@@ -20,3 +20,29 @@ body {
   /* color: rgb(var(--foreground-rgb)); */
   /* background:  */
 }
+
+
+html {
+  --color-primary: #172E4A;
+  --color-seccondary: #2E4057;
+  --color-background: #FFFFFF;
+  --color-darkGray: #4F6272;
+  --color-gray: #929391;
+  --color-blue: #005293;
+  --color-whiteText: #FFFDFD;
+  --color-blackText: #252525;
+  --color-red: #DA282E;
+  --color-orange: #FF8C00;
+  direction: ltr;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 41px;
+}
+
+button {
+  border-radius: 8px !important;
+  padding: 16px 28px;
+}

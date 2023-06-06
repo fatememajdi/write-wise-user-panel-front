@@ -1,9 +1,37 @@
-.header-container {
-    background-color: blue;
+.headerContainer {
+    padding: 52px 93px 0px 63px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
 }
 
-.logo-card {
+.logoCard {
     padding: 22px 38px 22px 25px;
     border-radius: 10px;
-    background-color: aquamarine;
+    width: fit-content;
+    background-color: var(--color-background);
+    z-index: 1;
+}
+
+.profileCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: 300;
+    font-size: 24px;
+}
+
+.helpIcon {
+    margin-right: 20px;
+}
+
+.title {
+    color: var(--color-blackText);
+    font-size: 32px;
+    font-weight: 500;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import Image from "next/image";
 
 //-------------------------------------------------------styles
-import '../../styles/headerWithTitle.module.css';
+import styles from '../../styles/headerWithTitle.module.css';
 
 //-------------------------------------------------------images
 
@@ -13,16 +13,32 @@ interface _props {
 
 const HeaderWithTitle: React.FC<_props> = ({ title }) => {
     return (
-        <div className='col-12 header-container'>
+        <div className={'col-12 ' + styles.headerContainer}>
 
-            <div className='logo-card'>
+            <div className={styles.logoCard}>
                 <Image
                     src="/logo.svg"
-                    alt="Next.js Logo"
+                    alt="Logo"
                     width={180}
                     height={37}
                     priority
                 />
+            </div>
+
+            <div className={styles.title}>
+                {title}
+            </div>
+
+            <div className={styles.profileCard}>
+                <Image
+                    className={styles.helpIcon}
+                    src="/help.svg"
+                    alt="Help Icon"
+                    width={50}
+                    height={50}
+                    priority
+                />
+                {" profile"}
             </div>
 
         </div>

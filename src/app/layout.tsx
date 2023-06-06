@@ -1,6 +1,7 @@
 import '../styles/global.css';
 import '../styles/customBootstrapStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'antd/dist/reset.css';
 
 import { Inter } from 'next/font/google'
 
