@@ -9,7 +9,8 @@
 
 .dashboardBackground {
     min-height: 100vh;
-    overflow: hidden;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
     padding: 217px 75px 86px 83px;
 }
 
@@ -51,8 +52,9 @@
 
 .bottomLeftBack {
     position: absolute;
-    top: 100%;
+    top: 140%;
     left: 0px;
+    /* bottom: -200px; */
     z-index: 0;
     width: 249px;
     height: 249px

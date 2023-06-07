@@ -1,0 +1,23 @@
+.ant-select-single.ant-select-lg .ant-select-selector {
+    padding: 3px 20px !important;
+    border: 1px solid #2E4057 !important;
+    height: fit-content !important;
+    line-height: 28px !important;
+    font-weight: 700 !important;
+    font-size: 18px !important;
+}
+
+.ant-select .ant-select-arrow {
+    color: #2E4057 !important;
+    font-weight: 700 !important;
+}
+
+.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{
+    border-color: #2E4057 !important;
+    box-shadow: none !important;
+}
+
+.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector{
+    border-color: #2E4057 !important;
+    box-shadow: none !important;
+}
