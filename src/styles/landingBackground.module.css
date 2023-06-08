@@ -1,0 +1,16 @@
+.headerBackground {
+    height: 267px;
+    width: 1719px;
+    position: absolute;
+    top: 0px !important;
+    left: 0px !important;
+    right: 0px !important;
+    z-index: 0;
+}
+
+.landingBackground {
+    min-height: 100vh;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    /* padding: 217px 75px 86px 83px; */
+}
