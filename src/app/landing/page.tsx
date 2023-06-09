@@ -1,15 +1,16 @@
 import React from "react";
 
 //-------------------------------------------styles
-import '../../styles/landing.module.css';
+import styles from '../../styles/landing.module.css';
 
 //-------------------------------------------components
 import LandingBackground from "@/components/landingBackground/landingBackground";
+import Section1 from "./section1";
 
 const Landing: React.FC = () => {
     return (
         <LandingBackground>
-            hi
+            <Section1 />
         </LandingBackground>
     );
 };

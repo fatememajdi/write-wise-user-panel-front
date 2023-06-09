@@ -1,0 +1,75 @@
+.section1Container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+.leftContainer {
+    padding-right: 112px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.leftContainerCircle {
+    height: 355px;
+    width: 355px;
+    background-color: #D9D9D9;
+    border-radius: 100%;
+}
+
+.rightContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.rightContainerTitle {
+    font-weight: 700;
+    font-size: 48px;
+    font-style: normal;
+    line-height: 60px;
+    letter-spacing: -0.005em;
+}
+
+.rightContainerDescription {
+    margin-top: 73px;
+    font-size: 24px;
+    /* line-height: 12px; */
+    font-weight: 200;
+    text-transform: capitalize;
+    hanging-punctuation: first last;
+}
+
+.rightContainerDescriptionItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.rightContainerDescriptionItem span {
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.rightContainerDescriptionItemIcon {
+    font-size: medium;
+    margin-right: 10px;
+}
+
+.rightContainerButton {
+    background-color: var(--color-red);
+    color: var(--color-whiteText);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 40px;
+    margin-top: 50px;
+    border: 1px solid var(--color-red);
+    box-shadow: 5px 5px 29px 4px rgba(16, 24, 40, 0.05);
+}

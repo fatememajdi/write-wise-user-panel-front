@@ -32,9 +32,17 @@ html {
   --color-blue: #005293;
   --color-whiteText: #FFFDFD;
   --color-blackText: #252525;
-  --color-red: #DA282E;
+  --color-red: #AB141D;
   --color-orange: #FF8C00;
   direction: ltr;
+}
+
+h1 {
+  font-weight: 800;
+  font-size: 48px;
+  font-style: normal;
+  line-height: 60px;
+  letter-spacing: -0.005em;
 }
 
 h2 {
