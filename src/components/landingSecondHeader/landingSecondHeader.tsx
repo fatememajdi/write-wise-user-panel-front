@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Formik } from 'formik';
 
-//-------------------------------------------styles
-import styles from './landingHeader.module.css';
+//--------------------------------------------styles
+import styles from './landingSecondHeader.module.css';
+import SecondStyles from '../landingHeader/landingHeader.module.css';
 
 //-------------------------------------------components
 import Input from "../input/input";
@@ -29,10 +30,10 @@ const headerItems = [
     }
 ];
 
-const LandingHeader: React.FC = () => <div className={'col-12 ' + styles.headerContainer}>
-    <div className={styles.headerItemsContainer}>
+const LandingSecondHeader: React.FC = () => <div className={styles.headerCard}>
+    <div className={SecondStyles.headerItemsContainer}>
         <Image
-            className={styles.headerLogo}
+            className={SecondStyles.headerLogo}
             src="/logo.svg"
             alt="Logo"
             width={133}
@@ -41,7 +42,7 @@ const LandingHeader: React.FC = () => <div className={'col-12 ' + styles.headerC
         />
         {
             headerItems.map(
-                (item, index) => <Link href={item.route} key={index} className={styles.headerItem} >{item.title}</Link>)
+                (item, index) => <Link href={item.route} key={index} className={SecondStyles.headerItem} >{item.title}</Link>)
         }
     </div>
     <Formik
@@ -65,18 +66,10 @@ const LandingHeader: React.FC = () => <div className={'col-12 ' + styles.headerC
         }) => (
 
             <form
-                className={styles.headerItemsContainer}
+                className={SecondStyles.headerItemsContainer}
                 onSubmit={handleSubmit}>
-                <Image
-                    src="/help.svg"
-                    alt="Help Icon"
-                    width={33}
-                    height={33}
-                    priority
-                />
-
                 <Input
-                    className={styles.searchInput}
+                    className={SecondStyles.searchInput}
                     onChange={handleChange}
                     placeHolder='try something...'
                     input
@@ -87,7 +80,7 @@ const LandingHeader: React.FC = () => <div className={'col-12 ' + styles.headerC
 
                 <Image
                     src="/search.svg"
-                    alt="Help Icon"
+                    alt="Search Icon"
                     width={40}
                     height={40}
                     priority
@@ -99,4 +92,4 @@ const LandingHeader: React.FC = () => <div className={'col-12 ' + styles.headerC
     </Formik>
 </div>;
 
-export default LandingHeader;
+export default LandingSecondHeader;

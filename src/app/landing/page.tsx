@@ -1,7 +1,7 @@
 import React from "react";
 
 //-------------------------------------------styles
-import styles from '../../styles/landing.module.css';
+import styles from './landing.module.css';
 
 //-------------------------------------------components
 import LandingBackground from "@/components/landingBackground/landingBackground";

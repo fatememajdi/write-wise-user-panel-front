@@ -1,7 +1,7 @@
 import React from 'react';
 
 //-------------------------------------------------------------styles
-import styles from '../../styles/input.module.css';
+import styles from './input.module.css';
 
 
 interface props {

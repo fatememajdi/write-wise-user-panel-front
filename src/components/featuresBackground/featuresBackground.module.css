@@ -1,0 +1,89 @@
+.featuresBackground {
+    min-height: 100vh;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    padding: 217px 156px 129px 156px;
+}
+
+.rightTopBackground {
+    height: 183px;
+    width: 386px;
+    position: absolute;
+    top: 100px;
+    right: -40px;
+    z-index: -1;
+}
+
+.rightTop3Background {
+    height: 183px;
+    width: 386px;
+    position: absolute;
+    top: 0px;
+    right: -50px;
+    z-index: -1;
+}
+
+.rightTop2Background {
+    height: 347px;
+    width: 372px;
+    position: absolute;
+    top: 140px;
+    right: -50px;
+    z-index: -1;
+}
+
+.leftTopBackground {
+    height: 293px;
+    width: 489px;
+    position: absolute;
+    top: 70px;
+    left: -40px;
+    z-index: -1;
+}
+
+.leftTop2Background {
+    height: 296px;
+    width: 346px;
+    position: absolute;
+    top: 64px;
+    left: 174px;
+    z-index: -1;
+    transform: matrix(0.99, 0.15, -0.17, 0.99, 0, 0);
+}
+
+.leftTop3Background {
+    height: 296px;
+    width: 346px;
+    position: absolute;
+    top: 174px;
+    left: 154px;
+    z-index: -1;
+    transform: matrix(0.99, 0.15, -0.17, 0.99, 0, 0);
+}
+
+.leftCenterBackground {
+    height: 449.02px;
+    width: 378.08px;
+    position: absolute;
+    top: 254px;
+    left: -40px;
+    z-index: -1;
+}
+
+.leftCenter2Background {
+    height: 449.02px;
+    width: 378.08px;
+    position: absolute;
+    top: 170px;
+    left: 0px;
+    z-index: -1;
+}
+
+.leftBottomBackground {
+    height: 188.38px;
+    width: 326.61px;
+    position: absolute;
+    top: 500px;
+    left: -55px;
+    z-index: -1;
+}

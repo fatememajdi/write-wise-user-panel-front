@@ -1,0 +1,15 @@
+.headerCard {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 22px;
+    right: 32px;
+    left: 32px;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    flex: 1;
+    background-color: var(--color-background);
+    border-radius: 30px;
+    padding: 0px 97px 0px 25px;
+}

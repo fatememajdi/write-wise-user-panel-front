@@ -4,7 +4,7 @@ import { Select } from 'antd';
 import { Chart } from "chart.js";
 
 //--------------------------------------------styles
-import styles from '../../styles/dashboard.module.css';
+import styles from './dashboard.module.css';
 
 //--------------------------------------------components
 import HeaderWithTitle from "../../components/headerWithTitle/headerWithTitle";

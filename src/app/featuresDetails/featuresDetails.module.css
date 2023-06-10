@@ -1,0 +1,87 @@
+.featuresDetailsContainer {
+    min-height: 100vh;
+    background-color: var(--color-background);
+}
+
+.featuresDetailsContent {
+    height: 100%;
+    padding: 141px 206px 187px 208px;
+}
+
+.description {
+    color: #1F1F1F;
+    font-weight: 500;
+    font-size: 24px;
+    text-align: center;
+    line-height: 127.52%;
+    font-style: normal;
+}
+
+.featuresItemsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 70px;
+}
+
+.itemCard {
+    margin-bottom: 70px;
+}
+
+.itemTitle {
+    color: var(--color-whiteText);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 133.02%;
+    font-style: normal;
+    margin-top: 52px;
+    text-align: center;
+}
+
+.itemCardContent {
+    background-color: var(--color-seccondary);
+    border-radius: 30px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 96px 50px 96px;
+}
+
+.itemCardContent svg path {
+    color: var(--color-seccondary) !important;
+    fill: aqua !important;
+}
+
+.itemCard :nth-of-type(2n-1) {
+    margin-left: 35px !important;
+}
+
+.itemCard :nth-of-type(2n) {
+    margin-right: 35px !important;
+}
+
+.lastItemCard {
+    margin-bottom: 70px;
+}
+
+
+.lastItemCardContent {
+    background: linear-gradient(179.62deg, rgba(46, 64, 87, 0.1) -19.6%, rgba(218, 40, 46, 0.007) 139.2%);
+    color: #000000;
+    line-height: 26px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 300;
+    min-height: 320px;
+    border-radius: 20px;
+    padding: 95px 37px;
+}
+
+.lastItemCard :nth-of-type(2n-1) {
+    margin-left: 35px !important;
+}
+
+.lastItemCard :nth-of-type(2n) {
+    margin-right: 35px !important;
+}

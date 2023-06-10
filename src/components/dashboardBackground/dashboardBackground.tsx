@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 //-------------------------------------styles
-import styles from '../../styles/dashboardBackground.module.css';
+import styles from './dashboardBackground.module.css';
 
 const DashboardBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => <div className={'col-12 ' + styles.dashboardBackground}>
     <Image

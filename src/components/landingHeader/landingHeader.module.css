@@ -20,11 +20,11 @@
 }
 
 .headerItem {
-    color: var(--color-blackText);
+    color: var(--color-seccondary);
     text-decoration: none;
     line-height: 28px;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 600;
     font-style: normal;
     margin-right: 40px;
 }

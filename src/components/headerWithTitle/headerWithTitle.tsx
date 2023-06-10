@@ -2,7 +2,7 @@ import React from 'react';
 import Image from "next/image";
 
 //-------------------------------------------------------styles
-import styles from '../../styles/headerWithTitle.module.css';
+import styles from './headerWithTitle.module.css';
 
 //-------------------------------------------------------images
 
