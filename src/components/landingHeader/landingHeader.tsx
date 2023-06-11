@@ -13,7 +13,7 @@ import Input from "../input/input";
 const headerItems = [
     {
         title: 'Home',
-        route: '/landing'
+        route: '/'
     },
     {
         title: 'Features',

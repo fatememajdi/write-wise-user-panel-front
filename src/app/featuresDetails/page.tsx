@@ -1,8 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import Image from "next/image";
 
 //------------------------------------------------styles
 import styles from './featuresDetails.module.css';
+import Footer from '@/components/footer/footer';
 
 const featuresItems = [
     {
@@ -48,6 +50,7 @@ const FeaturesDetails: React.FC = () => <div className={'col-12 ' + styles.featu
 
         </div>
     </div>
+    <Footer />
 </div>;
 
 export default FeaturesDetails;

@@ -1,7 +1,7 @@
 import React from "react";
 
 //------------------------------------------------styles
-import styles from './landingSection1.module.css';
+import styles from '../styles/landingSection1.module.css';
 
 //------------------------------------------------icons
 import { VscCircleFilled } from 'react-icons/vsc';
