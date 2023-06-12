@@ -6,6 +6,9 @@ import Image from "next/image";
 import styles from './featuresDetails.module.css';
 import Footer from '@/components/footer/footer';
 
+//------------------------------------------------components
+import { FeaturesDetailsBackground } from "@/components/featuresBackground/featuresBackground";
+
 const featuresItems = [
     {
         icon: '/user.svg',
@@ -29,7 +32,7 @@ const featuresItems = [
     }
 ];
 
-const FeaturesDetails: React.FC = () => <div className={'col-12 ' + styles.featuresDetailsContainer}>
+const FeaturesDetails: React.FC = () => <FeaturesDetailsBackground>
     <div className={'col-12 ' + styles.featuresDetailsContent}>
         <div className={'col-12 ' + styles.description}>
             Embrace the power of WriteWiseAI and unlock your full potential in IELTS writing. With our innovative features and benefits,
@@ -47,11 +50,16 @@ const FeaturesDetails: React.FC = () => <div className={'col-12 ' + styles.featu
                     give you a clear understanding of your current writing proficiency.
                 </div>
             </div>
-
         </div>
+        <div className={'col-12 ' + styles.SignUpTitle}>
+            Sign up today and start your journey to IELTS writing mastery
+        </div>
+        <button className={styles.signUpButton}>
+            Sign up
+        </button>
     </div>
     <Footer />
-</div>;
+</FeaturesDetailsBackground>;
 
 export default FeaturesDetails;
 

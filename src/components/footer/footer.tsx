@@ -1,10 +1,17 @@
+'use client';
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
-//----------------------------------------styles 
+//----------------------------------------------------------------styles 
 import styles from './footer.module.css';
 
+//----------------------------------------------------------------components
+import Input from "../input/input";
+
+//----------------------------------------------------------------social media items
 const socialMediaItems = [
     {
         icon: '/twitter.svg',
@@ -28,6 +35,14 @@ const socialMediaItems = [
     },
 ]
 
+//---------------------------------------------------------------validation
+const EmailValidationSchema = Yup.object().shape({
+    email: Yup
+        .string()
+        .email("Invalid email format")
+        .required('Username is required!'),
+})
+
 const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerContainer}>
     <div className={styles.leftContainer}>
         <Image
@@ -44,22 +59,74 @@ const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerConta
             <Link className={styles.link} href={'/'}>about us</Link>
         </div>
     </div>
-    <div className={styles.rightContainer}>
-        <div className={styles.socialMediaContainer}>
-            {
-                socialMediaItems.map((item, index) => <a key={index} href={item.link}>
-                    <Image
-                        className={styles.socialIcon}
-                        src={item.icon}
-                        alt="social media"
-                        width={24}
-                        height={24}
-                        priority
-                    />
-                </a>)
-            }
-        </div>
-    </div>
+    <Formik
+        initialValues={{
+            email: ''
+        }}
+        validationSchema={EmailValidationSchema}
+        enableReinitialize
+        onSubmit={async (values) => {
+            // await handleSubmit(values);
+        }}
+
+    >
+        {({
+            values,
+            errors,
+            touched,
+            handleSubmit,
+            setFieldValue,
+            handleChange
+        }) => (
+
+            <form
+                className={styles.rightContainer}
+                onSubmit={handleSubmit}>
+                <div className={styles.socialMediaContainer}>
+                    {
+                        socialMediaItems.map((item, index) => <a key={index} href={item.link}>
+                            <Image
+                                className={styles.socialIcon}
+                                src={item.icon}
+                                alt="social media"
+                                width={24}
+                                height={24}
+                                priority
+                            />
+                        </a>)
+                    }
+                </div>
+                <div>
+                    <div className={styles.emailCardTiitle}>
+                        Stay up to date !
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <Input
+                            className={styles.emailInput}
+                            onChange={handleChange}
+                            placeHolder='Enter your email'
+                            input
+                            inputtype='email'
+                            input_name='email'
+                            input_value={values.email}
+                            input_error={errors.email && touched.email && errors.email}
+                        />
+
+                        <button type="submit" className={styles.sibscribeButton}>
+                            Subscribe
+                        </button>
+                    </div>
+
+                    <div className={styles.emailCardText}>
+                        We care about your data in our <Link className={styles.emailCardText} href={'/'}>privacy policy</Link>
+                    </div>
+
+                </div>
+            </form>
+
+        )}
+
+    </Formik>
 </div>;
 
 export default Footer;

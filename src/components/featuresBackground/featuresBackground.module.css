@@ -5,6 +5,14 @@
     padding: 217px 156px 129px 156px;
 }
 
+.featuresDetailsBackground {
+    min-height: 100vh;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    /* background-color: var(--color-background); */
+    position: relative;
+}
+
 .rightTopBackground {
     height: 183px;
     width: 386px;
@@ -76,6 +84,25 @@
     position: absolute;
     top: 170px;
     left: 0px;
+    z-index: -1;
+}
+
+.centerBackground {
+    height: 357px;
+    width: 427.75px;
+    position: absolute;
+    top: 507px;
+    right: 690px;
+    z-index: -1;
+}
+
+.center2Background {
+    height: 546.45px;
+    width: 205.58px;
+    position: absolute;
+    top: 740px;
+    right: 500px;
+    transform: rotate(-95.31deg);
     z-index: -1;
 }
 

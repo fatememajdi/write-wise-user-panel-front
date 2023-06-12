@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import styles from './features.module.css';
 
 //-------------------------------------------components
-import FeaturesBackground from "@/components/featuresBackground/featuresBackground";
+import { FeaturesBackground } from "@/components/featuresBackground/featuresBackground";
 import LandingSecondHeader from "@/components/landingSecondHeader/landingSecondHeader";
 
 const Features: React.FC = () => {

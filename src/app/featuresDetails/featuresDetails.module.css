@@ -5,7 +5,7 @@
 
 .featuresDetailsContent {
     height: 100%;
-    padding: 141px 206px 187px 208px;
+    padding: 141px 206px 203px 208px;
 }
 
 .description {
@@ -20,10 +20,12 @@
 .featuresItemsContainer {
     display: flex;
     flex-wrap: wrap;
+    z-index: 1;
     margin-top: 70px;
 }
 
 .itemCard {
+    z-index: 1;
     margin-bottom: 70px;
 }
 
@@ -62,6 +64,7 @@
 }
 
 .lastItemCard {
+    z-index: 1 !important;
     margin-bottom: 70px;
 }
 
@@ -84,4 +87,28 @@
 
 .lastItemCard :nth-of-type(2n) {
     margin-right: 35px !important;
+}
+
+.SignUpTitle {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 40px;
+}
+
+.signUpButton {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 49px;
+    background-color: #DA282E;
+    color: var(--color-whiteText);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 40px;
 }

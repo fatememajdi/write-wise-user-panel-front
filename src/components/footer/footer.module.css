@@ -39,10 +39,61 @@
 .socialMediaContainer {
     display: flex;
     flex-direction: row;
+    margin-right: 24px;
+    padding-top: 20px;
 }
 
 .socialIcon {
     height: 24px;
     width: 24px;
     margin-right: 24px;
+}
+
+.emailCardTiitle {
+    margin-top: 26px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    color: var(--color-whiteText);
+}
+
+.emailInput {
+    width: 296px !important;
+    border: none !important;
+}
+
+.emailInput input {
+    height: 44px !important;
+}
+
+.emailInput input::placeholder {
+    color: var(--color-seccondary) !important;
+}
+
+.emailCardText {
+    color: var(--color-gray);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    font-style: normal;
+    margin-top: 12px;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+}
+
+.sibscribeButton {
+    height: 44px;
+    border: solid 1px var(--color-background);
+    display: flex;
+    align-items: center;
+    color: var(--color-whiteText);
+    margin-left: 24px;
+    font-size: 16px;
+    font-style: normal;
+    line-height: 24px;
+    font-weight: 600;
 }

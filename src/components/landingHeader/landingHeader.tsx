@@ -21,7 +21,7 @@ const headerItems = [
     },
     {
         title: 'Pricing',
-        route: '/'
+        route: '/pricing'
     },
     {
         title: 'Signup',

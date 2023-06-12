@@ -5,7 +5,7 @@ import Image from "next/image";
 import styles from './featuresBackground.module.css';
 
 const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
-    <div className={styles.featuresBackground}>
+    <div className={'col-12 ' + styles.featuresBackground}>
         <Image
             className={styles.rightTop3Background}
             src="/features/right-top.svg"
@@ -105,4 +105,25 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
         {children}
     </div>;
 
-export default FeaturesBackground;
+
+const FeaturesDetailsBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => <div className={'col-12 ' + styles.featuresDetailsBackground}>
+    <Image
+        className={styles.centerBackground}
+        src="/features/center.svg"
+        alt="background"
+        width={427.75}
+        height={357}
+        priority
+    />
+    <Image
+        className={styles.center2Background}
+        src="/features/center-2.svg"
+        alt="background"
+        width={205.58}
+        height={546.45}
+        priority
+    />
+    {children}
+</div>
+
+export { FeaturesBackground, FeaturesDetailsBackground };
