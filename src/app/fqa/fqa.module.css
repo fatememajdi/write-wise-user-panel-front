@@ -1,0 +1,36 @@
+.fqaContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.fqaItemText {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 40px;
+    text-align: center;
+    padding: 40px 0px;
+}
+
+.fqaFirstItem {
+    border-bottom: 0.5px solid #2E4057;
+    padding: 40px 116px !important;
+}
+
+.fqaLastItem {
+    padding: 40px 201px !important;
+    border-top: 0.5px solid #2E4057;
+}
+
+.fqaButton {
+    background-color: #DA282E;
+    margin-top: 90px;
+    color: var(--color-whiteText);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+}

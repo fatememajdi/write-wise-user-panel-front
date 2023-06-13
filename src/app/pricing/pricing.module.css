@@ -35,7 +35,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 490px;
+    max-height: 500px;
+    min-height: 100% !important;
     height: 100% !important;
     justify-content: center;
     position: relative;
@@ -61,6 +62,7 @@
     font-size: 20px;
     line-height: 169.52%;
     cursor: context-menu !important;
+    margin-top: 60px !important;
 }
 
 .itemDescriptionCard {
@@ -82,9 +84,9 @@
 .leftdescriptionsContainer {
     display: flex;
     flex-direction: column;
-    margin-left: 55px;
-    margin-right: 50px;
-    margin-bottom: 115px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: auto;
 }
 
 .circleIcon {
@@ -96,10 +98,10 @@
 
 .signUpButton {
     display: flex;
-    margin-top: auto;
+    /* margin-top: auto; */
     background-color: #DA282E;
     color: var(--color-whiteText);
-    margin-bottom: 25px;
+    margin-bottom: 25px !important;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
@@ -111,7 +113,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 24px 39px 21px 45px;
+    padding: 24px 39px 15px 45px;
 }
 
 .divider {

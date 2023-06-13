@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 import React from "react";
 import Image from "next/image";
@@ -27,7 +28,7 @@ const Features: React.FC = () => {
                     icon="/rise.svg"
                     description="Monitor your IELTS writing improvement over time with our progress tracking feature. Review your essay history, ratings, and feedback to see your development and stay motivated on your journey to success." />
             </div>
-            <button onClick={() => router.push('/featuresDetails')} className={styles.featuresButton}>
+            <button onClick={() => router.push('/features/featuresDetails')} className={styles.featuresButton}>
                 Read more
             </button>
         </FeaturesBackground>)

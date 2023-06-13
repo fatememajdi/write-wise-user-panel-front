@@ -1,0 +1,67 @@
+.fqadBackground {
+    min-height: 100vh;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    position: relative;
+}
+
+.rightTopBackground {
+    height: 259px;
+    width: 256px;
+    position: absolute;
+    top: 80px;
+    right: 0px;
+    z-index: -1;
+}
+
+.leftTopBackground {
+    height: 301.14px;
+    width: 237px;
+    position: absolute;
+    top: 140px;
+    left: 20px;
+    z-index: -1;
+}
+
+.leftCenterBackground {
+    height: 377px;
+    width: 377px;
+    position: absolute;
+    top: 300px;
+    left: 0px;
+    z-index: -1;
+}
+
+.rightTop2Background {
+    height: 427.75px;
+    width: 357px;
+    position: absolute;
+    top: 65px;
+    right: 0px;
+    z-index: -1;
+}
+
+.rightCenterBackground {
+    height: 427.75px;
+    width: 357px;
+    position: absolute;
+    top: 466px;
+    right: 0px;
+    z-index: -1;
+}
+
+.leftTop2Background {
+    height: 377px;
+    width: 377px;
+    position: absolute;
+    top: 110px;
+    left: 0px;
+}
+
+.leftCenter2Background {
+    height: 427.75px;
+    width: 357px;
+    position: absolute;
+    top: 380px;
+    left: 0px;
+}
