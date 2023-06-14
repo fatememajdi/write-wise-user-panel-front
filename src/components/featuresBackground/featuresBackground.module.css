@@ -2,6 +2,7 @@
     min-height: 100vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
+    position: relative;
     padding: 217px 156px 129px 156px;
 }
 
@@ -35,8 +36,8 @@
     height: 347px;
     width: 372px;
     position: absolute;
-    top: 140px;
-    right: -50px;
+    top: 80px;
+    right: -70px;
     z-index: -1;
 }
 

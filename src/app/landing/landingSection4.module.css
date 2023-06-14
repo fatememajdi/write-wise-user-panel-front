@@ -2,7 +2,9 @@
     background: rgba(0, 114, 199, 0.0);
     background: linear-gradient(135deg, rgba(247, 213, 214, 0.445), #FFFFFF, rgba(218, 233, 245, 0.315));
     min-height: 100vh;
-    padding: 90px 153px 90px 167px;
+    padding: 170px 153px 90px 167px;
+    display: flex;
+    flex-direction: column;
 }
 
 .title {

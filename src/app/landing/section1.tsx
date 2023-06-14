@@ -1,12 +1,12 @@
 import React from "react";
 
 //------------------------------------------------styles
-import styles from '../styles/landingSection1.module.css';
+import styles from './landingSection1.module.css';
 
 //------------------------------------------------icons
 import { VscCircleFilled } from 'react-icons/vsc';
 
-const Section1: React.FC = () => <div className={'col-12 ' + styles.section1Container}>
+const Section1: React.FC = () => <section className={'col-12 ' + styles.section1Container} id="section-1">
 
     <div className={'col-lg-6 ' + styles.leftContainer}>
         <div className={styles.leftContainerCircle}></div>
@@ -39,6 +39,6 @@ const Section1: React.FC = () => <div className={'col-12 ' + styles.section1Cont
 
     </div>
 
-</div>;
+</section>;
 
 export default Section1;

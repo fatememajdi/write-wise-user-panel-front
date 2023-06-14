@@ -1,36 +1,122 @@
-.fqaContainer {
+.topContainer {
+    background-color: var(--color-seccondary);
+    height: 70vh;
+    position: relative;
+    top: 0px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    align-items: center;
 }
 
-.fqaItemText {
+.title {
     font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
+    font-weight: 600;
+    font-size: 40px;
     line-height: 40px;
     text-align: center;
+    letter-spacing: -0.05em;
+    hanging-punctuation: first last;
+    color: var(--color-whiteText);
+}
+
+.searchCard {
+    border: 5px solid #FFFFFF;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 16px;
+    height: fit-content !important;
+    min-height: 85px;
+    margin-top: 38px;
+    z-index: 0;
+}
+
+.searchInput {}
+
+.searchInput input {
+    background-color: var(--color-seccondary) !important;
+    border: none !important;
+    width: 700px !important;
+    color: var(--color-whiteText) !important;
+}
+
+.searchInput input::placeholder {
+    color: var(--color-whiteText) !important;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: -0.05em;
+}
+
+.searchInput input:focus {
+    border: none !important;
+}
+
+.mainContainer {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 30vh;
+    padding: 147px 40px 150px 180px;
+}
+
+.questionCard {
+    padding-right: 127px;
+    height: fit-content !important;
+    max-height: fit-content !important;
+    /* height: auto !important; */
+    align-self: flex-start;
+}
+
+.questionContent {
+    border-bottom: 0.5px solid #2E4057;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     padding: 40px 0px;
 }
 
-.fqaFirstItem {
-    border-bottom: 0.5px solid #2E4057;
-    padding: 40px 116px !important;
-}
-
-.fqaLastItem {
-    padding: 40px 201px !important;
-    border-top: 0.5px solid #2E4057;
-}
-
-.fqaButton {
-    background-color: #DA282E;
-    margin-top: 90px;
-    color: var(--color-whiteText);
+.question {
+    height: fit-content;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 24px;
-    line-height: 28px;
+    line-height: 30px;
+    letter-spacing: 0.02em;
+    color: var(--color-blackText);
+    margin-right: 45px;
+    display: flex;
+    flex-direction: row;
+}
+
+.circleIcon {
+    min-height: 20px !important;
+    min-width: 20px !important;
+    font-size: 20px !important;
+    margin-right: 10px;
+    margin-top: 7px;
+}
+
+.plusIcon {
+    min-height: 35px !important;
+    min-width: 35px !important;
+    font-size: 35px !important;
+    cursor: pointer;
+}
+
+.answer {
+    background: linear-gradient(180deg, rgba(46, 64, 87, 0.1) 0%, rgba(46, 64, 87, 0) 100%);
+    border-radius: 5px;
+    padding: 31px 40px 33px 40px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    color: #000000;
 }

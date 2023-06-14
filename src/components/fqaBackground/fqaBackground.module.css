@@ -36,9 +36,9 @@
     height: 427.75px;
     width: 357px;
     position: absolute;
-    top: 65px;
+    top: 90px;
     right: 0px;
-    z-index: -1;
+    z-index: 1;
 }
 
 .rightCenterBackground {
@@ -47,7 +47,7 @@
     position: absolute;
     top: 466px;
     right: 0px;
-    z-index: -1;
+    z-index: 1;
 }
 
 .leftTop2Background {
@@ -55,6 +55,7 @@
     width: 377px;
     position: absolute;
     top: 110px;
+    z-index: 1;
     left: 0px;
 }
 
@@ -62,6 +63,7 @@
     height: 427.75px;
     width: 357px;
     position: absolute;
-    top: 380px;
+    top: 450px;
+    z-index: 1;
     left: 0px;
 }

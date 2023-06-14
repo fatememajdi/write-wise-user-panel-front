@@ -1,51 +1,77 @@
 /* eslint-disable react/no-unescaped-entities */
-'use client';
-import React from "react";
+import React from 'react';
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
 
-//-------------------------------------------styles
+//------------------------------------------------styles
 import styles from './features.module.css';
+import Footer from '@/components/footer/footer';
 
-//-------------------------------------------components
-import { FeaturesBackground } from "@/components/featuresBackground/featuresBackground";
-import LandingSecondHeader from "@/components/landingSecondHeader/landingSecondHeader";
+//------------------------------------------------components
+import { FeaturesDetailsBackground } from "@/components/featuresBackground/featuresBackground";
 
-const Features: React.FC = () => {
-    const router = useRouter();
+const featuresItems = [
+    {
+        icon: '/user.svg',
+        title: 'Personalized Feedback and Recommendations'
+    },
+    {
+        icon: '/file.svg',
+        title: 'AI-Powered Topic Generator'
+    },
+    {
+        icon: '/step.svg',
+        title: 'AI-Powered Step-by-Step Writing Tutor'
+    },
+    {
+        icon: '',
+        title: 'Affordable Pricing and Token System'
+    },
+    {
+        icon: '/regularRise.svg',
+        title: 'Progress Tracking'
+    }
+];
 
-    return (
-        <FeaturesBackground>
-            <LandingSecondHeader />
-            <div className={styles.featuresDescription}>
-                Discover the advantages of using WriteWiseAI, a revolutionary platform designed to help you conquer IELTS writing challenges. Our state-of-the-art features and benefits provide the tools and guidance necessary to elevate your essay writing skills and achieve your desired IELTS score. Here's what you can expect when using WriteWiseAI
+const Features: React.FC = () => <FeaturesDetailsBackground>
+    <div className={'col-12 ' + styles.featuresDetailsContent}>
+        <div className={'col-12 ' + styles.description}>
+            Embrace the power of WriteWiseAI and unlock your full potential in IELTS writing. With our innovative features and benefits,
+            you'll be well-equipped to achieve your desired IELTS score and open the door to new opportunities:
+        </div>
+        <div className={'col-12 ' + styles.featuresItemsContainer}>
+            {
+                featuresItems.map((item, index) => <FeaturesItemCard item={item} key={index} />)
+            }
+
+            <div className={'col-lg-6 ' + styles.lastItemCard}>
+                <div className={styles.lastItemCardContent}>
+                    Receive objective and accurate essay ratings based on the official
+                    IELTS criteria. Our advanced AI technology analyzes your essays to
+                    give you a clear understanding of your current writing proficiency.
+                </div>
             </div>
-            <div className={'col-lg-12 ' + styles.featuresItemsContainer}>
-                <FeaturesItemCard title="AI-Powered Essay Rating"
-                    icon="/rate.svg"
-                    description="Receive objective and accurate essay ratings based on the official IELTS criteria. Our advanced AI technology analyzes your essays to give you a clear understanding of your current writing proficiency." />
-                <FeaturesItemCard title="Progress Tracking"
-                    icon="/rise.svg"
-                    description="Monitor your IELTS writing improvement over time with our progress tracking feature. Review your essay history, ratings, and feedback to see your development and stay motivated on your journey to success." />
-            </div>
-            <button onClick={() => router.push('/features/featuresDetails')} className={styles.featuresButton}>
-                Read more
-            </button>
-        </FeaturesBackground>)
-};
+        </div>
+        <div className={'col-12 ' + styles.SignUpTitle}>
+            Sign up today and start your journey to IELTS writing mastery
+        </div>
+        <button className={styles.signUpButton}>
+            Sign up
+        </button>
+    </div>
+    <Footer />
+</FeaturesDetailsBackground>;
 
 export default Features;
 
-const FeaturesItemCard: React.FC<{ title: string, description: string, icon: string }> = ({ title, description, icon }) => <div className={'col-lg-5 ' + styles.featuresItemCard}>
-    <Image
-        src={icon}
-        alt="Icon"
-        width={58.33}
-        height={35}
-        priority
-    />
-    <div className={styles.featuresItemTitle}>
-        {title}
+const FeaturesItemCard: React.FC<{ item: { icon: string, title: string } }> = ({ item }) => <div className={'col-lg-6 ' + styles.itemCard}>
+    <div className={styles.itemCardContent}>
+        <Image
+            src={item.icon}
+            alt="Icon"
+            width={58.33}
+            height={46.67}
+            priority
+        />
+        <div className={styles.itemTitle}>{item.title}</div>
     </div>
-    <div className={styles.featuresItemDescription}>{description}</div>
 </div>;
