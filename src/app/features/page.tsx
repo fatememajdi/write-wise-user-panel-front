@@ -9,25 +9,28 @@ import Footer from '@/components/footer/footer';
 //------------------------------------------------components
 import { FeaturesDetailsBackground } from "@/components/featuresBackground/featuresBackground";
 
+//------------------------------------------------icons
+import { User, File, Step, Money, RegularRise } from '../../../public';
+
 const featuresItems = [
     {
-        icon: '/user.svg',
+        icon: User,
         title: 'Personalized Feedback and Recommendations'
     },
     {
-        icon: '/file.svg',
+        icon: File,
         title: 'AI-Powered Topic Generator'
     },
     {
-        icon: '/step.svg',
+        icon: Step,
         title: 'AI-Powered Step-by-Step Writing Tutor'
     },
     {
-        icon: '',
+        icon: Money,
         title: 'Affordable Pricing and Token System'
     },
     {
-        icon: '/regularRise.svg',
+        icon: RegularRise,
         title: 'Progress Tracking'
     }
 ];
@@ -63,15 +66,9 @@ const Features: React.FC = () => <FeaturesDetailsBackground>
 
 export default Features;
 
-const FeaturesItemCard: React.FC<{ item: { icon: string, title: string } }> = ({ item }) => <div className={'col-lg-6 ' + styles.itemCard}>
+const FeaturesItemCard: React.FC<{ item: { icon: any, title: string } }> = ({ item }) => <div className={'col-lg-6 ' + styles.itemCard}>
     <div className={styles.itemCardContent}>
-        <Image
-            src={item.icon}
-            alt="Icon"
-            width={58.33}
-            height={46.67}
-            priority
-        />
+        <item.icon />
         <div className={styles.itemTitle}>{item.title}</div>
     </div>
 </div>;

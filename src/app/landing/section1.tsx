@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 //------------------------------------------------styles
 import styles from './landingSection1.module.css';

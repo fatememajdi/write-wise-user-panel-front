@@ -1,0 +1,26 @@
+.title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 167.02%;
+    /* or 80px */
+}
+
+.secondTitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 167.02%;
+    margin-top: 42px;
+}
+
+.description {
+    margin-top: 20px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 130.52%;
+    /* or 26px */
+
+    letter-spacing: 0.005em;
+}

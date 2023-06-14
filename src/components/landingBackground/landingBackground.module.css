@@ -99,3 +99,8 @@
     left: -30px;
     z-index: -1 !important;
 }
+
+.headerBackground{
+    height: 1840px;
+    width: 164px;
+}

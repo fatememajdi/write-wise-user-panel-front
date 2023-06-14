@@ -10,6 +10,9 @@ import styles from './landingSection3.module.css';
 //-------------------------------------------components
 import { FeaturesBackground } from "@/components/featuresBackground/featuresBackground";
 
+//-------------------------------------------icons
+import { Rate, Rise } from "../../../public";
+
 const Section3: React.FC = () => {
     const router = useRouter();
 
@@ -21,10 +24,10 @@ const Section3: React.FC = () => {
             </div>
             <div className={'col-lg-12 ' + styles.featuresItemsContainer}>
                 <FeaturesItemCard title="AI-Powered Essay Rating"
-                    icon="/rate.svg"
+                    icon={<Rate />}
                     description="Receive objective and accurate essay ratings based on the official IELTS criteria. Our advanced AI technology analyzes your essays to give you a clear understanding of your current writing proficiency." />
                 <FeaturesItemCard title="Progress Tracking"
-                    icon="/rise.svg"
+                    icon={<Rise />}
                     description="Monitor your IELTS writing improvement over time with our progress tracking feature. Review your essay history, ratings, and feedback to see your development and stay motivated on your journey to success." />
             </div>
             <button onClick={() => router.push('/features')} className={styles.featuresButton}>
@@ -37,14 +40,8 @@ const Section3: React.FC = () => {
 
 export default Section3;
 
-const FeaturesItemCard: React.FC<{ title: string, description: string, icon: string }> = ({ title, description, icon }) => <div className={'col-lg-5 ' + styles.featuresItemCard}>
-    <Image
-        src={icon}
-        alt="Icon"
-        width={58.33}
-        height={35}
-        priority
-    />
+const FeaturesItemCard: React.FC<{ title: string, description: string, icon: any }> = ({ title, description, icon }) => <div className={'col-lg-5 ' + styles.featuresItemCard}>
+    {icon}
     <div className={styles.featuresItemTitle}>
         {title}
     </div>

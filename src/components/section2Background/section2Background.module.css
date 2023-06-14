@@ -1,0 +1,34 @@
+.section2Background {
+    min-height: 100vh;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    position: relative;
+    padding: 90px 0px 0px 119px;
+}
+
+.rightBottomBackground {
+    height: 377px;
+    width: 353px;
+    position: absolute;
+    /* top: 477px; */
+    bottom: 0px;
+    right: 0px;
+    z-index: -1;
+}
+
+.leftTopBackground {
+    height: 377px;
+    width: 459px;
+    position: absolute;
+    top: 58px;
+    left: 0px;
+    z-index: -1;
+}
+
+.headerBackground {
+    width: 1719px;
+    height: 249px;
+    position: absolute;
+    top: 0px;
+    z-index: -1;
+}

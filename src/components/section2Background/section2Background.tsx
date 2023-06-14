@@ -2,49 +2,34 @@ import React from "react";
 import Image from "next/image";
 
 //-------------------------------------styles
-import styles from './section6Background.module.css';
+import styles from './section2Background.module.css';
 
 const Section2Background: React.FC<{ children: React.ReactNode }> = ({ children }) => <section className={'col-12 ' + styles.section2Background}>
     <Image
+        className={styles.headerBackground}
+        src="/landing/section2-header-background.svg"
+        alt="background"
+        width={1719}
+        height={249}
+        priority
+    />
+    <Image
+        className={styles.rightBottomBackground}
+        src="/section2/right-bottom.svg"
+        alt="background"
+        width={377}
+        height={353}
+        priority
+    />
+    <Image
         className={styles.leftTopBackground}
-        src="/section6/left-top.svg"
+        src="/section2/left-top.svg"
         alt="background"
-        width={208}
-        height={168}
+        width={377}
+        height={459}
         priority
     />
-    <Image
-        className={styles.leftCenterBackground}
-        src="/section6/left-center.svg"
-        alt="background"
-        width={224}
-        height={241}
-        priority
-    />
-    <Image
-        className={styles.leftCenterBackground}
-        src="/section6/left-center.svg"
-        alt="background"
-        width={224}
-        height={241}
-        priority
-    />
-    <Image
-        className={styles.rightBottomBackground}
-        src="/section6/right-bottom.svg"
-        alt="background"
-        width={427.75}
-        height={357}
-        priority
-    />
-    <Image
-        className={styles.rightBottomBackground}
-        src="/section6/right-bottom.svg"
-        alt="background"
-        width={427.75}
-        height={357}
-        priority
-    />
+
     {children}
 </section>;
 
