@@ -3,6 +3,8 @@ import '../styles/customBootstrapStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/reset.css';
 import '../styles/customAntdStyles.css';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import '../styles/customCarouselStyles.css';
 
 import { Inter } from 'next/font/google'
 

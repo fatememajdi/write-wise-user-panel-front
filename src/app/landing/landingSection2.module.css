@@ -11,7 +11,7 @@
     font-weight: 500;
     font-size: 24px;
     line-height: 167.02%;
-    margin-top: 42px;
+    margin-top: 52px;
 }
 
 .description {
@@ -23,4 +23,54 @@
     /* or 26px */
 
     letter-spacing: 0.005em;
+}
+
+.section2carousel {
+    display: flex;
+    align-self: center;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stepCard {
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 82, 147, 0.3);
+    border-radius: 20px;
+    padding: 19px 108px 67px 108px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 633px;
+    margin-bottom: 80px;
+    margin-right: 100px;
+    margin-left: 100px;
+}
+
+.stepCardtitle {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 167.02%;
+    text-align: justify;
+    letter-spacing: -0.005em;
+}
+
+.stepCardSecondtitle {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 167.02%;
+    text-align: justify;
+    letter-spacing: -0.005em;
+}
+
+.stepCardDescription {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 167.02%;
+    margin-top: 26px;
+    text-align: center;
+    letter-spacing: -0.005em;
 }

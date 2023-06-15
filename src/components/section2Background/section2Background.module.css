@@ -3,7 +3,7 @@
     overflow: hidden !important;
     overflow-x: hidden !important;
     position: relative;
-    padding: 90px 0px 0px 119px;
+    padding: 90px 119px 0px 119px;
 }
 
 .rightBottomBackground {
@@ -20,15 +20,26 @@
     height: 377px;
     width: 459px;
     position: absolute;
-    top: 58px;
+    top: 128px;
     left: 0px;
     z-index: -1;
 }
 
 .headerBackground {
     width: 1719px;
-    height: 249px;
+    height: 220px;
+    position: absolute;
+    top: -0px;
+    left: 0px;
+    z-index: -1;
+}
+
+.headerShadow{
+    width: 1719px;
+    height: 252px;
     position: absolute;
     top: 0px;
-    z-index: -1;
+    z-index: -2;
+    left: 0px;
+
 }

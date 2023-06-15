@@ -10,9 +10,19 @@ const Section2Background: React.FC<{ children: React.ReactNode }> = ({ children 
         src="/landing/section2-header-background.svg"
         alt="background"
         width={1719}
-        height={249}
+        height={220}
         priority
     />
+
+    <Image
+        className={styles.headerShadow}
+        src="/landing/section2-header-shadow.svg"
+        alt="background"
+        width={1719}
+        height={252}
+        priority
+    />
+
     <Image
         className={styles.rightBottomBackground}
         src="/section2/right-bottom.svg"

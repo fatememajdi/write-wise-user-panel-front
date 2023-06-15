@@ -1,0 +1,11 @@
+.carousel .control-dots .dot {
+    background: #DA282E !important;
+    height: 24px !important;
+    width: 24px !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.carousel{
+    width: auto !important;
+}
