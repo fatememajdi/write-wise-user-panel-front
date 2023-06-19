@@ -49,7 +49,7 @@ const Section2: React.FC = () => <Section2Background>
                         } top-0 bottom-0 left-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20`}
                     onClick={clickHandler}
                 >
-                    <ArrowRight className="" />
+                    <ArrowRight className={styles.arrowPrev} />
                 </div>
             );
         }}

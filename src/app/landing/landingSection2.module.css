@@ -65,6 +65,11 @@
     letter-spacing: -0.005em;
 }
 
+.arrowPrev {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
 .stepCardDescription {
     font-style: normal;
     font-weight: 400;
