@@ -50,3 +50,23 @@
 .headerLogo {
     margin-right: 38px;
 }
+
+@media(max-width: 1440px){
+    .headerCard{
+        padding: 0px 10px;
+    }
+
+    .headerItem{
+        margin-right: 20px;
+    }
+}
+
+@media(max-width: 992px){
+    .headerCard{
+        padding: 0px 10px;
+    }
+
+    .headerItem{
+        margin-right: 20px;
+    }
+}

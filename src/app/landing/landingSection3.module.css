@@ -57,3 +57,49 @@
 .featuresContainer {
     min-height: 100vh;
 }
+
+@media(max-width: 1440px) {
+    .featuresDescription {
+        font-size: 22px;
+    }
+
+    .featuresItemDescription {
+        font-size: 18px;
+    }
+
+    .featuresItemTitle {
+        font-size: 22px;
+    }
+
+    .featuresItemCard {
+        margin-top: 60px;
+    }
+
+    .featuresButton {
+        font-size: 22px;
+        margin-top: 80px;
+    }
+}
+
+@media(max-width: 992px) {
+    .featuresDescription {
+        font-size: 22px;
+    }
+
+    .featuresItemDescription {
+        font-size: 18px;
+    }
+
+    .featuresItemTitle {
+        font-size: 22px;
+    }
+
+    .featuresItemCard {
+        margin-top: 60px;
+    }
+
+    .featuresButton {
+        font-size: 22px;
+        margin-top: 80px;
+    }
+}

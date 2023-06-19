@@ -15,7 +15,7 @@ import Section2 from "./landing/section2";
 
 const Home: React.FC = () => {
   return (
-    <LandingBackground>
+    <>
       <Section1 />
       <Section2 />
       <Section3 />
@@ -23,7 +23,7 @@ const Home: React.FC = () => {
       <Section5 />
       <Section6 />
       <Footer />
-    </LandingBackground>
+    </>
   );
 };
 

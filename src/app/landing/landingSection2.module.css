@@ -28,7 +28,7 @@
 .section2carousel {
     display: flex;
     align-self: center;
-    margin-top: 100px;
+    margin-top: 100px !important;
     margin-left: auto;
     margin-right: auto;
 }
@@ -73,4 +73,28 @@
     margin-top: 26px;
     text-align: center;
     letter-spacing: -0.005em;
+}
+
+@media(max-width: 1440px) {
+    .title {
+        font-size: 43px;
+    }
+
+    .stepCard {
+        margin-right: 0px;
+        margin-left: 0px;
+        padding: 19px 90px 67px 90px;
+    }
+}
+
+@media(max-width: 992px) {
+    .title {
+        font-size: 43px;
+    }
+
+    .stepCard {
+        margin-right: 0px;
+        padding: 19px 90px 67px 90px;
+        margin-left: 0px;
+    }
 }

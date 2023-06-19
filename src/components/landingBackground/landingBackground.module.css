@@ -3,6 +3,7 @@
     overflow: hidden !important;
     overflow-x: hidden !important;
     /* padding: 217px 75px 86px 83px; */
+    position: relative;
 }
 
 .topLeftBackground {

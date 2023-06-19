@@ -66,7 +66,7 @@ const Section2: React.FC = () => <Section2Background>
         }}
         showStatus={false}
         thumbWidth={100}
-        className={'col-lg-7 ' + styles.section2carousel}>
+        className={'col-12 col-md-12 ' + styles.section2carousel}>
         {
             steps.map((item, index) => <StepCard Step={item} key={index} />)
         }
