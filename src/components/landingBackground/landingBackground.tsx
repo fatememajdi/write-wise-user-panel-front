@@ -11,7 +11,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         className={styles.headerBackground}
         src='/landing/landing-header-background.svg'
         alt="Background"
-        width={1840}
+        width={2000}
         height={184}
         priority
     />
