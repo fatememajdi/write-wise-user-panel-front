@@ -81,8 +81,6 @@
     }
 
     .stepCard {
-        margin-right: 0px;
-        margin-left: 0px;
         padding: 19px 90px 67px 90px;
     }
 }
@@ -93,8 +91,6 @@
     }
 
     .stepCard {
-        margin-right: 0px;
         padding: 19px 90px 67px 90px;
-        margin-left: 0px;
     }
 }

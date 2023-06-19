@@ -7,14 +7,22 @@ import LandingHeader from "../landingHeader/landingHeader";
 
 const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => <div className={'col-12 ' + styles.landingBackground}>
     <LandingHeader />
-    {/* <Image
-        // className={styles.headerBackground}
+    <Image
+        className={styles.headerBackground}
         src='/landing/landing-header-background.svg'
         alt="Background"
         width={1840}
-        height={164}
+        height={184}
         priority
-    /> */}
+    />
+    <Image
+        className={styles.headerShadow}
+        src='/landing/landing-header-shadow.svg'
+        alt="Background"
+        width={1719}
+        height={267}
+        priority
+    />
     <Image
         className={styles.topLeftBackground}
         src="/landing/top-left.svg"

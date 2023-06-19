@@ -24,3 +24,19 @@
     font-size: 24px;
     line-height: 28px;
 }
+
+
+@media(max-width: 1440px) {
+    .section6Card {
+        padding: 88px 135px;
+        font-size: 18px;
+    }
+
+    .section6Button {
+        font-size: 18px;
+        right: 38%;
+        left: 38%;
+    }
+}
+
+@media(max-width: 992px) {}

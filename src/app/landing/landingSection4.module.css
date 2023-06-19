@@ -158,6 +158,70 @@
     .description {
         font-size: 20px;
     }
+
+    .leftdescriptionsContainer {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .rightdescriptionsContainer {
+        padding: 24px 20px 15px 25px;
+    }
+
+    .descriptionsContainer span {
+        font-size: 14px;
+    }
+
+    .signUpButton {
+        font-size: 14px;
+    }
+
+    .cardTitle {
+        font-size: 18px;
+    }
+
+    .description {
+        margin-top: 20px;
+        font-size: 20px;
+    }
 }
 
-@media(max-width: 992px) {}
+@media(max-width: 992px) {
+    .pricigBackground {
+        padding: 100px 90px 70px 90px;
+    }
+
+    .title {
+        font-size: 36px;
+    }
+
+    .description {
+        font-size: 20px;
+    }
+
+    .leftdescriptionsContainer {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .rightdescriptionsContainer {
+        padding: 24px 20px 15px 25px;
+    }
+
+    .descriptionsContainer span {
+        font-size: 14px;
+    }
+
+    .signUpButton {
+        font-size: 14px;
+    }
+
+    .cardTitle {
+        font-size: 18px;
+    }
+
+    .description {
+        margin-top: 20px;
+        font-size: 20px;
+    }
+}

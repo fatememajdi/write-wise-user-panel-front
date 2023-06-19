@@ -42,7 +42,7 @@ const Section2: React.FC = () => <Section2Background>
     </div>
 
     <Carousel
-        renderArrowPrev={(clickHandler, hasPrev) => {
+        renderArrowPrev={(clickHandler: React.MouseEventHandler<HTMLDivElement> | undefined, hasPrev: any) => {
             return (
                 <div
                     className={`${hasPrev ? "absolute" : "hidden"
@@ -53,7 +53,7 @@ const Section2: React.FC = () => <Section2Background>
                 </div>
             );
         }}
-        renderArrowNext={(clickHandler, hasNext) => {
+        renderArrowNext={(clickHandler: React.MouseEventHandler<HTMLDivElement> | undefined, hasNext: any) => {
             return (
                 <div
                     className={`${hasNext ? "absolute" : "hidden"
@@ -66,7 +66,7 @@ const Section2: React.FC = () => <Section2Background>
         }}
         showStatus={false}
         thumbWidth={100}
-        className={'col-12 col-md-12 ' + styles.section2carousel}>
+        className={'col-12 col-md-10 col-lg-10 ' + styles.section2carousel}>
         {
             steps.map((item, index) => <StepCard Step={item} key={index} />)
         }
