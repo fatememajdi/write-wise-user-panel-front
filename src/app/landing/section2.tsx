@@ -42,6 +42,7 @@ const Section2: React.FC = () => <Section2Background>
     </div>
 
     <Carousel
+        showThumbs={false}
         renderArrowPrev={(clickHandler: React.MouseEventHandler<HTMLDivElement> | undefined, hasPrev: any) => {
             return (
                 <div
