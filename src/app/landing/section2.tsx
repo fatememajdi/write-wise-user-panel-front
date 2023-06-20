@@ -6,7 +6,7 @@ import { Carousel } from 'react-responsive-carousel';
 import styles from './landingSection2.module.css';
 
 //--------------------------------components
-import Section2Background from "@/components/section2Background/section2Background";
+import Section2Background from "@/components/backgrounds/section2Background/section2Background";
 
 //--------------------------------icons
 import { ArrowRight } from "../../../public";

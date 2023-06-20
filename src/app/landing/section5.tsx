@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import styles from './landingSection5.module.css';
 
 //------------------------------------------components
-import { FqaBackground } from "@/components/fqaBackground/fqaBackground";
+import { FqaBackground } from "@/components/backgrounds/fqaBackground/fqaBackground";
 
 const Section5: React.FC = () => {
     const router = useRouter();

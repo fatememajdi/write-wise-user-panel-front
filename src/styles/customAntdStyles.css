@@ -25,3 +25,7 @@
 .ant-divider-vertical {
     border-inline-start: solid 2px #2E4057 !important;
 }
+
+.ant-divider-horizontal.ant-divider-with-text {
+    border-block-start: 0 #2E4057 !important;
+}

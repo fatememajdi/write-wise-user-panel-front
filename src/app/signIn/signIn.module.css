@@ -1,0 +1,163 @@
+.signInPageContainer {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+.signInLeftContainer {
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 134px;
+}
+
+.signInrightContainer {
+    min-height: 100vh;
+    height: 100%;
+    background-color: var(--color-seccondary);
+    position: relative;
+}
+
+.circle1 {
+    background-color: var(--color-primary);
+    height: 243px;
+    width: 243px;
+    border-radius: 100%;
+    position: absolute;
+    top: 181px;
+    right: 57px;
+}
+
+.circle2 {
+    position: absolute;
+    width: 376px;
+    height: 376px;
+    right: 208px;
+    border-radius: 100%;
+    background-color: var(--color-background);
+    top: 251px;
+    z-index: 1;
+}
+
+.circle3 {
+    background-color: var(--color-primary);
+    width: 376px;
+    height: 376px;
+    border-radius: 100%;
+    position: absolute;
+    top: 297px;
+    right: 179px;
+    z-index: 0;
+}
+
+.circle4 {
+    position: absolute;
+    width: 207px;
+    height: 207px;
+    right: 57px;
+    border-radius: 100%;
+    background-color: var(--color-background);
+    top: 610px;
+}
+
+.logo {
+    height: 16px;
+    width: 151px;
+}
+
+.title {
+    margin-top: 118px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 12px;
+    color: var(--color-seccondary);
+    margin-bottom: 114px;
+}
+
+.stepContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+}
+
+.signInOptionsbutton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 10px;
+    width: 360px;
+    justify-content: center;
+    border-radius: 8px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.googleSingInCard {
+    border-color: Gray/300;
+    border-width: 1px;
+    border-style: solid;
+    color: #344054;
+}
+
+.faceBookSingInCard {
+    color: var(--color-whiteText);
+    border: solid 1px #1877F2;
+    background-color: #1877F2;
+}
+
+.appleSingInCard {
+    color: var(--color-whiteText);
+    border: solid 1px #000000;
+    background-color: #000000;
+}
+
+.signInOptionsIcon {
+    margin-right: 12px;
+    font-size: 24px;
+}
+
+.divider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 40px;
+    width: 360px !important;
+    background-color: #1877F2;
+}
+
+.emailButton {
+    color: var(--color-whiteText);
+    background-color: var(--color-seccondary);
+    width: 100%;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 20px;
+}
+
+.footerText {
+    margin-top: 130px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    color: var(--color-seccondary);
+    margin-bottom: 56px;
+}
+
+.footerText a {
+    text-decoration: underline !important;
+    font-weight: 500px !important;
+    cursor: pointer !important;
+}

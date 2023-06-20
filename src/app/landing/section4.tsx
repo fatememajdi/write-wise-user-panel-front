@@ -2,6 +2,7 @@
 'use client';
 import React from "react";
 import { Divider } from 'antd';
+import { useRouter } from 'next/navigation';
 
 //------------------------------------------------styles
 import styles from './landingSection4.module.css';
@@ -9,8 +10,10 @@ import styles from './landingSection4.module.css';
 //------------------------------------------------icons
 import { VscCircleFilled } from 'react-icons/vsc';
 
-const Section4: React.FC = () =>
-    <section className={styles.pricigBackground} id='section-4'>
+const Section4: React.FC = () => {
+    const router = useRouter();
+
+    return <section className={styles.pricigBackground} id='section-4'>
         <div className={styles.title}>Pricing</div>
         <div className={styles.description}>
             At WriteWiseAI, we offer a simple payment structure designed to cater to your specific IELTS writing needs and budget.
@@ -29,7 +32,7 @@ const Section4: React.FC = () =>
                         <ItemDescriptionCard text="Receive an overall band score and 4 criteria-specific band scores for your essay" />
                         <ItemDescriptionCard text="No cost, unlimited usage" />
                     </div>
-                    <button className={styles.signUpButton}>
+                    <button onClick={() => router.push('/signIn')} className={styles.signUpButton}>
                         Signup now
                     </button>
                 </div>
@@ -59,12 +62,13 @@ const Section4: React.FC = () =>
                         <ItemDescriptionCard text="Fine-tune your arguments to excel in your IELTS writing" />
                     </div>
                 </div>
-                <button className={styles.signUpButton}>
+                <button onClick={() => router.push('/signIn')} className={styles.signUpButton}>
                     Signup now
                 </button>
             </div>
         </div>
-    </section>;
+    </section>
+};
 
 export default Section4;
 

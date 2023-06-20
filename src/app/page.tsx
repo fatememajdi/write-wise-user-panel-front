@@ -4,7 +4,7 @@ import React from "react";
 import styles from '../styles/landing.module.css';
 
 //-------------------------------------------components
-import LandingBackground from "@/components/landingBackground/landingBackground";
+import LandingBackground from "@/components/backgrounds/landingBackground/landingBackground";
 import Section1 from "./landing/section1";
 import Footer from "@/components/footer/footer";
 import Section3 from "./landing/section3";

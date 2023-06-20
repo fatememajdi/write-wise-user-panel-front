@@ -8,7 +8,7 @@ import styles from './dashboard.module.css';
 
 //--------------------------------------------components
 import HeaderWithTitle from "../../components/headerWithTitle/headerWithTitle";
-import DashboardBackground from "../../components/dashboardBackground/dashboardBackground";
+import DashboardBackground from "../../components/backgrounds/dashboardBackground/dashboardBackground";
 
 const Dashboard: React.FC = () => {
 

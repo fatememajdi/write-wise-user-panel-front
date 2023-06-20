@@ -1,13 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react';
-import Image from "next/image";
+'use client';
+import React from "react";
+import { useRouter } from 'next/navigation';
 
 //------------------------------------------------styles
 import styles from './features.module.css';
 import Footer from '@/components/footer/footer';
 
 //------------------------------------------------components
-import { FeaturesDetailsBackground } from "@/components/featuresBackground/featuresBackground";
+import { FeaturesDetailsBackground } from "@/components/backgrounds/featuresBackground/featuresBackground";
 
 //------------------------------------------------icons
 import { User, File, Step, Money, RegularRise } from '../../../public';
@@ -35,34 +36,40 @@ const featuresItems = [
     }
 ];
 
-const Features: React.FC = () => <FeaturesDetailsBackground>
-    <div className={'col-12 ' + styles.featuresDetailsContent}>
-        <div className={'col-12 ' + styles.description}>
-            Embrace the power of WriteWiseAI and unlock your full potential in IELTS writing. With our innovative features and benefits,
-            you'll be well-equipped to achieve your desired IELTS score and open the door to new opportunities:
-        </div>
-        <div className={'col-12 ' + styles.featuresItemsContainer}>
-            {
-                featuresItems.map((item, index) => <FeaturesItemCard item={item} key={index} />)
-            }
+const Features: React.FC = () => {
+    const router = useRouter();
 
-            <div className={'col-lg-6 ' + styles.lastItemCard}>
-                <div className={styles.lastItemCardContent}>
-                    Receive objective and accurate essay ratings based on the official
-                    IELTS criteria. Our advanced AI technology analyzes your essays to
-                    give you a clear understanding of your current writing proficiency.
+    return <FeaturesDetailsBackground>
+        <div className={'col-12 ' + styles.featuresDetailsContent}>
+            <div className={'col-12 ' + styles.description}>
+                Embrace the power of WriteWiseAI and unlock your full potential in IELTS writing. With our innovative features and benefits,
+                you'll be well-equipped to achieve your desired IELTS score and open the door to new opportunities:
+            </div>
+            <div className={'col-12 ' + styles.featuresItemsContainer}>
+                {
+                    featuresItems.map((item, index) => <FeaturesItemCard item={item} key={index} />)
+                }
+
+                <div className={'col-lg-6 ' + styles.lastItemCard}>
+                    <div className={styles.lastItemCardContent}>
+                        Receive objective and accurate essay ratings based on the official
+                        IELTS criteria. Our advanced AI technology analyzes your essays to
+                        give you a clear understanding of your current writing proficiency.
+                    </div>
                 </div>
             </div>
+            <div className={'col-12 ' + styles.SignUpTitle}>
+                Sign up today and start your journey to IELTS writing mastery
+            </div>
+            <button
+                onClick={() => router.push('/signIn')}
+                className={styles.signUpButton}>
+                Sign up
+            </button>
         </div>
-        <div className={'col-12 ' + styles.SignUpTitle}>
-            Sign up today and start your journey to IELTS writing mastery
-        </div>
-        <button className={styles.signUpButton}>
-            Sign up
-        </button>
-    </div>
-    <Footer />
-</FeaturesDetailsBackground>;
+        <Footer />
+    </FeaturesDetailsBackground>
+};
 
 export default Features;
 

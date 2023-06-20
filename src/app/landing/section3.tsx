@@ -1,14 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 import React from "react";
-import Image from "next/image";
 import { useRouter } from 'next/navigation';
 
 //-------------------------------------------styles
 import styles from './landingSection3.module.css';
 
 //-------------------------------------------components
-import { FeaturesBackground } from "@/components/featuresBackground/featuresBackground";
+import { FeaturesBackground } from "@/components/backgrounds/featuresBackground/featuresBackground";
 
 //-------------------------------------------icons
 import { Rate, Rise } from "../../../public";

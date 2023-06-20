@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import styles from './fqa.module.css';
 
 //--------------------------------------------components
-import { FqaQuestionsBackground } from "@/components/fqaBackground/fqaBackground";
+import { FqaQuestionsBackground } from "@/components/backgrounds/fqaBackground/fqaBackground";
 import LandingThirdHeader from "@/components/landingThirdHeader/landingThirdHeader";
 import Input from "../../components/input/input";
 import Footer from "@/components/footer/footer";
