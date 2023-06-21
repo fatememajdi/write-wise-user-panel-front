@@ -35,7 +35,7 @@ const Input: React.FC<props> = ({ ...props }) =>
         {/* ---------------------------------------------------------input forms */}
         {props.input &&
             <>
-                <div className={styles.formSectionInput}>
+                <div className={props.input_error ? styles.formSectionInput + ' ' + styles.formSectionInputError : styles.formSectionInput}>
                     <input
                         placeholder={props.placeHolder}
                         type={props.inputtype ? props.inputtype : 'text'}
@@ -44,8 +44,6 @@ const Input: React.FC<props> = ({ ...props }) =>
                         value={props.input_value}
                     />
                 </div>
-
-
 
                 {props.input_error &&
                     <div className={styles.errorForm}>{props.input_error}</div>

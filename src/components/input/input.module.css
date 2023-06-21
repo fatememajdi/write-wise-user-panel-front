@@ -36,6 +36,10 @@
     border-radius: 10px;
 }
 
+.formSectionInputError input{
+    border: solid 1px #DA282E  !important;
+}
+
 .formSectionInput input:focus {
     outline: none !important;
     /* border: none !important;
@@ -64,7 +68,14 @@
 .errorForm {
     width: 100%;
     font-size: 9px;
-    margin-top: 5px;
+    margin-top: 15px;
     text-align: left;
-    color: var(--color-red) !important;
+    color: #DA282E !important;
+    background-color: #F3E7E7;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 22px;
+    padding: 15px 3px;
 }

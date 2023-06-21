@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     min-height: 100vh;
+    max-height: 100vh !important;
 }
 
 .signInLeftContainer {
@@ -11,12 +12,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 134px;
+    padding-top: 90px;
 }
 
 .signInrightContainer {
     min-height: 100vh;
-    height: 100%;
+    height: 100% !important;
     background-color: var(--color-seccondary);
     position: relative;
 }
@@ -83,6 +84,7 @@
     flex-direction: column;
     align-items: center;
     width: fit-content;
+    flex: 1;
 }
 
 .signInOptionsbutton {
@@ -146,18 +148,52 @@
 }
 
 .footerText {
-    margin-top: 130px;
+    margin-top: auto !important;
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
     line-height: 22px;
     text-align: center;
     color: var(--color-seccondary);
-    margin-bottom: 56px;
+    margin-bottom: 26px;
 }
 
 .footerText a {
     text-decoration: underline !important;
     font-weight: 500px !important;
     cursor: pointer !important;
+}
+
+.emailInput {
+    width: 360px;
+}
+
+.emailInput input {
+    height: 69px !important;
+}
+
+.inputEmailTitle {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+}
+
+.submitEmailButton {
+    margin-top: 70px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 12px;
+    color: var(--color-whiteText);
+    background-color: var(--color-seccondary);
+    width: 360px;
+    padding: 20px 0px;
+    border-radius: 15px !important;
+}
+
+.step2ButtonContaier {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 360px;
 }

@@ -41,7 +41,7 @@ const EmailValidationSchema = Yup.object().shape({
         .string()
         .email("Invalid email format")
         .required('Username is required!'),
-})
+});
 
 const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerContainer}>
     <div className={styles.leftContainer}>
