@@ -2,6 +2,7 @@
 import React from "react";
 import { Select } from 'antd';
 import { Chart } from "chart.js";
+import Image from "next/image";
 
 //--------------------------------------------styles
 import styles from './dashboard.module.css';
@@ -126,7 +127,13 @@ const Dashboard: React.FC = () => {
                         {'progress chart'}
                         <canvas className={styles.chart} id='myChart'></canvas>
                     </div>
-                    <div>
+                    <div className={styles.sliderChart}>
+                        <div className={styles.sliderChartBackground}>
+                            <div
+                                id="#hi"
+                                style={{ height: '60%' }}
+                                className={styles.sliderChartline}>6</div>
+                        </div>
                     </div>
                 </div>
 

@@ -1,10 +1,18 @@
+'use client';
 import '../styles/global.css';
 import '../styles/customBootstrapStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/reset.css';
 import '../styles/customAntdStyles.css';
+import '../styles/customMuiStyles.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import '../styles/customCarouselStyles.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 import { Inter } from 'next/font/google'
 
@@ -22,7 +30,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <body className={inter.className}>{children}</body>
+      </LocalizationProvider>
     </html>
   )
 }

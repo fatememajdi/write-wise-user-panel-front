@@ -197,3 +197,63 @@
     flex-direction: column;
     width: 360px;
 }
+
+.nameInput {
+    width: 451px;
+    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+    margin-bottom: 39px;
+}
+
+.nameInput input {
+    height: 71px !important;
+}
+
+.ageAndGenderContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.datePicker {
+    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+    margin-top: 10px !important;
+    border-radius: 10px !important;
+    border: 1px solid #2E4057 !important;
+    width: 204px !important;
+    height: 71px !important;
+}
+
+.datePicker:focus {
+    border: none !important;
+}
+
+.select {
+    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+    margin-top: 10px !important;
+    border-radius: 10px !important;
+    border: 1px solid #2E4057 !important;
+    width: 210px !important;
+    height: 71px !important;
+}
+
+.step4ButtonContainer {
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+    flex: 1;
+    margin-top: 30px;
+}
+
+.skipButton{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 12px;
+    color: var(--color-seccondary);
+    border: solid 1px var(--color-seccondary);
+    background-color: var(--color-background);
+    width: 360px;
+    padding: 20px 0px;
+    border-radius: 15px !important;
+}

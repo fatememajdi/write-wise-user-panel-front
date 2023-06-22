@@ -4,6 +4,10 @@ import Image from "next/image";
 import { Divider } from 'antd';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { DatePicker } from "@mui/x-date-pickers";
+import { useRouter } from 'next/navigation';
 
 //---------------------------------------------------styles
 import styles from './signIn.module.css';
@@ -208,9 +212,11 @@ const Step3: React.FC<{ changeStep: any }> = ({ changeStep }) => {
 
 
 const Step4: React.FC<{ changeStep: any }> = ({ changeStep }) => {
+    const router = useRouter();
     return <Formik
         initialValues={{
-            code: ''
+            name: '',
+            gender: '',
         }}
         validationSchema={VerificationCodeValidationSchema}
         enableReinitialize
@@ -228,6 +234,61 @@ const Step4: React.FC<{ changeStep: any }> = ({ changeStep }) => {
                 className={'col-12 ' + styles.stepContainer}
                 onSubmit={handleSubmit}>
                 <div className={styles.title}>About you</div>
+
+                <div className={'col-12 ' + styles.inputEmailTitle}>Name</div>
+                <Input
+                    className={styles.nameInput}
+                    onChange={handleChange}
+                    input
+                    inputtype='name'
+                    input_name='name'
+                    input_value={values.name}
+                    input_error={errors.name && touched.name && errors.name}
+                />
+
+                <div className={'col-lg-12 ' + styles.ageAndGenderContainer}>
+
+                    <div>
+                        <div className={'col-12 ' + styles.inputEmailTitle}>Age</div>
+                        <DatePicker className={styles.datePicker} />
+                    </div>
+
+                    <div>
+                        <div className={'col-12 ' + styles.inputEmailTitle}>Gender</div>
+                        <Select
+                            defaultValue=""
+                            value={values.gender}
+                            onChange={(e) => setFieldValue('gender', e.target.value)}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                            className={styles.select}
+                        >
+
+                            <MenuItem value={'male'}>Male</MenuItem>
+                            <MenuItem value={'female'}>Female</MenuItem>
+                        </Select>
+                    </div>
+
+                </div>
+
+                <div className={styles.step4ButtonContainer}>
+
+                    <button
+                        onClick={() => router.push('/dashboard')}
+                        className={styles.submitEmailButton} type="submit">
+                        CTA
+                    </button>
+
+                    <Divider style={{ marginTop: 20 }} plain>or</Divider>
+
+                    <button
+                        onClick={() => router.push('/dashboard')}
+                        className={styles.skipButton} type="submit">
+                        skip
+                    </button>
+
+                </div>
+
             </form>
         )}
     </Formik>
