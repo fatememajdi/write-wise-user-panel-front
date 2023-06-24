@@ -2,29 +2,38 @@
     background: #FFFFFF;
     box-shadow: 0px 15px 30px 5px rgba(123, 123, 123, 0.15);
     border-radius: 50px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 32px;
-    text-align: center;
-    letter-spacing: 0.02em;
-    padding: 98px 153px;
+    padding: 98px 153px 74px 153px;
     position: relative;
 }
 
 .section6Button {
     color: var(--color-whiteText);
     background-color: var(--color-seccondary);
-    position: absolute;
-    bottom: -30px;
-    right: 40%;
-    left: 40%;
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 28px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 30px 0px rgba(129, 129, 129, 0.25);
+    margin-top: 30px;
 }
 
+.cardDescription {
+    color: #252525;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 31.5px;
+    letter-spacing: 0.4px;
+    text-align: left;
+    margin-top: 30px;
+}
+
+.cardTitle {
+    color: #252525;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+}
 
 @media(max-width: 1440px) {
     .section6Card {

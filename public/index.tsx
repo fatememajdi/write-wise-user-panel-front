@@ -7,6 +7,7 @@ import Step from './step';
 import RegularRise from './regularRise';
 import File from './file';
 import ArrowRight from './arrowRight';
+import ArrowLeft from './arrowLeft';
 
 export {
     Search,
@@ -17,5 +18,6 @@ export {
     Step,
     File,
     RegularRise,
-    ArrowRight
+    ArrowRight,
+    ArrowLeft
 }

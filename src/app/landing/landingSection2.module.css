@@ -1,8 +1,16 @@
+.section2Container {
+    background: linear-gradient(129deg, #172E4A 0%, #2E4057 53.68%);
+    padding: 160px 119px 0px 169px;
+    min-height: 100vh;
+    width: 100vw;
+}
+
 .title {
     font-style: normal;
     font-weight: 500;
     font-size: 48px;
     line-height: 167.02%;
+    color: var(--color-whiteText);
     /* or 80px */
 }
 
@@ -11,7 +19,8 @@
     font-weight: 500;
     font-size: 24px;
     line-height: 167.02%;
-    margin-top: 52px;
+    /* margin-top: 52px; */
+    color: var(--color-whiteText);
 }
 
 .description {
@@ -21,14 +30,14 @@
     font-size: 20px;
     line-height: 130.52%;
     /* or 26px */
-
+    color: var(--color-whiteText);
     letter-spacing: 0.005em;
 }
 
 .section2carousel {
     display: flex;
     align-self: center;
-    margin-top: 100px !important;
+    margin-top: 50px !important;
     margin-left: auto;
     margin-right: auto;
 }
@@ -37,14 +46,15 @@
     background-color: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 82, 147, 0.3);
     border-radius: 20px;
-    padding: 19px 108px 67px 108px;
+    padding: 30px 108px 40px 63px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     min-width: 633px;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
     margin-right: 100px;
     margin-left: 100px;
+    min-height: 380px;
+    justify-content: flex-end;
 }
 
 .stepCardtitle {
@@ -63,11 +73,7 @@
     line-height: 167.02%;
     text-align: justify;
     letter-spacing: -0.005em;
-}
-
-.arrowPrev {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+    color: #DA282E;
 }
 
 .stepCardDescription {
@@ -76,26 +82,48 @@
     font-size: 20px;
     line-height: 167.02%;
     margin-top: 26px;
-    text-align: center;
     letter-spacing: -0.005em;
+    text-align: left;
+}
+
+.arrowContainer {
+    height: 65px;
+    width: 65px;
+    border-radius: 100%;
+    border-radius: 65.448px;
+    background: linear-gradient(141deg, #B5C0CE 0%, rgba(234, 234, 234, 0.20) 83.58%);
+    filter: blur(0px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 7px;
 }
 
 @media(max-width: 1440px) {
+
+    .section2Container {
+        padding: 170px 90px 0px 90px;
+    }
+
     .title {
         font-size: 43px;
     }
 
     .stepCard {
-        padding: 19px 90px 67px 90px;
+        padding: 19px 90px 40px 40px;
     }
 }
 
 @media(max-width: 992px) {
+    .section2Container {
+        padding: 170px 70px 0px 70px;
+    }
+
     .title {
         font-size: 43px;
     }
 
     .stepCard {
-        padding: 19px 90px 67px 90px;
+        padding: 19px 90px 40px 40px;
     }
 }

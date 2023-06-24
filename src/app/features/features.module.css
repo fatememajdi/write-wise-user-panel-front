@@ -27,6 +27,7 @@
 .itemCard {
     z-index: 1;
     margin-bottom: 70px;
+    background-color: #DA282E;
 }
 
 .itemTitle {

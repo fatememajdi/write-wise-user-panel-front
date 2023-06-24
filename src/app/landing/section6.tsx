@@ -14,11 +14,18 @@ const Section6: React.FC = () => {
 
     return <Section6Background>
         <div className={styles.section6Card}>
-            Don't let IELTS writing hold you back from achieving your dreams. Join WriteWiseAI now and <br />unlock a world of opportunity with our innovative,
-            AI-powered platform. Elevate your writing<br /> skills,
-            gain personalized insights, and conquer your IELTS test with confidence. Start your journey<br /> to IELTS success today and take a step closer to a brighter future.
 
-            <button onClick={() => router.push('/signIn')} className={styles.section6Button}>Join WriteWiseAI now!</button>
+            <div className={styles.cardTitle}>
+                Join WriteWiseAI now!
+            </div>
+
+            <div className={styles.cardDescription}>
+                Don't let IELTS writing hold you back from achieving your dreams. Join WriteWiseAI now and <br />
+                unlock a world of opportunity with our innovative, AI-powered platform. Elevate your writing skills,<br />
+                gain personalized insights, and conquer your IELTS test with confidence. Start your journey to IELTS <br />
+                success today and take a step closer to a brighter future.
+            </div>
+            <button onClick={() => router.push('/signIn')} className={styles.section6Button}>Signup now!</button>
 
         </div>
     </Section6Background>

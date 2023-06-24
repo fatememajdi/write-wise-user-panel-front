@@ -3,7 +3,6 @@
     overflow: hidden !important;
     overflow-x: hidden !important;
     position: relative;
-    padding: 90px 119px 0px 119px;
 }
 
 .rightBottomBackground {
@@ -45,13 +44,9 @@
 }
 
 @media(max-width: 1440px) {
-    .section2Background {
-        padding: 90px 90px 0px 90px;
-    }
+   
 }
 
 @media(max-width: 992px) {
-    .section2Background {
-        padding: 90px 70px 0px 70px;
-    }
+   
 }

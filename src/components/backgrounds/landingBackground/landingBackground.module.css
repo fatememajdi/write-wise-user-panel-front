@@ -101,22 +101,3 @@
     z-index: -1 !important;
 }
 
-.headerBackground {
-    /* width: 1840px;
-    height: 184px; */
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 0 !important;
-}
-
-.headerShadow {
-    width: 1719px;
-    height: 267px;
-    position: absolute;
-    top: 20px;
-    left: 0px;
-    right: 0px;
-    z-index: -1 !important;
-}

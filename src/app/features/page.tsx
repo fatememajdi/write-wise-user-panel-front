@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 //------------------------------------------------styles
 import styles from './features.module.css';
 import Footer from '@/components/footer/footer';
+import './animationCard.css';
 
 //------------------------------------------------components
 import { FeaturesDetailsBackground } from "@/components/backgrounds/featuresBackground/featuresBackground";
@@ -39,6 +40,10 @@ const featuresItems = [
 const Features: React.FC = () => {
     const router = useRouter();
 
+    React.useEffect(() => {
+        router.refresh();
+    }, []);
+
     return <FeaturesDetailsBackground>
         <div className={'col-12 ' + styles.featuresDetailsContent}>
             <div className={'col-12 ' + styles.description}>
@@ -49,14 +54,6 @@ const Features: React.FC = () => {
                 {
                     featuresItems.map((item, index) => <FeaturesItemCard item={item} key={index} />)
                 }
-
-                <div className={'col-lg-6 ' + styles.lastItemCard}>
-                    <div className={styles.lastItemCardContent}>
-                        Receive objective and accurate essay ratings based on the official
-                        IELTS criteria. Our advanced AI technology analyzes your essays to
-                        give you a clear understanding of your current writing proficiency.
-                    </div>
-                </div>
             </div>
             <div className={'col-12 ' + styles.SignUpTitle}>
                 Sign up today and start your journey to IELTS writing mastery
@@ -73,9 +70,28 @@ const Features: React.FC = () => {
 
 export default Features;
 
-const FeaturesItemCard: React.FC<{ item: { icon: any, title: string } }> = ({ item }) => <div className={'col-lg-6 ' + styles.itemCard}>
-    <div className={styles.itemCardContent}>
-        <item.icon />
-        <div className={styles.itemTitle}>{item.title}</div>
+const FeaturesItemCard: React.FC<{ item: { icon: any, title: string } }> = ({ item }) => {
+    if (typeof window !== "undefined") {
+        var cards = document.querySelectorAll('.card');
+
+        cards.forEach((card) => {
+            card.addEventListener('click', function () {
+                card.classList.toggle('is-flipped');
+            });
+        });
+    }
+    return <div className="scene scene--card col-lg-6">
+        <div className="card">
+            <div className="card__face card__face--front">
+                <item.icon />
+                <div className={styles.itemTitle}>{item.title}</div>
+            </div>
+            <div className="card__face card__face--back">
+                Receive objective and accurate essay ratings based on the official
+                IELTS criteria. Our advanced AI technology analyzes your essays to
+                give you a clear understanding of your current writing proficiency.
+            </div>
+        </div>
     </div>
-</div>;
+
+};

@@ -11,7 +11,7 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         <g filter="url(#a)">
             <path
                 fill="#2E4057"
-                d="M4 3.995 15.744 17 4 30.005 7.615 34 23 17 7.615 0 4 3.995Z"
+                d="M23 30.005 11.256 17 23 3.995 19.385 0 4 17l15.385 17L23 30.005Z"
             />
         </g>
         <defs>
@@ -36,11 +36,11 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
                 <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
                 <feBlend
                     in2="BackgroundImageFix"
-                    result="effect1_dropShadow_1318_9260"
+                    result="effect1_dropShadow_1318_9250"
                 />
                 <feBlend
                     in="SourceGraphic"
-                    in2="effect1_dropShadow_1318_9260"
+                    in2="effect1_dropShadow_1318_9250"
                     result="shape"
                 />
             </filter>
