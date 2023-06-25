@@ -65,7 +65,7 @@
 
 @media(max-width: 1440px){
     .headerCard{
-        padding: 0px 10px;
+        padding: 0px 50px;
     }
 
     .headerItem{
@@ -75,7 +75,7 @@
 
 @media(max-width: 992px){
     .headerCard{
-        padding: 0px 10px;
+        padding: 0px 50px;
     }
 
     .headerItem{
