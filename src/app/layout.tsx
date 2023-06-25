@@ -13,6 +13,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { SessionProvider } from 'next-auth/react';
 
 import { Inter } from 'next/font/google'
 
@@ -29,10 +30,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <LocalizationProvider dateAdapter={AdapterMoment}>
-        <body className={inter.className}>{children}</body>
-      </LocalizationProvider>
-    </html>
+    <SessionProvider>
+      <html lang="en">
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <body className={inter.className}>{children}</body>
+        </LocalizationProvider>
+      </html>
+    </SessionProvider>
   )
 }

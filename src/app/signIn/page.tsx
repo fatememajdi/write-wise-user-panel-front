@@ -8,6 +8,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { DatePicker } from "@mui/x-date-pickers";
 import { useRouter } from 'next/navigation';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 //---------------------------------------------------styles
 import styles from './signIn.module.css';
@@ -60,6 +61,18 @@ const SignIn: React.FC = () => {
 export default SignIn;
 
 const Step1: React.FC<{ changeStep: any }> = ({ changeStep }) => {
+
+    const { data, status } = useSession();
+    const handleLogin = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        signIn();
+    };
+
+    const handleLogout = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        signOut();
+    };
+
     return <div className={'col-12 ' + styles.stepContainer}>
         <div className={styles.title}>Log in/Sign in</div>
 
@@ -69,7 +82,9 @@ const Step1: React.FC<{ changeStep: any }> = ({ changeStep }) => {
         <a className={styles.signInOptionsbutton + ' ' + styles.faceBookSingInCard}>
             <SiFacebook className={styles.signInOptionsIcon} />Sign in with Facebook
         </a>
-        <a className={styles.signInOptionsbutton + ' ' + styles.appleSingInCard}>
+        <a
+            onClick={handleLogin}
+            className={styles.signInOptionsbutton + ' ' + styles.appleSingInCard}>
             <GrApple className={styles.signInOptionsIcon} />Sign in with Apple
         </a>
 

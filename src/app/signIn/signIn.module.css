@@ -245,7 +245,7 @@
     margin-top: 30px;
 }
 
-.skipButton{
+.skipButton {
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -256,4 +256,110 @@
     width: 360px;
     padding: 20px 0px;
     border-radius: 15px !important;
+}
+
+
+@media(max-width: 1440px) {
+    .circle1 {
+        height: 223px;
+        width: 223px;
+    }
+
+    .circle2 {
+        height: 356px;
+        width: 356px;
+    }
+
+    .circle2 {
+        height: 356px;
+        width: 356px;
+    }
+
+    .circle4 {
+        height: 187px;
+        width: 187px;
+    }
+
+    .title {
+        margin-top: 90px;
+        margin-bottom: 80px;
+    }
+
+    .select {
+        width: 190px;
+    }
+
+    .datePicker {
+        width: 190px;
+    }
+}
+
+@media(max-width: 992px) {
+    .circle1 {
+        height: 223px;
+        width: 223px;
+    }
+
+    .circle2 {
+        height: 356px;
+        width: 356px;
+    }
+
+    .circle2 {
+        height: 356px;
+        width: 356px;
+    }
+
+    .circle4 {
+        height: 187px;
+        width: 187px;
+    }
+
+    .title {
+        margin-top: 90px;
+        margin-bottom: 80px;
+    }
+
+    .select {
+        width: 190px;
+    }
+
+    .datePicker {
+        width: 190px;
+    }
+}
+
+@media(max-height: 900px) {
+    .circle1 {
+        height: 223px;
+        width: 223px;
+    }
+
+    .circle2 {
+        height: 356px;
+        width: 356px;
+    }
+
+    .circle2 {
+        height: 356px;
+        width: 356px;
+    }
+
+    .circle4 {
+        height: 187px;
+        width: 187px;
+    }
+
+    .title {
+        margin-top: 90px;
+        margin-bottom: 80px;
+    }
+
+    .select {
+        width: 190px;
+    }
+
+    .datePicker {
+        width: 190px;
+    }
 }

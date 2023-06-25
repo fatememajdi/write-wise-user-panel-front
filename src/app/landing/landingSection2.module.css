@@ -3,6 +3,7 @@
     padding: 160px 119px 0px 169px;
     min-height: 100vh;
     width: 100vw;
+    position: relative;
 }
 
 .title {
