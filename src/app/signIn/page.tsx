@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { DatePicker } from "@mui/x-date-pickers";
 import { useRouter } from 'next/navigation';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
 //---------------------------------------------------styles
 import styles from './signIn.module.css';
@@ -62,28 +62,45 @@ export default SignIn;
 
 const Step1: React.FC<{ changeStep: any }> = ({ changeStep }) => {
 
-    const { data, status } = useSession();
-    const handleLogin = (e: { preventDefault: () => void; }) => {
-        e.preventDefault();
-        signIn();
-    };
 
-    const handleLogout = (e: { preventDefault: () => void; }) => {
-        e.preventDefault();
-        signOut();
-    };
+    const router = useRouter();
+
+    const handeClickGoogle = async () => {
+
+        const signInResponse = await signIn('google');
+        if (signInResponse && !signInResponse.error) {
+            router.push('/dashboard');
+        } else {
+            console.log('Sign In error : ', signInResponse?.error);
+            // toast
+        }
+    }
+
+    const handeClickFaceBook = async () => {
+
+        const signInResponse = await signIn('facebook');
+        if (signInResponse && !signInResponse.error) {
+            router.push('/dashboard');
+        } else {
+            console.log('Sign In error : ', signInResponse?.error);
+            // toast
+        }
+    }
 
     return <div className={'col-12 ' + styles.stepContainer}>
         <div className={styles.title}>Log in/Sign in</div>
 
-        <a className={styles.signInOptionsbutton + ' ' + styles.googleSingInCard}>
+        <a
+            onClick={handeClickGoogle}
+            className={styles.signInOptionsbutton + ' ' + styles.googleSingInCard}>
             <FcGoogle className={styles.signInOptionsIcon} />Sign in with Google
         </a>
-        <a className={styles.signInOptionsbutton + ' ' + styles.faceBookSingInCard}>
+        <a
+            onClick={handeClickFaceBook}
+            className={styles.signInOptionsbutton + ' ' + styles.faceBookSingInCard}>
             <SiFacebook className={styles.signInOptionsIcon} />Sign in with Facebook
         </a>
         <a
-            onClick={handleLogin}
             className={styles.signInOptionsbutton + ' ' + styles.appleSingInCard}>
             <GrApple className={styles.signInOptionsIcon} />Sign in with Apple
         </a>

@@ -1,0 +1,78 @@
+.profileContainer {
+    min-height: 100vh;
+}
+
+.profileHeader {
+    padding: 40px 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.logo {
+    height: 15px;
+    width: 133px;
+}
+
+.backcard {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    align-items: center;
+    color: var(--color-seccondary);
+    font-size: 24px;
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.profileCard {
+    height: 207px;
+    width: 207px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(217, 217, 217, 1);
+    overflow: hidden;
+    margin: 0px 36px;
+}
+
+.profilePictureContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 57px;
+    align-items: flex-end;
+}
+
+.leftDivider {
+    width: 77px;
+    height: 3px;
+    background: linear-gradient(1deg, #2E4057 0%, rgba(46, 64, 87, 0.36) 100%);
+    margin-bottom: 63px;
+}
+
+.rightDivider {
+    height: 3px;
+    background: linear-gradient(1deg, rgba(46, 64, 87, 0.36) 0%, #2E4057 100%);
+    margin-bottom: 63px;
+    flex: 1;
+}
+
+.profilePageContent {
+    margin-left: 51px;
+    flex: 1;
+}
+
+.userInformationCard {
+    flex: 1;
+    margin: 73px 45px;
+    border-radius: 8px;
+    border: 1px solid #FFF;
+    background: linear-gradient(133deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.32) 100%);
+    box-shadow: -5px 8px 23px -5px rgba(0, 0, 0, 0.14);
+    padding: 86px 52px;
+}

@@ -8,6 +8,7 @@ import RegularRise from './regularRise';
 import File from './file';
 import ArrowRight from './arrowRight';
 import ArrowLeft from './arrowLeft';
+import Camera from './camera';
 
 export {
     Search,
@@ -19,5 +20,6 @@ export {
     File,
     RegularRise,
     ArrowRight,
-    ArrowLeft
+    ArrowLeft,
+    Camera
 }
