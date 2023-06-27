@@ -1,0 +1,41 @@
+.profileCardBackground {
+    padding: 86px 52px;
+    height: 100%;
+    position: relative;
+}
+
+.rightBackground {
+    height: 480.45px;
+    width: 569.24px;
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    z-index: -1;
+}
+
+.centerBackground {
+    height: 357px;
+    width: 427.75px;
+    position: absolute;
+    top: 0px;
+    right: 370px;
+    z-index: -1;
+}
+
+.leftBackground {
+    height: 377px;
+    width: 377px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+}
+
+.left2Background {
+    height: 357px;
+    width: 427.75px;
+    position: absolute;
+    top: 30px;
+    left: -50px;
+    z-index: -1;
+}

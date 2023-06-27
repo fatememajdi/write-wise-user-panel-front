@@ -1,5 +1,6 @@
 .profileContainer {
     min-height: 100vh;
+    padding-bottom: 50px;
 }
 
 .profileHeader {
@@ -74,5 +75,96 @@
     border: 1px solid #FFF;
     background: linear-gradient(133deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.32) 100%);
     box-shadow: -5px 8px 23px -5px rgba(0, 0, 0, 0.14);
-    padding: 86px 52px;
+}
+
+.userName {
+    color: var(--color-seccondary);
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 12px;
+    letter-spacing: -0.18px;
+}
+
+.joinDate {
+    color: #000;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 12px;
+    letter-spacing: -0.16px;
+    margin-top: 45px;
+}
+
+.age {
+    color: var(--color-seccondary);
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 12px;
+    letter-spacing: -0.18px;
+    margin-top: 85px;
+}
+
+.gender {
+    color: var(--color-seccondary);
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 12px;
+    margin-top: 45px;
+    letter-spacing: -0.18px;
+}
+
+.editButton {
+    height: 127px;
+    width: 127px;
+    border-radius: 100% !important;
+    border-radius: 127.373px;
+    background: linear-gradient(210deg, rgb(46, 64, 87) 0%, rgb(218, 40, 46) 100%);
+    /* filter: blur(12.5px); */
+    position: absolute;
+    right: -64px;
+    bottom: -90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.editUserJoinDate {
+    color: #000;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 12px;
+    letter-spacing: -0.16px;
+    margin-top: 30px;
+}
+
+.input {}
+
+.input input {
+    height: 62px;
+    width: 360px;
+    border-radius: 8px !important;
+}
+
+.input input::placeholder {
+    color: var(--color-seccondary) !important;
+}
+
+.select {
+    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+    margin-top: 30px !important;
+    border-radius: 8px !important;
+    border: 1px solid #2E4057 !important;
+    width: 360px !important;
+    height: 62px !important;
+}
+
+.checkIcon {
+    font-size: 90px;
+    color: var(--color-whiteText);
+}
+
+.closeButton{
+    position: absolute;
+    right: 64px;
+    bottom: -90px;
 }

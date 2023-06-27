@@ -9,6 +9,8 @@ import File from './file';
 import ArrowRight from './arrowRight';
 import ArrowLeft from './arrowLeft';
 import Camera from './camera';
+import Edit from './edit';
+import CloseButton from './profile/closeButton';
 
 export {
     Search,
@@ -21,5 +23,7 @@ export {
     RegularRise,
     ArrowRight,
     ArrowLeft,
-    Camera
+    Camera,
+    Edit,
+    CloseButton
 }
