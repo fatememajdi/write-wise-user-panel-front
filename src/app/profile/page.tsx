@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { useRouter } from "next/navigation";
 
 //-------------------------------------styles
 import styles from './profile.module.css';
@@ -22,6 +23,7 @@ const Profile: React.FC = () => {
 
     const [profile, setprofile] = React.useState<boolean>(true);
     const [step, changeStep] = React.useState<number>(1);
+    const router = useRouter();
 
     return <div className={'col-12 ' + styles.profileContainer}>
         <div className={'col-12 ' + styles.profileHeader}>
@@ -33,9 +35,14 @@ const Profile: React.FC = () => {
                 height={15}
                 priority
             />
-            <div className={styles.backcard}>
+            <a
+                onClick={() => {
+                    if (step > 1) changeStep(step - 1);
+                    else router.back();
+                }}
+                className={styles.backcard}>
                 <MdOutlineArrowBackIosNew /> Back
-            </div>
+            </a>
         </div>
 
         <div className={'col-lg-10 ' + styles.profilePageContent}>

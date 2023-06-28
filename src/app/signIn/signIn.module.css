@@ -3,6 +3,9 @@
     flex-direction: row;
     min-height: 100vh;
     max-height: 100vh !important;
+    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .signInLeftContainer {
@@ -62,6 +65,17 @@
     border-radius: 100%;
     background-color: var(--color-background);
     top: 610px;
+}
+
+.circle5 {
+    background-color: var(--color-primary);
+    width: 243px;
+    height: 243px;
+    border-radius: 100%;
+    position: absolute;
+    top: -121px;
+    right: 379px;
+    z-index: 0;
 }
 
 .logo {
@@ -179,7 +193,7 @@
 }
 
 .submitEmailButton {
-    margin-top: 70px;
+    margin-top: 45px;
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -189,6 +203,7 @@
     width: 360px;
     padding: 20px 0px;
     border-radius: 15px !important;
+    margin-bottom: 35px;
 }
 
 .step2ButtonContaier {
@@ -258,6 +273,9 @@
     border-radius: 15px !important;
 }
 
+.pagination{
+    margin-top: 40px;
+}
 
 @media(max-width: 1440px) {
     .circle1 {
@@ -278,6 +296,12 @@
     .circle4 {
         height: 187px;
         width: 187px;
+    }
+
+    .circle5 {
+        height: 223px;
+        width: 223px;
+        top: -111px;
     }
 
     .title {
@@ -315,6 +339,12 @@
         width: 187px;
     }
 
+    .circle5 {
+        height: 223px;
+        width: 223px;
+        top: -111px;
+    }
+
     .title {
         margin-top: 90px;
         margin-bottom: 80px;
@@ -348,6 +378,12 @@
     .circle4 {
         height: 187px;
         width: 187px;
+    }
+
+    .circle5 {
+        height: 223px;
+        width: 223px;
+        top: -111px;
     }
 
     .title {

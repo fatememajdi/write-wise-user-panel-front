@@ -1,0 +1,64 @@
+.chooseTypeContainer {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 33px 35px 33px 64px;
+    position: absolute;
+    top: 0px;
+    z-index: 2 !important;
+}
+
+.logo {
+    height: 15px;
+    width: 133px;
+}
+
+.backcard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--color-seccondary);
+    font-size: 24px;
+    font-weight: 300;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+.menuIcon {
+    font-size: 50px;
+    color: rgba(46, 64, 87, 1) !important;
+    cursor: pointer !important;
+}
+
+.stepcontainer {
+    min-height: 100vh;
+    position: relative;
+}
+
+.leftBackground {
+    height: 357px;
+    width: 427.75px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+}
+
+.rightBackground {
+    height: 357px;
+    width: 427.75px;
+    position: absolute;
+    bottom: -50px;
+    right: 0px;
+    z-index: -1;
+    transform: rotate(180deg);
+}

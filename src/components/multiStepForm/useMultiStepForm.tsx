@@ -1,3 +1,4 @@
+'use client';
 import { ReactElement, useState } from 'react';
 
 export function useMultiStepForm(steps: ReactElement[]) {
@@ -26,7 +27,7 @@ export function useMultiStepForm(steps: ReactElement[]) {
         step: steps[currentStepIndex],
         goTo,
         next,
-        back  
+        back
     }
 
 }
