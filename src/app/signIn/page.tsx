@@ -5,7 +5,9 @@ import { Divider } from 'antd';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
+import { useMutation } from "@apollo/react-hooks";
 import { signIn } from 'next-auth/react';
+import toast from 'react-hot-toast';
 
 //---------------------------------------------------styles
 import styles from './signIn.module.css';
@@ -18,6 +20,7 @@ import { GrApple } from 'react-icons/gr';
 //---------------------------------------------------components
 import Input from "@/components/input/input";
 import { Pagination } from "@/components/pagination/pagination";
+import { EMAIL_SIGN_IN } from '../../config/graphql';
 
 const SignIn: React.FC = () => {
     const [loginStep, changeLoginStep] = React.useState<number>(0);
@@ -69,6 +72,18 @@ const Step1: React.FC<{ changeStep: any }> = ({ changeStep }) => {
         }
     }
 
+
+    const handeClickApple = async () => {
+
+        const signInResponse = await signIn('apple');
+        if (signInResponse && !signInResponse.error) {
+            router.push('/dashboard');
+        } else {
+            console.log('Sign In error : ', signInResponse?.error);
+            // toast
+        }
+    }
+
     const handeClickFaceBook = async () => {
 
         const signInResponse = await signIn('facebook');
@@ -95,6 +110,7 @@ const Step1: React.FC<{ changeStep: any }> = ({ changeStep }) => {
             <SiFacebook className={styles.signInOptionsIcon} />Sign in with Facebook
         </a>
         <a
+            onClick={handeClickApple}
             className={styles.signInOptionsbutton + ' ' + styles.appleSingInCard}>
             <GrApple className={styles.signInOptionsIcon} />Sign in with Apple
         </a>
@@ -123,6 +139,31 @@ const EmailValidationSchema = Yup.object().shape({
 const Step2: React.FC = () => {
 
     const router = useRouter();
+    const [emailSignIn, { error }] = useMutation(EMAIL_SIGN_IN);
+
+    const handleEmailSignIn = async (values: any) => {
+        await emailSignIn({
+            variables: {
+                email: values.email,
+            },
+        }).then(
+            (data) => {
+                // localStorage.setItem("user", JSON.stringify(data.data.adminSignIn))
+                router.push('/signIn/verificationCode')
+                console.log(data);
+            }
+        ).catch(() => {
+            if (error)
+                toast.error(error.message, {
+                    className: 'error-toast'
+                });
+            else
+                toast.error("Try again!", {
+                    className: 'error-toast'
+                });
+
+        });
+    };
 
     const handeClickGoogle = async () => {
 
@@ -130,6 +171,17 @@ const Step2: React.FC = () => {
         if (signInResponse && !signInResponse.error) {
             // router.push('/dashboard');
             console.log(signInResponse);
+        } else {
+            console.log('Sign In error : ', signInResponse?.error);
+            // toast
+        }
+    }
+
+    const handeClickApple = async () => {
+
+        const signInResponse = await signIn('apple');
+        if (signInResponse && !signInResponse.error) {
+            router.push('/dashboard');
         } else {
             console.log('Sign In error : ', signInResponse?.error);
             // toast
@@ -156,7 +208,7 @@ const Step2: React.FC = () => {
         validationSchema={EmailValidationSchema}
         enableReinitialize
         onSubmit={async (values) => {
-            // await handleSubmit(values);
+            await handleEmailSignIn(values);
         }}>{({
             values,
             errors,
@@ -181,7 +233,7 @@ const Step2: React.FC = () => {
                 />
 
                 <button
-                    onClick={() => router.push('/signIn/verificationCode')}
+                    // onClick={() => }
                     className={styles.submitEmailButton} type="submit">
                     Log in
                 </button>
@@ -200,7 +252,10 @@ const Step2: React.FC = () => {
                     className={styles.signInOptionsbutton + ' ' + styles.faceBookSingInCard}>
                     <SiFacebook className={styles.signInOptionsIcon} />Sign in with Facebook
                 </a>
-                <a className={styles.signInOptionsbutton + ' ' + styles.appleSingInCard}>
+
+                <a
+                    onClick={handeClickApple}
+                    className={styles.signInOptionsbutton + ' ' + styles.appleSingInCard}>
                     <GrApple className={styles.signInOptionsIcon} />Sign in with Apple
                 </a>
 

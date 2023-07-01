@@ -1,12 +1,7 @@
-import { NextAuthOptions, User, getServerSession } from 'next-auth';
-// import { useSession } from 'next-auth/react';
-// import { redirect } from 'next/navigation';
-// import CredentialsProvider from 'next-auth/providers/credentials';
+import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import AppleProvider from 'next-auth/providers/apple';
 import FacebookProvider from 'next-auth/providers/facebook';
-
-// import prisma from './prisma';
 
 export const authConfig: NextAuthOptions = {
     providers: [
