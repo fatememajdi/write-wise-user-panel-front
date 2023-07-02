@@ -39,11 +39,8 @@ export default function RootLayout({
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <body className={inter.className}>{children}</body>
           </LocalizationProvider>
-          <Toaster
-            position="top-center"
-            reverseOrder={false}
-          />
         </html>
+        
       </ApolloProvider>
     </SessionProvider>
   )

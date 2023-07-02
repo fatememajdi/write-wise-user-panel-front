@@ -7,7 +7,8 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
 import { signIn } from 'next-auth/react';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 //---------------------------------------------------styles
 import styles from './signIn.module.css';
@@ -21,6 +22,7 @@ import { GrApple } from 'react-icons/gr';
 import Input from "@/components/input/input";
 import { Pagination } from "@/components/pagination/pagination";
 import { EMAIL_SIGN_IN } from '../../config/graphql';
+import Loading from "@/components/loading/loading";
 
 const SignIn: React.FC = () => {
     const [loginStep, changeLoginStep] = React.useState<number>(0);
@@ -58,7 +60,6 @@ export default SignIn;
 
 const Step1: React.FC<{ changeStep: any }> = ({ changeStep }) => {
 
-
     const router = useRouter();
 
     const handeClickGoogle = async () => {
@@ -87,11 +88,10 @@ const Step1: React.FC<{ changeStep: any }> = ({ changeStep }) => {
     const handeClickFaceBook = async () => {
 
         const signInResponse = await signIn('facebook');
-        console.log('hiii',signInResponse);
-
+        console.log('fasebook signin response : ', signInResponse);
         if (signInResponse && !signInResponse.error) {
             // router.push('/dashboard');
-            console.log('hiii',signInResponse);
+            console.log('hiii', signInResponse);
         } else {
             console.log('Sign In error : ', signInResponse?.error);
             // toast
@@ -141,18 +141,17 @@ const EmailValidationSchema = Yup.object().shape({
 const Step2: React.FC = () => {
 
     const router = useRouter();
-    const [emailSignIn, { error }] = useMutation(EMAIL_SIGN_IN);
+    const [emailSignIn, { error, loading }] = useMutation(EMAIL_SIGN_IN);
 
     const handleEmailSignIn = async (values: any) => {
+        localStorage.setItem('user', values.email);
         await emailSignIn({
             variables: {
                 email: values.email,
             },
         }).then(
             (data) => {
-                // localStorage.setItem("user", JSON.stringify(data.data.adminSignIn))
                 router.push('/signIn/verificationCode')
-                console.log(data);
             }
         ).catch(() => {
             if (error)
@@ -193,6 +192,7 @@ const Step2: React.FC = () => {
     const handeClickFaceBook = async () => {
 
         const signInResponse = await signIn('facebook');
+        console.log('fasebook signin response : ', signInResponse);
         if (signInResponse && !signInResponse.error) {
             // router.push('/dashboard');
             console.log(signInResponse);
@@ -203,68 +203,75 @@ const Step2: React.FC = () => {
         }
     }
 
-    return <Formik
-        initialValues={{
-            email: ''
-        }}
-        validationSchema={EmailValidationSchema}
-        enableReinitialize
-        onSubmit={async (values) => {
-            await handleEmailSignIn(values);
-        }}>{({
-            values,
-            errors,
-            touched,
-            handleSubmit,
-            setFieldValue,
-            handleChange
-        }) => (
-            <form
-                className={'col-12 ' + styles.stepContainer}
-                onSubmit={handleSubmit}>
-                <div className={styles.title}>Log in</div>
-                <div className={'col-12 ' + styles.inputEmailTitle}>Email</div>
-                <Input
-                    className={styles.emailInput}
-                    onChange={handleChange}
-                    input
-                    inputtype='email'
-                    input_name='email'
-                    input_value={values.email}
-                    input_error={errors.email && touched.email && errors.email}
-                />
+    if (loading)
+        return <Loading />
+    else
+        return <Formik
+            initialValues={{
+                email: ''
+            }}
+            validationSchema={EmailValidationSchema}
+            enableReinitialize
+            onSubmit={async (values) => {
+                await handleEmailSignIn(values);
+            }}>{({
+                values,
+                errors,
+                touched,
+                handleSubmit,
+                setFieldValue,
+                handleChange
+            }) => (
+                <form
+                    className={'col-12 ' + styles.stepContainer}
+                    onSubmit={handleSubmit}>
+                    <div className={styles.title}>Log in</div>
+                    <div className={'col-12 ' + styles.inputEmailTitle}>Email</div>
+                    <Input
+                        className={styles.emailInput}
+                        onChange={handleChange}
+                        input
+                        inputtype='email'
+                        input_name='email'
+                        input_value={values.email}
+                        input_error={errors.email && touched.email && errors.email}
+                    />
 
-                <button
-                    // onClick={() => }
-                    className={styles.submitEmailButton} type="submit">
-                    Log in
-                </button>
+                    <button
+                        // onClick={() => }
+                        className={styles.submitEmailButton} type="submit">
+                        Log in
+                    </button>
 
-                <Pagination lenght={2} currentPage={1} color="#2E4057" />
+                    <Pagination lenght={2} currentPage={1} color="#2E4057" />
 
-                <Divider style={{ marginTop: 20 }} plain>or</Divider>
+                    <Divider style={{ marginTop: 20 }} plain>or</Divider>
 
-                <a
-                    onClick={handeClickGoogle}
-                    className={styles.signInOptionsbutton + ' ' + styles.googleSingInCard}>
-                    <FcGoogle className={styles.signInOptionsIcon} />Sign in with Google
-                </a>
-                <a
-                    onClick={handeClickFaceBook}
-                    className={styles.signInOptionsbutton + ' ' + styles.faceBookSingInCard}>
-                    <SiFacebook className={styles.signInOptionsIcon} />Sign in with Facebook
-                </a>
+                    <a
+                        onClick={handeClickGoogle}
+                        className={styles.signInOptionsbutton + ' ' + styles.googleSingInCard}>
+                        <FcGoogle className={styles.signInOptionsIcon} />Sign in with Google
+                    </a>
+                    <a
+                        onClick={handeClickFaceBook}
+                        className={styles.signInOptionsbutton + ' ' + styles.faceBookSingInCard}>
+                        <SiFacebook className={styles.signInOptionsIcon} />Sign in with Facebook
+                    </a>
 
-                <a
-                    onClick={handeClickApple}
-                    className={styles.signInOptionsbutton + ' ' + styles.appleSingInCard}>
-                    <GrApple className={styles.signInOptionsIcon} />Sign in with Apple
-                </a>
+                    <a
+                        onClick={handeClickApple}
+                        className={styles.signInOptionsbutton + ' ' + styles.appleSingInCard}>
+                        <GrApple className={styles.signInOptionsIcon} />Sign in with Apple
+                    </a>
 
-                <div className={styles.footerText}>
-                    By login, you agree to our <a>Terms of<br /> Service</a> and <a>Privacy Policy .</a>
-                </div>
-            </form>
-        )}
-    </Formik>
+                    <div className={styles.footerText}>
+                        By login, you agree to our <a>Terms of<br /> Service</a> and <a>Privacy Policy .</a>
+                    </div>
+                    <Toaster
+                        position="top-center"
+                        reverseOrder={false}
+                    />
+                </form>
+            )}
+        </Formik>
 };
