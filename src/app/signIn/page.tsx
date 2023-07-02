@@ -72,9 +72,11 @@ const Step1: React.FC<{ changeStep: any }> = ({ changeStep }) => {
     const handeClickFaceBook = async () => {
 
         const signInResponse = await signIn('facebook');
+        console.log('hiii',signInResponse);
+
         if (signInResponse && !signInResponse.error) {
             // router.push('/dashboard');
-            console.log(signInResponse);
+            console.log('hiii',signInResponse);
         } else {
             console.log('Sign In error : ', signInResponse?.error);
             // toast
