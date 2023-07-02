@@ -14,6 +14,9 @@ import '@fontsource/roboto/700.css';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { SessionProvider } from 'next-auth/react';
+import { ApolloProvider } from "@apollo/react-hooks";
+import client from '../config/applloClient';
+import { Toaster } from 'react-hot-toast';
 
 import { Inter } from 'next/font/google'
 
@@ -31,11 +34,17 @@ export default function RootLayout({
 }) {
   return (
     <SessionProvider>
-      <html lang="en">
-        <LocalizationProvider dateAdapter={AdapterMoment}>
-          <body className={inter.className}>{children}</body>
-        </LocalizationProvider>
-      </html>
+      <ApolloProvider client={client}>
+        <html lang="en">
+          <LocalizationProvider dateAdapter={AdapterMoment}>
+            <body className={inter.className}>{children}</body>
+          </LocalizationProvider>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+          />
+        </html>
+      </ApolloProvider>
     </SessionProvider>
   )
 }
