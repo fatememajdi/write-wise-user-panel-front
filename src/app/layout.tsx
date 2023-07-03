@@ -17,6 +17,7 @@ import { SessionProvider } from 'next-auth/react';
 import { ApolloProvider } from "@apollo/react-hooks";
 import client from '../config/applloClient';
 import { Toaster } from 'react-hot-toast';
+import { Session } from "next-auth";
 
 import { Inter } from 'next/font/google'
 
@@ -29,19 +30,23 @@ const metadata = {
 
 export default function RootLayout({
   children,
+  pageProps
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  pageProps: { session: Session },
 }) {
   return (
-    <SessionProvider>
+    <SessionProvider session={pageProps?.session}>
       <ApolloProvider client={client}>
         <html lang="en">
+          <script src='httpa://accounts.google.com/gsi/client' async defer></script>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <body className={inter.className}>{children}</body>
           </LocalizationProvider>
         </html>
-        
+
       </ApolloProvider>
     </SessionProvider>
   )
 }
+

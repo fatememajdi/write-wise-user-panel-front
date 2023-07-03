@@ -15,3 +15,11 @@ mutation VerifyEmail($email:String!, $code:String!){
     }
   }
 `;
+
+export const GOOGLE_SIGN_IN = gql`
+mutation GoogleSignIn($token:String!){
+    googleLogin(loginWithGoogle:{token:$token}){
+      token
+    }
+  }
+`;

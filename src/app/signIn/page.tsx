@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 
 
@@ -21,7 +21,7 @@ import { GrApple } from 'react-icons/gr';
 //---------------------------------------------------components
 import Input from "@/components/input/input";
 import { Pagination } from "@/components/pagination/pagination";
-import { EMAIL_SIGN_IN } from '../../config/graphql';
+import { EMAIL_SIGN_IN, GOOGLE_SIGN_IN } from '../../config/graphql';
 import Loading from "@/components/loading/loading";
 
 const SignIn: React.FC = () => {
@@ -58,21 +58,35 @@ const SignIn: React.FC = () => {
 
 export default SignIn;
 
-const Step1: React.FC<{ changeStep: any }> = ({ changeStep }) => {
+const Step1: React.FC<{ changeStep: any }> = async ({ changeStep }) => {
 
     const router = useRouter();
+    const [googleSignIn, { error, loading }] = useMutation(GOOGLE_SIGN_IN);
+    const { data } = useSession();
+
+    React.useEffect(() => {
+        GoogleLogIn();
+    }, []);
 
     const handeClickGoogle = async () => {
-
-        const signInResponse = await signIn('google');
-        if (signInResponse && !signInResponse.error) {
-            router.push('/dashboard');
-        } else {
-            console.log('Sign In error : ', signInResponse?.error);
-            // toast
-        }
+        const signInResponse = signIn('google');
+        if (signInResponse)
+            console.log('google login sign in response : ', signInResponse);
     }
 
+    const GoogleLogIn = async () => {
+        await googleSignIn({
+            variables: {
+                token: data?.user.token as string,
+            },
+        }).then(
+            (data) => {
+                console.log('goole login token : ',data);
+            }
+        ).catch((error) => {
+            console.log('google sign in error : ', error);
+        });
+    }
 
     const handeClickApple = async () => {
 
@@ -100,7 +114,6 @@ const Step1: React.FC<{ changeStep: any }> = ({ changeStep }) => {
 
     return <div className={'col-12 ' + styles.stepContainer}>
         <div className={styles.title}>Log in/Sign in</div>
-
         <a
             onClick={handeClickGoogle}
             className={styles.signInOptionsbutton + ' ' + styles.googleSingInCard}>
@@ -153,29 +166,32 @@ const Step2: React.FC = () => {
             (data) => {
                 router.push('/signIn/verificationCode')
             }
-        ).catch(() => {
-            if (error)
-                toast.error(error.message, {
-                    className: 'error-toast'
-                });
-            else
-                toast.error("Try again!", {
-                    className: 'error-toast'
-                });
-
+        ).catch((error) => {
+            console.log('verification email error : ', error);
         });
     };
 
     const handeClickGoogle = async () => {
 
-        const signInResponse = await signIn('google');
-        if (signInResponse && !signInResponse.error) {
-            // router.push('/dashboard');
-            console.log(signInResponse);
-        } else {
-            console.log('Sign In error : ', signInResponse?.error);
-            // toast
+
+        try {
+            const signInResponse = await signIn('google', {
+                redirect: true,
+                callbackUrl: '/dashboard'
+            });
+            console.log('sasdf' + signInResponse);
+
+        } catch (error) {
+            console.log('sasdf' + error);
         }
+
+        // if (signInResponse) {
+        //     router.push('/dashboard');
+        //     console.log(signInResponse);
+        // } else {
+        //     console.log('Sign In error : ', signInResponse?.error);
+        //     // toast
+        // }
     }
 
     const handeClickApple = async () => {
@@ -192,7 +208,7 @@ const Step2: React.FC = () => {
     const handeClickFaceBook = async () => {
 
         const signInResponse = await signIn('facebook');
-        console.log('fasebook signin response : ', signInResponse);
+        console.log('facebook signin response : ', signInResponse);
         if (signInResponse && !signInResponse.error) {
             // router.push('/dashboard');
             console.log(signInResponse);
