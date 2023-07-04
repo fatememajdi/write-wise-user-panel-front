@@ -44,7 +44,6 @@ export default function RootLayout({
             <body className={inter.className}>{children}</body>
           </LocalizationProvider>
         </html>
-
       </ApolloProvider>
     </SessionProvider>
   )

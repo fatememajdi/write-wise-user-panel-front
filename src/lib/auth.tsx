@@ -4,7 +4,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import AppleProvider from 'next-auth/providers/apple';
 import FacebookProvider from 'next-auth/providers/facebook';
 import { useRouter } from 'next/navigation';
-import { ApolloClient, useMutation } from "@apollo/react-hooks";
 // import { sign } from 'jsonwebtoken';
 // import fs from 'fs';
 
@@ -69,7 +68,7 @@ export const authConfig: NextAuthOptions = {
                 token.access_token = account.id_token
             }
             // console.log('account  : ', account);
-
+            // await fetch()s
             return token
         },
         async session({ session, token, user }) {

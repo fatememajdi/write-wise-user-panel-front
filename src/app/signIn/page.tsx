@@ -4,9 +4,9 @@ import Image from "next/image";
 import { Divider } from 'antd';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 
 
@@ -70,8 +70,10 @@ const Step1: React.FC<{ changeStep: any }> = async ({ changeStep }) => {
 
     const handeClickGoogle = async () => {
         const signInResponse = signIn('google');
+        // const signInResponse = signOut();
         if (signInResponse)
             console.log('google login sign in response : ', signInResponse);
+
     }
 
     const GoogleLogIn = async () => {
@@ -81,7 +83,7 @@ const Step1: React.FC<{ changeStep: any }> = async ({ changeStep }) => {
             },
         }).then(
             (data) => {
-                console.log('goole login token : ',data);
+                console.log('goole login token : ', data);
             }
         ).catch((error) => {
             console.log('google sign in error : ', error);
