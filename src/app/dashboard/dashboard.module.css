@@ -9,6 +9,7 @@
     background-color: var(--color-seccondary);
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .dashboardRightCard {}
@@ -21,6 +22,7 @@
     display: flex;
     flex-direction: column;
     border-top: solid 1px #626E7E;
+    border-bottom: solid 1px #626E7E;
     padding-top: 5px;
     padding-right: 8px;
 }
@@ -67,4 +69,256 @@
     font-size: 30px;
     font-style: normal;
     font-weight: 700;
+}
+
+.taskTabsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: fit-content;
+    margin-top: 10px;
+    align-items: end;
+}
+
+.taskTabButton {
+    color: #FFF;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    background-color: #626E7E;
+    padding: 0px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    width: 32%;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.activeTaskTabButton {
+    color: #F3F3F3;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    padding: 0px;
+    background-color: #132740;
+    line-height: normal;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px !important;
+    width: 32%;
+    border-bottom-right-radius: 0px !important;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drawerFooterContainer {
+    border-top: solid 1px #626E7E;
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end !important;
+    height: 74px;
+    padding-top: 2px;
+}
+
+.drawerContent {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.menuButton {
+    height: 100%;
+    border-radius: 0px !important;
+    background-color: #132740;
+    padding: 0px 0px !important;
+    border-right: solid 1px #626E7E;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menuIcon {
+    color: #FFFFFF;
+    font-size: 30px;
+}
+
+.drawerFooterText {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 12px;
+}
+
+.popOverCard {
+    display: flex;
+    flex-direction: column;
+    background-color: #12263E;
+    padding-bottom: 16px;
+}
+
+.menuItemCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #FFF;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    padding: 20PX 14PX;
+    min-width: 210PX;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.menuItemCard span {
+    margin-left: 18px;
+}
+
+.tasksContainer {
+    height: 98%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.tasksContainer::-webkit-scrollbar {
+    /* display: none; */
+    width: 13px;
+    background-color: #D9D9D9;
+    border-radius: 33px;
+}
+
+.tasksContainer::-webkit-scrollbar-thumb {
+    width: 13px;
+    background-color: #12263E;
+    border-radius: 33px;
+}
+
+.taskCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: solid 1px #626E7E;
+    padding: 30px 33px 22px 18px;
+    cursor: pointer;
+}
+
+.taskCardTitle {
+    color: #FFF;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    max-width: 75%;
+    display: flex;
+    flex-direction: column;
+}
+
+.taskCardTitle span {
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    margin-top: 15px;
+}
+
+.taskCardScore {
+    color: #FFF;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 12px;
+}
+
+.dashboardContentContainer {
+    display: flex;
+    flex: 1;
+    height: 100vh;
+    flex-direction: row;
+    overflow-y: hidden;
+    padding-right: 10px;
+}
+
+.leftTabBar {
+    background-color: var(--color-seccondary);
+    width: 80px;
+    height: 100% !important;
+    display: flex;
+}
+
+.leftTabBarButton {
+    border-top: solid 1px #626E7E;
+    display: flex;
+    height: 74px;
+    padding-top: 2px;
+    margin-top: auto
+}
+
+.topTabBarCard {
+    height: 96px;
+    display: flex;
+    flex: 1;
+    position: absolute;
+    top: 16px;
+    right: 50px;
+    left: 24px;
+    background-color: var(--color-seccondary);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dashboardContentRightContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+}
+
+
+.dashboardContentRightContainer::-webkit-scrollbar {
+    /* display: none; */
+    width: 13px;
+    background-color: #D9D9D9;
+    border-radius: 33px;
+}
+
+.dashboardContentRightContainer::-webkit-scrollbar-thumb {
+    width: 13px;
+    background-color: #12263E;
+    border-radius: 33px;
+}
+
+.topTabBarItemCard {
+    height: 100%;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    padding: 0px 40px;
 }
