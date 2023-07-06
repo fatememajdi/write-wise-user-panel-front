@@ -291,6 +291,7 @@
     height: 100%;
     position: relative;
     overflow-y: auto;
+    padding-top: 150px;
 }
 
 
@@ -321,4 +322,18 @@
     line-height: normal;
     cursor: pointer;
     padding: 0px 40px;
+    border-radius: 8px;
+}
+
+.lockIcon {
+    color: #FFF;
+    margin-left: 5px;
+}
+
+.activeTopTabBarItemCard {
+    background-color: #12263E !important;
+}
+
+.activeTopTabBarItemCard span {
+    text-decoration: underline !important;
 }

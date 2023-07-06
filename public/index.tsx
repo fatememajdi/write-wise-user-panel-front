@@ -11,6 +11,7 @@ import ArrowLeft from './arrowLeft';
 import Camera from './camera';
 import Edit from './edit';
 import CloseButton from './profile/closeButton';
+import Reload from './reload';
 
 export {
     Search,
@@ -25,5 +26,6 @@ export {
     ArrowLeft,
     Camera,
     Edit,
-    CloseButton
+    CloseButton,
+    Reload
 }

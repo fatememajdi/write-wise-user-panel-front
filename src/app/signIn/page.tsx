@@ -4,9 +4,9 @@ import Image from "next/image";
 import { Divider } from 'antd';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 
 

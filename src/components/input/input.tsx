@@ -54,7 +54,7 @@ const Input: React.FC<props> = ({ ...props }) =>
         {/* -----------------------------------------------------------textarea forms */}
         {
             props.textarea &&
-            <div className={styles.formSectionInput}>
+            <div className={props.input_error ? styles.formSectionInput + ' ' + styles.formSectionInputError : styles.formSectionInput}>
 
 
                 <textarea
@@ -64,8 +64,9 @@ const Input: React.FC<props> = ({ ...props }) =>
                     value={props.textarea_value}
                 />
 
-                <div className={styles.errorForm}>{props.textarea_error}</div>
-
+                {props.textarea_error &&
+                    <div className={styles.errorForm}>{props.textarea_error}</div>
+                }
             </div>
         }
     </div >

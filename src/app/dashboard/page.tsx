@@ -12,12 +12,14 @@ import styles from './dashboard.module.css';
 
 //-----------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
+import Essay from "./Essay";
+import Score from "./Score";
 
 //-----------------------------------------icons
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 import { TfiMenu } from 'react-icons/tfi';
-import { User, Wallet, Support, Progress } from '../../../public/dashboard';
+import { User, Wallet, Support, Progress, Lock } from '../../../public/dashboard';
 
 const drawerWidth = 400;
 
@@ -288,7 +290,7 @@ const tabBarItems = [
 ]
 
 const DashboardContent: React.FC<_props> = ({ drawerOpen, handleDrawerOpen, handlePopOverOpen }) => {
-    const { goTo, currentStepIndex, step } = useMultiStepForm([<GeneralTask1 />, <AcademicTask1 />, <Task2 />])
+    const { goTo, currentStepIndex, step } = useMultiStepForm([<Essay />, <Score />])
 
     return <div className={styles.dashboardContentContainer}>
         {!drawerOpen &&
@@ -309,12 +311,18 @@ const DashboardContent: React.FC<_props> = ({ drawerOpen, handleDrawerOpen, hand
                 {
                     tabBarItems.map((item, index) =>
                         <div
-                            style={!item.active ? { opacity: 0.5 } : {}}
-                            className={styles.topTabBarItemCard}
-                            key={index} >{item.title}</div>
+                            onClick={() => { if (item.active) goTo(index) }}
+                            style={!item.active ? { cursor: 'context-menu' } : {}}
+                            className={currentStepIndex === index ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard : styles.topTabBarItemCard}
+                            key={index} >
+                            <span
+                                style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
+                            {!item.active && <Lock className={styles.lockIcon} />}
+                        </div>
                     )
                 }
             </div>
+            {step}
         </div>
 
     </div>
