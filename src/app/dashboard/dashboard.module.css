@@ -275,11 +275,8 @@
     height: 96px;
     display: flex;
     flex: 1;
-    position: absolute;
-    top: 16px;
-    right: 50px;
-    left: 24px;
     background-color: var(--color-seccondary);
+    width: 100%;
     border-radius: 8px;
     overflow: hidden;
 }
@@ -291,7 +288,8 @@
     height: 100%;
     position: relative;
     overflow-y: auto;
-    padding-top: 150px;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 
@@ -336,4 +334,122 @@
 
 .activeTopTabBarItemCard span {
     text-decoration: underline !important;
+}
+
+.topTabBarContainer {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    top: 16px;
+    padding: 0px 50px 0px 24px;
+    height: 96px !important;
+    width: 100% !important;
+}
+
+.topTabBarContainerAnimation {
+    width: 100% !important;
+    display: flex;
+    padding: 0px 50px 0px 24px;
+    position: absolute;
+    animation-name: example;
+    animation-duration: 1s;
+    flex-direction: column;
+    animation-fill-mode: forwards;
+}
+
+@keyframes example {
+    from {
+        top: 16px;
+    }
+
+    to {
+        top: 100%;
+    }
+}
+
+.writingScoreCard {
+    display: flex;
+    border: solid 2px var(--color-seccondary);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-top: -8px;
+    border-top: none !important;
+    padding: 29px 42px 19px 32px;
+    width: 100%;
+    margin-bottom: 20px;
+    flex-direction: column;
+    height: 500px;
+    z-index: -10 !important;
+}
+
+.writingScoreDate {
+    color: #252525;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 12px;
+}
+
+.writingScoresContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.writingScoreItemCard {
+    color: #252525;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 20px;
+}
+
+
+.writingScoreText {
+    color: #252525;
+    margin-top: 40px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.analusisButton {
+    display: flex;
+    margin-top: 30px;
+    align-self: flex-end;
+    color: #DA282E;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border: solid 1px #DA282E;
+}
+
+.writingEssayCard {
+    display: flex;
+    border: solid 2px var(--color-seccondary);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-top: -8px;
+    border-top: none !important;
+    padding: 48px 100px 64px 71px;
+    width: 100%;
+    margin-bottom: 20px;
+    flex-direction: column;
+    z-index: -10 !important;
+    height: 500px;
+}
+
+.writingEssayText {
+    margin-top: 20px;
+    color: #252525;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }

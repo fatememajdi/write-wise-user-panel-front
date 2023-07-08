@@ -1,0 +1,22 @@
+.sliderCard {
+    background-color: var(--color-seccondary);
+    height: 180px;
+    width: 180px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sliderProgress {
+    height: 165px;
+    width: 165px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

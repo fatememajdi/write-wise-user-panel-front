@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -13,10 +14,16 @@ import Input from "@/components/input/input";
 import { Reload } from "../../../public";
 import { MdEdit } from 'react-icons/md';
 
-const Essay: React.FC = () => {
+
+interface _props {
+    changeTabBarLoc: any,
+    tabBarLoc: boolean
+}
+
+const Essay: React.FC<_props> = ({ tabBarLoc, changeTabBarLoc }) => {
 
     const [type, setType] = React.useState('general_task_1');
-    const { next, currentStepIndex, step } = useMultiStepForm([<ChooseType changeType={ChangeType} />, <Writing type={type} />])
+    const { next, currentStepIndex, step } = useMultiStepForm([<ChooseType changeType={ChangeType} />, <Writing type={type} changeTabBarLoc={changeTabBarLoc} />])
     function ChangeType(type: string) {
         setType(type);
         next();
@@ -70,9 +77,10 @@ const ChooseType: React.FC<chooseTypeProps> = ({ changeType }) => {
 
 interface writingProps {
     type: string;
+    changeTabBarLoc: any
 }
 
-const Writing: React.FC<writingProps> = ({ type }) => {
+const Writing: React.FC<writingProps> = ({ type, changeTabBarLoc }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState(false);
 
@@ -144,8 +152,8 @@ const Writing: React.FC<writingProps> = ({ type }) => {
                         textarea_error={errors.body && touched.body && errors.body}
                     />
                     <button
-                        type="button"
-                        onClick={() => console.log("aliu")}
+                        type="submit"
+                        onClick={() => changeTabBarLoc(true)}
                         className={styles.scoreButton}>
                         Score
                     </button>

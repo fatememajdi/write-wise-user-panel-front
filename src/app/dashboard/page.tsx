@@ -13,7 +13,8 @@ import styles from './dashboard.module.css';
 //-----------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
 import Essay from "./Essay";
-import Score from "./Score";
+import Score from "./score";
+import Slider from "@/components/slider/slider";
 
 //-----------------------------------------icons
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -290,7 +291,9 @@ const tabBarItems = [
 ]
 
 const DashboardContent: React.FC<_props> = ({ drawerOpen, handleDrawerOpen, handlePopOverOpen }) => {
-    const { goTo, currentStepIndex, step } = useMultiStepForm([<Essay />, <Score />])
+    const [tabBarLoc, changeTabBarLoc] = React.useState<boolean>(false);
+    const [writingCardStep, changeWritingCardStep] = React.useState<number>(1);
+    const { goTo, currentStepIndex, step } = useMultiStepForm([<Essay tabBarLoc={tabBarLoc} changeTabBarLoc={changeTabBarLoc} />, <Score />])
 
     return <div className={styles.dashboardContentContainer}>
         {!drawerOpen &&
@@ -305,25 +308,72 @@ const DashboardContent: React.FC<_props> = ({ drawerOpen, handleDrawerOpen, hand
             </div>
         }
 
-        <div className={styles.dashboardContentRightContainer}>
+        <div
+            style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
+            className={styles.dashboardContentRightContainer}>
 
-            <div className={styles.topTabBarCard}>
-                {
-                    tabBarItems.map((item, index) =>
-                        <div
-                            onClick={() => { if (item.active) goTo(index) }}
-                            style={!item.active ? { cursor: 'context-menu' } : {}}
-                            className={currentStepIndex === index ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard : styles.topTabBarItemCard}
-                            key={index} >
-                            <span
-                                style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
-                            {!item.active && <Lock className={styles.lockIcon} />}
+            <div className={tabBarLoc ? styles.topTabBarContainerAnimation : styles.topTabBarContainer}>
+                <div className={styles.topTabBarCard}>
+                    {
+                        tabBarItems.map((item, index) =>
+                            <div
+                                onClick={() => {
+                                    if (item.active && !tabBarLoc) goTo(index)
+                                    else if (item.active) changeWritingCardStep(index);
+                                }}
+                                style={!item.active ? { cursor: 'context-menu' } : {}}
+                                className={currentStepIndex === index && !tabBarLoc ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard
+                                    : writingCardStep === index && tabBarLoc ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard
+                                        : styles.topTabBarItemCard}
+                                key={index} >
+                                <span
+                                    style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
+                                {!item.active && <Lock className={styles.lockIcon} />}
+                            </div>
+                        )
+                    }
+                </div>
+                {tabBarLoc && writingCardStep === 0 ?
+                    <div className={styles.writingEssayCard}>
+                        <div className={styles.writingScoreDate}>JAN 18</div>
+                        <div className={styles.writingEssayText}>
+                            Qorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum <br />
+                            est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin <br />
+                            lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat <br />
+                            lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos <br />
+                            himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar.<br />
+                            Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel <br />
+                            bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.<br />
+                            Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a tempus aliquet.
+
                         </div>
-                    )
+                    </div>
+                    : tabBarLoc &&
+                    <div className={styles.writingScoreCard}>
+                        <div className={styles.writingScoreDate}>JAN 18</div>
+                        <div className={styles.writingScoresContainer}>
+                            <div>
+                                <div className={styles.writingScoreItemCard}>Task Achievement: 6</div>
+                                <div className={styles.writingScoreItemCard}>Coherence & Cohesion: 5</div>
+                                <div className={styles.writingScoreItemCard}>Lexical resource: 6</div>
+                                <div className={styles.writingScoreItemCard}>Grammatical Range and accuracy: 7</div>
+                            </div>
+
+                            <Slider value={6} total={10} />
+                        </div>
+                        <div className={styles.writingScoreText}>
+                            Good user<br />
+                            Has operational command of the language, though with occasional inaccuracies, inappropriacies and misunderstandings in some situations. Generally handles complex language well and understands detailed reasoning.
+                        </div>
+                        <button className={styles.analusisButton}>
+                            Analysis
+                        </button>
+                    </div>
                 }
             </div>
+
             {step}
         </div>
 
     </div>
-}
+};
