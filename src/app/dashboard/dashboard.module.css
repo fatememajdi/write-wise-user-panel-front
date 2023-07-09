@@ -290,6 +290,7 @@
     overflow-y: auto;
     align-items: flex-start;
     justify-content: flex-start;
+    overflow-y: auto;
 }
 
 
@@ -307,7 +308,6 @@
 }
 
 .topTabBarItemCard {
-    height: 100%;
     display: flex;
     flex: 1;
     align-items: center;
@@ -321,6 +321,7 @@
     cursor: pointer;
     padding: 0px 40px;
     border-radius: 8px;
+    height: 96px !important;
 }
 
 .lockIcon {
@@ -363,93 +364,61 @@
     }
 
     to {
-        top: 100%;
+        top: 90%;
     }
 }
 
-.writingScoreCard {
-    display: flex;
-    border: solid 2px var(--color-seccondary);
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    margin-top: -8px;
-    border-top: none !important;
-    padding: 29px 42px 19px 32px;
-    width: 100%;
-    margin-bottom: 20px;
-    flex-direction: column;
-    height: 500px;
-    z-index: -10 !important;
+@media(max-width: 1440px) {
+
+    .newEssayButton {
+        font-size: 22px;
+    }
+
+    .taskTabButton {
+        font-size: 18px;
+    }
+
+    .activeTaskTabButton {
+        font-size: 18px;
+    }
+
+    .menuItemCard span {
+        font-size: 17px;
+    }
+
+    .menuItemCard {
+        font-size: 22px;
+    }
+
+    .topTabBarItemCard {
+        font-size: 20px;
+        padding: 0px 20px;
+    }
 }
 
-.writingScoreDate {
-    color: #252525;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 12px;
-}
+@media(max-width: 992px) {
+    .newEssayButton {
+        font-size: 22px;
+    }
 
-.writingScoresContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 30px;
-}
+    .taskTabButton {
+        font-size: 18px;
+    }
 
-.writingScoreItemCard {
-    color: #252525;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    margin-bottom: 20px;
-}
+    .activeTaskTabButton {
+        font-size: 18px;
+    }
 
+    .menuItemCard span {
+        font-size: 17px;
+    }
 
-.writingScoreText {
-    color: #252525;
-    margin-top: 40px;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-}
+    .menuItemCard {
+        font-size: 22px;
+    }
 
-.analusisButton {
-    display: flex;
-    margin-top: 30px;
-    align-self: flex-end;
-    color: #DA282E;
-    text-align: center;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    border: solid 1px #DA282E;
-}
-
-.writingEssayCard {
-    display: flex;
-    border: solid 2px var(--color-seccondary);
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    margin-top: -8px;
-    border-top: none !important;
-    padding: 48px 100px 64px 71px;
-    width: 100%;
-    margin-bottom: 20px;
-    flex-direction: column;
-    z-index: -10 !important;
-    height: 500px;
-}
-
-.writingEssayText {
-    margin-top: 20px;
-    color: #252525;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    .topTabBarItemCard {
+        font-size: 20px;
+        padding: 0px 20px;
+    }
 }
