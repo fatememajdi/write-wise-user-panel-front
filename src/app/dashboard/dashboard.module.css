@@ -391,8 +391,9 @@
     }
 
     .topTabBarItemCard {
-        font-size: 20px;
-        padding: 0px 20px;
+
+        font-size: 18px;
+        padding: 0px 15px;
     }
 }
 
@@ -418,7 +419,8 @@
     }
 
     .topTabBarItemCard {
-        font-size: 20px;
-        padding: 0px 20px;
+
+        font-size: 18px;
+        padding: 0px 15px;
     }
 }
