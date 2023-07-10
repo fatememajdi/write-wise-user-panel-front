@@ -6,6 +6,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .sliderProgress {
@@ -19,4 +20,9 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    position: absolute;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    left: auto;
 }

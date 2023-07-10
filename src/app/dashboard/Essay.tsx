@@ -34,6 +34,9 @@ const Essay: React.FC<_props> = ({ tabBarLoc, changeTabBarLoc, changeEndAnimatio
     }
 
     return <div className={'col-12 ' + styles.essayContainer}>
+        {/* <button className={styles.chatButton}>
+            <Message />
+        </button> */}
         {step}
     </div>;
 };
@@ -173,6 +176,7 @@ const Writing: React.FC<writingProps> = ({ type, changeTabBarLoc, changeEndAnima
                     <>
                         <WritingDataCard />
                         <WritingDataCard />
+                        <WritingDataCard />
                     </>
                 }
             </form>
@@ -204,7 +208,7 @@ const tabBarItems = [
 ]
 
 const WritingDataCard: React.FC = () => {
-    const [writingCardStep, changeWritingCardStep] = React.useState<number>(0);
+    const [writingCardStep, changeWritingCardStep] = React.useState<number>(1);
 
     return <div className={styles.writingDataCard}>
         <div className={styles.writingDataTabBarCard}>
@@ -239,6 +243,9 @@ const WritingDataCard: React.FC = () => {
                     Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a tempus aliquet.
 
                 </div>
+                <button className={styles.editWritingButton}>
+                    <div> <MdEdit style={{ fontSize: 40 }} /></div>
+                </button>
             </div>
             :
             <div className={styles.writingScoreCard}>
@@ -251,7 +258,7 @@ const WritingDataCard: React.FC = () => {
                         <div className={styles.writingScoreItemCard}>Grammatical Range and accuracy: 7</div>
                     </div>
 
-                    <Slider value={6} total={10} />
+                    <Slider value={7} total={10} />
                 </div>
                 <div className={styles.writingScoreText}>
                     Good user<br />

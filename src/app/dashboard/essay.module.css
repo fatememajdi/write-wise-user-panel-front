@@ -205,10 +205,10 @@
 }
 
 .writingDataCard {
-    height: 575px;
+    height: 596px;
     display: flex;
     flex-direction: column;
-    border: solid 1px var(--color-seccondary);
+    border: solid 2px var(--color-seccondary);
     border-radius: 8px;
     overflow: hidden;
     margin: 55px 0px 0px 0px;
@@ -257,7 +257,7 @@
 
 .writingScoreCard {
     display: flex;
-    border: solid 2px var(--color-seccondary);
+    flex: 1;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     border-top: none !important;
@@ -265,9 +265,24 @@
     width: 100%;
     margin-bottom: 20px;
     flex-direction: column;
-    height: 500px;
-    /* z-index: -1 !important; */
+    min-height: 500px;
+    overflow-y: auto !important;
+    overflow-x: hidden;
 }
+
+.writingScoreCard::-webkit-scrollbar {
+    /* display: none; */
+    width: 13px;
+    background-color: #FFF;
+    border-radius: 33px;
+}
+
+.writingScoreCard::-webkit-scrollbar-thumb {
+    width: 13px;
+    background-color: #12263E;
+    border-radius: 33px;
+}
+
 
 .writingScoreDate {
     color: #252525;
@@ -319,7 +334,7 @@
 
 .writingEssayCard {
     display: flex;
-    border: solid 2px var(--color-seccondary);
+    flex: 1;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     border-top: none !important;
@@ -354,6 +369,17 @@
     border-radius: 33px;
 }
 
+.editWritingButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 58px;
+    width: 58px;
+    border-radius: 100% !important;
+    margin-left: auto;
+    margin-top: auto;
+    background-color: #F3F3F3;
+}
 
 @media(max-width: 1440px) {
     .typeCard {

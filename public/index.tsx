@@ -12,6 +12,7 @@ import Camera from './camera';
 import Edit from './edit';
 import CloseButton from './profile/closeButton';
 import Reload from './reload';
+import Message from './message';
 
 export {
     Search,
@@ -27,5 +28,6 @@ export {
     Camera,
     Edit,
     CloseButton,
-    Reload
+    Reload,
+    Message
 }

@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, useSession, signOut } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 
 
@@ -23,6 +23,7 @@ import Input from "@/components/input/input";
 import { Pagination } from "@/components/pagination/pagination";
 import { EMAIL_SIGN_IN, GOOGLE_SIGN_IN } from '../../config/graphql';
 import Loading from "@/components/loading/loading";
+import AppleClientSecret from '../../lib/appleClientSecret';
 
 const SignIn: React.FC = () => {
     const [loginStep, changeLoginStep] = React.useState<number>(0);
@@ -69,8 +70,8 @@ const Step1: React.FC<{ changeStep: any }> = async ({ changeStep }) => {
     }, []);
 
     const handeClickGoogle = async () => {
+        // signOut();
         const signInResponse = signIn('google');
-        // const signInResponse = signOut();
         if (signInResponse)
             console.log('google login sign in response : ', signInResponse);
 
