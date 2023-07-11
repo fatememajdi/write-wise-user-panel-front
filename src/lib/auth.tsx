@@ -4,10 +4,27 @@ import GoogleProvider from 'next-auth/providers/google';
 import AppleProvider from 'next-auth/providers/apple';
 import { useMutation } from "@apollo/react-hooks";
 import FacebookProvider from 'next-auth/providers/facebook';
+import client from '@/config/applloClient';
 
 //------------------------------------------------------------components
 import AppleClientSecret from './appleClientSecret';
 import { GOOGLE_SIGN_IN } from '../config/graphql';
+
+
+async function RefreshAccessToken(token: string) {
+    client.mutate({
+        mutation: GOOGLE_SIGN_IN,
+        variables: {
+            token: token
+        }
+    }).then((res) => {
+        console.log('sign innnnnnn : ', res.data.googleLogin.token);
+        return res.data.googleLogin.token as string
+    }).catch((err) => {
+        return 'RefreshAccessTokenError'
+    })
+}
+
 
 export const authConfig: NextAuthOptions = {
 
@@ -35,23 +52,30 @@ export const authConfig: NextAuthOptions = {
         signOut: '/signIn'
     },
     callbacks: {
-        async redirect() {
-            return 'http://localhost:3000/dashboard'
-        },
         async jwt({ token, account }) {
-            // Persist the OAuth access_token to the token right after signin
-
             if (account) {
                 token.access_token = account.id_token
             }
-            // console.log('account  : ', account);
-            // await fetch()s
             return token
         },
         async session({ session, token, user }) {
-            // Send properties to the client, like an access_token from a provider.
             session.user.token = token.access_token as string;
-            // console.log('token in session : ', session);
+            let refreshToken;
+            client.mutate({
+                mutation: GOOGLE_SIGN_IN,
+                variables: {
+                    token: token.access_token as string
+                }
+            }).then((res) => {
+                console.log('sign innnnnnn : ', res.data.googleLogin.token);
+                refreshToken = res.data.googleLogin.token;
+                session.user.refreshToken = refreshToken
+                console.log('session : ', session.user.refreshToken);
+                console.log('session : ', session);
+            }).catch((err) => {
+                console.log('refresh token error : ', err);
+            })
+            
             return session
         },
         async signIn({ user, account, profile, email, credentials }) {
@@ -61,19 +85,6 @@ export const authConfig: NextAuthOptions = {
     },
     events: {
         signIn: async ({ user, account, profile }) => {
-            // const [googleSignIn, { error, loading }] = useMutation(GOOGLE_SIGN_IN);
-
-            // await googleSignIn({
-            //     variables: {
-            //         token: account?.id_token as string,
-            //     },
-            // }).then(
-            //     (data) => {
-            //         console.log('goole login token : ', data);
-            //     }
-            // ).catch((error) => {
-            //     console.log('google sign in error : ', error);
-            // });
             console.log(account);
         }
     }
