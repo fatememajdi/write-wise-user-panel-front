@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React from "react";
 import { Formik } from 'formik';
 
@@ -6,45 +5,19 @@ import { Formik } from 'formik';
 import styles from './essay.module.css';
 
 //--------------------------------------components
-import { useMultiStepForm } from "@/components/multiStepForm/useMultiStepForm";
 import Slider from "@/components/slider/slider";
 import Input from "@/components/input/input";
 
 //--------------------------------------icons
-import { Reload } from "../../../public";
+import { Reload } from "../../../../public";
 import { MdEdit } from 'react-icons/md';
-import { Lock } from '../../../public/dashboard';
+import { Lock } from '../../../../public/dashboard';
 
-
-interface _props {
+interface writingProps {
+    type: string
     changeTabBarLoc: any
-    tabBarLoc: boolean
-    changeEndAnimation: any
+    changeEndAnimation: any,
     endAnimation: boolean
-}
-
-const Essay: React.FC<_props> = ({ tabBarLoc, changeTabBarLoc, changeEndAnimation, endAnimation }) => {
-
-    const [type, setType] = React.useState('general_task_1');
-    const { next, currentStepIndex, step } = useMultiStepForm([<ChooseType changeType={ChangeType} />,
-    <Writing type={type} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />])
-    function ChangeType(type: string) {
-        setType(type);
-        next();
-    }
-
-    return <div className={'col-12 ' + styles.essayContainer}>
-        {/* <button className={styles.chatButton}>
-            <Message />
-        </button> */}
-        {step}
-    </div>;
-};
-
-export default Essay;
-
-interface chooseTypeProps {
-    changeType: any
 }
 
 const types = [
@@ -62,34 +35,7 @@ const types = [
     },
 ]
 
-const ChooseType: React.FC<chooseTypeProps> = ({ changeType }) => {
-
-    const [teste, testtt] = React.useState(false);
-
-    return <div className={'col-12 ' + styles.chooseTypeContainer}>
-        <div className={teste ? styles.diver : styles.chooseTypeTitle}>
-            Choose your essay type:
-        </div>
-        <div className={styles.typesContainer}>
-            {types.map((item, index) =>
-                <div
-                    onClick={() => changeType(item.value)}
-                    // onClick={() => testtt(true)}
-                    className={styles.typeCard}
-                    key={index}>{item.label}</div>
-            )}
-        </div>
-    </div>;
-};
-
-interface writingProps {
-    type: string
-    changeTabBarLoc: any
-    changeEndAnimation: any,
-    endAnimation: boolean
-}
-
-const Writing: React.FC<writingProps> = ({ type, changeTabBarLoc, changeEndAnimation, endAnimation }) => {
+const Writings: React.FC<writingProps> = ({ type, changeTabBarLoc, changeEndAnimation, endAnimation }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState(false);
 
@@ -142,7 +88,7 @@ const Writing: React.FC<writingProps> = ({ type, changeTabBarLoc, changeEndAnima
                     {
                         generateWriting &&
                         <button className={styles.editButton}>
-                            <MdEdit style={{ fontSize: 45 }} />
+                            <div><MdEdit style={{ fontSize: 40 }} /></div>
                         </button>
                     }
 
@@ -271,3 +217,5 @@ const WritingDataCard: React.FC = () => {
         }
     </div>
 };
+
+export default Writings;

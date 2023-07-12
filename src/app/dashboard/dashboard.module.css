@@ -15,7 +15,7 @@
 .dashboardRightCard {}
 
 .logo {
-    margin: 28px auto;
+    margin: 32px auto;
 }
 
 .tabsContainer {
@@ -23,8 +23,7 @@
     flex-direction: column;
     border-top: solid 1px #626E7E;
     border-bottom: solid 1px #626E7E;
-    padding-top: 5px;
-    padding-right: 8px;
+    padding-right: 11px;
 }
 
 .newEssayContainer {
@@ -32,6 +31,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding: 20px 0px 18px 0px;
 }
 
 .newEssayButton {
@@ -44,16 +44,18 @@
     font-style: normal;
     font-weight: 400;
     line-height: 28px;
-    margin: 0px 8px 0px 5px;
+    margin: 0px 8px 0px 13px;
     flex: 1;
     height: 52px !important;
 }
 
 .arrowLeftButton {
     height: 52px !important;
+    width: 55px;
     background-color: #626E7E;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .plusIcon {
@@ -83,7 +85,7 @@
 .taskTabButton {
     color: #FFF;
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -94,7 +96,7 @@
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
     width: 32%;
-    height: 43px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,7 +105,7 @@
 .activeTaskTabButton {
     color: #F3F3F3;
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 500;
     padding: 0px;
@@ -114,7 +116,7 @@
     border-bottom-left-radius: 0px !important;
     width: 32%;
     border-bottom-right-radius: 0px !important;
-    height: 48px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -176,7 +178,7 @@
     flex-direction: row;
     align-items: center;
     color: #FFF;
-    font-size: 23px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 500;
     line-height: 28px;
@@ -200,15 +202,15 @@
 
 .tasksContainer::-webkit-scrollbar {
     /* display: none; */
-    width: 13px;
-    background-color: #D9D9D9;
+    width: 8px;
+    background-color: #626E7E;
     border-radius: 33px;
 }
 
 .tasksContainer::-webkit-scrollbar-thumb {
     width: 13px;
-    background-color: #12263E;
-    border-radius: 33px;
+    background-color: #F3F3F3;
+    border-radius: 8px;
 }
 
 .taskCard {
@@ -217,18 +219,19 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: solid 1px #626E7E;
-    padding: 30px 33px 22px 18px;
+    padding: 28px 31px 22px 20px;
     cursor: pointer;
 }
 
 .taskCardTitle {
     color: #FFF;
-    font-size: 24px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 300;
     max-width: 75%;
     display: flex;
     flex-direction: column;
+    line-height: 12px;
 }
 
 .taskCardTitle span {
@@ -236,12 +239,13 @@
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
-    margin-top: 15px;
+    margin-top: 20px;
+    line-height: 12px;
 }
 
 .taskCardScore {
     color: #FFF;
-    font-size: 36px;
+    font-size: 32px;
     font-style: normal;
     font-weight: 500;
     line-height: 12px;
@@ -261,6 +265,14 @@
     width: 80px;
     height: 100% !important;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.briefLogo {
+    height: 69px;
+    width: 19px;
+    margin: 12px 0px;
 }
 
 .leftTabBarButton {
@@ -271,8 +283,27 @@
     margin-top: auto
 }
 
+.openDrawerButtonCard {
+    border-top: solid 1px #626E7E;
+    width: 100%;
+    padding: 12px 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.openDrawerButton {
+    background-color: #626E7E;
+    border-radius: 8px;
+    height: 52px;
+    width: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .topTabBarCard {
-    height: 96px;
+    height: 70px;
     display: flex;
     flex: 1;
     background-color: var(--color-seccondary);
@@ -296,13 +327,13 @@
 
 .dashboardContentRightContainer::-webkit-scrollbar {
     /* display: none; */
-    width: 13px;
+    width: 12px;
     background-color: #D9D9D9;
     border-radius: 33px;
 }
 
 .dashboardContentRightContainer::-webkit-scrollbar-thumb {
-    width: 13px;
+    width: 12px;
     background-color: #12263E;
     border-radius: 33px;
 }
@@ -314,14 +345,14 @@
     justify-content: center;
     color: #FFF;
     text-align: center;
-    font-size: 24px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     cursor: pointer;
     padding: 0px 40px;
     border-radius: 8px;
-    height: 96px !important;
+    height: 70px !important;
 }
 
 .lockIcon {
@@ -342,20 +373,27 @@
     position: absolute;
     flex-direction: column;
     top: 16px;
-    padding: 0px 50px 0px 24px;
-    height: 96px !important;
+    padding: 30px 95px 0px 90px;
+    height: 100px !important;
     width: 100% !important;
 }
 
 .topTabBarContainerAnimation {
     width: 100% !important;
     display: flex;
-    padding: 0px 50px 0px 24px;
+    padding: 30px 95px 0px 90px;
     position: absolute;
     animation-name: example;
     animation-duration: 1s;
     flex-direction: column;
     animation-fill-mode: forwards;
+}
+
+.essayContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-bottom: 100px;
 }
 
 @keyframes example {
@@ -364,7 +402,7 @@
     }
 
     to {
-        top: 90%;
+        top: 85vh;
     }
 }
 

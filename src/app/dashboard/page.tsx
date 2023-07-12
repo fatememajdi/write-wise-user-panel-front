@@ -3,25 +3,27 @@
 import React from "react";
 import Image from "next/image";
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
+import { useSession } from "next-auth/react";
 import Popover from '@mui/material/Popover';
+import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
 
 //-----------------------------------------styles
 import styles from './dashboard.module.css';
 
 //-----------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-import Essay from "./Essay";
-import Score from "./score";
+import Loading from "@/components/loading/loading";
+import ChooseType from "./essay/chooseType";
+import Writings from "./essay/writings";
 
 //-----------------------------------------icons
-import { AiOutlinePlus } from 'react-icons/ai';
-import { IoIosArrowBack } from 'react-icons/io';
-import { TfiMenu } from 'react-icons/tfi';
 import { User, Wallet, Support, Progress, Lock } from '../../../public/dashboard';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { TfiMenu } from 'react-icons/tfi';
 
-const drawerWidth = 400;
+const drawerWidth = 380;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
@@ -65,21 +67,72 @@ const menuItems = [
     }
 ]
 
+const tabBarItems = [
+    {
+        title: 'Essay',
+        active: true
+    },
+    {
+        title: 'Score',
+        active: true
+    },
+    {
+        title: 'Analysis',
+        active: false
+    },
+    {
+        title: 'Recommendations',
+        active: false
+    },
+    {
+        title: 'WWAI Tutor',
+        active: false
+    },
+]
+
 const Dashboard: React.FC = () => {
-    const { goTo, currentStepIndex, step } = useMultiStepForm([<GeneralTask1 />, <AcademicTask1 />, <Task2 />])
-    const [open, setOpen] = React.useState(true);
+    const { goTo, currentStepIndex, step } = useMultiStepForm([<GeneralTask1 />, <AcademicTask1 />, <Task2 />]);
+    const [dashboardContentStep, changeDashboardContentStep] = React.useState<number>(0);
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const [endAnimation, changeEndAnimation] = React.useState<boolean>(false);
+    const [tabBarLoc, changeTabBarLoc] = React.useState<boolean>(false);
+    const { data: session, status } = useSession({ required: true });
+    const [loading, setLoading] = React.useState<boolean>(true);
+    const [type, setType] = React.useState('general_task_1');
+    const [open, setOpen] = React.useState<boolean>(true);
 
     const Open = Boolean(anchorEl);
     const id = Open ? 'simple-popover' : undefined;
+
+    function ChangeType(type: string) {
+        setType(type);
+        changeDashboardContentStep(1);
+    }
+
+    //------------------------------------------------------------------check user loged in
+    React.useEffect(() => {
+        if (!localStorage.getItem('user')) {
+            if (status != "loading") {
+                if (status === 'authenticated') {
+                    localStorage.setItem('user', session.user.token);
+                    setLoading(false);
+                }
+                else {
+                    console.log('please signIn');
+                }
+            }
+        } else
+            setLoading(false);
+    });
+
+    const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handlePopOverClose = () => {
+        setAnchorEl(null);
+    };
+
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -88,105 +141,186 @@ const Dashboard: React.FC = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    return <Box sx={{ display: 'flex' }}>
-        <Drawer
-            sx={{
-                width: drawerWidth,
-                flexShrink: 0,
-                '& .MuiDrawer-paper': {
+
+    if (loading)
+        return <Loading />
+    else
+        return <Box sx={{ display: 'flex' }}>
+            <Drawer
+                sx={{
                     width: drawerWidth,
-                    boxSizing: 'border-box',
-                },
-            }}
-            variant="persistent"
-            anchor="left"
-            open={open}
-        >
-            <div className={'col-12 ' + styles.dashboardLeftCard}>
-                <Image
-                    className={styles.logo}
-                    src="/logo3.svg"
-                    alt="Logo"
-                    width={205}
-                    height={15}
-                    priority
-                />
-                <div className={'col-12 ' + styles.tabsContainer}>
-                    <div className={'col-12 ' + styles.newEssayContainer}>
-                        <button className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} /></button>
-                        <button
-                            onClick={handleDrawerClose}
-                            className={styles.arrowLeftButton}><IoIosArrowBack className={styles.arrowIcon} /></button>
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: drawerWidth,
+                        boxSizing: 'border-box',
+                    },
+                }}
+                variant="persistent"
+                anchor="left"
+                open={open}
+            >
+                {/* //--------------------------------------------------------------drawer content */}
+                <div className={'col-12 ' + styles.dashboardLeftCard}>
+                    <Image
+                        className={styles.logo}
+                        src="/logo3.svg"
+                        alt="Logo"
+                        width={175}
+                        height={17}
+                        priority
+                    />
+                    <div className={'col-12 ' + styles.tabsContainer}>
+                        <div className={'col-12 ' + styles.newEssayContainer}>
+                            <button
+                                onClick={async () => {
+                                    await changeTabBarLoc(false);
+                                    await changeEndAnimation(false);
+                                    await changeDashboardContentStep(0);
+                                }}
+                                className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} /></button>
+                            <button
+                                onClick={handleDrawerClose}
+                                className={styles.arrowLeftButton}><div><IoIosArrowBack className={styles.arrowIcon} /></div></button>
+                        </div>
+
+                        <div className={'col-12 ' + styles.taskTabsContainer}>
+
+                            <button
+                                onClick={() => goTo(0)}
+                                className={currentStepIndex === 0 ? styles.activeTaskTabButton : styles.taskTabButton} >
+                                Gen Task 1</button>
+
+                            <button
+                                onClick={() => goTo(1)}
+                                className={currentStepIndex === 1 ? styles.activeTaskTabButton : styles.taskTabButton} >
+                                Ac Task 1</button>
+
+                            <button
+                                onClick={() => goTo(2)}
+                                className={currentStepIndex === 2 ? styles.activeTaskTabButton : styles.taskTabButton} >
+                                Task 2</button>
+
+                        </div>
                     </div>
-
-                    <div className={'col-12 ' + styles.taskTabsContainer}>
-
+                    <div className={'col-12 ' + styles.drawerContent}>
+                        {step}
+                    </div>
+                    <div className={'col-12 ' + styles.drawerFooterContainer}>
                         <button
-                            onClick={() => goTo(0)}
-                            className={currentStepIndex === 0 ? styles.activeTaskTabButton : styles.taskTabButton} >
-                            Gen Task 1</button>
-
-                        <button
-                            onClick={() => goTo(1)}
-                            className={currentStepIndex === 1 ? styles.activeTaskTabButton : styles.taskTabButton} >
-                            Ac Task 1</button>
-
-                        <button
-                            onClick={() => goTo(2)}
-                            className={currentStepIndex === 2 ? styles.activeTaskTabButton : styles.taskTabButton} >
-                            Task 2</button>
-
+                            onClick={handlePopOverOpen}
+                            className={styles.menuButton}>
+                            <TfiMenu className={styles.menuIcon} />
+                        </button>
+                        <div className={styles.drawerFooterText}>
+                            Welcome  user name
+                        </div>
                     </div>
                 </div>
-                <div className={'col-12 ' + styles.drawerContent}>
-                    {step}
-                </div>
-                <div className={'col-12 ' + styles.drawerFooterContainer}>
-                    <button
-                        onClick={handleClick}
-                        className={styles.menuButton}>
-                        <TfiMenu className={styles.menuIcon} />
-                    </button>
-                    <div className={styles.drawerFooterText}>
-                        Welcome  user name
+                {/* //--------------------------------------------------------------drawer content */}
+
+            </Drawer>
+
+            <Main open={open} style={{ padding: 0 }}>
+                {/* //-------------------------------------------------------------dashboard content */}
+                <div className={styles.dashboardContentContainer}>
+                    {!open &&
+                        <div className={styles.leftTabBar}>
+                            <Image
+                                className={styles.briefLogo}
+                                src="/dashboard/W W AI.svg"
+                                alt="Logo"
+                                width={19}
+                                height={69}
+                                priority
+                            />
+
+                            <div className={styles.openDrawerButtonCard}>
+                                <button
+                                    onClick={handleDrawerOpen}
+                                    className={styles.openDrawerButton}>
+                                    <div><IoIosArrowForward className={styles.arrowIcon} /></div>
+                                </button>
+                            </div>
+
+                            <div className={'col-12 ' + styles.leftTabBarButton}>
+                                <button
+                                    onClick={handlePopOverOpen}
+                                    className={styles.menuButton}>
+                                    <TfiMenu className={styles.menuIcon} />
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+                    <div
+                        style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
+                        className={styles.dashboardContentRightContainer}>
+
+                        <div
+                            style={endAnimation ? { display: 'none' } : { display: 'flex' }}
+                            className={tabBarLoc ? styles.topTabBarContainerAnimation : styles.topTabBarContainer}>
+                            <div className={styles.topTabBarCard}>
+                                {
+                                    tabBarItems.map((item, index) =>
+                                        <div
+                                            style={{ cursor: 'context-menu' }}
+                                            className={0 === index && !tabBarLoc ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard
+                                                : styles.topTabBarItemCard}
+                                            key={index} >
+                                            <span
+                                                style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
+                                            {!item.active && <Lock className={styles.lockIcon} />}
+                                        </div>
+                                    )
+                                }
+                            </div>
+
+                        </div>
+
+                        <div className={'col-12 ' + styles.essayContainer}>
+                            {
+                                dashboardContentStep === 0 ?
+                                    <ChooseType changeType={ChangeType} /> :
+                                    <Writings type={type} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
+                            }
+                        </div>
+
                     </div>
+
                 </div>
-            </div>
-        </Drawer>
+                {/* //-------------------------------------------------------------dashboard content */}
 
-        <Main open={open} style={{ padding: 0 }}>
+            </Main>
 
-            <DashboardContent drawerOpen={open} handlePopOverOpen={handleClick} handleDrawerOpen={handleDrawerOpen} />
+            {/* -------------------------------------------------------------------popover menu card */}
+            <Popover
+                id={id}
+                open={Open}
+                anchorEl={anchorEl}
+                onClose={handlePopOverClose}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+            >
+                <div className={styles.popOverCard}>
+                    {
+                        menuItems.map((item, index) =>
+                            <a key={index} className={styles.menuItemCard}>
+                                <item.icon />
+                                <span> {item.title}</span>
+                            </a>
+                        )
+                    }
+                </div>
+            </Popover>
+            {/* -------------------------------------------------------------------popover menu card */}
 
-        </Main>
-
-        <Popover
-            id={id}
-            open={Open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-            }}
-            transformOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-            }}
-        >
-            <div className={styles.popOverCard}>
-                {
-                    menuItems.map((item, index) =>
-                        <a key={index} className={styles.menuItemCard}>
-                            <item.icon />
-                            <span> {item.title}</span>
-                        </a>
-                    )
-                }
-            </div>
-        </Popover>
-
-    </Box>
+        </Box>
 };
 
 export default Dashboard;
@@ -256,92 +390,5 @@ const Task2: React.FC = () => {
                 </div>
             </div>)
         }
-    </div>
-};
-
-
-interface _props {
-    drawerOpen: Boolean;
-    handleDrawerOpen: any;
-    handlePopOverOpen: any;
-}
-
-const tabBarItems = [
-    {
-        title: 'Essay',
-        active: true
-    },
-    {
-        title: 'Score',
-        active: true
-    },
-    {
-        title: 'Analysis',
-        active: false
-    },
-    {
-        title: 'Recommendations',
-        active: false
-    },
-    {
-        title: 'WWAI Tutor',
-        active: false
-    },
-]
-
-const DashboardContent: React.FC<_props> = ({ drawerOpen, handleDrawerOpen, handlePopOverOpen }) => {
-    const [tabBarLoc, changeTabBarLoc] = React.useState<boolean>(false);
-    const [endAnimation, changeEndAnimation] = React.useState<boolean>(false);
-    const [writingCardStep, changeWritingCardStep] = React.useState<number>(0);
-    const { goTo, currentStepIndex, step } = useMultiStepForm(
-        [<Essay tabBarLoc={tabBarLoc} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation}/>, <Score />])
-
-    return <div className={styles.dashboardContentContainer}>
-        {!drawerOpen &&
-            <div className={styles.leftTabBar}>
-                <div className={'col-12 ' + styles.leftTabBarButton}>
-                    <button
-                        onClick={handleDrawerOpen}
-                        className={styles.menuButton}>
-                        <TfiMenu className={styles.menuIcon} />
-                    </button>
-                </div>
-            </div>
-        }
-
-        <div
-            style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
-            className={styles.dashboardContentRightContainer}>
-
-            <div
-                style={endAnimation ? { display: 'none' } : { display: 'flex' }}
-                className={tabBarLoc ? styles.topTabBarContainerAnimation : styles.topTabBarContainer}>
-                <div className={styles.topTabBarCard}>
-                    {
-                        tabBarItems.map((item, index) =>
-                            <div
-                                onClick={() => {
-                                    if (item.active && !tabBarLoc) goTo(index)
-                                    else if (item.active) changeWritingCardStep(index);
-                                }}
-                                style={!item.active ? { cursor: 'context-menu' } : {}}
-                                className={currentStepIndex === index && !tabBarLoc ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard
-                                    : writingCardStep === index && tabBarLoc ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard
-                                        : styles.topTabBarItemCard}
-                                key={index} >
-                                <span
-                                    style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
-                                {!item.active && <Lock className={styles.lockIcon} />}
-                            </div>
-                        )
-                    }
-                </div>
-
-            </div>
-
-            {step}
-
-        </div>
-
     </div>
 };

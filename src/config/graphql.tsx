@@ -23,3 +23,11 @@ mutation GoogleSignIn($token:String!){
     }
   }
 `;
+
+export const META_SIGN_IN = gql`
+mutation MetaSignIn($token:String!){
+    metaLogin(loginWithMeta:{token:$token}){
+      token
+    }
+  }
+`;

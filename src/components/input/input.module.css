@@ -50,11 +50,11 @@
 
 .formSectionInput textarea {
     border: none !important;
-    font-size: 12px !important;
+    font-size: 20px !important;
     transition: 0s border;
     min-height: 250px;
-    background-color: var(--color-seccondary) !important;
-    color: var(--color-whiteText) !important;
+    background-color: var(--color-background) !important;
+    color: var(--color-blackText) !important;
     border: solid 1px var(--color-seccondary) !important;
     padding: 10px !important;
 }
