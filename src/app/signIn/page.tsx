@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
-import { signIn, useSession, signOut } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 
 
@@ -36,7 +36,7 @@ const SignIn: React.FC = () => {
                     alt="Logo"
                     width={151}
                     height={16}
-                    loading="eager" 
+                    loading="eager"
                     priority
                 />
                 {
@@ -62,57 +62,27 @@ export default SignIn;
 const Step1: React.FC<{ changeStep: any }> = async ({ changeStep }) => {
 
     const router = useRouter();
-    const [googleSignIn, { error, loading }] = useMutation(GOOGLE_SIGN_IN);
-    const { data } = useSession();
-
-    React.useEffect(() => {
-        GoogleLogIn();
-    }, []);
 
     const handeClickGoogle = async () => {
         // signOut();
+        // localStorage.clear();
         const signInResponse = signIn('google');
         if (signInResponse)
             console.log('google login sign in response : ', signInResponse);
 
     }
-
-    const GoogleLogIn = async () => {
-        await googleSignIn({
-            variables: {
-                token: data?.user.token as string,
-            },
-        }).then(
-            (data) => {
-                console.log('goole login token : ', data);
-            }
-        ).catch((error) => {
-            console.log('google sign in error : ', error);
-        });
-    }
-
     const handeClickApple = async () => {
-
         const signInResponse = await signIn('apple');
-        if (signInResponse && !signInResponse.error) {
-            router.push('/dashboard');
-        } else {
-            console.log('Sign In error : ', signInResponse?.error);
-            // toast
-        }
+        if (signInResponse)
+            console.log('google login sign in response : ', signInResponse);
     }
 
     const handeClickFaceBook = async () => {
 
         const signInResponse = await signIn('facebook');
         console.log('fasebook signin response : ', signInResponse);
-        if (signInResponse && !signInResponse.error) {
-            // router.push('/dashboard');
-            console.log('hiii', signInResponse);
-        } else {
-            console.log('Sign In error : ', signInResponse?.error);
-            // toast
-        }
+        if (signInResponse)
+            console.log('google login sign in response : ', signInResponse);
     }
 
     return <div className={'col-12 ' + styles.stepContainer}>
@@ -157,69 +127,49 @@ const EmailValidationSchema = Yup.object().shape({
 const Step2: React.FC = () => {
 
     const router = useRouter();
-    const [emailSignIn, { error, loading }] = useMutation(EMAIL_SIGN_IN);
+    const [emailSignIn, { error }] = useMutation(EMAIL_SIGN_IN);
+    const [loading, changeLoading] = React.useState<boolean>(false);
 
     const handleEmailSignIn = async (values: any) => {
+        changeLoading(true);
         localStorage.setItem('user', values.email);
         await emailSignIn({
             variables: {
                 email: values.email,
             },
-        }).then(
-            (data) => {
-                router.push('/signIn/verificationCode')
-            }
-        ).catch((error) => {
-            console.log('verification email error : ', error);
+        }).then(async () => {
+            await router.push('/signIn/verificationCode');
+            changeLoading(false);
+        }
+        ).catch(() => {
+            changeLoading(false);
+            if (error)
+                toast.error(error.message, {
+                    className: 'error-toast'
+                });
+            else
+                toast.error("Try again!", {
+                    className: 'error-toast'
+                });
         });
     };
 
     const handeClickGoogle = async () => {
-
-
-        try {
-            const signInResponse = await signIn('google', {
-                redirect: true,
-                callbackUrl: '/dashboard'
-            });
-            console.log('sasdf' + signInResponse);
-
-        } catch (error) {
-            console.log('sasdf' + error);
-        }
-
-        // if (signInResponse) {
-        //     router.push('/dashboard');
-        //     console.log(signInResponse);
-        // } else {
-        //     console.log('Sign In error : ', signInResponse?.error);
-        //     // toast
-        // }
+        const signInResponse = signIn('google');
+        if (signInResponse)
+            console.log('google login sign in response : ', signInResponse);
     }
 
     const handeClickApple = async () => {
-
         const signInResponse = await signIn('apple');
-        if (signInResponse && !signInResponse.error) {
-            router.push('/dashboard');
-        } else {
-            console.log('Sign In error : ', signInResponse?.error);
-            // toast
-        }
+        if (signInResponse)
+            console.log('google login sign in response : ', signInResponse);
     }
 
     const handeClickFaceBook = async () => {
-
         const signInResponse = await signIn('facebook');
-        console.log('facebook signin response : ', signInResponse);
-        if (signInResponse && !signInResponse.error) {
-            // router.push('/dashboard');
-            console.log(signInResponse);
-
-        } else {
-            console.log('Sign In error : ', signInResponse);
-            // toast
-        }
+        if (signInResponse)
+            console.log('google login sign in response : ', signInResponse);
     }
 
     if (loading)

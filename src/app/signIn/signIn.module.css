@@ -159,6 +159,8 @@
     font-weight: 500;
     font-size: 24px;
     line-height: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .footerText {
@@ -204,6 +206,8 @@
     padding: 20px 0px;
     border-radius: 15px !important;
     margin-bottom: 35px;
+    align-items: center;
+    justify-content: center;
 }
 
 .step2ButtonContaier {

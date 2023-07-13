@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import Popover from '@mui/material/Popover';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
+import { useRouter } from 'next/navigation';
 
 //-----------------------------------------styles
 import styles from './dashboard.module.css';
@@ -96,10 +97,18 @@ const Dashboard: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const [endAnimation, changeEndAnimation] = React.useState<boolean>(false);
     const [tabBarLoc, changeTabBarLoc] = React.useState<boolean>(false);
-    const { data: session, status } = useSession({ required: true });
+    const { data: session, status } = useSession({
+        required: true, onUnauthenticated() {
+            if (localStorage.getItem('user'))
+                return
+            else
+                router.push('/signIn');
+        }
+    });
     const [loading, setLoading] = React.useState<boolean>(true);
     const [type, setType] = React.useState('general_task_1');
     const [open, setOpen] = React.useState<boolean>(true);
+    const router = useRouter();
 
     const Open = Boolean(anchorEl);
     const id = Open ? 'simple-popover' : undefined;
@@ -118,7 +127,7 @@ const Dashboard: React.FC = () => {
                     setLoading(false);
                 }
                 else {
-                    console.log('please signIn');
+                    router.push('/signIn');
                 }
             }
         } else

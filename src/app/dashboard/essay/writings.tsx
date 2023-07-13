@@ -53,7 +53,7 @@ const Writings: React.FC<writingProps> = ({ type, changeTabBarLoc, changeEndAnim
             topic: '',
             body: ''
         }}
-        validationSchema={WritingValidationSchema}
+        // validationSchema={WritingValidationSchema}
         enableReinitialize
         onSubmit={async (values) => {
             // await handleEmailSignIn(values);

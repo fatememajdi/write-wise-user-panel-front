@@ -26,21 +26,24 @@ const VerificationCodeValidationSchema = Yup.object().shape({
 const VerificationCode: React.FC = () => {
 
     const router = useRouter();
-    const [verificationCode, { error, loading }] = useMutation(VERIFICATION_CODE);
+    const [verificationCode, { error }] = useMutation(VERIFICATION_CODE);
+    const [loading, changeLoadig] = React.useState<boolean>(false);
 
     const handleSignIn = async (values: any) => {
+        changeLoadig(true);
         let email = localStorage.getItem('user');
         await verificationCode({
             variables: {
                 email: email,
                 code: values.code
             },
-        }).then(
-            (data) => {
-                localStorage.setItem("user", JSON.stringify(data.data.verifyEmail.token));
-                router.push('/dashboard')
-            }
+        }).then(async (data) => {
+            localStorage.setItem("user", JSON.stringify(data.data.verifyEmail.token));
+            await router.push('/dashboard');
+            changeLoadig(false);
+        }
         ).catch(() => {
+            changeLoadig(false);
             if (error)
                 toast.error(error.message, {
                     className: 'error-toast'
@@ -63,7 +66,7 @@ const VerificationCode: React.FC = () => {
                     width={151}
                     height={16}
                     priority
-                    loading="eager" 
+                    loading="eager"
                 />
                 <Formik
                     initialValues={{

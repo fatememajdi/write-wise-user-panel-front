@@ -48,6 +48,9 @@ export const authConfig: NextAuthOptions = {
         signOut: '/signIn'
     },
     callbacks: {
+        async redirect({ url, baseUrl }) {
+            return 'http://localhost:3000/dashboard'
+        },
         async jwt({ token, account, }) {
             if (account) {
                 if (account.provider === 'google')
