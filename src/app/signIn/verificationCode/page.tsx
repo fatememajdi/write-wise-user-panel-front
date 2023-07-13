@@ -63,6 +63,7 @@ const VerificationCode: React.FC = () => {
                     width={151}
                     height={16}
                     priority
+                    loading="eager" 
                 />
                 <Formik
                     initialValues={{

@@ -167,6 +167,7 @@ const Dashboard: React.FC = () => {
                         alt="Logo"
                         width={175}
                         height={17}
+                        loading="eager"
                         priority
                     />
                     <div className={'col-12 ' + styles.tabsContainer}>
@@ -229,6 +230,7 @@ const Dashboard: React.FC = () => {
                                 className={styles.briefLogo}
                                 src="/dashboard/W W AI.svg"
                                 alt="Logo"
+                                loading="eager"
                                 width={19}
                                 height={69}
                                 priority

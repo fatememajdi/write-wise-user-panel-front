@@ -2,7 +2,6 @@
 import React from "react";
 import { Select } from 'antd';
 import { Chart } from "chart.js";
-import Image from "next/image";
 
 //--------------------------------------------styles
 import styles from './dashboard.module.css';

@@ -51,6 +51,7 @@ const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerConta
             alt="Logo"
             width={133}
             height={15}
+            loading="eager" 
             priority
         />
         <Link className={styles.link} href={'/'}>Terms of Service</Link>

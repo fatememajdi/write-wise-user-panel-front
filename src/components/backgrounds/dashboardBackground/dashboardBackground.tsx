@@ -11,6 +11,7 @@ const DashboardBackground: React.FC<{ children: React.ReactNode }> = ({ children
         alt="background"
         width={427.75}
         height={357}
+        loading="eager" 
         priority
     />
 
@@ -20,6 +21,7 @@ const DashboardBackground: React.FC<{ children: React.ReactNode }> = ({ children
         alt="background"
         width={427.75}
         height={357}
+        loading="eager" 
         priority
     />
 
@@ -29,6 +31,7 @@ const DashboardBackground: React.FC<{ children: React.ReactNode }> = ({ children
         alt="background"
         width={377}
         height={377}
+        loading="eager" 
         priority
     />
 
@@ -38,6 +41,7 @@ const DashboardBackground: React.FC<{ children: React.ReactNode }> = ({ children
         alt="background"
         width={462.14}
         height={401.95}
+        loading="eager" 
         priority
     />
 
@@ -47,6 +51,7 @@ const DashboardBackground: React.FC<{ children: React.ReactNode }> = ({ children
         alt="background"
         width={462.14}
         height={401.95}
+        loading="eager" 
         priority
     />
 
@@ -56,6 +61,7 @@ const DashboardBackground: React.FC<{ children: React.ReactNode }> = ({ children
         alt="background"
         width={462.14}
         height={401.95}
+        loading="eager" 
         priority
     />
 
@@ -65,6 +71,7 @@ const DashboardBackground: React.FC<{ children: React.ReactNode }> = ({ children
         alt="background"
         width={462.14}
         height={401.95}
+        loading="eager" 
         priority
     />
     {children}

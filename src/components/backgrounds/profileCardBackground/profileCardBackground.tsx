@@ -11,6 +11,7 @@ const ProfileCardBackground: React.FC<{ children: React.ReactNode }> = ({ childr
         alt="background"
         width={569.24}
         height={480.45}
+        loading="eager" 
         priority
     />
     <Image
@@ -19,6 +20,7 @@ const ProfileCardBackground: React.FC<{ children: React.ReactNode }> = ({ childr
         alt="background"
         width={427.75}
         height={357}
+        loading="eager" 
         priority
     />
     <Image
@@ -27,6 +29,7 @@ const ProfileCardBackground: React.FC<{ children: React.ReactNode }> = ({ childr
         alt="background"
         width={377}
         height={377}
+        loading="eager" 
         priority
     />
     <Image
@@ -35,6 +38,7 @@ const ProfileCardBackground: React.FC<{ children: React.ReactNode }> = ({ childr
         alt="background"
         width={427.75}
         height={357}
+        loading="eager" 
         priority
     />
     <Image
@@ -43,6 +47,7 @@ const ProfileCardBackground: React.FC<{ children: React.ReactNode }> = ({ childr
         alt="background"
         width={377}
         height={377}
+        loading="eager" 
         priority
     />
     <Image
@@ -51,6 +56,7 @@ const ProfileCardBackground: React.FC<{ children: React.ReactNode }> = ({ childr
         alt="background"
         width={427.75}
         height={357}
+        loading="eager" 
         priority
     />
     <Image
@@ -59,6 +65,7 @@ const ProfileCardBackground: React.FC<{ children: React.ReactNode }> = ({ childr
         alt="background"
         width={377}
         height={377}
+        loading="eager" 
         priority
     />
     <Image
@@ -67,6 +74,7 @@ const ProfileCardBackground: React.FC<{ children: React.ReactNode }> = ({ childr
         alt="background"
         width={427.75}
         height={357}
+        loading="eager" 
         priority
     />
     {children}

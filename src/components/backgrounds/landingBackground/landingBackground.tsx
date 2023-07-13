@@ -13,6 +13,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         alt="Background"
         width={509}
         height={477}
+        loading="eager" 
         priority
     />
     <Image
@@ -21,6 +22,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         alt="Background"
         width={509}
         height={457}
+        loading="eager" 
         priority
     />
     <Image
@@ -29,6 +31,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         alt="Background"
         width={360}
         height={326}
+        loading="eager" 
         priority
     />
     <Image
@@ -37,6 +40,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         alt="Background"
         width={1719}
         height={267}
+        loading="eager" 
         priority
     />
     <Image
@@ -45,6 +49,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         alt="Background"
         width={576}
         height={491}
+        loading="eager" 
         priority
     />
     <Image
@@ -53,6 +58,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         alt="Background"
         width={576}
         height={491}
+        loading="eager" 
         priority
     />
     <Image
@@ -61,6 +67,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         alt="Background"
         width={427}
         height={357}
+        loading="eager" 
         priority
     />
     <Image
@@ -69,6 +76,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         alt="Background"
         width={328}
         height={377}
+        loading="eager" 
         priority
     />
     <Image
@@ -77,6 +85,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         alt="Background"
         width={377}
         height={377}
+        loading="eager" 
         priority
     />
     <Image
@@ -85,6 +94,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         alt="Background"
         width={377}
         height={350}
+        loading="eager" 
         priority
     />
     {children}

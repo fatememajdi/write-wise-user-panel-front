@@ -37,6 +37,7 @@ const LandingThirdHeader: React.FC = () => {
                 width={133}
                 height={15}
                 priority
+                loading="eager" 
             />
             {
                 headerItems.map(

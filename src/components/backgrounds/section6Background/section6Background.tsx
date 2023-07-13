@@ -11,6 +11,7 @@ const Section6Background: React.FC<{ children: React.ReactNode }> = ({ children 
         alt="background"
         width={208}
         height={168}
+        loading="eager" 
         priority
     />
     <Image
@@ -19,6 +20,7 @@ const Section6Background: React.FC<{ children: React.ReactNode }> = ({ children 
         alt="background"
         width={224}
         height={241}
+        loading="eager" 
         priority
     />
     <Image
@@ -27,6 +29,7 @@ const Section6Background: React.FC<{ children: React.ReactNode }> = ({ children 
         alt="background"
         width={224}
         height={241}
+        loading="eager" 
         priority
     />
     <Image
@@ -35,6 +38,7 @@ const Section6Background: React.FC<{ children: React.ReactNode }> = ({ children 
         alt="background"
         width={427.75}
         height={357}
+        loading="eager" 
         priority
     />
     <Image
@@ -43,6 +47,7 @@ const Section6Background: React.FC<{ children: React.ReactNode }> = ({ children 
         alt="background"
         width={427.75}
         height={357}
+        loading="eager" 
         priority
     />
     {children}

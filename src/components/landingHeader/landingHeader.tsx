@@ -54,6 +54,7 @@ const LandingHeader: React.FC = () => {
                 height="0"
                 sizes="100vw"
                 priority
+                loading="eager" 
             />
 
             <Image
@@ -64,6 +65,7 @@ const LandingHeader: React.FC = () => {
                 height="0"
                 sizes="100vw"
                 priority
+                loading="eager" 
             />
 
             <div className={'col-12 ' + styles.headerCard}>
@@ -75,6 +77,7 @@ const LandingHeader: React.FC = () => {
                         width={133}
                         height={15}
                         priority
+                        loading="eager" 
                     />
                     {
                         headerItems.map(
@@ -111,6 +114,7 @@ const LandingHeader: React.FC = () => {
                                 width={33}
                                 height={33}
                                 priority
+                                loading="eager" 
                             />
                             <Input
                                 className={styles.searchInput}

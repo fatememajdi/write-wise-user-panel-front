@@ -29,6 +29,7 @@ const Section2Background: React.FC<{ children: React.ReactNode }> = ({ children 
         alt="background"
         width={377}
         height={353}
+        loading="eager" 
         priority
     />
     <Image
@@ -37,6 +38,7 @@ const Section2Background: React.FC<{ children: React.ReactNode }> = ({ children 
         alt="background"
         width={377}
         height={459}
+        loading="eager" 
         priority
     />
 

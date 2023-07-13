@@ -23,7 +23,6 @@ import Input from "@/components/input/input";
 import { Pagination } from "@/components/pagination/pagination";
 import { EMAIL_SIGN_IN, GOOGLE_SIGN_IN } from '../../config/graphql';
 import Loading from "@/components/loading/loading";
-import AppleClientSecret from '../../lib/appleClientSecret';
 
 const SignIn: React.FC = () => {
     const [loginStep, changeLoginStep] = React.useState<number>(0);
@@ -37,6 +36,7 @@ const SignIn: React.FC = () => {
                     alt="Logo"
                     width={151}
                     height={16}
+                    loading="eager" 
                     priority
                 />
                 {

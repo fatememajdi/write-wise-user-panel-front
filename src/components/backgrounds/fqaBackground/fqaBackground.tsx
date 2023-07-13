@@ -11,6 +11,7 @@ const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         alt="background"
         width={259}
         height={256}
+        loading="eager" 
         priority
     />
     <Image
@@ -19,6 +20,7 @@ const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         alt="background"
         width={259}
         height={256}
+        loading="eager" 
         priority
     />
     <Image
@@ -27,6 +29,7 @@ const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         alt="background"
         width={301.14}
         height={237}
+        loading="eager" 
         priority
     />
     <Image
@@ -35,6 +38,7 @@ const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         alt="background"
         width={377}
         height={377}
+        loading="eager" 
         priority
     />
 

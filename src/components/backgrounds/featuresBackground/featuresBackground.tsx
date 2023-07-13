@@ -12,6 +12,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             alt="background"
             width={386}
             height={183}
+            loading="eager"
             priority
         />
         {/* <Image
@@ -44,6 +45,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             alt="background"
             width={372}
             height={347}
+            loading="eager"
             priority
         />
         <Image
@@ -52,6 +54,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             alt="background"
             width={489}
             height={293}
+            loading="eager"
             priority
         />
         <Image
@@ -60,6 +63,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             alt="background"
             width={489}
             height={293}
+            loading="eager"
             priority
         />
         <Image
@@ -68,6 +72,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             alt="background"
             width={346}
             height={296}
+            loading="eager"
             priority
         />
         <Image
@@ -76,6 +81,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             alt="background"
             width={346}
             height={296}
+            loading="eager"
             priority
         />
         <Image
@@ -84,6 +90,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             alt="background"
             width={378.08}
             height={449.02}
+            loading="eager"
             priority
         />
         <Image
@@ -92,6 +99,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             alt="background"
             width={378.08}
             height={449.02}
+            loading="eager"
             priority
         />
         <Image
@@ -100,6 +108,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             alt="background"
             width={326.61}
             height={188.38}
+            loading="eager"
             priority
         />
         {children}

@@ -34,6 +34,7 @@ const Profile: React.FC = () => {
                 width={133}
                 height={15}
                 priority
+                loading="eager" 
             />
             <a
                 onClick={() => {
@@ -58,6 +59,7 @@ const Profile: React.FC = () => {
                                 width={207}
                                 height={207}
                                 priority
+                                loading="eager" 
                             />
                             :
                             <Camera />

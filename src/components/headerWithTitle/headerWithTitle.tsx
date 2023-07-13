@@ -21,6 +21,7 @@ const HeaderWithTitle: React.FC<_props> = ({ title }) => {
                     alt="Logo"
                     width={180}
                     height={37}
+                    loading="eager" 
                     priority
                 />
             </div>
@@ -36,6 +37,7 @@ const HeaderWithTitle: React.FC<_props> = ({ title }) => {
                     alt="Help Icon"
                     width={50}
                     height={50}
+                    loading="eager" 
                     priority
                 />
                 {" profile"}

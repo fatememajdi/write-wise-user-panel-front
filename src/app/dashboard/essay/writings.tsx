@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 //--------------------------------------styles
 import styles from './essay.module.css';
@@ -35,6 +36,14 @@ const types = [
     },
 ]
 
+//---------------------------------------------------------------validation
+const WritingValidationSchema = Yup.object().shape({
+    topic: Yup.string(),
+    body: Yup
+        .string()
+        .required('body is required!'),
+});
+
 const Writings: React.FC<writingProps> = ({ type, changeTabBarLoc, changeEndAnimation, endAnimation }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState(false);
@@ -44,7 +53,7 @@ const Writings: React.FC<writingProps> = ({ type, changeTabBarLoc, changeEndAnim
             topic: '',
             body: ''
         }}
-        // validationSchema={EmailValidationSchema}
+        validationSchema={WritingValidationSchema}
         enableReinitialize
         onSubmit={async (values) => {
             // await handleEmailSignIn(values);
