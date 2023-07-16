@@ -32,7 +32,10 @@ const Section4: React.FC = () => {
                         <ItemDescriptionCard text="Receive an overall band score and 4 criteria-specific band scores for your essay" />
                         <ItemDescriptionCard text="No cost, unlimited usage" />
                     </div>
-                    <button onClick={() => router.push('/signIn')} className={styles.signUpButton}>
+                    <button
+                        aria-label="sign up button"
+                        onClick={() => router.push('/signIn')}
+                        className={styles.signUpButton}>
                         Signup now
                     </button>
                 </div>
@@ -62,7 +65,10 @@ const Section4: React.FC = () => {
                         <ItemDescriptionCard text="Fine-tune your arguments to excel in your IELTS writing" />
                     </div>
                 </div>
-                <button onClick={() => router.push('/signIn')} className={styles.signUpButton}>
+                <button
+                    aria-label="sign up button"
+                    onClick={() => router.push('/signIn')}
+                    className={styles.signUpButton}>
                     Signup now
                 </button>
             </div>

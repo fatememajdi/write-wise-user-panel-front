@@ -43,6 +43,7 @@ const Section1: React.FC = () => {
                 </div>
 
                 <button
+                    aria-label="write like a pro button"
                     onClick={() => router.push('/signIn')}
                     className={styles.rightContainerButton}>
                     I Want to Write Like a Pro!

@@ -207,6 +207,7 @@ const Step2: React.FC = () => {
                     />
 
                     <button
+                        aria-label="login button"
                         // onClick={() => }
                         className={styles.submitEmailButton} type="submit">
                         Log in

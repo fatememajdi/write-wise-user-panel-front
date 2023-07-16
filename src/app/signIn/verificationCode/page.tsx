@@ -101,6 +101,7 @@ const VerificationCode: React.FC = () => {
                             />
 
                             <button
+                                aria-label="login button"
                                 className={styles.submitEmailButton} type="submit">
                                 Log in
                             </button>

@@ -29,7 +29,10 @@ const Section3: React.FC = () => {
                     icon={<Rise />}
                     description="Monitor your IELTS writing improvement over time with our progress tracking feature. Review your essay history, ratings, and feedback to see your development and stay motivated on your journey to success." />
             </div>
-            <button onClick={() => router.push('/features')} className={styles.featuresButton}>
+            <button
+                aria-label="read more button"
+                onClick={() => router.push('/features')}
+                className={styles.featuresButton}>
                 Read more
             </button>
 

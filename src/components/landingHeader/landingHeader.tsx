@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Formik } from 'formik';
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 //-------------------------------------------styles
 import styles from './landingHeader.module.css';
@@ -29,8 +30,12 @@ const headerItems = [
     }
 ];
 
-const LandingHeader: React.FC = () => {
-
+const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
+    const { data: session, status } = useSession({
+        required: true, onUnauthenticated() {
+            return;
+        }
+    });
     const router = useRouter();
 
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -54,7 +59,7 @@ const LandingHeader: React.FC = () => {
                 height="0"
                 sizes="100vw"
                 priority
-                loading="eager" 
+                loading="eager"
             />
 
             <Image
@@ -65,7 +70,7 @@ const LandingHeader: React.FC = () => {
                 height="0"
                 sizes="100vw"
                 priority
-                loading="eager" 
+                loading="eager"
             />
 
             <div className={'col-12 ' + styles.headerCard}>
@@ -77,13 +82,19 @@ const LandingHeader: React.FC = () => {
                         width={133}
                         height={15}
                         priority
-                        loading="eager" 
+                        loading="eager"
                     />
                     {
                         headerItems.map(
                             (item, index) => <Link href={item.route} key={index} className={styles.headerItem} onClick={handleScroll} >{item.title}</Link>)
                     }
-                    <a onClick={() => router.push('/signIn')} className={styles.headerItem}>Signup</a>
+                    {
+                        logedIn ?
+                            <a onClick={() => router.push('/dashboard')} className={styles.headerItem}>Dashboard</a>
+                            :
+                            <a onClick={() => router.push('/signIn')} className={styles.headerItem}>Signup</a>
+                    }
+
                 </div>
                 <Formik
                     initialValues={{
@@ -114,7 +125,7 @@ const LandingHeader: React.FC = () => {
                                 width={33}
                                 height={33}
                                 priority
-                                loading="eager" 
+                                loading="eager"
                             />
                             <Input
                                 className={styles.searchInput}

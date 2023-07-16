@@ -25,7 +25,10 @@ const Section6: React.FC = () => {
                 gain personalized insights, and conquer your IELTS test with confidence. Start your journey to IELTS <br />
                 success today and take a step closer to a brighter future.
             </div>
-            <button onClick={() => router.push('/signIn')} className={styles.section6Button}>Signup now!</button>
+            <button
+                aria-label="sign up button"
+                onClick={() => router.push('/signIn')}
+                className={styles.section6Button}>Signup now!</button>
 
         </div>
     </Section6Background>

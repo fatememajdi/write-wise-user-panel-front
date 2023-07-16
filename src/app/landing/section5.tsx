@@ -22,7 +22,10 @@ const Section5: React.FC = () => {
             <div className={styles.fqaItemText + ' ' + styles.fqaLastItem}>
                 How long does it take to get feedback on my essay?
             </div>
-            <button onClick={() => router.push('/fqa')} className={styles.fqaButton}>
+            <button
+                aria-label="fqa page button"
+                onClick={() => router.push('/fqa')}
+                className={styles.fqaButton}>
                 FQA page
             </button>
         </div>

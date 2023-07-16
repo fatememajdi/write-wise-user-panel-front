@@ -49,7 +49,7 @@ const menuItems = [
     {
         title: 'Profile',
         icon: User,
-        route: ''
+        route: '/profile'
     },
     {
         title: 'Wallet',
@@ -182,6 +182,7 @@ const Dashboard: React.FC = () => {
                     <div className={'col-12 ' + styles.tabsContainer}>
                         <div className={'col-12 ' + styles.newEssayContainer}>
                             <button
+                                aria-label="new essay button"
                                 onClick={async () => {
                                     await changeTabBarLoc(false);
                                     await changeEndAnimation(false);
@@ -189,6 +190,7 @@ const Dashboard: React.FC = () => {
                                 }}
                                 className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} /></button>
                             <button
+                                aria-label="close drawer button"
                                 onClick={handleDrawerClose}
                                 className={styles.arrowLeftButton}><div><IoIosArrowBack className={styles.arrowIcon} /></div></button>
                         </div>
@@ -196,16 +198,19 @@ const Dashboard: React.FC = () => {
                         <div className={'col-12 ' + styles.taskTabsContainer}>
 
                             <button
+                                aria-label="general task1 button"
                                 onClick={() => goTo(0)}
                                 className={currentStepIndex === 0 ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Gen Task 1</button>
 
                             <button
+                                aria-label="academic task1 button"
                                 onClick={() => goTo(1)}
                                 className={currentStepIndex === 1 ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Ac Task 1</button>
 
                             <button
+                                aria-label="task2 button"
                                 onClick={() => goTo(2)}
                                 className={currentStepIndex === 2 ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Task 2</button>
@@ -217,6 +222,7 @@ const Dashboard: React.FC = () => {
                     </div>
                     <div className={'col-12 ' + styles.drawerFooterContainer}>
                         <button
+                            aria-label="menu button"
                             onClick={handlePopOverOpen}
                             className={styles.menuButton}>
                             <TfiMenu className={styles.menuIcon} />
@@ -247,6 +253,7 @@ const Dashboard: React.FC = () => {
 
                             <div className={styles.openDrawerButtonCard}>
                                 <button
+                                    aria-label="open drawer button"
                                     onClick={handleDrawerOpen}
                                     className={styles.openDrawerButton}>
                                     <div><IoIosArrowForward className={styles.arrowIcon} /></div>
@@ -255,6 +262,7 @@ const Dashboard: React.FC = () => {
 
                             <div className={'col-12 ' + styles.leftTabBarButton}>
                                 <button
+                                    aria-label="menu button"
                                     onClick={handlePopOverOpen}
                                     className={styles.menuButton}>
                                     <TfiMenu className={styles.menuIcon} />
@@ -321,7 +329,9 @@ const Dashboard: React.FC = () => {
                 <div className={styles.popOverCard}>
                     {
                         menuItems.map((item, index) =>
-                            <a key={index} className={styles.menuItemCard}>
+                            <a
+                                onClick={() => router.push(item.route)}
+                                key={index} className={styles.menuItemCard}>
                                 <item.icon />
                                 <span> {item.title}</span>
                             </a>

@@ -1,13 +1,16 @@
 import React from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import dynamic from 'next/dynamic'
+import { lazy } from 'react';
 
 //--------------------------------------styles
 import styles from './essay.module.css';
 
 //--------------------------------------components
 import Slider from "@/components/slider/slider";
-import Input from "@/components/input/input";
+// const Input = dynamic(() => import("@/components/input/input"));
+const Input = lazy(() => import('@/components/input/input'));
 
 //--------------------------------------icons
 import { Reload } from "../../../../public";

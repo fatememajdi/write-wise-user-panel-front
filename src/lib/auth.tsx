@@ -96,7 +96,7 @@ export const authConfig: NextAuthOptions = {
     },
     events: {
         signIn: async ({ user, account, profile }) => {
-            console.log(account);
+            // console.log(account);
         }
     }
 };
