@@ -186,6 +186,10 @@
 
 .emailInput input {
     height: 69px !important;
+    border-width: 1px !important;
+    border-color: var(--color-primary) !important;
+    border-style: solid !important;
+    border: solid 1px var(--color-primary) !important;
 }
 
 .inputEmailTitle {
@@ -277,7 +281,7 @@
     border-radius: 15px !important;
 }
 
-.pagination{
+.pagination {
     margin-top: 40px;
 }
 

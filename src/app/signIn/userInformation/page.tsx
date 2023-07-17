@@ -1,5 +1,5 @@
 'use client';
-import React from "react";
+import React, { lazy } from "react";
 import Image from "next/image";
 import { Divider } from 'antd';
 import { Formik } from 'formik';
@@ -13,8 +13,10 @@ import { useRouter } from 'next/navigation';
 import styles from '../signIn.module.css';
 
 //---------------------------------------------------components
-import Input from "@/components/input/input";
-import { Pagination } from "@/components/pagination/pagination";
+const Input = lazy(() => import("@/components/input/input"));
+const Pagination = React.lazy(
+    () => import("@/components/pagination/pagination").then(module => ({ default: module.Pagination }))
+);
 
 const UserInformation: React.FC = () => {
     const router = useRouter();
@@ -28,7 +30,7 @@ const UserInformation: React.FC = () => {
                 width={151}
                 height={16}
                 priority
-                loading="eager" 
+                loading="eager"
             />
             <Formik
                 initialValues={{

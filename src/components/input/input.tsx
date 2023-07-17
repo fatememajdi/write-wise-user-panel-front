@@ -35,7 +35,7 @@ const Input: React.FC<props> = ({ ...props }) =>
         {/* ---------------------------------------------------------input forms */}
         {props.input &&
             <>
-                <div className={props.input_error ? styles.formSectionInput + ' ' + styles.formSectionInputError : styles.formSectionInput}>
+                <div className={props.input_error ? styles.formSectionInput + ' ' + styles.formSectionInputError + ' ' + props.className : styles.formSectionInput + ' ' + props.className}>
                     <input
                         placeholder={props.placeHolder}
                         type={props.inputtype ? props.inputtype : 'text'}

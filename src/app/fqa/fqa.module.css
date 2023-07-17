@@ -34,11 +34,13 @@
     z-index: 0;
 }
 
-.searchInput {}
+.searchInput {
+    background-color: var(--color-seccondary) !important;
+}
 
 .searchInput input {
     background-color: var(--color-seccondary) !important;
-    border: none !important;
+    border-color: none !important;
     width: 700px !important;
     color: var(--color-whiteText) !important;
 }

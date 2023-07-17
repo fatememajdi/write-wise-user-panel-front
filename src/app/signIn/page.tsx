@@ -1,12 +1,12 @@
 'use client';
-import React from "react";
+import React, { lazy } from "react";
 import Image from "next/image";
 import { Divider } from 'antd';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
-import { signIn, signOut } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 
 
@@ -19,9 +19,11 @@ import { SiFacebook } from 'react-icons/si';
 import { GrApple } from 'react-icons/gr';
 
 //---------------------------------------------------components
-import Input from "@/components/input/input";
-import { Pagination } from "@/components/pagination/pagination";
-import { EMAIL_SIGN_IN, GOOGLE_SIGN_IN } from '../../config/graphql';
+const Input = lazy(() => import("@/components/input/input"));
+const Pagination = React.lazy(
+    () => import("@/components/pagination/pagination").then(module => ({ default: module.Pagination }))
+);
+import { EMAIL_SIGN_IN } from '../../config/graphql';
 import Loading from "@/components/loading/loading";
 
 const SignIn: React.FC = () => {

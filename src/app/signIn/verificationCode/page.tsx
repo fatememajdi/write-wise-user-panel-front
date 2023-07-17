@@ -1,5 +1,5 @@
 'use client';
-import React from "react";
+import React, { lazy } from "react";
 import Image from "next/image";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -11,7 +11,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import styles from '../signIn.module.css';
 
 //---------------------------------------------------components
-import OtpInput from "@/components/otpIput/otpIput";
+const OtpInput = lazy(() => import("@/components/otpIput/otpIput"));
 import { VERIFICATION_CODE } from '../../../config/graphql';
 import Loading from "@/components/loading/loading";
 

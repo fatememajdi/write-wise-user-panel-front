@@ -29,15 +29,15 @@
     font-weight: 275px !important;
     transition: 0s border;
     height: 46px;
-    background-color: var(--color-background) !important;
+    background-color: var(--color-background);
     color: var(--color-blackText) !important;
     border: solid 1px var(--color-primary) !important;
     padding: 0px 10px;
     border-radius: 10px;
 }
 
-.formSectionInputError input{
-    border: solid 1px #DA282E  !important;
+.formSectionInputError input {
+    border: solid 1px #DA282E !important;
 }
 
 .formSectionInput input:focus {

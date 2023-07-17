@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 'use client';
-import React from "react";
+import React, { lazy } from "react";
 import Image from "next/image";
 import { styled } from '@mui/material/styles';
 import { useSession } from "next-auth/react";
@@ -8,15 +8,18 @@ import Popover from '@mui/material/Popover';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
 //-----------------------------------------styles
 import styles from './dashboard.module.css';
 
 //-----------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-import Loading from "@/components/loading/loading";
-import ChooseType from "./essay/chooseType";
-import Writings from "./essay/writings";
+const Loading = dynamic(() => import("@/components/loading/loading"));
+const ChooseType = lazy(() => import("./essay/chooseType"));
+const GeneralTask1 = lazy(() => import("./essay/generalTask1"));
+const AcademicTask1 = lazy(() => import("./essay/academicTaks1"));
+const Task2 = lazy(() => import("./essay/task2"));
 
 //-----------------------------------------icons
 import { User, Wallet, Support, Progress, Lock } from '../../../public/dashboard';
@@ -92,7 +95,7 @@ const tabBarItems = [
 ]
 
 const Dashboard: React.FC = () => {
-    const { goTo, currentStepIndex, step } = useMultiStepForm([<GeneralTask1 />, <AcademicTask1 />, <Task2 />]);
+    const { goTo, currentStepIndex, step } = useMultiStepForm([<GeneralTask1List />, <AcademicTask1List />, <Task2List />]);
     const [dashboardContentStep, changeDashboardContentStep] = React.useState<number>(0);
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const [endAnimation, changeEndAnimation] = React.useState<boolean>(false);
@@ -113,9 +116,9 @@ const Dashboard: React.FC = () => {
     const Open = Boolean(anchorEl);
     const id = Open ? 'simple-popover' : undefined;
 
-    function ChangeType(type: string) {
+    function ChangeType(type: string, index: number) {
         setType(type);
-        changeDashboardContentStep(1);
+        changeDashboardContentStep(index);
     }
 
     //------------------------------------------------------------------check user loged in
@@ -299,8 +302,13 @@ const Dashboard: React.FC = () => {
                         <div className={'col-12 ' + styles.essayContainer}>
                             {
                                 dashboardContentStep === 0 ?
-                                    <ChooseType changeType={ChangeType} /> :
-                                    <Writings type={type} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
+                                    <ChooseType changeType={ChangeType} />
+                                    : dashboardContentStep === 1 ?
+                                        <GeneralTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
+                                        : dashboardContentStep === 2 ?
+                                            <AcademicTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
+                                            :
+                                            <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
                             }
                         </div>
 
@@ -365,7 +373,7 @@ const tasks = [
     },
 ]
 
-const GeneralTask1: React.FC = () => {
+const GeneralTask1List: React.FC = () => {
     return <div className={'col-12 ' + styles.tasksContainer}>
         {
             tasks.map((item, index) => <div className={'col-12 ' + styles.taskCard} key={index}>
@@ -381,7 +389,7 @@ const GeneralTask1: React.FC = () => {
     </div>
 };
 
-const AcademicTask1: React.FC = () => {
+const AcademicTask1List: React.FC = () => {
     return <div className={'col-12 ' + styles.tasksContainer}>
         {
             tasks.map((item, index) => <div className={'col-12 ' + styles.taskCard} key={index}>
@@ -398,7 +406,7 @@ const AcademicTask1: React.FC = () => {
 };
 
 
-const Task2: React.FC = () => {
+const Task2List: React.FC = () => {
     return <div className={'col-12 ' + styles.tasksContainer}>
         {
             tasks.map((item, index) => <div className={'col-12 ' + styles.taskCard} key={index}>

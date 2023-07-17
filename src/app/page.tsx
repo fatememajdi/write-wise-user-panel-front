@@ -1,18 +1,20 @@
 'use client';
-import React from "react";
+import React, { Suspense, lazy } from 'react';
+import dynamic from 'next/dynamic';
 import { useSession } from "next-auth/react";
 
 //-------------------------------------------styles
 import styles from '../styles/landing.module.css';
 
 //-------------------------------------------components
-import Section1 from "./landing/section1";
-import Footer from "@/components/footer/footer";
-import Section3 from "./landing/section3";
-import Section4 from "./landing/section4";
-import Section5 from "./landing/section5";
-import Section6 from "./landing/section6";
-import Section2 from "./landing/section2";
+const Section1 = lazy(() => import("./landing/section1"));
+const Section2 = lazy(() => import("./landing/section2"));
+const Section3 = lazy(() => import("./landing/section3"));
+const Section4 = lazy(() => import("./landing/section4"));
+const Section5 = lazy(() => import("./landing/section5"));
+const Section6 = lazy(() => import("./landing/section6"));
+const Footer = lazy(() => import("@/components/footer/footer"));
+const Loading = dynamic(() => import("@/components/loading/loading"));
 
 const Home: React.FC = () => {
 
@@ -34,7 +36,7 @@ const Home: React.FC = () => {
   });
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <Section1 />
       <Section2 />
       <Section3 />
@@ -42,7 +44,7 @@ const Home: React.FC = () => {
       <Section5 />
       <Section6 />
       <Footer />
-    </>
+    </Suspense>
   );
 };
 

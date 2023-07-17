@@ -1,4 +1,3 @@
-
 .chooseTypeContainer {
     display: flex;
     flex: 1;
@@ -178,25 +177,9 @@
     right: 32%;
 }
 
-.diver {
-    width: 100px;
-    height: 100px;
-    background: red;
-    position: relative;
-    animation-name: example;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes example {
-    from {
-        top: 0px;
-    }
-
-    to {
-        top: 200px;
-        background-color: blue;
-    }
+.writingForm {
+    overflow: hidden;
+    height: 750px;
 }
 
 .writingDataCard {

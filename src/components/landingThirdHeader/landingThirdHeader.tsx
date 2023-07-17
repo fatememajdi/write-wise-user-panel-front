@@ -21,13 +21,13 @@ const headerItems = [
     },
     {
         title: 'Signup',
-        route: '/'
+        route: '/signIn'
     }
 ];
 
 
 const LandingThirdHeader: React.FC = () => {
-   
+
     return (<div className={styles.headerCard}>
         <div className={SecondStyles.headerItemsContainer}>
             <Image
@@ -37,7 +37,7 @@ const LandingThirdHeader: React.FC = () => {
                 width={133}
                 height={15}
                 priority
-                loading="eager" 
+                loading="eager"
             />
             {
                 headerItems.map(

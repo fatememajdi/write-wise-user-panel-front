@@ -31,7 +31,7 @@ const ChooseType: React.FC<chooseTypeProps> = ({ changeType }) => {
         <div className={styles.typesContainer}>
             {types.map((item, index) =>
                 <div
-                    onClick={() => changeType(item.value)}
+                    onClick={() => changeType(item.value, index + 1)}
                     className={styles.typeCard}
                     key={index}>{item.label}</div>
             )}

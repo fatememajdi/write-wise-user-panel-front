@@ -1,15 +1,17 @@
 'use client';
-import React from "react";
+import React, { lazy } from "react";
 import { Formik } from 'formik';
 
 //--------------------------------------------styles
 import styles from './fqa.module.css';
 
 //--------------------------------------------components
-import { FqaQuestionsBackground } from "@/components/backgrounds/fqaBackground/fqaBackground";
-import LandingThirdHeader from "@/components/landingThirdHeader/landingThirdHeader";
-import Input from "../../components/input/input";
-import Footer from "@/components/footer/footer";
+const FqaQuestionsBackground = React.lazy(
+    () => import("@/components/backgrounds/fqaBackground/fqaBackground").then(module => ({ default: module.FqaQuestionsBackground }))
+);
+const LandingThirdHeader = lazy(() => import("@/components/landingThirdHeader/landingThirdHeader"));
+const Input = lazy(() => import("@/components/input/input"));
+const Footer = lazy(() => import("@/components/footer/footer"));
 
 //--------------------------------------------icons 
 import { Search } from '../../../public';

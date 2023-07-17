@@ -1,15 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
-import React from "react";
+import React, { lazy } from "react";
 import { useRouter } from 'next/navigation';
 
 //------------------------------------------------styles
 import styles from './features.module.css';
-import Footer from '@/components/footer/footer';
 import './animationCard.css';
 
 //------------------------------------------------components
-import { FeaturesDetailsBackground } from "@/components/backgrounds/featuresBackground/featuresBackground";
+const FeaturesDetailsBackground = React.lazy(
+    () => import("@/components/backgrounds/featuresBackground/featuresBackground").then(module => ({ default: module.FeaturesDetailsBackground }))
+);
+const Footer = lazy(() => import("@/components/footer/footer"));
 
 //------------------------------------------------icons
 import { User, File, Step, Money, RegularRise } from '../../../public';
