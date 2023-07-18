@@ -2,6 +2,7 @@ import React, { lazy } from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
+import { loadStripe } from '@stripe/stripe-js';
 
 //--------------------------------------styles
 import styles from './essay.module.css';
@@ -28,6 +29,8 @@ const WritingValidationSchema = Yup.object().shape({
         .string()
         .required('body is required!'),
 });
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
 const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimation, endAnimation }) => {
 
@@ -152,6 +155,24 @@ const tabBarItems = [
 const WritingDataCard: React.FC = () => {
     const [writingCardStep, changeWritingCardStep] = React.useState<number>(1);
 
+    const handleClick = async (event: any) => {
+        event.preventDefault();
+        const { sessionId } = await fetch('/api/checkout/session', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ quantity: 1 })
+        }).then(res => res.json())
+        const stripe = await stripePromise;
+        if (stripe) {
+            const { error } = await stripe.redirectToCheckout({
+                sessionId
+            });
+            console.log('stripe error : ', error);
+        }
+    }
+
     return <div className={styles.writingDataCard}>
         <div className={styles.writingDataTabBarCard}>
             {
@@ -185,7 +206,10 @@ const WritingDataCard: React.FC = () => {
                     Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a tempus aliquet.
 
                 </div>
-                <button className={styles.editWritingButton}>
+                <button
+                    type="button"
+                    aria-label="edit button"
+                    className={styles.editWritingButton}>
                     <div> <MdEdit style={{ fontSize: 40 }} /></div>
                 </button>
             </div>
@@ -206,7 +230,11 @@ const WritingDataCard: React.FC = () => {
                     Good user<br />
                     Has operational command of the language, though with occasional inaccuracies, inappropriacies and misunderstandings in some situations. Generally handles complex language well and understands detailed reasoning.
                 </div>
-                <button className={styles.analusisButton}>
+                <button
+                    type="button"
+                    aria-label="anausis button"
+                    onClick={(e) => handleClick(e)}
+                    className={styles.analusisButton}>
                     Analysis
                 </button>
             </div>
