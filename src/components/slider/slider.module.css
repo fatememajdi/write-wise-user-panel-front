@@ -26,3 +26,5 @@
     right: auto;
     left: auto;
 }
+
+@media(max-width: 480px) {}

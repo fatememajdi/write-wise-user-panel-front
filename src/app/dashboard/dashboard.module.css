@@ -376,6 +376,7 @@
     padding: 30px 95px 0px 90px;
     height: 100px !important;
     width: 100% !important;
+    overflow: hidden;
 }
 
 .topTabBarContainerAnimation {
@@ -387,6 +388,7 @@
     animation-duration: 1s;
     flex-direction: column;
     animation-fill-mode: forwards;
+    overflow: hidden;
 }
 
 .essayContainer {
@@ -406,57 +408,91 @@
     }
 }
 
-@media(max-width: 1440px) {
-
-    .newEssayButton {
-        font-size: 22px;
-    }
-
-    .taskTabButton {
-        font-size: 16px;
-    }
-
-    .activeTaskTabButton {
-        font-size: 16px;
-    }
-
-    .menuItemCard span {
-        font-size: 16px;
-    }
-
-    .menuItemCard {
-        font-size: 18px;
-    }
-
-    .topTabBarItemCard {
-        font-size: 18px;
-        padding: 0px 15px;
-    }
+.topResponsiveTabBar {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-seccondary);
+    width: 100%;
+    height: 45px;
 }
 
-@media(max-width: 992px) {
-    .newEssayButton {
-        font-size: 22px;
+.responsiveLogo {
+    height: 17px !important;
+    width: 175px !important;
+}
+
+.responsiveMenuButton {
+    padding: 0px 10px !important;
+}
+
+.responsiveMenuIcon {
+    color: var(--color-whiteText);
+    font-size: 25px;
+}
+
+.responsivePlusButton {
+    padding: 0px;
+    height: 35px;
+    width: 35px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    background-color: #626E7E;
+}
+
+.responsivePlusIcon {
+    color: #FFF;
+    font-size: 24px;
+}
+
+@media(max-width: 480px) {
+    .dashboardContentContainer {
+        flex-direction: column;
+        padding-right: 0px;
     }
 
-    .taskTabButton {
-        font-size: 16px;
+    .leftTabBar {
+        display: none;
     }
 
-    .activeTaskTabButton {
-        font-size: 16px;
+    .topResponsiveTabBar {
+        display: flex;
     }
 
-    .menuItemCard span {
-        font-size: 16px;
+    .topTabBarContainer {
+        display: none;
+        height: 0px !important;
     }
 
-    .menuItemCard {
-        font-size: 18px;
+    .topTabBarContainerAnimation {
+        display: none;
+        height: 0px !important;
     }
 
-    .topTabBarItemCard {
-        font-size: 18px;
-        padding: 0px 15px;
+    .topTabBarCard {
+        display: none;
+    }
+
+    .essayContainer {
+        padding-bottom: 0px;
+    }
+
+    .dashboardContentRightContainer {
+        padding-top: 0px !important;
+    }
+
+    .dashboardContentRightContainer::-webkit-scrollbar {
+        /* display: none; */
+        width: 6px;
+        background-color: var(--color-background);
+        border-radius: 33px;
+    }
+
+    .dashboardContentRightContainer::-webkit-scrollbar-thumb {
+        width: 6px;
+        background-color: #626E7E;
+        border-radius: 33px;
     }
 }

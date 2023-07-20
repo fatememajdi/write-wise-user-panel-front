@@ -80,13 +80,13 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                         <button
                             onClick={() => changeGenerateWriting(true)}
                             type="button" className={styles.generateButton}>
-                            <Reload />Generate
+                            <Reload className={styles.reloadIconResponsive} />Generate
                         </button>
 
                         {
                             generateWriting &&
                             <button className={styles.editButton}>
-                                <div><MdEdit style={{ fontSize: 40 }} /></div>
+                                <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
                             </button>
                         }
 
@@ -113,7 +113,9 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                                 }, 1000);
                             }}
                             className={styles.scoreButton}>
-                            Score
+                            <div>
+                                Score
+                            </div>
                         </button>
                     </div>
                 </div>
@@ -224,7 +226,9 @@ const WritingDataCard: React.FC = () => {
                         <div className={styles.writingScoreItemCard}>Grammatical Range and accuracy: 7</div>
                     </div>
 
-                    <Slider value={7} total={10} />
+                    <div className={styles.sliderContainer}>
+                        <Slider value={7} total={10} />
+                    </div>
                 </div>
                 <div className={styles.writingScoreText}>
                     Good user<br />

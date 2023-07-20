@@ -105,7 +105,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    padding: 15px 52px 40px 18px !important;
+    padding: 15px 52px 45px 18px !important;
 }
 
 .topicInput textarea::-webkit-scrollbar {
@@ -381,5 +381,168 @@
     .topTabBarItemCard {
         font-size: 18px;
         padding: 0px 20px;
+    }
+}
+
+
+@media(max-width: 480px) {
+    .chooseTypeTitle {
+        font-size: 13px;
+    }
+
+    .typeCard {
+        font-size: 13px;
+        width: 80px;
+        height: 28px;
+    }
+
+    .typesContainer {
+        margin-top: 33px;
+    }
+
+    .writingContainer {
+        padding: 0px 22px 24px 22px;
+    }
+
+    .wriritngTitle {
+        margin-left: 0px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .writingSecondTitle {
+        font-size: 16px;
+        margin-left: 0px;
+    }
+
+    .writingInputTitle {
+        font-size: 16px;
+        margin-left: 0px;
+    }
+
+    .topicInputContainer {
+        margin: 0px;
+    }
+
+    .generateButton {
+        position: absolute;
+        bottom: 20px;
+        right: 60px;
+        height: 25px;
+        width: 80px;
+        font-size: 13px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reloadIconResponsive {
+        display: none;
+    }
+
+    .editButton {
+        right: 14px;
+        bottom: 16px;
+        background-color: #F3F3F3;
+        padding: 0px;
+        height: 35px;
+        width: 35px;
+        border-radius: 100% !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .editIconResponsive {
+        font-size: 25px !important;
+    }
+
+    .topicInput {
+        width: 100% !important;
+    }
+
+    .topicInput textarea {
+        font-size: 16px !important;
+    }
+
+    .topicInput textarea::-webkit-scrollbar {
+        /* display: none; */
+        width: 6px;
+        background-color: var(--color-background);
+        border-radius: 33px;
+    }
+
+    .topicInput textarea::-webkit-scrollbar-thumb {
+        width: 6px;
+        background-color: #626E7E;
+        border-radius: 33px;
+    }
+
+    .topicInput textarea::placeholder {
+        font-size: 16px !important;
+    }
+
+    .bodyInputContainer {
+        margin: 0px;
+    }
+
+    .writingForm {
+        height: fit-content;
+    }
+
+    .scoreButton {
+        background-color: var(--color-seccondary) !important;
+        width: 100%;
+        right: 0px;
+        bottom: 0px;
+        border-top-left-radius: 0px !important;
+        border-top-right-radius: 0px !important;
+        height: 40px;
+    }
+
+    .scoreButton div {
+        color: var(--color-whiteText);
+        text-align: center;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        border-radius: 8px;
+        border: 1px solid #F3F3F3;
+        height: 26px;
+        width: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .writingScoresContainer {
+        flex-direction: column-reverse;
+    }
+
+    .writingDataTabBarCard {
+        display: none;
+    }
+
+    .writingDataCard {
+        background-color: #626E7E;
+        height: fit-content;
+    }
+
+    .sliderContainer {
+        margin-bottom: 63px;
+    }
+
+    .writingScoreItemCard {
+        color: #F3F3F3;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        display: flex;
+        margin-right: auto !important;
+        background-color: #132740;
+    }
+
+    .writingScoreCard {
+        padding: 0px 16px 19px 16px;
     }
 }

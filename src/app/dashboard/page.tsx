@@ -274,6 +274,34 @@ const Dashboard: React.FC = () => {
                         </div>
                     }
 
+                    {
+                        !open &&
+                        <div className={styles.topResponsiveTabBar}>
+
+                            <button
+                                aria-label="menu button"
+                                onClick={handleDrawerOpen}
+                                className={styles.responsiveMenuButton}>
+                                <TfiMenu className={styles.responsiveMenuIcon} />
+                            </button>
+
+                            <Image
+                                className={styles.responsiveLogo}
+                                src="/logo3.svg"
+                                alt="Logo"
+                                loading="eager"
+                                width={175}
+                                height={17}
+                                priority
+                            />
+
+                            <button className={styles.responsivePlusButton}>
+                                <AiOutlinePlus className={styles.responsivePlusIcon} />
+                            </button>
+
+                        </div>
+                    }
+
                     <div
                         style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
                         className={styles.dashboardContentRightContainer}>
