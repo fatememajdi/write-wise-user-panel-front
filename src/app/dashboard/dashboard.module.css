@@ -495,4 +495,8 @@
         background-color: #626E7E;
         border-radius: 33px;
     }
+
+    .logo {
+        display: none;
+    }
 }

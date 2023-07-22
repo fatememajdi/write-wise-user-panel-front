@@ -82,7 +82,7 @@ const UserInformation: React.FC = () => {
                                     value={values.gender}
                                     onChange={(e) => setFieldValue('gender', e.target.value)}
                                     displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    inputProps={{ 'aria-label': 'gender select' }}
                                     className={styles.select}
                                 >
 

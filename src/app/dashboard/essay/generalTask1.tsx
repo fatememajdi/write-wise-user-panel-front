@@ -10,6 +10,7 @@ import styles from './essay.module.css';
 //--------------------------------------components
 const Slider = dynamic(() => import("@/components/slider/slider"));
 const Input = lazy(() => import('@/components/input/input'));
+const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
 
 //--------------------------------------icons
 import { Reload } from "../../../../public";
@@ -58,6 +59,15 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                 onSubmit={handleSubmit}>
 
                 <div className={styles.writingForm}>
+
+                    <SelectComponents values={[
+                        { title: 'Essay', active: false, lock: false },
+                        { title: 'Score', active: false, lock: false },
+                        { title: 'Analysis', active: false, lock: true },
+                        { title: 'Recommendations', active: false, lock: true },
+                        { title: 'WWAI Tutor', active: false, lock: true }
+                    ]} selectedItem={0} className={styles.topSelect} />
+
                     <div className={styles.wriritngTitle}>Gen Task 1</div>
 
                     <div className={styles.writingSecondTitle}>
@@ -119,6 +129,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                         </button>
                     </div>
                 </div>
+
                 {endAnimation &&
                     <>
                         <WritingDataCard />
@@ -128,7 +139,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                 }
             </form>
         )}
-    </Formik>;
+    </Formik >;
 };
 
 const tabBarItems = [
@@ -194,6 +205,16 @@ const WritingDataCard: React.FC = () => {
                 )
             }
         </div>
+
+        <SelectComponents values={[
+            { title: 'Essay', active: true, lock: false },
+            { title: 'Score', active: true, lock: false },
+            { title: 'Analysis', active: false, lock: true },
+            { title: 'Recommendations', active: false, lock: true },
+            { title: 'WWAI Tutor', active: false, lock: true }
+        ]} 
+        selectedItem={writingCardStep} className={styles.writingCardSelect} onChange={changeWritingCardStep} />
+
         {writingCardStep === 0 ?
             <div className={styles.writingEssayCard}>
                 <div className={styles.writingScoreDate}>JAN 18</div>
@@ -212,7 +233,7 @@ const WritingDataCard: React.FC = () => {
                     type="button"
                     aria-label="edit button"
                     className={styles.editWritingButton}>
-                    <div> <MdEdit style={{ fontSize: 40 }} /></div>
+                    <div className={styles.responsiveEditWritingButton}> <MdEdit className={styles.editWritingButtonIcon} /></div>
                 </button>
             </div>
             :
@@ -234,13 +255,15 @@ const WritingDataCard: React.FC = () => {
                     Good user<br />
                     Has operational command of the language, though with occasional inaccuracies, inappropriacies and misunderstandings in some situations. Generally handles complex language well and understands detailed reasoning.
                 </div>
-                <button
-                    type="button"
-                    aria-label="anausis button"
-                    onClick={(e) => handleClick(e)}
-                    className={styles.analusisButton}>
-                    Analysis
-                </button>
+                <div className={styles.analusisButtonContainer}>
+                    <button
+                        type="button"
+                        aria-label="anausis button"
+                        onClick={(e) => handleClick(e)}
+                        className={styles.analusisButton}>
+                        Analysis
+                    </button>
+                </div>
             </div>
         }
     </div>
