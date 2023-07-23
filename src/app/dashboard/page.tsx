@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 'use client';
-import React, { lazy } from "react";
+import React, { lazy, use } from "react";
 import Image from "next/image";
 import { styled } from '@mui/material/styles';
 import { useSession } from "next-auth/react";
@@ -26,6 +26,7 @@ import { User, Wallet, Support, Progress, Lock } from '../../../public/dashboard
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { TfiMenu } from 'react-icons/tfi';
+import { FiMoreVertical } from 'react-icons/fi';
 
 const drawerWidth = 380;
 
@@ -113,6 +114,8 @@ const Dashboard: React.FC = () => {
     const [open, setOpen] = React.useState<boolean>(true);
     const router = useRouter();
 
+    const [width, setWidth] = React.useState<number>(0);
+    const handleResize = () => setWidth(window.innerWidth);
     const Open = Boolean(anchorEl);
     const id = Open ? 'simple-popover' : undefined;
 
@@ -136,6 +139,12 @@ const Dashboard: React.FC = () => {
         } else
             setLoading(false);
     });
+
+
+    React.useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [handleResize]);
 
     const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -229,6 +238,7 @@ const Dashboard: React.FC = () => {
                             onClick={handlePopOverOpen}
                             className={styles.menuButton}>
                             <TfiMenu className={styles.menuIcon} />
+                            <FiMoreVertical className={styles.moreIcon} />
                         </button>
                         <div className={styles.drawerFooterText}>
                             Welcome  user name
@@ -295,7 +305,14 @@ const Dashboard: React.FC = () => {
                                 priority
                             />
 
-                            <button className={styles.responsivePlusButton}>
+                            <button
+                                aria-label="new essay button"
+                                onClick={async () => {
+                                    await changeTabBarLoc(false);
+                                    await changeEndAnimation(false);
+                                    await changeDashboardContentStep(0);
+                                }}
+                                className={styles.responsivePlusButton}>
                                 <AiOutlinePlus className={styles.responsivePlusIcon} />
                             </button>
 
