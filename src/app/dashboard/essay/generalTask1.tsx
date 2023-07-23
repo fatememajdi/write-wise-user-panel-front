@@ -6,6 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 //--------------------------------------styles
 import styles from './essay.module.css';
+import './showWritingCard.css';
 
 //--------------------------------------components
 const Slider = dynamic(() => import("@/components/slider/slider"));
@@ -127,6 +128,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                                 Score
                             </div>
                         </button>
+
                     </div>
                 </div>
 
@@ -212,8 +214,8 @@ const WritingDataCard: React.FC = () => {
             { title: 'Analysis', active: false, lock: true },
             { title: 'Recommendations', active: false, lock: true },
             { title: 'WWAI Tutor', active: false, lock: true }
-        ]} 
-        selectedItem={writingCardStep} className={styles.writingCardSelect} onChange={changeWritingCardStep} />
+        ]}
+            selectedItem={writingCardStep} className={styles.writingCardSelect} onChange={changeWritingCardStep} />
 
         {writingCardStep === 0 ?
             <div className={styles.writingEssayCard}>
@@ -237,7 +239,8 @@ const WritingDataCard: React.FC = () => {
                 </button>
             </div>
             :
-            <div className={styles.writingScoreCard}>
+            <div
+                className={styles.writingScoreCard}>
                 <div className={styles.writingScoreDate}>JAN 18</div>
                 <div className={styles.writingScoresContainer}>
                     <div>
@@ -266,7 +269,7 @@ const WritingDataCard: React.FC = () => {
                 </div>
             </div>
         }
-    </div>
+    </div >
 };
 
 export default GeneralTask1;
