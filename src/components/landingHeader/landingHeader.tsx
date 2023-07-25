@@ -90,9 +90,9 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
                     }
                     {
                         logedIn ?
-                            <a onClick={() => router.push('/dashboard')} className={styles.headerItem}>Dashboard</a>
+                            <div onClick={() => router.push('/dashboard')} className={styles.headerItem}>Dashboard</div>
                             :
-                            <a onClick={() => router.push('/signIn')} className={styles.headerItem}>Signup</a>
+                            <div onClick={() => router.push('/signIn')} className={styles.headerItem}>Signup</div>
                     }
 
                 </div>

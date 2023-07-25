@@ -55,6 +55,10 @@ export default function RootLayout({
           <title>Write Wise Ai</title>
           <Head>
             <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+            <meta
+              name="description"
+              content="  Unlock your IELTS writing potential with WriteWiseAI,  four-step process to get accurate essay ratings, personalized feedback,
+              and valuable recommendations "></meta>
           </Head>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <body className={lato.className}>
