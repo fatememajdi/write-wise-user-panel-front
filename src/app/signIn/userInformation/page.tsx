@@ -3,7 +3,7 @@ import React, { lazy } from "react";
 import Image from "next/image";
 import { Divider } from 'antd';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { DatePicker } from "@mui/x-date-pickers";

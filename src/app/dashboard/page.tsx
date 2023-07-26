@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 'use client';
-import React, { lazy, use } from "react";
+import React, { lazy } from "react";
 import Image from "next/image";
 import { styled } from '@mui/material/styles';
 import { useSession } from "next-auth/react";
@@ -22,7 +22,7 @@ const AcademicTask1 = lazy(() => import("./essay/academicTaks1"));
 const Task2 = lazy(() => import("./essay/task2"));
 
 //-----------------------------------------icons
-import { User, Wallet, Support, Progress, Lock } from '../../../public/dashboard';
+import { User, Wallet, Support, Lock } from '../../../public/dashboard';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { TfiMenu } from 'react-icons/tfi';
@@ -58,11 +58,6 @@ const menuItems = [
     {
         title: 'Wallet',
         icon: Wallet,
-        route: ''
-    },
-    {
-        title: 'Progress',
-        icon: Progress,
         route: ''
     },
     {

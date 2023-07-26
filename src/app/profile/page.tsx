@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { Formik } from 'formik';
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useRouter } from "next/navigation";

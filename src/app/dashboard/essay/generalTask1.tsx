@@ -6,7 +6,6 @@ import { loadStripe } from '@stripe/stripe-js';
 
 //--------------------------------------styles
 import styles from './essay.module.css';
-import './showWritingCard.css';
 
 //--------------------------------------components
 const Slider = dynamic(() => import("@/components/slider/slider"));

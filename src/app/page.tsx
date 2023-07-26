@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { useSession } from "next-auth/react";
 
 //-------------------------------------------styles
-import styles from '../styles/landing.module.css';
+// import styles from '../styles/landing.module.css';
 
 //-------------------------------------------components
 const Section1 = lazy(() => import("./landing/section1"));
