@@ -31,3 +31,38 @@ mutation MetaSignIn($token:String!){
     }
   }
 `;
+
+export const GET_USER_TOPICS = gql`
+query GetUserTopics($type:String!){
+  getUserTopics(filter:{type:$type ,isDelete:false},pagination:{page:1,pageSize:1000}){
+    userTopics{
+      id,
+      type,
+      shortName,
+      topic,
+      completeTopic,
+      score,
+      createdAt
+    }
+  }
+}
+`;
+
+export const GET_USER_ESSAY = gql`
+query GetUserEssay($id:String!){
+  getUserEssay(getEssayInput:{id:$id },pagination:{pageSize:50,page:1}){
+    essaies{
+      essay,
+      date,
+      taskAchievementScore,
+      taskAchievementSummery,
+      coherenceAndCohesionScore,
+      coherenceAndCohesionSummery,
+      lexicalResourceScore,
+      lexicalResourceSummery,
+      grammaticalRangeAndAccuracyScore,
+      grammaticalRangeAndAccuracySummery
+    }
+  }
+}
+`

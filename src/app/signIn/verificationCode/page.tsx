@@ -40,6 +40,7 @@ const VerificationCode: React.FC = () => {
         }).then(async (data) => {
             localStorage.setItem("user", JSON.stringify(data.data.verifyEmail.token));
             await router.push('/dashboard');
+            console.log(data);
             changeLoadig(false);
         }
         ).catch(() => {

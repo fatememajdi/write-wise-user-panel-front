@@ -139,9 +139,10 @@ const Step2: React.FC = () => {
             variables: {
                 email: values.email,
             },
-        }).then(async () => {
+        }).then(async (data) => {
             await router.push('/signIn/verificationCode');
             changeLoading(false);
+            console.log(data);
         }
         ).catch(() => {
             changeLoading(false);

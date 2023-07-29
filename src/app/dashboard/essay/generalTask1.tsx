@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
 import { loadStripe } from '@stripe/stripe-js';
+import { useQuery } from "@apollo/react-hooks";
 
 //--------------------------------------styles
 import styles from './essay.module.css';
@@ -11,16 +12,24 @@ import styles from './essay.module.css';
 const Slider = dynamic(() => import("@/components/slider/slider"));
 const Input = lazy(() => import('@/components/input/input'));
 const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
+import Text from "@/components/text/text";
 
 //--------------------------------------icons
 import { Reload } from "../../../../public";
 import { MdEdit } from 'react-icons/md';
 import { Lock } from '../../../../public/dashboard';
+import { GET_USER_ESSAY } from "@/config/graphql";
+
+interface topic {
+    id: string,
+    body: string
+}
 
 interface writingProps {
     changeTabBarLoc: any
     changeEndAnimation: any,
-    endAnimation: boolean
+    endAnimation: boolean,
+    topic?: topic
 }
 
 //---------------------------------------------------------------validation
@@ -33,9 +42,31 @@ const WritingValidationSchema = Yup.object().shape({
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
-const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimation, endAnimation }) => {
+const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState(false);
+    const [essayTopic, changeTopic] = React.useState<topic>();
+
+    // const { data, loading, error } = useQuery(GET_USER_ESSAY, {
+    //     variables: {
+    //         id: topic?.id as string
+    //     },
+    //     onError(error) {
+    //         console.log('get user essay error : ', error);
+    //     },
+    // });
+    // if (error) {
+    //     console.log("get user essay error : ", error);
+    // } else {
+    //     console.log(data)
+    // }
+
+    React.useEffect(() => {
+        if (topic) {
+            changeTopic(topic);
+
+        }
+    });
 
     return <Formik
         initialValues={{
@@ -75,32 +106,36 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     </div>
 
                     <div className={styles.writingInputTitle}>Write about following topic :</div>
+                    {
+                        topic ?
+                            <div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
+                            :
+                            <div className={styles.topicInputContainer}>
+                                <Input
+                                    style={{ width: '70%' }}
+                                    className={styles.topicInput}
+                                    onChange={handleChange}
+                                    placeHolder="Type your topic here..."
+                                    textarea
+                                    textarea_name='topic'
+                                    textarea_value={values.topic}
+                                    textarea_error={errors.topic && touched.topic && errors.topic}
+                                />
+                                <button
+                                    onClick={() => changeGenerateWriting(true)}
+                                    type="button" className={styles.generateButton}>
+                                    <Reload className={styles.reloadIconResponsive} />Generate
+                                </button>
 
-                    <div className={styles.topicInputContainer}>
-                        <Input
-                            style={{ width: '70%' }}
-                            className={styles.topicInput}
-                            onChange={handleChange}
-                            placeHolder="Type your topic here..."
-                            textarea
-                            textarea_name='topic'
-                            textarea_value={values.topic}
-                            textarea_error={errors.topic && touched.topic && errors.topic}
-                        />
-                        <button
-                            onClick={() => changeGenerateWriting(true)}
-                            type="button" className={styles.generateButton}>
-                            <Reload className={styles.reloadIconResponsive} />Generate
-                        </button>
+                                {
+                                    generateWriting &&
+                                    <button className={styles.editButton}>
+                                        <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
+                                    </button>
+                                }
 
-                        {
-                            generateWriting &&
-                            <button className={styles.editButton}>
-                                <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
-                            </button>
-                        }
-
-                    </div>
+                            </div>
+                    }
 
                     <div className={styles.writingInputTitle}>Write at least 150 words.</div>
 
@@ -138,6 +173,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                         <WritingDataCard />
                     </>
                 }
+
             </form>
         )}
     </Formik >;

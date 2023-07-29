@@ -9,12 +9,14 @@ import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import { useQuery } from "@apollo/react-hooks";
 
 //-----------------------------------------styles
 import styles from './dashboard.module.css';
 
 //-----------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
+import { GET_USER_TOPICS } from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
 const ChooseType = lazy(() => import("./essay/chooseType"));
 const GeneralTask1 = lazy(() => import("./essay/generalTask1"));
@@ -90,9 +92,12 @@ const tabBarItems = [
     },
 ]
 
+interface topic {
+    id: string,
+    body: string
+}
+
 const Dashboard: React.FC = () => {
-    const { goTo, currentStepIndex, step } = useMultiStepForm([<GeneralTask1List />, <AcademicTask1List />, <Task2List />]);
-    const [dashboardContentStep, changeDashboardContentStep] = React.useState<number>(0);
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const [endAnimation, changeEndAnimation] = React.useState<boolean>(false);
     const [tabBarLoc, changeTabBarLoc] = React.useState<boolean>(false);
@@ -106,18 +111,35 @@ const Dashboard: React.FC = () => {
     });
     const [loading, setLoading] = React.useState<boolean>(true);
     const [type, setType] = React.useState('general_task_1');
+    const [topicsType, setTopicsType] = React.useState('general_task_1');
     const [open, setOpen] = React.useState<boolean>(true);
     const router = useRouter();
-
     const [width, setWidth] = React.useState<number>(0);
+    const [essayTopic, changeTopic] = React.useState<topic>();
+    const { step, goTo } = useMultiStepForm([<ChooseType changeType={ChangeType} />,
+    <GeneralTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic && essayTopic} />,
+    <AcademicTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />,
+    <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
+    ])
     const handleResize = () => setWidth(window.innerWidth);
     const Open = Boolean(anchorEl);
     const id = Open ? 'simple-popover' : undefined;
 
     function ChangeType(type: string, index: number) {
         setType(type);
-        changeDashboardContentStep(index);
+        goTo(index)
     }
+
+    function SelectTopic(topic: topic) {
+        changeTopic(topic);
+        if (topicsType === 'general_task_1')
+            goTo(1);
+        else if (topicsType === 'academic_task_1')
+            goTo(2)
+        else
+            goTo(3)
+    }
+
 
     //------------------------------------------------------------------check user loged in
     React.useEffect(() => {
@@ -193,7 +215,7 @@ const Dashboard: React.FC = () => {
                                 onClick={async () => {
                                     await changeTabBarLoc(false);
                                     await changeEndAnimation(false);
-                                    await changeDashboardContentStep(0);
+                                    await goTo(0);
                                 }}
                                 className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} /></button>
                             <button
@@ -206,26 +228,26 @@ const Dashboard: React.FC = () => {
 
                             <button
                                 aria-label="general task1 button"
-                                onClick={() => goTo(0)}
-                                className={currentStepIndex === 0 ? styles.activeTaskTabButton : styles.taskTabButton} >
+                                onClick={() => setTopicsType('general_task_1')}
+                                className={topicsType === 'general_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Gen Task 1</button>
 
                             <button
                                 aria-label="academic task1 button"
-                                onClick={() => goTo(1)}
-                                className={currentStepIndex === 1 ? styles.activeTaskTabButton : styles.taskTabButton} >
+                                onClick={() => setTopicsType('academic_task_1')}
+                                className={topicsType === 'academic_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Ac Task 1</button>
 
                             <button
                                 aria-label="task2 button"
-                                onClick={() => goTo(2)}
-                                className={currentStepIndex === 2 ? styles.activeTaskTabButton : styles.taskTabButton} >
+                                onClick={() => setTopicsType('general_task_2')}
+                                className={topicsType === 'general_task_2' ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Task 2</button>
 
                         </div>
                     </div>
                     <div className={'col-12 ' + styles.drawerContent}>
-                        {step}
+                        <UserTopicsList type={topicsType} SelectTopic={SelectTopic} />
                     </div>
                     <div className={'col-12 ' + styles.drawerFooterContainer}>
                         <button
@@ -248,70 +270,68 @@ const Dashboard: React.FC = () => {
                 {/* //-------------------------------------------------------------dashboard content */}
                 <div className={styles.dashboardContentContainer}>
                     {!open &&
-                        <div className={styles.leftTabBar}>
-                            <Image
-                                className={styles.briefLogo}
-                                src="/dashboard/W W AI.svg"
-                                alt="Logo"
-                                loading="eager"
-                                width={19}
-                                height={69}
-                                priority
-                            />
+                        <>
+                            <div className={styles.leftTabBar}>
+                                <Image
+                                    className={styles.briefLogo}
+                                    src="/dashboard/W W AI.svg"
+                                    alt="Logo"
+                                    loading="eager"
+                                    width={19}
+                                    height={69}
+                                    priority
+                                />
 
-                            <div className={styles.openDrawerButtonCard}>
-                                <button
-                                    aria-label="open drawer button"
-                                    onClick={handleDrawerOpen}
-                                    className={styles.openDrawerButton}>
-                                    <div><IoIosArrowForward className={styles.arrowIcon} /></div>
-                                </button>
+                                <div className={styles.openDrawerButtonCard}>
+                                    <button
+                                        aria-label="open drawer button"
+                                        onClick={handleDrawerOpen}
+                                        className={styles.openDrawerButton}>
+                                        <div><IoIosArrowForward className={styles.arrowIcon} /></div>
+                                    </button>
+                                </div>
+
+                                <div className={'col-12 ' + styles.leftTabBarButton}>
+                                    <button
+                                        aria-label="menu button"
+                                        onClick={handlePopOverOpen}
+                                        className={styles.menuButton}>
+                                        <TfiMenu className={styles.menuIcon} />
+                                    </button>
+                                </div>
                             </div>
+                            <div className={styles.topResponsiveTabBar}>
 
-                            <div className={'col-12 ' + styles.leftTabBarButton}>
                                 <button
                                     aria-label="menu button"
-                                    onClick={handlePopOverOpen}
-                                    className={styles.menuButton}>
-                                    <TfiMenu className={styles.menuIcon} />
+                                    onClick={handleDrawerOpen}
+                                    className={styles.responsiveMenuButton}>
+                                    <TfiMenu className={styles.responsiveMenuIcon} />
                                 </button>
+
+                                <Image
+                                    className={styles.responsiveLogo}
+                                    src="/logo3.svg"
+                                    alt="Logo"
+                                    loading="eager"
+                                    width={175}
+                                    height={17}
+                                    priority
+                                />
+
+                                <button
+                                    aria-label="new essay button"
+                                    onClick={async () => {
+                                        await changeTabBarLoc(false);
+                                        await changeEndAnimation(false);
+                                        await goTo(0)
+                                    }}
+                                    className={styles.responsivePlusButton}>
+                                    <AiOutlinePlus className={styles.responsivePlusIcon} />
+                                </button>
+
                             </div>
-                        </div>
-                    }
-
-                    {
-                        !open &&
-                        <div className={styles.topResponsiveTabBar}>
-
-                            <button
-                                aria-label="menu button"
-                                onClick={handleDrawerOpen}
-                                className={styles.responsiveMenuButton}>
-                                <TfiMenu className={styles.responsiveMenuIcon} />
-                            </button>
-
-                            <Image
-                                className={styles.responsiveLogo}
-                                src="/logo3.svg"
-                                alt="Logo"
-                                loading="eager"
-                                width={175}
-                                height={17}
-                                priority
-                            />
-
-                            <button
-                                aria-label="new essay button"
-                                onClick={async () => {
-                                    await changeTabBarLoc(false);
-                                    await changeEndAnimation(false);
-                                    await changeDashboardContentStep(0);
-                                }}
-                                className={styles.responsivePlusButton}>
-                                <AiOutlinePlus className={styles.responsivePlusIcon} />
-                            </button>
-
-                        </div>
+                        </>
                     }
 
                     <div
@@ -340,16 +360,7 @@ const Dashboard: React.FC = () => {
                         </div>
 
                         <div className={'col-12 ' + styles.essayContainer}>
-                            {
-                                dashboardContentStep === 0 ?
-                                    <ChooseType changeType={ChangeType} />
-                                    : dashboardContentStep === 1 ?
-                                        <GeneralTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
-                                        : dashboardContentStep === 2 ?
-                                            <AcademicTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
-                                            :
-                                            <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
-                            }
+                            {step}
                         </div>
 
                     </div>
@@ -394,70 +405,38 @@ const Dashboard: React.FC = () => {
 
 export default Dashboard;
 
-//----------------------------------------------------fake data
-const tasks = [
-    {
-        title: 'Short name of essay ',
-        score: '6',
-        date: 'JAN 18'
-    },
-    {
-        title: 'Short name of essay ',
-        score: '6',
-        date: 'JAN 18'
-    },
-    {
-        title: 'Short name of essay ',
-        score: '6',
-        date: 'JAN 18'
-    },
-]
+//----------------------------------------------------------------------------------drawer data card
+const UserTopicsList: React.FC<{ type: string, SelectTopic: any }> = ({ type, SelectTopic }) => {
 
-const GeneralTask1List: React.FC = () => {
-    return <div className={'col-12 ' + styles.tasksContainer}>
-        {
-            tasks.map((item, index) => <div className={'col-12 ' + styles.taskCard} key={index}>
-                <div className={styles.taskCardTitle}>
-                    {item.title}
-                    <span>{item.date}</span>
-                </div>
-                <div className={styles.taskCardScore}>
-                    {item.score}
-                </div>
-            </div>)
-        }
-    </div>
-};
+    const { data, loading, error } = useQuery(GET_USER_TOPICS, {
+        variables: {
+            type: type
+        },
+        onError(error) {
+            console.log('generate writing error : ', error);
+        },
+    });
+    if (error) {
+        console.log("get user topics error : ", error);
+    }
 
-const AcademicTask1List: React.FC = () => {
-    return <div className={'col-12 ' + styles.tasksContainer}>
-        {
-            tasks.map((item, index) => <div className={'col-12 ' + styles.taskCard} key={index}>
-                <div className={styles.taskCardTitle}>
-                    {item.title}
-                    <span>{item.date}</span>
-                </div>
-                <div className={styles.taskCardScore}>
-                    {item.score}
-                </div>
-            </div>)
-        }
-    </div>
-};
-
-
-const Task2List: React.FC = () => {
-    return <div className={'col-12 ' + styles.tasksContainer}>
-        {
-            tasks.map((item, index) => <div className={'col-12 ' + styles.taskCard} key={index}>
-                <div className={styles.taskCardTitle}>
-                    {item.title}
-                    <span>{item.date}</span>
-                </div>
-                <div className={styles.taskCardScore}>
-                    {item.score}
-                </div>
-            </div>)
-        }
-    </div>
+    if (loading)
+        return <Loading />
+    else
+        return <div className={'col-12 ' + styles.tasksContainer}>
+            {
+                data.getUserTopics.userTopics.map((item: any, index: any) =>
+                    <div
+                        onClick={() => SelectTopic({ id: item.id, body: item.topic })}
+                        className={'col-12 ' + styles.taskCard} key={index}>
+                        <div className={styles.taskCardTitle}>
+                            {item.shortName}
+                            <span>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}</span>
+                        </div>
+                        <div className={styles.taskCardScore}>
+                            {item.score}
+                        </div>
+                    </div>)
+            }
+        </div>
 };
