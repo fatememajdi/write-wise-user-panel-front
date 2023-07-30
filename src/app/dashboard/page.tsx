@@ -145,6 +145,7 @@ const Dashboard: React.FC = () => {
 
     //----------------------------------------------------------------get topics list
     async function GetTopicsList(type?: string) {
+        setTopicsListLoading(true);
         await client.query({
             query: GET_USER_TOPICS,
             variables: {
@@ -160,6 +161,7 @@ const Dashboard: React.FC = () => {
     }
 
     //------------------------------------------------------------------check user loged in
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     React.useEffect(() => {
         if (!localStorage.getItem('user')) {
             if (status != "loading") {
@@ -250,7 +252,6 @@ const Dashboard: React.FC = () => {
                             <button
                                 aria-label="general task1 button"
                                 onClick={() => {
-                                    setTopicsListLoading(true);
                                     setTopicsType('general_task_1');
                                     GetTopicsList('general_task_1');
                                 }}
@@ -260,7 +261,6 @@ const Dashboard: React.FC = () => {
                             <button
                                 aria-label="academic task1 button"
                                 onClick={() => {
-                                    setTopicsListLoading(true);
                                     setTopicsType('academic_task_1');
                                     GetTopicsList('academic_task_1');
                                 }}
@@ -270,7 +270,6 @@ const Dashboard: React.FC = () => {
                             <button
                                 aria-label="task2 button"
                                 onClick={() => {
-                                    setTopicsListLoading(true);
                                     setTopicsType('general_task_2');
                                     GetTopicsList('general_task_2');
                                 }}

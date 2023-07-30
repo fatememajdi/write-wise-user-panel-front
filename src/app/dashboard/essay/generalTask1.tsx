@@ -125,7 +125,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
             }).then(async (res) => {
                 await GetUserEssaies(id);
                 changeFirstEssayLoading(false);
-                GetTopicsList('general_task_1')
+                await GetTopicsList('general_task_1');
             }).catch((err) => {
                 console.log('add new essay error : ', err);
             })

@@ -26,10 +26,10 @@ import '../styles/global.css';
 import 'antd/dist/reset.css';
 
 
-export const metadata = {
-  title: 'Write Wise Ai',
-  description: 'Ielts Writing Ai',
-}
+// export const metadata = {
+//   title: 'Write Wise Ai',
+//   description: 'Ielts Writing Ai',
+// }
 
 export default function RootLayout({
   children,
@@ -57,8 +57,8 @@ export default function RootLayout({
             <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
             <meta
               name="description"
-              content="  Unlock your IELTS writing potential with WriteWiseAI,  four-step process to get accurate essay ratings, personalized feedback,
-              and valuable recommendations "></meta>
+              content="Unlock your IELTS writing potential with WriteWiseAI,  four-step process to get accurate essay ratings, personalized feedback,
+              and valuable recommendations"></meta>
           </Head>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <body className={lato.className}>
