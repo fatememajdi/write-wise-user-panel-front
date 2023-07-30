@@ -65,4 +65,39 @@ query GetUserEssay($id:String!){
     }
   }
 }
-`
+`;
+
+export const GET_RANDOM_GENERAL_TASK1_WRITING = gql`
+query{
+  getRandomWriting(type:GENERAL_TASK_1){
+    id,
+    topic,
+    body,
+    tone
+  }
+}
+`;
+
+export const SELECT_TOPIC = gql`
+mutation SelectTopic($type:String! , $body:String, $id:String){
+  selectTopic(selecetTopic:{type:$type ,body:$body, id:$id})
+  {
+    id
+  }
+}
+`;
+
+export const ADD_ESSAY = gql`
+mutation AddEssay($id:String! , $body: String!){
+  addEssay(addEssay:{id:$id ,body:$body}){
+    taskAchievementScore,
+    taskAchievementSummery,
+    coherenceAndCohesionScore,
+    coherenceAndCohesionSummery,
+    grammaticalRangeAndAccuracyScore,
+    grammaticalRangeAndAccuracySummery,
+    essay,
+    date,
+  }
+}
+`;

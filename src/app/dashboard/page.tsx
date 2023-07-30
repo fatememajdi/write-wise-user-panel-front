@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { useQuery } from "@apollo/react-hooks";
+import client from '@/config/applloClient';
 
 //-----------------------------------------styles
 import styles from './dashboard.module.css';
@@ -80,7 +81,7 @@ const tabBarItems = [
     },
     {
         title: 'Analysis',
-        active: false
+        active: true
     },
     {
         title: 'Recommendations',
@@ -109,15 +110,17 @@ const Dashboard: React.FC = () => {
                 router.push('/signIn');
         }
     });
-    const [loading, setLoading] = React.useState<boolean>(true);
+    const [pageLoading, setLoading] = React.useState<boolean>(true);
+    const [topicsListLoading, setTopicsListLoading] = React.useState<boolean>(true);
+    const [topics, changeTopics] = React.useState<any>([]);
     const [type, setType] = React.useState('general_task_1');
     const [topicsType, setTopicsType] = React.useState('general_task_1');
     const [open, setOpen] = React.useState<boolean>(true);
     const router = useRouter();
     const [width, setWidth] = React.useState<number>(0);
-    const [essayTopic, changeTopic] = React.useState<topic>();
+    const [essayTopic, changeTopic] = React.useState<topic | null>();
     const { step, goTo } = useMultiStepForm([<ChooseType changeType={ChangeType} />,
-    <GeneralTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic && essayTopic} />,
+    <GeneralTask1 GetTopicsList={GetTopicsList} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />,
     <AcademicTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />,
     <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
     ])
@@ -140,6 +143,21 @@ const Dashboard: React.FC = () => {
             goTo(3)
     }
 
+    //----------------------------------------------------------------get topics list
+    async function GetTopicsList(type?: string) {
+        await client.query({
+            query: GET_USER_TOPICS,
+            variables: {
+                type: type ? type : topicsType
+            },
+        }).then(async (res) => {
+            await changeTopics(res.data.getUserTopics.userTopics);
+            setTopicsListLoading(false);
+        }).catch((err) => {
+            console.log("get user topics error : ", err);
+            setTopicsListLoading(false);
+        });
+    }
 
     //------------------------------------------------------------------check user loged in
     React.useEffect(() => {
@@ -153,8 +171,10 @@ const Dashboard: React.FC = () => {
                     router.push('/signIn');
                 }
             }
-        } else
+        } else {
             setLoading(false);
+            GetTopicsList();
+        }
     });
 
 
@@ -180,7 +200,7 @@ const Dashboard: React.FC = () => {
         setOpen(false);
     };
 
-    if (loading)
+    if (pageLoading)
         return <Loading />
     else
         return <Box sx={{ display: 'flex' }}>
@@ -215,6 +235,7 @@ const Dashboard: React.FC = () => {
                                 onClick={async () => {
                                     await changeTabBarLoc(false);
                                     await changeEndAnimation(false);
+                                    await changeTopic(null);
                                     await goTo(0);
                                 }}
                                 className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} /></button>
@@ -228,26 +249,43 @@ const Dashboard: React.FC = () => {
 
                             <button
                                 aria-label="general task1 button"
-                                onClick={() => setTopicsType('general_task_1')}
+                                onClick={() => {
+                                    setTopicsListLoading(true);
+                                    setTopicsType('general_task_1');
+                                    GetTopicsList('general_task_1');
+                                }}
                                 className={topicsType === 'general_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Gen Task 1</button>
 
                             <button
                                 aria-label="academic task1 button"
-                                onClick={() => setTopicsType('academic_task_1')}
+                                onClick={() => {
+                                    setTopicsListLoading(true);
+                                    setTopicsType('academic_task_1');
+                                    GetTopicsList('academic_task_1');
+                                }}
                                 className={topicsType === 'academic_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Ac Task 1</button>
 
                             <button
                                 aria-label="task2 button"
-                                onClick={() => setTopicsType('general_task_2')}
+                                onClick={() => {
+                                    setTopicsListLoading(true);
+                                    setTopicsType('general_task_2');
+                                    GetTopicsList('general_task_2');
+                                }}
                                 className={topicsType === 'general_task_2' ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Task 2</button>
 
                         </div>
                     </div>
                     <div className={'col-12 ' + styles.drawerContent}>
-                        <UserTopicsList type={topicsType} SelectTopic={SelectTopic} />
+                        {
+                            topicsListLoading ?
+                                <Loading style={{ height: '50vh', minHeight: 0 }} />
+                                :
+                                <UserTopicsList topics={topics} SelectTopic={SelectTopic} />
+                        }
                     </div>
                     <div className={'col-12 ' + styles.drawerFooterContainer}>
                         <button
@@ -324,6 +362,7 @@ const Dashboard: React.FC = () => {
                                     onClick={async () => {
                                         await changeTabBarLoc(false);
                                         await changeEndAnimation(false);
+                                        await changeTopic(null);
                                         await goTo(0)
                                     }}
                                     className={styles.responsivePlusButton}>
@@ -406,37 +445,21 @@ const Dashboard: React.FC = () => {
 export default Dashboard;
 
 //----------------------------------------------------------------------------------drawer data card
-const UserTopicsList: React.FC<{ type: string, SelectTopic: any }> = ({ type, SelectTopic }) => {
-
-    const { data, loading, error } = useQuery(GET_USER_TOPICS, {
-        variables: {
-            type: type
-        },
-        onError(error) {
-            console.log('generate writing error : ', error);
-        },
-    });
-    if (error) {
-        console.log("get user topics error : ", error);
-    }
-
-    if (loading)
-        return <Loading />
-    else
-        return <div className={'col-12 ' + styles.tasksContainer}>
-            {
-                data.getUserTopics.userTopics.map((item: any, index: any) =>
-                    <div
-                        onClick={() => SelectTopic({ id: item.id, body: item.topic })}
-                        className={'col-12 ' + styles.taskCard} key={index}>
-                        <div className={styles.taskCardTitle}>
-                            {item.shortName}
-                            <span>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}</span>
-                        </div>
-                        <div className={styles.taskCardScore}>
-                            {item.score}
-                        </div>
-                    </div>)
-            }
-        </div>
+const UserTopicsList: React.FC<{ topics: any, SelectTopic: any }> = ({ topics, SelectTopic }) => {
+    return <div className={'col-12 ' + styles.tasksContainer}>
+        {
+            topics.map((item: any, index: any) =>
+                <div
+                    onClick={() => SelectTopic({ id: item.id, body: item.topic })}
+                    className={'col-12 ' + styles.taskCard} key={index}>
+                    <div className={styles.taskCardTitle}>
+                        {item.shortName}
+                        <span>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}</span>
+                    </div>
+                    <div className={styles.taskCardScore}>
+                        {item.score}
+                    </div>
+                </div>)
+        }
+    </div>
 };
