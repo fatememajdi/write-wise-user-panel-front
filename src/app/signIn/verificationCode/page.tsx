@@ -31,7 +31,7 @@ const VerificationCode: React.FC = () => {
 
     const handleSignIn = async (values: any) => {
         changeLoadig(true);
-        let email = localStorage.getItem('user');
+        let email = localStorage.getItem('email');
         await verificationCode({
             variables: {
                 email: email,
@@ -40,19 +40,10 @@ const VerificationCode: React.FC = () => {
         }).then(async (data) => {
             localStorage.setItem("user", JSON.stringify(data.data.verifyEmail.token));
             await router.push('/dashboard');
-            console.log(data);
             changeLoadig(false);
         }
-        ).catch(() => {
-            changeLoadig(false);
-            if (error)
-                toast.error(error.message, {
-                    className: 'error-toast'
-                });
-            else
-                toast.error("Try again!", {
-                    className: 'error-toast'
-                });
+        ).catch((error) => {
+            console.log('verification error : ', error);
         });
     };
     if (loading)

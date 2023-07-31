@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 'use client';
 import React, { lazy } from "react";
@@ -9,8 +10,7 @@ import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { useQuery } from "@apollo/react-hooks";
-import client from '@/config/applloClient';
+import client from '@/config/applloAuthorizedClient';
 
 //-----------------------------------------styles
 import styles from './dashboard.module.css';

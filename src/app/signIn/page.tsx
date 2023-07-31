@@ -134,7 +134,7 @@ const Step2: React.FC = () => {
 
     const handleEmailSignIn = async (values: any) => {
         changeLoading(true);
-        localStorage.setItem('user', values.email);
+        localStorage.setItem('email', values.email);
         await emailSignIn({
             variables: {
                 email: values.email,
@@ -142,18 +142,11 @@ const Step2: React.FC = () => {
         }).then(async (data) => {
             await router.push('/signIn/verificationCode');
             changeLoading(false);
-            console.log(data);
         }
-        ).catch(() => {
+        ).catch((error) => {
             changeLoading(false);
-            if (error)
-                toast.error(error.message, {
-                    className: 'error-toast'
-                });
-            else
-                toast.error("Try again!", {
-                    className: 'error-toast'
-                });
+            console.log('signIn error : ', error);
+
         });
     };
 

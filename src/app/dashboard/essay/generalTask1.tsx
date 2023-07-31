@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
 import { loadStripe } from '@stripe/stripe-js';
-import client from '@/config/applloClient';
+import client from '@/config/applloAuthorizedClient';
 
 //--------------------------------------styles
 import styles from './essay.module.css';
