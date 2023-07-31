@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { lazy } from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
 import { loadStripe } from '@stripe/stripe-js';
 import client from '@/config/applloAuthorizedClient';
+import { Modal } from 'antd';
 
 //--------------------------------------styles
 import styles from './essay.module.css';
@@ -53,6 +55,20 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
     const [essaies, setEssaies] = React.useState([]);
     const [essayTopic, changeTopic] = React.useState<topic>();
+    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [modalContent, changeModalContent] = React.useState<string>('sdf');
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     //----------------------------------------------------------------get user essaies
     async function GetUserEssaies(id: string) {
@@ -97,6 +113,8 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
         }).then(async (res) => {
             id = res.data.selectTopic.id as string;
         }).catch(async (err) => {
+            // await changeModalContent(err as string);
+            showModal();
             await console.log(err);
             id = null;
         });
@@ -125,8 +143,9 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
             }).then(async (res) => {
                 await GetUserEssaies(id);
                 changeFirstEssayLoading(false);
-                await GetTopicsList('general_task_1');
-            }).catch((err) => {
+            }).catch(async (err) => {
+                // await changeModalContent(err as string);
+                showModal();
                 console.log('add new essay error : ', err);
             })
         };
@@ -250,6 +269,10 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                 {
                     essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} />)
                 }
+
+                <Modal title="Add essay error" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+
+                </Modal>
 
             </form>
         )}
