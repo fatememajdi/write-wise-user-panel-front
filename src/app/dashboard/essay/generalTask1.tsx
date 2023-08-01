@@ -23,6 +23,9 @@ import { Reload } from "../../../../public";
 import { MdEdit } from 'react-icons/md';
 import { Lock } from '../../../../public/dashboard';
 
+//--------------------------------------types
+import { Essay } from '../../../../types/essay';
+
 interface topic {
     id: string,
     body: string
@@ -33,7 +36,7 @@ interface writingProps {
     changeEndAnimation: any,
     endAnimation: boolean,
     topic?: topic,
-    GetTopicsList: any
+    GetTopicsList: any,
 }
 
 //---------------------------------------------------------------validation
@@ -53,10 +56,13 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     const [firstEssayLoading, changeFirstEssayLoading] = React.useState<boolean>(false);
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
-    const [essaies, setEssaies] = React.useState([]);
+    const [essaies, setEssaies] = React.useState<Essay[]>([]);
     const [essayTopic, changeTopic] = React.useState<topic>();
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [getMoreEssayLoading, changeGetMoreEssayLoading] = React.useState<boolean>(false);
+    const [essaiesPage, changeEssaiesPage] = React.useState<number>(1);
     const [modalContent, changeModalContent] = React.useState<string>('sdf');
+    const [currentId, changeCcurrentId] = React.useState<string>('');
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -71,14 +77,20 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     };
 
     //----------------------------------------------------------------get user essaies
-    async function GetUserEssaies(id: string) {
+    async function GetUserEssaies(id: string, page: number) {
         await client.query({
             query: GET_USER_ESSAY,
             variables: {
-                id: id
+                id: id,
+                page: page,
+                pageSize: 100
             }
         }).then(async (res) => {
-            await setEssaies(res.data.getUserEssay.essaies);
+            if (page === 1)
+                await setEssaies(res.data.getUserEssay.essaies);
+            else
+                await setEssaies(essaies => [...essaies, ...res.data.getUserEssay.essaies]);
+            changeEssaiesPage(page);
         }).catch((err) => {
             console.log('get users essay error :  : ', err)
         });
@@ -141,7 +153,8 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     body: body
                 }
             }).then(async (res) => {
-                await GetUserEssaies(id);
+                changeCcurrentId(id);
+                await GetUserEssaies(id, 1);
                 changeFirstEssayLoading(false);
             }).catch(async (err) => {
                 // await changeModalContent(err as string);
@@ -153,10 +166,11 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
 
     React.useEffect(() => {
         if (topic) {
+            changeCcurrentId(topic.id);
             changeTopic(topic);
-            GetUserEssaies(topic.id as string);
+            GetUserEssaies(topic.id as string, 1);
         }
-    });
+    },);
 
     return <Formik
         initialValues={{
@@ -269,6 +283,23 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                 {
                     essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} />)
                 }
+
+                <div
+                    className={styles.moreEssayButton}
+                    onClick={async () => {
+                        changeGetMoreEssayLoading(true);
+                        await GetUserEssaies(currentId, essaiesPage + 1);
+                        changeGetMoreEssayLoading(false);
+                    }}>
+                    {
+                        getMoreEssayLoading ?
+                            <Loading style={{ height: 60, minHeight: 0 }} />
+                            :
+                            'more ...'
+                    }
+                </div>
+
+
 
                 <Modal title="Add essay error" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
 

@@ -49,8 +49,8 @@ query GetUserTopics($type:String!){
 `;
 
 export const GET_USER_ESSAY = gql`
-query GetUserEssay($id:String!){
-  getUserEssay(getEssayInput:{id:$id },pagination:{pageSize:50,page:1}){
+query GetUserEssay($id:String!, $page:Float!, $pageSize:Float!){
+  getUserEssay(getEssayInput:{id:$id },pagination:{pageSize:$pageSize,page:$page}){
     essaies{
       essay,
       date,

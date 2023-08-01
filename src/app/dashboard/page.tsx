@@ -373,6 +373,7 @@ const Dashboard: React.FC = () => {
                     }
 
                     <div
+                        onScroll={() => { console.log('hi I am scrolling') }}
                         style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
                         className={styles.dashboardContentRightContainer}>
 
