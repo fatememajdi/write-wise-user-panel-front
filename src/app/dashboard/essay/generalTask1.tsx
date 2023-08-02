@@ -61,7 +61,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [getMoreEssayLoading, changeGetMoreEssayLoading] = React.useState<boolean>(false);
     const [essaiesPage, changeEssaiesPage] = React.useState<number>(1);
-    const [modalContent, changeModalContent] = React.useState<string>('sdf');
+    // const [modalContent, changeModalContent] = React.useState<string>('sdf');
     const [currentId, changeCcurrentId] = React.useState<string>('');
 
     const showModal = () => {
@@ -83,7 +83,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
             variables: {
                 id: id,
                 page: page,
-                pageSize: 100
+                pageSize: 1
             }
         }).then(async (res) => {
             if (page === 1)
@@ -170,7 +170,15 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
             changeTopic(topic);
             GetUserEssaies(topic.id as string, 1);
         }
-    },);
+    }, []);
+
+    window.addEventListener('scroll', async function () {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            if (essaiesPage < 10)
+                await GetUserEssaies(currentId, essaiesPage + 1);
+            // console.log("hi");
+        }
+    });
 
     return <Formik
         initialValues={{

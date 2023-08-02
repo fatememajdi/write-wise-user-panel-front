@@ -142,6 +142,7 @@ const Step2: React.FC = () => {
         }).then(async (data) => {
             await router.push('/signIn/verificationCode');
             changeLoading(false);
+            console.log(data);
         }
         ).catch((error) => {
             changeLoading(false);
