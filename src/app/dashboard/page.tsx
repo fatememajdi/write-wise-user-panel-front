@@ -373,7 +373,7 @@ const Dashboard: React.FC = () => {
                     }
 
                     <div
-                        // onScroll={() => { console.log('hi I am scrolling') }}
+                        // onScroll={(e) => { console.log(e.target.addEventListener.length.toFixed()) }}
                         style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
                         className={styles.dashboardContentRightContainer}>
 

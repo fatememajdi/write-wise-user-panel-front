@@ -57,19 +57,17 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
     const [essaies, setEssaies] = React.useState<Essay[]>([]);
+    // const [FirstEssaies, setFierstEssaiey] = React.useState<Essay[]>([]);
     const [essayTopic, changeTopic] = React.useState<topic>();
+    const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [getMoreEssayLoading, changeGetMoreEssayLoading] = React.useState<boolean>(false);
     const [essaiesPage, changeEssaiesPage] = React.useState<number>(1);
-    // const [modalContent, changeModalContent] = React.useState<string>('sdf');
+    const [modalContent, changeModalContent] = React.useState<string>('');
     const [currentId, changeCcurrentId] = React.useState<string>('');
 
     const showModal = () => {
         setIsModalOpen(true);
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
     };
 
     const handleCancel = () => {
@@ -77,20 +75,21 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     };
 
     //----------------------------------------------------------------get user essaies
-    async function GetUserEssaies(id: string, page: number) {
+    async function GetUserEssaies(id: string) {
+        // console.log(page);
         await client.query({
             query: GET_USER_ESSAY,
             variables: {
                 id: id,
-                page: page,
-                pageSize: 1
+                page: 1,
+                pageSize: 1000
             }
         }).then(async (res) => {
-            if (page === 1)
-                await setEssaies(res.data.getUserEssay.essaies);
-            else
-                await setEssaies(essaies => [...essaies, ...res.data.getUserEssay.essaies]);
-            changeEssaiesPage(page);
+            // if (essaiesPage === 1)
+            await setEssaies(res.data.getUserEssay.essaies);
+            // else
+            //     await setEssaies(essaies => [...essaies, ...res.data.getUserEssay.essaies]);
+            changeEssaiesPage(essaiesPage + 1);
         }).catch((err) => {
             console.log('get users essay error :  : ', err)
         });
@@ -102,7 +101,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
         await client.query({
             query: GET_RANDOM_GENERAL_TASK1_WRITING,
         }).then(async (res) => {
-            await changeTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body })
+            await changeGeneratedTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body })
             changeGenerateWritingTopicLoading(false);
         }).catch((err) => {
             console.log('get random writing error :  : ', err);
@@ -112,20 +111,20 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
 
     //------------------------------------------------------------------select essay topic
     async function SelectTopic(topic: string): Promise<string | null> {
-        console.log(!editedGeneratedTopic && essayTopic?.body === topic || essayTopic?.body === topic);
-        console.log(!essayTopic || essayTopic?.body != topic);
         let id: any;
         await client.mutate({
             mutation: SELECT_TOPIC,
             variables: {
                 type: 'general_task_1',
-                id: !editedGeneratedTopic && essayTopic?.body === topic || essayTopic?.body === topic ? essayTopic?.id : null,
-                body: !essayTopic || essayTopic?.body != topic ? topic : null
+                id: !editedGeneratedTopic && generatedTopic?.body === topic || generatedTopic?.body === topic ? generatedTopic?.id : null,
+                body: !generatedTopic || generatedTopic?.body != topic ? topic : null
             }
         }).then(async (res) => {
             id = res.data.selectTopic.id as string;
+            if (generatedTopic)
+                changeTopic({ id: generatedTopic.id, body: generatedTopic.body });
         }).catch(async (err) => {
-            // await changeModalContent(err as string);
+            await changeModalContent('try again!');
             showModal();
             await console.log(err);
             id = null;
@@ -136,9 +135,14 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     //-------------------------------------------------------------------ass new essay
     async function AddNewEssay(topic: string, body: string) {
         changeLoading(true);
-        const id = await SelectTopic(topic);
-        console.log(id);
+        let id: any;
+        if (essayTopic)
+            id = essayTopic.id;
+        else
+            id = await SelectTopic(topic);
         changeLoading(false);
+
+        console.log(id);
 
         if (id != null) {
             changeTabBarLoc(true);
@@ -152,13 +156,13 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     id: id as string,
                     body: body
                 }
-            }).then(async (res) => {
+            }
+            ).then(async (res) => {
                 changeCcurrentId(id);
-                await GetUserEssaies(id, 1);
+                await changeEssaiesPage(1);
+                await GetUserEssaies(id);
                 changeFirstEssayLoading(false);
             }).catch(async (err) => {
-                // await changeModalContent(err as string);
-                showModal();
                 console.log('add new essay error : ', err);
             })
         };
@@ -168,21 +172,21 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
         if (topic) {
             changeCcurrentId(topic.id);
             changeTopic(topic);
-            GetUserEssaies(topic.id as string, 1);
+            GetUserEssaies(topic.id as string);
         }
     }, []);
 
-    window.addEventListener('scroll', async function () {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-            if (essaiesPage < 10)
-                await GetUserEssaies(currentId, essaiesPage + 1);
-            // console.log("hi");
-        }
-    });
+    // window.addEventListener('scroll', async function () {
+    //     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    //         if (essaiesPage < 10)
+    //             await GetUserEssaies(currentId, essaiesPage + 1);
+    //         // console.log("hi");
+    //     }
+    // });
 
     return <Formik
         initialValues={{
-            topic: essayTopic ? essayTopic.body : '',
+            topic: generatedTopic ? generatedTopic.body : '',
             body: ''
         }}
         // validationSchema={WritingValidationSchema}
@@ -288,15 +292,19 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     <WritingDataCard essay={'loading'} />
                 }
 
+                {/* {
+                    FirstEssaies.map((essay, index) => <WritingDataCard key={index} essay={essay} />)
+                } */}
+
                 {
                     essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} />)
                 }
 
-                <div
+                {/* <div
                     className={styles.moreEssayButton}
                     onClick={async () => {
                         changeGetMoreEssayLoading(true);
-                        await GetUserEssaies(currentId, essaiesPage + 1);
+                        await GetUserEssaies(currentId);
                         changeGetMoreEssayLoading(false);
                     }}>
                     {
@@ -305,12 +313,14 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                             :
                             'more ...'
                     }
-                </div>
+                </div> */}
 
 
 
-                <Modal title="Add essay error" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-
+                <Modal
+                    footer={null}
+                    title="Add essay error" open={isModalOpen} onCancel={handleCancel}>
+                    <div className={styles.modalCard}> {modalContent}</div>
                 </Modal>
 
             </form>
