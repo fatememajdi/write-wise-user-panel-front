@@ -79,7 +79,7 @@
     justify-content: space-around;
     height: fit-content;
     margin-top: 10px;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .taskTabButton {

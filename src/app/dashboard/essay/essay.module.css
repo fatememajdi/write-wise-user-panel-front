@@ -185,11 +185,11 @@
 .generateButton {
     background-color: #132740;
     border: solid 2px #132740;
-    width: 150px;
+    width: 170px;
     height: 40px;
     display: flex;
     align-items: center !important;
-    justify-content: space-between;
+    justify-content: center;
     color: var(--color-whiteText);
     margin-left: 29px;
     margin-top: 25px;
@@ -524,7 +524,7 @@
         bottom: 20px;
         right: 60px;
         height: 25px;
-        width: 80px;
+        width: 100px;
         font-size: 13px;
         align-items: center;
         justify-content: center;

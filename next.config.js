@@ -8,11 +8,11 @@ const nextConfig = {
   images: {
     minimumCacheTTL: 60,
   },
-  optimization: {
-    minimize: true,
-  },
+  // optimization: {
+  //   minimize: true,
+  // },
   env: {
-    NEXT_PUBLIC_ENV: 'PRODUCTION', //your next configs goes here
+    NEXT_PUBLIC_ENV: 'PRODUCTION', 
   }
 }
 

@@ -39,6 +39,11 @@ interface writingProps {
     endAnimation: boolean,
     topic?: topic,
     GetTopicsList: any,
+    essaies: Essay[],
+    GetUserEssaies: any,
+    changePage: any,
+    MoreEssaies: boolean,
+    changeMoreEssaies: any
 }
 
 //---------------------------------------------------------------validation
@@ -51,16 +56,14 @@ const WritingValidationSchema = Yup.object().shape({
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
-const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, GetTopicsList }) => {
+const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essaies, GetUserEssaies, changePage, MoreEssaies, changeMoreEssaies }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [loading, changeLoading] = React.useState<boolean>(false);
-    const [MoreEssaies, changeMoreEssaies] = React.useState<boolean>(true);
-    const [page, changePage] = React.useState<number>(1);
     const [firstEssayLoading, changeFirstEssayLoading] = React.useState<boolean>(false);
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
-    const [essaies, setEssaies] = React.useState<Essay[]>([]);
+    // const [essaies, setEssaies] = React.useState<Essay[]>([]);
     // const [FirstEssaies, setFierstEssaiey] = React.useState<Essay[]>([]);
     const [essayTopic, changeTopic] = React.useState<topic>();
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
@@ -74,30 +77,6 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
 
     const handleCancel = () => {
         setIsModalOpen(false);
-    };
-
-    //----------------------------------------------------------------get user essaies
-    async function GetUserEssaies(id: string) {
-        await client.query({
-            query: GET_USER_ESSAY,
-            variables: {
-                id: id,
-                page: 1,
-                pageSize: 1000
-            }
-        }).then(async (res) => {
-            if (res.data.getUserEssay.essaies.length != 0) {
-                if (page === 1)
-                    await setEssaies(res.data.getUserEssay.essaies);
-                else
-                    await setEssaies([...essaies, ...res.data.getUserEssay.essaies]);
-                changePage(page + 1);
-            } else {
-                changeMoreEssaies(false);
-            }
-        }).catch((err) => {
-            console.log('get users essay error :  : ', err)
-        });
     };
 
     //-----------------------------------------------------------------generate topic
@@ -162,8 +141,9 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     body: body
                 }
             }).then(async (res) => {
-                changePage(1);
+                await changePage(1);
                 changeCcurrentId(id);
+                changeMoreEssaies(true);
                 await GetUserEssaies(id);
                 changeFirstEssayLoading(false);
             }).catch(async (err) => {
@@ -176,9 +156,8 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
         if (topic) {
             changeCcurrentId(topic.id);
             changeTopic(topic);
-            // GetUserEssaies(topic.id as string);
         }
-    }, []);
+    });
 
 
     return <Formik
@@ -241,18 +220,28 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                                                 textarea_error={errors.topic && touched.topic && errors.topic}
                                             />
                                             <button
+                                                aria-label="edit tipic"
                                                 onClick={() => {
                                                     changeGenerateWriting(true);
                                                     GenerateTopic();
                                                 }}
                                                 type="button" className={styles.generateButton}>
-                                                <Reload className={styles.reloadIconResponsive} />Generate
+                                                <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
+                                                {
+                                                    generatedTopic ? 'Regenereate' :
+                                                        'Generate'
+                                                }
                                             </button>
 
                                             {
                                                 generateWriting &&
                                                 <button
-                                                    onClick={() => changeEditedGeneratedTopic(true)}
+                                                    aria-label="edit tipic"
+                                                    type="button"
+                                                    onClick={() => {
+                                                        changeEditedGeneratedTopic(true);
+                                                        setFieldValue('topic', '');
+                                                    }}
                                                     className={styles.editButton}>
                                                     <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
                                                 </button>

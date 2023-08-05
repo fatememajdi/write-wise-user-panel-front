@@ -18,7 +18,7 @@ import styles from './dashboard.module.css';
 
 //-----------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-import { GET_USER_TOPICS } from "@/config/graphql";
+import { GET_USER_ESSAY, GET_USER_TOPICS } from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
 const ChooseType = lazy(() => import("./essay/chooseType"));
 const GeneralTask1 = lazy(() => import("./essay/generalTask1"));
@@ -31,6 +31,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { TfiMenu } from 'react-icons/tfi';
 import { FiMoreVertical } from 'react-icons/fi';
+import { Essay } from "../../../types/essay";
 
 const drawerWidth = 380;
 
@@ -112,20 +113,24 @@ const Dashboard: React.FC = () => {
         }
     });
     const [pageLoading, setLoading] = React.useState<boolean>(true);
+    const [MoreEssaies, changeMoreEssaies] = React.useState<boolean>(true);
     const [MoreTopics, changeMoreTopics] = React.useState<boolean>(true);
     const [page, changePage] = React.useState<number>(1);
+    const [essayPage, changeEssayPage] = React.useState<number>(1);
     const [topics, changeTopics] = React.useState<any>([]);
     const [topicsType, setTopicsType] = React.useState('general_task_1');
+    const [essaies, setEssaies] = React.useState<Essay[]>([]);
     const [open, setOpen] = React.useState<boolean>(true);
     const router = useRouter();
-    const [width, setWidth] = React.useState<number>(0);
     const [essayTopic, changeTopic] = React.useState<topic | null>();
     const { step, goTo } = useMultiStepForm([<ChooseType changeType={ChangeType} />,
-    <GeneralTask1 GetTopicsList={GetTopicsList} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />,
+    <GeneralTask1
+        changePage={changeEssayPage} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies}
+        essaies={essaies} GetUserEssaies={GetUserEssaies} GetTopicsList={GetTopicsList} changeTabBarLoc={changeTabBarLoc}
+        changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />,
     <AcademicTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />,
     <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
     ])
-    const handleResize = () => setWidth(window.innerWidth);
     const Open = Boolean(anchorEl);
     const id = Open ? 'simple-popover' : undefined;
 
@@ -133,7 +138,10 @@ const Dashboard: React.FC = () => {
         goTo(index)
     }
 
-    function SelectTopic(topic: topic) {
+    async function SelectTopic(topic: topic) {
+        setEssaies([]);
+        changeEssayPage(1);
+        changeMoreEssaies(true);
         changeTopic(topic);
         if (topicsType === 'general_task_1')
             goTo(1);
@@ -143,8 +151,33 @@ const Dashboard: React.FC = () => {
             goTo(3)
     }
 
+    //----------------------------------------------------------------get user essaies
+    async function GetUserEssaies(id: string) {
+        await client.query({
+            query: GET_USER_ESSAY,
+            variables: {
+                id: id,
+                page: essayPage,
+                pageSize: 1
+            }
+        }).then(async (res) => {
+            if (res.data.getUserEssay.essaies.length != 0) {
+                if (page === 1)
+                    await setEssaies(res.data.getUserEssay.essaies);
+                else
+                    await setEssaies([...essaies, ...res.data.getUserEssay.essaies]);
+                changeEssayPage(essayPage + 1);
+            } else {
+                changeMoreEssaies(false);
+            }
+        }).catch((err) => {
+            console.log('get users essay error : ', err)
+        });
+    };
+
     //----------------------------------------------------------------get topics list
     async function GetTopicsList(type?: string) {
+        console.log(MoreTopics);
         await client.query({
             query: GET_USER_TOPICS,
             variables: {
@@ -185,12 +218,6 @@ const Dashboard: React.FC = () => {
             GetTopicsList();
         }
     }, []);
-
-
-    React.useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [handleResize]);
 
     const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -242,6 +269,10 @@ const Dashboard: React.FC = () => {
                             <button
                                 aria-label="new essay button"
                                 onClick={async () => {
+                                    await setEssaies([]);
+                                    await changeEssayPage(1);
+                                    await changeMoreEssaies(false);
+                                    await changeTopic(null)
                                     await changeTabBarLoc(false);
                                     await changeEndAnimation(false);
                                     await changeTopic(null);
@@ -259,6 +290,9 @@ const Dashboard: React.FC = () => {
                             <button
                                 aria-label="general task1 button"
                                 onClick={() => {
+                                    changePage(1);
+                                    changeTopics([]);
+                                    changeMoreTopics(true);
                                     setTopicsType('general_task_1');
                                     GetTopicsList('general_task_1');
                                 }}
@@ -267,7 +301,10 @@ const Dashboard: React.FC = () => {
 
                             <button
                                 aria-label="academic task1 button"
-                                onClick={() => {
+                                onClick={async () => {
+                                    changePage(1);
+                                    changeTopics([]);
+                                    changeMoreTopics(true);
                                     setTopicsType('academic_task_1');
                                     GetTopicsList('academic_task_1');
                                 }}
@@ -277,6 +314,9 @@ const Dashboard: React.FC = () => {
                             <button
                                 aria-label="task2 button"
                                 onClick={() => {
+                                    changePage(1);
+                                    changeTopics([]);
+                                    changeMoreTopics(true);
                                     setTopicsType('general_task_2');
                                     GetTopicsList('general_task_2');
                                 }}
@@ -361,6 +401,10 @@ const Dashboard: React.FC = () => {
                                 <button
                                     aria-label="new essay button"
                                     onClick={async () => {
+                                        await setEssaies([]);
+                                        await changeEssayPage(1);
+                                        await changeMoreEssaies(false);
+                                        await changeTopic(null)
                                         await changeTabBarLoc(false);
                                         await changeEndAnimation(false);
                                         await changeTopic(null);
