@@ -7,6 +7,7 @@ import client from '../config/applloClient';
 import React, { Suspense } from 'react';
 import { Session } from "next-auth";
 import Head from 'next/head';
+
 //--------------------------------------------------------components
 import Loading from '@/components/loading/loading';
 import { lato } from '../../fonts';
