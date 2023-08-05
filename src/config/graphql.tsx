@@ -33,8 +33,8 @@ mutation MetaSignIn($token:String!){
 `;
 
 export const GET_USER_TOPICS = gql`
-query GetUserTopics($type:String!){
-  getUserTopics(filter:{type:$type ,isDelete:false},pagination:{page:1,pageSize:1000}){
+query GetUserTopics($type:String!, $page:Float!, $pageSize:Float!){
+  getUserTopics(filter:{type:$type ,isDelete:false},pagination:{page:$page,pageSize:$pageSize}){
     userTopics{
       id,
       type,

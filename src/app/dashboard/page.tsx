@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import client from '@/config/applloAuthorizedClient';
+import InfiniteScroll from 'react-infinite-scroller';
 
 //-----------------------------------------styles
 import styles from './dashboard.module.css';
@@ -111,9 +112,9 @@ const Dashboard: React.FC = () => {
         }
     });
     const [pageLoading, setLoading] = React.useState<boolean>(true);
-    const [topicsListLoading, setTopicsListLoading] = React.useState<boolean>(true);
+    const [MoreTopics, changeMoreTopics] = React.useState<boolean>(true);
+    const [page, changePage] = React.useState<number>(1);
     const [topics, changeTopics] = React.useState<any>([]);
-    const [type, setType] = React.useState('general_task_1');
     const [topicsType, setTopicsType] = React.useState('general_task_1');
     const [open, setOpen] = React.useState<boolean>(true);
     const router = useRouter();
@@ -129,7 +130,6 @@ const Dashboard: React.FC = () => {
     const id = Open ? 'simple-popover' : undefined;
 
     function ChangeType(type: string, index: number) {
-        setType(type);
         goTo(index)
     }
 
@@ -145,18 +145,25 @@ const Dashboard: React.FC = () => {
 
     //----------------------------------------------------------------get topics list
     async function GetTopicsList(type?: string) {
-        setTopicsListLoading(true);
         await client.query({
             query: GET_USER_TOPICS,
             variables: {
-                type: type ? type : topicsType
+                type: type ? type : topicsType,
+                page: page,
+                pageSize: 6
             },
         }).then(async (res) => {
-            await changeTopics(res.data.getUserTopics.userTopics);
-            setTopicsListLoading(false);
+            if (res.data.getUserTopics.userTopics.length != 0) {
+                if (page == 1)
+                    await changeTopics(res.data.getUserTopics.userTopics);
+                else
+                    await changeTopics([...topics, ...res.data.getUserTopics.userTopics])
+                changePage(page + 1);
+            } else {
+                changeMoreTopics(false);
+            }
         }).catch((err) => {
             console.log("get user topics error : ", err);
-            setTopicsListLoading(false);
         });
     }
 
@@ -177,7 +184,7 @@ const Dashboard: React.FC = () => {
             setLoading(false);
             GetTopicsList();
         }
-    });
+    }, []);
 
 
     React.useEffect(() => {
@@ -279,12 +286,7 @@ const Dashboard: React.FC = () => {
                         </div>
                     </div>
                     <div className={'col-12 ' + styles.drawerContent}>
-                        {
-                            topicsListLoading ?
-                                <Loading style={{ height: '50vh', minHeight: 0 }} />
-                                :
-                                <UserTopicsList topics={topics} SelectTopic={SelectTopic} />
-                        }
+                        <UserTopicsList topics={topics} SelectTopic={SelectTopic} GetTopicsList={GetTopicsList} MoreTopics={MoreTopics} />
                     </div>
                     <div className={'col-12 ' + styles.drawerFooterContainer}>
                         <button
@@ -372,9 +374,7 @@ const Dashboard: React.FC = () => {
                         </>
                     }
 
-                    <div
-                        // onScroll={() => { console.log('hi I am scrolling') }}
-                        style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
+                    <div style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
                         className={styles.dashboardContentRightContainer}>
 
                         <div
@@ -445,21 +445,30 @@ const Dashboard: React.FC = () => {
 export default Dashboard;
 
 //----------------------------------------------------------------------------------drawer data card
-const UserTopicsList: React.FC<{ topics: any, SelectTopic: any }> = ({ topics, SelectTopic }) => {
+const UserTopicsList: React.FC<{ topics: any, SelectTopic: any, GetTopicsList: any, MoreTopics: boolean }> = ({ topics, SelectTopic, GetTopicsList, MoreTopics }) => {
     return <div className={'col-12 ' + styles.tasksContainer}>
-        {
-            topics.map((item: any, index: any) =>
-                <div
-                    onClick={() => SelectTopic({ id: item.id, body: item.topic })}
-                    className={'col-12 ' + styles.taskCard} key={index}>
-                    <div className={styles.taskCardTitle}>
-                        {item.shortName}
-                        <span>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}</span>
-                    </div>
-                    <div className={styles.taskCardScore}>
-                        {item.score}
-                    </div>
-                </div>)
-        }
+        <InfiniteScroll
+            pageStart={0}
+            loadMore={() => GetTopicsList()}
+            hasMore={MoreTopics}
+            loader={<Loading style={{ height: 50, minHeight: 0 }} />}
+            useWindow={false}
+            key={0}
+        >
+            {
+                topics.map((item: any, index: any) =>
+                    <div
+                        onClick={() => SelectTopic({ id: item.id, body: item.topic })}
+                        className={'col-12 ' + styles.taskCard} key={index}>
+                        <div className={styles.taskCardTitle}>
+                            {item.shortName}
+                            <span>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}</span>
+                        </div>
+                        <div className={styles.taskCardScore}>
+                            {item.score}
+                        </div>
+                    </div>)
+            }
+        </InfiniteScroll>
     </div>
 };

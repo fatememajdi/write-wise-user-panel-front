@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic';
 import { loadStripe } from '@stripe/stripe-js';
 import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
+import InfiniteScroll from 'react-infinite-scroller';
+
 
 //--------------------------------------styles
 import styles from './essay.module.css';
@@ -53,14 +55,14 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
 
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [loading, changeLoading] = React.useState<boolean>(false);
+    const [MoreEssaies, changeMoreEssaies] = React.useState<boolean>(true);
+    const [page, changePage] = React.useState<number>(1);
     const [firstEssayLoading, changeFirstEssayLoading] = React.useState<boolean>(false);
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
     const [essaies, setEssaies] = React.useState<Essay[]>([]);
     const [essayTopic, changeTopic] = React.useState<topic>();
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-    const [getMoreEssayLoading, changeGetMoreEssayLoading] = React.useState<boolean>(false);
-    const [essaiesPage, changeEssaiesPage] = React.useState<number>(1);
     // const [modalContent, changeModalContent] = React.useState<string>('sdf');
     const [currentId, changeCcurrentId] = React.useState<string>('');
 
@@ -77,7 +79,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     };
 
     //----------------------------------------------------------------get user essaies
-    async function GetUserEssaies(id: string, page: number) {
+    async function GetUserEssaies(id: string) {
         await client.query({
             query: GET_USER_ESSAY,
             variables: {
@@ -86,11 +88,15 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                 pageSize: 1
             }
         }).then(async (res) => {
-            if (page === 1)
-                await setEssaies(res.data.getUserEssay.essaies);
-            else
-                await setEssaies(essaies => [...essaies, ...res.data.getUserEssay.essaies]);
-            changeEssaiesPage(page);
+            if (res.data.getUserEssay.essaies.length != 0) {
+                if (page === 1)
+                    await setEssaies(res.data.getUserEssay.essaies);
+                else
+                    await setEssaies([...essaies, ...res.data.getUserEssay.essaies]);
+                changePage(page + 1);
+            } else {
+                changeMoreEssaies(false);
+            }
         }).catch((err) => {
             console.log('get users essay error :  : ', err)
         });
@@ -153,8 +159,9 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     body: body
                 }
             }).then(async (res) => {
+                changePage(1);
                 changeCcurrentId(id);
-                await GetUserEssaies(id, 1);
+                await GetUserEssaies(id);
                 changeFirstEssayLoading(false);
             }).catch(async (err) => {
                 // await changeModalContent(err as string);
@@ -168,17 +175,10 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
         if (topic) {
             changeCcurrentId(topic.id);
             changeTopic(topic);
-            GetUserEssaies(topic.id as string, 1);
+            // GetUserEssaies(topic.id as string);
         }
     }, []);
 
-    window.addEventListener('scroll', async function () {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-            if (essaiesPage < 10)
-                await GetUserEssaies(currentId, essaiesPage + 1);
-            // console.log("hi");
-        }
-    });
 
     return <Formik
         initialValues={{
@@ -288,25 +288,18 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     <WritingDataCard essay={'loading'} />
                 }
 
-                {
-                    essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} />)
-                }
-
-                <div
-                    className={styles.moreEssayButton}
-                    onClick={async () => {
-                        changeGetMoreEssayLoading(true);
-                        await GetUserEssaies(currentId, essaiesPage + 1);
-                        changeGetMoreEssayLoading(false);
-                    }}>
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={() => GetUserEssaies(currentId)}
+                    hasMore={MoreEssaies}
+                    loader={<Loading style={{ height: 50, minHeight: 0 }} />}
+                    useWindow={false}
+                    key={0}
+                >
                     {
-                        getMoreEssayLoading ?
-                            <Loading style={{ height: 60, minHeight: 0 }} />
-                            :
-                            'more ...'
+                        essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} />)
                     }
-                </div>
-
+                </InfiniteScroll>
 
 
                 <Modal title="Add essay error" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
