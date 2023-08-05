@@ -125,6 +125,7 @@ const Dashboard: React.FC = () => {
     const [essayTopic, changeTopic] = React.useState<topic | null>();
     const { step, goTo } = useMultiStepForm([<ChooseType changeType={ChangeType} />,
     <GeneralTask1
+        setEssaies={setEssaies}
         changePage={changeEssayPage} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies}
         essaies={essaies} GetUserEssaies={GetUserEssaies} GetTopicsList={GetTopicsList} changeTabBarLoc={changeTabBarLoc}
         changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />,
@@ -177,7 +178,6 @@ const Dashboard: React.FC = () => {
 
     //----------------------------------------------------------------get topics list
     async function GetTopicsList(type?: string) {
-        console.log(MoreTopics);
         await client.query({
             query: GET_USER_TOPICS,
             variables: {
@@ -237,7 +237,9 @@ const Dashboard: React.FC = () => {
     };
 
     if (pageLoading)
-        return <Loading />
+        return <div
+            style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        ><Loading /></div>
     else
         return <Box sx={{ display: 'flex' }}>
             <Drawer

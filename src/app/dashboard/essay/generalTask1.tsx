@@ -43,7 +43,8 @@ interface writingProps {
     GetUserEssaies: any,
     changePage: any,
     MoreEssaies: boolean,
-    changeMoreEssaies: any
+    changeMoreEssaies: any,
+    setEssaies: any
 }
 
 //---------------------------------------------------------------validation
@@ -54,22 +55,18 @@ const WritingValidationSchema = Yup.object().shape({
         .required('body is required!'),
 });
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
-
-const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essaies, GetUserEssaies, changePage, MoreEssaies, changeMoreEssaies }) => {
+const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essaies, GetUserEssaies, changePage, MoreEssaies, changeMoreEssaies, GetTopicsList, setEssaies }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [firstEssayLoading, changeFirstEssayLoading] = React.useState<boolean>(false);
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
-    // const [essaies, setEssaies] = React.useState<Essay[]>([]);
-    // const [FirstEssaies, setFierstEssaiey] = React.useState<Essay[]>([]);
     const [essayTopic, changeTopic] = React.useState<topic>();
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [modalContent, changeModalContent] = React.useState<string>('sdf');
-    const [currentId, changeCcurrentId] = React.useState<string>('');
+    const [currentId, changeCcurrentId] = React.useState<string | null>(null);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -81,6 +78,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic() {
+        console.log('hiiii')
         changeGenerateWritingTopicLoading(true);
         await client.query({
             query: GET_RANDOM_GENERAL_TASK1_WRITING,
@@ -105,8 +103,10 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
             }
         }).then(async (res) => {
             id = res.data.selectTopic.id as string;
+            changeCcurrentId(id);
             if (generatedTopic)
                 changeTopic({ id: generatedTopic.id, body: generatedTopic.body });
+
         }).catch(async (err) => {
             await changeModalContent('try again!');
             showModal();
@@ -120,13 +120,12 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     async function AddNewEssay(topic: string, body: string) {
         changeLoading(true);
         let id: any;
-        if (essayTopic)
-            id = essayTopic.id;
+        if (currentId != null) {
+            id = currentId;
+        }
         else
             id = await SelectTopic(topic);
         changeLoading(false);
-
-        console.log(id);
 
         if (id != null) {
             changeTabBarLoc(true);
@@ -141,10 +140,24 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     body: body
                 }
             }).then(async (res) => {
-                await changePage(1);
+                await changePage(essaies.length + 1);
+                console.log(res.data.addEssay);
+                setEssaies([{
+                    essay: res.data.addEssay.essay,
+                    date: res.data.addEssay.date,
+                    taskAchievementScore: res.data.addEssay.taskAchievementScore,
+                    taskAchievementSummery: res.data.addEssay.taskAchievementSummery,
+                    coherenceAndCohesionScore: res.data.addEssay.coherenceAndCohesionScore,
+                    coherenceAndCohesionSummery: res.data.addEssay.coherenceAndCohesionSummery,
+                    lexicalResourceScore: res.data.addEssay.lexicalResourceScore,
+                    lexicalResourceSummery: res.data.addEssay.lexicalResourceSummery,
+                    grammaticalRangeAndAccuracyScore: res.data.addEssay.grammaticalRangeAndAccuracyScore,
+                    grammaticalRangeAndAccuracySummery: res.data.addEssay.grammaticalRangeAndAccuracySummery,
+                }, ...essaies])
                 changeCcurrentId(id);
-                changeMoreEssaies(true);
-                await GetUserEssaies(id);
+                // await changeMoreEssaies(true);
+                // await GetUserEssaies(id);
+                await GetTopicsList();
                 changeFirstEssayLoading(false);
             }).catch(async (err) => {
                 console.log('add new essay error : ', err);
@@ -156,6 +169,8 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
         if (topic) {
             changeCcurrentId(topic.id);
             changeTopic(topic);
+        } else if (currentId == null) {
+            changeMoreEssaies(false);
         }
     });
 
@@ -205,49 +220,51 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                             {
                                 topic ?
                                     <div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
-                                    : generateWritingTopicLoading ?
-                                        <Loading style={{ height: 250, minHeight: 0 }} />
-                                        :
-                                        <div className={styles.topicInputContainer}>
-                                            <Input
-                                                style={{ width: '70%' }}
-                                                className={styles.topicInput}
-                                                onChange={handleChange}
-                                                placeHolder="Type your topic here..."
-                                                textarea
-                                                textarea_name='topic'
-                                                textarea_value={values.topic}
-                                                textarea_error={errors.topic && touched.topic && errors.topic}
-                                            />
-                                            <button
-                                                aria-label="edit tipic"
-                                                onClick={() => {
-                                                    changeGenerateWriting(true);
-                                                    GenerateTopic();
-                                                }}
-                                                type="button" className={styles.generateButton}>
-                                                <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
-                                                {
-                                                    generatedTopic ? 'Regenereate' :
-                                                        'Generate'
-                                                }
-                                            </button>
-
-                                            {
-                                                generateWriting &&
+                                    : currentId != null ?
+                                        <div className={styles.selectedTopcCard}><Text text={values.topic} /></div>
+                                        : generateWritingTopicLoading ?
+                                            <Loading style={{ height: 250, minHeight: 0 }} />
+                                            :
+                                            <div className={styles.topicInputContainer}>
+                                                <Input
+                                                    style={{ width: '70%' }}
+                                                    className={styles.topicInput}
+                                                    onChange={handleChange}
+                                                    placeHolder="Type your topic here..."
+                                                    textarea
+                                                    textarea_name='topic'
+                                                    textarea_value={values.topic}
+                                                    textarea_error={errors.topic && touched.topic && errors.topic}
+                                                />
                                                 <button
                                                     aria-label="edit tipic"
-                                                    type="button"
                                                     onClick={() => {
-                                                        changeEditedGeneratedTopic(true);
-                                                        setFieldValue('topic', '');
+                                                        changeGenerateWriting(true);
+                                                        GenerateTopic();
                                                     }}
-                                                    className={styles.editButton}>
-                                                    <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
+                                                    type="button" className={styles.generateButton}>
+                                                    <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
+                                                    {
+                                                        generatedTopic ? 'Regenereate' :
+                                                            'Generate'
+                                                    }
                                                 </button>
-                                            }
 
-                                        </div>
+                                                {
+                                                    generateWriting &&
+                                                    <button
+                                                        aria-label="edit tipic"
+                                                        type="button"
+                                                        onClick={() => {
+                                                            changeEditedGeneratedTopic(true);
+                                                            setFieldValue('topic', '');
+                                                        }}
+                                                        className={styles.editButton}>
+                                                        <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
+                                                    </button>
+                                                }
+
+                                            </div>
                             }
 
                             <div className={styles.writingInputTitle}>Write at least 150 words.</div>
@@ -328,24 +345,6 @@ const tabBarItems = [
 
 const WritingDataCard: React.FC<{ essay: any }> = ({ essay }) => {
     const [writingCardStep, changeWritingCardStep] = React.useState<number>(1);
-
-    const handleClick = async (event: any) => {
-        event.preventDefault();
-        const { sessionId } = await fetch('/api/checkout/session', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({ quantity: 1 })
-        }).then(res => res.json())
-        const stripe = await stripePromise;
-        if (stripe) {
-            const { error } = await stripe.redirectToCheckout({
-                sessionId
-            });
-            console.log('stripe error : ', error);
-        }
-    }
 
     return <div className={styles.writingDataCard}>
         <div className={styles.writingDataTabBarCard}>

@@ -4,12 +4,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { ApolloProvider } from "@apollo/react-hooks";
 import { SessionProvider } from 'next-auth/react';
 import client from '../config/applloClient';
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Session } from "next-auth";
 import Head from 'next/head';
 
 //--------------------------------------------------------components
-import Loading from '@/components/loading/loading';
+// import Loading from '@/components/loading/loading';
 import { lato } from '../../fonts';
 
 //--------------------------------------------------------css
@@ -63,9 +63,9 @@ export default function RootLayout({
           </Head>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <body className={lato.className}>
-              <Suspense fallback={<Loading />}>
+              {/* <Suspense fallback={<Loading />}> */}
                 {children}
-              </Suspense>
+              {/* </Suspense> */}
             </body>
           </LocalizationProvider>
         </html>

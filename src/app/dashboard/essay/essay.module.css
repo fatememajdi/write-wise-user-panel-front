@@ -90,7 +90,8 @@
     padding: 15px 52px 55px 18px !important;
     width: 70%;
     height: 250px;
-    overflow-y: auto; color: #252525 !important;
+    overflow-y: auto;
+    color: #252525 !important;
     font-size: 20px !important;
     font-style: normal;
     font-weight: 500;
@@ -325,7 +326,7 @@
 
 .writingScoreItemCard {
     color: #252525;
-    font-size: 24px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -334,8 +335,8 @@
     flex-direction: column;
 }
 
-.writingScoreItemCard span{
-    font-size: 20px;
+.writingScoreItemCard span {
+    font-size: 18px;
     padding-left: 10px !important;
     margin-top: 5px;
 }
@@ -436,7 +437,7 @@
     display: none;
 }
 
-.moreEssayButton{
+.moreEssayButton {
     margin-top: 10px;
     display: flex;
     align-self: center;
@@ -445,20 +446,57 @@
     cursor: pointer;
 }
 
-.modalCard{
+.modalCard {
     color: #DA282E;
     font-size: 24px;
     font-weight: 400;
 }
 
-@media(max-width: 1440px) {
+@media(max-width: 1500px) {
     .typeCard {
         font-size: 20px;
     }
 
     .topTabBarItemCard {
-        font-size: 18px;
+        font-size: 16px;
         padding: 0px 15px;
+    }
+
+    .writingContainer {
+        padding: 0px 60px 100px 55px;
+    }
+
+    .wriritngTitle {
+        margin-left: 35px;
+    }
+
+    .writingSecondTitle {
+        margin-left: 31px;
+    }
+
+    .topicInputContainer {
+        margin: 0px 20px 0px 25px;
+    }
+
+    .writingInputTitle {
+        margin-left: 35px;
+    }
+
+    .bodyInputContainer {
+        margin: 0px 20px 0px 25px;
+    }
+
+    .selectedTopcCard {
+        margin: 15px 20px 0px 25px;
+        font-size: 17px !important;
+    }
+
+    .topicInput textarea {
+        font-size: 17px !important;
+    }
+
+    .topicInput textarea ::placeholder {
+        font-size: 17px !important;
     }
 }
 
@@ -512,7 +550,7 @@
         margin: 0px;
     }
 
-    .selectedTopcCard{
+    .selectedTopcCard {
         height: fit-content;
         margin: 15px 0px 0px 0px !important;
         width: 100%;
@@ -632,7 +670,7 @@
 
     .writingScoreItemCard {
         color: #F3F3F3;
-        font-size: 16px;
+        font-size: 14px;
         font-style: normal;
         font-weight: 500;
         line-height: normal;

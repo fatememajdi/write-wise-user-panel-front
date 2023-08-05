@@ -453,6 +453,36 @@
     display: none;
 }
 
+@media(max-width: 1500px) {
+    .topTabBarContainer {
+        padding: 30px 60px 0px 55px;
+    }
+
+    .topTabBarContainerAnimation {
+        padding: 30px 60px 0px 55px;
+    }
+
+    .topTabBarItemCard {
+        font-size: 16px;
+        padding: 0px 15px;
+    }
+
+    .newEssayButton {
+        font-size: 20px;
+    }
+
+    .taskTabButton {
+        font-size: 16px;
+    }
+
+    .activeTaskTabButton {
+        font-size: 16px;
+    }
+    .logo{
+        margin: 22px auto;
+    }
+}
+
 @media(max-width: 480px) {
     .dashboardContentContainer {
         flex-direction: column;
