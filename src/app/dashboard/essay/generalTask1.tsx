@@ -103,6 +103,13 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTopics, changeTabBarLoc, c
         }).then(async (res) => {
             id = res.data.selectTopic.id as string;
             changeCcurrentId(id);
+            changeTopics([{
+                id: res.data.selectTopic.id,
+                topic: res.data.selectTopic.topic,
+                shortName: res.data.selectTopic.shortName,
+                createdAt: res.data.selectTopic.createdAt,
+                score: res.data.selectTopic.score
+            }, ...topics])
             if (generatedTopic)
                 changeTopic({ id: generatedTopic.id, body: generatedTopic.body });
 
@@ -377,7 +384,7 @@ const WritingDataCard: React.FC<{ essay: any }> = ({ essay }) => {
                 </div>
                 : writingCardStep === 0 ?
                     <div className={styles.writingEssayCard}>
-                        {/* <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div> */}
+                        <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
                         <div className={styles.writingEssayText}>
                             <Text text={essay.essay} />
                         </div>
@@ -391,7 +398,7 @@ const WritingDataCard: React.FC<{ essay: any }> = ({ essay }) => {
                     : writingCardStep === 1 ?
                         <div
                             className={styles.writingScoreCard}>
-                            <div className={styles.writingScoreDate}>JAN 18</div>
+                            <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
                             <div className={styles.writingScoresContainer}>
                                 <div>
                                     <div className={styles.writingScoreItemCard}>Task Achievement: {essay.taskAchievementScore}</div>
@@ -423,7 +430,7 @@ const WritingDataCard: React.FC<{ essay: any }> = ({ essay }) => {
                         :
                         <div
                             className={styles.writingScoreCard}>
-                            <div className={styles.writingScoreDate}>JAN 18</div>
+                            <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
                             <div className={styles.writingScoresContainer}>
                                 <div>
                                     <div className={styles.writingScoreItemCard}>Task Achievement Summery: <br /><span>{essay.taskAchievementSummery}</span></div>

@@ -82,7 +82,13 @@ export const SELECT_TOPIC = gql`
 mutation SelectTopic($type:String! , $body:String, $id:String){
   selectTopic(selecetTopic:{type:$type ,body:$body, id:$id})
   {
-    id
+    id,
+    type,
+    shortName,
+    topic,
+    completeTopic,
+    score,
+    createdAt
   }
 }
 `;

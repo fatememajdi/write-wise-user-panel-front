@@ -192,7 +192,24 @@ const Dashboard: React.FC = () => {
         }).catch((err) => {
             console.log("get user topics error : ", err);
         });
-    }
+    };
+
+    async function SelectType(type: string) {
+        changeTopics([]);
+        changeMoreTopics(true);
+        setTopicsType(type);
+        await GetTopicsList(type);
+    };
+
+    async function NewEssay() {
+        setEssaies([]);
+        changeMoreEssaies(false);
+        changeTopic(null)
+        changeTabBarLoc(false);
+        changeEndAnimation(false);
+        changeTopic(null);
+        goTo(0);
+    };
 
     //------------------------------------------------------------------check user loged in
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -209,7 +226,6 @@ const Dashboard: React.FC = () => {
             }
         } else {
             setLoading(false);
-            // GetTopicsList();
         }
     });
 
@@ -269,15 +285,7 @@ const Dashboard: React.FC = () => {
                         <div className={'col-12 ' + styles.newEssayContainer}>
                             <button
                                 aria-label="new essay button"
-                                onClick={async () => {
-                                    await setEssaies([]);
-                                    await changeMoreEssaies(false);
-                                    await changeTopic(null)
-                                    await changeTabBarLoc(false);
-                                    await changeEndAnimation(false);
-                                    await changeTopic(null);
-                                    await goTo(0);
-                                }}
+                                onClick={async () => NewEssay()}
                                 className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} /></button>
                             <button
                                 aria-label="close drawer button"
@@ -289,34 +297,19 @@ const Dashboard: React.FC = () => {
 
                             <button
                                 aria-label="general task1 button"
-                                onClick={() => {
-                                    changeTopics([]);
-                                    changeMoreTopics(true);
-                                    setTopicsType('general_task_1');
-                                    GetTopicsList('general_task_1');
-                                }}
+                                onClick={() => SelectType('general_task_1')}
                                 className={topicsType === 'general_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Gen Task 1</button>
 
                             <button
                                 aria-label="academic task1 button"
-                                onClick={async () => {
-                                    changeTopics([]);
-                                    changeMoreTopics(true);
-                                    setTopicsType('academic_task_1');
-                                    GetTopicsList('academic_task_1');
-                                }}
+                                onClick={() => SelectType('academic_task_1')}
                                 className={topicsType === 'academic_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Ac Task 1</button>
 
                             <button
                                 aria-label="task2 button"
-                                onClick={() => {
-                                    changeTopics([]);
-                                    changeMoreTopics(true);
-                                    setTopicsType('general_task_2');
-                                    GetTopicsList('general_task_2');
-                                }}
+                                onClick={() => SelectType('general_task_2')}
                                 className={topicsType === 'general_task_2' ? styles.activeTaskTabButton : styles.taskTabButton} >
                                 Task 2</button>
 
@@ -397,15 +390,7 @@ const Dashboard: React.FC = () => {
 
                                 <button
                                     aria-label="new essay button"
-                                    onClick={async () => {
-                                        await setEssaies([]);
-                                        await changeMoreEssaies(false);
-                                        await changeTopic(null)
-                                        await changeTabBarLoc(false);
-                                        await changeEndAnimation(false);
-                                        await changeTopic(null);
-                                        await goTo(0)
-                                    }}
+                                    onClick={async () => NewEssay()}
                                     className={styles.responsivePlusButton}>
                                     <AiOutlinePlus className={styles.responsivePlusIcon} />
                                 </button>
