@@ -44,3 +44,24 @@
 .formSectionInputError {
     border: solid 1px #DA282E !important;
 }
+
+@media(max-width: 480px) {
+    .otpGroup {
+        max-width: 210px;
+        border: solid 1px Gray/300 !important;
+        height: 52px !important;
+    }
+
+    .otpGroup input:focus {
+        border-bottom: 1px solid Gray/300 !important;
+    }
+
+    .errorForm {
+        font-size: 14px;
+    }
+
+    .otpInput {
+        font-size: 16px;
+        height: 38px !important;
+    }
+}

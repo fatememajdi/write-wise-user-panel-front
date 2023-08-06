@@ -5,7 +5,6 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from "@apollo/react-hooks";
 import { useRouter } from "next/navigation";
-import toast, { Toaster } from 'react-hot-toast';
 
 //---------------------------------------------------styles
 import styles from '../signIn.module.css';
@@ -80,10 +79,10 @@ const VerificationCode: React.FC = () => {
                             className={'col-12 ' + styles.stepContainer}
                             onSubmit={handleSubmit}>
 
-                            <div className={styles.title}>Log in</div>
+                            <div className={styles.title}>Sign Up/Log in</div>
 
 
-                            <div className={'col-12 ' + styles.inputEmailTitle}>Verification code</div>
+                            <div className={'col-12 ' + styles.inputEmailTitle}>Code</div>
                             <OtpInput
                                 valueLength={6}
                                 onChange={(e) => setFieldValue('code', e)}
@@ -115,10 +114,6 @@ const VerificationCode: React.FC = () => {
                 <div className={styles.circle5} />
             </div>
 
-            <Toaster
-                position="top-center"
-                reverseOrder={false}
-            />
         </div>
 };
 

@@ -3,17 +3,15 @@ import React, { lazy } from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
-import { loadStripe } from '@stripe/stripe-js';
 import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
-
 
 //--------------------------------------styles
 import styles from './essay.module.css';
 
 //--------------------------------------components
-import { ADD_ESSAY, GET_RANDOM_GENERAL_TASK1_WRITING, GET_USER_ESSAY, SELECT_TOPIC } from "@/config/graphql";
+import { ADD_ESSAY, GET_RANDOM_GENERAL_TASK1_WRITING, SELECT_TOPIC } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 const Slider = dynamic(() => import("@/components/slider/slider"));
 const Input = lazy(() => import('@/components/input/input'));
@@ -27,6 +25,7 @@ import { Lock } from '../../../../public/dashboard';
 
 //--------------------------------------types
 import { Essay } from '../../../../types/essay';
+import { Topic } from "../../../../types/topic";
 
 interface topic {
     id: string,
@@ -38,13 +37,13 @@ interface writingProps {
     changeEndAnimation: any,
     endAnimation: boolean,
     topic?: topic,
-    GetTopicsList: any,
     essaies: Essay[],
     GetUserEssaies: any,
-    changePage: any,
     MoreEssaies: boolean,
     changeMoreEssaies: any,
-    setEssaies: any
+    setEssaies: any,
+    changeTopics: any,
+    topics: Topic[]
 }
 
 //---------------------------------------------------------------validation
@@ -55,7 +54,8 @@ const WritingValidationSchema = Yup.object().shape({
         .required('body is required!'),
 });
 
-const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essaies, GetUserEssaies, changePage, MoreEssaies, changeMoreEssaies, GetTopicsList, setEssaies }) => {
+const GeneralTask1: React.FC<writingProps> = ({ changeTopics, changeTabBarLoc, changeEndAnimation, endAnimation, topic,
+    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, topics }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [loading, changeLoading] = React.useState<boolean>(false);
@@ -78,7 +78,6 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic() {
-        console.log('hiiii')
         changeGenerateWritingTopicLoading(true);
         await client.query({
             query: GET_RANDOM_GENERAL_TASK1_WRITING,
@@ -140,8 +139,6 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     body: body
                 }
             }).then(async (res) => {
-                await changePage(essaies.length + 1);
-                console.log(res.data.addEssay);
                 setEssaies([{
                     essay: res.data.addEssay.essay,
                     date: res.data.addEssay.date,
@@ -153,11 +150,9 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     lexicalResourceSummery: res.data.addEssay.lexicalResourceSummery,
                     grammaticalRangeAndAccuracyScore: res.data.addEssay.grammaticalRangeAndAccuracyScore,
                     grammaticalRangeAndAccuracySummery: res.data.addEssay.grammaticalRangeAndAccuracySummery,
-                }, ...essaies])
+                }, ...essaies]);
                 changeCcurrentId(id);
-                // await changeMoreEssaies(true);
-                // await GetUserEssaies(id);
-                await GetTopicsList();
+                await changeTopics([]);
                 changeFirstEssayLoading(false);
             }).catch(async (err) => {
                 console.log('add new essay error : ', err);
@@ -417,7 +412,6 @@ const WritingDataCard: React.FC<{ essay: any }> = ({ essay }) => {
                                 <button
                                     type="button"
                                     aria-label="anausis button"
-                                    // onClick={(e) => handleClick(e)}
                                     onClick={() => {
                                         changeWritingCardStep(2);
                                     }}

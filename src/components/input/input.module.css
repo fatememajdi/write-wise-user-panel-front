@@ -79,3 +79,13 @@
     line-height: 22px;
     padding: 15px 3px;
 }
+
+@media(max-width: 480px) {
+    .formSectionInput textarea {
+        font-size: 14px !important;
+    }
+
+    .formSectionInput input {
+        font-size: 14px !important;
+    }
+}

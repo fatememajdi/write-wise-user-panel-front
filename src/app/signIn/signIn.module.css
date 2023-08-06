@@ -285,7 +285,7 @@
     margin-top: 40px;
 }
 
-@media(max-width: 1440px) {
+@media(max-width: 1500px) {
     .circle1 {
         height: 223px;
         width: 223px;
@@ -405,5 +405,81 @@
 
     .datePicker {
         width: 190px;
+    }
+}
+
+@media(max-width: 480px) {
+    .signInrightContainer {
+        display: none;
+    }
+
+    .signInLeftContainer {
+        padding: 57px 23px 65px 23px;
+        height: fit-content;
+    }
+
+    .signInOptionsbutton {
+        width: 210px;
+        font-size: 12px !important;
+        justify-content: flex-start;
+        padding-left: 13px;
+        line-height: 24px;
+        height: 38px;
+    }
+
+    .title {
+        font-size: 24px;
+        margin-top: 0px;
+        position: relative;
+        top: -6px;
+    }
+
+    .stepContainer {
+        justify-content: flex-start;
+        margin-top: 56px;
+        padding: 0px 52px;
+        border-radius: 8px;
+        border: 1px solid #FFF;
+        background: linear-gradient(133deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.32) 100%);
+        box-shadow: -5px 8px 23px -5px rgba(0, 0, 0, 0.14);
+    }
+
+    .emailButton {
+        font-size: 12px;
+        line-height: 12px;
+        height: 38px;
+    }
+
+    .submitEmailButton {
+        font-size: 12px;
+        line-height: 12px;
+        height: 38px;
+        width: 210px;
+        margin-top: 14px;
+        border-radius: 8px !important;
+        margin-bottom: 0px;
+    }
+
+    .footerText {
+        font-size: 10px;
+    }
+
+    .emailInput {
+        width: 210px;
+    }
+
+    .emailInput input {
+        height: 38px !important;
+        border-color: Gray/300 !important;
+        border: solid 1px Gray/300 !important;
+        border-radius: 8px !important;
+    }
+
+    .inputEmailTitle {
+        font-size: 12px;
+    }
+
+    .pagination {
+        display: none !important;
     }
 }

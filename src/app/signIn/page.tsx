@@ -7,8 +7,6 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
 import { signIn } from 'next-auth/react';
-import toast, { Toaster } from 'react-hot-toast';
-
 
 //---------------------------------------------------styles
 import styles from './signIn.module.css';
@@ -31,7 +29,7 @@ const SignIn: React.FC = () => {
 
     return (
         <div className={'col-12 ' + styles.signInPageContainer}>
-            <div className={'col-lg-7 ' + styles.signInLeftContainer}>
+            <div className={'col-lg-7 col-md-7 col-12 ' + styles.signInLeftContainer}>
                 <Image
                     className={styles.logo}
                     src="/logo.svg"
@@ -49,7 +47,7 @@ const SignIn: React.FC = () => {
                 }
             </div>
 
-            <div className={'col-lg-5 ' + styles.signInrightContainer}>
+            <div className={'col-lg-5 col-md-5 ' + styles.signInrightContainer}>
                 <div className={styles.circle1} />
                 <div className={styles.circle2} />
                 <div className={styles.circle3} />
@@ -88,7 +86,7 @@ const Step1: React.FC<{ changeStep: any }> = async ({ changeStep }) => {
     }
 
     return <div className={'col-12 ' + styles.stepContainer}>
-        <div className={styles.title}>Log in/Sign in</div>
+        <div className={styles.title}>Sign Up/Log in</div>
         <a
             onClick={handeClickGoogle}
             className={styles.signInOptionsbutton + ' ' + styles.googleSingInCard}>
@@ -107,7 +105,9 @@ const Step1: React.FC<{ changeStep: any }> = async ({ changeStep }) => {
 
         <Divider style={{ marginTop: 30 }} plain>or</Divider>
 
-        <button onClick={() => changeStep(1)} className={styles.emailButton}>
+        <button
+            aria-label="email button"
+            onClick={() => changeStep(1)} className={styles.emailButton}>
             Email
         </button>
 
@@ -191,7 +191,7 @@ const Step2: React.FC = () => {
                 <form
                     className={'col-12 ' + styles.stepContainer}
                     onSubmit={handleSubmit}>
-                    <div className={styles.title}>Log in</div>
+                    <div className={styles.title}>Sign Up/Log in</div>
                     <div className={'col-12 ' + styles.inputEmailTitle}>Email</div>
                     <Input
                         className={styles.emailInput}
@@ -210,7 +210,7 @@ const Step2: React.FC = () => {
                         Log in
                     </button>
 
-                    <Pagination lenght={2} currentPage={1} color="#2E4057" />
+                    <Pagination className={styles.pagination} lenght={2} currentPage={1} color="#2E4057" />
 
                     <Divider style={{ marginTop: 20 }} plain>or</Divider>
 
@@ -234,10 +234,7 @@ const Step2: React.FC = () => {
                     <div className={styles.footerText}>
                         By login, you agree to our <a>Terms of<br /> Service</a> and <a>Privacy Policy .</a>
                     </div>
-                    <Toaster
-                        position="top-center"
-                        reverseOrder={false}
-                    />
+                   
                 </form>
             )}
         </Formik>
