@@ -41,7 +41,7 @@ query GetUserTopics($type:String!, $page:Float!, $pageSize:Float!){
       shortName,
       topic,
       completeTopic,
-      score,
+      overallBandScore,
       createdAt
     }
   }
@@ -61,7 +61,8 @@ query GetUserEssay($id:String!, $page:Float!, $pageSize:Float!){
       lexicalResourceScore,
       lexicalResourceSummery,
       grammaticalRangeAndAccuracyScore,
-      grammaticalRangeAndAccuracySummery
+      grammaticalRangeAndAccuracySummery,
+      overallBandScore
     }
   }
 }
@@ -87,8 +88,9 @@ mutation SelectTopic($type:String! , $body:String, $id:String){
     shortName,
     topic,
     completeTopic,
-    score,
-    createdAt
+    overallBandScore,
+    createdAt,
+    overallBandScore
   }
 }
 `;
@@ -104,6 +106,32 @@ mutation AddEssay($id:String! , $body: String!){
     grammaticalRangeAndAccuracySummery,
     essay,
     date,
+    overallBandScore
+  }
+}
+`;
+
+export const GET_PROFILE = gql`
+query{
+  getUserProfile{
+    firstName,
+    lastName,
+    email,
+    age,
+    gender,
+    profile
+  }
+}
+`;
+
+export const UPDATE_USER=gql`
+mutation UpdateUser($firstName:String, $age:Float, $lastName:String, $gender:String){
+  updateUserProfile(updateUser:{firstName:$firstName ,age:$age ,lastName:$lastName ,gender:$gender}){
+    firstName,
+    lastName,
+    email,
+    age,
+    gender
   }
 }
 `;

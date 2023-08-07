@@ -126,8 +126,8 @@ const Dashboard: React.FC = () => {
     const [essayTopic, changeTopic] = React.useState<topic | null>();
     const { step, goTo } = useMultiStepForm([<ChooseType changeType={ChangeType} />,
     <GeneralTask1
-        setEssaies={setEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} topics={topics}
-        essaies={essaies} GetUserEssaies={GetUserEssaies} changeTopics={changeTopics} changeTabBarLoc={changeTabBarLoc}
+        setEssaies={setEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} handleNewTopic={handleNewTopic}
+        essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc}
         changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />,
     <AcademicTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />,
     <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
@@ -250,6 +250,10 @@ const Dashboard: React.FC = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    async function handleNewTopic(topic: Topic) {
+        await changeTopics([topic, ...topics]);
+    }
 
     if (pageLoading)
         return <div
@@ -490,7 +494,7 @@ const UserTopicsList: React.FC<{ topics: any, SelectTopic: any, GetTopicsList: a
                             <span>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}</span>
                         </div>
                         <div className={styles.taskCardScore}>
-                            {item.score}
+                            {item.overallBandScore}
                         </div>
                     </div>)
             }

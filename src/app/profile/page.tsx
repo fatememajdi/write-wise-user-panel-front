@@ -1,10 +1,10 @@
 'use client';
-import React from "react";
+import React, { use } from "react";
 import Image from "next/image";
 import { Formik } from 'formik';
-// import * as Yup from 'yup';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import client from '@/config/applloAuthorizedClient';
 import { useRouter } from "next/navigation";
 
 //-------------------------------------styles
@@ -18,12 +18,30 @@ import { HiCheck } from 'react-icons/hi';
 //-------------------------------------components
 import ProfileCardBackground from "@/components/backgrounds/profileCardBackground/profileCardBackground";
 import Input from "@/components/input/input";
+import { GET_PROFILE, UPDATE_USER } from "@/config/graphql";
+
+//-------------------------------------types
+import { UserProfile } from "../../../types/profile";
 
 const Profile: React.FC = () => {
 
-    const [profile, setprofile] = React.useState<boolean>(true);
+    const [profile, setprofile] = React.useState<UserProfile>();
     const [step, changeStep] = React.useState<number>(1);
     const router = useRouter();
+
+    async function GetProfile() {
+        await client.query({
+            query: GET_PROFILE
+        }).then(async (res) => {
+            setprofile(res.data.getUserProfile);
+        }).catch((err) => {
+            console.log("get user profile error : ", err);
+        });
+    }
+
+    React.useEffect(() => {
+        GetProfile();
+    });
 
     return <div className={'col-12 ' + styles.profileContainer}>
         <div className={'col-12 ' + styles.profileHeader}>
@@ -34,7 +52,7 @@ const Profile: React.FC = () => {
                 width={133}
                 height={15}
                 priority
-                loading="eager" 
+                loading="eager"
             />
             <a
                 onClick={() => {
@@ -51,7 +69,7 @@ const Profile: React.FC = () => {
                 <div className={styles.leftDivider} />
                 <div className={styles.profileCard}>
                     {
-                        profile ?
+                        profile?.profile ?
                             <Image
                                 className={styles.profileImage}
                                 src="/profile.jpg"
@@ -59,7 +77,7 @@ const Profile: React.FC = () => {
                                 width={207}
                                 height={207}
                                 priority
-                                loading="eager" 
+                                loading="eager"
                             />
                             :
                             <Camera />
@@ -70,9 +88,9 @@ const Profile: React.FC = () => {
 
             {
                 step == 1 ?
-                    <UserInformationCard changeStep={changeStep} />
+                    <UserInformationCard changeStep={changeStep} user={profile} />
                     :
-                    <EditUserCard changeStep={changeStep} />
+                    <EditUserCard changeStep={changeStep} setprofile={setprofile} />
             }
 
         </div>
@@ -81,12 +99,13 @@ const Profile: React.FC = () => {
 
 export default Profile;
 
-const UserInformationCard: React.FC<{ changeStep: any }> = ({ changeStep }) => <div className={styles.userInformationCard}>
+const UserInformationCard: React.FC<{ changeStep: any, user?: UserProfile }> = ({ changeStep, user }) => <div className={styles.userInformationCard}>
     <ProfileCardBackground>
-        <div className={styles.userName}>John Doe</div>
+        <div className={styles.userName}>{user?.firstName + ' ' + user?.lastName}</div>
         <div className={styles.joinDate}>Member since: June 2022</div>
-        <div className={styles.age}>27 years old  </div>
-        <div className={styles.gender}>Male</div>
+        <div className={styles.age}>{user?.age} years old  </div>
+        <div className={styles.gender}>{user?.gender}</div>
+        <div className={styles.username}>Username:{user?.email}</div>
         <a
             onClick={() => changeStep(2)}
             className={styles.editButton}>
@@ -95,73 +114,97 @@ const UserInformationCard: React.FC<{ changeStep: any }> = ({ changeStep }) => <
     </ProfileCardBackground>
 </div>;
 
-const EditUserCard: React.FC<{ changeStep: any }> = ({ changeStep }) => <Formik
-    initialValues={{
-        name: '',
-        age: '',
-        gender: ''
-    }}
-    // validationSchema={EmailValidationSchema}
-    enableReinitialize
-    onSubmit={async (values) => {
-        // await handleSubmit(values);
-    }}>{({
-        values,
-        errors,
-        touched,
-        handleSubmit,
-        setFieldValue,
-        handleChange
-    }) => (
-        <form
-            className={styles.userInformationCard}
-            onSubmit={handleSubmit}>
-            <ProfileCardBackground>
-                <Input
-                    className={styles.input}
-                    onChange={handleChange}
-                    input
-                    placeHolder="Name"
-                    inputtype='name'
-                    input_name='name'
-                    input_value={values.name}
-                    input_error={errors.name && touched.name && errors.name}
-                />
-                <div className={styles.editUserJoinDate}>Member since: June 2022</div>
-                <Input
-                    style={{ marginTop: 35 }}
-                    className={styles.input}
-                    onChange={handleChange}
-                    input
-                    placeHolder="Age"
-                    inputtype='age'
-                    input_name='age'
-                    input_value={values.age}
-                    input_error={errors.age && touched.age && errors.age}
-                />
-                <Select
-                    value={values.gender}
-                    onChange={(e) => setFieldValue('gender', e.target.value)}
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                    className={styles.select}
-                >
-                    <MenuItem value={''} disabled>Gender</MenuItem>
-                    <MenuItem value={'male'}>Male</MenuItem>
-                    <MenuItem value={'female'}>Female</MenuItem>
-                </Select>
+const EditUserCard: React.FC<{ changeStep: any, setprofile: any }> = ({ changeStep, setprofile }) => {
+
+    async function UpdateProfile(values: { age: string, name: string, gender: string }) {
+        console.log('hi')
+        await client.mutate({
+            mutation: UPDATE_USER,
+            variables: {
+                age: values.age != '' ? parseInt(values.age) : null,
+                firstName: values.name != '' ? values.name : null,
+                gender: values.gender != '' ? values.gender : null
+            }
+        }).then(async (res) => {
+            setprofile(res.data.updateUserProfile);
+        }).catch((err) => {
+            console.log("update user profile error : ", err);
+        });
+    }
+
+    return <Formik
+        initialValues={{
+            name: '',
+            age: '',
+            gender: ''
+        }}
+        // validationSchema={EmailValidationSchema}
+        enableReinitialize
+        onSubmit={async (values) => {
+            await UpdateProfile(values);
+        }}>{({
+            values,
+            errors,
+            touched,
+            handleSubmit,
+            setFieldValue,
+            handleChange
+        }) => (
+            <form
+                className={styles.userInformationCard}
+                onSubmit={handleSubmit}>
+                <ProfileCardBackground>
+                    <Input
+                        className={styles.input}
+                        onChange={handleChange}
+                        input
+                        placeHolder="Name"
+                        inputtype='name'
+                        input_name='name'
+                        input_value={values.name}
+                        input_error={errors.name && touched.name && errors.name}
+                    />
+                    <div className={styles.editUserJoinDate}>Member since: June 2022</div>
+                    <Input
+                        style={{ marginTop: 35 }}
+                        className={styles.input}
+                        onChange={handleChange}
+                        input
+                        placeHolder="Age"
+                        inputtype='age'
+                        input_name='age'
+                        input_value={values.age}
+                        input_error={errors.age && touched.age && errors.age}
+                    />
+                    <Select
+                        value={values.gender}
+                        onChange={(e) => setFieldValue('gender', e.target.value)}
+                        displayEmpty
+                        inputProps={{ 'aria-label': 'Without label' }}
+                        className={styles.select}
+                    >
+                        <MenuItem value={''} disabled>Gender</MenuItem>
+                        <MenuItem value={'male'}>Male</MenuItem>
+                        <MenuItem value={'female'}>Female</MenuItem>
+                        <MenuItem value={'other'}>Other</MenuItem>
+                    </Select>
 
 
-                <button
-                    className={styles.editButton}>
-                    <HiCheck className={styles.checkIcon} />
-                </button>
-                <button
-                    onClick={() => changeStep(1)}
-                    className={styles.closeButton}>
-                    <CloseButton />
-                </button>
-            </ProfileCardBackground>
-        </form>
-    )}
-</Formik>;
+                    <button
+                        type="submit"
+                        aria-label="edit profile button"
+                        className={styles.editButton}>
+                        <HiCheck className={styles.checkIcon} />
+                    </button>
+                    <button
+                        type='button'
+                        aria-label="cancle button"
+                        onClick={() => changeStep(1)}
+                        className={styles.closeButton}>
+                        <CloseButton />
+                    </button>
+                </ProfileCardBackground>
+            </form>
+        )}
+    </Formik>
+};

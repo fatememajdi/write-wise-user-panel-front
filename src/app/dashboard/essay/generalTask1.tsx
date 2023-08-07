@@ -42,8 +42,7 @@ interface writingProps {
     MoreEssaies: boolean,
     changeMoreEssaies: any,
     setEssaies: any,
-    changeTopics: any,
-    topics: Topic[]
+    handleNewTopic: any
 }
 
 //---------------------------------------------------------------validation
@@ -54,8 +53,8 @@ const WritingValidationSchema = Yup.object().shape({
         .required('body is required!'),
 });
 
-const GeneralTask1: React.FC<writingProps> = ({ changeTopics, changeTabBarLoc, changeEndAnimation, endAnimation, topic,
-    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, topics }) => {
+const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic,
+    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [loading, changeLoading] = React.useState<boolean>(false);
@@ -103,13 +102,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTopics, changeTabBarLoc, c
         }).then(async (res) => {
             id = res.data.selectTopic.id as string;
             changeCcurrentId(id);
-            changeTopics([{
-                id: res.data.selectTopic.id,
-                topic: res.data.selectTopic.topic,
-                shortName: res.data.selectTopic.shortName,
-                createdAt: res.data.selectTopic.createdAt,
-                score: res.data.selectTopic.score
-            }, ...topics])
+            handleNewTopic(res.data.selectTopic);
             if (generatedTopic)
                 changeTopic({ id: generatedTopic.id, body: generatedTopic.body });
 
@@ -157,9 +150,9 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTopics, changeTabBarLoc, c
                     lexicalResourceSummery: res.data.addEssay.lexicalResourceSummery,
                     grammaticalRangeAndAccuracyScore: res.data.addEssay.grammaticalRangeAndAccuracyScore,
                     grammaticalRangeAndAccuracySummery: res.data.addEssay.grammaticalRangeAndAccuracySummery,
+                    overallBandScore: res.data.addEssay.overallBandScore
                 }, ...essaies]);
                 changeCcurrentId(id);
-                await changeTopics([]);
                 changeFirstEssayLoading(false);
             }).catch(async (err) => {
                 console.log('add new essay error : ', err);
@@ -408,7 +401,7 @@ const WritingDataCard: React.FC<{ essay: any }> = ({ essay }) => {
                                 </div>
 
                                 <div className={styles.sliderContainer}>
-                                    <Slider value={Number(((essay.taskAchievementScore + essay.coherenceAndCohesionScore + essay.lexicalResourceScore + essay.grammaticalRangeAndAccuracyScore) / 4).toFixed(1))} total={9} />
+                                    <Slider value={essay.overallBandScore} total={9} />
                                 </div>
                             </div>
                             <div className={styles.writingScoreText}>

@@ -10,4 +10,5 @@ export interface Essay {
     lexicalResourceSummery?: string,
     grammaticalRangeAndAccuracyScore?: number,
     grammaticalRangeAndAccuracySummery?: string,
+    overallBandScore?: number
 }
