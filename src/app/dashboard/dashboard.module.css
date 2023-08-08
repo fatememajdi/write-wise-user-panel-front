@@ -303,7 +303,7 @@
 }
 
 .topTabBarCard {
-    height: 70px;
+    height: 64px;
     display: flex;
     flex: 1;
     background-color: var(--color-seccondary);
@@ -352,7 +352,7 @@
     cursor: pointer;
     padding: 0px 40px;
     border-radius: 8px;
-    height: 70px !important;
+    height: 64px !important;
 }
 
 .lockIcon {
