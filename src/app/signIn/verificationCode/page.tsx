@@ -39,10 +39,13 @@ const VerificationCode: React.FC = () => {
         }).then(async (data) => {
             localStorage.setItem("user", JSON.stringify(data.data.verifyEmail.token));
             await router.push('/dashboard');
-            changeLoadig(false);
+            // setTimeout(() => {
+            //     changeLoadig(false);
+            // }, 5000);
         }
         ).catch((error) => {
             console.log('verification error : ', error);
+            changeLoadig(false);
         });
     };
     if (loading)

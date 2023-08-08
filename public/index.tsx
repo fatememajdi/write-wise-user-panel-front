@@ -13,6 +13,9 @@ import Edit from './edit';
 import CloseButton from './profile/closeButton';
 import Reload from './reload';
 import Message from './message';
+import Chat from './chat';
+import Chat2 from './chat2';
+import MobileCloseButton from './mobileCloseButton';
 
 export {
     Search,
@@ -29,5 +32,8 @@ export {
     Edit,
     CloseButton,
     Reload,
-    Message
+    Message,
+    Chat,
+    Chat2,
+    MobileCloseButton
 }

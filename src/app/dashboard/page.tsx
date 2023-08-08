@@ -487,7 +487,12 @@ const UserTopicsList: React.FC<{ topics: any, SelectTopic: any, GetTopicsList: a
             {
                 topics.map((item: any, index: any) =>
                     <div
-                        onClick={() => SelectTopic({ id: item.id, body: item.topic })}
+                        onClick={() => {
+                            SelectTopic({ id: item.id, body: item.topic });
+                            setTimeout(() => {
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }, 1000);
+                        }}
                         className={'col-12 ' + styles.taskCard} key={index}>
                         <div className={styles.taskCardTitle}>
                             {item.shortName}

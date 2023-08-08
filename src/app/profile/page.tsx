@@ -1,5 +1,5 @@
 'use client';
-import React, { use } from "react";
+import React from "react";
 import Image from "next/image";
 import { Formik } from 'formik';
 import Select from '@mui/material/Select';
@@ -11,40 +11,74 @@ import { useRouter } from "next/navigation";
 import styles from './profile.module.css';
 
 //-------------------------------------icons
-import { MdOutlineArrowBackIosNew } from 'react-icons/md';
-import { Camera, CloseButton, Edit } from '../../../public';
+import { MdOutlineArrowBackIosNew, MdModeEditOutline } from 'react-icons/md';
+import { Camera, Chat, Chat2, CloseButton, MobileCloseButton } from '../../../public';
 import { HiCheck } from 'react-icons/hi';
 
 //-------------------------------------components
 import ProfileCardBackground from "@/components/backgrounds/profileCardBackground/profileCardBackground";
 import Input from "@/components/input/input";
 import { GET_PROFILE, UPDATE_USER } from "@/config/graphql";
+import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
 
 //-------------------------------------types
 import { UserProfile } from "../../../types/profile";
+import Loading from "@/components/loading/loading";
+
 
 const Profile: React.FC = () => {
 
     const [profile, setprofile] = React.useState<UserProfile>();
-    const [step, changeStep] = React.useState<number>(1);
+    const [loading, setLoading] = React.useState<boolean>(true);
+    const { step, goTo, currentStepIndex } = useMultiStepForm(
+        [<UserInformationCard user={profile} goTo={GoTo} />, <EditUserCard goTo={GoTo} UpdateProfile={UpdateProfile} user={profile} />]);
     const router = useRouter();
+
+    function GoTo(step: number) { goTo(step) };
 
     async function GetProfile() {
         await client.query({
             query: GET_PROFILE
         }).then(async (res) => {
             setprofile(res.data.getUserProfile);
+            setLoading(false);
         }).catch((err) => {
             console.log("get user profile error : ", err);
         });
     }
 
+    async function UpdateProfile(values: { age: string, name: string, gender: string }) {
+        setLoading(true);
+        await client.mutate({
+            mutation: UPDATE_USER,
+            variables: {
+                age: values.age != '' ? parseInt(values.age) : profile?.age,
+                firstName: values.name != '' ? values.name : profile?.firstName,
+                lastName: '',
+                gender: values.gender != '' ? values.gender : profile?.lastName
+            }
+        }).then(async (res) => {
+            await setprofile(res.data.updateUserProfile);
+            goTo(0);
+            setLoading(false);
+        }).catch((err) => {
+            console.log("update user profile error : ", err);
+            setLoading(false);
+        });
+    }
+
     React.useEffect(() => {
         GetProfile();
-    });
+    }, []);
 
     return <div className={'col-12 ' + styles.profileContainer}>
+        {/* ------------------------------------------------------------------------desktop header */}
         <div className={'col-12 ' + styles.profileHeader}>
+            <button
+                aria-label="chat button"
+                className={styles.chatButton}>
+                <Chat />
+            </button>
             <Image
                 className={styles.logo}
                 src="/logo.svg"
@@ -56,7 +90,7 @@ const Profile: React.FC = () => {
             />
             <a
                 onClick={() => {
-                    if (step > 1) changeStep(step - 1);
+                    if (currentStepIndex > 0) goTo(currentStepIndex - 1);
                     else router.back();
                 }}
                 className={styles.backcard}>
@@ -64,42 +98,67 @@ const Profile: React.FC = () => {
             </a>
         </div>
 
-        <div className={'col-lg-10 ' + styles.profilePageContent}>
-            <div className={'col-12 ' + styles.profilePictureContainer}>
-                <div className={styles.leftDivider} />
-                <div className={styles.profileCard}>
-                    {
-                        profile?.profile ?
-                            <Image
-                                className={styles.profileImage}
-                                src="/profile.jpg"
-                                alt="profile"
-                                width={207}
-                                height={207}
-                                priority
-                                loading="eager"
-                            />
-                            :
-                            <Camera />
-                    }
-                </div>
-                <div className={styles.rightDivider} />
-            </div>
-
-            {
-                step == 1 ?
-                    <UserInformationCard changeStep={changeStep} user={profile} />
-                    :
-                    <EditUserCard changeStep={changeStep} setprofile={setprofile} />
-            }
-
+        {/* ------------------------------------------------------------------------mobile header */}
+        <div className={'col-12 ' + styles.responsiveProfileHeader}>
+            <a
+                onClick={() => {
+                    if (currentStepIndex > 0) goTo(currentStepIndex - 1);
+                    else router.back();
+                }}
+                className={styles.responsiveBackcard}>
+                <MdOutlineArrowBackIosNew /> Back
+            </a>
+            <Image
+                className={styles.responsiveLogo}
+                src="/logo3.svg"
+                alt="Logo"
+                width={81}
+                height={17}
+                priority
+                loading="eager"
+            />
+            <button
+                aria-label="chat button"
+                className={styles.responsiveChatButton}
+            >
+                <Chat2 />
+            </button>
         </div>
+
+
+        {
+            loading ?
+                <Loading /> :
+                <div className={'col-lg-9 col-md-9 col-12 ' + styles.profilePageContent}>
+                    <div className={'col-12 ' + styles.profilePictureContainer}>
+                        <div className={styles.leftDivider} />
+                        <div className={styles.profileCard}>
+                            {
+                                profile?.profile ?
+                                    <Image
+                                        className={styles.profileImage}
+                                        src="/profile.jpg"
+                                        alt="profile"
+                                        width={207}
+                                        height={207}
+                                        priority
+                                        loading="eager"
+                                    />
+                                    :
+                                    <Camera />
+                            }
+                        </div>
+                        <div className={styles.rightDivider} />
+                    </div>
+                    {step}
+                </div>
+        }
     </div>
 };
 
 export default Profile;
 
-const UserInformationCard: React.FC<{ changeStep: any, user?: UserProfile }> = ({ changeStep, user }) => <div className={styles.userInformationCard}>
+const UserInformationCard: React.FC<{ goTo: any, user?: UserProfile }> = ({ goTo, user }) => <div className={styles.userInformationCard}>
     <ProfileCardBackground>
         <div className={styles.userName}>{user?.firstName + ' ' + user?.lastName}</div>
         <div className={styles.joinDate}>Member since: June 2022</div>
@@ -107,30 +166,14 @@ const UserInformationCard: React.FC<{ changeStep: any, user?: UserProfile }> = (
         <div className={styles.gender}>{user?.gender}</div>
         <div className={styles.username}>Username:{user?.email}</div>
         <a
-            onClick={() => changeStep(2)}
+            onClick={() => goTo(1)}
             className={styles.editButton}>
-            <Edit />
+            <MdModeEditOutline className={styles.editIcon} />
         </a>
     </ProfileCardBackground>
 </div>;
 
-const EditUserCard: React.FC<{ changeStep: any, setprofile: any }> = ({ changeStep, setprofile }) => {
-
-    async function UpdateProfile(values: { age: string, name: string, gender: string }) {
-        console.log('hi')
-        await client.mutate({
-            mutation: UPDATE_USER,
-            variables: {
-                age: values.age != '' ? parseInt(values.age) : null,
-                firstName: values.name != '' ? values.name : null,
-                gender: values.gender != '' ? values.gender : null
-            }
-        }).then(async (res) => {
-            setprofile(res.data.updateUserProfile);
-        }).catch((err) => {
-            console.log("update user profile error : ", err);
-        });
-    }
+const EditUserCard: React.FC<{ goTo: any, UpdateProfile: any, user?: UserProfile }> = ({ goTo, UpdateProfile, user }) => {
 
     return <Formik
         initialValues={{
@@ -138,7 +181,6 @@ const EditUserCard: React.FC<{ changeStep: any, setprofile: any }> = ({ changeSt
             age: '',
             gender: ''
         }}
-        // validationSchema={EmailValidationSchema}
         enableReinitialize
         onSubmit={async (values) => {
             await UpdateProfile(values);
@@ -166,7 +208,6 @@ const EditUserCard: React.FC<{ changeStep: any, setprofile: any }> = ({ changeSt
                     />
                     <div className={styles.editUserJoinDate}>Member since: June 2022</div>
                     <Input
-                        style={{ marginTop: 35 }}
                         className={styles.input}
                         onChange={handleChange}
                         input
@@ -188,20 +229,22 @@ const EditUserCard: React.FC<{ changeStep: any, setprofile: any }> = ({ changeSt
                         <MenuItem value={'female'}>Female</MenuItem>
                         <MenuItem value={'other'}>Other</MenuItem>
                     </Select>
-
+                    <div className={styles.username}>Username:{user?.email}</div>
 
                     <button
                         type="submit"
                         aria-label="edit profile button"
                         className={styles.editButton}>
-                        <HiCheck className={styles.checkIcon} />
+                        <div><HiCheck className={styles.checkIcon} /></div>
                     </button>
                     <button
                         type='button'
                         aria-label="cancle button"
-                        onClick={() => changeStep(1)}
-                        className={styles.closeButton}>
-                        <CloseButton />
+                        onClick={() => goTo(0)}
+                        className={styles.closeButton}
+                        >
+                        <CloseButton className={styles.closeIcon} />
+                        <MobileCloseButton className={styles.mobileCloseIcon} />
                     </button>
                 </ProfileCardBackground>
             </form>

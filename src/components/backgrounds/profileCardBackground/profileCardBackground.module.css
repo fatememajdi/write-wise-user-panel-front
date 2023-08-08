@@ -39,3 +39,25 @@
     left: -50px;
     z-index: -1;
 }
+
+@media(max-width: 480px) {
+    .profileCardBackground {
+        padding: 45px 32px;
+    }
+
+    .centerBackground {
+        display: none;
+    }
+
+    .left2Background {
+        display: none;
+    }
+
+    .leftBackground {
+        display: none;
+    }
+
+    .rightBackground {
+        display: none;
+    }
+}

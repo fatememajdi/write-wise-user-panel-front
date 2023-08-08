@@ -25,7 +25,6 @@ import { Lock } from '../../../../public/dashboard';
 
 //--------------------------------------types
 import { Essay } from '../../../../types/essay';
-import { Topic } from "../../../../types/topic";
 
 interface topic {
     id: string,
@@ -61,10 +60,9 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     const [firstEssayLoading, changeFirstEssayLoading] = React.useState<boolean>(false);
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
-    const [essayTopic, changeTopic] = React.useState<topic>();
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-    const [modalContent, changeModalContent] = React.useState<string>('sdf');
+    const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
 
     const showModal = () => {
@@ -103,9 +101,6 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
             id = res.data.selectTopic.id as string;
             changeCcurrentId(id);
             handleNewTopic(res.data.selectTopic);
-            if (generatedTopic)
-                changeTopic({ id: generatedTopic.id, body: generatedTopic.body });
-
         }).catch(async (err) => {
             await changeModalContent('try again!');
             showModal();
@@ -163,7 +158,6 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     React.useEffect(() => {
         if (topic) {
             changeCcurrentId(topic.id);
-            changeTopic(topic);
         } else if (currentId == null) {
             changeMoreEssaies(false);
         }

@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
 import { signIn } from 'next-auth/react';
+import { Modal } from 'antd';
 
 //---------------------------------------------------styles
 import styles from './signIn.module.css';
@@ -61,11 +62,7 @@ export default SignIn;
 
 const Step1: React.FC<{ changeStep: any }> = async ({ changeStep }) => {
 
-    const router = useRouter();
-
     const handeClickGoogle = async () => {
-        // signOut();
-        // localStorage.clear();
         const signInResponse = signIn('google');
         if (signInResponse)
             console.log('google login sign in response : ', signInResponse);
@@ -131,6 +128,18 @@ const Step2: React.FC = () => {
     const router = useRouter();
     const [emailSignIn, { error }] = useMutation(EMAIL_SIGN_IN);
     const [loading, changeLoading] = React.useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
+
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
 
     const handleEmailSignIn = async (values: any) => {
         changeLoading(true);
@@ -139,16 +148,18 @@ const Step2: React.FC = () => {
             variables: {
                 email: values.email,
             },
-        }).then(async (data) => {
+        }).then(async () => {
             await router.push('/signIn/verificationCode');
-            changeLoading(false);
-            console.log(data);
+            setTimeout(() => {
+                changeLoading(false);
+            }, 9000);
         }
         ).catch((error) => {
             changeLoading(false);
             console.log('signIn error : ', error);
-
+            throw Error(error);
         });
+
     };
 
     const handeClickGoogle = async () => {
@@ -234,7 +245,7 @@ const Step2: React.FC = () => {
                     <div className={styles.footerText}>
                         By login, you agree to our <a>Terms of<br /> Service</a> and <a>Privacy Policy .</a>
                     </div>
-                   
+
                 </form>
             )}
         </Formik>

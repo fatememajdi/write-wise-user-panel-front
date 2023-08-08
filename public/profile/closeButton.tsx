@@ -12,7 +12,7 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
             cx={44.091}
             cy={44.091}
             r={43.091}
-            fill="url(#a)"
+            fill="#fff"
             stroke="url(#b)"
             strokeWidth={2}
         />
