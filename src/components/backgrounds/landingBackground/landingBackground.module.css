@@ -101,3 +101,51 @@
     z-index: -1 !important;
 }
 
+@media(max-width: 480px) {
+
+    .landingBackground {
+        background: #F4DEDF;
+        background: linear-gradient(90deg, #F4DEDF, #DBE8F2);
+    }
+
+    .topLeftBackground {
+        display: none;
+    }
+
+    .topLeft2Background {
+        display: none;
+    }
+
+    .topLeft3Background {
+        display: none;
+    }
+
+    .topBackground {
+        display: none;
+    }
+
+    .topCenterBackground {
+        display: none;
+    }
+
+    .topCenter2Background {
+        display: none;
+    }
+
+
+    .topRightBackground {
+        display: none;
+    }
+
+    .leftCenterBackground {
+        display: none;
+    }
+
+    .leftCenter2Background {
+        display: none;
+    }
+
+    .leftBottomBackground {
+        display: none;
+    }
+}

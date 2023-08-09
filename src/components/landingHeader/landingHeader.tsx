@@ -13,7 +13,8 @@ import styles from './landingHeader.module.css';
 import Input from "../input/input";
 
 //-------------------------------------------icons
-import { Search } from "../../../public";
+import { Chat2, Search } from "../../../public";
+import { MdOutlineMenu } from 'react-icons/md';
 
 const headerItems = [
     {
@@ -72,6 +73,26 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
                 priority
                 loading="eager"
             />
+
+            {/* ---------------------------------------------------------------------mobile header */}
+            <div className={styles.responsiveMenuIcon}>
+                <MdOutlineMenu />
+            </div>
+            <Image
+                className={styles.responsiveLogo}
+                src="/logo3.svg"
+                alt="Logo"
+                width={81}
+                height={17}
+                priority
+                loading="eager"
+            />
+            <button
+                aria-label="chat button"
+                className={styles.responsiveChatButton}
+            >
+                <Chat2 />
+            </button>
 
             <div className={'col-12 ' + styles.headerCard}>
                 <div className={styles.headerItemsContainer}>
@@ -144,7 +165,7 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
 
                 </Formik>
             </div>
-        </div>
+        </div >
     )
 };
 

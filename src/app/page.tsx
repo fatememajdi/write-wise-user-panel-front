@@ -41,9 +41,9 @@ const Home: React.FC = () => {
       <Section2 />
       <Section3 />
       <Section4 />
-      <Section5 />
-      <Section6 />
-      <Footer />
+      {/* <Section5 />
+      <Section6 /> */}
+      {/* <Footer /> */}
     </Suspense>
   );
 };

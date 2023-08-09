@@ -127,3 +127,15 @@
         padding: 157px 90px 129px 90px;
     }
 }
+
+@media(max-width: 480px) {
+    .mobile {
+        display: none;
+    }
+
+    .featuresBackground {
+        background: #FDEFF0;
+        background: linear-gradient(135deg, #FDEFF0, #FFFFFF);
+        padding: 50px 45px 15px 45px;
+    }
+}

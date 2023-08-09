@@ -135,13 +135,14 @@ const Dashboard: React.FC = () => {
     const Open = Boolean(anchorEl);
     const id = Open ? 'simple-popover' : undefined;
 
-    function ChangeType(type: string, index: number) {
+    function ChangeType(index: number) {
         goTo(index)
     }
 
     async function SelectTopic(topic: topic) {
+        changeTabBarLoc(true);
+        changeEndAnimation(true);
         setEssaies([]);
-        // changeEssayPage(1);
         changeMoreEssaies(true);
         changeTopic(topic);
         if (topicsType === 'general_task_1')
@@ -262,6 +263,7 @@ const Dashboard: React.FC = () => {
     else
         return <Box sx={{ display: 'flex' }}>
             <Drawer
+                disableScrollLock={true}
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
@@ -339,7 +341,7 @@ const Dashboard: React.FC = () => {
 
             </Drawer>
 
-            <Main open={open} style={{ padding: 0 }}>
+            <Main open={open} style={{ padding: 0 }} >
                 {/* //-------------------------------------------------------------dashboard content */}
                 <div className={styles.dashboardContentContainer}>
                     {!open &&

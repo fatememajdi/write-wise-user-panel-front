@@ -25,6 +25,7 @@ import { Lock } from '../../../../public/dashboard';
 
 //--------------------------------------types
 import { Essay } from '../../../../types/essay';
+import Link from "next/link";
 
 interface topic {
     id: string,
@@ -74,12 +75,13 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     };
 
     //-----------------------------------------------------------------generate topic
-    async function GenerateTopic() {
+    async function GenerateTopic(setFieldValue: any) {
         changeGenerateWritingTopicLoading(true);
         await client.query({
             query: GET_RANDOM_GENERAL_TASK1_WRITING,
         }).then(async (res) => {
-            await changeGeneratedTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body })
+            await changeGeneratedTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body });
+            setFieldValue('topic', res.data.getRandomWriting.body);
             changeGenerateWritingTopicLoading(false);
         }).catch((err) => {
             console.log('get random writing error :  : ', err);
@@ -199,7 +201,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                                 { title: 'WWAI Tutor', active: false, lock: true }
                             ]} selectedItem={0} className={styles.topSelect} />
 
-                            <div className={styles.wriritngTitle}>Gen Task 1</div>
+                            <section className={styles.wriritngTitle}>Gen Task 1</section>
 
                             <div className={styles.writingSecondTitle}>
                                 You should spend about 20 minutes on this task
@@ -229,7 +231,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                                                     aria-label="edit tipic"
                                                     onClick={() => {
                                                         changeGenerateWriting(true);
-                                                        GenerateTopic();
+                                                        GenerateTopic(setFieldValue);
                                                     }}
                                                     type="button" className={styles.generateButton}>
                                                     <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
@@ -242,7 +244,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                                                 {
                                                     generateWriting &&
                                                     <button
-                                                        aria-label="edit tipic"
+                                                        aria-label="edit topic"
                                                         type="button"
                                                         onClick={() => {
                                                             changeEditedGeneratedTopic(true);
@@ -293,7 +295,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     key={0}
                 >
                     {
-                        essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} />)
+                        essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} setFieldValue={setFieldValue} />)
                     }
                 </InfiniteScroll>
 
@@ -332,8 +334,17 @@ const tabBarItems = [
     },
 ]
 
-const WritingDataCard: React.FC<{ essay: any }> = ({ essay }) => {
+const WritingDataCard: React.FC<{ essay: any, setFieldValue?: any }> = ({ essay, setFieldValue }) => {
     const [writingCardStep, changeWritingCardStep] = React.useState<number>(1);
+
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        e.preventDefault();
+        const targetId = e.currentTarget.href.replace(/.*\#/, "");
+        const elem = document.getElementById(targetId);
+        elem?.scrollIntoView({
+            behavior: "smooth",
+        });
+    };
 
     return <div className={styles.writingDataCard}>
         <div className={styles.writingDataTabBarCard}>
@@ -375,12 +386,17 @@ const WritingDataCard: React.FC<{ essay: any }> = ({ essay }) => {
                         <div className={styles.writingEssayText}>
                             <Text text={essay.essay} />
                         </div>
-                        <button
+                        <Link
+                            href={'/dashboard/#top-of-form'}
+                            onClick={() => {
+                                setFieldValue('body', essay.essay);
+                                handleScroll;
+                            }}
                             type="button"
                             aria-label="edit button"
                             className={styles.editWritingButton}>
                             <div className={styles.responsiveEditWritingButton}> <MdEdit className={styles.editWritingButtonIcon} /></div>
-                        </button>
+                        </Link>
                     </div>
                     : writingCardStep === 1 ?
                         <div
@@ -398,10 +414,10 @@ const WritingDataCard: React.FC<{ essay: any }> = ({ essay }) => {
                                     <Slider value={essay.overallBandScore} total={9} />
                                 </div>
                             </div>
-                            <div className={styles.writingScoreText}>
+                            {/* <div className={styles.writingScoreText}>
                                 Good user<br />
                                 Has operational command of the language, though with occasional inaccuracies, inappropriacies and misunderstandings in some situations. Generally handles complex language well and understands detailed reasoning.
-                            </div>
+                            </div> */}
                             <div className={styles.analusisButtonContainer}>
                                 <button
                                     type="button"

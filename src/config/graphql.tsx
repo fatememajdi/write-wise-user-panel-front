@@ -124,7 +124,7 @@ query{
 }
 `;
 
-export const UPDATE_USER=gql`
+export const UPDATE_USER = gql`
 mutation UpdateUser($firstName:String, $age:Float, $lastName:String, $gender:String){
   updateUserProfile(updateUser:{firstName:$firstName ,age:$age ,lastName:$lastName ,gender:$gender}){
     firstName,
@@ -132,6 +132,15 @@ mutation UpdateUser($firstName:String, $age:Float, $lastName:String, $gender:Str
     email,
     age,
     gender
+  }
+}
+`;
+
+export const UPLOAD_PROFILE_FILE = gql`
+mutation UploadProfile($file:File!){
+  uploadProfileFile(file:$file){
+    url,
+    fileSize
   }
 }
 `;

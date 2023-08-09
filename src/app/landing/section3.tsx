@@ -10,7 +10,7 @@ import styles from './landingSection3.module.css';
 import { FeaturesBackground } from "@/components/backgrounds/featuresBackground/featuresBackground";
 
 //-------------------------------------------icons
-import { Rate, Rise } from "../../../public";
+import { File, Rate, Rise, User } from "../../../public";
 
 const Section3: React.FC = () => {
     const router = useRouter();
@@ -28,6 +28,16 @@ const Section3: React.FC = () => {
                 <FeaturesItemCard title="Progress Tracking"
                     icon={<Rise />}
                     description="Monitor your IELTS writing improvement over time with our progress tracking feature. Review your essay history, ratings, and feedback to see your development and stay motivated on your journey to success." />
+                <div className={styles.mobileFeautersItemsContainer}>
+                    <FeaturesItemCard
+                        icon={<User />}
+                        title="Personalized Feedback and Recommendations"
+                    />
+                    <FeaturesItemCard
+                        icon={<File />}
+                        title="AI-Powered Topic Generator"
+                    />
+                </div>
             </div>
             <button
                 aria-label="read more button"
@@ -42,10 +52,10 @@ const Section3: React.FC = () => {
 
 export default Section3;
 
-const FeaturesItemCard: React.FC<{ title: string, description: string, icon: any }> = ({ title, description, icon }) => <div className={'col-lg-5 ' + styles.featuresItemCard}>
+const FeaturesItemCard: React.FC<{ title: string, icon: any, description?: string }> = ({ title, description, icon }) => <div className={'col-lg-5 col-md-5 col-12 ' + styles.featuresItemCard}>
     {icon}
     <div className={styles.featuresItemTitle}>
         {title}
     </div>
-    <div className={styles.featuresItemDescription}>{description}</div>
+    <div className={styles.featuresItemDescription}>{description && description}</div>
 </div>;

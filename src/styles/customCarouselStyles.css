@@ -6,6 +6,13 @@
     border: none !important;
 }
 
-.carousel{
+.carousel {
     width: auto !important;
+}
+
+@media(max-width: 480px) {
+    .carousel .control-dots .dot {
+        height: 8px !important;
+        width: 8px !important;
+    }
 }

@@ -10,6 +10,7 @@ import Section2Background from "@/components/backgrounds/section2Background/sect
 
 //--------------------------------icons
 import { ArrowLeft, ArrowRight } from "../../../public";
+import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 
 //--------------------------------data 
 const steps = [
@@ -30,7 +31,7 @@ const steps = [
     },
     {
         step: 'Step 4',
-        title: 'Learn, Improve, and Succeed',
+        title: 'Learn,Improve,and Succeed',
         description: 'leverage the power of our AI-powered step-by-step writing tutor as you practice and refine your IELTS writing skills. Receive real-time guidance and suggestions while composing your essays, ensuring that you develop strong essay structures, enhance coherence and cohesion, improve vocabulary and grammar, and fine-tune your arguments. With WriteWiseAI, you will gain the confidence and expertise to excel in your IELTS writing, paving the way for your future success.'
     }
 ]
@@ -60,13 +61,14 @@ const Section2: React.FC = () => {
                     return (
                         <div
                             className={`${hasPrev ? "absolute" : "hidden"
-                                } top-0 bottom-0 left-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20`}
+                                } top-0 bottom-0 left-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20 ` + styles.arrowCard}
                             onClick={clickHandler}
                         >
                             <div
                                 style={{ paddingRight: 5 }}
                                 className={styles.arrowContainer}>
-                                <ArrowLeft />
+                                <ArrowLeft className={styles.arrowIcon} />
+                                <IoIosArrowBack className={styles.mobileArrowIcon} />
                             </div>
                         </div>
                     );
@@ -75,13 +77,14 @@ const Section2: React.FC = () => {
                     return (
                         <div
                             className={`${hasNext ? "absolute" : "hidden"
-                                } top-0 bottom-0 right-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20`}
+                                } top-0 bottom-0 right-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20 ` + styles.arrowCard}
                             onClick={clickHandler}
                         >
                             <div
                                 style={{ paddingLeft: 5 }}
                                 className={styles.arrowContainer}>
-                                <ArrowRight className="" />
+                                <ArrowRight className={styles.arrowIcon} />
+                                <IoIosArrowForward className={styles.mobileArrowIcon} />
                             </div>
 
                         </div>
@@ -89,7 +92,7 @@ const Section2: React.FC = () => {
                 }}
                 showStatus={false}
                 thumbWidth={100}
-                className={'col-12 col-md-10 col-lg-8 ' + styles.section2carousel}>
+                className={'col-12 col-md-10 col-lg-8 col-12 ' + styles.section2carousel}>
                 {
                     steps.map((item, index) => <StepCard Step={item} key={index} />)
                 }

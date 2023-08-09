@@ -22,7 +22,7 @@ const Section4: React.FC = () => {
         </div>
 
         <div className={'col-12 ' + styles.pricingItemsContainer}>
-            <div className={'col-lg-3 ' + styles.leftCard}>
+            <div className={'col-lg-3 col-md-3 col-12 ' + styles.leftCard}>
                 <div className={styles.leftContent + ' ' + styles.itemCard}>
                     <div className={'col-12 ' + styles.itemCardTopCard} />
                     <div className={styles.cardTitle} style={{ marginBottom: 39, marginTop: 90 }}>
@@ -41,7 +41,7 @@ const Section4: React.FC = () => {
                 </div>
             </div>
 
-            <div className={'col-lg-9 ' + styles.itemCard}>
+            <div className={'col-lg-9 col-md-9 col-12 ' + styles.itemCard}>
                 <div className={'col-12 ' + styles.itemCardTopCard} />
                 <div className={styles.cardTitle} style={{ marginTop: 44 }}>
                     Pay-As-You-Go

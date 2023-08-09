@@ -63,6 +63,24 @@
     margin-right: 38px;
 }
 
+.responsiveChatButton {
+    background: linear-gradient(210deg, rgb(46, 64, 87) 0%, rgb(218, 40, 46) 100%);
+    padding: 6px !important;
+    display: none;
+    border-radius: 100% !important;
+}
+
+
+.responsiveMenuIcon {
+    font-size: 30px;
+    color: #fff;
+    display: none;
+}
+
+.responsiveLogo {
+    display: none;
+}
+
 @media(max-width: 1440px) {
     .headerCard {
         padding: 0px 50px;
@@ -89,4 +107,42 @@
     .headerBackground {
         top: 0px;
     }
+}
+
+@media(max-width: 480px) {
+    .headerBackground {
+        display: none;
+    }
+
+    .headerShadow {
+        display: none;
+    }
+
+    .headerCard {
+        display: none;
+    }
+
+    .headerContainer {
+        background-color: var(--color-seccondary);
+        height: 45px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0px 15px;
+    }
+
+    .responsiveChatButton {
+        display: flex;
+    }
+
+
+    .responsiveMenuIcon {
+        display: flex;
+    }
+
+    .responsiveLogo {
+        display: flex;
+    }
+
 }

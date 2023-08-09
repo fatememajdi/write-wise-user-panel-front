@@ -17,11 +17,11 @@ const Section1: React.FC = () => {
     return <LandingBackground>
         <section className={'col-12 ' + styles.section1Container} id="section-1">
 
-            <div className={'col-lg-5 ' + styles.leftContainer}>
+            <div className={'col-lg-5 col-md-5 col-12 ' + styles.leftContainer}>
                 <div className={styles.leftContainerCircle}></div>
             </div>
 
-            <div className={'col-lg-7 ' + styles.rightContainer}>
+            <div className={'col-lg-7 col-md-7 col-12 ' + styles.rightContainer}>
                 <div className={styles.rightContainerTitle}>
                     Boost Your IELTS Writing<br /> Score with AI
                 </div>
@@ -36,8 +36,8 @@ const Section1: React.FC = () => {
                         {'Get your essays rated for'}<span>&nbsp;Free!</span>
                     </div>
                     <div className={styles.rightContainerDescriptionItem}>
-                        <VscCircleFilled className={styles.rightContainerDescriptionItemIcon} />
-                        {'Recieve personalized analysis and feedback for just'}<span> &nbsp;$1&nbsp;</span>{'per essay'}
+                        <div> <VscCircleFilled className={styles.rightContainerDescriptionItemIcon} /></div>
+                        {'Recieve personalized analysis and feedback for just $1 per essay'}
                     </div>
 
                 </div>

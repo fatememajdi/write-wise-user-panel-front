@@ -61,7 +61,7 @@
 }
 
 .rightContainerDescriptionItemIcon {
-    font-size: medium;
+    font-size: medium !important;
     margin-right: 10px;
 }
 
@@ -130,5 +130,66 @@
 
     .rightContainerButton {
         font-size: 22px;
+    }
+}
+
+@media(max-width: 480px) {
+    .section1Container {
+        flex-direction: column;
+        padding: 85px 40px 37px 40px;
+    }
+
+    .leftContainerCircle {
+        background-color: #F3F3F3;
+        height: 266px;
+        width: 266px;
+    }
+
+    .rightContainerTitle {
+        font-size: 24px;
+        font-weight: 800;
+        margin-top: 33px;
+        line-height: 26px;
+        width: 100%;
+    }
+
+    .rightContainerDescription {
+        font-size: 13px;
+        margin-top: 20px;
+        width: 100%;
+        /* line-height: 0px; */
+    }
+
+    .rightContainerDescriptionItem span {
+        font-size: 13px;
+    }
+
+
+    .rightContainerDescriptionItem {
+        margin-top: 5px;
+    }
+
+    .rightContainerDescriptionItemIcon {
+        /* font-size: medium !important; */
+        font-size: 14px !important;
+    }
+
+    .rightContainer {
+        height: fit-content;
+        align-items: center;
+    }
+
+    .leftContainer {
+        height: fit-content;
+        align-items: center !important;
+        padding: 0px;
+    }
+
+    .rightContainerButton{
+        height: 42px;
+        width: 226px;
+        font-size: 13px;
+        align-items: center;
+        margin-top: 30px;
     }
 }

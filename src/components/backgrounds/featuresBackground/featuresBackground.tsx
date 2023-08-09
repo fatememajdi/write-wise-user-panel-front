@@ -7,7 +7,7 @@ import styles from './featuresBackground.module.css';
 const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     <section className={'col-12 ' + styles.featuresBackground} id='section-3'>
         <Image
-            className={styles.rightTop3Background}
+            className={styles.rightTop3Background + ' ' + styles.mobile}
             src="/features/right-top.svg"
             alt="background"
             width={386}
@@ -40,7 +40,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             priority
         /> */}
         <Image
-            className={styles.rightTop2Background}
+            className={styles.rightTop2Background + ' ' + styles.mobile}
             src="/features/right-top-2.svg"
             alt="background"
             width={372}
@@ -49,7 +49,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             priority
         />
         <Image
-            className={styles.leftTopBackground}
+            className={styles.leftTopBackground + ' ' + styles.mobile}
             src="/features/left-top.svg"
             alt="background"
             width={489}
@@ -58,7 +58,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             priority
         />
         <Image
-            className={styles.leftTopBackground}
+            className={styles.leftTopBackground + ' ' + styles.mobile}
             src="/features/left-top.svg"
             alt="background"
             width={489}
@@ -67,7 +67,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             priority
         />
         <Image
-            className={styles.leftTop2Background}
+            className={styles.leftTop2Background + ' ' + styles.mobile}
             src="/features/left-top-2.svg"
             alt="background"
             width={346}
@@ -76,7 +76,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             priority
         />
         <Image
-            className={styles.leftTop3Background}
+            className={styles.leftTop3Background + ' ' + styles.mobile}
             src="/features/left-top-2.svg"
             alt="background"
             width={346}
@@ -85,7 +85,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             priority
         />
         <Image
-            className={styles.leftCenterBackground}
+            className={styles.leftCenterBackground + ' ' + styles.mobile}
             src="/features/left-center.svg"
             alt="background"
             width={378.08}
@@ -94,7 +94,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             priority
         />
         <Image
-            className={styles.leftCenter2Background}
+            className={styles.leftCenter2Background + ' ' + styles.mobile}
             src="/features/left-center.svg"
             alt="background"
             width={378.08}
@@ -103,7 +103,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             priority
         />
         <Image
-            className={styles.leftBottomBackground}
+            className={styles.leftBottomBackground + ' ' + styles.mobile}
             src="/features/left-bottom.svg"
             alt="background"
             width={326.61}

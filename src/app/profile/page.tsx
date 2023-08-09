@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import client from '@/config/applloAuthorizedClient';
+import uploadFileClient from "@/config/appolloUploadFileClient";
 import { useRouter } from "next/navigation";
 
 //-------------------------------------styles
@@ -19,13 +20,12 @@ import { HiCheck } from 'react-icons/hi';
 //-------------------------------------components
 import ProfileCardBackground from "@/components/backgrounds/profileCardBackground/profileCardBackground";
 import Input from "@/components/input/input";
-import { GET_PROFILE, UPDATE_USER } from "@/config/graphql";
+import { GET_PROFILE, UPDATE_USER, UPLOAD_PROFILE_FILE } from "@/config/graphql";
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
 
 //-------------------------------------types
 import { UserProfile } from "../../../types/profile";
 import Loading from "@/components/loading/loading";
-
 
 const Profile: React.FC = () => {
 
@@ -34,7 +34,11 @@ const Profile: React.FC = () => {
     const { step, goTo, currentStepIndex } = useMultiStepForm(
         [<UserInformationCard user={profile} goTo={GoTo} />, <EditUserCard goTo={GoTo} UpdateProfile={UpdateProfile} user={profile} />]);
     const router = useRouter();
+    const [inputImage, setInputImage] = React.useState<File>();
 
+    const onChangePic = async (e: any) => {
+        await setInputImage(e.target.files[0]);
+    }
     function GoTo(step: number) { goTo(step) };
 
     async function GetProfile() {
@@ -65,6 +69,20 @@ const Profile: React.FC = () => {
         }).catch((err) => {
             console.log("update user profile error : ", err);
             setLoading(false);
+        });
+    }
+
+
+    async function UploadProfile() {
+        await uploadFileClient.mutate({
+            mutation: UPLOAD_PROFILE_FILE,
+            variables: {
+                file: inputImage
+            }
+        }).then(async (res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log("update user profile error : ", err);
         });
     }
 
@@ -126,6 +144,13 @@ const Profile: React.FC = () => {
             </button>
         </div>
 
+        {/* <label className="image-picker flex" id="image-show">
+            <input type="file" id="fileupload" style={{ width: '100%', height: '100%' }} className="hide" onChange={onChangePic} />
+        </label> */}
+
+        {/* <button onClick={() => UploadProfile()}>
+            upload
+        </button> */}
 
         {
             loading ?
@@ -243,7 +268,7 @@ const EditUserCard: React.FC<{ goTo: any, UpdateProfile: any, user?: UserProfile
                         aria-label="cancle button"
                         onClick={() => goTo(0)}
                         className={styles.closeButton}
-                        >
+                    >
                         <CloseButton className={styles.closeIcon} />
                         <MobileCloseButton className={styles.mobileCloseIcon} />
                     </button>
