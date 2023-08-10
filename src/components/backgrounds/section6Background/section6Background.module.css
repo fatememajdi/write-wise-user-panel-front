@@ -32,3 +32,20 @@
     left: 0px;
     z-index: -1;
 }
+
+.mobile {
+    display: flex;
+}
+
+@media(max-width: 480px) {
+    .mobile {
+        display: none;
+    }
+
+    .section6Background {
+        padding: 70px 20px 100px 20px;
+        background: #F4DEDF;
+        background: linear-gradient(90deg, #F4DEDF, #DBE8F2);
+        min-height: 90vh;
+    }
+}

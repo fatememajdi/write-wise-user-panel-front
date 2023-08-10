@@ -7,7 +7,6 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
 import { signIn } from 'next-auth/react';
-import { Modal } from 'antd';
 
 //---------------------------------------------------styles
 import styles from './signIn.module.css';

@@ -17,7 +17,7 @@ const Section3: React.FC = () => {
 
     return (
         <FeaturesBackground>
-
+            <div className={styles.mobileTabBar} />
             <div className={styles.featuresDescription}>
                 Discover the advantages of using WriteWiseAI, a revolutionary platform designed to help you conquer IELTS writing challenges. Our state-of-the-art features and benefits provide the tools and guidance necessary to elevate your essay writing skills and achieve your desired IELTS score. Here's what you can expect when using WriteWiseAI
             </div>

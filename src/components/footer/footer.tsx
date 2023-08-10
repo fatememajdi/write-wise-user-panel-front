@@ -51,13 +51,27 @@ const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerConta
             alt="Logo"
             width={133}
             height={15}
-            loading="eager" 
+            loading="eager"
             priority
         />
         <Link className={styles.link} href={'/'}>Terms of Service</Link>
-        <div>
+        <div className={styles.mobileLinksContainer}>
             <Link className={styles.link} href={'/'}>Privacy Policy</Link>
             <Link className={styles.link} href={'/'}>about us</Link>
+        </div>
+        <div className={styles.mobileSocialMediaContainer}>
+            {
+                socialMediaItems.map((item, index) => <a key={index} href={item.link}>
+                    <Image
+                        className={styles.socialIcon}
+                        src={item.icon}
+                        alt="social media"
+                        width={24}
+                        height={24}
+                        priority
+                    />
+                </a>)
+            }
         </div>
     </div>
     <Formik
@@ -103,6 +117,7 @@ const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerConta
                     </div>
                     <div className={styles.inputContainer}>
                         <Input
+                            style={{ width: 182 }}
                             className={styles.emailInput}
                             onChange={handleChange}
                             placeHolder='Enter your email'
@@ -112,8 +127,12 @@ const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerConta
                             input_value={values.email}
                             input_error={errors.email && touched.email && errors.email}
                         />
-
-                        <button type="submit" className={styles.sibscribeButton}>
+                        <div className={styles.mobileEmailCardText}>
+                            We care about your data in our <Link className={styles.emailCardText} href={'/'}>privacy policy</Link>
+                        </div>
+                        <button
+                            aria-label="email submit button"
+                            type="submit" className={styles.sibscribeButton}>
                             Subscribe
                         </button>
                     </div>

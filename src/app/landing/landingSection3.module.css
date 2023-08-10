@@ -64,6 +64,12 @@
     height: fit-content;
 }
 
+.mobileTabBar {
+    display: none;
+    height: 45px;
+    color: var(--color-seccondary);
+}
+
 @media(max-width: 1440px) {
     .featuresDescription {
         font-size: 22px;
@@ -162,5 +168,9 @@
         margin-top: 10px;
         border: none;
         box-shadow: none;
+    }
+
+    .mobileTabBar{
+        display: flex;
     }
 }

@@ -6,39 +6,39 @@ import styles from './fqaBackground.module.css';
 
 const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => <div className={'col-12 ' + styles.fqadBackground}>
     <Image
-        className={styles.rightTopBackground}
+        className={styles.rightTopBackground + ' ' + styles.mobile}
         src="/fqa/right-top.svg"
         alt="background"
         width={259}
         height={256}
-        loading="eager" 
+        loading="eager"
         priority
     />
     <Image
-        className={styles.rightTopBackground}
+        className={styles.rightTopBackground + ' ' + styles.mobile}
         src="/fqa/right-top.svg"
         alt="background"
         width={259}
         height={256}
-        loading="eager" 
+        loading="eager"
         priority
     />
     <Image
-        className={styles.leftTopBackground}
+        className={styles.leftTopBackground + ' ' + styles.mobile}
         src="/fqa/left-top.svg"
         alt="background"
         width={301.14}
         height={237}
-        loading="eager" 
+        loading="eager"
         priority
     />
     <Image
-        className={styles.leftCenterBackground}
+        className={styles.leftCenterBackground + ' ' + styles.mobile}
         src="/fqa/left-center.svg"
         alt="background"
         width={377}
         height={377}
-        loading="eager" 
+        loading="eager"
         priority
     />
 

@@ -6,48 +6,48 @@ import styles from './section6Background.module.css';
 
 const Section6Background: React.FC<{ children: React.ReactNode }> = ({ children }) => <section className={'col-12 ' + styles.section6Background}>
     <Image
-        className={styles.leftTopBackground}
+        className={styles.leftTopBackground + ' ' + styles.mobile}
         src="/section6/left-top.svg"
         alt="background"
         width={208}
         height={168}
-        loading="eager" 
+        loading="eager"
         priority
     />
     <Image
-        className={styles.leftCenterBackground}
+        className={styles.leftCenterBackground + ' ' + styles.mobile}
         src="/section6/left-center.svg"
         alt="background"
         width={224}
         height={241}
-        loading="eager" 
+        loading="eager"
         priority
     />
     <Image
-        className={styles.leftCenterBackground}
+        className={styles.leftCenterBackground + ' ' + styles.mobile}
         src="/section6/left-center.svg"
         alt="background"
         width={224}
         height={241}
-        loading="eager" 
+        loading="eager"
         priority
     />
     <Image
-        className={styles.rightBottomBackground}
+        className={styles.rightBottomBackground + ' ' + styles.mobile}
         src="/section6/right-bottom.svg"
         alt="background"
         width={427.75}
         height={357}
-        loading="eager" 
+        loading="eager"
         priority
     />
     <Image
-        className={styles.rightBottomBackground}
+        className={styles.rightBottomBackground + ' ' + styles.mobile}
         src="/section6/right-bottom.svg"
         alt="background"
         width={427.75}
         height={357}
-        loading="eager" 
+        loading="eager"
         priority
     />
     {children}

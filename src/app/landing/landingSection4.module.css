@@ -146,6 +146,17 @@
     margin-bottom: 15px;
 }
 
+.mobileDivider {
+    display: none !important;
+}
+
+.mobileTabBar {
+    display: none;
+    height: 45px !important;
+    width: 100% !important;
+    background-color: var(--color-seccondary);
+}
+
 @media(max-width: 1440px) {
     .pricigBackground {
         padding: 100px 90px 70px 90px;
@@ -302,5 +313,13 @@
 
     .divider {
         display: none;
+    }
+
+    .mobileDivider {
+        display: flex;
+    }
+
+    .mobileTabBar {
+        display: flex;
     }
 }
