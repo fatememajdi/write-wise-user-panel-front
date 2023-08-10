@@ -316,7 +316,7 @@
     }
 
     .mobileDivider {
-        display: flex;
+        display: flex !important;
     }
 
     .mobileTabBar {
