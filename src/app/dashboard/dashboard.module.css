@@ -9,7 +9,7 @@
     background-color: var(--color-seccondary);
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
 }
 
 .dashboardRightCard {}
@@ -263,7 +263,7 @@
 .leftTabBar {
     background-color: var(--color-seccondary);
     width: 80px;
-    height: 100% !important;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -453,6 +453,12 @@
     display: none;
 }
 
+.mask {
+    object-fit: cover;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 5%, black 100%);
+    mask-image: linear-gradient(to top, transparent 5%, black 100%);
+}
+
 @media(max-width: 1500px) {
     .topTabBarContainer {
         padding: 30px 60px 0px 55px;
@@ -478,20 +484,33 @@
     .activeTaskTabButton {
         font-size: 16px;
     }
-    .logo{
+
+    .logo {
         margin: 22px auto;
     }
 }
 
-@media(max-width: 480px) {
+@media(max-width: 500px) {
     .dashboardContentContainer {
         flex-direction: column;
         padding-right: 0px;
     }
 
-    .leftTabBar {
+    .openDrawerButtonCard {
         display: none;
     }
+
+    .leftTabBarButton {
+        display: none;
+    }
+
+    .briefLogo {
+        display: none;
+    }
+
+    /* .leftTabBar {
+        display: none;
+    } */
 
     .topResponsiveTabBar {
         display: flex;

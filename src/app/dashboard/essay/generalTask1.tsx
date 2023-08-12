@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/link-passhref */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { lazy } from "react";
 import { Formik } from 'formik';
@@ -201,7 +202,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                                 { title: 'WWAI Tutor', active: false, lock: true }
                             ]} selectedItem={0} className={styles.topSelect} />
 
-                            <section className={styles.wriritngTitle}>Gen Task 1</section>
+                            <section id="top-of-form" className={styles.wriritngTitle}>Gen Task 1</section>
 
                             <div className={styles.writingSecondTitle}>
                                 You should spend about 20 minutes on this task
@@ -387,10 +388,11 @@ const WritingDataCard: React.FC<{ essay: any, setFieldValue?: any }> = ({ essay,
                             <Text text={essay.essay} />
                         </div>
                         <Link
-                            href={'/dashboard/#top-of-form'}
+                            href={'/dashboard/#top'}
                             onClick={() => {
                                 setFieldValue('body', essay.essay);
                                 handleScroll;
+                                window.scrollTo(0,0)
                             }}
                             type="button"
                             aria-label="edit button"

@@ -1,17 +1,17 @@
+/* eslint-disable @next/next/link-passhref */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 'use client';
 import React, { lazy } from "react";
 import Image from "next/image";
-import { styled } from '@mui/material/styles';
 import { useSession } from "next-auth/react";
 import Popover from '@mui/material/Popover';
-import Drawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import client from '@/config/applloAuthorizedClient';
 import InfiniteScroll from 'react-infinite-scroller';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useMediaQuery } from 'react-responsive';
 
 //-----------------------------------------styles
 import styles from './dashboard.module.css';
@@ -35,27 +35,8 @@ import { FiMoreVertical } from 'react-icons/fi';
 //----------------------------------------types
 import { Essay } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
+import Link from "next/link";
 
-const drawerWidth = 380;
-
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
-    open?: boolean;
-}>(({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-    }),
-}));
 
 const menuItems = [
     {
@@ -116,12 +97,12 @@ const Dashboard: React.FC = () => {
         }
     });
     const [pageLoading, setLoading] = React.useState<boolean>(true);
+    const [isOpen, setIsOpen] = React.useState<boolean>(true);
     const [MoreEssaies, changeMoreEssaies] = React.useState<boolean>(true);
     const [MoreTopics, changeMoreTopics] = React.useState<boolean>(true);
     const [topics, changeTopics] = React.useState<Topic[]>([]);
     const [topicsType, setTopicsType] = React.useState('general_task_1');
     const [essaies, setEssaies] = React.useState<Essay[]>([]);
-    const [open, setOpen] = React.useState<boolean>(true);
     const router = useRouter();
     const [essayTopic, changeTopic] = React.useState<topic | null>();
     const { step, goTo } = useMultiStepForm([<ChooseType changeType={ChangeType} />,
@@ -139,6 +120,11 @@ const Dashboard: React.FC = () => {
         goTo(index)
     }
 
+    const isMobile = useMediaQuery({
+        query: "(max-width: 500px)"
+    });
+
+
     async function SelectTopic(topic: topic) {
         changeTabBarLoc(true);
         changeEndAnimation(true);
@@ -151,6 +137,8 @@ const Dashboard: React.FC = () => {
             goTo(2)
         else
             goTo(3)
+        if (isMobile)
+            setIsOpen(false);
     }
 
     //----------------------------------------------------------------get user essaies
@@ -210,6 +198,8 @@ const Dashboard: React.FC = () => {
         changeEndAnimation(false);
         changeTopic(null);
         goTo(0);
+        if (isMobile)
+            setIsOpen(false);
     };
 
     //------------------------------------------------------------------check user loged in
@@ -244,16 +234,42 @@ const Dashboard: React.FC = () => {
         setAnchorEl(null);
     };
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
     async function handleNewTopic(topic: Topic) {
         await changeTopics([topic, ...topics]);
+    }
+
+    const showAnimation = {
+        hidden: {
+            width: 0,
+            opacity: 0,
+            transition: {
+                duration: 0.5,
+            }
+        },
+        show: {
+            width: 'auto',
+            opacity: 1,
+            transition: {
+                duration: 0.2,
+            }
+        }
+    }
+
+    const showEssayButtonAnimation = {
+        hidden: {
+            width: 0,
+            opacity: 0,
+            transition: {
+                duration: 0.5,
+            }
+        },
+        show: {
+            width: 'auto',
+            opacity: 1,
+            transition: {
+                duration: 0.2,
+            }
+        }
     }
 
     if (pageLoading)
@@ -261,92 +277,96 @@ const Dashboard: React.FC = () => {
             style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         ><Loading /></div>
     else
-        return <Box sx={{ display: 'flex' }}>
-            <Drawer
-                disableScrollLock={true}
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: drawerWidth,
-                        boxSizing: 'border-box',
-                    },
-                }}
-                variant="persistent"
-                anchor="left"
-                open={open}
-            >
+        return <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
+            <motion.div animate={{
+                width: isOpen && !isMobile ? '380px' : isOpen && isMobile ? '350px'
+                    : !isOpen && !isMobile ? '83px' : '0px',
+                transition: {
+                    duration: 0.5,
+                    type: 'spring',
+                    damping: 15
+                },
+                position: isMobile ? 'absolute' : 'inherit',
+                zIndex: 10
+            }} className={styles.sideBard}>
+
                 {/* //--------------------------------------------------------------drawer content */}
-                <div className={'col-12 ' + styles.dashboardLeftCard}>
-                    <Image
-                        className={styles.logo}
-                        src="/logo3.svg"
-                        alt="Logo"
-                        width={175}
-                        height={17}
-                        loading="eager"
-                        priority
-                    />
-                    <div className={'col-12 ' + styles.tabsContainer}>
-                        <div className={'col-12 ' + styles.newEssayContainer}>
-                            <button
-                                aria-label="new essay button"
-                                onClick={async () => NewEssay()}
-                                className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} /></button>
-                            <button
-                                aria-label="close drawer button"
-                                onClick={handleDrawerClose}
-                                className={styles.arrowLeftButton}><div><IoIosArrowBack className={styles.arrowIcon} /></div></button>
-                        </div>
+                <AnimatePresence>
 
-                        <div className={'col-12 ' + styles.taskTabsContainer}>
+                    {
+                        isOpen ?
+                            <motion.div
+                                variants={showAnimation}
+                                initial='hidden'
+                                animate='show'
+                                exit='hidden'
+                                className={styles.dashboardLeftCard}>
+                                <Image
+                                    className={styles.logo}
+                                    src="/logo3.svg"
+                                    alt="Logo"
+                                    width={175}
+                                    height={17}
+                                    loading="eager"
+                                    priority
+                                />
+                                <div className={'col-12 ' + styles.tabsContainer}>
+                                    <div className={'col-12 ' + styles.newEssayContainer}>
+                                        <button
+                                            aria-label="new essay button"
+                                            onClick={async () => NewEssay()}
+                                            className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} /></button>
+                                        <button
+                                            aria-label="close drawer button"
+                                            onClick={() => setIsOpen(false)}
+                                            className={styles.arrowLeftButton}><div><IoIosArrowBack className={styles.arrowIcon} /></div></button>
+                                    </div>
 
-                            <button
-                                aria-label="general task1 button"
-                                onClick={() => SelectType('general_task_1')}
-                                className={topicsType === 'general_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
-                                Gen Task 1</button>
+                                    <div className={'col-12 ' + styles.taskTabsContainer}>
 
-                            <button
-                                aria-label="academic task1 button"
-                                onClick={() => SelectType('academic_task_1')}
-                                className={topicsType === 'academic_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
-                                Ac Task 1</button>
+                                        <button
+                                            aria-label="general task1 button"
+                                            onClick={() => SelectType('general_task_1')}
+                                            className={topicsType === 'general_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
+                                            Gen Task 1</button>
 
-                            <button
-                                aria-label="task2 button"
-                                onClick={() => SelectType('general_task_2')}
-                                className={topicsType === 'general_task_2' ? styles.activeTaskTabButton : styles.taskTabButton} >
-                                Task 2</button>
+                                        <button
+                                            aria-label="academic task1 button"
+                                            onClick={() => SelectType('academic_task_1')}
+                                            className={topicsType === 'academic_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
+                                            Ac Task 1</button>
 
-                        </div>
-                    </div>
-                    <div className={'col-12 ' + styles.drawerContent}>
-                        <UserTopicsList topics={topics} SelectTopic={SelectTopic} GetTopicsList={GetTopicsList} MoreTopics={MoreTopics} />
-                    </div>
-                    <div className={'col-12 ' + styles.drawerFooterContainer}>
-                        <button
-                            aria-label="menu button"
-                            onClick={handlePopOverOpen}
-                            className={styles.menuButton}>
-                            <TfiMenu className={styles.menuIcon} />
-                            <FiMoreVertical className={styles.moreIcon} />
-                        </button>
-                        <div className={styles.drawerFooterText}>
-                            Welcome  user name
-                        </div>
-                    </div>
-                </div>
-                {/* //--------------------------------------------------------------drawer content */}
+                                        <button
+                                            aria-label="task2 button"
+                                            onClick={() => SelectType('general_task_2')}
+                                            className={topicsType === 'general_task_2' ? styles.activeTaskTabButton : styles.taskTabButton} >
+                                            Task 2</button>
 
-            </Drawer>
-
-            <Main open={open} style={{ padding: 0 }} >
-                {/* //-------------------------------------------------------------dashboard content */}
-                <div className={styles.dashboardContentContainer}>
-                    {!open &&
-                        <>
-                            <div className={styles.leftTabBar}>
+                                    </div>
+                                </div>
+                                <div className={'col-12 ' + styles.drawerContent}>
+                                    <UserTopicsList topics={topics} SelectTopic={SelectTopic} GetTopicsList={GetTopicsList} MoreTopics={MoreTopics} />
+                                </div>
+                                <div className={'col-12 ' + styles.drawerFooterContainer}>
+                                    <button
+                                        aria-label="menu button"
+                                        onClick={handlePopOverOpen}
+                                        className={styles.menuButton}>
+                                        <TfiMenu className={styles.menuIcon} />
+                                        <FiMoreVertical className={styles.moreIcon} />
+                                    </button>
+                                    <div className={styles.drawerFooterText}>
+                                        Welcome  user name
+                                    </div>
+                                </div>
+                            </motion.div>
+                            :
+                            <motion.div
+                                variants={showAnimation}
+                                initial='hidden'
+                                animate='show'
+                                exit='hidden'
+                                className={styles.leftTabBar}>
                                 <Image
                                     className={styles.briefLogo}
                                     src="/dashboard/W W AI.svg"
@@ -360,7 +380,7 @@ const Dashboard: React.FC = () => {
                                 <div className={styles.openDrawerButtonCard}>
                                     <button
                                         aria-label="open drawer button"
-                                        onClick={handleDrawerOpen}
+                                        onClick={() => setIsOpen(true)}
                                         className={styles.openDrawerButton}>
                                         <div><IoIosArrowForward className={styles.arrowIcon} /></div>
                                     </button>
@@ -374,37 +394,50 @@ const Dashboard: React.FC = () => {
                                         <TfiMenu className={styles.menuIcon} />
                                     </button>
                                 </div>
-                            </div>
-                            <div className={styles.topResponsiveTabBar}>
-
-                                <button
-                                    aria-label="menu button"
-                                    onClick={handleDrawerOpen}
-                                    className={styles.responsiveMenuButton}>
-                                    <TfiMenu className={styles.responsiveMenuIcon} />
-                                </button>
-
-                                <Image
-                                    className={styles.responsiveLogo}
-                                    src="/logo3.svg"
-                                    alt="Logo"
-                                    loading="eager"
-                                    width={175}
-                                    height={17}
-                                    priority
-                                />
-
-                                <button
-                                    aria-label="new essay button"
-                                    onClick={async () => NewEssay()}
-                                    className={styles.responsivePlusButton}>
-                                    <AiOutlinePlus className={styles.responsivePlusIcon} />
-                                </button>
-
-                            </div>
-                        </>
+                            </motion.div>
                     }
 
+                    {/* //--------------------------------------------------------------drawer content */}
+                </AnimatePresence>
+            </motion.div >
+            <section id='top' />
+
+            <main style={{ flex: 1, height: '100vh' }}
+                className={isOpen && isMobile ? styles.mask : ''}
+            >
+                {/* //-------------------------------------------------------------dashboard content */}
+                {
+                    isMobile &&
+                    <div
+                        className={styles.topResponsiveTabBar}>
+
+                        <button
+                            aria-label="menu button"
+                            onClick={() => setIsOpen(true)}
+                            className={styles.responsiveMenuButton}>
+                            <TfiMenu className={styles.responsiveMenuIcon} />
+                        </button>
+
+                        <Image
+                            className={styles.responsiveLogo}
+                            src="/logo3.svg"
+                            alt="Logo"
+                            loading="eager"
+                            width={175}
+                            height={17}
+                            priority
+                        />
+
+                        <button
+                            aria-label="new essay button"
+                            onClick={async () => NewEssay()}
+                            className={styles.responsivePlusButton}>
+                            <AiOutlinePlus className={styles.responsivePlusIcon} />
+                        </button>
+
+                    </div>
+                }
+                <div className={styles.dashboardContentContainer}>
                     <div style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
                         className={styles.dashboardContentRightContainer}>
 
@@ -429,7 +462,8 @@ const Dashboard: React.FC = () => {
 
                         </div>
 
-                        <div className={'col-12 ' + styles.essayContainer}>
+                        <div
+                            className={'col-12 ' + styles.essayContainer}>
                             {step}
                         </div>
 
@@ -438,8 +472,7 @@ const Dashboard: React.FC = () => {
                 </div>
                 {/* //-------------------------------------------------------------dashboard content */}
 
-            </Main>
-
+            </main>
             {/* -------------------------------------------------------------------popover menu card */}
             <Popover
                 id={id}
@@ -470,7 +503,7 @@ const Dashboard: React.FC = () => {
             </Popover>
             {/* -------------------------------------------------------------------popover menu card */}
 
-        </Box>
+        </div >
 };
 
 export default Dashboard;
@@ -488,13 +521,9 @@ const UserTopicsList: React.FC<{ topics: any, SelectTopic: any, GetTopicsList: a
         >
             {
                 topics.map((item: any, index: any) =>
-                    <div
-                        onClick={() => {
-                            SelectTopic({ id: item.id, body: item.topic });
-                            setTimeout(() => {
-                                window.scrollTo({ top: 0, behavior: 'smooth' });
-                            }, 1000);
-                        }}
+                    <Link
+                        href='/dashboard/#top'
+                        onClick={() => SelectTopic({ id: item.id, body: item.topic })}
                         className={'col-12 ' + styles.taskCard} key={index}>
                         <div className={styles.taskCardTitle}>
                             {item.shortName}
@@ -503,7 +532,7 @@ const UserTopicsList: React.FC<{ topics: any, SelectTopic: any, GetTopicsList: a
                         <div className={styles.taskCardScore}>
                             {item.overallBandScore}
                         </div>
-                    </div>)
+                    </Link>)
             }
         </InfiniteScroll>
     </div>
