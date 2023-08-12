@@ -193,7 +193,6 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                         <Loading style={{ height: 750, minHeight: 0 }} />
                         :
                         <div className={styles.writingForm}>
-
                             <SelectComponents values={[
                                 { title: 'Essay', active: false, lock: false },
                                 { title: 'Score', active: false, lock: false },
@@ -392,7 +391,7 @@ const WritingDataCard: React.FC<{ essay: any, setFieldValue?: any }> = ({ essay,
                             onClick={() => {
                                 setFieldValue('body', essay.essay);
                                 handleScroll;
-                                window.scrollTo(0,0)
+                                window.scrollTo(0, 0)
                             }}
                             type="button"
                             aria-label="edit button"
