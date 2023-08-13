@@ -10,6 +10,9 @@ import styles from './landingSection4.module.css';
 //------------------------------------------------icons
 import { VscCircleFilled } from 'react-icons/vsc';
 
+//---------------------------------------------------components
+import { StartLoader } from "@/components/Untitled";
+
 const Section4: React.FC = () => {
     const router = useRouter();
 
@@ -36,7 +39,10 @@ const Section4: React.FC = () => {
                         </div>
                         <button
                             aria-label="sign up button"
-                            onClick={() => router.push('/signIn')}
+                            onClick={() => {
+                                router.push('/signIn');
+                                StartLoader();
+                            }}
                             className={styles.signUpButton}>
                             Signup now
                         </button>
@@ -70,7 +76,10 @@ const Section4: React.FC = () => {
                     </div>
                     <button
                         aria-label="sign up button"
-                        onClick={() => router.push('/signIn')}
+                        onClick={() => {
+                            router.push('/signIn');
+                            StartLoader();
+                        }}
                         className={styles.signUpButton}>
                         Signup now
                     </button>

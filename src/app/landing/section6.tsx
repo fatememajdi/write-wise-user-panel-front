@@ -8,6 +8,7 @@ import styles from './landingSection6.module.css';
 
 //-------------------------------------------components
 import Section6Background from "@/components/backgrounds/section6Background/section6Background";
+import { StartLoader } from "@/components/Untitled";
 
 const Section6: React.FC = () => {
     const router = useRouter();
@@ -27,7 +28,10 @@ const Section6: React.FC = () => {
             </div>
             <button
                 aria-label="sign up button"
-                onClick={() => router.push('/signIn')}
+                onClick={() => {
+                    router.push('/signIn');
+                    StartLoader();
+                }}
                 className={styles.section6Button}>Signup now!</button>
 
         </div>

@@ -8,6 +8,7 @@ import styles from './landingSection3.module.css';
 
 //-------------------------------------------components
 import { FeaturesBackground } from "@/components/backgrounds/featuresBackground/featuresBackground";
+import { StartLoader } from "@/components/Untitled";
 
 //-------------------------------------------icons
 import { File, Rate, Rise, User } from "../../../public";
@@ -41,7 +42,10 @@ const Section3: React.FC = () => {
             </div>
             <button
                 aria-label="read more button"
-                onClick={() => router.push('/features')}
+                onClick={() => {
+                    router.push('/features');
+                    StartLoader();
+                }}
                 className={styles.featuresButton}>
                 Read more
             </button>

@@ -22,6 +22,7 @@ import ProfileCardBackground from "@/components/backgrounds/profileCardBackgroun
 import Input from "@/components/input/input";
 import { GET_PROFILE, UPDATE_USER, UPLOAD_PROFILE_FILE } from "@/config/graphql";
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
+import { StopLoader } from "@/components/Untitled";
 
 //-------------------------------------types
 import { UserProfile } from "../../../types/profile";
@@ -87,6 +88,7 @@ const Profile: React.FC = () => {
     }
 
     React.useEffect(() => {
+        StopLoader();
         GetProfile();
     }, []);
 

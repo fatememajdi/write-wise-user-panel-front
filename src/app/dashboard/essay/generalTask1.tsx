@@ -26,7 +26,6 @@ import { Lock } from '../../../../public/dashboard';
 
 //--------------------------------------types
 import { Essay } from '../../../../types/essay';
-import Link from "next/link";
 
 interface topic {
     id: string,
@@ -43,7 +42,8 @@ interface writingProps {
     MoreEssaies: boolean,
     changeMoreEssaies: any,
     setEssaies: any,
-    handleNewTopic: any
+    handleNewTopic: any,
+    divRef?: any
 }
 
 //---------------------------------------------------------------validation
@@ -55,7 +55,7 @@ const WritingValidationSchema = Yup.object().shape({
 });
 
 const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic,
-    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic }) => {
+    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [loading, changeLoading] = React.useState<boolean>(false);
@@ -78,8 +78,9 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any) {
         changeGenerateWritingTopicLoading(true);
+
         await client.query({
-            query: GET_RANDOM_GENERAL_TASK1_WRITING,
+            query: GET_RANDOM_GENERAL_TASK1_WRITING
         }).then(async (res) => {
             await changeGeneratedTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body });
             setFieldValue('topic', res.data.getRandomWriting.body);
@@ -174,15 +175,17 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
         }}
         // validationSchema={WritingValidationSchema}
         enableReinitialize
-        onSubmit={async (values) => {
+        onSubmit={async (values, { resetForm }) => {
             await AddNewEssay(values.topic, values.body);
+            resetForm();
         }}>{({
             values,
             errors,
             touched,
             handleSubmit,
             setFieldValue,
-            handleChange
+            handleChange,
+            resetForm
         }) => (
             <form
                 className={'col-12 ' + styles.writingContainer}
@@ -201,7 +204,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                                 { title: 'WWAI Tutor', active: false, lock: true }
                             ]} selectedItem={0} className={styles.topSelect} />
 
-                            <section id="top-of-form" className={styles.wriritngTitle}>Gen Task 1</section>
+                            <div className={styles.wriritngTitle}>Gen Task 1</div>
 
                             <div className={styles.writingSecondTitle}>
                                 You should spend about 20 minutes on this task
@@ -295,7 +298,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     key={0}
                 >
                     {
-                        essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} setFieldValue={setFieldValue} />)
+                        essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} setFieldValue={setFieldValue} divRef={divRef} />)
                     }
                 </InfiniteScroll>
 
@@ -334,17 +337,8 @@ const tabBarItems = [
     },
 ]
 
-const WritingDataCard: React.FC<{ essay: any, setFieldValue?: any }> = ({ essay, setFieldValue }) => {
+const WritingDataCard: React.FC<{ essay: any, setFieldValue?: any, divRef?: any }> = ({ essay, setFieldValue, divRef }) => {
     const [writingCardStep, changeWritingCardStep] = React.useState<number>(1);
-
-    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        e.preventDefault();
-        const targetId = e.currentTarget.href.replace(/.*\#/, "");
-        const elem = document.getElementById(targetId);
-        elem?.scrollIntoView({
-            behavior: "smooth",
-        });
-    };
 
     return <div className={styles.writingDataCard}>
         <div className={styles.writingDataTabBarCard}>
@@ -386,18 +380,17 @@ const WritingDataCard: React.FC<{ essay: any, setFieldValue?: any }> = ({ essay,
                         <div className={styles.writingEssayText}>
                             <Text text={essay.essay} />
                         </div>
-                        <Link
-                            href={'/dashboard/#top'}
+                        <button
                             onClick={() => {
                                 setFieldValue('body', essay.essay);
-                                handleScroll;
-                                window.scrollTo(0, 0)
+                                if (divRef)
+                                    divRef.scrollTop = divRef.offsetTop;
                             }}
                             type="button"
                             aria-label="edit button"
                             className={styles.editWritingButton}>
                             <div className={styles.responsiveEditWritingButton}> <MdEdit className={styles.editWritingButtonIcon} /></div>
-                        </Link>
+                        </button>
                     </div>
                     : writingCardStep === 1 ?
                         <div

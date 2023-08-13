@@ -10,6 +10,7 @@ import { VscCircleFilled } from 'react-icons/vsc';
 
 //------------------------------------------------componnets
 import LandingBackground from "@/components/backgrounds/landingBackground/landingBackground";
+import { StartLoader } from "@/components/Untitled";
 
 const Section1: React.FC = () => {
     const router = useRouter();
@@ -44,7 +45,10 @@ const Section1: React.FC = () => {
 
                 <button
                     aria-label="write like a pro button"
-                    onClick={() => router.push('/signIn')}
+                    onClick={() => {
+                        router.push('/signIn');
+                        StartLoader();
+                    }}
                     className={styles.rightContainerButton}>
                     I Want to Write Like a Pro!
                 </button>

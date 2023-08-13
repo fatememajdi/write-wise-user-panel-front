@@ -12,6 +12,7 @@ const FeaturesDetailsBackground = React.lazy(
     () => import("@/components/backgrounds/featuresBackground/featuresBackground").then(module => ({ default: module.FeaturesDetailsBackground }))
 );
 const Footer = lazy(() => import("@/components/footer/footer"));
+import { StartLoader, StopLoader } from "@/components/Untitled";
 
 //------------------------------------------------icons
 import { User, File, Step, Money, RegularRise } from '../../../public';
@@ -43,6 +44,7 @@ const Features: React.FC = () => {
     const router = useRouter();
 
     React.useEffect(() => {
+        StopLoader();
         router.refresh();
     }, []);
 
@@ -61,7 +63,10 @@ const Features: React.FC = () => {
                 Sign up today and start your journey to IELTS writing mastery
             </div>
             <button
-                onClick={() => router.push('/signIn')}
+                onClick={() => {
+                    router.push('/signIn');
+                    StartLoader();
+                }}
                 className={styles.signUpButton}>
                 Sign up
             </button>

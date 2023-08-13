@@ -12,7 +12,7 @@
     height: 100vh;
 }
 
-.dashboardRightCard {}
+/* .dashboardRightCard {} */
 
 .logo {
     margin: 32px auto;
@@ -47,6 +47,9 @@
     margin: 0px 8px 0px 13px;
     flex: 1;
     height: 52px !important;
+    border-radius: 8px !important;
+    padding: 16px 28px;
+    display: flex;
 }
 
 .arrowLeftButton {
@@ -455,8 +458,8 @@
 
 .mask {
     object-fit: cover;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 5%, black 100%);
-    mask-image: linear-gradient(to top, transparent 5%, black 100%);
+    -webkit-mask-image: linear-gradient(to top, transparent 5%, black 100%);
+    mask-image: linear-gradient(to bottom, transparent 5%, black 100%);
 }
 
 @media(max-width: 1500px) {

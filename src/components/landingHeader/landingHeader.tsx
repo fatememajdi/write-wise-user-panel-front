@@ -11,6 +11,7 @@ import styles from './landingHeader.module.css';
 
 //-------------------------------------------components
 import Input from "../input/input";
+import { StartLoader } from "../Untitled";
 
 //-------------------------------------------icons
 import { Chat2, Search } from "../../../public";
@@ -111,9 +112,15 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
                     }
                     {
                         logedIn ?
-                            <div onClick={() => router.push('/dashboard')} className={styles.headerItem}>Dashboard</div>
+                            <div onClick={() => {
+                                router.push('/dashboard');
+                                StartLoader();
+                            }} className={styles.headerItem}>Dashboard</div>
                             :
-                            <div onClick={() => router.push('/signIn')} className={styles.headerItem}>Signup</div>
+                            <div onClick={() => {
+                                router.push('/signIn');
+                                StartLoader();
+                            }} className={styles.headerItem}>Signup</div>
                     }
 
                 </div>

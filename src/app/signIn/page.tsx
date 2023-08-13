@@ -23,9 +23,14 @@ const Pagination = React.lazy(
 );
 import { EMAIL_SIGN_IN } from '../../config/graphql';
 import Loading from "@/components/loading/loading";
+import { StopLoader } from "@/components/Untitled";
 
 const SignIn: React.FC = () => {
     const [loginStep, changeLoginStep] = React.useState<number>(0);
+
+    React.useEffect(() => {
+        StopLoader();
+    }, []);
 
     return (
         <div className={'col-12 ' + styles.signInPageContainer}>

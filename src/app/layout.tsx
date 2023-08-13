@@ -25,6 +25,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '../styles/global.css';
 import 'antd/dist/reset.css';
+import '../styles/nprogress.css'
 
 
 // export const metadata = {
@@ -64,7 +65,7 @@ export default function RootLayout({
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <body className={lato.className}>
               {/* <Suspense fallback={<Loading />}> */}
-                {children}
+              {children}
               {/* </Suspense> */}
             </body>
           </LocalizationProvider>

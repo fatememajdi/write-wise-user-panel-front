@@ -24,6 +24,7 @@ const ChooseType = lazy(() => import("./essay/chooseType"));
 const GeneralTask1 = lazy(() => import("./essay/generalTask1"));
 const AcademicTask1 = lazy(() => import("./essay/academicTaks1"));
 const Task2 = lazy(() => import("./essay/task2"));
+import { StartLoader, StopLoader } from "@/components/Untitled";
 
 //-----------------------------------------icons
 import { User, Wallet, Support, Lock } from '../../../public/dashboard';
@@ -35,7 +36,6 @@ import { FiMoreVertical } from 'react-icons/fi';
 //----------------------------------------types
 import { Essay } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
-import Link from "next/link";
 
 
 const menuItems = [
@@ -85,6 +85,9 @@ interface topic {
 }
 
 const Dashboard: React.FC = () => {
+    let divRef: any;
+    if (typeof document !== 'undefined')
+        divRef = document.getElementById('scrollableDiv');
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const [endAnimation, changeEndAnimation] = React.useState<boolean>(false);
     const [tabBarLoc, changeTabBarLoc] = React.useState<boolean>(false);
@@ -108,7 +111,7 @@ const Dashboard: React.FC = () => {
     const { step, goTo } = useMultiStepForm([<ChooseType changeType={ChangeType} />,
     <GeneralTask1
         setEssaies={setEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} handleNewTopic={handleNewTopic}
-        essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc}
+        essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef}
         changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />,
     <AcademicTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />,
     <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
@@ -131,6 +134,8 @@ const Dashboard: React.FC = () => {
         setEssaies([]);
         changeMoreEssaies(true);
         changeTopic(topic);
+        if (divRef)
+            divRef.scrollTop = divRef.offsetTop;
         if (topicsType === 'general_task_1')
             goTo(1);
         else if (topicsType === 'academic_task_1')
@@ -174,7 +179,6 @@ const Dashboard: React.FC = () => {
         }).then(async (res) => {
             if (res.data.getUserTopics.userTopics.length != 0) {
                 await changeTopics([...topics, ...res.data.getUserTopics.userTopics])
-                // changePage(page + 1);
             } else {
                 changeMoreTopics(false);
             }
@@ -222,6 +226,7 @@ const Dashboard: React.FC = () => {
 
 
     React.useEffect(() => {
+        StopLoader();
         if (localStorage.getItem('user'))
             GetTopicsList();
     }, []);
@@ -260,7 +265,7 @@ const Dashboard: React.FC = () => {
             width: 0,
             opacity: 0,
             transition: {
-                duration: 0.5,
+                duration: 0.2,
             }
         },
         show: {
@@ -312,10 +317,15 @@ const Dashboard: React.FC = () => {
                                 />
                                 <div className={'col-12 ' + styles.tabsContainer}>
                                     <div className={'col-12 ' + styles.newEssayContainer}>
-                                        <button
+                                        <motion.div
+                                            variants={showEssayButtonAnimation}
+                                            initial='hidden'
+                                            animate='show'
+                                            exit='hidden'
                                             aria-label="new essay button"
                                             onClick={async () => NewEssay()}
-                                            className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} /></button>
+                                            className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} />
+                                        </motion.div>
                                         <button
                                             aria-label="close drawer button"
                                             onClick={() => setIsOpen(false)}
@@ -400,7 +410,6 @@ const Dashboard: React.FC = () => {
                     {/* //--------------------------------------------------------------drawer content */}
                 </AnimatePresence>
             </motion.div >
-            <section id='top' />
 
             <main style={{ flex: 1, height: '100vh' }}
                 className={isOpen && isMobile ? styles.mask : ''}
@@ -438,7 +447,10 @@ const Dashboard: React.FC = () => {
                     </div>
                 }
                 <div className={styles.dashboardContentContainer}>
-                    <div style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
+                    <div
+                        // ref={divRef}
+                        id="scrollableDiv"
+                        style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
                         className={styles.dashboardContentRightContainer}>
 
                         <div
@@ -492,7 +504,10 @@ const Dashboard: React.FC = () => {
                     {
                         menuItems.map((item, index) =>
                             <a
-                                onClick={() => router.push(item.route)}
+                                onClick={() => {
+                                    router.push(item.route);
+                                    StartLoader();
+                                }}
                                 key={index} className={styles.menuItemCard}>
                                 <item.icon />
                                 <span> {item.title}</span>
@@ -521,18 +536,19 @@ const UserTopicsList: React.FC<{ topics: any, SelectTopic: any, GetTopicsList: a
         >
             {
                 topics.map((item: any, index: any) =>
-                    <Link
-                        href='/dashboard/#top'
+                    <div
                         onClick={() => SelectTopic({ id: item.id, body: item.topic })}
                         className={'col-12 ' + styles.taskCard} key={index}>
                         <div className={styles.taskCardTitle}>
                             {item.shortName}
-                            <span>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}</span>
+                            <span>
+                                {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}
+                            </span>
                         </div>
                         <div className={styles.taskCardScore}>
                             {item.overallBandScore}
                         </div>
-                    </Link>)
+                    </div>)
             }
         </InfiniteScroll>
     </div>

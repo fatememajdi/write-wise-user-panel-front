@@ -7,6 +7,7 @@ import styles from './landingSection5.module.css';
 
 //------------------------------------------components
 import { FqaBackground } from "@/components/backgrounds/fqaBackground/fqaBackground";
+import { StartLoader } from "@/components/Untitled";
 
 //------------------------------------------icons
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
@@ -57,7 +58,10 @@ const Section5: React.FC = () => {
             }
             <button
                 aria-label="fqa page button"
-                onClick={() => router.push('/fqa')}
+                onClick={() => {
+                    router.push('/fqa');
+                    StartLoader();
+                }}
                 className={styles.fqaButton}>
                 FQA page
             </button>
