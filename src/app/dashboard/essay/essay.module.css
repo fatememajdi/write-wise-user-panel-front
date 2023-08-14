@@ -412,6 +412,13 @@
     border-radius: 33px;
 }
 
+.essayButtonContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    margin-left: auto;
+}
+
 .editWritingButton {
     display: flex;
     align-items: center;
@@ -419,9 +426,19 @@
     height: 58px;
     width: 58px;
     border-radius: 100% !important;
-    margin-left: auto;
-    margin-top: auto;
     background-color: #F3F3F3;
+}
+
+.deleteWritingButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 58px;
+    width: 58px;
+    border-radius: 100% !important;
+    background-color: #F3F3F3;
+    margin-right: 10px;
+
 }
 
 .topSelect {
@@ -431,6 +448,10 @@
 
 .editWritingButtonIcon {
     font-size: 40px;
+}
+
+.deleteWritingButtonIcon {
+    font-size: 30px;
 }
 
 .writingCardSelect {
@@ -706,7 +727,7 @@
         line-height: normal;
     }
 
-    .editWritingButton {
+    .essayButtonContainer {
         width: 100%;
         border-top: solid 1px var(--color-seccondary);
         position: absolute;
@@ -720,12 +741,28 @@
         border-radius: 0% !important;
     }
 
+    .editWritingButton {
+        padding: 0px !important;
+        height: 40px;
+        width: 40px;
+    }
+
+    .deleteWritingButton {
+        padding: 0px !important;
+        height: 40px;
+        width: 40px;
+    }
+
     .editWritingButtonIcon {
         font-size: 25px;
     }
 
+    .deleteWritingButtonIcon {
+        font-size: 25px;
+    }
+
+
     .responsiveEditWritingButton {
-        background-color: #F3F3F3;
         height: 30px;
         width: 30px;
         border-radius: 100%;

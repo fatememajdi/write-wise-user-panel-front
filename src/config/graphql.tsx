@@ -52,6 +52,7 @@ export const GET_USER_ESSAY = gql`
 query GetUserEssay($id:String!, $page:Float!, $pageSize:Float!){
   getUserEssay(getEssayInput:{id:$id },pagination:{pageSize:$pageSize,page:$page}){
     essaies{
+      id,
       essay,
       date,
       taskAchievementScore,
@@ -98,6 +99,7 @@ mutation SelectTopic($type:String! , $body:String, $id:String){
 export const ADD_ESSAY = gql`
 mutation AddEssay($id:String! , $body: String!){
   addEssay(addEssay:{id:$id ,body:$body}){
+    id,
     taskAchievementScore,
     taskAchievementSummery,
     coherenceAndCohesionScore,
@@ -141,6 +143,24 @@ mutation UploadProfile($file:File!){
   uploadProfileFile(file:$file){
     url,
     fileSize
+  }
+}
+`;
+
+
+export const DELETE_TOPIC = gql`
+mutation DeleteTopic($id:String!){
+  deleteTopic(deleteTopic:{id:$id}){
+    isDelete
+  }
+}
+`;
+
+
+export const DELETE_ESSAY = gql`
+mutation DeleteEssay($id:String!){
+  deleteEssay(deleteEssay:{id:$id}){
+    id
   }
 }
 `;

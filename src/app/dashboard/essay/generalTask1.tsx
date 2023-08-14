@@ -12,17 +12,19 @@ import InfiniteScroll from 'react-infinite-scroller';
 import styles from './essay.module.css';
 
 //--------------------------------------components
-import { ADD_ESSAY, GET_RANDOM_GENERAL_TASK1_WRITING, SELECT_TOPIC } from "@/config/graphql";
+import { ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_GENERAL_TASK1_WRITING, SELECT_TOPIC } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 const Slider = dynamic(() => import("@/components/slider/slider"));
 const Input = lazy(() => import('@/components/input/input'));
 const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
-import Text from "@/components/text/text";
+const Text = lazy(() => import("@/components/text/text"));
+const DialogComponent = lazy(() => import("@/components/dialog/dialog"));
 
 //--------------------------------------icons
 import { Reload } from "../../../../public";
 import { MdEdit } from 'react-icons/md';
 import { Lock } from '../../../../public/dashboard';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 //--------------------------------------types
 import { Essay } from '../../../../types/essay';
@@ -59,6 +61,9 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
 
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [loading, changeLoading] = React.useState<boolean>(false);
+    const [open, setOpen] = React.useState<boolean>(false);
+    const [selectedId, changeSelectedId] = React.useState<string>('');
+    const [deleteLoading, changeDeleteLoading] = React.useState<boolean>(false);
     const [firstEssayLoading, changeFirstEssayLoading] = React.useState<boolean>(false);
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
@@ -114,7 +119,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
         return id;
     }
 
-    //-------------------------------------------------------------------ass new essay
+    //-------------------------------------------------------------------add new essay
     async function AddNewEssay(topic: string, body: string) {
         changeLoading(true);
         let id: any;
@@ -139,6 +144,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                 }
             }).then(async (res) => {
                 setEssaies([{
+                    id: res.data.addEssay.id,
                     essay: res.data.addEssay.essay,
                     date: res.data.addEssay.date,
                     taskAchievementScore: res.data.addEssay.taskAchievementScore,
@@ -158,6 +164,35 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
             })
         };
     }
+
+    //-------------------------------------------------------------------delete essay
+    async function DeleteEssay() {
+        setOpen(false);
+        changeDeleteLoading(true);
+        await client.mutate({
+            mutation: DELETE_ESSAY,
+            variables: {
+                id: selectedId
+            }
+        }).then(async (res) => {
+            changeDeleteLoading(false);
+            setEssaies(essaies.filter(item => item.id !== selectedId));
+        }).catch((err) => {
+            console.log("delete essay error : ", err);
+            changeDeleteLoading(false);
+        });
+    }
+
+    //-------------------------------------------------------------------dialog
+    function handleClose() {
+        setOpen(false);
+    };
+
+    async function handleDelete(id: string) {
+        console.log(id);
+        setOpen(true);
+        changeSelectedId(id);
+    };
 
     React.useEffect(() => {
         if (topic) {
@@ -289,19 +324,23 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     <WritingDataCard essay={'loading'} />
                 }
 
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={() => GetUserEssaies(currentId)}
-                    hasMore={MoreEssaies}
-                    loader={<Loading style={{ height: 50, minHeight: 0 }} />}
-                    useWindow={false}
-                    key={0}
-                >
-                    {
-                        essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} setFieldValue={setFieldValue} divRef={divRef} />)
-                    }
-                </InfiniteScroll>
-
+                {
+                    deleteLoading ?
+                        <Loading style={{ height: 50, minHeight: 0 }} />
+                        :
+                        <InfiniteScroll
+                            pageStart={0}
+                            loadMore={() => GetUserEssaies(currentId)}
+                            hasMore={MoreEssaies}
+                            loader={<Loading style={{ height: 50, minHeight: 0 }} />}
+                            useWindow={false}
+                            key={0}
+                        >
+                            {
+                                essaies.map((essay, index) => <WritingDataCard key={index} essay={essay} setFieldValue={setFieldValue} divRef={divRef} handleDelete={handleDelete} />)
+                            }
+                        </InfiniteScroll>
+                }
 
                 <Modal
                     footer={null}
@@ -309,6 +348,7 @@ const GeneralTask1: React.FC<writingProps> = ({ changeTabBarLoc, changeEndAnimat
                     <div className={styles.modalCard}> {modalContent}</div>
                 </Modal>
 
+                <DialogComponent open={open} handleClose={handleClose} handleDelete={DeleteEssay} title="Delete Essay" dialog="Permanently delete the essay?" />
             </form>
         )}
     </Formik >;
@@ -335,9 +375,16 @@ const tabBarItems = [
         title: 'WWAI Tutor',
         active: false
     },
-]
+];
 
-const WritingDataCard: React.FC<{ essay: any, setFieldValue?: any, divRef?: any }> = ({ essay, setFieldValue, divRef }) => {
+interface _props {
+    essay: any,
+    setFieldValue?: any,
+    divRef?: any,
+    handleDelete?: any
+}
+
+const WritingDataCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete }) => {
     const [writingCardStep, changeWritingCardStep] = React.useState<number>(1);
 
     return <div className={styles.writingDataCard}>
@@ -380,17 +427,27 @@ const WritingDataCard: React.FC<{ essay: any, setFieldValue?: any, divRef?: any 
                         <div className={styles.writingEssayText}>
                             <Text text={essay.essay} />
                         </div>
-                        <button
-                            onClick={() => {
-                                setFieldValue('body', essay.essay);
-                                if (divRef)
-                                    divRef.scrollTop = divRef.offsetTop;
-                            }}
-                            type="button"
-                            aria-label="edit button"
-                            className={styles.editWritingButton}>
-                            <div className={styles.responsiveEditWritingButton}> <MdEdit className={styles.editWritingButtonIcon} /></div>
-                        </button>
+                        <div className={styles.essayButtonContainer}>
+                            <button
+                                onClick={() => handleDelete(essay.id)}
+                                type="button"
+                                aria-label="delete button"
+                                className={styles.deleteWritingButton}>
+                                <div className={styles.responsiveEditWritingButton}> <AiOutlineDelete className={styles.deleteWritingButtonIcon} /></div>
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setFieldValue('body', essay.essay);
+                                    if (divRef)
+                                        divRef.scrollTop = divRef.offsetTop;
+                                }}
+                                type="button"
+                                aria-label="edit button"
+                                className={styles.editWritingButton}>
+                                <div className={styles.responsiveEditWritingButton}> <MdEdit className={styles.editWritingButtonIcon} /></div>
+                            </button>
+
+                        </div>
                     </div>
                     : writingCardStep === 1 ?
                         <div
