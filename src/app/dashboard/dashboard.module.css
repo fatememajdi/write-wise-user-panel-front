@@ -195,75 +195,6 @@
     margin-left: 18px;
 }
 
-.tasksContainer {
-    height: 98% !important;
-    overflow-y: auto;
-    overflow-x: hidden;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-.tasksContainer::-webkit-scrollbar {
-    /* display: none; */
-    width: 8px;
-    background-color: #626E7E;
-    border-radius: 33px;
-}
-
-.tasksContainer::-webkit-scrollbar-thumb {
-    width: 13px;
-    background-color: #F3F3F3;
-    border-radius: 8px;
-}
-
-.taskCard {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: solid 1px #626E7E;
-    padding: 28px 31px 22px 20px;
-    cursor: pointer;
-}
-
-.taskCardTitle {
-    color: #FFF;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 300;
-    max-width: 70%;
-    display: flex;
-    flex-direction: column;
-    /* line-height: 16px; */
-}
-
-.taskCardTitle span {
-    color: #FFF;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 300;
-    margin-top: 20px;
-    line-height: 12px;
-}
-
-.taskCardScore {
-    color: #FFF;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 12px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.deleteIcon{
-    margin-left: 10px;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-
 .dashboardContentContainer {
     display: flex;
     flex: 1;
@@ -599,35 +530,6 @@
         padding: 10px 0px 10px 0px;
     }
 
-    .taskCard {
-        border-bottom: none;
-        background-color: #626E7E;
-        margin-bottom: 13px;
-        border-radius: 8px;
-        padding: 15px 28px 15px 10px;
-    }
-
-    .tasksContainer {
-        padding: 0px 10px;
-    }
-
-    .taskCardTitle {
-        font-size: 16px;
-        font-weight: 500;
-    }
-
-    .taskCardTitle span {
-        font-size: 11px;
-        font-weight: 300;
-    }
-
-    .taskCardScore {
-        font-size: 20px;
-    }
-
-    .deleteIcon{
-        font-size: 24px;
-    }
 
     .drawerFooterContainer {
         height: 42px;

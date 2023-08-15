@@ -454,6 +454,10 @@
     font-size: 30px;
 }
 
+.deleteWritingButtonIcon:hover {
+    font-size: 32px !important;
+}
+
 .writingCardSelect {
     display: none;
 }

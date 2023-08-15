@@ -9,7 +9,6 @@ import Popover from '@mui/material/Popover';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import client from '@/config/applloAuthorizedClient';
-import InfiniteScroll from 'react-infinite-scroller';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMediaQuery } from 'react-responsive';
 
@@ -24,16 +23,15 @@ const ChooseType = lazy(() => import("./essay/chooseType"));
 const GeneralTask1 = lazy(() => import("./essay/generalTask1"));
 const AcademicTask1 = lazy(() => import("./essay/academicTaks1"));
 const Task2 = lazy(() => import("./essay/task2"));
-const DialogComponent = lazy(() => import("@/components/dialog/dialog"));
+const TopicsList = lazy(() => import("@/components/topicsList/topicsList"));
 import { StartLoader, StopLoader } from "@/components/Untitled";
 
 //-----------------------------------------icons
 import { User, Wallet, Support, Lock } from '../../../public/dashboard';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { AiOutlinePlus, AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { TfiMenu } from 'react-icons/tfi';
 import { FiMoreVertical } from 'react-icons/fi';
-import { Empty } from 'antd';
 
 //----------------------------------------types
 import { Essay } from "../../../types/essay";
@@ -131,32 +129,44 @@ const Dashboard: React.FC = () => {
     });
 
 
+    
     async function SelectTopic(topic?: topic) {
-        if (topic) {
-            changeTabBarLoc(true);
-            changeEndAnimation(true);
-            setEssaies([]);
-            changeMoreEssaies(true);
-            changeTopic(topic);
-            if (divRef)
-                divRef.scrollTop = divRef.offsetTop;
-            if (topicsType === 'general_task_1')
-                goTo(1);
-            else if (topicsType === 'academic_task_1')
-                goTo(2)
-            else
-                goTo(3)
-            if (isMobile)
-                setIsOpen(false);
-        } else {
+        changeTabBarLoc(true);
+        changeEndAnimation(true);
+        setEssaies([]);
+        changeMoreEssaies(true);
+        changeTopic(topic);
+        if (divRef)
+            divRef.scrollTop = divRef.offsetTop;
+        if (topicsType === 'general_task_1')
+            goTo(1);
+        else if (topicsType === 'academic_task_1')
+            goTo(2)
+        else
+            goTo(3)
+        if (isMobile)
+            setIsOpen(false);
+    }
+
+    async function DeleteTopic(id: string) {
+        await client.mutate({
+            mutation: DELETE_TOPIC,
+            variables: {
+                id: id
+            }
+        }).then(async (res) => {
+            changeTopics(topics.filter(item => item.id !== id));
             changeTabBarLoc(false);
             changeEndAnimation(false);
             setEssaies([]);
             changeMoreEssaies(true);
             changeTopic(null);
             goTo(0);
-        }
+        }).catch((err) => {
+            console.log("delete topic error : ", err);
+        });
     }
+
 
     //----------------------------------------------------------------get user essaies
     async function GetUserEssaies(id: string) {
@@ -381,9 +391,9 @@ const Dashboard: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className={'col-12 ' + styles.drawerContent}>
-                                    <UserTopicsList topics={topics} SelectTopic={SelectTopic}
+                                    <TopicsList Topics={topics} HandleSelect={SelectTopic}
                                         GetTopicsList={GetTopicsList} MoreTopics={MoreTopics}
-                                        changeTopics={changeTopics}
+                                        HandleDelete={DeleteTopic}
                                     />
                                 </div>
                                 <div className={'col-12 ' + styles.drawerFooterContainer}>
@@ -551,83 +561,3 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
-
-interface _props {
-    topics: Topic[],
-    SelectTopic: any,
-    GetTopicsList: any,
-    MoreTopics: boolean,
-    changeTopics: any
-}
-
-//----------------------------------------------------------------------------------drawer data card
-const UserTopicsList: React.FC<_props> = ({ topics, SelectTopic, GetTopicsList, MoreTopics, changeTopics }) => {
-
-    const [open, setOpen] = React.useState<boolean>(false);
-    const [loading, setLoading] = React.useState<boolean>(false);
-    const [selectedId, changeSelectedId] = React.useState<string>('');
-
-    function handleClose() {
-        setOpen(false);
-    };
-
-    async function handleDelete() {
-        setOpen(false);
-        setLoading(true);
-        await client.mutate({
-            mutation: DELETE_TOPIC,
-            variables: {
-                id: selectedId
-            }
-        }).then(async (res) => {
-            changeTopics(topics.filter(item => item.id !== selectedId));
-            SelectTopic();
-            setLoading(false);
-        }).catch((err) => {
-            console.log("delete topic error : ", err);
-            setLoading(false);
-        });
-    };
-
-    return <div className={'col-12 ' + styles.tasksContainer}>
-        {
-            loading ?
-                <Loading style={{ height: '100%', minHeight: 0 }} />
-                : topics.length === 0 ?
-                    <Empty description={false} style={{ marginTop: '50%' }} />
-                    :
-                    <InfiniteScroll
-                        pageStart={0}
-                        loadMore={() => GetTopicsList()}
-                        hasMore={MoreTopics}
-                        loader={<Loading style={{ height: 50, minHeight: 0 }} />}
-                        useWindow={false}
-                        key={0}
-                    >
-                        {
-                            topics.map((item: any, index: any) =>
-                                <div
-                                    onClick={() => SelectTopic({ id: item.id, body: item.topic })}
-                                    className={'col-12 ' + styles.taskCard} key={index}>
-                                    <div className={styles.taskCardTitle}>
-                                        {item.shortName}
-                                        <span>
-                                            {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}
-                                        </span>
-                                    </div>
-                                    <div className={styles.taskCardScore}>
-                                        {item.overallBandScore}
-                                        <AiOutlineDelete className={styles.deleteIcon}
-                                            onClick={() => {
-                                                setOpen(true);
-                                                changeSelectedId(item.id);
-                                            }} />
-                                    </div>
-                                </div>)
-                        }
-                    </InfiniteScroll>
-        }
-
-        <DialogComponent open={open} handleClose={handleClose} handleDelete={handleDelete} title="Delete Topic" dialog="Permanently delete the dialog?" />
-    </div>
-};
