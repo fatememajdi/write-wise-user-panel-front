@@ -169,32 +169,6 @@
     line-height: 12px;
 }
 
-.popOverCard {
-    display: flex;
-    flex-direction: column;
-    background-color: #12263E;
-    padding-bottom: 16px;
-}
-
-.menuItemCard {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    color: #FFF;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 28px;
-    padding: 20PX 14PX;
-    min-width: 210PX;
-    text-decoration: none !important;
-    cursor: pointer;
-}
-
-.menuItemCard span {
-    margin-left: 18px;
-}
-
 .dashboardContentContainer {
     display: flex;
     flex: 1;
@@ -548,8 +522,4 @@
         display: flex;
     }
 
-    .menuItemCard {
-        font-size: 16px;
-        padding: 17PX 15PX;
-    }
 }

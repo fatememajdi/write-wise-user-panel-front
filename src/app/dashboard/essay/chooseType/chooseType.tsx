@@ -1,7 +1,7 @@
 import React from 'react';
 
 //------------------------------------------styles
-import styles from './essay.module.css';
+import styles from './chooseType.module.css';
 
 interface chooseTypeProps {
     changeType: any
@@ -31,7 +31,7 @@ const ChooseType: React.FC<chooseTypeProps> = ({ changeType }) => {
         <div className={styles.typesContainer}>
             {types.map((item, index) =>
                 <div
-                    onClick={() => changeType(index + 1)}
+                    onClick={() => changeType(item.value)}
                     className={styles.typeCard}
                     key={index}>{item.label}</div>
             )}

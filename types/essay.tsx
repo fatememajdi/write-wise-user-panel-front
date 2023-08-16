@@ -1,7 +1,7 @@
 export interface Essay {
     id?: string,
     essay?: string,
-    date?: string,
+    date?: any,
     taskAchievementScore?: number,
     taskAchievementSummery?: string,
     coherenceAndCohesionScore?: number,

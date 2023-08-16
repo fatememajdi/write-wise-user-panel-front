@@ -5,56 +5,36 @@
 import React, { lazy } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import Popover from '@mui/material/Popover';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import client from '@/config/applloAuthorizedClient';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMediaQuery } from 'react-responsive';
 
-//-----------------------------------------styles
+//-----------------------------------------------------styles
 import styles from './dashboard.module.css';
 
-//-----------------------------------------components
+//-----------------------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
 import { DELETE_TOPIC, GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS } from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
-const ChooseType = lazy(() => import("./essay/chooseType"));
-const GeneralTask1 = lazy(() => import("./essay/generalTask1"));
-const AcademicTask1 = lazy(() => import("./essay/academicTaks1"));
-const Task2 = lazy(() => import("./essay/task2"));
+const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/dashboardPopOver"));
+const ChooseType = lazy(() => import("./essay/chooseType/chooseType"));
+const Task = lazy(() => import("./essay/task/task"));
 const TopicsList = lazy(() => import("@/components/topicsList/topicsList"));
-import { StartLoader, StopLoader } from "@/components/Untitled";
+import { StopLoader } from "@/components/Untitled";
 
-//-----------------------------------------icons
-import { User, Wallet, Support, Lock } from '../../../public/dashboard';
+//----------------------------------------------------icons
+import { Lock } from '../../../public/dashboard';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { TfiMenu } from 'react-icons/tfi';
 import { FiMoreVertical } from 'react-icons/fi';
 
-//----------------------------------------types
+//---------------------------------------------------types
 import { Essay } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
 
-
-const menuItems = [
-    {
-        title: 'Profile',
-        icon: User,
-        route: '/profile'
-    },
-    {
-        title: 'Wallet',
-        icon: Wallet,
-        route: ''
-    },
-    {
-        title: 'Support',
-        icon: Support,
-        route: ''
-    }
-]
 
 const tabBarItems = [
     {
@@ -106,22 +86,22 @@ const Dashboard: React.FC = () => {
     const [MoreTopics, changeMoreTopics] = React.useState<boolean>(true);
     const [topics, changeTopics] = React.useState<Topic[]>([]);
     const [topicsType, setTopicsType] = React.useState('general_task_1');
+    const [type, setType] = React.useState('');
     const [essaies, setEssaies] = React.useState<Essay[]>([]);
     const router = useRouter();
     const [essayTopic, changeTopic] = React.useState<topic | null>();
-    const { step, goTo } = useMultiStepForm([<ChooseType changeType={ChangeType} />,
-    <GeneralTask1
-        setEssaies={setEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} handleNewTopic={handleNewTopic}
-        essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef}
-        changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />,
-    <AcademicTask1 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />,
-    <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} />
+    const { step, goTo } = useMultiStepForm([
+        <ChooseType changeType={ChangeType} />,
+        <Task
+            setEssaies={setEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} handleNewTopic={handleNewTopic}
+            essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type}
+            changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
     ])
-    const Open = Boolean(anchorEl);
-    const id = Open ? 'simple-popover' : undefined;
 
-    function ChangeType(index: number) {
-        goTo(index)
+
+    function ChangeType(type: string) {
+        setType(type);
+        goTo(1);
     }
 
     const isMobile = useMediaQuery({
@@ -129,7 +109,7 @@ const Dashboard: React.FC = () => {
     });
 
 
-    
+
     async function SelectTopic(topic?: topic) {
         changeTabBarLoc(true);
         changeEndAnimation(true);
@@ -204,7 +184,6 @@ const Dashboard: React.FC = () => {
             } else {
                 changeMoreTopics(false);
             }
-            console.log(res);
         }).catch((err) => {
             console.log("get user topics error : ", err);
         });
@@ -487,7 +466,6 @@ const Dashboard: React.FC = () => {
                 }
                 <div className={styles.dashboardContentContainer}>
                     <div
-                        // ref={divRef}
                         id="scrollableDiv"
                         style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
                         className={styles.dashboardContentRightContainer}>
@@ -524,38 +502,8 @@ const Dashboard: React.FC = () => {
                 {/* //-------------------------------------------------------------dashboard content */}
 
             </main>
-            {/* -------------------------------------------------------------------popover menu card */}
-            <Popover
-                id={id}
-                open={Open}
-                anchorEl={anchorEl}
-                onClose={handlePopOverClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                }}
-            >
-                <div className={styles.popOverCard}>
-                    {
-                        menuItems.map((item, index) =>
-                            <a
-                                onClick={() => {
-                                    router.push(item.route);
-                                    StartLoader();
-                                }}
-                                key={index} className={styles.menuItemCard}>
-                                <item.icon />
-                                <span> {item.title}</span>
-                            </a>
-                        )
-                    }
-                </div>
-            </Popover>
-            {/* -------------------------------------------------------------------popover menu card */}
+
+            <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose} />
 
         </div >
 };

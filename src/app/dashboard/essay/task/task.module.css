@@ -1,0 +1,332 @@
+.writingContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 0px 95px 100px 90px;
+    min-height: 90vh;
+    /* background-color: var(--color-background); */
+}
+
+.wriritngTitle {
+    color: #252525;
+    text-align: left;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-left: 60px;
+}
+
+.writingSecondTitle {
+    color: #252525;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    margin-left: 56px;
+    margin-top: 18px;
+}
+
+.writingInputTitle {
+    margin-top: 29px;
+    color: #252525;
+    text-align: left;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    margin-left: 60px;
+    line-height: normal;
+}
+
+.selectedTopcCard {
+    border: solid 2px #132740;
+    border-radius: 8px !important;
+    margin: 15px 40px 0px 45px;
+    padding: 15px 52px 55px 18px !important;
+    width: 70%;
+    height: 250px;
+    overflow-y: auto;
+    color: #252525 !important;
+    font-size: 20px !important;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.selectedTopcCard::-webkit-scrollbar {
+    /* display: none; */
+    width: 8px;
+    background-color: #D9D9D9;
+    border-radius: 33px;
+}
+
+.selectedTopcCard::-webkit-scrollbar-thumb {
+    width: 8px;
+    background-color: #12263E;
+    border-radius: 33px;
+}
+
+.topicInputContainer {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin: 0px 40px 0px 45px;
+}
+
+.topicInput {
+    margin-top: 26px;
+    border-radius: 8px !important;
+    border: solid 1px #132740;
+    overflow: hidden !important;
+}
+
+.topicInput textarea {
+    border-radius: 8px !important;
+    background-color: transparent !important;
+    color: #252525 !important;
+    font-size: 20px !important;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding: 15px 52px 55px 18px !important;
+}
+
+.topicInput textarea::-webkit-scrollbar {
+    /* display: none; */
+    width: 8px;
+    background-color: #D9D9D9;
+    border-radius: 33px;
+}
+
+.topicInput textarea::-webkit-scrollbar-thumb {
+    width: 8px;
+    background-color: #12263E;
+    border-radius: 33px;
+}
+
+.topicInput textarea::placeholder {
+    color: #132740 !important;
+    font-size: 20px !important;
+    font-weight: 400px !important;
+}
+
+.bodyInputContainer {
+    display: flex;
+    position: relative;
+    height: fit-content;
+    margin: 0px 40px 0px 45px;
+}
+
+.scoreButton {
+    position: absolute;
+    border: solid 2px #132740;
+    padding: 0px;
+    width: 150px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #252525;
+    text-align: left;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    z-index: 2;
+    bottom: 20px;
+    right: 40px;
+    background-color: var(--color-background) !important;
+    box-shadow: none !important;
+}
+
+.generateButton {
+    background-color: #132740;
+    border: solid 2px #132740;
+    width: 170px;
+    height: 40px;
+    display: flex;
+    align-items: center !important;
+    justify-content: center;
+    color: var(--color-whiteText);
+    margin-left: 29px;
+    margin-top: 25px;
+    padding: 0px 22px;
+}
+
+.editButton {
+    height: 70px;
+    width: 70px;
+    position: absolute;
+    bottom: 10px;
+    right: 32%;
+}
+
+.writingForm {
+    overflow: hidden;
+    height: 750px;
+}
+
+
+.writingScoreText {
+    color: #252525;
+    margin-top: 40px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+
+.topSelect {
+    margin-top: 24px;
+    display: none;
+}
+
+
+.moreEssayButton {
+    margin-top: 10px;
+    display: flex;
+    align-self: center;
+    font-size: 22px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.modalCard {
+    color: #DA282E;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+@media(max-width: 500px) {
+    .writingContainer {
+        padding: 0px 22px 24px 22px;
+    }
+
+    .wriritngTitle {
+        margin-left: 0px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .writingSecondTitle {
+        font-size: 16px;
+        margin-left: 0px;
+    }
+
+    .writingInputTitle {
+        font-size: 16px;
+        margin-left: 0px;
+    }
+
+    .topicInputContainer {
+        margin: 0px;
+    }
+
+    .selectedTopcCard {
+        height: fit-content;
+        margin: 15px 0px 0px 0px !important;
+        width: 100%;
+        font-size: 16px !important;
+    }
+
+    .generateButton {
+        position: absolute;
+        bottom: 20px;
+        right: 60px;
+        height: 25px;
+        width: 100px;
+        font-size: 13px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reloadIconResponsive {
+        display: none;
+    }
+
+    .editButton {
+        right: 14px;
+        bottom: 16px;
+        background-color: #F3F3F3;
+        padding: 0px;
+        height: 35px;
+        width: 35px;
+        border-radius: 100% !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .editIconResponsive {
+        font-size: 25px !important;
+    }
+
+    .topicInput {
+        width: 100% !important;
+    }
+
+    .topicInput textarea {
+        font-size: 13px !important;
+    }
+
+    .topicInput textarea::-webkit-scrollbar {
+        /* display: none; */
+        width: 6px;
+        background-color: var(--color-background);
+        border-radius: 33px;
+    }
+
+    .topicInput textarea::-webkit-scrollbar-thumb {
+        width: 6px;
+        background-color: #626E7E;
+        border-radius: 33px;
+    }
+
+    .topicInput textarea::placeholder {
+        font-size: 13px !important;
+    }
+
+    .bodyInputContainer {
+        margin: 0px;
+    }
+
+    .writingForm {
+        height: fit-content;
+    }
+
+    .scoreButton {
+        background-color: var(--color-seccondary) !important;
+        width: 100%;
+        right: 0px;
+        bottom: 0px;
+        border-top-left-radius: 0px !important;
+        border-top-right-radius: 0px !important;
+        height: 40px;
+    }
+
+    .scoreButton div {
+        color: var(--color-whiteText);
+        text-align: center;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        border-radius: 8px;
+        border: 1px solid #F3F3F3;
+        height: 26px;
+        width: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .writingScoreText {
+        font-size: 15px;
+        color: #F3F3F3;
+        font-weight: 500;
+        margin-top: 40px;
+    }
+
+    .topSelect {
+        display: flex;
+    }
+}

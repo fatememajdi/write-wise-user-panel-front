@@ -1,0 +1,33 @@
+.popOverCard {
+    display: flex;
+    flex-direction: column;
+    background-color: #12263E;
+    padding-bottom: 16px;
+}
+
+
+.menuItemCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    padding: 20PX 14PX;
+    min-width: 210PX;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.menuItemCard span {
+    margin-left: 18px;
+}
+
+@media(max-width: 500px) {
+    .menuItemCard {
+        font-size: 16px;
+        padding: 17PX 15PX;
+    }
+}

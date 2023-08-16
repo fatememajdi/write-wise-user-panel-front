@@ -1,0 +1,64 @@
+.chooseTypeContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.chooseTypeTitle {
+    color: #000;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.typesContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 44px;
+}
+
+
+.typeCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 140px;
+    height: 45px;
+    color: #F3F3F3;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0px 4px;
+    background-color: #626E7E;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.typeCard :hover {
+    background-color: #132740 !important;
+}
+
+
+@media(max-width: 500px) {
+    .chooseTypeTitle {
+        font-size: 13px;
+    }
+
+    .typesContainer {
+        margin-top: 33px;
+    }
+
+    .typeCard {
+        font-size: 13px;
+        width: 80px;
+        height: 28px;
+    }
+
+}

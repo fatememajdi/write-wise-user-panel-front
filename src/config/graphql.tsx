@@ -80,6 +80,17 @@ query{
 }
 `;
 
+export const GET_RANDOM_GENERAL_TASK2_WRITING = gql`
+query{
+  getRandomWriting(type:GENERAL_TASK_2){
+    id,
+    topic,
+    body,
+    tone
+  }
+}
+`;
+
 export const SELECT_TOPIC = gql`
 mutation SelectTopic($type:String! , $body:String, $id:String){
   selectTopic(selecetTopic:{type:$type ,body:$body, id:$id})
@@ -97,18 +108,11 @@ mutation SelectTopic($type:String! , $body:String, $id:String){
 `;
 
 export const ADD_ESSAY = gql`
-mutation AddEssay($id:String! , $body: String!){
-  addEssay(addEssay:{id:$id ,body:$body}){
+mutation finishEssay($id:String! , $body: String!){
+  finishEssay(addEssay:{id:$id ,body:$body}){
     id,
-    taskAchievementScore,
-    taskAchievementSummery,
-    coherenceAndCohesionScore,
-    coherenceAndCohesionSummery,
-    grammaticalRangeAndAccuracyScore,
-    grammaticalRangeAndAccuracySummery,
     essay,
-    date,
-    overallBandScore
+    date
   }
 }
 `;
@@ -161,6 +165,46 @@ export const DELETE_ESSAY = gql`
 mutation DeleteEssay($id:String!){
   deleteEssay(deleteEssay:{id:$id}){
     id
+  }
+}
+`;
+
+export const SCORE_TASK_RESPONSE = gql`
+mutation ScoreTaskResponse($id:String!){
+  scoreTaskResponse(scoreEssay:{id:$id}){
+    taskAchievementScore,
+    taskAchievementSummery,
+    overallBandScore
+  }
+}
+`;
+
+export const SCORE_LEXICAL = gql`
+mutation ScoreLexical($id:String!){
+  scoreLexical(scoreEssay:{id:$id}){
+    lexicalResourceScore,
+    lexicalResourceSummery,
+    overallBandScore
+  }
+}
+`;
+
+export const SCORE_GRAMMATICAL = gql`
+mutation ScoreGrammatical($id:String!){
+  scoreGrammatical(scoreEssay:{id:$id}){
+    grammaticalRangeAndAccuracyScore,
+    grammaticalRangeAndAccuracySummery,
+    overallBandScore
+  }
+}
+`;
+
+export const SCORE_COHERENCE = gql`
+mutation ScoreCoherence($id:String!){
+  scoreCoherence(scoreEssay:{id:$id}){
+    coherenceAndCohesionScore,
+    coherenceAndCohesionSummery,
+    overallBandScore
   }
 }
 `;
