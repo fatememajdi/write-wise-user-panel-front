@@ -101,6 +101,7 @@ const Dashboard: React.FC = () => {
 
     function ChangeType(type: string) {
         setType(type);
+        SelectType(type);
         goTo(1);
     }
 
@@ -109,6 +110,9 @@ const Dashboard: React.FC = () => {
     });
 
 
+    const isMac = useMediaQuery({
+        query: "(max-width: 1440px)"
+    });
 
     async function SelectTopic(topic?: topic) {
         changeTabBarLoc(true);
@@ -299,8 +303,10 @@ const Dashboard: React.FC = () => {
     else
         return <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
             <motion.div animate={{
-                width: isOpen && !isMobile ? '380px' : isOpen && isMobile ? '350px'
-                    : !isOpen && !isMobile ? '83px' : '0px',
+                width: isOpen && isMac ? '268px'
+                    : isOpen && isMobile ? '350px'
+                        : isOpen && !isMac && !isMobile ? '380px'
+                            : !isOpen && !isMobile ? '83px' : '0px',
                 transition: {
                     duration: 0.5,
                     type: 'spring',
@@ -325,8 +331,8 @@ const Dashboard: React.FC = () => {
                                     className={styles.logo}
                                     src="/logo3.svg"
                                     alt="Logo"
-                                    width={175}
-                                    height={17}
+                                    width={isMac ? 108 : 175}
+                                    height={isMac ? 23 : 17}
                                     loading="eager"
                                     priority
                                 />
@@ -339,7 +345,7 @@ const Dashboard: React.FC = () => {
                                             exit='hidden'
                                             aria-label="new essay button"
                                             onClick={async () => NewEssay()}
-                                            className={styles.newEssayButton}>New essay <AiOutlinePlus className={styles.plusIcon} />
+                                            className={styles.newEssayButton}><AiOutlinePlus className={styles.plusIcon} />New essay
                                         </motion.div>
                                         <button
                                             aria-label="close drawer button"

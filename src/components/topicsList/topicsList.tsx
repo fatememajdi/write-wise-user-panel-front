@@ -10,7 +10,7 @@ import { Topic } from "../../../types/topic";
 
 //-------------------------------------------components
 const Loading = dynamic(() => import("@/components/loading/loading"));
-const DialogComponent=dynamic(()=>import("../dialog/dialog"))
+const DialogComponent = dynamic(() => import("../dialog/dialog"))
 
 //-------------------------------------------icons
 import { Empty } from "antd";
@@ -51,7 +51,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                         pageStart={0}
                         loadMore={() => GetTopicsList()}
                         hasMore={MoreTopics}
-                        loader={<Loading style={{ height: 50, minHeight: 0 }} />}
+                        loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} />}
                         useWindow={false}
                         key={0}
                     >

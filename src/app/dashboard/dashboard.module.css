@@ -23,7 +23,7 @@
     flex-direction: column;
     border-top: solid 1px #626E7E;
     border-bottom: solid 1px #626E7E;
-    padding-right: 11px;
+    padding: 0px 5px;
 }
 
 .newEssayContainer {
@@ -62,11 +62,12 @@
 }
 
 .plusIcon {
-    margin-left: 10px;
+    margin-left: 16px;
     color: #F3F3F3;
     font-size: 30px;
     font-style: normal;
     font-weight: 700;
+    margin-right: 13px;
 }
 
 .arrowIcon {
@@ -223,7 +224,7 @@
 .topTabBarCard {
     height: 64px;
     display: flex;
-    flex: 1;
+    /* flex: 1; */
     background-color: var(--color-seccondary);
     width: 100%;
     border-radius: 8px;
@@ -377,34 +378,78 @@
     mask-image: linear-gradient(to bottom, transparent 5%, black 100%);
 }
 
-@media(max-width: 1500px) {
+@media(max-width: 1440px) {
+    .topTabBarCard {
+        height: 50px !important;
+        padding: 0px !important;
+        height: fit-content;
+    }
+
     .topTabBarContainer {
-        padding: 30px 60px 0px 55px;
+        padding: 28px 22px 0px 22px;
     }
 
     .topTabBarContainerAnimation {
-        padding: 30px 60px 0px 55px;
+        padding: 28px 22px 0px 22px;
     }
 
     .topTabBarItemCard {
+        height: 50px !important;
         font-size: 16px;
-        padding: 0px 15px;
+    }
+
+    .activeTopTabBarItemCard {
+        height: 50 !important;
+    }
+
+    .activeTaskTabButton {
+        font-size: 12px;
+        height: 38px !important;
+    }
+
+    .taskTabButton {
+        font-size: 12px;
+        height: 38px !important;
+    }
+
+    .taskTabsContainer {
+        margin-top: 0px;
+    }
+
+    .newEssayContainer {
+        padding: 15px 0px !important;
     }
 
     .newEssayButton {
         font-size: 20px;
+        padding: 0px;
+        margin: 0px 8px 0px 0px;
+        height: 48px !important;
     }
 
-    .taskTabButton {
-        font-size: 16px;
-    }
-
-    .activeTaskTabButton {
-        font-size: 16px;
+    .arrowLeftButton {
+        height: 48px !important;
+        width: 40px !important;
     }
 
     .logo {
-        margin: 22px auto;
+        margin: 17px auto;
+    }
+
+    .drawerFooterText {
+        font-size: 14px;
+    }
+
+    .drawerFooterContainer {
+        height: 50px;
+    }
+
+    .menuButton {
+        width: 60px;
+    }
+
+    .menuIcon {
+        font-size: 25px;
     }
 }
 

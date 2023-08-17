@@ -197,6 +197,42 @@
     font-weight: 400;
 }
 
+@media(max-width: 1440px) {
+    .writingContainer {
+        padding: 0px 27px 100px 22px;
+    }
+
+    .wriritngTitle {
+        font-size: 16px;
+    }
+
+    .writingSecondTitle {
+        font-size: 16px;
+    }
+
+    .writingInputTitle {
+        font-size: 16px;
+    }
+
+    .selectedTopcCard {
+        font-size: 16px !important;
+    }
+
+    .topicInput textarea {
+        font-size: 16px !important;
+    }
+
+    .generateButton {
+        font-size: 14px !important;
+    }
+
+    .scoreButton {
+        font-size: 16px !important;
+        width: 100px;
+        height: 31px;
+    }
+}
+
 @media(max-width: 500px) {
     .writingContainer {
         padding: 0px 22px 24px 22px;

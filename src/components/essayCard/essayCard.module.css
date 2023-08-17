@@ -217,7 +217,20 @@
     align-items: center;
 }
 
-.writingScoreItemCard span {
+.writingScoreSummeryItemCard {
+    color: #252525;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left !important;
+}
+
+.writingScoreSummeryItemCard span {
     font-size: 18px;
     padding-left: 10px !important;
     margin-top: 5px;
@@ -241,6 +254,37 @@
     font-weight: 500;
     line-height: normal;
     border: solid 1px #DA282E;
+}
+
+
+@media(max-width: 1440px) {
+    .writingDataTabBarCard {
+        height: 50px !important;
+        padding: 0px !important;
+        height: fit-content;
+    }
+
+    .topTabBarContainer {
+        padding: 28px 22px 0px 22px;
+    }
+
+    .topTabBarContainerAnimation {
+        padding: 28px 22px 0px 22px;
+    }
+
+    .topTabBarItemCard {
+        height: 50px !important;
+        font-size: 16px;
+    }
+
+    .activeTopTabBarItemCard {
+        height: 100% !important;
+    }
+
+    .writingEssayText{
+        font-size: 16px !important;
+        font-weight: 700;
+    }
 }
 
 @media(max-width: 500px) {

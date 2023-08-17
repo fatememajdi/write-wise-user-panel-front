@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { lazy } from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -66,7 +67,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [deleteLoading, changeDeleteLoading] = React.useState<boolean>(false);
-    const [firstEssayLoading, changeFirstEssayLoading] = React.useState<boolean>(false);
+    // const [firstEssayLoading, changeFirstEssayLoading] = React.useState<boolean>(false);
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
@@ -121,59 +122,56 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     }
 
 
-    async function GetScores(id: string) {
-        let NewEssay: Essay;
+    async function GetScores(essaies: Essay[]) {
+        let newEssay: Essay[] = essaies;
         await Promise.all([
             client.mutate({
                 mutation: SCORE_TASK_RESPONSE,
                 variables: {
-                    id: id
+                    id: newEssay[0].id
                 }
             }).then(async (res) => {
-                console.log(res);
-                NewEssay.taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
-                NewEssay.taskAchievementSummery = res.data.scoreTaskResponse.taskAchievementSummery;
-                NewEssay.overallBandScore = res.data.scoreTaskResponse.overallBandScore;
+                newEssay[0].taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
+                newEssay[0].taskAchievementSummery = res.data.scoreTaskResponse.taskAchievementSummery;
+                newEssay[0].overallBandScore = res.data.scoreTaskResponse.overallBandScore;
             }),
 
             client.mutate({
                 mutation: SCORE_COHERENCE,
                 variables: {
-                    id: id
+                    id: newEssay[0].id
                 }
             }).then(async (res) => {
-                console.log(res);
-                // essaies[0].coherenceAndCohesionScore = res.data.scoreCoherence.coherenceAndCohesionScore;
-                // essaies[0].coherenceAndCohesionSummery = res.data.scoreCoherence.coherenceAndCohesionSummery;
-                // essaies[0].overallBandScore = res.data.scoreCoherence.overallBandScore;
+                newEssay[0].coherenceAndCohesionScore = res.data.scoreCoherence.coherenceAndCohesionScore;
+                newEssay[0].coherenceAndCohesionSummery = res.data.scoreCoherence.coherenceAndCohesionSummery;
+                newEssay[0].overallBandScore = res.data.scoreCoherence.overallBandScore;
             }),
 
             client.mutate({
                 mutation: SCORE_LEXICAL,
                 variables: {
-                    id: id
+                    id: newEssay[0].id
                 }
             }).then(async (res) => {
-                console.log(res);
-                // essaies[0].lexicalResourceScore = res.data.scoreLexical.lexicalResourceScore;
-                // essaies[0].lexicalResourceSummery = res.data.scoreLexical.lexicalResourceSummery;
-                // essaies[0].overallBandScore = res.data.scoreLexical.overallBandScore;
+                newEssay[0].lexicalResourceScore = res.data.scoreLexical.lexicalResourceScore;
+                newEssay[0].lexicalResourceSummery = res.data.scoreLexical.lexicalResourceSummery;
+                newEssay[0].overallBandScore = res.data.scoreLexical.overallBandScore;
             }),
 
             client.mutate({
                 mutation: SCORE_GRAMMATICAL,
                 variables: {
-                    id: id
+                    id: newEssay[0].id
                 }
             }).then(async (res) => {
-                console.log(res);
-                // essaies[0].grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
-                // essaies[0].grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
-                // essaies[0].overallBandScore = res.data.scoreGrammatical.overallBandScore;
+                newEssay[0].grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
+                newEssay[0].grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
+                newEssay[0].overallBandScore = res.data.scoreGrammatical.overallBandScore;
             }),
-
         ]).catch((err) => {
             console.log('get essay score error : ', err);
+        }).then(() => {
+            setEssaies(newEssay);
         })
     }
 
@@ -186,14 +184,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         }
         else
             id = await SelectTopic(topic);
-        changeLoading(false);
 
         if (id != null) {
-            changeTabBarLoc(true);
-            setTimeout(() => {
-                changeEndAnimation(true);
-                changeFirstEssayLoading(true);
-            }, 1000);
             await client.mutate({
                 mutation: ADD_ESSAY,
                 variables: {
@@ -201,17 +193,29 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     body: body
                 }
             }).then(async (res) => {
+                // changeFirstEssayLoading(false);
                 setEssaies([{
                     id: res.data.finishEssay.id,
                     essay: res.data.finishEssay.essay,
-                    date: res.data.finishEssay.date,
+                    date: res.data.finishEssay.date
+
+                }, ...essaies]);
+                changeLoading(false);
+                changeTabBarLoc(true);
+                setTimeout(() => {
+                    changeEndAnimation(true);
+                    // changeFirstEssayLoading(true);
+                }, 1000);
+                await GetScores([{
+                    id: res.data.finishEssay.id,
+                    essay: res.data.finishEssay.essay,
+                    date: res.data.finishEssay.date
+
                 }, ...essaies]);
                 changeCcurrentId(id);
-                changeFirstEssayLoading(false);
-                changeLoading(false);
-                GetScores(res.data.finishEssay.id);
             }).catch(async (err) => {
                 console.log('add new essay error : ', err);
+                changeLoading(false);
             })
         };
     }
@@ -277,7 +281,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                 { title: 'WWAI Tutor', active: false, lock: true }
                             ]} selectedItem={0} className={styles.topSelect} />
 
-                            <div className={styles.wriritngTitle}>Gen Task 1</div>
+                            <div className={styles.wriritngTitle}>{type === 'general_task_1' ? 'Gen Task 1' : 'Task 2'} </div>
 
                             <div className={styles.writingSecondTitle}>
                                 You should spend about 20 minutes on this task
@@ -358,14 +362,16 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                         </div>
                 }
 
-                {endAnimation && firstEssayLoading &&
+                {/* {endAnimation && firstEssayLoading ?
                     <EssayCard loading={true} />
-                }
+                    :
+                    <></>
+                } */}
 
                 {
                     deleteLoading ?
                         <Loading style={{ height: 50, minHeight: 0 }} />
-                        :
+                        : endAnimation &&
                         <InfiniteScroll
                             pageStart={0}
                             loadMore={() => GetUserEssaies(currentId)}

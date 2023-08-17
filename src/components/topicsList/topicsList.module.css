@@ -73,6 +73,33 @@
     font-size: 30px !important;
 }
 
+@media(max-width: 1440px) {
+    .taskCard {
+        padding: 17px 15px 20px 10px;
+    }
+
+    .taskCardTitle {
+        font-size: 14px;
+    }
+
+    .taskCardTitle span {
+        font-size: 12px !important;
+    }
+
+    .taskCardScore {
+        font-size: 16px;
+    }
+
+    .deleteIcon {
+        font-size: 20px;
+        margin-left: 5px;
+    }
+
+    .deleteIcon:hover {
+        font-size: 22px !important;
+    }
+}
+
 @media(max-width: 500px) {
     .tasksContainer {
         padding: 0px 10px;

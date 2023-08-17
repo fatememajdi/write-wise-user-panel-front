@@ -62,9 +62,9 @@ interface _props {
 const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
-        [<EssayScore essay={essay} goTo={analysisStep} />,
-        <EssayBody essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} />,
-        <EssayAnalysis essay={essay} />]);
+        [<EssayScore key={0} essay={essay} goTo={analysisStep} />,
+        <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} />,
+        <EssayAnalysis key={1} essay={essay} />]);
 
     function analysisStep() { goTo(2) };
 
@@ -151,14 +151,10 @@ const EssayScore: React.FC<{ essay?: Essay, goTo: any }> = ({ goTo, essay }) => 
         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
         <div className={styles.writingScoresContainer}>
             <div>
-                <div className={styles.writingScoreItemCard}>Task Achievement: {essay?.taskAchievementScore ? essay?.taskAchievementScore
-                    : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}</div>
-                <div className={styles.writingScoreItemCard}>Coherence & Cohesion: {essay?.coherenceAndCohesionScore ? essay?.coherenceAndCohesionScore
-                    : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}</div>
-                <div className={styles.writingScoreItemCard}>Lexical resource: {essay?.lexicalResourceScore ? essay?.lexicalResourceScore
-                    : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}</div>
-                <div className={styles.writingScoreItemCard}>Grammatical Range and accuracy: {essay?.grammaticalRangeAndAccuracyScore ? essay?.grammaticalRangeAndAccuracyScore
-                    : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}</div>
+                <ScoreCard title="Task Achievement" score={essay?.taskAchievementScore} />
+                <ScoreCard title="Coherence & Cohesion" score={essay?.coherenceAndCohesionScore} />
+                <ScoreCard title="Lexical resource" score={essay?.lexicalResourceScore} />
+                <ScoreCard title="Grammatical Range and accuracy" score={essay?.grammaticalRangeAndAccuracyScore} />
             </div>
 
             <div className={styles.sliderContainer}>
@@ -183,12 +179,27 @@ const EssayAnalysis: React.FC<{ essay?: Essay }> = ({ essay }) => {
         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
         <div className={styles.writingScoresContainer}>
             <div>
-                <div className={styles.writingScoreItemCard}>Task Achievement Summery: <br /><span>{essay?.taskAchievementSummery}</span></div>
-                <div className={styles.writingScoreItemCard}>Coherence & Cohesion Summery: <br /><span>{essay?.coherenceAndCohesionSummery}</span></div>
-                <div className={styles.writingScoreItemCard}>Lexical resource summery:<br /><span> {essay?.lexicalResourceSummery}</span></div>
-                <div className={styles.writingScoreItemCard}>Grammatical Range and accuracy summery:<br /><span> {essay?.grammaticalRangeAndAccuracySummery}</span></div>
+                <ScoreSummeryCard title="Task Achievement Summery" summery={essay?.taskAchievementSummery} />
+                <ScoreSummeryCard title="Coherence & Cohesion Summery" summery={essay?.coherenceAndCohesionSummery} />
+                <ScoreSummeryCard title="Lexical resource summery" summery={essay?.lexicalResourceSummery} />
+                <ScoreSummeryCard title="Grammatical Range and accuracy summery" summery={essay?.grammaticalRangeAndAccuracySummery} />
             </div>
         </div>
     </div>
 
 };
+
+const ScoreCard: React.FC<{ title: string, score?: number }> = ({ title, score }) => {
+    return <div className={styles.writingScoreItemCard}>
+        {title}: {score ? score
+            : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}
+    </div>
+}
+
+
+const ScoreSummeryCard: React.FC<{ title: string, summery?: string }> = ({ title, summery }) => {
+    return <div className={styles.writingScoreSummeryItemCard}>
+        {title}: <br /><span>{summery ? summery
+            : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}</span>
+    </div>
+}
