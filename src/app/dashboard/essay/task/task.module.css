@@ -235,7 +235,7 @@
 
 @media(max-width: 500px) {
     .writingContainer {
-        padding: 0px 22px 24px 22px;
+        padding: 0px 22px 50px 22px;
     }
 
     .wriritngTitle {
@@ -327,6 +327,7 @@
 
     .writingForm {
         height: fit-content;
+        padding-bottom: 50px;
     }
 
     .scoreButton {

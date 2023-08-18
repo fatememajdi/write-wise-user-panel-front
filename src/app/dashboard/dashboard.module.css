@@ -3,6 +3,7 @@
     flex-direction: row;
     height: 100vh !important;
     overflow: hidden;
+    overflow-y: hidden;
 }
 
 .dashboardLeftCard {
@@ -148,6 +149,18 @@
     padding: 0px 0px !important;
     border-right: solid 1px #626E7E;
     width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menuButtonOpen {
+    height: 100%;
+    border-radius: 0px !important;
+    background-color: #132740;
+    padding: 0px 0px !important;
+    border-right: solid 1px #626E7E;
+    width: 82px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -448,8 +461,16 @@
         width: 60px;
     }
 
+    /* .leftTabBar {
+        width: 60px !important;
+    } */
+
     .menuIcon {
         font-size: 25px;
+    }
+
+    .openDrawerButton {
+        padding: 10px;
     }
 }
 
@@ -520,8 +541,9 @@
 
     .arrowLeftButton {
         background-color: #F3F3F3;
-        height: 50px !important;
-        width: 36px;
+        height: 45px !important;
+        width: 45px !important;
+        padding: 0px;
     }
 
     .arrowIcon {
@@ -530,7 +552,7 @@
 
     .newEssayButton {
         background-color: #132740;
-        justify-content: space-between;
+        /* justify-content: space-between; */
         font-size: 16px;
         height: 40px;
     }

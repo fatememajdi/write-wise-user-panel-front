@@ -65,6 +65,14 @@ interface topic {
 }
 
 const Dashboard: React.FC = () => {
+    const isMobile = useMediaQuery({
+        query: "(max-width: 500px)"
+    });
+
+    const isMac = useMediaQuery({
+        query: "(max-width: 1440px)"
+    });
+
     let divRef: any;
     if (typeof document !== 'undefined')
         divRef = document.getElementById('scrollableDiv');
@@ -81,7 +89,7 @@ const Dashboard: React.FC = () => {
     });
     const [pageLoading, setLoading] = React.useState<boolean>(true);
     const [userName, setuserName] = React.useState<string>('');
-    const [isOpen, setIsOpen] = React.useState<boolean>(true);
+    const [isOpen, setIsOpen] = React.useState<boolean>(!isMobile);
     const [MoreEssaies, changeMoreEssaies] = React.useState<boolean>(true);
     const [MoreTopics, changeMoreTopics] = React.useState<boolean>(true);
     const [topics, changeTopics] = React.useState<Topic[]>([]);
@@ -104,15 +112,6 @@ const Dashboard: React.FC = () => {
         SelectType(type);
         goTo(1);
     }
-
-    const isMobile = useMediaQuery({
-        query: "(max-width: 500px)"
-    });
-
-
-    const isMac = useMediaQuery({
-        query: "(max-width: 1440px)"
-    });
 
     async function SelectTopic(topic?: topic) {
         changeTabBarLoc(true);
@@ -304,7 +303,7 @@ const Dashboard: React.FC = () => {
         return <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
             <motion.div animate={{
                 width: isOpen && isMac ? '268px'
-                    : isOpen && isMobile ? '350px'
+                    : isOpen && isMobile ? '270px'
                         : isOpen && !isMac && !isMobile ? '380px'
                             : !isOpen && !isMobile ? '83px' : '0px',
                 transition: {
@@ -424,7 +423,7 @@ const Dashboard: React.FC = () => {
                                     <button
                                         aria-label="menu button"
                                         onClick={handlePopOverOpen}
-                                        className={styles.menuButton}>
+                                        className={isOpen ? styles.menuButton : styles.menuButtonOpen}>
                                         <TfiMenu className={styles.menuIcon} />
                                     </button>
                                 </div>
