@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import client from '@/config/applloAuthorizedClient';
 import { AnimatePresence, motion } from 'framer-motion';
+import ReactLoading from 'react-loading';
 import { useMediaQuery } from 'react-responsive';
 
 //-----------------------------------------------------styles
@@ -57,12 +58,12 @@ const tabBarItems = [
         title: 'WWAI Tutor',
         active: false
     },
-]
+];
 
 interface topic {
     id: string,
     body: string
-}
+};
 
 const Dashboard: React.FC = () => {
     const isMobile = useMediaQuery({
@@ -88,10 +89,11 @@ const Dashboard: React.FC = () => {
         }
     });
     const [pageLoading, setLoading] = React.useState<boolean>(true);
-    const [userName, setuserName] = React.useState<string>('');
+    const [userName, setuserName] = React.useState<string>();
     const [isOpen, setIsOpen] = React.useState<boolean>(!isMobile);
     const [MoreEssaies, changeMoreEssaies] = React.useState<boolean>(true);
     const [MoreTopics, changeMoreTopics] = React.useState<boolean>(true);
+    const [topicsLoading, changeTopicsLoading] = React.useState<boolean>(true);
     const [topics, changeTopics] = React.useState<Topic[]>([]);
     const [topicsType, setTopicsType] = React.useState('general_task_1');
     const [type, setType] = React.useState('');
@@ -104,14 +106,14 @@ const Dashboard: React.FC = () => {
             setEssaies={setEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} handleNewTopic={handleNewTopic}
             essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type}
             changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
-    ])
-
+    ]);
 
     function ChangeType(type: string) {
         setType(type);
-        SelectType(type);
+        if (topicsType !== type)
+            SelectType(type);
         goTo(1);
-    }
+    };
 
     async function SelectTopic(topic?: topic) {
         changeTabBarLoc(true);
@@ -121,15 +123,10 @@ const Dashboard: React.FC = () => {
         changeTopic(topic);
         if (divRef)
             divRef.scrollTop = divRef.offsetTop;
-        if (topicsType === 'general_task_1')
-            goTo(1);
-        else if (topicsType === 'academic_task_1')
-            goTo(2)
-        else
-            goTo(3)
+        goTo(1);
         if (isMobile)
             setIsOpen(false);
-    }
+    };
 
     async function DeleteTopic(id: string) {
         await client.mutate({
@@ -148,8 +145,7 @@ const Dashboard: React.FC = () => {
         }).catch((err) => {
             console.log("delete topic error : ", err);
         });
-    }
-
+    };
 
     //----------------------------------------------------------------get user essaies
     async function GetUserEssaies(id: string) {
@@ -193,10 +189,22 @@ const Dashboard: React.FC = () => {
     };
 
     async function SelectType(type: string) {
-        changeTopics([]);
+        changeTopicsLoading(true);
+        await setTopicsType(type);
         changeMoreTopics(true);
-        setTopicsType(type);
-        await GetTopicsList(type);
+        await client.query({
+            query: GET_USER_TOPICS,
+            variables: {
+                type: type,
+                page: 1,
+                pageSize: 6
+            },
+        }).then(async (res) => {
+            await changeTopics(res.data.getUserTopics.userTopics);
+        }).catch((err) => {
+            console.log("get user topics error : ", err);
+        });
+        changeTopicsLoading(false);
     };
 
     async function NewEssay() {
@@ -219,7 +227,7 @@ const Dashboard: React.FC = () => {
         }).catch((err) => {
             console.log("get user profile error : ", err);
         });
-    }
+    };
 
     //------------------------------------------------------------------check user loged in
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -239,12 +247,14 @@ const Dashboard: React.FC = () => {
         }
     });
 
-
     React.useEffect(() => {
         StopLoader();
         if (localStorage.getItem('user')) {
-            if (MoreTopics)
+            if (MoreTopics) {
+                changeTopicsLoading(true);
                 GetTopicsList();
+                changeTopicsLoading(false);
+            }
             GetProfile();
         }
     }, []);
@@ -259,7 +269,7 @@ const Dashboard: React.FC = () => {
 
     async function handleNewTopic(topic: Topic) {
         await changeTopics([topic, ...topics]);
-    }
+    };
 
     const showAnimation = {
         hidden: {
@@ -276,7 +286,7 @@ const Dashboard: React.FC = () => {
                 duration: 0.2,
             }
         }
-    }
+    };
 
     const showEssayButtonAnimation = {
         hidden: {
@@ -293,12 +303,10 @@ const Dashboard: React.FC = () => {
                 duration: 0.2,
             }
         }
-    }
+    };
 
     if (pageLoading)
-        return <div
-            style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-        ><Loading /></div>
+        return <Loading />
     else
         return <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
             <motion.div animate={{
@@ -375,10 +383,14 @@ const Dashboard: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className={'col-12 ' + styles.drawerContent}>
-                                    <TopicsList Topics={topics} HandleSelect={SelectTopic}
-                                        GetTopicsList={GetTopicsList} MoreTopics={MoreTopics}
-                                        HandleDelete={DeleteTopic}
-                                    />
+                                    {topicsLoading ?
+                                        <Loading style={{ height: '100%', minHeight: 0 }} />
+                                        :
+                                        <TopicsList Topics={topics} HandleSelect={SelectTopic}
+                                            GetTopicsList={GetTopicsList} MoreTopics={MoreTopics}
+                                            HandleDelete={DeleteTopic} type={topicsType}
+                                        />
+                                    }
                                 </div>
                                 <div className={'col-12 ' + styles.drawerFooterContainer}>
                                     <button
@@ -389,7 +401,7 @@ const Dashboard: React.FC = () => {
                                         <FiMoreVertical className={styles.moreIcon} />
                                     </button>
                                     <div className={styles.drawerFooterText}>
-                                        Welcome  {userName}
+                                        Welcome  {userName ? userName : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}
                                     </div>
                                 </div>
                             </motion.div>
@@ -510,7 +522,7 @@ const Dashboard: React.FC = () => {
 
             <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose} />
 
-        </div >
+        </div>
 };
 
 export default Dashboard;

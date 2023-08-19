@@ -20,7 +20,6 @@
     border-radius: 8px;
 }
 
-
 .taskCard {
     display: flex;
     flex-direction: row;
@@ -28,12 +27,10 @@
     justify-content: space-between;
     padding: 16px 14px 20px 14px;
     cursor: pointer;
-    background-color: #626E7E;
     border-radius: 8px;
     margin: 0px 0px 12px 8px !important;
+    background: linear-gradient(111deg, #6B7787 0%, #132740 100%);
 }
-
-
 
 .taskCardTitle {
     color: #FFF;
@@ -44,6 +41,23 @@
     display: flex;
     flex-direction: column;
     /* line-height: 16px; */
+}
+
+.taskCardTitle h5 {
+    color: #FFF;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.taskCardTitle h5:hover {
+    text-decoration: underline !important;
+    /* font-weight: 400; */
 }
 
 .taskCardTitle span {
@@ -110,7 +124,7 @@
 
     .taskCard {
         border-bottom: none;
-        background: linear-gradient(111deg, #6B7787 0%, #132740 100%);
+        margin: 0px 0px 12px 0px !important;
         /* background-color: #626E7E; */
         margin-bottom: 13px;
         border-radius: 8px;

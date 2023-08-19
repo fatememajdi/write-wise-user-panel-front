@@ -76,7 +76,7 @@
 .topicInput {
     margin-top: 26px;
     border-radius: 8px !important;
-    border: solid 1px #132740;
+    /* border: solid 1px #132740; */
     overflow: hidden !important;
 }
 

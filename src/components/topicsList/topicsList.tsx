@@ -21,10 +21,11 @@ interface _props {
     HandleSelect: any,
     GetTopicsList: any,
     MoreTopics: boolean,
-    HandleDelete: any
+    HandleDelete: any,
+    type: string
 };
 
-const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, MoreTopics, HandleDelete }) => {
+const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, MoreTopics, HandleDelete, type }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const [loading, setLoading] = React.useState<boolean>(false);
     const [selectedId, changeSelectedId] = React.useState<string>('');
@@ -57,12 +58,13 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                     >
                         {
                             Topics.map((item: any, index: any) =>
+                                item.type === type &&
                                 <div
-                                    className={'col-12 ' + styles.taskCard} key={index}>
+                                    className={'col-12 ' + styles.taskCard} key={index} >
                                     <div
                                         onClick={() => HandleSelect({ id: item.id, body: item.topic })}
                                         className={styles.taskCardTitle}>
-                                        {item.shortName}
+                                        <h5>{item.shortName}</h5>
                                         <span>
                                             {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}
                                         </span>
@@ -84,7 +86,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
 
         <DialogComponent open={open} handleClose={handleClose} handleDelete={handleDelete}
             title="Delete Topic" dialog="Permanently delete the topic?" />
-    </div>
+    </div >
 };
 
 export default TopicsList;

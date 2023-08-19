@@ -40,7 +40,6 @@ query GetUserTopics($type:String!, $page:Float!, $pageSize:Float!){
       type,
       shortName,
       topic,
-      completeTopic,
       overallBandScore,
       createdAt
     }
@@ -99,7 +98,6 @@ mutation SelectTopic($type:String! , $body:String, $id:String){
     type,
     shortName,
     topic,
-    completeTopic,
     overallBandScore,
     createdAt,
     overallBandScore

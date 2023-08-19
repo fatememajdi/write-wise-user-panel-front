@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from "@apollo/react-hooks";
+import { Modal } from 'antd';
 import { useRouter } from "next/navigation";
 
 //---------------------------------------------------styles
@@ -25,8 +26,18 @@ const VerificationCodeValidationSchema = Yup.object().shape({
 const VerificationCode: React.FC = () => {
 
     const router = useRouter();
-    const [verificationCode, { error }] = useMutation(VERIFICATION_CODE);
+    const [verificationCode] = useMutation(VERIFICATION_CODE);
     const [loading, changeLoadig] = React.useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     const handleSignIn = async (values: any) => {
         changeLoadig(true);
@@ -43,9 +54,10 @@ const VerificationCode: React.FC = () => {
             //     changeLoadig(false);
             // }, 5000);
         }
-        ).catch((error) => {
-            console.log('verification error : ', error);
+        ).catch(async (err) => {
+            await changeModalContent(JSON.stringify(err.message));
             changeLoadig(false);
+            showModal();
         });
     };
     if (loading)
@@ -117,6 +129,11 @@ const VerificationCode: React.FC = () => {
                 <div className={styles.circle5} />
             </div>
 
+            <Modal
+                footer={null}
+                title={'Verify code error'} open={isModalOpen} onCancel={handleCancel}>
+                <div className={styles.modalCard}> {modalContent}</div>
+            </Modal>
         </div>
 };
 

@@ -4,5 +4,5 @@ export interface Topic {
     shortName?: string,
     createdAt?: string,
     score?: string,
-    overallBandScore?: number
+    overallBandScore?: number,
 }

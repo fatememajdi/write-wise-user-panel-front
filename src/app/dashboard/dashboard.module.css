@@ -51,6 +51,7 @@
     border-radius: 8px !important;
     padding: 16px 28px;
     display: flex;
+    cursor: pointer;
 }
 
 .arrowLeftButton {
@@ -309,6 +310,7 @@
     height: 100px !important;
     width: 100% !important;
     overflow: hidden;
+    z-index: 2;
 }
 
 .topTabBarContainerAnimation {
@@ -321,6 +323,7 @@
     flex-direction: column;
     animation-fill-mode: forwards;
     overflow: hidden;
+    z-index: 2;
 }
 
 .essayContainer {

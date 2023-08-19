@@ -18,7 +18,8 @@ interface props {
     input_error?: any,
     textarea_name?: string,
     textarea_value?: string,
-    textarea_error?: any
+    textarea_error?: any,
+    secondError?: boolean
 };
 
 const Input: React.FC<props> = ({ ...props }) =>
@@ -35,7 +36,8 @@ const Input: React.FC<props> = ({ ...props }) =>
         {/* ---------------------------------------------------------input forms */}
         {props.input &&
             <>
-                <div className={props.input_error ? styles.formSectionInput + ' ' + styles.formSectionInputError + ' ' + props.className : styles.formSectionInput + ' ' + props.className}>
+                <div className={props.input_error ? styles.formSectionInput + ' ' + styles.formSectionInputError + ' ' + props.className
+                    : styles.formSectionInput + ' ' + props.className}>
                     <input
                         placeholder={props.placeHolder}
                         type={props.inputtype ? props.inputtype : 'text'}
@@ -54,8 +56,8 @@ const Input: React.FC<props> = ({ ...props }) =>
         {/* -----------------------------------------------------------textarea forms */}
         {
             props.textarea &&
-            <div className={props.input_error ? styles.formSectionInput + ' ' + styles.formSectionInputError : styles.formSectionInput}>
-
+            <div className={props.textarea_error ? styles.formSectionInput + ' ' + styles.formSectionInputError
+                : styles.formSectionInput}>
 
                 <textarea
                     placeholder={props.placeHolder}
@@ -65,7 +67,7 @@ const Input: React.FC<props> = ({ ...props }) =>
                 />
 
                 {props.textarea_error &&
-                    <div className={styles.errorForm}>{props.textarea_error}</div>
+                    <div className={props.secondError ? styles.secondErrorForm : styles.errorForm}>{props.textarea_error}</div>
                 }
             </div>
         }

@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import client from '@/config/applloAuthorizedClient';
 import uploadFileClient from "@/config/appolloUploadFileClient";
 import { useRouter } from "next/navigation";
+import { Modal } from 'antd';
 
 //-------------------------------------styles
 import styles from './profile.module.css';
@@ -32,6 +33,8 @@ const Profile: React.FC = () => {
 
     const [profile, setprofile] = React.useState<UserProfile>();
     const [loading, setLoading] = React.useState<boolean>(true);
+    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
     const { step, goTo, currentStepIndex } = useMultiStepForm(
         [<UserInformationCard user={profile} goTo={GoTo} />, <EditUserCard goTo={GoTo} UpdateProfile={UpdateProfile} user={profile} />]);
     const router = useRouter();
@@ -67,12 +70,20 @@ const Profile: React.FC = () => {
             await setprofile(res.data.updateUserProfile);
             goTo(0);
             setLoading(false);
-        }).catch((err) => {
-            console.log("update user profile error : ", err);
+        }).catch(async (err) => {
+            await changeModalContent(JSON.stringify(err.message));
             setLoading(false);
+            showModal();
         });
     }
 
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     async function UploadProfile() {
         await uploadFileClient.mutate({
@@ -181,6 +192,11 @@ const Profile: React.FC = () => {
                     {step}
                 </div>
         }
+        <Modal
+            footer={null}
+            title={"Update profile error"} open={isModalOpen} onCancel={handleCancel}>
+            <div className={styles.modalCard}> {modalContent}</div>
+        </Modal>
     </div>
 };
 

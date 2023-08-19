@@ -10,7 +10,11 @@ import InfiniteScroll from 'react-infinite-scroller';
 import styles from './task.module.css';
 
 //--------------------------------------components
-import { ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_GENERAL_TASK1_WRITING, GET_RANDOM_GENERAL_TASK2_WRITING, SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_LEXICAL, SCORE_TASK_RESPONSE, SELECT_TOPIC } from "@/config/graphql";
+import {
+    ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_GENERAL_TASK1_WRITING,
+    GET_RANDOM_GENERAL_TASK2_WRITING, SCORE_COHERENCE, SCORE_GRAMMATICAL,
+    SCORE_LEXICAL, SCORE_TASK_RESPONSE, SELECT_TOPIC
+} from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
 const Input = lazy(() => import('@/components/input/input'));
@@ -67,12 +71,12 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [deleteLoading, changeDeleteLoading] = React.useState<boolean>(false);
-    // const [firstEssayLoading, changeFirstEssayLoading] = React.useState<boolean>(false);
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
+    const [modalTitle, changeModalTitle] = React.useState<string>('Add essay error');
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
 
     const showModal = () => {
@@ -92,9 +96,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             await changeGeneratedTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body });
             setFieldValue('topic', res.data.getRandomWriting.body);
             changeGenerateWritingTopicLoading(false);
-        }).catch((err) => {
-            console.log('get random writing error :  : ', err);
+        }).catch(async (err) => {
+            await changeModalTitle('Generate topic error');
+            await changeModalContent(JSON.stringify(err.message));
             changeGenerateWritingTopicLoading(false);
+            showModal();
         });
     }
 
@@ -113,9 +119,10 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             changeCcurrentId(id);
             handleNewTopic(res.data.selectTopic);
         }).catch(async (err) => {
-            await changeModalContent('try again!');
+            await changeModalTitle('Select topic error');
+            await changeModalContent(JSON.stringify(err.message));
+            changeLoading(false);
             showModal();
-            await console.log(err);
             id = null;
         });
         return id;
@@ -168,8 +175,10 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                 newEssay[0].grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
                 newEssay[0].overallBandScore = res.data.scoreGrammatical.overallBandScore;
             }),
-        ]).catch((err) => {
-            console.log('get essay score error : ', err);
+        ]).catch(async (err) => {
+            await changeModalTitle('Get essay score error');
+            await changeModalContent(JSON.stringify(err.message));
+            showModal();
         }).then(() => {
             setEssaies(newEssay);
         })
@@ -193,29 +202,34 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     body: body
                 }
             }).then(async (res) => {
-                // changeFirstEssayLoading(false);
-                setEssaies([{
-                    id: res.data.finishEssay.id,
-                    essay: res.data.finishEssay.essay,
-                    date: res.data.finishEssay.date
+                await changeLoading(false);
+                try {
+                    await setEssaies([{
+                        id: res.data.finishEssay.id,
+                        essay: res.data.finishEssay.essay,
+                        date: res.data.finishEssay.date
 
-                }, ...essaies]);
-                changeLoading(false);
-                changeTabBarLoc(true);
-                setTimeout(() => {
-                    changeEndAnimation(true);
-                    // changeFirstEssayLoading(true);
-                }, 1000);
-                await GetScores([{
-                    id: res.data.finishEssay.id,
-                    essay: res.data.finishEssay.essay,
-                    date: res.data.finishEssay.date
+                    }, ...essaies]);
+                } finally {
+                    changeTabBarLoc(true);
+                    setTimeout(() => {
+                        changeEndAnimation(true);
+                        // changeFirstEssayLoading(true);
+                    }, 1000);
 
-                }, ...essaies]);
-                changeCcurrentId(id);
+                    await GetScores([{
+                        id: res.data.finishEssay.id,
+                        essay: res.data.finishEssay.essay,
+                        date: res.data.finishEssay.date
+
+                    }, ...essaies]);
+                    changeCcurrentId(id);
+                }
             }).catch(async (err) => {
-                console.log('add new essay error : ', err);
+                await changeModalTitle('Add essay error');
+                await changeModalContent(JSON.stringify(err.message));
                 changeLoading(false);
+                showModal();
             })
         };
     }
@@ -231,9 +245,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         }).then(async (res) => {
             changeDeleteLoading(false);
             setEssaies(essaies.filter(item => item.id !== id));
-        }).catch((err) => {
-            console.log("delete essay error : ", err);
+        }).catch(async (err) => {
+            await changeModalTitle('Delete essay error');
+            await changeModalContent(JSON.stringify(err.message));
             changeDeleteLoading(false);
+            showModal();
         });
     }
 
@@ -245,12 +261,19 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         }
     });
 
+    const EssayValidationSchema = Yup.object().shape({
+        topic: Yup
+            .string()
+            .required('Topic is required!'),
+    });
+
+
     return <Formik
         initialValues={{
             topic: generatedTopic ? generatedTopic.body : '',
             body: ''
         }}
-        // validationSchema={WritingValidationSchema}
+        validationSchema={EssayValidationSchema}
         enableReinitialize
         onSubmit={async (values, { resetForm }) => {
             await AddNewEssay(values.topic, values.body);
@@ -261,8 +284,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             touched,
             handleSubmit,
             setFieldValue,
-            handleChange,
-            resetForm
+            handleChange
         }) => (
             <form
                 className={'col-12 ' + styles.writingContainer}
@@ -284,7 +306,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                             <div className={styles.wriritngTitle}>{type === 'general_task_1' ? 'Gen Task 1' : 'Task 2'} </div>
 
                             <div className={styles.writingSecondTitle}>
-                                You should spend about 20 minutes on this task
+                                You should spend about {type === 'general_task_1' ? '20' : '40'} minutes on this task
                             </div>
 
                             <div className={styles.writingInputTitle}>Write about following topic :</div>
@@ -302,6 +324,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                     className={styles.topicInput}
                                                     onChange={handleChange}
                                                     placeHolder="Type your topic here..."
+                                                    secondError
                                                     textarea
                                                     textarea_name='topic'
                                                     textarea_value={values.topic}
@@ -338,13 +361,14 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                             </div>
                             }
 
-                            <div className={styles.writingInputTitle}>Write at least 150 words.</div>
+                            <div className={styles.writingInputTitle}>Write at least  {type === 'general_task_1' ? '150' : '250'} words.</div>
 
                             <div className={styles.bodyInputContainer}>
                                 <Input
                                     className={styles.topicInput}
                                     onChange={handleChange}
                                     placeHolder="Type here..."
+                                    secondError
                                     textarea
                                     textarea_name='body'
                                     textarea_value={values.body}
@@ -389,7 +413,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
                 <Modal
                     footer={null}
-                    title="Add essay error" open={isModalOpen} onCancel={handleCancel}>
+                    title={modalTitle} open={isModalOpen} onCancel={handleCancel}>
                     <div className={styles.modalCard}> {modalContent}</div>
                 </Modal>
 
@@ -399,5 +423,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 };
 
 const AcademicTask: React.FC<{}> = () => {
-    return <div></div>
+    return <div>
+        hihi
+    </div>
 };
