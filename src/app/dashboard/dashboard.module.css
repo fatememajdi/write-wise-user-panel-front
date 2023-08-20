@@ -312,7 +312,7 @@
     overflow: hidden;
     z-index: 2;
 }
-
+/* 
 .topTabBarContainerAnimation {
     width: 100% !important;
     display: flex;
@@ -324,7 +324,7 @@
     animation-fill-mode: forwards;
     overflow: hidden;
     z-index: 2;
-}
+} */
 
 .essayContainer {
     display: flex;
@@ -333,7 +333,7 @@
     padding-bottom: 100px;
 }
 
-@keyframes example {
+/* @keyframes example {
     from {
         top: 16px;
     }
@@ -341,7 +341,7 @@
     to {
         top: 810px;
     }
-}
+} */
 
 .topResponsiveTabBar {
     display: none;

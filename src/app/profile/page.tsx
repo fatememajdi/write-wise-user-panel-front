@@ -17,6 +17,7 @@ import styles from './profile.module.css';
 import { MdOutlineArrowBackIosNew, MdModeEditOutline } from 'react-icons/md';
 import { Camera, Chat, Chat2, CloseButton, MobileCloseButton } from '../../../public';
 import { HiCheck } from 'react-icons/hi';
+import { RxExit } from 'react-icons/rx';
 
 //-------------------------------------components
 import ProfileCardBackground from "@/components/backgrounds/profileCardBackground/profileCardBackground";
@@ -120,14 +121,21 @@ const Profile: React.FC = () => {
                 priority
                 loading="eager"
             />
-            <a
+            {/* <a
                 onClick={() => {
                     if (currentStepIndex > 0) goTo(currentStepIndex - 1);
                     else router.back();
                 }}
                 className={styles.backcard}>
                 <MdOutlineArrowBackIosNew /> Back
-            </a>
+            </a> */}
+
+            <button
+                aria-label="logout button"
+            >
+                <RxExit /> Log out
+            </button>
+
         </div>
 
         {/* ------------------------------------------------------------------------mobile header */}
@@ -140,6 +148,7 @@ const Profile: React.FC = () => {
                 className={styles.responsiveBackcard}>
                 <MdOutlineArrowBackIosNew /> Back
             </a>
+
             <Image
                 className={styles.responsiveLogo}
                 src="/logo3.svg"

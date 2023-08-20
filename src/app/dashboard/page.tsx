@@ -66,13 +66,9 @@ interface topic {
 };
 
 const Dashboard: React.FC = () => {
-    const isMobile = useMediaQuery({
-        query: "(max-width: 500px)"
-    });
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
-    const isMac = useMediaQuery({
-        query: "(max-width: 1440px)"
-    });
+    const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
 
     let divRef: any;
     if (typeof document !== 'undefined')
@@ -135,7 +131,7 @@ const Dashboard: React.FC = () => {
                 id: id
             }
         }).then(async (res) => {
-            changeTopics(topics.filter(item => item.id !== id));
+            await changeTopics(topics.filter(item => item.id !== id));
             changeTabBarLoc(false);
             changeEndAnimation(false);
             setEssaies([]);
@@ -155,7 +151,8 @@ const Dashboard: React.FC = () => {
                 id: id,
                 page: essaies.length + 1,
                 pageSize: 1
-            }
+            },
+            fetchPolicy: "no-cache"
         }).then(async (res) => {
             if (res.data.getUserEssay.essaies.length != 0) {
                 await setEssaies([...essaies, ...res.data.getUserEssay.essaies]);
@@ -177,6 +174,7 @@ const Dashboard: React.FC = () => {
                 page: topics.length + 1,
                 pageSize: topics.length === 0 ? 6 : 1
             },
+            fetchPolicy: "no-cache"
         }).then(async (res) => {
             if (res.data.getUserTopics.userTopics.length != 0) {
                 await changeTopics([...topics, ...res.data.getUserTopics.userTopics]);
@@ -199,7 +197,9 @@ const Dashboard: React.FC = () => {
                 page: 1,
                 pageSize: 6
             },
+            fetchPolicy: "no-cache"
         }).then(async (res) => {
+            console.log(res);
             await changeTopics(res.data.getUserTopics.userTopics);
         }).catch((err) => {
             console.log("get user topics error : ", err);
@@ -288,23 +288,6 @@ const Dashboard: React.FC = () => {
         }
     };
 
-    const showEssayButtonAnimation = {
-        hidden: {
-            width: 0,
-            opacity: 0,
-            transition: {
-                duration: 0.2,
-            }
-        },
-        show: {
-            width: 'auto',
-            opacity: 1,
-            transition: {
-                duration: 0.2,
-            }
-        }
-    };
-
     if (pageLoading)
         return <Loading />
     else
@@ -343,17 +326,18 @@ const Dashboard: React.FC = () => {
                                     loading="eager"
                                     priority
                                 />
-                                <div className={'col-12 ' + styles.tabsContainer}>
+
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 2.3 }}
+                                    className={'col-12 ' + styles.tabsContainer}>
                                     <div className={'col-12 ' + styles.newEssayContainer}>
-                                        <motion.div
-                                            variants={showEssayButtonAnimation}
-                                            initial='hidden'
-                                            animate='show'
-                                            exit='hidden'
-                                            aria-label="new essay button"
+                                        <button
                                             onClick={async () => NewEssay()}
                                             className={styles.newEssayButton}><AiOutlinePlus className={styles.plusIcon} />New essay
-                                        </motion.div>
+                                        </button>
                                         <button
                                             aria-label="close drawer button"
                                             onClick={() => setIsOpen(false)}
@@ -381,8 +365,13 @@ const Dashboard: React.FC = () => {
                                             Task 2</button>
 
                                     </div>
-                                </div>
-                                <div className={'col-12 ' + styles.drawerContent}>
+                                </motion.div>
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 2.3 }}
+                                    className={'col-12 ' + styles.drawerContent}>
                                     {topicsLoading ?
                                         <Loading style={{ height: '100%', minHeight: 0 }} />
                                         :
@@ -391,8 +380,13 @@ const Dashboard: React.FC = () => {
                                             HandleDelete={DeleteTopic} type={topicsType}
                                         />
                                     }
-                                </div>
-                                <div className={'col-12 ' + styles.drawerFooterContainer}>
+                                </motion.div>
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 2.3 }}
+                                    className={'col-12 ' + styles.drawerFooterContainer}>
                                     <button
                                         aria-label="menu button"
                                         onClick={handlePopOverOpen}
@@ -403,7 +397,7 @@ const Dashboard: React.FC = () => {
                                     <div className={styles.drawerFooterText}>
                                         Welcome  {userName ? userName : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}
                                     </div>
-                                </div>
+                                </motion.div>
                             </motion.div>
                             :
                             <motion.div
@@ -487,27 +481,35 @@ const Dashboard: React.FC = () => {
                         style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
                         className={styles.dashboardContentRightContainer}>
 
-                        <div
-                            style={endAnimation ? { display: 'none' } : { display: 'flex' }}
-                            className={tabBarLoc ? styles.topTabBarContainerAnimation : styles.topTabBarContainer}>
-                            <div className={styles.topTabBarCard}>
-                                {
-                                    tabBarItems.map((item, index) =>
-                                        <div
-                                            style={{ cursor: 'context-menu' }}
-                                            className={0 === index && !tabBarLoc ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard
-                                                : styles.topTabBarItemCard}
-                                            key={index} >
-                                            <span
-                                                style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
-                                            {!item.active && <Lock className={styles.lockIcon} />}
-                                        </div>
-                                    )
-                                }
-                            </div>
+                        {
+                            !endAnimation &&
+                            <motion.div
+                                className={styles.topTabBarContainer}
+                                animate={{ y: tabBarLoc ? 810 : 0 }}
+                                transition={{ type: "spring", duration: 2 }}
+                            >
+                                {/* <div
+                                style={endAnimation ? { display: 'none' } : { display: 'flex' }}
+                                className={tabBarLoc ? styles.topTabBarContainerAnimation : styles.topTabBarContainer}> */}
+                                <div className={styles.topTabBarCard}>
+                                    {
+                                        tabBarItems.map((item, index) =>
+                                            <div
+                                                style={{ cursor: 'context-menu' }}
+                                                className={0 === index && !tabBarLoc ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard
+                                                    : styles.topTabBarItemCard}
+                                                key={index} >
+                                                <span
+                                                    style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
+                                                {!item.active && <Lock className={styles.lockIcon} />}
+                                            </div>
+                                        )
+                                    }
+                                </div>
 
-                        </div>
-
+                                {/* </div> */}
+                            </motion.div>
+                        }
                         <div
                             className={'col-12 ' + styles.essayContainer}>
                             {step}
@@ -518,11 +520,11 @@ const Dashboard: React.FC = () => {
                 </div>
                 {/* //-------------------------------------------------------------dashboard content */}
 
-            </main>
+            </main >
 
             <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose} />
 
-        </div>
+        </div >
 };
 
 export default Dashboard;

@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
+import Typewriter from 'typewriter-effect';
 
 //--------------------------------------styles
 import styles from './task.module.css';
@@ -19,6 +20,7 @@ import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
 const Input = lazy(() => import('@/components/input/input'));
 const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
+import { SplitText } from "@/components/Untitled";
 const Text = lazy(() => import("@/components/text/text"));
 
 //--------------------------------------icons
@@ -70,6 +72,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [loading, changeLoading] = React.useState<boolean>(false);
+    const [essayLoading, changeEssayLoading] = React.useState<boolean>(false);
     const [deleteLoading, changeDeleteLoading] = React.useState<boolean>(false);
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
@@ -131,6 +134,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
     async function GetScores(essaies: Essay[]) {
         let newEssay: Essay[] = essaies;
+        let score: number = 0;
         await Promise.all([
             client.mutate({
                 mutation: SCORE_TASK_RESPONSE,
@@ -138,9 +142,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     id: newEssay[0].id
                 }
             }).then(async (res) => {
+                console.log(res);
                 newEssay[0].taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
                 newEssay[0].taskAchievementSummery = res.data.scoreTaskResponse.taskAchievementSummery;
-                newEssay[0].overallBandScore = res.data.scoreTaskResponse.overallBandScore;
+                // newEssay[0].overallBandScore = newEssay[0].overallBandScore + res.data.scoreTaskResponse.overallBandScore;
+                score = score + res.data.scoreTaskResponse.taskAchievementScore;
             }),
 
             client.mutate({
@@ -149,9 +155,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     id: newEssay[0].id
                 }
             }).then(async (res) => {
+                console.log(res);
                 newEssay[0].coherenceAndCohesionScore = res.data.scoreCoherence.coherenceAndCohesionScore;
                 newEssay[0].coherenceAndCohesionSummery = res.data.scoreCoherence.coherenceAndCohesionSummery;
-                newEssay[0].overallBandScore = res.data.scoreCoherence.overallBandScore;
+                // newEssay[0].overallBandScore = newEssay[0].overallBandScore + res.data.scoreCoherence.overallBandScore;
+                score = score + res.data.scoreCoherence.coherenceAndCohesionScore;
             }),
 
             client.mutate({
@@ -160,9 +168,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     id: newEssay[0].id
                 }
             }).then(async (res) => {
+                console.log(res);
                 newEssay[0].lexicalResourceScore = res.data.scoreLexical.lexicalResourceScore;
                 newEssay[0].lexicalResourceSummery = res.data.scoreLexical.lexicalResourceSummery;
-                newEssay[0].overallBandScore = res.data.scoreLexical.overallBandScore;
+                // newEssay[0].overallBandScore = newEssay[0].overallBandScore + res.data.scoreLexical.overallBandScore;
+                score = score + res.data.scoreLexical.lexicalResourceScore;
             }),
 
             client.mutate({
@@ -171,15 +181,18 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     id: newEssay[0].id
                 }
             }).then(async (res) => {
+                console.log(res);
                 newEssay[0].grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
                 newEssay[0].grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
-                newEssay[0].overallBandScore = res.data.scoreGrammatical.overallBandScore;
+                // newEssay[0].overallBandScore = newEssay[0].overallBandScore + res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
+                score = score + res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
             }),
         ]).catch(async (err) => {
             await changeModalTitle('Get essay score error');
             await changeModalContent(JSON.stringify(err.message));
             showModal();
         }).then(() => {
+            newEssay[0].overallBandScore = score / 4;
             setEssaies(newEssay);
         })
     }
@@ -194,7 +207,10 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         else
             id = await SelectTopic(topic);
 
+        await changeLoading(false);
+
         if (id != null) {
+            changeEssayLoading(true);
             await client.mutate({
                 mutation: ADD_ESSAY,
                 variables: {
@@ -202,29 +218,27 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     body: body
                 }
             }).then(async (res) => {
-                await changeLoading(false);
-                try {
-                    await setEssaies([{
-                        id: res.data.finishEssay.id,
-                        essay: res.data.finishEssay.essay,
-                        date: res.data.finishEssay.date
+                await setEssaies([{
+                    id: res.data.finishEssay.id,
+                    essay: res.data.finishEssay.essay,
+                    date: res.data.finishEssay.date
 
-                    }, ...essaies]);
-                } finally {
-                    changeTabBarLoc(true);
-                    setTimeout(() => {
-                        changeEndAnimation(true);
-                        // changeFirstEssayLoading(true);
-                    }, 1000);
+                }, ...essaies]);
+                
+                changeEssayLoading(false);
+                changeTabBarLoc(true);
+                setTimeout(() => {
+                    changeEndAnimation(true);
+                    // changeFirstEssayLoading(true);
+                }, 1000);
+                await GetScores([{
+                    id: res.data.finishEssay.id,
+                    essay: res.data.finishEssay.essay,
+                    date: res.data.finishEssay.date
 
-                    await GetScores([{
-                        id: res.data.finishEssay.id,
-                        essay: res.data.finishEssay.essay,
-                        date: res.data.finishEssay.date
+                }, ...essaies]);
+                changeCcurrentId(id);
 
-                    }, ...essaies]);
-                    changeCcurrentId(id);
-                }
             }).catch(async (err) => {
                 await changeModalTitle('Add essay error');
                 await changeModalContent(JSON.stringify(err.message));
@@ -273,7 +287,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             topic: generatedTopic ? generatedTopic.body : '',
             body: ''
         }}
-        validationSchema={EssayValidationSchema}
+        // validationSchema={EssayValidationSchema}
         enableReinitialize
         onSubmit={async (values, { resetForm }) => {
             await AddNewEssay(values.topic, values.body);
@@ -319,20 +333,33 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                             <Loading style={{ height: 250, minHeight: 0 }} />
                                             :
                                             <div className={styles.topicInputContainer}>
-                                                <Input
-                                                    style={{ width: '70%' }}
-                                                    className={styles.topicInput}
-                                                    onChange={handleChange}
-                                                    placeHolder="Type your topic here..."
-                                                    secondError
-                                                    textarea
-                                                    textarea_name='topic'
-                                                    textarea_value={values.topic}
-                                                    textarea_error={errors.topic && touched.topic && errors.topic}
-                                                />
+                                                {
+                                                    generateWriting && !editedGeneratedTopic ?
+                                                        <div className={styles.generatedWritingCard}>
+                                                            <Typewriter
+                                                                options={{ delay: 40 }}
+                                                                onInit={(typewriter) => {
+                                                                    typewriter.typeString(JSON.stringify(SplitText(values.topic))).start();
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        :
+                                                        <Input
+                                                            style={{ width: '70%' }}
+                                                            className={styles.topicInput}
+                                                            onChange={handleChange}
+                                                            placeHolder="Type your topic here..."
+                                                            secondError
+                                                            textarea
+                                                            textarea_name='topic'
+                                                            textarea_value={values.topic}
+                                                            textarea_error={errors.topic && touched.topic && errors.topic}
+                                                        />
+                                                }
                                                 <button
                                                     aria-label="edit tipic"
                                                     onClick={() => {
+                                                        changeEditedGeneratedTopic(false);
                                                         changeGenerateWriting(true);
                                                         GenerateTopic(setFieldValue);
                                                     }}
@@ -406,7 +433,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                         >
                             {
                                 essaies.map((essay, index) => <EssayCard key={index} essay={essay} setFieldValue={setFieldValue}
-                                    divRef={divRef} handleDelete={DeleteEssay} />)
+                                    divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} />)
                             }
                         </InfiniteScroll>
                 }

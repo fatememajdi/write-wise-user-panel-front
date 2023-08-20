@@ -33,15 +33,24 @@ const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, ti
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
     >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
+        <DialogTitle
+            style={{ backgroundColor: '#626E7E', color: '#F3F3F3' }}>{title}</DialogTitle>
+        <DialogContent
+            style={{ backgroundColor: '#626E7E' }}>
+            <DialogContentText
+                style={{ color: '#F3F3F3' }}
+                id="alert-dialog-slide-description">
                 {dialog}
             </DialogContentText>
         </DialogContent>
-        <DialogActions>
-            <Button onClick={handleClose}>Cancle</Button>
-            <Button onClick={handleDelete}>Delete</Button>
+        <DialogActions
+            style={{ backgroundColor: '#626E7E' }}>
+            <Button
+                style={{ color: '#252525' }}
+                onClick={handleClose}>Cancle</Button>
+            <Button
+                style={{ color: '#252525' }}
+                onClick={handleDelete}>Delete</Button>
         </DialogActions>
     </Dialog>
 };

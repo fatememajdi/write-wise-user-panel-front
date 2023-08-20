@@ -49,7 +49,7 @@
     color: #252525 !important;
     font-size: 20px !important;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 700;
     line-height: normal;
 }
 
@@ -86,7 +86,7 @@
     color: #252525 !important;
     font-size: 20px !important;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 700;
     line-height: normal;
     padding: 15px 52px 55px 18px !important;
 }
@@ -197,6 +197,35 @@
     font-weight: 400;
 }
 
+.generatedWritingCard {
+    border: solid 1px #132740;
+    display: flex;
+    width: 70%;
+    height: 250px;
+    border-radius: 8px;
+    padding: 15px 52px 55px 18px;
+    overflow-y: auto;
+    color: #252525 !important;
+    font-size: 20px !important;
+    font-style: normal;
+    font-weight: 700;
+    margin-top: 26px;
+    line-height: normal;
+}
+
+.generatedWritingCard::-webkit-scrollbar {
+    /* display: none; */
+    width: 8px;
+    background-color: #D9D9D9;
+    border-radius: 33px;
+}
+
+.generatedWritingCard::-webkit-scrollbar-thumb {
+    width: 8px;
+    background-color: #12263E;
+    border-radius: 33px;
+}
+
 @media(max-width: 1440px) {
     .writingContainer {
         padding: 0px 27px 100px 22px;
@@ -263,6 +292,14 @@
         margin: 15px 0px 0px 0px !important;
         width: 100%;
         font-size: 16px !important;
+    }
+
+    .generatedWritingCard {
+        height: fit-content;
+        font-size: 13px !important;
+        font-weight: 400;
+        padding: 15px 32px 55px 18px;
+        width: 100%;
     }
 
     .generateButton {
