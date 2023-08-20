@@ -94,7 +94,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     async function GenerateTopic(setFieldValue: any) {
         changeGenerateWritingTopicLoading(true);
         await client.query({
-            query: type === 'general_task_1' ? GET_RANDOM_GENERAL_TASK1_WRITING : GET_RANDOM_GENERAL_TASK2_WRITING
+            query: type === 'general_task_1' ? GET_RANDOM_GENERAL_TASK1_WRITING : GET_RANDOM_GENERAL_TASK2_WRITING,
+            fetchPolicy: "no-cache"
         }).then(async (res) => {
             await changeGeneratedTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body });
             setFieldValue('topic', res.data.getRandomWriting.body);
@@ -224,7 +225,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     date: res.data.finishEssay.date
 
                 }, ...essaies]);
-                
+
                 changeEssayLoading(false);
                 changeTabBarLoc(true);
                 setTimeout(() => {
