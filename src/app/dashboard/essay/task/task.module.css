@@ -243,6 +243,10 @@
         font-size: 16px;
     }
 
+    .generatedWritingCard{
+        font-size: 16px !important;
+    }
+
     .selectedTopcCard {
         font-size: 16px !important;
     }
