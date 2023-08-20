@@ -317,10 +317,10 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                 { title: 'WWAI Tutor', active: false, lock: true }
                             ]} selectedItem={0} className={styles.topSelect} />
 
-                            <div className={styles.wriritngTitle}>{type === 'general_task_1' ? 'Gen Task 1' : 'Task 2'} </div>
+                            <div className={styles.wriritngTitle}>{type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'} </div>
 
                             <div className={styles.writingSecondTitle}>
-                                You should spend about {type === 'general_task_1' ? '20' : '40'} minutes on this task
+                                You should spend about {type == 'general_task_1' ? '20' : '40'} minutes on this task
                             </div>
 
                             <div className={styles.writingInputTitle}>Write about following topic :</div>
