@@ -195,6 +195,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         }).then(() => {
             newEssay[0].overallBandScore = score / 4;
             setEssaies(newEssay);
+            handleNewTopic();
         })
     }
 
@@ -212,6 +213,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
         if (id != null) {
             changeEssayLoading(true);
+            changeTabBarLoc(true);
+            setTimeout(() => {
+                changeEndAnimation(true);
+                // changeFirstEssayLoading(true);
+            }, 1000);
             await client.mutate({
                 mutation: ADD_ESSAY,
                 variables: {
@@ -225,13 +231,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     date: res.data.finishEssay.date
 
                 }, ...essaies]);
-
                 changeEssayLoading(false);
-                changeTabBarLoc(true);
-                setTimeout(() => {
-                    changeEndAnimation(true);
-                    // changeFirstEssayLoading(true);
-                }, 1000);
                 await GetScores([{
                     id: res.data.finishEssay.id,
                     essay: res.data.finishEssay.essay,
@@ -340,7 +340,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                             <Typewriter
                                                                 options={{ delay: 40 }}
                                                                 onInit={(typewriter) => {
-                                                                    typewriter.typeString(JSON.stringify(SplitText(values.topic))).start();
+                                                                    typewriter.typeString(JSON.stringify(SplitText(values.topic)).slice(1, JSON.stringify(SplitText(values.topic)).length - 1)).start();
                                                                 }}
                                                             />
                                                         </div>

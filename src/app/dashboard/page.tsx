@@ -267,7 +267,14 @@ const Dashboard: React.FC = () => {
     };
 
     async function handleNewTopic(topic: Topic) {
-        await changeTopics([topic, ...topics]);
+        if (topic)
+            await changeTopics([topic, ...topics]);
+        else {
+            changeTopicsLoading(true);
+            await changeTopics([]);
+            await GetTopicsList();
+            changeTopicsLoading(false);
+        }
     };
 
     const showAnimation = {
@@ -352,6 +359,8 @@ const Dashboard: React.FC = () => {
                                             Gen Task 1</button>
 
                                         <button
+                                            style={{ cursor: 'unset', opacity: 0.6 }}
+                                            disabled={true}
                                             aria-label="academic task1 button"
                                             onClick={() => SelectType('academic_task_1')}
                                             className={topicsType === 'academic_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
