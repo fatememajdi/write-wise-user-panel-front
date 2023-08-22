@@ -40,7 +40,7 @@
     max-width: 70%;
     display: flex;
     flex-direction: column;
-    /* line-height: 16px; */
+    line-height: 12px;
 }
 
 .taskCardTitle h5 {
@@ -65,7 +65,7 @@
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
-    margin-top: 20px;
+    /* margin-top: 5px; */
     line-height: 12px;
 }
 

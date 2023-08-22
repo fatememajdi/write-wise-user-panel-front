@@ -59,9 +59,10 @@ const tabBarItems = [
     },
 ];
 
-interface topic {
+type topic = {
     id: string,
-    body: string
+    body: string,
+    type: string
 };
 
 const Dashboard: React.FC = () => {
@@ -186,6 +187,7 @@ const Dashboard: React.FC = () => {
     };
 
     async function SelectType(type: string) {
+        setType(type);
         changeTopicsLoading(true);
         await setTopicsType(type);
         changeMoreTopics(true);
@@ -220,7 +222,8 @@ const Dashboard: React.FC = () => {
 
     async function GetProfile() {
         await client.query({
-            query: GET_PROFILE
+            query: GET_PROFILE,
+            fetchPolicy: "no-cache"
         }).then(async (res) => {
             setuserName(res.data.getUserProfile.firstName + ' ' + res.data.getUserProfile.lastName);
         }).catch((err) => {
@@ -324,6 +327,7 @@ const Dashboard: React.FC = () => {
                                 exit='hidden'
                                 className={styles.dashboardLeftCard}>
                                 <Image
+                                    onClick={() => router.push('/')}
                                     className={styles.logo}
                                     src="/logo3.svg"
                                     alt="Logo"
@@ -337,7 +341,7 @@ const Dashboard: React.FC = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    transition={{ duration: 2.3 }}
+                                    transition={{ duration: 1 }}
                                     className={'col-12 ' + styles.tabsContainer}>
                                     <div className={'col-12 ' + styles.newEssayContainer}>
                                         <button
@@ -378,7 +382,7 @@ const Dashboard: React.FC = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    transition={{ duration: 2.3 }}
+                                    transition={{ duration: 1.5 }}
                                     className={'col-12 ' + styles.drawerContent}>
                                     {topicsLoading ?
                                         <Loading style={{ height: '100%', minHeight: 0 }} />
@@ -393,7 +397,7 @@ const Dashboard: React.FC = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    transition={{ duration: 2.3 }}
+                                    transition={{ duration: 1 }}
                                     className={'col-12 ' + styles.drawerFooterContainer}>
                                     <button
                                         aria-label="menu button"

@@ -9,6 +9,8 @@ import client from '@/config/applloAuthorizedClient';
 import uploadFileClient from "@/config/appolloUploadFileClient";
 import { useRouter } from "next/navigation";
 import { Modal } from 'antd';
+import { useSession } from "next-auth/react";
+import { signOut } from 'next-auth/react';
 
 //-------------------------------------styles
 import styles from './profile.module.css';
@@ -40,6 +42,14 @@ const Profile: React.FC = () => {
         [<UserInformationCard user={profile} goTo={GoTo} />, <EditUserCard goTo={GoTo} UpdateProfile={UpdateProfile} user={profile} />]);
     const router = useRouter();
     const [inputImage, setInputImage] = React.useState<File>();
+    const { status } = useSession({
+        required: true, onUnauthenticated() {
+            if (localStorage.getItem('user'))
+                return
+            else
+                router.push('/signIn');
+        },
+    });
 
     const onChangePic = async (e: any) => {
         await setInputImage(e.target.files[0]);
@@ -48,7 +58,8 @@ const Profile: React.FC = () => {
 
     async function GetProfile() {
         await client.query({
-            query: GET_PROFILE
+            query: GET_PROFILE,
+            fetchPolicy: "no-cache"
         }).then(async (res) => {
             setprofile(res.data.getUserProfile);
             setLoading(false);
@@ -131,9 +142,16 @@ const Profile: React.FC = () => {
             </a> */}
 
             <button
+                onClick={() => {
+                    setLoading(true);
+                    localStorage.clear();
+                    if (status === 'authenticated')
+                        signOut();
+                }}
+                className={styles.logOutButton}
                 aria-label="logout button"
             >
-                <RxExit /> Log out
+                <RxExit className={styles.exitIcon} /> Log out
             </button>
 
         </div>

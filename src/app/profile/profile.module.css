@@ -34,6 +34,24 @@
     text-decoration: none !important;
 }
 
+.logOutButton {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    align-items: center;
+    background-color: #132740;
+    border-radius: 8px;
+    color: #F3F3F3;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    padding: 9px 30px !important;
+}
+
+.exitIcon {
+    margin-right: 16px;
+}
+
 .profileCard {
     height: 207px;
     width: 207px;

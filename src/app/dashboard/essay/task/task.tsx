@@ -30,9 +30,10 @@ import { MdEdit } from 'react-icons/md';
 //--------------------------------------types
 import { Essay } from '../../../../../types/essay';
 
-interface topic {
+type topic = {
     id: string,
-    body: string
+    body: string,
+    type: string
 }
 
 interface _props {
@@ -97,7 +98,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             query: type === 'general_task_1' ? GET_RANDOM_GENERAL_TASK1_WRITING : GET_RANDOM_GENERAL_TASK2_WRITING,
             fetchPolicy: "no-cache"
         }).then(async (res) => {
-            await changeGeneratedTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body });
+            await changeGeneratedTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body, type: res.data.getRandomWriting.type });
             setFieldValue('topic', res.data.getRandomWriting.body);
             changeGenerateWritingTopicLoading(false);
         }).catch(async (err) => {
@@ -318,10 +319,13 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                 { title: 'WWAI Tutor', active: false, lock: true }
                             ]} selectedItem={0} className={styles.topSelect} />
 
-                            <div className={styles.wriritngTitle}>{type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'} </div>
+                            <div className={styles.wriritngTitle}>{topic === undefined ? type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'
+                                : topic.type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'} </div>
 
                             <div className={styles.writingSecondTitle}>
-                                You should spend about {type == 'general_task_1' ? '20' : '40'} minutes on this task
+                                You should spend about {topic === undefined ? type == 'general_task_1' ? '20' : '40'
+                                    : topic.type == 'general_task_1' ? '20' : '40'
+                                } minutes on this task
                             </div>
 
                             <div className={styles.writingInputTitle}>Write about following topic :</div>
@@ -337,10 +341,26 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                 {
                                                     generateWriting && !editedGeneratedTopic ?
                                                         <div className={styles.generatedWritingCard}>
-                                                            <Typewriter
+                                                            {/* <Typewriter
                                                                 options={{ delay: 40 }}
                                                                 onInit={(typewriter) => {
                                                                     typewriter.typeString(JSON.stringify(SplitText(values.topic)).slice(1, JSON.stringify(SplitText(values.topic)).length - 1)).start();
+                                                                }}
+                                                            /> */}
+
+                                                            <Typewriter
+                                                                options={{ delay: 0 }}
+                                                                onInit={(typewriter) => {
+                                                                    JSON.stringify(SplitText(values.topic)).slice(1, JSON.stringify(SplitText(values.topic)).length - 1).split(/(\s)/).map((str: any, index: number) => {
+                                                                        if (index % 8 !== 0) {
+                                                                            typewriter.typeString(str)
+                                                                                .pauseFor(100);
+                                                                        } else {
+                                                                            typewriter.typeString(str)
+                                                                                .pauseFor(1000);
+                                                                        }
+                                                                        typewriter.start();
+                                                                    })
                                                                 }}
                                                             />
                                                         </div>
@@ -389,13 +409,16 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                             </div>
                             }
 
-                            <div className={styles.writingInputTitle}>Write at least  {type === 'general_task_1' ? '150' : '250'} words.</div>
+                            <div className={styles.writingInputTitle}>Write at least  {topic === undefined ? type === 'general_task_1' ? '150' : '250'
+                                : topic.type == 'general_task_1' ? '150' : '250'} words.</div>
 
                             <div className={styles.bodyInputContainer}>
                                 <Input
                                     className={styles.topicInput}
                                     onChange={handleChange}
-                                    placeHolder="Type here..."
+                                    placeHolder={topic === undefined ? type === 'general_task_1' ? 'Dear...' : "Type here..." :
+                                        topic.type == 'general_task_1' ? 'Dear...' : "Type here..."
+                                    }
                                     secondError
                                     textarea
                                     textarea_name='body'

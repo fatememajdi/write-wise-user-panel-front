@@ -17,6 +17,7 @@
 
 .logo {
     margin: 32px auto;
+    cursor: pointer;
 }
 
 .tabsContainer {
