@@ -13,7 +13,8 @@ interface _props {
     open: boolean,
     handleDelete: any,
     title: string,
-    dialog: string
+    dialog: string,
+    deleteButton?: string
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -25,7 +26,7 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, title, dialog }) => {
+const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, title, dialog, deleteButton }) => {
     return <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -50,7 +51,7 @@ const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, ti
                 onClick={handleClose}>Cancle</Button>
             <Button
                 style={{ color: '#252525' }}
-                onClick={handleDelete}>Delete</Button>
+                onClick={handleDelete}>{deleteButton ? deleteButton : 'Delete'}</Button>
         </DialogActions>
     </Dialog>
 };

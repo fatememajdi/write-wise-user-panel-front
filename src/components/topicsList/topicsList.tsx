@@ -10,7 +10,7 @@ import { Topic } from "../../../types/topic";
 
 //-------------------------------------------components
 const Loading = dynamic(() => import("@/components/loading/loading"));
-const DialogComponent = dynamic(() => import("../dialog/dialog"))
+const DialogComponent = dynamic(() => import("../dialog/dialog"));
 
 //-------------------------------------------icons
 import { Empty } from "antd";

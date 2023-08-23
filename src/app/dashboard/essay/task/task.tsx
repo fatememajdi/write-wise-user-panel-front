@@ -36,7 +36,7 @@ type topic = {
     type: string
 }
 
-interface _props {
+type _props = {
     changeTabBarLoc: any
     changeEndAnimation: any,
     endAnimation: boolean,
@@ -141,13 +141,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             client.mutate({
                 mutation: SCORE_TASK_RESPONSE,
                 variables: {
-                    id: newEssay[0].id
+                    id: newEssay[0].id 
                 }
             }).then(async (res) => {
-                console.log(res);
                 newEssay[0].taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
                 newEssay[0].taskAchievementSummery = res.data.scoreTaskResponse.taskAchievementSummery;
-                // newEssay[0].overallBandScore = newEssay[0].overallBandScore + res.data.scoreTaskResponse.overallBandScore;
                 score = score + res.data.scoreTaskResponse.taskAchievementScore;
             }),
 
@@ -157,10 +155,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     id: newEssay[0].id
                 }
             }).then(async (res) => {
-                console.log(res);
                 newEssay[0].coherenceAndCohesionScore = res.data.scoreCoherence.coherenceAndCohesionScore;
                 newEssay[0].coherenceAndCohesionSummery = res.data.scoreCoherence.coherenceAndCohesionSummery;
-                // newEssay[0].overallBandScore = newEssay[0].overallBandScore + res.data.scoreCoherence.overallBandScore;
                 score = score + res.data.scoreCoherence.coherenceAndCohesionScore;
             }),
 
@@ -170,10 +166,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     id: newEssay[0].id
                 }
             }).then(async (res) => {
-                console.log(res);
                 newEssay[0].lexicalResourceScore = res.data.scoreLexical.lexicalResourceScore;
                 newEssay[0].lexicalResourceSummery = res.data.scoreLexical.lexicalResourceSummery;
-                // newEssay[0].overallBandScore = newEssay[0].overallBandScore + res.data.scoreLexical.overallBandScore;
                 score = score + res.data.scoreLexical.lexicalResourceScore;
             }),
 
@@ -183,10 +177,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     id: newEssay[0].id
                 }
             }).then(async (res) => {
-                console.log(res);
                 newEssay[0].grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
                 newEssay[0].grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
-                // newEssay[0].overallBandScore = newEssay[0].overallBandScore + res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
                 score = score + res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
             }),
         ]).catch(async (err) => {
@@ -195,6 +187,22 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             showModal();
         }).then(() => {
             newEssay[0].overallBandScore = score / 4;
+            if (!newEssay[0].taskAchievementScore) {
+                newEssay[0].taskAchievementScore = -1;
+                newEssay[0].taskAchievementSummery = '';
+            };
+            if (!newEssay[0].coherenceAndCohesionScore) {
+                newEssay[0].coherenceAndCohesionScore = -1;
+                newEssay[0].coherenceAndCohesionSummery = '';
+            };
+            if (!newEssay[0].grammaticalRangeAndAccuracyScore) {
+                newEssay[0].grammaticalRangeAndAccuracyScore = -1;
+                newEssay[0].grammaticalRangeAndAccuracySummery = '';
+            };
+            if (!newEssay[0].lexicalResourceScore) {
+                newEssay[0].lexicalResourceScore = -1;
+                newEssay[0].lexicalResourceSummery = '';
+            };
             setEssaies(newEssay);
             handleNewTopic();
         })
@@ -352,7 +360,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                                 options={{ delay: 0 }}
                                                                 onInit={(typewriter) => {
                                                                     JSON.stringify(SplitText(values.topic)).slice(1, JSON.stringify(SplitText(values.topic)).length - 1).split(/(\s)/).map((str: any, index: number) => {
-                                                                        if (index % 8 !== 0) {
+                                                                        if (index % 10 !== 0) {
                                                                             typewriter.typeString(str)
                                                                                 .pauseFor(100);
                                                                         } else {
@@ -457,7 +465,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                         >
                             {
                                 essaies.map((essay, index) => <EssayCard key={index} essay={essay} setFieldValue={setFieldValue}
-                                    divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} />)
+                                    divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} />)
                             }
                         </InfiniteScroll>
                 }

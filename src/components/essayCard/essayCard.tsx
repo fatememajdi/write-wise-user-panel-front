@@ -1,6 +1,8 @@
 import React, { lazy } from "react";
 import ReactLoading from 'react-loading';
 import dynamic from 'next/dynamic';
+import client from "@/config/applloAuthorizedClient";
+import { useRouter } from "next/navigation";
 
 //--------------------------------------components
 import Loading from "@/components/loading/loading";
@@ -22,6 +24,7 @@ import { Essay } from "../../../types/essay";
 //----------------------------------------------components
 const DialogComponent = lazy(() => import("@/components/dialog/dialog"));
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
+import { SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_LEXICAL, SCORE_TASK_RESPONSE } from "@/config/graphql";
 
 const tabBarItems = [
     {
@@ -51,20 +54,22 @@ const tabBarItems = [
     },
 ];
 
-interface _props {
-    essay?: Essay,
-    setFieldValue?: any,
-    divRef?: any,
-    handleDelete?: any,
-    loading?: boolean
+type _props = {
+    essay: Essay,
+    setFieldValue: any,
+    divRef: any,
+    handleDelete: any,
+    loading?: boolean,
+    setEssaies: any,
+    essaies: Essay[]
 }
 
-const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading }) => {
+const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, setEssaies, essaies }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
-        [<EssayScore key={0} essay={essay} goTo={analysisStep} />,
+        [<EssayScore key={0} essay={essay} goTo={analysisStep} essaies={essaies} setEssaies={setEssaies} />,
         <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} />,
-        <EssayAnalysis key={1} essay={essay} />]);
+        <EssayAnalysis key={2} essay={essay} essaies={essaies} setEssaies={setEssaies} />]);
 
     function analysisStep() { goTo(2) };
 
@@ -115,7 +120,7 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
 
 export default EssayCard;
 
-const EssayBody: React.FC<{ essay?: Essay, setFieldValue?: any, handleDelete?: any, divRef?: any, setOpen?: any }> = ({ essay, setFieldValue, divRef, setOpen }) => {
+const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any, divRef?: any, setOpen: any }> = ({ essay, setFieldValue, divRef, setOpen }) => {
     return <div className={styles.writingEssayCard}>
         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
         <div className={styles.writingEssayText}>
@@ -145,16 +150,102 @@ const EssayBody: React.FC<{ essay?: Essay, setFieldValue?: any, handleDelete?: a
     </div>
 };
 
-const EssayScore: React.FC<{ essay?: Essay, goTo: any }> = ({ goTo, essay }) => {
+const EssayScore: React.FC<{ essay: Essay, setEssaies: any, essaies: Essay[], goTo: any }> = ({ goTo, essay, setEssaies, essaies }) => {
+    const router = useRouter();
+    async function GetTaskScore() {
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: SCORE_TASK_RESPONSE,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
+                Essay.taskAchievementSummery = res.data.scoreTaskResponse.taskAchievementSummery;
+                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+            };
+            setEssaies(Essaies);
+            router.refresh();
+        }).catch((err) => {
+            console.log('get score error : ', err);
+        });
+    };
+
+    async function GetCoherenceAndCohesionScore() {
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: SCORE_COHERENCE,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.coherenceAndCohesionScore = res.data.scoreCoherence.coherenceAndCohesionScore;
+                Essay.coherenceAndCohesionSummery = res.data.scoreCoherence.coherenceAndCohesionSummery;
+                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+            };
+            setEssaies(Essaies);
+            router.refresh();
+        }).catch((err) => {
+            console.log('get score error : ', err);
+        });
+    };
+
+    async function GetLexicalResourceScore() {
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: SCORE_LEXICAL,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.lexicalResourceScore = res.data.scoreLexical.lexicalResourceScore;
+                Essay.lexicalResourceSummery = res.data.scoreLexical.lexicalResourceSummery;
+                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+            };
+            setEssaies(Essaies);
+            router.refresh();
+
+        }).catch((err) => {
+            console.log('get score error : ', err);
+        });
+    };
+
+    async function GetGrammaticalRangeAndAccuracyScore() {
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: SCORE_GRAMMATICAL,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
+                Essay.grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
+                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+            };
+            await setEssaies(Essaies);
+            router.refresh();
+        }).catch((err) => {
+            console.log('get score error : ', err);
+        });
+    };
+
     return <div
         className={styles.writingScoreCard}>
         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
         <div className={styles.writingScoresContainer}>
             <div>
-                <ScoreCard title="Task Achievement" score={essay?.taskAchievementScore} />
-                <ScoreCard title="Coherence & Cohesion" score={essay?.coherenceAndCohesionScore} />
-                <ScoreCard title="Lexical resource" score={essay?.lexicalResourceScore} />
-                <ScoreCard title="Grammatical Range and accuracy" score={essay?.grammaticalRangeAndAccuracyScore} />
+                <ScoreCard key={0} title="Task Achievement" score={essay?.taskAchievementScore} getScore={GetTaskScore} />
+                <ScoreCard key={1} title="Coherence & Cohesion" score={essay?.coherenceAndCohesionScore} getScore={GetCoherenceAndCohesionScore} />
+                <ScoreCard key={2} title="Lexical resource" score={essay?.lexicalResourceScore} getScore={GetLexicalResourceScore} />
+                <ScoreCard key={3} title="Grammatical Range and accuracy" score={essay?.grammaticalRangeAndAccuracyScore} getScore={GetGrammaticalRangeAndAccuracyScore} />
             </div>
 
             <div className={styles.sliderContainer}>
@@ -173,33 +264,148 @@ const EssayScore: React.FC<{ essay?: Essay, goTo: any }> = ({ goTo, essay }) => 
     </div>
 };
 
-const EssayAnalysis: React.FC<{ essay?: Essay }> = ({ essay }) => {
+const EssayAnalysis: React.FC<{ essay: Essay, setEssaies: any, essaies: Essay[] }> = ({ essay, setEssaies, essaies }) => {
+    const router = useRouter();
+    async function GetTaskScore() {
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: SCORE_TASK_RESPONSE,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
+                Essay.taskAchievementSummery = res.data.scoreTaskResponse.taskAchievementSummery;
+                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+            };
+            setEssaies(Essaies);
+            router.refresh();
+        }).catch((err) => {
+            console.log('get score error : ', err);
+        });
+    };
+
+    async function GetCoherenceAndCohesionScore() {
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: SCORE_COHERENCE,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.coherenceAndCohesionScore = res.data.scoreCoherence.coherenceAndCohesionScore;
+                Essay.coherenceAndCohesionSummery = res.data.scoreCoherence.coherenceAndCohesionSummery;
+                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+            };
+            setEssaies(Essaies);
+            router.refresh();
+        }).catch((err) => {
+            console.log('get score error : ', err);
+        });
+    };
+
+    async function GetLexicalResourceScore() {
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: SCORE_LEXICAL,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.lexicalResourceScore = res.data.scoreLexical.lexicalResourceScore;
+                Essay.lexicalResourceSummery = res.data.scoreLexical.lexicalResourceSummery;
+                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+            };
+            setEssaies(Essaies);
+            router.refresh();
+
+        }).catch((err) => {
+            console.log('get score error : ', err);
+        });
+    };
+
+    async function GetGrammaticalRangeAndAccuracyScore() {
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: SCORE_GRAMMATICAL,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
+                Essay.grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
+                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+            };
+            await setEssaies(Essaies);
+            router.refresh();
+        }).catch((err) => {
+            console.log('get score error : ', err);
+        });
+    };
     return <div
         className={styles.writingScoreCard}>
         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
         <div className={styles.writingScoresContainer}>
             <div>
-                <ScoreSummeryCard title="Task Achievement Summery" summery={essay?.taskAchievementSummery} />
-                <ScoreSummeryCard title="Coherence & Cohesion Summery" summery={essay?.coherenceAndCohesionSummery} />
-                <ScoreSummeryCard title="Lexical resource summery" summery={essay?.lexicalResourceSummery} />
-                <ScoreSummeryCard title="Grammatical Range and accuracy summery" summery={essay?.grammaticalRangeAndAccuracySummery} />
+                <ScoreSummeryCard key={0} title="Task Achievement Summery" summery={essay?.taskAchievementSummery} getScore={GetTaskScore} />
+                <ScoreSummeryCard key={1} title="Coherence & Cohesion Summery" summery={essay?.coherenceAndCohesionSummery} getScore={GetCoherenceAndCohesionScore} />
+                <ScoreSummeryCard key={2} title="Lexical resource summery" summery={essay?.lexicalResourceSummery} getScore={GetLexicalResourceScore} />
+                <ScoreSummeryCard key={3} title="Grammatical Range and accuracy summery" summery={essay?.grammaticalRangeAndAccuracySummery} getScore={GetGrammaticalRangeAndAccuracyScore} />
             </div>
         </div>
     </div>
 
 };
 
-const ScoreCard: React.FC<{ title: string, score?: number }> = ({ title, score }) => {
+const ScoreCard: React.FC<{ title: string, score?: number, getScore: any }> = ({ title, score, getScore }) => {
+    const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
+
+    async function RefetchScore() {
+        setRefetchLoading(true);
+        typeof (getScore());
+        await getScore();
+        setRefetchLoading(false);
+    };
+
     return <div className={styles.writingScoreItemCard}>
-        {title}: {score ? score
-            : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}
+        {title}:{
+            refetchLoading || score === undefined ? <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />
+                : score <= 0 ? <div
+                    style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}
+                    onClick={() => RefetchScore()}>reload!</div>
+                    : score
+        }
     </div>
 }
 
 
-const ScoreSummeryCard: React.FC<{ title: string, summery?: string }> = ({ title, summery }) => {
+const ScoreSummeryCard: React.FC<{ title: string, summery?: string, getScore: any }> = ({ title, summery, getScore }) => {
+    const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
+
+    async function RefetchScore() {
+        setRefetchLoading(true);
+        typeof (getScore());
+        await getScore();
+        setRefetchLoading(false);
+    };
+
     return <div className={styles.writingScoreSummeryItemCard}>
-        {title}: <br /><span>{summery ? summery
-            : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}</span>
+        {title}: <br /><span>
+            {
+                refetchLoading || summery === undefined ? <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />
+                    : summery === '' ? <div
+                        style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}
+                        onClick={() => RefetchScore()}>reload!</div>
+                        : summery
+            }
+        </span>
     </div>
 }

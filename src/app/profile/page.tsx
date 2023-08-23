@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import client from '@/config/applloAuthorizedClient';
 import uploadFileClient from "@/config/appolloUploadFileClient";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import { Modal } from 'antd';
 import { useSession } from "next-auth/react";
 import { signOut } from 'next-auth/react';
@@ -23,17 +24,19 @@ import { RxExit } from 'react-icons/rx';
 
 //-------------------------------------components
 import ProfileCardBackground from "@/components/backgrounds/profileCardBackground/profileCardBackground";
-import Input from "@/components/input/input";
 import { GET_PROFILE, UPDATE_USER, UPLOAD_PROFILE_FILE } from "@/config/graphql";
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
 import { StopLoader } from "@/components/Untitled";
+const Loading = dynamic(() => import("@/components/loading/loading"), { ssr: false });
+const Input = dynamic(() => import("@/components/input/input"), { ssr: false });
+const DialogComponent = dynamic(() => import("../../components/dialog/dialog"), { ssr: false });
 
 //-------------------------------------types
 import { UserProfile } from "../../../types/profile";
-import Loading from "@/components/loading/loading";
 
 const Profile: React.FC = () => {
 
+    const [open, setOpen] = React.useState<boolean>(false);
     const [profile, setprofile] = React.useState<UserProfile>();
     const [loading, setLoading] = React.useState<boolean>(true);
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
@@ -115,6 +118,22 @@ const Profile: React.FC = () => {
         GetProfile();
     }, []);
 
+    function handleClose() {
+        setOpen(false);
+    };
+
+    async function LogOut() {
+        setLoading(true);
+        localStorage.clear();
+        if (status === 'authenticated')
+            signOut();
+    }
+
+    async function handleDelete() {
+        setOpen(false);
+        await LogOut();
+    }
+
     return <div className={'col-12 ' + styles.profileContainer}>
         {/* ------------------------------------------------------------------------desktop header */}
         <div className={'col-12 ' + styles.profileHeader}>
@@ -142,12 +161,7 @@ const Profile: React.FC = () => {
             </a> */}
 
             <button
-                onClick={() => {
-                    setLoading(true);
-                    localStorage.clear();
-                    if (status === 'authenticated')
-                        signOut();
-                }}
+                onClick={() => setOpen(true)}
                 className={styles.logOutButton}
                 aria-label="logout button"
             >
@@ -219,6 +233,10 @@ const Profile: React.FC = () => {
                     {step}
                 </div>
         }
+
+        <DialogComponent open={open} handleClose={handleClose} handleDelete={handleDelete}
+            title="Log out" dialog="Are you sure you want to log out?" deleteButton='Log out' />
+
         <Modal
             footer={null}
             title={"Update profile error"} open={isModalOpen} onCancel={handleCancel}>
