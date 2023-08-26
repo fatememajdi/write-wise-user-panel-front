@@ -19,7 +19,8 @@ interface props {
     textarea_name?: string,
     textarea_value?: string,
     textarea_error?: any,
-    secondError?: boolean
+    secondError?: boolean,
+    disable?: boolean
 };
 
 const Input: React.FC<props> = ({ ...props }) =>
@@ -39,6 +40,7 @@ const Input: React.FC<props> = ({ ...props }) =>
                 <div className={props.input_error ? styles.formSectionInput + ' ' + styles.formSectionInputError + ' ' + props.className
                     : styles.formSectionInput + ' ' + props.className}>
                     <input
+                        disabled={props.disable}
                         placeholder={props.placeHolder}
                         type={props.inputtype ? props.inputtype : 'text'}
                         name={props.input_name}
@@ -60,6 +62,7 @@ const Input: React.FC<props> = ({ ...props }) =>
                 : styles.formSectionInput}>
 
                 <textarea
+                    disabled={props.disable}
                     placeholder={props.placeHolder}
                     name={props.textarea_name}
                     onChange={props.onChange}

@@ -6,6 +6,7 @@ import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
+import { Typing, TypingStep } from "typing-effect-reactjs";
 
 //--------------------------------------styles
 import styles from './task.module.css';
@@ -20,7 +21,7 @@ import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
 const Input = lazy(() => import('@/components/input/input'));
 const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
-import { SplitText } from "@/components/Untitled";
+import { CountWords, SplitText } from "@/components/Untitled";
 const Text = lazy(() => import("@/components/text/text"));
 
 //--------------------------------------icons
@@ -72,6 +73,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
+    const [endTyping, changeEndTyping] = React.useState<boolean>(false);
+    const [cursor, changeCursor] = React.useState<string>('|');
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [essayLoading, changeEssayLoading] = React.useState<boolean>(false);
     const [deleteLoading, changeDeleteLoading] = React.useState<boolean>(false);
@@ -141,7 +144,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             client.mutate({
                 mutation: SCORE_TASK_RESPONSE,
                 variables: {
-                    id: newEssay[0].id 
+                    id: newEssay[0].id
                 }
             }).then(async (res) => {
                 newEssay[0].taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
@@ -349,15 +352,13 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                 {
                                                     generateWriting && !editedGeneratedTopic ?
                                                         <div className={styles.generatedWritingCard}>
-                                                            {/* <Typewriter
-                                                                options={{ delay: 40 }}
-                                                                onInit={(typewriter) => {
-                                                                    typewriter.typeString(JSON.stringify(SplitText(values.topic)).slice(1, JSON.stringify(SplitText(values.topic)).length - 1)).start();
-                                                                }}
-                                                            /> */}
 
                                                             <Typewriter
-                                                                options={{ delay: 0 }}
+                                                                options={{
+                                                                    delay: 0,
+                                                                    // cursor: cursor
+                                                                    // cursorClassName: endTyping ? 'Typewriter__cursor ' + styles.cursor : 'Typewriter__cursor'
+                                                                }}
                                                                 onInit={(typewriter) => {
                                                                     JSON.stringify(SplitText(values.topic)).slice(1, JSON.stringify(SplitText(values.topic)).length - 1).split(/(\s)/).map((str: any, index: number) => {
                                                                         if (index % 10 !== 0) {
@@ -368,9 +369,17 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                                                 .pauseFor(1000);
                                                                         }
                                                                         typewriter.start();
+                                                                    });
+                                                                    typewriter.callFunction(() => {
+                                                                        changeEndTyping(true);
+                                                                        changeCursor(' ')
                                                                     })
                                                                 }}
+
                                                             />
+
+
+
                                                         </div>
                                                         :
                                                         <Input
@@ -388,6 +397,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                 <button
                                                     aria-label="edit tipic"
                                                     onClick={() => {
+                                                        changeEndTyping(false);
                                                         changeEditedGeneratedTopic(false);
                                                         changeGenerateWriting(true);
                                                         GenerateTopic(setFieldValue);
@@ -422,6 +432,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
                             <div className={styles.bodyInputContainer}>
                                 <Input
+                                    disable={!endTyping}
                                     className={styles.topicInput}
                                     onChange={handleChange}
                                     placeHolder={topic === undefined ? type === 'general_task_1' ? 'Dear...' : "Type here..." :
@@ -433,6 +444,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                     textarea_value={values.body}
                                     textarea_error={errors.body && touched.body && errors.body}
                                 />
+                                {/* {CountWords(values.body)} */}
+                                {/* {values.body} */}
                                 <button
                                     type="submit"
                                     className={styles.scoreButton}>

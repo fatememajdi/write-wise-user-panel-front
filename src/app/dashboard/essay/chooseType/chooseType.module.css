@@ -39,6 +39,7 @@
     background-color: #626E7E;
     border-radius: 8px;
     cursor: pointer;
+    padding: 0px !important;
 }
 
 .typeCard :hover {

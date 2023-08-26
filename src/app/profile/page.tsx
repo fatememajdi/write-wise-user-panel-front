@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 import { Modal } from 'antd';
 import { useSession } from "next-auth/react";
 import { signOut } from 'next-auth/react';
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 
 //-------------------------------------styles
 import styles from './profile.module.css';
@@ -340,3 +341,26 @@ const EditUserCard: React.FC<{ goTo: any, UpdateProfile: any, user?: UserProfile
         )}
     </Formik>
 };
+
+export const getServerSideProps: GetServerSideProps<{
+    user: UserProfile
+}> = async () => {
+    let user: UserProfile = {};
+    await client.query({
+        query: GET_PROFILE,
+        fetchPolicy: "no-cache"
+    }).then(async (res) => {
+        console.log('sdkl', res);
+        user = res.data.getUserProfile;
+    }).catch((err) => {
+        console.log("get user profile error : ", err);
+    });
+    console.log('hgv', user);
+
+    return { props: { user } }
+};
+
+// export default function Page({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+//     console.log('iouho', user);
+//     return user;
+// };

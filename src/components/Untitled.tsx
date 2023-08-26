@@ -16,4 +16,15 @@ export function SplitText(text: string): Promise<string> {
     });
 
     return newText2;
-}
+};
+
+export function CountWords(text: string): Promise<string> {
+
+    let count: any = 0
+
+    text.split('a').map((word: string) => {
+        if (word !== 'a' && word !== 'the' && word !== 'an')
+            count++;
+    });
+    return count;
+};
