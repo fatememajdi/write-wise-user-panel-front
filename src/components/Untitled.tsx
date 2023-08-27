@@ -18,13 +18,19 @@ export function SplitText(text: string): Promise<string> {
     return newText2;
 };
 
-export function CountWords(text: string): Promise<string> {
+export function CountWords(text: string, message: boolean) {
+    var splits = text.split(/(\s+)/);
+    var splits = splits.filter(item => item != 'a' && item != 'A' && item != 'an' && item != 'An' && item != 'the' && item != 'The');
+    var words = splits.filter((x) => x.trim().length > 0);
+    var count: any = words.length as number;
 
-    let count: any = 0
-
-    text.split('a').map((word: string) => {
-        if (word !== 'a' && word !== 'the' && word !== 'an')
-            count++;
-    });
-    return count;
+    return <div style={{ fontSize: 16, color: count < 100 ? '#AB141D' : count < 150 ? '#FF8C00' : count < 200 ? 'green' : '#AB141D' }}>
+        {count}
+        {
+            message ?
+                count < 100 ? ' words error' : count < 150 ? ' words warning' : count < 200 ? ' words success' : ' words error'
+                :
+                ' words'
+        }
+    </div>;
 };

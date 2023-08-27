@@ -497,7 +497,7 @@ const Dashboard: React.FC = () => {
                             !endAnimation &&
                             <motion.div
                                 className={styles.topTabBarContainer}
-                                animate={{ y: tabBarLoc ? 810 : 0 }}
+                                animate={{ y: tabBarLoc ? 840 : 0 }}
                                 transition={{ type: "spring", duration: 2 }}
                             >
                                 {/* <div

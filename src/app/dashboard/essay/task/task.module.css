@@ -15,6 +15,11 @@
     font-weight: 500;
     line-height: normal;
     margin-left: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 75px;
 }
 
 .writingSecondTitle {
@@ -24,7 +29,7 @@
     font-weight: 300;
     line-height: normal;
     margin-left: 56px;
-    margin-top: 18px;
+    /* margin-top: 18px; */
 }
 
 .writingInputTitle {
@@ -162,7 +167,7 @@
 
 .writingForm {
     overflow: hidden;
-    height: 750px;
+    height: 780px;
 }
 
 
@@ -231,6 +236,11 @@
     display: none;
 }
 
+.wordsCount {
+    margin-left: 45px;
+    margin-top: 8px;
+}
+
 @media(max-width: 1440px) {
     .writingContainer {
         padding: 0px 27px 100px 22px;
@@ -294,6 +304,10 @@
 
     .topicInputContainer {
         margin: 0px;
+    }
+
+    .wordsCount {
+        margin-left: 0px;
     }
 
     .selectedTopcCard {

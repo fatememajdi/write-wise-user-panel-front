@@ -6,7 +6,7 @@ import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
-import { Typing, TypingStep } from "typing-effect-reactjs";
+import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 
 //--------------------------------------styles
 import styles from './task.module.css';
@@ -73,7 +73,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type }) => {
 
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
-    const [endTyping, changeEndTyping] = React.useState<boolean>(false);
+    const [changeInput, setChangeInput] = React.useState<boolean>(false);
+    const [endTyping, changeEndTyping] = React.useState<boolean>(topic ? true : false);
     const [cursor, changeCursor] = React.useState<string>('|');
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [essayLoading, changeEssayLoading] = React.useState<boolean>(false);
@@ -214,6 +215,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     //-------------------------------------------------------------------add new essay
     async function AddNewEssay(topic: string, body: string) {
         changeLoading(true);
+        setChangeInput(false);
         let id: any;
         if (currentId != null) {
             id = currentId;
@@ -294,7 +296,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             .required('Topic is required!'),
     });
 
-
     return <Formik
         initialValues={{
             topic: generatedTopic ? generatedTopic.body : '',
@@ -319,7 +320,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
                 {
                     loading ?
-                        <Loading style={{ height: 750, minHeight: 0 }} />
+                        <Loading style={{ height: 780, minHeight: 0 }} />
                         :
                         <div className={styles.writingForm}>
                             <SelectComponents values={[
@@ -331,7 +332,24 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                             ]} selectedItem={0} className={styles.topSelect} />
 
                             <div className={styles.wriritngTitle}>{topic === undefined ? type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'
-                                : topic.type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'} </div>
+                                : topic.type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'}
+
+                                {
+                                    changeInput &&
+                                    <CountdownCircleTimer
+                                        size={75}
+                                        strokeWidth={8}
+                                        isPlaying
+                                        duration={topic === undefined ? type == 'general_task_1' ? 1200 : 2400
+                                            : topic.type == 'general_task_1' ? 1200 : 2400}
+                                        colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+                                        colorsTime={[7, 5, 2, 0]}
+                                    >
+                                        {({ remainingTime }) => <div style={{ fontSize: 14 }}>{Math.round(remainingTime / 60) + ' min'}</div>}
+                                    </CountdownCircleTimer>
+                                }
+
+                            </div>
 
                             <div className={styles.writingSecondTitle}>
                                 You should spend about {topic === undefined ? type == 'general_task_1' ? '20' : '40'
@@ -397,6 +415,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                 <button
                                                     aria-label="edit tipic"
                                                     onClick={() => {
+                                                        setChangeInput(false);
                                                         changeEndTyping(false);
                                                         changeEditedGeneratedTopic(false);
                                                         changeGenerateWriting(true);
@@ -434,7 +453,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                 <Input
                                     disable={!endTyping}
                                     className={styles.topicInput}
-                                    onChange={handleChange}
+                                    onChange={(e: any) => {
+                                        if (!changeInput)
+                                            setChangeInput(true);
+                                        handleChange(e);
+                                    }}
                                     placeHolder={topic === undefined ? type === 'general_task_1' ? 'Dear...' : "Type here..." :
                                         topic.type == 'general_task_1' ? 'Dear...' : "Type here..."
                                     }
@@ -444,8 +467,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                     textarea_value={values.body}
                                     textarea_error={errors.body && touched.body && errors.body}
                                 />
-                                {/* {CountWords(values.body)} */}
-                                {/* {values.body} */}
                                 <button
                                     type="submit"
                                     className={styles.scoreButton}>
@@ -454,6 +475,9 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                     </div>
                                 </button>
 
+                            </div>
+                            <div className={styles.wordsCount}>
+                                {CountWords(values.body, true)}
                             </div>
                         </div>
                 }
