@@ -476,9 +476,12 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                 </button>
 
                             </div>
-                            <div className={styles.wordsCount}>
-                                {CountWords(values.body, true)}
-                            </div>
+                            {
+                                changeInput &&
+                                <div className={styles.wordsCount}>
+                                    {CountWords(values.body, true)}
+                                </div>
+                            }
                         </div>
                 }
 
