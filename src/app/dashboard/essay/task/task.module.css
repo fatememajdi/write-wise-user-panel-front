@@ -44,12 +44,12 @@
 }
 
 .selectedTopcCard {
-    border: solid 1px #132740;
+    /* border: solid 1px #132740; */
     border-radius: 8px !important;
     margin: 15px 40px 0px 45px;
     padding: 15px 52px 55px 18px !important;
     width: 70%;
-    height: 250px;
+    height: fit-content;
     overflow-y: auto;
     color: #252525 !important;
     font-size: 20px !important;
@@ -167,7 +167,7 @@
 
 .writingForm {
     overflow: hidden;
-    height: 780px;
+    height: 790px;
 }
 
 

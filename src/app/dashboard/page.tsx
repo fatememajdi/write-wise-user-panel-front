@@ -187,7 +187,7 @@ const Dashboard: React.FC = () => {
     };
 
     async function SelectType(type: string) {
-        setType(type);
+        // setType(type);
         changeTopicsLoading(true);
         await setTopicsType(type);
         changeMoreTopics(true);
@@ -270,14 +270,34 @@ const Dashboard: React.FC = () => {
     };
 
     async function handleNewTopic(topic: Topic) {
-        if (topic)
-            await changeTopics([topic, ...topics]);
-        else {
-            changeTopicsLoading(true);
-            await changeTopics([]);
-            await GetTopicsList();
-            changeTopicsLoading(false);
+        try {
+            if (topic)
+                await changeTopics([topic, ...topics]);
+            else {
+                changeTopicsLoading(true);
+                await client.query({
+                    query: GET_USER_TOPICS,
+                    variables: {
+                        type: topicsType,
+                        page: 1,
+                        pageSize: 6
+                    },
+                    fetchPolicy: "no-cache"
+                }).then(async (res) => {
+                    if (res.data.getUserTopics.userTopics.length != 0) {
+                        await changeTopics(res.data.getUserTopics.userTopics);
+                        changeMoreTopics(true);
+                    } else {
+                        changeMoreTopics(false);
+                    }
+                }).catch((err) => {
+                    console.log("get user topics error : ", err);
+                });
+                changeTopicsLoading(false);
+            };
+        } finally {
         }
+
     };
 
     const showAnimation = {
@@ -389,7 +409,7 @@ const Dashboard: React.FC = () => {
                                         :
                                         <TopicsList Topics={topics} HandleSelect={SelectTopic}
                                             GetTopicsList={GetTopicsList} MoreTopics={MoreTopics}
-                                            HandleDelete={DeleteTopic} type={topicsType}
+                                            HandleDelete={DeleteTopic} type={topicsType} selectedTopic={essayTopic ? essayTopic : undefined}
                                         />
                                     }
                                 </motion.div>
@@ -497,7 +517,7 @@ const Dashboard: React.FC = () => {
                             !endAnimation &&
                             <motion.div
                                 className={styles.topTabBarContainer}
-                                animate={{ y: tabBarLoc ? 840 : 0 }}
+                                animate={{ y: tabBarLoc ? 850 : 0 }}
                                 transition={{ type: "spring", duration: 2 }}
                             >
                                 {/* <div

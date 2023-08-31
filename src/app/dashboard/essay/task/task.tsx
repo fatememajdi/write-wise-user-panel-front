@@ -127,6 +127,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             id = res.data.selectTopic.id as string;
             changeCcurrentId(id);
             handleNewTopic(res.data.selectTopic);
+            changeGeneratedTopic({
+                id: res.data.selectTopic.id,
+                body: res.data.selectTopic.topic,
+                type: res.data.selectTopic.type
+            });
         }).catch(async (err) => {
             await changeModalTitle('Select topic error');
             await changeModalContent(JSON.stringify(err.message));
@@ -214,6 +219,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
     //-------------------------------------------------------------------add new essay
     async function AddNewEssay(topic: string, body: string) {
+        changeEssayLoading(true);
         changeLoading(true);
         setChangeInput(false);
         let id: any;
@@ -226,7 +232,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         await changeLoading(false);
 
         if (id != null) {
-            changeEssayLoading(true);
             changeTabBarLoc(true);
             setTimeout(() => {
                 changeEndAnimation(true);
@@ -320,9 +325,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
                 {
                     loading ?
-                        <Loading style={{ height: 780, minHeight: 0 }} />
+                        <Loading style={{ height: 790, minHeight: 0 }} />
                         :
-                        <div className={styles.writingForm}>
+                        <div
+                            style={{ height: currentId === null ? 790 : 'fit-content', minHeight: 790 }}
+                            className={styles.writingForm}>
                             <SelectComponents values={[
                                 { title: 'Essay', active: false, lock: false },
                                 { title: 'Score', active: false, lock: false },
@@ -403,7 +410,10 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                         <Input
                                                             style={{ width: '70%' }}
                                                             className={styles.topicInput}
-                                                            onChange={handleChange}
+                                                            onChange={(e: any) => {
+                                                                changeEndTyping(true);
+                                                                handleChange(e);
+                                                            }}
                                                             placeHolder="Type your topic here..."
                                                             secondError
                                                             textarea

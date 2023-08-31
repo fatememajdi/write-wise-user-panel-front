@@ -16,16 +16,17 @@ const DialogComponent = dynamic(() => import("../dialog/dialog"));
 import { Empty } from "antd";
 import { AiOutlineDelete } from "react-icons/ai";
 
-interface _props {
+type _props = {
     Topics: Topic[],
     HandleSelect: any,
     GetTopicsList: any,
     MoreTopics: boolean,
     HandleDelete: any,
-    type: string
+    type: string,
+    selectedTopic?: Topic
 };
 
-const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, MoreTopics, HandleDelete, type }) => {
+const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, MoreTopics, HandleDelete, type, selectedTopic }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const [loading, setLoading] = React.useState<boolean>(false);
     const [selectedId, changeSelectedId] = React.useState<string>('');
@@ -60,6 +61,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                             Topics.map((item: any, index: any) =>
                                 item.type === type &&
                                 <div
+                                    style={item.id === selectedTopic?.id ? { background: '#172E4A' } : {}}
                                     className={'col-12 ' + styles.taskCard} key={index} >
                                     <div
                                         onClick={() => HandleSelect({ id: item.id, body: item.topic, type: item.type })}
