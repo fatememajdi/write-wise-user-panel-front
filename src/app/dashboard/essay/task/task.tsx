@@ -23,6 +23,7 @@ const Input = lazy(() => import('@/components/input/input'));
 const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
 import { CountWords, SplitText } from "@/components/Untitled";
 const Text = lazy(() => import("@/components/text/text"));
+const Timer = lazy(() => import("@/components/timer/timer"));
 
 //--------------------------------------icons
 import { Reload } from "../../../../../public";
@@ -338,10 +339,13 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                 { title: 'WWAI Tutor', active: false, lock: true }
                             ]} selectedItem={0} className={styles.topSelect} />
 
-                            <div className={styles.wriritngTitle}>{topic === undefined ? type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'
-                                : topic.type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'}
-
+                            <div className={styles.wriritngTitle}>
                                 {
+                                    topic === undefined ? type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'
+                                        : topic.type == 'general_task_1' ? 'Gen Task 1' : 'Task 2'
+                                }
+
+                                {/* {
                                     changeInput &&
                                     <CountdownCircleTimer
                                         size={75}
@@ -354,7 +358,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                     >
                                         {({ remainingTime }) => <div style={{ fontSize: 14 }}>{Math.round(remainingTime / 60) + ' min'}</div>}
                                     </CountdownCircleTimer>
-                                }
+                                } */}
+
 
                             </div>
 
@@ -457,7 +462,14 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                             }
 
                             <div className={styles.writingInputTitle}>Write at least  {topic === undefined ? type === 'general_task_1' ? '150' : '250'
-                                : topic.type == 'general_task_1' ? '150' : '250'} words.</div>
+                                : topic.type == 'general_task_1' ? '150' : '250'} words.
+                                {
+                                    changeInput &&
+                                    <div className={styles.wordsCount}>
+                                        {CountWords(values.body, true)}
+                                    </div>
+                                }
+                            </div>
 
                             <div className={styles.bodyInputContainer}>
                                 <Input
@@ -488,10 +500,12 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                             </div>
                             {
                                 changeInput &&
-                                <div className={styles.wordsCount}>
-                                    {CountWords(values.body, true)}
+                                <div className={styles.timer}>
+                                    <Timer time={topic === undefined ? type == 'general_task_1' ? 1200 : 2400
+                                        : topic.type == 'general_task_1' ? 1200 : 2400} />
                                 </div>
                             }
+
                         </div>
                 }
 

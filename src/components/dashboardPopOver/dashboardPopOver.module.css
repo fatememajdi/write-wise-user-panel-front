@@ -3,6 +3,9 @@
     flex-direction: column;
     background-color: #12263E;
     padding-bottom: 16px;
+    /* width: 380px; */
+    /* position: relative;
+    left: 0; */
 }
 
 
@@ -15,8 +18,8 @@
     font-style: normal;
     font-weight: 500;
     line-height: 28px;
-    padding: 20PX 14PX;
-    min-width: 210PX;
+    padding: 20px 14px;
+    min-width: 270px;
     text-decoration: none !important;
     cursor: pointer;
 }

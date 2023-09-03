@@ -147,7 +147,7 @@
 .menuButton {
     height: 100%;
     border-radius: 0px !important;
-    background-color: #132740;
+    /* background-color: var(--color-seccondary); */
     padding: 0px 0px !important;
     border-right: solid 1px #626E7E;
     width: 80px;
@@ -159,7 +159,7 @@
 .menuButtonOpen {
     height: 100%;
     border-radius: 0px !important;
-    background-color: #132740;
+    /* background-color: #132740; */
     padding: 0px 0px !important;
     border-right: solid 1px #626E7E;
     width: 82px;
@@ -313,6 +313,7 @@
     overflow: hidden;
     z-index: 2;
 }
+
 /* 
 .topTabBarContainerAnimation {
     width: 100% !important;

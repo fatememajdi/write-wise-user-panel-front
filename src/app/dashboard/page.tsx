@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import client from '@/config/applloAuthorizedClient';
 import { AnimatePresence, motion } from 'framer-motion';
 import ReactLoading from 'react-loading';
+import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 
 //-----------------------------------------------------styles
@@ -269,6 +270,13 @@ const Dashboard: React.FC = () => {
         setAnchorEl(null);
     };
 
+    async function LogOut() {
+        setLoading(true);
+        localStorage.clear();
+        if (status === 'authenticated')
+            signOut();
+    }
+
     async function handleNewTopic(topic: Topic) {
         try {
             if (topic)
@@ -420,6 +428,7 @@ const Dashboard: React.FC = () => {
                                     transition={{ duration: 1 }}
                                     className={'col-12 ' + styles.drawerFooterContainer}>
                                     <button
+                                        style={{ backgroundColor: anchorEl === null ? '#2E4057' : '#132740' }}
                                         aria-label="menu button"
                                         onClick={handlePopOverOpen}
                                         className={styles.menuButton}>
@@ -554,7 +563,7 @@ const Dashboard: React.FC = () => {
 
             </main >
 
-            <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose} />
+            <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose} LogOut={LogOut}/>
 
         </div >
 };
