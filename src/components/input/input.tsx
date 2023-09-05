@@ -62,6 +62,7 @@ const Input: React.FC<props> = ({ ...props }) =>
                 : styles.formSectionInput}>
 
                 <textarea
+                    spellCheck={false}
                     disabled={props.disable}
                     placeholder={props.placeHolder}
                     name={props.textarea_name}

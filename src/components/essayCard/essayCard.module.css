@@ -99,15 +99,21 @@
     line-height: 12px;
 }
 
-
-
-.writingEssayText {
-    margin-top: 20px;
+.writingEssayTopic {
     color: #252525;
     font-size: 20px;
     font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    font-weight: 500;
+    line-height: 180%;
+}
+
+.writingEssayText {
+    margin-top: 25px;
+    color: #252525;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 180%;
 }
 
 .essayButtonContainer {
@@ -281,9 +287,9 @@
         height: 100% !important;
     }
 
-    .writingEssayText{
+    .writingEssayText {
         font-size: 16px !important;
-        font-weight: 700;
+        font-weight: 500;
     }
 }
 

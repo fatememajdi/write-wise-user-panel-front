@@ -61,14 +61,15 @@ type _props = {
     handleDelete: any,
     loading?: boolean,
     setEssaies: any,
-    essaies: Essay[]
+    essaies: Essay[],
+    topic: string
 }
 
-const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, setEssaies, essaies }) => {
+const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, setEssaies, essaies, topic }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
         [<EssayScore key={0} essay={essay} goTo={analysisStep} essaies={essaies} setEssaies={setEssaies} />,
-        <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} />,
+        <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} topic={topic} />,
         <EssayAnalysis key={2} essay={essay} essaies={essaies} setEssaies={setEssaies} />]);
 
     function analysisStep() { goTo(2) };
@@ -120,35 +121,41 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
 
 export default EssayCard;
 
-const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any, divRef?: any, setOpen: any }> = ({ essay, setFieldValue, divRef, setOpen }) => {
-    return <div className={styles.writingEssayCard}>
-        <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
-        <div className={styles.writingEssayText}>
-            <Text text={essay?.essay} />
-        </div>
-        <div className={styles.essayButtonContainer}>
-            <button
-                onClick={() => setOpen(true)}
-                type="button"
-                aria-label="delete button"
-                className={styles.deleteWritingButton}>
-                <div className={styles.responsiveEditWritingButton}> <AiOutlineDelete className={styles.deleteWritingButtonIcon} /></div>
-            </button>
-            <button
-                onClick={() => {
-                    setFieldValue('body', essay?.essay);
-                    if (divRef)
-                        divRef.scrollTop = divRef.offsetTop;
-                }}
-                type="button"
-                aria-label="edit button"
-                className={styles.editWritingButton}>
-                <div className={styles.responsiveEditWritingButton}> <MdEdit className={styles.editWritingButtonIcon} /></div>
-            </button>
+const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any, divRef?: any, setOpen: any, topic: string }>
+    = ({ essay, setFieldValue, divRef, setOpen, topic }) => {
+        return <div className={styles.writingEssayCard}>
+            {/* <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div> */}
 
+            <div className={styles.writingEssayTopic}>
+                <Text text={topic} />
+            </div>
+
+            <div className={styles.writingEssayText}>
+                <Text text={essay?.essay} />
+            </div>
+            <div className={styles.essayButtonContainer}>
+                <button
+                    onClick={() => setOpen(true)}
+                    type="button"
+                    aria-label="delete button"
+                    className={styles.deleteWritingButton}>
+                    <div className={styles.responsiveEditWritingButton}> <AiOutlineDelete className={styles.deleteWritingButtonIcon} /></div>
+                </button>
+                <button
+                    onClick={() => {
+                        setFieldValue('body', essay?.essay);
+                        if (divRef)
+                            divRef.scrollTop = divRef.offsetTop;
+                    }}
+                    type="button"
+                    aria-label="edit button"
+                    className={styles.editWritingButton}>
+                    <div className={styles.responsiveEditWritingButton}> <MdEdit className={styles.editWritingButtonIcon} /></div>
+                </button>
+
+            </div>
         </div>
-    </div>
-};
+    };
 
 const EssayScore: React.FC<{ essay: Essay, setEssaies: any, essaies: Essay[], goTo: any }> = ({ goTo, essay, setEssaies, essaies }) => {
     const router = useRouter();
@@ -355,10 +362,10 @@ const EssayAnalysis: React.FC<{ essay: Essay, setEssaies: any, essaies: Essay[] 
         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
         <div className={styles.writingScoresContainer}>
             <div>
-                <ScoreSummeryCard key={0} title="Task Achievement Summery" summery={essay?.taskAchievementSummery} getScore={GetTaskScore} />
-                <ScoreSummeryCard key={1} title="Coherence & Cohesion Summery" summery={essay?.coherenceAndCohesionSummery} getScore={GetCoherenceAndCohesionScore} />
-                <ScoreSummeryCard key={2} title="Lexical resource summery" summery={essay?.lexicalResourceSummery} getScore={GetLexicalResourceScore} />
-                <ScoreSummeryCard key={3} title="Grammatical Range and accuracy summery" summery={essay?.grammaticalRangeAndAccuracySummery} getScore={GetGrammaticalRangeAndAccuracyScore} />
+                <ScoreSummeryCard key={0} title="Task Achievement " summery={essay?.taskAchievementSummery} getScore={GetTaskScore} />
+                <ScoreSummeryCard key={1} title="Coherence & Cohesion " summery={essay?.coherenceAndCohesionSummery} getScore={GetCoherenceAndCohesionScore} />
+                <ScoreSummeryCard key={2} title="Lexical resource " summery={essay?.lexicalResourceSummery} getScore={GetLexicalResourceScore} />
+                <ScoreSummeryCard key={3} title="Grammatical Range and accuracy " summery={essay?.grammaticalRangeAndAccuracySummery} getScore={GetGrammaticalRangeAndAccuracyScore} />
             </div>
         </div>
     </div>

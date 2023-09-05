@@ -24,6 +24,28 @@
     cursor: pointer;
 }
 
+.logOutButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    padding: 20px 14px;
+    min-width: 270px;
+    text-decoration: none !important;
+    cursor: pointer;
+    border-top: solid 1px #626E7E;
+    border-radius: 0px !important;
+}
+
+.exitIcon {
+    font-size: 30px;
+    margin-right: 18px;
+}
+
 .menuItemCard span {
     margin-left: 18px;
 }

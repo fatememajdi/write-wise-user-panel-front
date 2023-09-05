@@ -386,6 +386,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                             <Typewriter
                                                                 options={{
                                                                     delay: 0,
+                                                                    wrapperClassName: styles.writerClassname
                                                                     // cursor: cursor
                                                                     // cursorClassName: endTyping ? 'Typewriter__cursor ' + styles.cursor : 'Typewriter__cursor'
                                                                 }}
@@ -529,7 +530,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                         >
                             {
                                 essaies.map((essay, index) => <EssayCard key={index} essay={essay} setFieldValue={setFieldValue}
-                                    divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} />)
+                                    divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
                             }
                         </InfiniteScroll>
                 }

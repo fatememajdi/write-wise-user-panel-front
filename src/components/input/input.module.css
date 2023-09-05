@@ -65,6 +65,7 @@
     border: solid 1px var(--color-seccondary) !important;
     padding: 10px !important;
     resize: none;
+    line-height: 180% !important;
 }
 
 .formSectionInput textarea:focus {

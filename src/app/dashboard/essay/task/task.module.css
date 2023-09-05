@@ -60,7 +60,7 @@
     font-size: 20px !important;
     font-style: normal;
     font-weight: 400;
-    line-height: normal;
+    line-height: 180% !important;
 }
 
 .selectedTopcCard::-webkit-scrollbar {
@@ -97,7 +97,6 @@
     font-size: 20px !important;
     font-style: normal;
     font-weight: 400;
-    line-height: normal;
     padding: 15px 52px 55px 18px !important;
 }
 
@@ -249,6 +248,10 @@
 .timer {
     margin-left: 45px;
     margin-top: 10px;
+}
+
+.writerClassname{
+    line-height: 180% !important;
 }
 
 @media(max-width: 1440px) {
