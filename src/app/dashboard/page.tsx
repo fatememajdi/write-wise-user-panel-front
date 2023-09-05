@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
-
+    const targetRef = React.useRef();
     let divRef: any;
     if (typeof document !== 'undefined')
         divRef = document.getElementById('scrollableDiv');
@@ -100,6 +100,7 @@ const Dashboard: React.FC = () => {
     const { step, goTo } = useMultiStepForm([
         <ChooseType changeType={ChangeType} />,
         <Task
+            targetRef={targetRef}
             setEssaies={setEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} handleNewTopic={handleNewTopic}
             essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type}
             changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
@@ -526,7 +527,7 @@ const Dashboard: React.FC = () => {
                             !endAnimation &&
                             <motion.div
                                 className={styles.topTabBarContainer}
-                                animate={{ y: tabBarLoc ? 850 : 0 }}
+                                animate={{ y: tabBarLoc ? 750 : 0 }}
                                 transition={{ type: "spring", duration: 2 }}
                             >
                                 {/* <div
@@ -563,7 +564,7 @@ const Dashboard: React.FC = () => {
 
             </main >
 
-            <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose} LogOut={LogOut}/>
+            <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose} LogOut={LogOut} />
 
         </div >
 };

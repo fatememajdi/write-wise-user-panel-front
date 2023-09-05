@@ -146,6 +146,7 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
                         setFieldValue('body', essay?.essay);
                         if (divRef)
                             divRef.scrollTop = divRef.offsetTop;
+
                     }}
                     type="button"
                     aria-label="edit button"

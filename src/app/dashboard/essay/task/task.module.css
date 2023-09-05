@@ -52,7 +52,7 @@
     /* border: solid 1px #132740; */
     border-radius: 8px !important;
     margin: 15px 40px 0px 45px;
-    padding: 15px 52px 55px 18px !important;
+    padding: 15px 52px 10px 18px !important;
     width: 70%;
     height: fit-content;
     overflow-y: auto;
@@ -88,6 +88,10 @@
     border-radius: 8px !important;
     /* border: solid 1px #132740; */
     overflow: hidden !important;
+}
+
+.topicInputfirst textarea{
+    min-height: 200px !important;
 }
 
 .topicInput textarea {
@@ -171,7 +175,7 @@
 
 .writingForm {
     overflow: hidden;
-    height: 790px;
+    /* height: 680px; */
 }
 
 
@@ -210,7 +214,7 @@
     border: solid 1px #132740;
     display: flex;
     width: 70%;
-    height: 250px;
+    height: 200px;
     border-radius: 8px;
     padding: 15px 52px 55px 18px !important;
     overflow-y: auto;

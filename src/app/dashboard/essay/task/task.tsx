@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { lazy } from "react";
+import React, { MutableRefObject, lazy } from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import client from '@/config/applloAuthorizedClient';
@@ -13,7 +13,7 @@ import styles from './task.module.css';
 
 //--------------------------------------components
 import {
-    ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_GENERAL_TASK1_WRITING,
+    ADD_ESSAY, DELETE_ESSAY, GET_OVERAL_SCORE, GET_RANDOM_GENERAL_TASK1_WRITING,
     GET_RANDOM_GENERAL_TASK2_WRITING, SCORE_COHERENCE, SCORE_GRAMMATICAL,
     SCORE_LEXICAL, SCORE_TASK_RESPONSE, SELECT_TOPIC
 } from "@/config/graphql";
@@ -50,11 +50,12 @@ type _props = {
     setEssaies: any,
     handleNewTopic: any,
     divRef?: any,
-    type: string
+    type: string,
+    targetRef: any
 }
 
 const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic,
-    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type }) => {
+    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
 
     return <>
         {
@@ -63,7 +64,7 @@ const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimat
                 :
                 <GeneralTask changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                     essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                    handleNewTopic={handleNewTopic} divRef={divRef} type={type} />
+                    handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} />
         }
     </>
 };
@@ -71,8 +72,11 @@ const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimat
 export default Task;
 
 const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic,
-    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type }) => {
+    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
 
+    let DivRef: any;
+    if (typeof document !== 'undefined')
+        DivRef = document.getElementById('scrollDiv');
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [changeInput, setChangeInput] = React.useState<boolean>(false);
     const [endTyping, changeEndTyping] = React.useState<boolean>(topic ? true : false);
@@ -195,8 +199,19 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             await changeModalTitle('Get essay score error');
             await changeModalContent(JSON.stringify(err.message));
             showModal();
-        }).then(() => {
-            newEssay[0].overallBandScore = score / 4;
+        }).then(async () => {
+
+            await client.query({
+                query: GET_OVERAL_SCORE,
+                variables: {
+                    id: newEssay[0].id
+                }
+            }).then((res) => {
+                console.log(res);
+                newEssay[0].overallBandScore = res.data.getEssay.overallBandScore
+            }).catch(() => {
+                newEssay[0].overallBandScore = -1;
+            });
             if (!newEssay[0].taskAchievementScore) {
                 newEssay[0].taskAchievementScore = -1;
                 newEssay[0].taskAchievementSummery = '';
@@ -329,7 +344,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                         <Loading style={{ height: 790, minHeight: 0 }} />
                         :
                         <div
-                            style={{ height: currentId === null ? 790 : 'fit-content', minHeight: 790 }}
+                            ref={targetRef}
+                            style={{ height: 'fit-content', minHeight: 700 }}
                             className={styles.writingForm}>
                             <SelectComponents values={[
                                 { title: 'Essay', active: false, lock: false },
@@ -415,7 +431,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                         :
                                                         <Input
                                                             style={{ width: '70%' }}
-                                                            className={styles.topicInput}
+                                                            className={styles.topicInput + ' ' + styles.topicInputfirst}
                                                             onChange={(e: any) => {
                                                                 changeEndTyping(true);
                                                                 handleChange(e);
@@ -515,7 +531,9 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     :
                     <></>
                 } */}
-
+                <div
+                    id="scrollDiv"
+                />
                 {
                     deleteLoading ?
                         <Loading style={{ height: 50, minHeight: 0 }} />

@@ -206,3 +206,11 @@ mutation ScoreCoherence($id:String!){
   }
 }
 `;
+
+
+export const GET_OVERAL_SCORE = gql`
+query GetEssay($id:String!){
+  getEssay(scoreEssay:{id:$id}){
+    overallBandScore
+  }
+}`;
