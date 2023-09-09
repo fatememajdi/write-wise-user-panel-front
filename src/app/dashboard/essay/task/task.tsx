@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { MutableRefObject, lazy } from "react";
+import React, { lazy } from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
-import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+// import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 
 //--------------------------------------styles
 import styles from './task.module.css';
@@ -74,9 +74,9 @@ export default Task;
 const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
 
-    let DivRef: any;
+    let DivRef2: any;
     if (typeof document !== 'undefined')
-        DivRef = document.getElementById('scrollDiv');
+        DivRef2 = document.getElementById('scrollDiv');
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [changeInput, setChangeInput] = React.useState<boolean>(false);
     const [endTyping, changeEndTyping] = React.useState<boolean>(topic ? true : false);
@@ -253,6 +253,9 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                 changeEndAnimation(true);
                 // changeFirstEssayLoading(true);
             }, 1000);
+            setTimeout(() => {
+                DivRef2.scrollIntoView({ behavior: "smooth" });
+            }, 1400);
             await client.mutate({
                 mutation: ADD_ESSAY,
                 variables: {
@@ -341,11 +344,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
                 {
                     loading ?
-                        <Loading style={{ height: 790, minHeight: 0 }} />
+                        <Loading style={{ height: 750, minHeight: 0 }} />
                         :
                         <div
                             ref={targetRef}
-                            style={{ height: 'fit-content', minHeight: 700 }}
+                            style={{ height: 'fit-content', minHeight: type === 'general_task_1' ? 700 : 600 }}
                             className={styles.writingForm}>
                             <SelectComponents values={[
                                 { title: 'Essay', active: false, lock: false },
@@ -385,7 +388,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                 } minutes on this task
                             </div>
 
-                            <div className={styles.writingInputTitle}>Write about following topic :</div>
+                            <div className={styles.writingInputTitle}>Write about the following topic:</div>
                             {
                                 topic ?
                                     <div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
@@ -397,7 +400,9 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                             <div className={styles.topicInputContainer}>
                                                 {
                                                     generateWriting && !editedGeneratedTopic ?
-                                                        <div className={styles.generatedWritingCard}>
+                                                        <div
+                                                            style={{ height: type === 'general_task_1' ? 250 : 200 }}
+                                                            className={styles.generatedWritingCard}>
 
                                                             <Typewriter
                                                                 options={{
@@ -431,7 +436,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                         :
                                                         <Input
                                                             style={{ width: '70%' }}
-                                                            className={styles.topicInput + ' ' + styles.topicInputfirst}
+                                                            className={type === 'general_task_1' ? styles.topicInputsecond + ' ' + styles.topicInput
+                                                                : styles.topicInputfirst + ' ' + styles.topicInput}
                                                             onChange={(e: any) => {
                                                                 changeEndTyping(true);
                                                                 handleChange(e);
@@ -533,25 +539,26 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                 } */}
                 <div
                     id="scrollDiv"
-                />
-                {
-                    deleteLoading ?
-                        <Loading style={{ height: 50, minHeight: 0 }} />
-                        : endAnimation &&
-                        <InfiniteScroll
-                            pageStart={0}
-                            loadMore={() => GetUserEssaies(currentId)}
-                            hasMore={MoreEssaies}
-                            loader={<Loading style={{ height: 50, minHeight: 0 }} />}
-                            useWindow={false}
-                            key={0}
-                        >
-                            {
-                                essaies.map((essay, index) => <EssayCard key={index} essay={essay} setFieldValue={setFieldValue}
-                                    divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
-                            }
-                        </InfiniteScroll>
-                }
+                >
+                    {
+                        deleteLoading ?
+                            <Loading style={{ height: 50, minHeight: 0 }} />
+                            : endAnimation &&
+                            <InfiniteScroll
+                                pageStart={0}
+                                loadMore={() => GetUserEssaies(currentId)}
+                                hasMore={MoreEssaies}
+                                loader={<Loading style={{ height: 50, minHeight: 0 }} />}
+                                useWindow={false}
+                                key={0}
+                            >
+                                {
+                                    essaies.map((essay, index) => <EssayCard key={index} essay={essay} setFieldValue={setFieldValue}
+                                        divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
+                                }
+                            </InfiniteScroll>
+                    }
+                </div>
 
                 <Modal
                     footer={null}

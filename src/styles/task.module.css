@@ -94,10 +94,6 @@
     min-height: 200px !important;
 }
 
-.topicInputsecond textarea{
-    min-height: 250px !important;
-}
-
 .topicInput textarea {
     border-radius: 8px !important;
     background-color: transparent !important;
@@ -218,6 +214,7 @@
     border: solid 1px #132740;
     display: flex;
     width: 70%;
+    height: 200px;
     border-radius: 8px;
     padding: 15px 52px 55px 18px !important;
     overflow-y: auto;
@@ -260,8 +257,6 @@
 .writerClassname{
     line-height: 180% !important;
 }
-
-
 
 @media(max-width: 1440px) {
     .writingContainer {

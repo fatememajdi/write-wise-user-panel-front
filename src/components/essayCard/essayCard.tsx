@@ -363,10 +363,10 @@ const EssayAnalysis: React.FC<{ essay: Essay, setEssaies: any, essaies: Essay[] 
         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
         <div className={styles.writingScoresContainer}>
             <div>
-                <ScoreSummeryCard key={0} title="Task Achievement " summery={essay?.taskAchievementSummery} getScore={GetTaskScore} />
-                <ScoreSummeryCard key={1} title="Coherence & Cohesion " summery={essay?.coherenceAndCohesionSummery} getScore={GetCoherenceAndCohesionScore} />
-                <ScoreSummeryCard key={2} title="Lexical resource " summery={essay?.lexicalResourceSummery} getScore={GetLexicalResourceScore} />
-                <ScoreSummeryCard key={3} title="Grammatical Range and accuracy " summery={essay?.grammaticalRangeAndAccuracySummery} getScore={GetGrammaticalRangeAndAccuracyScore} />
+                <ScoreSummeryCard key={0} title="Task Achievement" summery={essay?.taskAchievementSummery} getScore={GetTaskScore} />
+                <ScoreSummeryCard key={1} title="Coherence & Cohesion" summery={essay?.coherenceAndCohesionSummery} getScore={GetCoherenceAndCohesionScore} />
+                <ScoreSummeryCard key={2} title="Lexical resource" summery={essay?.lexicalResourceSummery} getScore={GetLexicalResourceScore} />
+                <ScoreSummeryCard key={3} title="Grammatical Range and accuracy" summery={essay?.grammaticalRangeAndAccuracySummery} getScore={GetGrammaticalRangeAndAccuracyScore} />
             </div>
         </div>
     </div>

@@ -527,12 +527,13 @@ const Dashboard: React.FC = () => {
                             !endAnimation &&
                             <motion.div
                                 className={styles.topTabBarContainer}
-                                animate={{ y: tabBarLoc ? 750 : 0 }}
+                                animate={{ y: tabBarLoc ? type === 'general_task_1' ? 750 : 650 : 0 }}
                                 transition={{ type: "spring", duration: 2 }}
                             >
                                 {/* <div
                                 style={endAnimation ? { display: 'none' } : { display: 'flex' }}
                                 className={tabBarLoc ? styles.topTabBarContainerAnimation : styles.topTabBarContainer}> */}
+
                                 <div className={styles.topTabBarCard}>
                                     {
                                         tabBarItems.map((item, index) =>
