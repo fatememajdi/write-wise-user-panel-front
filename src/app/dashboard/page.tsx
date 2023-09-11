@@ -202,7 +202,6 @@ const Dashboard: React.FC = () => {
             },
             fetchPolicy: "no-cache"
         }).then(async (res) => {
-            console.log(res);
             await changeTopics(res.data.getUserTopics.userTopics);
         }).catch((err) => {
             console.log("get user topics error : ", err);
@@ -280,8 +279,14 @@ const Dashboard: React.FC = () => {
 
     async function handleNewTopic(topic: Topic) {
         try {
-            if (topic)
+            if (topic) {
                 await changeTopics([topic, ...topics]);
+                changeTopic({
+                    id: topic.id ? topic.id : "",
+                    body: topic.topic ? topic.topic : "",
+                    type: topic.type ? topic.type : ""
+                });
+            }
             else {
                 changeTopicsLoading(true);
                 await client.query({

@@ -90,11 +90,11 @@
     overflow: hidden !important;
 }
 
-.topicInputfirst textarea{
+.topicInputfirst textarea {
     min-height: 200px !important;
 }
 
-.topicInputsecond textarea{
+.topicInputsecond textarea {
     min-height: 250px !important;
 }
 
@@ -257,11 +257,13 @@
     margin-top: 10px;
 }
 
-.writerClassname{
+.writerClassname {
     line-height: 180% !important;
 }
 
-
+.writerClassname br {
+    line-height: 180% !important;
+}
 
 @media(max-width: 1440px) {
     .writingContainer {

@@ -6,16 +6,22 @@ export function StartLoader() { NProgress.start(); };
 export function StopLoader() { NProgress.done(); };
 
 export function SplitText(text: string): Promise<string> {
+
     let newText: any = '';
     text.split(/[\t]/gm).map((item: any) => {
         newText = newText + item + '    ';
     });
     let newText2: any = '';
-    newText.split(/[\r\n]/gm).map((item: any) => {
+    newText.split(/[\n]/gm).map((item: any) => {
         newText2 = newText2 + item + '<br/>';
     });
+    let newText3: any = '';
+    newText2.split(/[\r]/gm).map((item: any) => {
+        newText3 = newText3 + item;
+    });
 
-    return newText2;
+
+    return newText3;
 };
 
 export function CountWords(text: string, message: boolean) {
