@@ -12,43 +12,49 @@ import { StartLoader } from "@/components/Untitled";
 
 //-------------------------------------------icons
 import { File, Rate, Rise, User } from "../../../public";
+import { IoIosArrowForward } from 'react-icons/io';
 
 const Section3: React.FC = () => {
     const router = useRouter();
 
     return (
         <FeaturesBackground>
-            <div className={styles.mobileTabBar} />
-            <div className={styles.featuresDescription}>
-                Discover the advantages of using WriteWiseAI, a revolutionary platform designed to help you conquer IELTS writing challenges. Our state-of-the-art features and benefits provide the tools and guidance necessary to elevate your essay writing skills and achieve your desired IELTS score. Here's what you can expect when using WriteWiseAI
-            </div>
-            <div className={'col-lg-12 ' + styles.featuresItemsContainer}>
-                <FeaturesItemCard title="AI-Powered Essay Rating"
-                    icon={<Rate />}
-                    description="Receive objective and accurate essay ratings based on the official IELTS criteria. Our advanced AI technology analyzes your essays to give you a clear understanding of your current writing proficiency." />
-                <FeaturesItemCard title="Progress Tracking"
-                    icon={<Rise />}
-                    description="Monitor your IELTS writing improvement over time with our progress tracking feature. Review your essay history, ratings, and feedback to see your development and stay motivated on your journey to success." />
-                <div className={styles.mobileFeautersItemsContainer}>
-                    <FeaturesItemCard
-                        icon={<User />}
-                        title="Personalized Feedback and Recommendations"
-                    />
-                    <FeaturesItemCard
-                        icon={<File />}
-                        title="AI-Powered Topic Generator"
-                    />
+
+            <div className={'col-12 ' + styles.section3Container}>
+
+                <div className={'col-lg-6 col-md-6 ' + styles.leftContainer}>
+                    <div className={styles.leftTitle}>
+                        Unlock IELTS Writing Mastery with<br />
+                        WriteWiseAI's Pioneering Features
+                    </div>
+                    <div className={styles.leftDescription}>
+                        Experience a seamless fusion of advanced<br />
+                        technology and intuitive design, tailored to <br />
+                        elevate every aspect of your IELTS<br />
+                        preparation journey, and ensure top-tier <br />
+                        IELTS writing results.
+                    </div>
+
+                    <button
+                        aria-label="read more button"
+                        onClick={() => {
+                            router.push('/features');
+                            StartLoader();
+                        }}
+                        className={styles.featuresButton}>
+                        Dive into IELTS Writing Mastery Now!  <IoIosArrowForward />
+                    </button>
+
                 </div>
+
+                <div className={'col-lg-6 col-md-6 ' + styles.rightContainer}>
+                    <FeaturesItemCard icon={<Rate />} title="AI-Powered Essay Rating" />
+                    <FeaturesItemCard icon={<File />} title="AI-Driven Topic Generator" />
+                    <FeaturesItemCard icon={<User />} title="Personalized Feedback and Recommendations" />
+                    <FeaturesItemCard icon={<Rise />} title="In-Depth Progress Tracking" />
+                </div>
+
             </div>
-            <button
-                aria-label="read more button"
-                onClick={() => {
-                    router.push('/features');
-                    StartLoader();
-                }}
-                className={styles.featuresButton}>
-                Read more
-            </button>
 
         </FeaturesBackground>
     )
@@ -56,10 +62,13 @@ const Section3: React.FC = () => {
 
 export default Section3;
 
-const FeaturesItemCard: React.FC<{ title: string, icon: any, description?: string }> = ({ title, description, icon }) => <div className={'col-lg-5 col-md-5 col-12 ' + styles.featuresItemCard}>
-    {icon}
-    <div className={styles.featuresItemTitle}>
-        {title}
-    </div>
-    <div className={styles.featuresItemDescription}>{description && description}</div>
-</div>;
+const FeaturesItemCard: React.FC<{ title: string, icon: any, description?: string }> = ({ title, description, icon }) =>
+    <div className={styles.featuresItemCard}>
+        <div className={styles.featuresItemIcon}>
+            {icon}
+        </div>
+        <div className={styles.featuresItemTitle}>
+            {title}
+        </div>
+        <div className={styles.featuresItemDescription}>{description && description}</div>
+    </div>;

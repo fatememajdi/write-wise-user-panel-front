@@ -51,8 +51,8 @@ const Features: React.FC = () => {
     return <FeaturesDetailsBackground>
         <div className={'col-12 ' + styles.featuresDetailsContent}>
             <div className={'col-12 ' + styles.description}>
-                Embrace the power of WriteWiseAI and unlock your full potential in IELTS writing. With our innovative features and benefits,
-                you'll be well-equipped to achieve your desired IELTS score and open the door to new opportunities:
+                embrace the power of WriteWiseAI and unlock your full potential in IELTS writing. With our innovative features and benefits, you'll be well-<br />
+                equipped to achieve your desired IELTS score and open the door to new opportunities:
             </div>
             <div className={'col-12 ' + styles.featuresItemsContainer}>
                 {
@@ -90,7 +90,7 @@ const FeaturesItemCard: React.FC<{ item: { icon: any, title: string } }> = ({ it
     return <div className="scene scene--card col-lg-6">
         <div className="card">
             <div className="card__face card__face--front">
-                <item.icon />
+                <item.icon color={'#FFF'} />
                 <div className={styles.itemTitle}>{item.title}</div>
             </div>
             <div className="card__face card__face--back">

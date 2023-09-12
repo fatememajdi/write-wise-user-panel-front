@@ -54,7 +54,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             loading="eager"
             priority
         />
-        <Image
+        {/* <Image
             className={styles.topCenterBackground}
             src="/landing/top-center.svg"
             alt="Background"
@@ -62,8 +62,8 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             height={491}
             loading="eager"
             priority
-        />
-        <Image
+        /> */}
+        {/* <Image
             className={styles.topCenter2Background}
             src="/landing/top-center.svg"
             alt="Background"
@@ -71,7 +71,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             height={491}
             loading="eager"
             priority
-        />
+        /> */}
         <Image
             className={styles.topRightBackground}
             src="/landing/top-right.svg"

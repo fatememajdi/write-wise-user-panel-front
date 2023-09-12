@@ -1,8 +1,7 @@
 .pricigBackground {
-    background: rgba(0, 114, 199, 0.0);
-    background: linear-gradient(135deg, rgba(247, 213, 214, 0.445), #FFFFFF, rgba(218, 233, 245, 0.315));
+    background: linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%);
     min-height: 100vh;
-    padding: 170px 153px 90px 167px;
+    padding: 150px 153px 90px 167px;
     display: flex;
     flex-direction: column;
 }
@@ -10,16 +9,17 @@
 .title {
     font-style: normal;
     font-weight: 600;
-    font-size: 40px;
+    font-size: 32px;
     line-height: 169.52%;
+    color: var(--color-textGray);
 }
 
 .description {
-    margin-top: 41px;
     font-style: normal;
     font-weight: 400;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 130.5%;
+    color: var(--color-textGray);
     margin-right: 100px;
 }
 
@@ -27,21 +27,45 @@
     display: flex;
     flex-direction: row;
     margin-top: 61px;
+    align-items: center;
 }
 
 .itemCard {
     background: var(--color-background);
     box-shadow: 0px 2px 2px rgba(0, 82, 147, 0.18);
-    border-radius: 19px 19px 32px 32px;
+    border-radius: 12px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 500px;
-    min-height: 100% !important;
-    height: 100% !important;
+    height: 420px;
+    /* height: 100% !important; */
     justify-content: center;
     position: relative;
+}
+
+.rightCard {
+    background: var(--color-background);
+    box-shadow: 0px 2px 2px rgba(0, 82, 147, 0.18);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 600px;
+    /* height: 100% !important; */
+    justify-content: center;
+    position: relative;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 35px;
+    margin-right: 35px;
+    border-bottom: solid 1px #626E7E;
+    flex: 1;
 }
 
 .leftCard {}
@@ -49,6 +73,13 @@
 .leftContent {
     flex: 1;
     margin-right: 51.48px;
+}
+
+.tabBar {
+    height: 30px !important;
+    width: 100% !important;
+    border-top: solid 1px #F3F3F3;
+    box-shadow: 0px 2px 2px 0px rgba(0, 82, 147, 0.18);
 }
 
 .itemCardTopCard {
@@ -61,10 +92,10 @@
 .cardTitle {
     font-style: normal;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 32px;
     line-height: 169.52%;
     cursor: context-menu !important;
-    margin-top: 60px !important;
+    color: var(--color-seccondary);
 }
 
 .itemDescriptionCard {
@@ -101,13 +132,20 @@
 .signUpButton {
     display: flex;
     /* margin-top: auto; */
-    background-color: #DA282E;
+    background-color: var(--color-red);
     color: var(--color-whiteText);
     margin-bottom: 25px !important;
+    margin-top: 30px;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 24px;
+    height: 48px;
+    width: 154px;
+    padding: 0px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .rightdescriptionsContainer {
@@ -128,7 +166,8 @@
     font-weight: 700;
     font-size: 20px;
     line-height: 230%;
-    margin: 0px 37px;
+    margin: auto 37px;
+    justify-content: center;
 }
 
 .descriptionsContainer {
@@ -136,11 +175,12 @@
     flex: 1;
     flex-direction: column;
     margin-bottom: auto;
+    margin-top: auto;
 }
 
 .descriptionsContainer span {
     font-style: normal;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 16px;
     line-height: 119.5%;
     margin-bottom: 15px;

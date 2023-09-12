@@ -39,7 +39,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             height={183}
             priority
         /> */}
-        <Image
+        {/* <Image
             className={styles.rightTop2Background + ' ' + styles.mobile}
             src="/features/right-top-2.svg"
             alt="background"
@@ -56,8 +56,8 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             height={293}
             loading="eager"
             priority
-        />
-        <Image
+        /> */}
+        {/* <Image
             className={styles.leftTopBackground + ' ' + styles.mobile}
             src="/features/left-top.svg"
             alt="background"
@@ -110,7 +110,7 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
             height={188.38}
             loading="eager"
             priority
-        />
+        /> */}
         {children}
     </section>;
 
