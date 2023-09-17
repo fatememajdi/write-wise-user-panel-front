@@ -29,9 +29,10 @@ type _props = {
     divRef?: any,
     type: string,
     targetRef: any,
+    essay?: string
 }
 
-const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic,
+const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
     return <>
         {
@@ -39,22 +40,22 @@ const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimat
                 topic.type === 'general_task_1' ?
                     <GeneralTask key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                         essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                        handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} />
+                        handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
                     : topic.type === 'academic_task_1' ?
                         <AcademicTask />
                         : <Task2 key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                             essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} />
+                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
                 :
                 type === 'academic_task_1' ?
                     <AcademicTask />
                     : type === 'general_task_1' ?
                         <GeneralTask changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                             essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} />
+                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
                         : <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                             essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} />
+                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
         }
     </>
 };

@@ -52,9 +52,20 @@ type _props = {
     divRef?: any,
     type: string,
     targetRef: any,
+    essay?: string
 };
 
-const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic,
+type tempEssay = {
+    topic: {
+        id?: string,
+        body: string,
+        type: string
+    },
+    essay: string,
+    currentId?: string
+};
+
+const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
 
     let DivRef2: any;
@@ -99,7 +110,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             changeGenerateWritingTopicLoading(false);
             showModal();
         });
-    }
+    };
 
     //------------------------------------------------------------------select essay topic
     async function SelectTopic(topic: string): Promise<string | null> {
@@ -128,7 +139,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             id = null;
         });
         return id;
-    }
+    };
 
 
     async function GetScores(essaies: Essay[]) {
@@ -213,19 +224,45 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             setEssaies(newEssay);
             handleNewTopic();
         })
-    }
+    };
 
     //-------------------------------------------------------------------add new essay
-    async function AddNewEssay(topic: string, body: string) {
+    async function AddNewEssay(Topic: string, body: string) {
         changeEssayLoading(true);
         changeLoading(true);
         setChangeInput(false);
         let id: any;
+
         if (currentId != null) {
             id = currentId;
-        }
-        else
-            id = await SelectTopic(topic);
+        } else if (essay !== '') {
+            console.log('hi')
+            await client.mutate({
+                mutation: SELECT_TOPIC,
+                variables: {
+                    type: type,
+                    id: topic?.id !== '' ? topic?.id : null,
+                    body: topic?.id === '' ? topic.body : null
+                }
+            }).then(async (res) => {
+                id = res.data.selectTopic.id as string;
+                console.log(res);
+                changeCcurrentId(id);
+                handleNewTopic(res.data.selectTopic);
+                changeGeneratedTopic({
+                    id: res.data.selectTopic.id,
+                    body: res.data.selectTopic.topic,
+                    type: res.data.selectTopic.type
+                });
+            }).catch(async (err) => {
+                await changeModalTitle('Select topic error');
+                await changeModalContent(JSON.stringify(err.message));
+                changeLoading(false);
+                showModal();
+                id = null;
+            });
+        } else
+            id = await SelectTopic(Topic);
 
         await changeLoading(false);
 
@@ -245,6 +282,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     body: body
                 }
             }).then(async (res) => {
+                await localStorage.removeItem('tempEssay');
                 await setEssaies([{
                     id: res.data.finishEssay.id,
                     essay: res.data.finishEssay.essay,
@@ -262,12 +300,13 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
             }).catch(async (err) => {
                 await changeModalTitle('Add essay error');
+                console.log(err)
                 await changeModalContent(JSON.stringify(err.message));
                 changeLoading(false);
                 showModal();
             })
         };
-    }
+    };
 
     //-------------------------------------------------------------------delete essay
     async function DeleteEssay(id: string) {
@@ -286,7 +325,21 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             changeDeleteLoading(false);
             showModal();
         });
-    }
+    };
+
+    //-------------------------------------------------------------------temp
+    async function CreateTempEssay(essay: string, Topic: string) {
+        let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_1' }, essay: '' };
+        if (topic && currentId) {
+            temp.topic = { id: currentId, body: topic.body, type: 'general_task_1' };
+        } else if (generatedTopic) {
+            temp.topic = { id: currentId ? currentId : generatedTopic.id, body: Topic, type: 'general_task_1' };
+        } else {
+            temp.topic = { id: currentId ? currentId : '', body: Topic, type: 'general_task_1' }
+        }
+        temp.essay = essay;
+        localStorage.setItem('tempEssay', JSON.stringify(temp));
+    };
 
     React.useEffect(() => {
         if (topic) {
@@ -305,7 +358,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     return <Formik
         initialValues={{
             topic: generatedTopic ? generatedTopic.body : '',
-            body: ''
+            body: essay ? essay : ''
         }}
         // validationSchema={EssayValidationSchema}
         enableReinitialize
@@ -458,6 +511,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                         if (!changeInput)
                                             setChangeInput(true);
                                         handleChange(e);
+                                        CreateTempEssay(e.target.value, values.topic);
                                     }}
                                     placeHolder={'Dear...'}
                                     secondError

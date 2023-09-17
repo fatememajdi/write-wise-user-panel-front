@@ -26,8 +26,19 @@ type _props = {
     selectedTopic?: Topic
 };
 
+type tempEssay = {
+    topic: {
+        id?: string,
+        body: string,
+        type: string
+    },
+    essay: string
+    currentId?: string
+};
+
 const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, MoreTopics, HandleDelete, type, selectedTopic }) => {
     const [open, setOpen] = React.useState<boolean>(false);
+    const [temp, setTemp] = React.useState<tempEssay | null>();
     const [loading, setLoading] = React.useState<boolean>(false);
     const [selectedId, changeSelectedId] = React.useState<string>('');
 
@@ -40,14 +51,26 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
         setLoading(true);
         await HandleDelete(selectedId);
         setLoading(false);
+    };
+
+    async function SetTempEssay() {
+        let Temp = await localStorage.getItem('tempEssay');
+        if (Temp && JSON.parse(Temp) !== temp)
+            setTemp(JSON.parse(Temp));
     }
+
+    React.useEffect(() => {
+        SetTempEssay();
+    }, []);
 
     return <div className={'col-12 ' + styles.tasksContainer}>
         {
             loading ?
                 <Loading style={{ height: '100%', minHeight: 0 }} />
                 : Topics.length === 0 ?
-                    <Empty description={false} style={{ marginTop: '50%' }} />
+                    <>
+                        <Empty description={false} style={{ marginTop: '50%' }} />
+                    </>
                     :
                     <InfiniteScroll
                         pageStart={0}
@@ -58,13 +81,39 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                         key={0}
                     >
                         {
+                            temp && temp?.topic.type === type &&
+                            <div
+                                style={{ background: '#667085' }}
+                                className={'col-12 ' + styles.taskCard} key={-1} >
+                                <div
+                                    onClick={() => HandleSelect({ id: temp.topic.id, body: temp.topic.body, type: temp.topic.type }, temp.essay)}
+                                    className={styles.taskCardTitle}>
+                                    <h5>{temp.topic.body}</h5>
+                                    {/* <span>
+                                        {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}
+                                    </span> */}
+                                </div>
+                                <div className={styles.taskCardScore}>
+                                    {/* {item.overallBandScore} */}
+                                    <AiOutlineDelete className={styles.deleteIcon}
+                                        onClick={() => {
+                                            setOpen(true);
+                                            // changeSelectedId(item.id);
+                                        }} />
+                                </div>
+                            </div>
+                        }
+                        {
                             Topics.map((item: any, index: any) =>
                                 item.type === type &&
                                 <div
                                     style={item.id === selectedTopic?.id ? { background: '#172E4A' } : {}}
                                     className={'col-12 ' + styles.taskCard} key={index} >
                                     <div
-                                        onClick={() => HandleSelect({ id: item.id, body: item.topic, type: item.type })}
+                                        onClick={() => {
+                                            HandleSelect({ id: item.id, body: item.topic, type: item.type },'');
+                                            SetTempEssay();
+                                        }}
                                         className={styles.taskCardTitle}>
                                         <h5>{item.shortName}</h5>
                                         <span>

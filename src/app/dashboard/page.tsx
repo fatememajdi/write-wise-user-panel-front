@@ -87,6 +87,7 @@ const Dashboard: React.FC = () => {
     });
     const [pageLoading, setLoading] = React.useState<boolean>(true);
     const [userName, setuserName] = React.useState<string>();
+    const [essay, setEssay] = React.useState<string>('');
     const [isOpen, setIsOpen] = React.useState<boolean>(!isMobile);
     const [MoreEssaies, changeMoreEssaies] = React.useState<boolean>(true);
     const [MoreTopics, changeMoreTopics] = React.useState<boolean>(true);
@@ -102,7 +103,7 @@ const Dashboard: React.FC = () => {
         <Task
             targetRef={targetRef}
             setEssaies={setEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} handleNewTopic={handleNewTopic}
-            essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type}
+            essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type} essay={essay}
             changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
     ]);
 
@@ -113,12 +114,21 @@ const Dashboard: React.FC = () => {
         goTo(1);
     };
 
-    async function SelectTopic(topic?: topic) {
+    async function SelectTopic(topic?: topic, essay?: string) {
+        console.log(topic);
         changeTabBarLoc(true);
         changeEndAnimation(true);
         setEssaies([]);
-        changeMoreEssaies(true);
         changeTopic(topic);
+        // changeMoreEssaies(true);
+
+        if (essay) {
+            setEssay(essay);
+            changeMoreEssaies(false);
+        } else {
+            setEssay('');
+            changeMoreEssaies(true);
+        }
         if (divRef)
             divRef.scrollTop = divRef.offsetTop;
         goTo(1);

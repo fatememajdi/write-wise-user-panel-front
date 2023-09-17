@@ -52,9 +52,10 @@ type _props = {
     divRef?: any,
     type: string,
     targetRef: any,
+    essay?: string
 };
 
-const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic,
+const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
     let DivRef2: any;
     if (typeof document !== 'undefined')
