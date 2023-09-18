@@ -62,7 +62,7 @@ type tempEssay = {
         type: string
     },
     essay: string,
-    currentId?: string
+    selected: boolean
 };
 
 const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay,
@@ -235,32 +235,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
         if (currentId != null) {
             id = currentId;
-        } else if (essay !== '') {
-            console.log('hi')
-            await client.mutate({
-                mutation: SELECT_TOPIC,
-                variables: {
-                    type: type,
-                    id: topic?.id !== '' ? topic?.id : null,
-                    body: topic?.id === '' ? topic.body : null
-                }
-            }).then(async (res) => {
-                id = res.data.selectTopic.id as string;
-                console.log(res);
-                changeCcurrentId(id);
-                handleNewTopic(res.data.selectTopic);
-                changeGeneratedTopic({
-                    id: res.data.selectTopic.id,
-                    body: res.data.selectTopic.topic,
-                    type: res.data.selectTopic.type
-                });
-            }).catch(async (err) => {
-                await changeModalTitle('Select topic error');
-                await changeModalContent(JSON.stringify(err.message));
-                changeLoading(false);
-                showModal();
-                id = null;
-            });
         } else
             id = await SelectTopic(Topic);
 
@@ -329,11 +303,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
     //-------------------------------------------------------------------temp
     async function CreateTempEssay(essay: string, Topic: string) {
-        let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_1' }, essay: '' };
-        if (topic && currentId) {
-            temp.topic = { id: currentId, body: topic.body, type: 'general_task_1' };
+        let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_1' }, essay: '', selected: currentId ? true : false };
+        if (topic) {
+            temp.topic = { id: currentId ? currentId : topic.id, body: topic.body, type: 'general_task_1' };
         } else if (generatedTopic) {
-            temp.topic = { id: currentId ? currentId : generatedTopic.id, body: Topic, type: 'general_task_1' };
+            temp.topic = { id: currentId ? currentId : generatedTopic.id as string, body: Topic, type: 'general_task_1' };
         } else {
             temp.topic = { id: currentId ? currentId : '', body: Topic, type: 'general_task_1' }
         }
@@ -341,13 +315,36 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         localStorage.setItem('tempEssay', JSON.stringify(temp));
     };
 
-    React.useEffect(() => {
-        if (topic) {
+    async function ChackTopic() {
+        if (essay !== '') {
+            let temp = await localStorage.getItem('tempEssay');
+            if (temp) {
+                if (JSON.parse(temp).selected) {
+                    changeCcurrentId(JSON.parse(temp).topic.id);
+                }
+                else if (JSON.parse(temp).topic.id !== '') {
+                    let tempTopic: topic = {
+                        id: JSON.parse(temp).topic.id,
+                        body: JSON.parse(temp).topic.body,
+                        type: JSON.parse(temp).topic.type
+                    }
+                    changeGeneratedTopic(tempTopic);
+                    changeMoreEssaies(false);
+                }
+                else {
+                    changeMoreEssaies(false);
+                }
+            }
+        } else if (topic) {
             changeCcurrentId(topic.id);
         } else if (currentId == null) {
             changeMoreEssaies(false);
         }
-    });
+    }
+
+    React.useEffect(() => {
+        ChackTopic();
+    }, []);
 
     const EssayValidationSchema = Yup.object().shape({
         topic: Yup
@@ -357,7 +354,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
     return <Formik
         initialValues={{
-            topic: generatedTopic ? generatedTopic.body : '',
+            topic: topic?.id === '' ? topic?.body : generatedTopic ? generatedTopic.body : '',
             body: essay ? essay : ''
         }}
         // validationSchema={EssayValidationSchema}
@@ -403,95 +400,97 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
                             <div className={styles.writingInputTitle}>Write about the following topic:</div>
                             {
-                                topic ?
-                                    <div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
-                                    : currentId != null ?
-                                        <div className={styles.selectedTopcCard}><Text text={values.topic} /></div>
-                                        : generateWritingTopicLoading ?
-                                            <Loading style={{ height: 250, minHeight: 0 }} />
-                                            :
-                                            <div className={styles.topicInputContainer}>
+                                topic && essay === '' ?
+                                    < div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
+                                    : topic && essay != '' && currentId !== null ?
+                                        < div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
+                                        : currentId != null ?
+                                            <div className={styles.selectedTopcCard}><Text text={values.topic} /></div>
+                                            : generateWritingTopicLoading ?
+                                                <Loading style={{ height: 250, minHeight: 0 }} />
+                                                :
+                                                <div className={styles.topicInputContainer}>
 
-                                                {
-                                                    generateWriting && !editedGeneratedTopic ?
-                                                        <div
-                                                            style={{ height: 250 }}
-                                                            className={styles.generatedWritingCard}>
-                                                            <Typewriter
-                                                                options={{
-                                                                    delay: 0,
-                                                                    wrapperClassName: styles.writerClassname
-                                                                    // cursor: cursor
-                                                                    // cursorClassName: endTyping ? 'Typewriter__cursor ' + styles.cursor : 'Typewriter__cursor'
-                                                                }}
-                                                                onInit={(typewriter) => {
-                                                                    JSON.stringify(SplitText(values.topic)).slice(1, JSON.stringify(values.topic).length - 1).split(/(\s)/).map((str: any, index: number) => {
-                                                                        if (index % 10 !== 0) {
-                                                                            typewriter.typeString(str)
-                                                                                .pauseFor(100);
-                                                                        } else {
-                                                                            typewriter.typeString(str)
-                                                                                .pauseFor(1000);
-                                                                        }
-                                                                        typewriter.start();
-                                                                    });
-                                                                    typewriter.callFunction(() => {
-                                                                        changeEndTyping(true);
-                                                                        changeCursor(' ')
-                                                                    })
-                                                                }}
-
-                                                            />
-
-                                                        </div>
-                                                        :
-                                                        <Input
-                                                            style={{ width: '70%' }}
-                                                            className={styles.topicInputsecond + ' ' + styles.topicInput}
-                                                            onChange={(e: any) => {
-                                                                changeEndTyping(true);
-                                                                handleChange(e);
-                                                            }}
-                                                            placeHolder="Type your topic here..."
-                                                            secondError
-                                                            textarea
-                                                            textarea_name='topic'
-                                                            textarea_value={values.topic}
-                                                            textarea_error={errors.topic && touched.topic && errors.topic}
-                                                        />
-                                                }
-                                                <button
-                                                    aria-label="edit tipic"
-                                                    onClick={() => {
-                                                        setChangeInput(false);
-                                                        changeEndTyping(false);
-                                                        changeEditedGeneratedTopic(false);
-                                                        changeGenerateWriting(true);
-                                                        GenerateTopic(setFieldValue);
-                                                    }}
-                                                    type="button" className={styles.generateButton}>
-                                                    <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
                                                     {
-                                                        generatedTopic ? 'Regenereate' :
-                                                            'Generate'
+                                                        generateWriting && !editedGeneratedTopic ?
+                                                            <div
+                                                                style={{ height: 250 }}
+                                                                className={styles.generatedWritingCard}>
+                                                                <Typewriter
+                                                                    options={{
+                                                                        delay: 0,
+                                                                        wrapperClassName: styles.writerClassname
+                                                                        // cursor: cursor
+                                                                        // cursorClassName: endTyping ? 'Typewriter__cursor ' + styles.cursor : 'Typewriter__cursor'
+                                                                    }}
+                                                                    onInit={(typewriter) => {
+                                                                        JSON.stringify(SplitText(values.topic)).slice(1, JSON.stringify(values.topic).length - 1).split(/(\s)/).map((str: any, index: number) => {
+                                                                            if (index % 10 !== 0) {
+                                                                                typewriter.typeString(str)
+                                                                                    .pauseFor(100);
+                                                                            } else {
+                                                                                typewriter.typeString(str)
+                                                                                    .pauseFor(1000);
+                                                                            }
+                                                                            typewriter.start();
+                                                                        });
+                                                                        typewriter.callFunction(() => {
+                                                                            changeEndTyping(true);
+                                                                            changeCursor(' ')
+                                                                        })
+                                                                    }}
+
+                                                                />
+
+                                                            </div>
+                                                            :
+                                                            <Input
+                                                                style={{ width: '70%' }}
+                                                                className={styles.topicInputsecond + ' ' + styles.topicInput}
+                                                                onChange={(e: any) => {
+                                                                    changeEndTyping(true);
+                                                                    handleChange(e);
+                                                                }}
+                                                                placeHolder="Type your topic here..."
+                                                                secondError
+                                                                textarea
+                                                                textarea_name='topic'
+                                                                textarea_value={values.topic}
+                                                                textarea_error={errors.topic && touched.topic && errors.topic}
+                                                            />
                                                     }
-                                                </button>
-
-                                                {
-                                                    generateWriting &&
                                                     <button
-                                                        aria-label="edit topic"
-                                                        type="button"
+                                                        aria-label="edit tipic"
                                                         onClick={() => {
-                                                            changeEditedGeneratedTopic(true);
-                                                            setFieldValue('topic', '');
+                                                            setChangeInput(false);
+                                                            changeEndTyping(false);
+                                                            changeEditedGeneratedTopic(false);
+                                                            changeGenerateWriting(true);
+                                                            GenerateTopic(setFieldValue);
                                                         }}
-                                                        className={styles.editButton}>
-                                                        <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
+                                                        type="button" className={styles.generateButton}>
+                                                        <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
+                                                        {
+                                                            generatedTopic ? 'Regenereate' :
+                                                                'Generate'
+                                                        }
                                                     </button>
-                                                }
 
-                                            </div>
+                                                    {
+                                                        generateWriting &&
+                                                        <button
+                                                            aria-label="edit topic"
+                                                            type="button"
+                                                            onClick={() => {
+                                                                changeEditedGeneratedTopic(true);
+                                                                setFieldValue('topic', '');
+                                                            }}
+                                                            className={styles.editButton}>
+                                                            <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
+                                                        </button>
+                                                    }
+
+                                                </div>
                             }
 
                             <div className={styles.writingInputTitle}>Write at least 150 words.

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import dynamic from "next/dynamic";
 import InfiniteScroll from 'react-infinite-scroller';
@@ -33,7 +34,7 @@ type tempEssay = {
         type: string
     },
     essay: string
-    currentId?: string
+    selected: boolean
 };
 
 const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, MoreTopics, HandleDelete, type, selectedTopic }) => {
@@ -81,7 +82,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                         key={0}
                     >
                         {
-                            temp && temp?.topic.type === type &&
+                            temp && temp?.topic.type === type && temp.selected === false &&
                             <div
                                 style={{ background: '#667085' }}
                                 className={'col-12 ' + styles.taskCard} key={-1} >
@@ -93,14 +94,14 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                         {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}
                                     </span> */}
                                 </div>
-                                <div className={styles.taskCardScore}>
-                                    {/* {item.overallBandScore} */}
+                                {/* <div className={styles.taskCardScore}>
+                                    {item.overallBandScore}
                                     <AiOutlineDelete className={styles.deleteIcon}
                                         onClick={() => {
                                             setOpen(true);
-                                            // changeSelectedId(item.id);
+                                            changeSelectedId(item.id);
                                         }} />
-                                </div>
+                                </div> */}
                             </div>
                         }
                         {
@@ -111,7 +112,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                     className={'col-12 ' + styles.taskCard} key={index} >
                                     <div
                                         onClick={() => {
-                                            HandleSelect({ id: item.id, body: item.topic, type: item.type },'');
+                                            HandleSelect({ id: item.id, body: item.topic, type: item.type }, temp?.topic.id === item.id ? temp?.essay : '');
                                             SetTempEssay();
                                         }}
                                         className={styles.taskCardTitle}>

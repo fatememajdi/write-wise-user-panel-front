@@ -115,7 +115,6 @@ const Dashboard: React.FC = () => {
     };
 
     async function SelectTopic(topic?: topic, essay?: string) {
-        console.log(topic);
         changeTabBarLoc(true);
         changeEndAnimation(true);
         setEssaies([]);
@@ -226,6 +225,7 @@ const Dashboard: React.FC = () => {
         changeTabBarLoc(false);
         changeEndAnimation(false);
         changeTopic(null);
+        setEssay('');
         goTo(0);
         if (isMobile)
             setIsOpen(false);
@@ -320,6 +320,7 @@ const Dashboard: React.FC = () => {
                 changeTopicsLoading(false);
             };
         } finally {
+            setEssay('');
         }
 
     };
