@@ -95,7 +95,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     };
 
     //-----------------------------------------------------------------generate topic
-    async function GenerateTopic(setFieldValue: any) {
+    async function GenerateTopic(setFieldValue: any, essay: string) {
         changeGenerateWritingTopicLoading(true);
         await client.query({
             query: GET_RANDOM_GENERAL_TASK1_WRITING,
@@ -103,6 +103,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         }).then(async (res) => {
             await changeGeneratedTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body, type: res.data.getRandomWriting.type });
             setFieldValue('topic', res.data.getRandomWriting.body);
+            ChangeTempTopic(essay, res.data.getRandomWriting.body, res.data.getRandomWriting.id);
             changeGenerateWritingTopicLoading(false);
         }).catch(async (err) => {
             await changeModalTitle('Generate topic error');
@@ -315,6 +316,15 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         localStorage.setItem('tempEssay', JSON.stringify(temp));
     };
 
+    async function ChangeTempTopic(essay: string, Topic: string, id?: string) {
+        if (essay != '') {
+            let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_1' }, essay: '', selected: false };
+            temp.topic = { id: id ? id : '', body: Topic, type: 'general_task_1' }
+            temp.essay = essay;
+            localStorage.setItem('tempEssay', JSON.stringify(temp));
+        }
+    };
+
     async function ChackTopic() {
         if (essay !== '') {
             let temp = await localStorage.getItem('tempEssay');
@@ -450,6 +460,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                                 onChange={(e: any) => {
                                                                     changeEndTyping(true);
                                                                     handleChange(e);
+                                                                    ChangeTempTopic(values.body, e.target.value);
                                                                 }}
                                                                 placeHolder="Type your topic here..."
                                                                 secondError
@@ -461,12 +472,12 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                     }
                                                     <button
                                                         aria-label="edit tipic"
-                                                        onClick={() => {
+                                                        onClick={async () => {
                                                             setChangeInput(false);
                                                             changeEndTyping(false);
                                                             changeEditedGeneratedTopic(false);
                                                             changeGenerateWriting(true);
-                                                            GenerateTopic(setFieldValue);
+                                                            await GenerateTopic(setFieldValue, values.body);
                                                         }}
                                                         type="button" className={styles.generateButton}>
                                                         <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
