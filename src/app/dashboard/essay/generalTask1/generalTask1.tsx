@@ -318,8 +318,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
     async function ChangeTempTopic(essay: string, Topic: string, id?: string) {
         if (essay != '') {
-            let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_1' }, essay: '', selected: false };
-            temp.topic = { id: id ? id : '', body: Topic, type: 'general_task_1' }
+            let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_2' }, essay: '', selected: false };
+            temp.topic = { id: id ? id : '', body: Topic, type: 'general_task_2' }
             temp.essay = essay;
             localStorage.setItem('tempEssay', JSON.stringify(temp));
         }
