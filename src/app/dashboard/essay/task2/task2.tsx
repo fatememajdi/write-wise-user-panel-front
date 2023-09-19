@@ -245,13 +245,18 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                     body: body
                 }
             }).then(async (res) => {
-                await localStorage.removeItem('tempEssay');
+                let lastTemp = await localStorage.getItem('lastTempEssay2');
                 let t = await localStorage.getItem('tempsEssayList');
                 let tempsLiset: SelectedTopicTempEssay[] = [];
                 if (t) tempsLiset = JSON.parse(t);
                 if (tempsLiset.findIndex(item => item.id === currentId) != -1) {
                     await localStorage.setItem('tempsEssayList', JSON.stringify(tempsLiset.filter(item => item.id !== tempsLiset[tempsLiset.findIndex(item => item.id === currentId)].id)));
+                } else if (lastTemp) {
+                    await localStorage.removeItem('lastTempEssay2');
+                } else {
+                    await localStorage.removeItem('tempEssay2');
                 };
+
                 await setEssaies([{
                     id: res.data.finishEssay.id,
                     essay: res.data.finishEssay.essay,
@@ -298,11 +303,18 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
     //-------------------------------------------------------------------temp
     async function CreateTempEssay(essay: string, Topic: string) {
         let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_2' }, essay: '' };
+        let oldestTemp = await localStorage.getItem('tempEssay2');
         let t = await localStorage.getItem('tempsEssayList');
         let tempsList: SelectedTopicTempEssay[] = [];
-        if (t) {
-            tempsList = JSON.parse(t);
-        }
+        if (t) tempsList = JSON.parse(t);
+
+        if (generatedTopic) {
+            temp.topic = { id: generatedTopic.id as string, body: Topic, type: 'general_task_2' };
+        } else {
+            temp.topic = { id: '', body: Topic, type: 'general_task_2' }
+        };
+        temp.essay = essay;
+
         if (currentId) {
             if (tempsList.length === 0) {
                 tempsList.push({ essay: essay, id: currentId });
@@ -314,14 +326,17 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                 }
             };
             localStorage.setItem('tempsEssayList', JSON.stringify(tempsList));
-        } else {
-            if (generatedTopic) {
-                temp.topic = { id: generatedTopic.id as string, body: Topic, type: 'general_task_2' };
+        } else if (oldestTemp) {
+            console.log(JSON.parse(oldestTemp).topic.body === Topic);
+            console.log(JSON.parse(oldestTemp).topic.body);
+            console.log(JSON.parse(oldestTemp).topic.body);
+            if (JSON.parse(oldestTemp).topic.body === Topic) {
+                localStorage.setItem('tempEssay2', JSON.stringify(temp));
             } else {
-                temp.topic = { id: '', body: Topic, type: 'general_task_2' }
-            };
-            temp.essay = essay;
-            localStorage.setItem('tempEssay', JSON.stringify(temp));
+                localStorage.setItem('lastTempEssay2', JSON.stringify(temp));
+            }
+        } else {
+            localStorage.setItem('tempEssay2', JSON.stringify(temp));
         };
     };
 
@@ -330,7 +345,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
             changeCcurrentId(topic.id);
             changeMoreEssaies(true);
         } else if (topic && essay !== '') {
-            let temp = await localStorage.getItem('tempEssay');
+            let temp = await localStorage.getItem('tempEssay2');
             let t = await localStorage.getItem('tempsEssayList');
             let tempsLiset: SelectedTopicTempEssay[] = [];
             if (t)
@@ -358,7 +373,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
             let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_2' }, essay: '' };
             temp.topic = { id: id ? id : '', body: Topic, type: 'general_task_2' }
             temp.essay = essay;
-            localStorage.setItem('tempEssay', JSON.stringify(temp));
+            localStorage.setItem('tempEssay2', JSON.stringify(temp));
         }
     };
 

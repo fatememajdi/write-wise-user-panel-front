@@ -47,17 +47,30 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
     };
 
     async function SetTempEssay() {
-        let Temp = await localStorage.getItem('tempEssay');
-        let lastTemp = await localStorage.getItem('lastTempEssay');
-        let TempsList = await localStorage.getItem('tempsEssayList');
-        if (lastTemp)
-            setTemp(JSON.parse(lastTemp));
-        else if (Temp)
-            setTemp(JSON.parse(Temp));
+        if (type === 'general_task_1') {
+            let Temp = await localStorage.getItem('tempEssay');
+            let lastTemp = await localStorage.getItem('lastTempEssay');
+            let TempsList = await localStorage.getItem('tempsEssayList');
+            if (lastTemp)
+                setTemp(JSON.parse(lastTemp));
+            else if (Temp)
+                setTemp(JSON.parse(Temp));
 
-        if (TempsList)
-            setTempsList(JSON.parse(TempsList));
-    }
+            if (TempsList)
+                setTempsList(JSON.parse(TempsList));
+        } else {
+            let Temp = await localStorage.getItem('tempEssay2');
+            let lastTemp = await localStorage.getItem('lastTempEssay2');
+            let TempsList = await localStorage.getItem('tempsEssayList');
+            if (lastTemp)
+                setTemp(JSON.parse(lastTemp));
+            else if (Temp)
+                setTemp(JSON.parse(Temp));
+
+            if (TempsList)
+                setTempsList(JSON.parse(TempsList));
+        }
+    };
 
     React.useEffect(() => {
         SetTempEssay();
@@ -81,9 +94,9 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                         key={0}
                     >
                         {
-                            temp && temp?.topic.type === type &&
+                            temp &&
                             <div
-                                style={{ background: '#667085' }}
+                                // style={{ background: '#172E4A' }}
                                 className={'col-12 ' + styles.taskCard} key={-1} >
                                 <div
                                     onClick={() => HandleSelect({ id: temp.topic.id, body: temp.topic.body, type: temp.topic.type }, temp.essay)}
@@ -93,14 +106,17 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                         {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}
                                     </span> */}
                                 </div>
-                                {/* <div className={styles.taskCardScore}>
-                                    {item.overallBandScore}
+                                <div className={styles.taskCardScore}>
+                                    <span style={{ fontSize: 26 }}>
+                                        ?
+                                    </span>
                                     <AiOutlineDelete className={styles.deleteIcon}
-                                        onClick={() => {
-                                            setOpen(true);
-                                            changeSelectedId(item.id);
-                                        }} />
-                                </div> */}
+                                    // onClick={() => {
+                                    //     setOpen(true);
+                                    //     changeSelectedId(item.id);
+                                    // }} 
+                                    />
+                                </div>
                             </div>
                         }
                         {
