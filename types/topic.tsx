@@ -1,4 +1,4 @@
-export interface Topic {
+export type Topic = {
     id?: string,
     type?: string,
     topic?: string,

@@ -30,7 +30,7 @@ import { Reload } from "../../../../../public";
 import { MdEdit } from 'react-icons/md';
 
 //--------------------------------------types
-import { Essay } from '../../../../../types/essay';
+import { Essay, SelectedTopicTempEssay, tempEssay } from '../../../../../types/essay';
 
 type topic = {
     id: string,
@@ -53,16 +53,6 @@ type _props = {
     type: string,
     targetRef: any,
     essay?: string
-};
-
-type tempEssay = {
-    topic: {
-        id?: string,
-        body: string,
-        type: string
-    },
-    essay: string,
-    selected: boolean
 };
 
 const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay,
@@ -109,7 +99,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
             changeGenerateWritingTopicLoading(false);
             showModal();
         });
-    }
+    };
 
     //------------------------------------------------------------------select essay topic
     async function SelectTopic(topic: string): Promise<string | null> {
@@ -138,7 +128,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
             id = null;
         });
         return id;
-    }
+    };
 
 
     async function GetScores(essaies: Essay[]) {
@@ -226,7 +216,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
             setEssaies(newEssay);
             handleNewTopic();
         })
-    }
+    };
 
     //-------------------------------------------------------------------add new essay
     async function AddNewEssay(topic: string, body: string) {
@@ -256,6 +246,12 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                 }
             }).then(async (res) => {
                 await localStorage.removeItem('tempEssay');
+                let t = await localStorage.getItem('tempsEssayList');
+                let tempsLiset: SelectedTopicTempEssay[] = [];
+                if (t) tempsLiset = JSON.parse(t);
+                if (tempsLiset.findIndex(item => item.id === currentId) != -1) {
+                    await localStorage.setItem('tempsEssayList', JSON.stringify(tempsLiset.filter(item => item.id !== tempsLiset[tempsLiset.findIndex(item => item.id === currentId)].id)));
+                };
                 await setEssaies([{
                     id: res.data.finishEssay.id,
                     essay: res.data.finishEssay.essay,
@@ -278,7 +274,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                 showModal();
             })
         };
-    }
+    };
 
     //-------------------------------------------------------------------delete essay
     async function DeleteEssay(id: string) {
@@ -297,52 +293,70 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
             changeDeleteLoading(false);
             showModal();
         });
-    }
+    };
+
     //-------------------------------------------------------------------temp
     async function CreateTempEssay(essay: string, Topic: string) {
-        let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_2' }, essay: '', selected: currentId ? true : false };
-        if (topic) {
-            temp.topic = { id: currentId ? currentId : topic.id, body: topic.body, type: 'general_task_2' };
-        } else if (generatedTopic) {
-            temp.topic = { id: currentId ? currentId : generatedTopic.id as string, body: Topic, type: 'general_task_2' };
-        } else {
-            temp.topic = { id: currentId ? currentId : '', body: Topic, type: 'general_task_2' }
+        let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_2' }, essay: '' };
+        let t = await localStorage.getItem('tempsEssayList');
+        let tempsList: SelectedTopicTempEssay[] = [];
+        if (t) {
+            tempsList = JSON.parse(t);
         }
-        temp.essay = essay;
-        localStorage.setItem('tempEssay', JSON.stringify(temp));
+        if (currentId) {
+            if (tempsList.length === 0) {
+                tempsList.push({ essay: essay, id: currentId });
+            } else {
+                if (tempsList.findIndex(item => item.id === currentId) === -1) {
+                    tempsList.push({ essay: essay, id: currentId });
+                } else {
+                    tempsList[tempsList.findIndex(item => item.id === currentId)].essay = essay;
+                }
+            };
+            localStorage.setItem('tempsEssayList', JSON.stringify(tempsList));
+        } else {
+            if (generatedTopic) {
+                temp.topic = { id: generatedTopic.id as string, body: Topic, type: 'general_task_2' };
+            } else {
+                temp.topic = { id: '', body: Topic, type: 'general_task_2' }
+            };
+            temp.essay = essay;
+            localStorage.setItem('tempEssay', JSON.stringify(temp));
+        };
     };
 
     async function ChackTopic() {
-        if (essay !== '') {
-            let temp = await localStorage.getItem('tempEssay');
-            if (temp) {
-                if (JSON.parse(temp).selected) {
-                    changeCcurrentId(JSON.parse(temp).topic.id);
-                }
-                else if (JSON.parse(temp).topic.id !== '') {
-                    let tempTopic: topic = {
-                        id: JSON.parse(temp).topic.id,
-                        body: JSON.parse(temp).topic.body,
-                        type: JSON.parse(temp).topic.type
-                    }
-                    changeGeneratedTopic(tempTopic);
-                    changeMoreEssaies(false);
-                }
-                else {
-                    changeMoreEssaies(false);
-                }
-            }
-        } else if (topic) {
+        if (topic && essay === '') {
             changeCcurrentId(topic.id);
-        } else if (currentId == null) {
-            changeMoreEssaies(false);
+            changeMoreEssaies(true);
+        } else if (topic && essay !== '') {
+            let temp = await localStorage.getItem('tempEssay');
+            let t = await localStorage.getItem('tempsEssayList');
+            let tempsLiset: SelectedTopicTempEssay[] = [];
+            if (t)
+                tempsLiset = JSON.parse(t);
+
+            if (temp && topic.id === JSON.parse(temp).topic.id) {
+                let tempTopic: topic = {
+                    id: JSON.parse(temp).topic.id,
+                    body: JSON.parse(temp).topic.body,
+                    type: JSON.parse(temp).topic.type
+                }
+                changeGeneratedTopic(tempTopic);
+                changeMoreEssaies(false);
+            } else if (tempsLiset.findIndex(item => item.id === topic.id) != -1) {
+                changeCcurrentId(topic.id);
+                changeMoreEssaies(true);
+            } else if (currentId == null) {
+                changeMoreEssaies(false);
+            }
         }
     };
 
     async function ChangeTempTopic(essay: string, Topic: string, id?: string) {
         if (essay != '') {
-            let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_1' }, essay: '', selected: false };
-            temp.topic = { id: id ? id : '', body: Topic, type: 'general_task_1' }
+            let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_2' }, essay: '' };
+            temp.topic = { id: id ? id : '', body: Topic, type: 'general_task_2' }
             temp.essay = essay;
             localStorage.setItem('tempEssay', JSON.stringify(temp));
         }

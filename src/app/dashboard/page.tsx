@@ -33,7 +33,7 @@ import { TfiMenu } from 'react-icons/tfi';
 import { FiMoreVertical } from 'react-icons/fi';
 
 //---------------------------------------------------types
-import { Essay } from "../../../types/essay";
+import { Essay, tempEssay } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
 
 
@@ -115,6 +115,7 @@ const Dashboard: React.FC = () => {
     };
 
     async function SelectTopic(topic?: topic, essay?: string) {
+
         changeTabBarLoc(true);
         changeEndAnimation(true);
         setEssaies([]);

@@ -8,6 +8,7 @@ import styles from './topicsList.module.css';
 
 //-------------------------------------------types
 import { Topic } from "../../../types/topic";
+import { SelectedTopicTempEssay, tempEssay } from "../../../types/essay";
 
 //-------------------------------------------components
 const Loading = dynamic(() => import("@/components/loading/loading"));
@@ -27,19 +28,10 @@ type _props = {
     selectedTopic?: Topic
 };
 
-type tempEssay = {
-    topic: {
-        id?: string,
-        body: string,
-        type: string
-    },
-    essay: string
-    selected: boolean
-};
-
 const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, MoreTopics, HandleDelete, type, selectedTopic }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const [temp, setTemp] = React.useState<tempEssay | null>();
+    const [tempsList, setTempsList] = React.useState<SelectedTopicTempEssay[]>([]);
     const [loading, setLoading] = React.useState<boolean>(false);
     const [selectedId, changeSelectedId] = React.useState<string>('');
 
@@ -56,8 +48,15 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
 
     async function SetTempEssay() {
         let Temp = await localStorage.getItem('tempEssay');
-        if (Temp && JSON.parse(Temp) !== temp)
+        let lastTemp = await localStorage.getItem('lastTempEssay');
+        let TempsList = await localStorage.getItem('tempsEssayList');
+        if (lastTemp)
+            setTemp(JSON.parse(lastTemp));
+        else if (Temp)
             setTemp(JSON.parse(Temp));
+
+        if (TempsList)
+            setTempsList(JSON.parse(TempsList));
     }
 
     React.useEffect(() => {
@@ -82,7 +81,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                         key={0}
                     >
                         {
-                            temp && temp?.topic.type === type && temp.selected === false &&
+                            temp && temp?.topic.type === type &&
                             <div
                                 style={{ background: '#667085' }}
                                 className={'col-12 ' + styles.taskCard} key={-1} >
@@ -112,7 +111,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                     className={'col-12 ' + styles.taskCard} key={index} >
                                     <div
                                         onClick={() => {
-                                            HandleSelect({ id: item.id, body: item.topic, type: item.type }, temp?.topic.id === item.id ? temp?.essay : '');
+                                            HandleSelect({ id: item.id, body: item.topic, type: item.type }, tempsList.findIndex(tempItem => tempItem.id === item.id) === -1 ? '' : tempsList[tempsList.findIndex(tempItem => tempItem.id === item.id)].essay);
                                             SetTempEssay();
                                         }}
                                         className={styles.taskCardTitle}>

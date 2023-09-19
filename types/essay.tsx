@@ -1,4 +1,4 @@
-export interface Essay {
+export type Essay = {
     id?: string,
     essay?: string,
     date?: any,
@@ -11,4 +11,18 @@ export interface Essay {
     grammaticalRangeAndAccuracyScore?: number,
     grammaticalRangeAndAccuracySummery?: string,
     overallBandScore?: number
-}
+};
+
+export type tempEssay = {
+    topic: {
+        id?: string,
+        body: string,
+        type: string
+    },
+    essay: string
+};
+
+export type SelectedTopicTempEssay = {
+    essay: string;
+    id: string
+};
