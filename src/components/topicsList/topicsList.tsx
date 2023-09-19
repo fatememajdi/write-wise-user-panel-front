@@ -96,7 +96,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                         {
                             temp &&
                             <div
-                                // style={{ background: '#172E4A' }}
+                                style={temp.topic.id === selectedTopic?.id ? { background: '#172E4A' } : {}}
                                 className={'col-12 ' + styles.taskCard} key={-1} >
                                 <div
                                     onClick={() => HandleSelect({ id: temp.topic.id, body: temp.topic.body, type: temp.topic.type }, temp.essay)}
@@ -111,10 +111,17 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                         ?
                                     </span>
                                     <AiOutlineDelete className={styles.deleteIcon}
-                                    // onClick={() => {
-                                    //     setOpen(true);
-                                    //     changeSelectedId(item.id);
-                                    // }} 
+                                        onClick={() => {
+                                            if (type === 'general_task_1') {
+                                                localStorage.removeItem('tempEssay');
+                                                localStorage.removeItem('lastTempEssay');
+                                                setTemp(null);
+                                            } else {
+                                                localStorage.removeItem('tempEssay2');
+                                                localStorage.removeItem('lastTempEssay2');
+                                                setTemp(null);
+                                            }
+                                        }}
                                     />
                                 </div>
                             </div>
