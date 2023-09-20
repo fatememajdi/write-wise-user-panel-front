@@ -156,8 +156,8 @@
 }
 
 .generateButton {
-    background-color: #132740;
-    border: solid 2px #132740;
+    background-color: #2E4057;
+    border: solid 2px #2E4057;
     width: 170px;
     height: 40px;
     display: flex;
@@ -165,8 +165,14 @@
     justify-content: center;
     color: var(--color-whiteText);
     margin-left: 29px;
-    margin-top: 25px;
+    margin-top: 19px;
     padding: 0px 22px;
+    color: #FAFAFA;
+    text-align: center;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
 .editButton {
@@ -263,6 +269,30 @@
 
 .writerClassname br {
     line-height: 180% !important;
+}
+
+.select {
+    border-radius: 8px !important;
+    border: 1px solid #2E4057 !important;
+    width: 170px !important;
+    height: 42px !important;
+    background-color: #2E4057;
+    margin-left: auto;
+    margin-top: 25px;
+}
+
+.topicButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+}
+
+.selectMenuItem {
+    background-color: #626E7E;
+    color: #F3F3F3;
+    margin: 0px !important;
 }
 
 @media(max-width: 1440px) {

@@ -18,7 +18,7 @@ const Timer: React.FC<{ time: number }> = ({ time }) => {
 
     return (
         <div className={styles.timerCard}>
-            you have {Math.round(seconds / 60) < 10 ? '0' + Math.round(seconds / 60) : Math.round(seconds / 60)} : {seconds % 60 < 10 ? '0' + seconds % 60 : seconds % 60} left</div>
+            you have {Math.trunc(seconds / 60) < 10 ? '0' + Math.trunc(seconds / 60) : Math.trunc(seconds / 60)} : {seconds % 60 < 10 ? '0' + seconds % 60 : seconds % 60} left</div>
     )
 };
 

@@ -10,7 +10,10 @@ export type Essay = {
     lexicalResourceSummery?: string,
     grammaticalRangeAndAccuracyScore?: number,
     grammaticalRangeAndAccuracySummery?: string,
-    overallBandScore?: number
+    overallBandScore?: number,
+    durationMillisecond?: number,
+    essayRecommendations?: string,
+    essayInsights?: string
 };
 
 export type tempEssay = {

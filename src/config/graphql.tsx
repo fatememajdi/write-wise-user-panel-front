@@ -62,30 +62,23 @@ query GetUserEssay($id:String!, $page:Float!, $pageSize:Float!){
       lexicalResourceSummery,
       grammaticalRangeAndAccuracyScore,
       grammaticalRangeAndAccuracySummery,
-      overallBandScore
+      overallBandScore,
+      durationMillisecond,
+      essayRecommendations,
+      essayInsights
     }
   }
 }
 `;
 
-export const GET_RANDOM_GENERAL_TASK1_WRITING = gql`
-query{
-  getRandomWriting(type:GENERAL_TASK_1){
+export const GET_RANDOM_WRITING = gql`
+query GetRandomWriting($type:String!,$questionType:String!){
+  getRandomWriting(randomWritingInput:{type:$type,questionType:$questionType}){
     id,
     topic,
     body,
-    tone
-  }
-}
-`;
-
-export const GET_RANDOM_GENERAL_TASK2_WRITING = gql`
-query{
-  getRandomWriting(type:GENERAL_TASK_2){
-    id,
-    topic,
-    body,
-    tone
+    tone,
+    questionType
   }
 }
 `;
@@ -106,11 +99,14 @@ mutation SelectTopic($type:String! , $body:String, $id:String){
 `;
 
 export const ADD_ESSAY = gql`
-mutation finishEssay($id:String! , $body: String!){
-  finishEssay(addEssay:{id:$id ,body:$body}){
+mutation finishEssay($id:String! , $body: String! ,$durationMillisecond:Float!){
+  finishEssay(addEssay:{id:$id ,body:$body ,durationMillisecond:$durationMillisecond}){
     id,
     essay,
-    date
+    date,
+    durationMillisecond,
+    essayRecommendations,
+    essayInsights
   }
 }
 `;
@@ -172,7 +168,10 @@ mutation ScoreTaskResponse($id:String!){
   scoreTaskResponse(scoreEssay:{id:$id}){
     taskAchievementScore,
     taskAchievementSummery,
-    overallBandScore
+    overallBandScore,
+    durationMillisecond,
+    essayRecommendations,
+    essayInsights
   }
 }
 `;
@@ -211,6 +210,9 @@ mutation ScoreCoherence($id:String!){
 export const GET_OVERAL_SCORE = gql`
 query GetEssay($id:String!){
   getEssay(scoreEssay:{id:$id}){
-    overallBandScore
+    overallBandScore,
+    durationMillisecond,
+    essayRecommendations,
+    essayInsights
   }
 }`;

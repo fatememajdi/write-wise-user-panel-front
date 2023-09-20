@@ -33,7 +33,7 @@ import { TfiMenu } from 'react-icons/tfi';
 import { FiMoreVertical } from 'react-icons/fi';
 
 //---------------------------------------------------types
-import { Essay, tempEssay } from "../../../types/essay";
+import { Essay } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
 
 
@@ -55,7 +55,7 @@ const tabBarItems = [
         active: false
     },
     {
-        title: 'WWAI Tutor',
+        title: 'Insights',
         active: false
     },
 ];
@@ -166,6 +166,7 @@ const Dashboard: React.FC = () => {
             },
             fetchPolicy: "no-cache"
         }).then(async (res) => {
+            console.log('e', res.data.getUserEssay.essaies[0].essayRecommendations);
             if (res.data.getUserEssay.essaies.length != 0) {
                 await setEssaies([...essaies, ...res.data.getUserEssay.essaies]);
                 // changeEssayPage(essayPage + 1);

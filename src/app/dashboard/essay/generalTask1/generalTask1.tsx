@@ -6,16 +6,16 @@ import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
-// import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 //--------------------------------------styles
 import styles from '../../../../styles/task.module.css';
 
 //--------------------------------------components
 import {
-    ADD_ESSAY, DELETE_ESSAY, GET_OVERAL_SCORE, GET_RANDOM_GENERAL_TASK1_WRITING,
-    GET_RANDOM_GENERAL_TASK2_WRITING, SCORE_COHERENCE, SCORE_GRAMMATICAL,
-    SCORE_LEXICAL, SCORE_TASK_RESPONSE, SELECT_TOPIC
+    ADD_ESSAY, DELETE_ESSAY, GET_OVERAL_SCORE, GET_RANDOM_WRITING,
+    SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_LEXICAL, SCORE_TASK_RESPONSE, SELECT_TOPIC
 } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
@@ -35,7 +35,8 @@ import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../types/e
 type topic = {
     id: string,
     body: string,
-    type: string
+    type: string,
+    questionType?: string
 };
 
 type _props = {
@@ -63,6 +64,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     if (typeof document !== 'undefined')
         DivRef2 = document.getElementById('scrollDiv');
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
+    const [essayTime, changeEssayTime] = React.useState<number>(0);
     const [changeInput, setChangeInput] = React.useState<boolean>(false);
     const [endTyping, changeEndTyping] = React.useState<boolean>(topic ? true : false);
     const [cursor, changeCursor] = React.useState<string>('|');
@@ -86,13 +88,20 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     };
 
     //-----------------------------------------------------------------generate topic
-    async function GenerateTopic(setFieldValue: any, essay: string) {
+    async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
         changeGenerateWritingTopicLoading(true);
         await client.query({
-            query: GET_RANDOM_GENERAL_TASK1_WRITING,
-            fetchPolicy: "no-cache"
+            query: GET_RANDOM_WRITING,
+            fetchPolicy: "no-cache",
+            variables: {
+                type: 'general_task_1',
+                questionType: subType
+            }
         }).then(async (res) => {
-            await changeGeneratedTopic({ id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body, type: res.data.getRandomWriting.type });
+            await changeGeneratedTopic({
+                id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body,
+                type: res.data.getRandomWriting.type, questionType: res.data.getRandomWriting.questionType
+            });
             setFieldValue('topic', res.data.getRandomWriting.body);
             ChangeTempTopic(essay, res.data.getRandomWriting.body, res.data.getRandomWriting.id);
             changeGenerateWritingTopicLoading(false);
@@ -244,10 +253,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                 mutation: ADD_ESSAY,
                 variables: {
                     id: id as string,
-                    body: body
+                    body: body,
+                    durationMillisecond: Date.now() - essayTime
                 }
             }).then(async (res) => {
-
+                console.log(res);
                 let lastTemp = await localStorage.getItem('lastTempEssay');
                 let t = await localStorage.getItem('tempsEssayList');
                 let tempsLiset: SelectedTopicTempEssay[] = [];
@@ -331,9 +341,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             };
             localStorage.setItem('tempsEssayList', JSON.stringify(tempsList));
         } else if (oldestTemp) {
-            console.log(JSON.parse(oldestTemp).topic.body === Topic);
-            console.log(JSON.parse(oldestTemp).topic.body);
-            console.log(JSON.parse(oldestTemp).topic.body );
             if (JSON.parse(oldestTemp).topic.body === Topic) {
                 localStorage.setItem('tempEssay', JSON.stringify(temp));
             } else {
@@ -394,7 +401,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     return <Formik
         initialValues={{
             topic: topic?.id === '' ? topic?.body : generatedTopic ? generatedTopic.body : '',
-            body: essay ? essay : ''
+            body: essay ? essay : '',
+            subType: ''
         }}
         // validationSchema={EssayValidationSchema}
         enableReinitialize
@@ -499,22 +507,45 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                                 textarea_error={errors.topic && touched.topic && errors.topic}
                                                             />
                                                     }
-                                                    <button
-                                                        aria-label="edit tipic"
-                                                        onClick={async () => {
-                                                            setChangeInput(false);
-                                                            changeEndTyping(false);
-                                                            changeEditedGeneratedTopic(false);
-                                                            changeGenerateWriting(true);
-                                                            await GenerateTopic(setFieldValue, values.body);
-                                                        }}
-                                                        type="button" className={styles.generateButton}>
-                                                        <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
-                                                        {
-                                                            generatedTopic ? 'Regenereate' :
-                                                                'Generate'
-                                                        }
-                                                    </button>
+                                                    <div className={styles.topicButtonsContainer}>
+                                                        <Select
+                                                            renderValue={(selected) => {
+                                                                if (selected.length === 0) {
+                                                                    return <em>Sub-type</em>;
+                                                                }
+
+                                                                return selected;
+                                                            }}
+                                                            defaultValue=""
+                                                            value={values.subType}
+                                                            onChange={(e) => setFieldValue('subType', e.target.value)}
+                                                            displayEmpty
+                                                            inputProps={{ 'aria-label': 'gender select' }}
+                                                            className={styles.select}
+                                                        >
+
+                                                            <MenuItem className={styles.selectMenuItem} value={'Informal'}>Informal</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Semi-formal'}>Semi-formal</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Formal'}>Formal</MenuItem>
+                                                        </Select>
+
+                                                        <button
+                                                            aria-label="edit tipic"
+                                                            onClick={async () => {
+                                                                setChangeInput(false);
+                                                                changeEndTyping(false);
+                                                                changeEditedGeneratedTopic(false);
+                                                                changeGenerateWriting(true);
+                                                                await GenerateTopic(setFieldValue, values.body, values.subType);
+                                                            }}
+                                                            type="button" className={styles.generateButton}>
+                                                            <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
+                                                            {
+                                                                generatedTopic ? 'Regenereate' :
+                                                                    'Generate'
+                                                            }
+                                                        </button>
+                                                    </div>
 
                                                     {
                                                         generateWriting &&
@@ -547,8 +578,10 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                     disable={!endTyping}
                                     className={styles.topicInput}
                                     onChange={(e: any) => {
-                                        if (!changeInput)
+                                        if (!changeInput) {
                                             setChangeInput(true);
+                                            changeEssayTime(Date.now());
+                                        }
                                         handleChange(e);
                                         CreateTempEssay(e.target.value, values.topic);
                                     }}

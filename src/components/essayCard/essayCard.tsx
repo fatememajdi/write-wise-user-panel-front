@@ -48,7 +48,7 @@ const tabBarItems = [
         index: 3,
     },
     {
-        title: 'WWAI Tutor',
+        title: 'Insights',
         active: false,
         index: 4,
     },

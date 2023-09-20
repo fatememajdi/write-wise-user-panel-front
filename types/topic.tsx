@@ -6,4 +6,5 @@ export type Topic = {
     createdAt?: string,
     score?: string,
     overallBandScore?: number,
+    questionType?: string
 }

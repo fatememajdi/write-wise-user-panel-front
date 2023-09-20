@@ -3,3 +3,25 @@
     border-radius: 10px !important;
     height: 71px !important;
 }
+
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+    color: #FAFAFA !important;
+    text-align: center !important;
+    font-size: 17px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: normal !important;
+}
+
+.css-bpeome-MuiSvgIcon-root-MuiSelect-icon {
+    color: #FAFAFA !important;
+}
+
+.css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
+    color: #FAFAFA !important;
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list {
+    padding: 0px !important;
+    background-color: #626E7E !important;
+} 
