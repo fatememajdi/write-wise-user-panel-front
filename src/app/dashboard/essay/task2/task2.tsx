@@ -15,7 +15,8 @@ import styles from '../../../../styles/task.module.css';
 //--------------------------------------components
 import {
     ADD_ESSAY, DELETE_ESSAY, GET_OVERAL_SCORE, GET_RANDOM_WRITING, SCORE_COHERENCE, SCORE_GRAMMATICAL,
-    SCORE_LEXICAL, SCORE_TASK_RESPONSE, SELECT_TOPIC
+    SCORE_INSIGHT,
+    SCORE_LEXICAL, SCORE_RECOMMENDATION, SCORE_TASK_RESPONSE, SELECT_TOPIC
 } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
@@ -186,6 +187,24 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                 newEssay[0].grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
                 newEssay[0].grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
                 score = score + res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
+            }),
+
+            client.mutate({
+                mutation: SCORE_RECOMMENDATION,
+                variables: {
+                    id: newEssay[0].id
+                }
+            }).then(async (res) => {
+                newEssay[0].essayRecommendations = res.data.recommendation.essayRecommendations;
+            }),
+
+            client.mutate({
+                mutation: SCORE_INSIGHT,
+                variables: {
+                    id: newEssay[0].id
+                }
+            }).then(async (res) => {
+                newEssay[0].essayInsights = res.data.insights.essayInsights;
             }),
         ]).catch(async (err) => {
             await changeModalTitle('Get essay score error');

@@ -216,3 +216,18 @@ query GetEssay($id:String!){
     essayInsights
   }
 }`;
+
+export const SCORE_RECOMMENDATION = gql`
+mutation Recommendation($id:String!){
+  recommendation(scoreEssay:{id:$id}){
+    essayRecommendations
+  }
+}`;
+
+export const SCORE_INSIGHT = gql`
+mutation Insights($id:String!){
+  insights(scoreEssay:{id:$id}){
+    essayInsights
+  }
+}
+`;

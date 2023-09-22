@@ -52,11 +52,11 @@ const tabBarItems = [
     },
     {
         title: 'Recommendations',
-        active: false
+        active: true
     },
     {
         title: 'Insights',
-        active: false
+        active: true
     },
 ];
 
@@ -166,7 +166,6 @@ const Dashboard: React.FC = () => {
             },
             fetchPolicy: "no-cache"
         }).then(async (res) => {
-            console.log('e', res.data.getUserEssay.essaies[0].essayRecommendations);
             if (res.data.getUserEssay.essaies.length != 0) {
                 await setEssaies([...essaies, ...res.data.getUserEssay.essaies]);
                 // changeEssayPage(essayPage + 1);

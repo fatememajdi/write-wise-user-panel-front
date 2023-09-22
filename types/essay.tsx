@@ -12,8 +12,8 @@ export type Essay = {
     grammaticalRangeAndAccuracySummery?: string,
     overallBandScore?: number,
     durationMillisecond?: number,
-    essayRecommendations?: string,
-    essayInsights?: string
+    essayRecommendations?: any,
+    essayInsights?: any
 };
 
 export type tempEssay = {

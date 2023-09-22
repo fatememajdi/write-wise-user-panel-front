@@ -24,7 +24,7 @@ import { Essay } from "../../../types/essay";
 //----------------------------------------------components
 const DialogComponent = lazy(() => import("@/components/dialog/dialog"));
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-import { SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_LEXICAL, SCORE_TASK_RESPONSE } from "@/config/graphql";
+import { SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_INSIGHT, SCORE_LEXICAL, SCORE_RECOMMENDATION, SCORE_TASK_RESPONSE } from "@/config/graphql";
 
 const tabBarItems = [
     {
@@ -44,12 +44,12 @@ const tabBarItems = [
     },
     {
         title: 'Recommendations',
-        active: false,
+        active: true,
         index: 3,
     },
     {
         title: 'Insights',
-        active: false,
+        active: true,
         index: 4,
     },
 ];
@@ -70,9 +70,52 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
     const { step, goTo, currentStepIndex } = useMultiStepForm(
         [<EssayScore key={0} essay={essay} goTo={analysisStep} essaies={essaies} setEssaies={setEssaies} />,
         <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} topic={topic} />,
-        <EssayAnalysis key={2} essay={essay} essaies={essaies} setEssaies={setEssaies} />]);
+        <EssayAnalysis key={2} essay={essay} essaies={essaies} setEssaies={setEssaies} />,
+        <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} GetTaskRecommendation={GetTaskRecommendation} />,
+        <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} GetTaskInsights={GetTaskInsights} />
+        ]);
 
     function analysisStep() { goTo(2) };
+    const router = useRouter();
+
+    async function GetTaskRecommendation() {
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: SCORE_RECOMMENDATION,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.essayInsights = res.data.recommendation.essayRecommendations;
+            };
+            setEssaies(Essaies);
+            router.refresh();
+        }).catch((err) => {
+            console.log('get score recommendation : ', err);
+        });
+    };
+
+    async function GetTaskInsights() {
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: SCORE_INSIGHT,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.essayInsights = res.data.insights.essayInsights;
+            };
+            setEssaies(Essaies);
+            router.refresh();
+        }).catch((err) => {
+            console.log('get score insights : ', err);
+        });
+    };
+
 
     return <div className={styles.writingDataCard}>
         <div className={styles.writingDataTabBarCard}>
@@ -416,4 +459,54 @@ const ScoreSummeryCard: React.FC<{ title: string, summery?: string, getScore: an
             }
         </span>
     </div>
+}
+
+const ScoreRecommendationCard: React.FC<{ recommendation: string, GetTaskRecommendation: any }> = ({ recommendation, GetTaskRecommendation }) => {
+    const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
+    const [htmlString, setHtmlString] = React.useState(recommendation);
+
+    const createMarkup = () => {
+        return { __html: htmlString };
+    };
+
+    return (<div className={styles.writingScoreCard}>
+        {recommendation != '' ?
+            <div dangerouslySetInnerHTML={createMarkup()} />
+            : refetchLoading ?
+                <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />
+                : <div
+                    style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}
+                    onClick={() => {
+                        setRefetchLoading(true);
+                        GetTaskRecommendation();
+                        setRefetchLoading(false);
+                    }}>reload!</div>
+        }
+    </div>
+    );
+}
+
+const ScoreInsightsCard: React.FC<{ Insight: string, GetTaskInsights: any }> = ({ Insight, GetTaskInsights }) => {
+    const [htmlString, setHtmlString] = React.useState(Insight);
+    const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
+
+    const createMarkup = () => {
+        return { __html: htmlString };
+    };
+
+    return (<div className={styles.writingScoreCard}>
+        {Insight != '' ?
+            <div dangerouslySetInnerHTML={createMarkup()} />
+            : refetchLoading ?
+                <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />
+                : <div
+                    style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}
+                    onClick={() => {
+                        setRefetchLoading(true);
+                        GetTaskInsights();
+                        setRefetchLoading(false);
+                    }}>reload!</div>
+        }
+    </div>
+    );
 }
