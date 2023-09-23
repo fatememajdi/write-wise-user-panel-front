@@ -240,6 +240,12 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                 newEssay[0].lexicalResourceScore = -1;
                 newEssay[0].lexicalResourceSummery = '';
             };
+            if (!newEssay[0].essayInsights) {
+                newEssay[0].essayInsights = '';
+            };
+            if (!newEssay[0].essayRecommendations) {
+                newEssay[0].essayRecommendations = '';
+            };
             setEssaies(newEssay);
             handleNewTopic();
         })

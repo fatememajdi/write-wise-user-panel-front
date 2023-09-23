@@ -205,7 +205,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                 }
             }).then(async (res) => {
                 newEssay[0].essayInsights = res.data.insights.essayInsights;
-            }),
+            })
         ]).catch(async (err) => {
             await changeModalTitle('Get essay score error');
             await changeModalContent(JSON.stringify(err.message));
@@ -237,6 +237,12 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
             if (!newEssay[0].lexicalResourceScore) {
                 newEssay[0].lexicalResourceScore = -1;
                 newEssay[0].lexicalResourceSummery = '';
+            };
+            if (!newEssay[0].essayInsights) {
+                newEssay[0].essayInsights = '';
+            };
+            if (!newEssay[0].essayRecommendations) {
+                newEssay[0].essayRecommendations = '';
             };
             setEssaies(newEssay);
             handleNewTopic();
