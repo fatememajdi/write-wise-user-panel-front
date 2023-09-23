@@ -71,50 +71,11 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
         [<EssayScore key={0} essay={essay} goTo={analysisStep} essaies={essaies} setEssaies={setEssaies} />,
         <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} topic={topic} />,
         <EssayAnalysis key={2} essay={essay} essaies={essaies} setEssaies={setEssaies} />,
-        <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} GetTaskRecommendation={GetTaskRecommendation} />,
-        <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} GetTaskInsights={GetTaskInsights} />
+        <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} essay={essay} essaies={essaies} setEssaies={setEssaies} />,
+        <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} essay={essay} essaies={essaies} setEssaies={setEssaies} />
         ]);
 
     function analysisStep() { goTo(2) };
-    const router = useRouter();
-
-    async function GetTaskRecommendation() {
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: SCORE_RECOMMENDATION,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.essayInsights = res.data.recommendation.essayRecommendations;
-            };
-            setEssaies(Essaies);
-            router.refresh();
-        }).catch((err) => {
-            console.log('get score recommendation : ', err);
-        });
-    };
-
-    async function GetTaskInsights() {
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: SCORE_INSIGHT,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.essayInsights = res.data.insights.essayInsights;
-            };
-            setEssaies(Essaies);
-            router.refresh();
-        }).catch((err) => {
-            console.log('get score insights : ', err);
-        });
-    };
 
 
     return <div className={styles.writingDataCard}>
@@ -461,52 +422,97 @@ const ScoreSummeryCard: React.FC<{ title: string, summery?: string, getScore: an
     </div>
 }
 
-const ScoreRecommendationCard: React.FC<{ recommendation: string, GetTaskRecommendation: any }> = ({ recommendation, GetTaskRecommendation }) => {
-    const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
-    const [htmlString, setHtmlString] = React.useState(recommendation);
+const ScoreRecommendationCard: React.FC<{ recommendation: string, essay: Essay, setEssaies: any, essaies: Essay[] }>
+    = ({ recommendation, essaies, essay, setEssaies }) => {
+        const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
+        const [htmlString, setHtmlString] = React.useState(recommendation);
 
-    const createMarkup = () => {
-        return { __html: htmlString };
-    };
+        const createMarkup = () => {
+            return { __html: htmlString };
+        };
 
-    return (<div className={styles.writingScoreCard}>
-        {recommendation != '' ?
-            <div dangerouslySetInnerHTML={createMarkup()} />
-            : refetchLoading ?
+        const router = useRouter();
+
+        async function GetTaskRecommendation() {
+            setRefetchLoading(true);
+            let Essaies: Essay[] = essaies;
+            let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+            await client.mutate({
+                mutation: SCORE_RECOMMENDATION,
+                variables: {
+                    id: essay.id
+                }
+            }).then(async (res) => {
+                if (Essay) {
+                    Essay.essayRecommendations = res.data.recommendation.essayRecommendations;
+                    Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+                };
+                setHtmlString(res.data.recommendation.essayRecommendations);
+                setEssaies(Essaies);
+                router.refresh();
+            }).catch((err) => {
+                console.log('get score recommendation : ', err);
+            });
+            setRefetchLoading(false);
+        };
+
+        return (<div className={styles.writingScoreCard}>
+            {refetchLoading ?
                 <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />
-                : <div
-                    style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}
-                    onClick={() => {
-                        setRefetchLoading(true);
-                        GetTaskRecommendation();
-                        setRefetchLoading(false);
-                    }}>reload!</div>
-        }
-    </div>
-    );
-}
+                : recommendation != '' ?
+                    <div dangerouslySetInnerHTML={createMarkup()} />
+                    : <div
+                        style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}
+                        onClick={() => GetTaskRecommendation()}>reload!</div>
+            }
+        </div>
+        );
+    }
 
-const ScoreInsightsCard: React.FC<{ Insight: string, GetTaskInsights: any }> = ({ Insight, GetTaskInsights }) => {
-    const [htmlString, setHtmlString] = React.useState(Insight);
-    const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
+const ScoreInsightsCard: React.FC<{ Insight: string, essay: Essay, setEssaies: any, essaies: Essay[] }>
+    = ({ Insight, essaies, essay, setEssaies }) => {
+        const [htmlString, setHtmlString] = React.useState(Insight);
+        const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
 
-    const createMarkup = () => {
-        return { __html: htmlString };
-    };
+        const createMarkup = () => {
+            return { __html: htmlString };
+        };
 
-    return (<div className={styles.writingScoreCard}>
-        {Insight != '' ?
-            <div dangerouslySetInnerHTML={createMarkup()} />
-            : refetchLoading ?
+        const router = useRouter();
+
+        async function GetTaskInsights() {
+            setRefetchLoading(true);
+            let Essaies: Essay[] = essaies;
+            let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+            await client.mutate({
+                mutation: SCORE_INSIGHT,
+                variables: {
+                    id: essay.id
+                }
+            }).then(async (res) => {
+                if (Essay) {
+                    Essay.essayInsights = res.data.insights.essayInsights;
+                    Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+                };
+                setHtmlString(res.data.insights.essayInsights);
+                setEssaies(Essaies);
+                router.refresh();
+            }).catch((err) => {
+                console.log('get score insights : ', err);
+            });
+            setRefetchLoading(false);
+        };
+
+
+        return (<div className={styles.writingScoreCard}>
+            {refetchLoading ?
                 <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />
-                : <div
-                    style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}
-                    onClick={() => {
-                        setRefetchLoading(true);
-                        GetTaskInsights();
-                        setRefetchLoading(false);
-                    }}>reload!</div>
-        }
-    </div>
-    );
-}
+                : Insight != '' ?
+                    <div dangerouslySetInnerHTML={createMarkup()} />
+                    : <div
+                        style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}
+                        onClick={() => GetTaskInsights()}>reload!</div>
+            }
+        </div >
+        );
+    }

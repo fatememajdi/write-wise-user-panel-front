@@ -542,6 +542,8 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                                                             <MenuItem className={styles.selectMenuItem} value={'Discussion'}>Discussion</MenuItem>
                                                             <MenuItem className={styles.selectMenuItem} value={'Advantage/disadvantage'}>Advantage/disadvantage</MenuItem>
                                                             <MenuItem className={styles.selectMenuItem} value={'Two-part/mixed'}>Two-part/mixed</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Problem solution'}>Problem solution</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Double question'}>Double question</MenuItem>
                                                         </Select>
 
                                                         <button
