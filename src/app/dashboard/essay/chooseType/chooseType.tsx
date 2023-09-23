@@ -32,8 +32,6 @@ const ChooseType: React.FC<chooseTypeProps> = ({ changeType }) => {
             {types.map((item, index) =>
                 <button
                     aria-label='choose type button'
-                    style={item.value === 'academic_task_1' ? { opacity: 0.6, cursor: "unset" } : {}}
-                    disabled={item.value === 'academic_task_1'}
                     onClick={() => changeType(item.value)}
                     className={styles.typeCard}
                     key={index}>{item.label}</button>

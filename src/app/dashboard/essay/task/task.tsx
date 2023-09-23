@@ -42,13 +42,17 @@ const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimat
                         essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
                         handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
                     : topic.type === 'academic_task_1' ?
-                        <AcademicTask />
+                        <AcademicTask key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
+                            essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
+                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
                         : <Task2 key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                             essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
                             handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
                 :
                 type === 'academic_task_1' ?
-                    <AcademicTask />
+                    <AcademicTask changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
+                        essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
+                        handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
                     : type === 'general_task_1' ?
                         <GeneralTask changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                             essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}

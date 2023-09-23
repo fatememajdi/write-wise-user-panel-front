@@ -24,4 +24,11 @@
 .css-6hp17o-MuiList-root-MuiMenu-list {
     padding: 0px !important;
     background-color: #626E7E !important;
-} 
+}
+
+
+@media(max-width: 500px) {
+    .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+        font-size: 13px !important;
+    }
+}

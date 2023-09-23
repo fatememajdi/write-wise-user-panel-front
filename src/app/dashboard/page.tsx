@@ -409,8 +409,6 @@ const Dashboard: React.FC = () => {
                                             Gen Task 1</button>
 
                                         <button
-                                            style={{ cursor: 'unset', opacity: 0.6 }}
-                                            disabled={true}
                                             aria-label="academic task1 button"
                                             onClick={() => SelectType('academic_task_1')}
                                             className={topicsType === 'academic_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
