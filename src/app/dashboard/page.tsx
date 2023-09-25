@@ -63,7 +63,13 @@ const tabBarItems = [
 type topic = {
     id: string,
     body: string,
-    type: string
+    type: string,
+    questionType?: string,
+    visuals?: {
+        id: string,
+        url: string,
+        image: string
+    }[]
 };
 
 const Dashboard: React.FC = () => {
@@ -115,7 +121,6 @@ const Dashboard: React.FC = () => {
     };
 
     async function SelectTopic(topic?: topic, essay?: string) {
-
         changeTabBarLoc(true);
         changeEndAnimation(true);
         setEssaies([]);
@@ -295,7 +300,8 @@ const Dashboard: React.FC = () => {
                 changeTopic({
                     id: topic.id ? topic.id : "",
                     body: topic.topic ? topic.topic : "",
-                    type: topic.type ? topic.type : ""
+                    type: topic.type ? topic.type : "",
+                    visuals: topic.visuals ? topic.visuals : undefined
                 });
             }
             else {
@@ -542,7 +548,7 @@ const Dashboard: React.FC = () => {
                             !endAnimation &&
                             <motion.div
                                 className={styles.topTabBarContainer}
-                                animate={{ y: tabBarLoc ? type === 'general_task_1' ? 750 : 650 : 0 }}
+                                animate={{ y: tabBarLoc ? type === 'general_task_1' ? 750 : type === 'academic_task_1' ? 1255 : 650 : 0 }}
                                 transition={{ type: "spring", duration: 2 }}
                             >
                                 {/* <div

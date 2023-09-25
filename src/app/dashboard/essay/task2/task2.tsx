@@ -37,7 +37,12 @@ type topic = {
     id: string,
     body: string,
     type: string,
-    questionType?: string
+    questionType?: string,
+    visuals?: {
+        id?: string,
+        url?: string,
+        image?: string
+    }
 };
 
 type _props = {

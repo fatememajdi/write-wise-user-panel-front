@@ -36,7 +36,12 @@ type topic = {
     id: string,
     body: string,
     type: string,
-    questionType?: string
+    questionType?: string,
+    visuals?: {
+        id?: string,
+        url?: string,
+        image?: string
+    }
 };
 
 type _props = {
@@ -240,7 +245,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                 newEssay[0].lexicalResourceScore = -1;
                 newEssay[0].lexicalResourceSummery = '';
             };
-                if (!newEssay[0].essayInsights) {
+            if (!newEssay[0].essayInsights) {
                 newEssay[0].essayInsights = '';
             };
             if (!newEssay[0].essayRecommendations) {

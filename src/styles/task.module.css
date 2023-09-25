@@ -299,6 +299,28 @@
     margin: 0px !important;
 }
 
+.imagesContainer {
+    display: flex;
+    margin-left: 45px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+.emptyImageCard {
+    width: 66%;
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: solid 1px var(--color-seccondary);
+}
+
+.imageCard{
+    width: 66%;
+    height: fit-content;
+}
+
 @media(max-width: 1440px) {
     .writingContainer {
         padding: 0px 27px 100px 22px;
@@ -401,7 +423,7 @@
         flex-direction: row;
     }
 
-    .select{
+    .select {
         height: 25px !important;
         width: 100px !important;
         margin-top: 20px;

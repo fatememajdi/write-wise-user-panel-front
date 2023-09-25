@@ -41,7 +41,12 @@ query GetUserTopics($type:String!, $page:Float!, $pageSize:Float!){
       shortName,
       topic,
       overallBandScore,
-      createdAt
+      createdAt,
+      visuals{
+        id,
+        url,
+        image
+      }
     }
   }
 }
@@ -83,6 +88,23 @@ query GetRandomWriting($type:String!,$questionType:String!){
 }
 `;
 
+export const GET_RANDOM_WRITING_AC_TASK = gql`
+query GetRandomWriting($type:String!){
+  getRandomWriting(randomWritingInput:{type:$type,questionType:""}){
+    id,
+    topic,
+    body,
+    tone,
+    questionType,
+    visuals{
+      id,
+      url,
+      image
+    }
+  }
+}
+`;
+
 export const SELECT_TOPIC = gql`
 mutation SelectTopic($type:String! , $body:String, $id:String){
   selectTopic(selecetTopic:{type:$type ,body:$body, id:$id})
@@ -93,7 +115,12 @@ mutation SelectTopic($type:String! , $body:String, $id:String){
     topic,
     overallBandScore,
     createdAt,
-    overallBandScore
+    overallBandScore,
+    visuals{
+      id,
+      url,
+      image
+    }
   }
 }
 `;

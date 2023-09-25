@@ -7,12 +7,20 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig = {
   images: {
     minimumCacheTTL: 60,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ielts.api.babyyodas.io',
+        port: '',
+        // pathname: '/account123/**',
+      },
+    ],
   },
   // optimization: {
   //   minimize: true,
   // },
   env: {
-    NEXT_PUBLIC_ENV: 'PRODUCTION', 
+    NEXT_PUBLIC_ENV: 'PRODUCTION',
   }
 }
 

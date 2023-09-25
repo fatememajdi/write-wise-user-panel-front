@@ -22,7 +22,12 @@ export type tempEssay = {
         body: string,
         type: string
     },
-    essay: string
+    essay: string,
+    visuals?: {
+        id: string,
+        url: string,
+        image: string
+    }
 };
 
 export type SelectedTopicTempEssay = {

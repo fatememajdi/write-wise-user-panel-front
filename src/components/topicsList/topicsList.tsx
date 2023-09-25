@@ -58,6 +58,17 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
 
             if (TempsList)
                 setTempsList(JSON.parse(TempsList));
+        } else if (type === 'academic_task_1') {
+            let Temp = await localStorage.getItem('tempEssay3');
+            let lastTemp = await localStorage.getItem('lastTempEssay3');
+            let TempsList = await localStorage.getItem('tempsEssayList');
+            if (lastTemp)
+                setTemp(JSON.parse(lastTemp));
+            else if (Temp)
+                setTemp(JSON.parse(Temp));
+
+            if (TempsList)
+                setTempsList(JSON.parse(TempsList));
         } else {
             let Temp = await localStorage.getItem('tempEssay2');
             let lastTemp = await localStorage.getItem('lastTempEssay2');
@@ -99,7 +110,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                 style={temp.topic.id === selectedTopic?.id ? { background: '#172E4A' } : {}}
                                 className={'col-12 ' + styles.taskCard} key={-1} >
                                 <div
-                                    onClick={() => HandleSelect({ id: temp.topic.id, body: temp.topic.body, type: temp.topic.type }, temp.essay)}
+                                    onClick={() => HandleSelect({ id: temp.topic.id, body: temp.topic.body, type: temp.topic.type, visuals: [temp.visuals] }, temp.essay)}
                                     className={styles.taskCardTitle}>
                                     <h5>{temp.topic.body}</h5>
                                     {/* <span>
@@ -115,6 +126,10 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                             if (type === 'general_task_1') {
                                                 localStorage.removeItem('tempEssay');
                                                 localStorage.removeItem('lastTempEssay');
+                                                setTemp(null);
+                                            } else if (type === 'academic_task_1') {
+                                                localStorage.removeItem('tempEssay3');
+                                                localStorage.removeItem('lastTempEssay3');
                                                 setTemp(null);
                                             } else {
                                                 localStorage.removeItem('tempEssay2');
@@ -134,7 +149,9 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                     className={'col-12 ' + styles.taskCard} key={index} >
                                     <div
                                         onClick={() => {
-                                            HandleSelect({ id: item.id, body: item.topic, type: item.type }, tempsList.findIndex(tempItem => tempItem.id === item.id) === -1 ? '' : tempsList[tempsList.findIndex(tempItem => tempItem.id === item.id)].essay);
+                                            HandleSelect({ id: item.id, body: item.topic, type: item.type, visuals: item.visuals },
+                                                tempsList.findIndex(tempItem => tempItem.id === item.id) === -1 ? ''
+                                                    : tempsList[tempsList.findIndex(tempItem => tempItem.id === item.id)].essay);
                                             SetTempEssay();
                                         }}
                                         className={styles.taskCardTitle}>

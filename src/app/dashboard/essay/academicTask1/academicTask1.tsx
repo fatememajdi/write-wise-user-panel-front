@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Image from "next/image";
 
 //-------------------------------------------------------styles
 import styles from '../../../../styles/task.module.css';
@@ -15,6 +16,7 @@ import styles from '../../../../styles/task.module.css';
 //--------------------------------------components
 import {
     ADD_ESSAY, DELETE_ESSAY, GET_OVERAL_SCORE, GET_RANDOM_WRITING,
+    GET_RANDOM_WRITING_AC_TASK,
     SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_INSIGHT, SCORE_LEXICAL, SCORE_RECOMMENDATION, SCORE_TASK_RESPONSE, SELECT_TOPIC
 } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
@@ -28,6 +30,7 @@ const Timer = lazy(() => import("@/components/timer/timer"));
 //--------------------------------------icons
 import { Reload } from "../../../../../public";
 import { MdEdit } from 'react-icons/md';
+import { IoMdImage } from 'react-icons/io';
 
 //--------------------------------------types
 import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../types/essay';
@@ -36,7 +39,12 @@ type topic = {
     id: string,
     body: string,
     type: string,
-    questionType?: string
+    questionType?: string,
+    visuals?: {
+        id: string,
+        url: string,
+        image: string
+    }[]
 };
 
 type _props = {
@@ -90,16 +98,17 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
         changeGenerateWritingTopicLoading(true);
         await client.query({
-            query: GET_RANDOM_WRITING,
+            query: GET_RANDOM_WRITING_AC_TASK,
             fetchPolicy: "no-cache",
             variables: {
                 type: 'academic_task_1',
-                questionType: subType
+                // questionType: subType
             }
         }).then(async (res) => {
             await changeGeneratedTopic({
                 id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body,
-                type: res.data.getRandomWriting.type, questionType: res.data.getRandomWriting.questionType
+                type: res.data.getRandomWriting.type, questionType: res.data.getRandomWriting.questionType,
+                visuals: res.data.getRandomWriting.visuals
             });
             setFieldValue('topic', res.data.getRandomWriting.body);
             ChangeTempTopic(essay, res.data.getRandomWriting.body, res.data.getRandomWriting.id);
@@ -129,7 +138,8 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
             changeGeneratedTopic({
                 id: res.data.selectTopic.id,
                 body: res.data.selectTopic.topic,
-                type: res.data.selectTopic.type
+                type: res.data.selectTopic.type,
+                visuals: res.data.selectTopic.visuals
             });
         }).catch(async (err) => {
             await changeModalTitle('Select topic error');
@@ -282,16 +292,16 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                 }
             }).then(async (res) => {
                 console.log(res);
-                let lastTemp = await localStorage.getItem('lastTempEssay');
+                let lastTemp = await localStorage.getItem('lastTempEssay3');
                 let t = await localStorage.getItem('tempsEssayList');
                 let tempsLiset: SelectedTopicTempEssay[] = [];
                 if (t) tempsLiset = JSON.parse(t);
                 if (tempsLiset.findIndex(item => item.id === currentId) != -1) {
                     await localStorage.setItem('tempsEssayList', JSON.stringify(tempsLiset.filter(item => item.id !== tempsLiset[tempsLiset.findIndex(item => item.id === currentId)].id)));
                 } else if (lastTemp) {
-                    await localStorage.removeItem('lastTempEssay');
+                    await localStorage.removeItem('lastTempEssay3');
                 } else {
-                    await localStorage.removeItem('tempEssay');
+                    await localStorage.removeItem('tempEssay3');
                 };
 
                 await setEssaies([{
@@ -341,13 +351,15 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
     //-------------------------------------------------------------------temp
     async function CreateTempEssay(essay: string, Topic: string) {
         let temp: tempEssay = { topic: { id: '', body: '', type: 'academic_task_1' }, essay: '' };
-        let oldestTemp = await localStorage.getItem('tempEssay');
+        let oldestTemp = await localStorage.getItem('tempEssay3');
         let t = await localStorage.getItem('tempsEssayList');
         let tempsList: SelectedTopicTempEssay[] = [];
         if (t) tempsList = JSON.parse(t);
 
         if (generatedTopic) {
             temp.topic = { id: generatedTopic.id as string, body: Topic, type: 'academic_task_1' };
+            if (generatedTopic?.visuals && generatedTopic.visuals.length > 0)
+                temp.visuals = generatedTopic.visuals[0]
         } else {
             temp.topic = { id: '', body: Topic, type: 'academic_task_1' }
         };
@@ -366,12 +378,12 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
             localStorage.setItem('tempsEssayList', JSON.stringify(tempsList));
         } else if (oldestTemp) {
             if (JSON.parse(oldestTemp).topic.body === Topic) {
-                localStorage.setItem('tempEssay', JSON.stringify(temp));
+                localStorage.setItem('tempEssay3', JSON.stringify(temp));
             } else {
-                localStorage.setItem('lastTempEssay', JSON.stringify(temp));
+                localStorage.setItem('lastTempEssay3', JSON.stringify(temp));
             }
         } else {
-            localStorage.setItem('tempEssay', JSON.stringify(temp));
+            localStorage.setItem('tempEssay3', JSON.stringify(temp));
         };
     };
 
@@ -380,7 +392,7 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
             let temp: tempEssay = { topic: { id: '', body: '', type: 'academic_task_1' }, essay: '' };
             temp.topic = { id: id ? id : '', body: Topic, type: 'academic_task_1' }
             temp.essay = essay;
-            localStorage.setItem('tempEssay', JSON.stringify(temp));
+            localStorage.setItem('tempEssay3', JSON.stringify(temp));
         }
     };
 
@@ -389,7 +401,7 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
             changeCcurrentId(topic.id);
             changeMoreEssaies(true);
         } else if (topic && essay !== '') {
-            let temp = await localStorage.getItem('tempEssay');
+            let temp = await localStorage.getItem('tempEssay3');
             let t = await localStorage.getItem('tempsEssayList');
             let tempsLiset: SelectedTopicTempEssay[] = [];
             if (t)
@@ -399,7 +411,8 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                 let tempTopic: topic = {
                     id: JSON.parse(temp).topic.id,
                     body: JSON.parse(temp).topic.body,
-                    type: JSON.parse(temp).topic.type
+                    type: JSON.parse(temp).topic.type,
+                    visuals: JSON.parse(temp).topic.visuals
                 }
                 changeGeneratedTopic(tempTopic);
                 changeMoreEssaies(false);
@@ -441,11 +454,11 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
 
                 {
                     loading ?
-                        <Loading style={{ height: 615, minHeight: 0 }} />
+                        <Loading style={{ height: 1220, minHeight: 0 }} />
                         :
                         <div
                             ref={targetRef}
-                            style={{ height: 'fit-content', minHeight: 665 }}
+                            style={{ height: 'fit-content', minHeight: 1255 }}
                             className={styles.writingForm}>
                             <SelectComponents values={[
                                 { title: 'Essay', active: false, lock: false },
@@ -510,6 +523,7 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                                                             </div>
                                                             :
                                                             <Input
+                                                                disable={true}
                                                                 style={{ width: '70%' }}
                                                                 className={styles.topicInputthird + ' ' + styles.topicInput}
                                                                 onChange={(e: any) => {
@@ -542,9 +556,13 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                                                             className={styles.select}
                                                         >
 
-                                                            <MenuItem className={styles.selectMenuItem} value={'Informal'}>Informal</MenuItem>
-                                                            <MenuItem className={styles.selectMenuItem} value={'Semi-formal'}>Semi-formal</MenuItem>
-                                                            <MenuItem className={styles.selectMenuItem} value={'Formal'}>Formal</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Bar Chart'}>Bar Chart</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Line Graph'}>Line Graph</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Table'}>Table</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Pie Chart'}>Pie Chart</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Process Diagram'}>Process Diagram</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Map'}>Map</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Multiple Graphs'}>Multiple Graphs</MenuItem>
                                                         </Select>
 
                                                         <button
@@ -582,6 +600,49 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                                                 </div>
                             }
 
+                            <div className={styles.imagesContainer + ' col-12'}>
+
+                                {
+                                    topic && topic.visuals && topic.visuals?.length > 0 ?
+                                        <div className={styles.imageCard}>
+                                            <Image
+                                                // className={styles.rightTop3Background + ' ' + styles.mobile}
+                                                src={topic.visuals[0].url}
+                                                alt="academic task chart"
+                                                sizes="100vw"
+                                                style={{
+                                                    height: 530,
+                                                    width: '100%'
+                                                }}
+                                                width="0"
+                                                height="0"
+                                                loading="eager"
+                                                priority
+                                            />
+                                        </div>
+                                        : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
+                                            <div className={styles.imageCard}>
+                                                <Image
+                                                    // className={styles.rightTop3Background + ' ' + styles.mobile}
+                                                    src={generatedTopic.visuals[0].url}
+                                                    alt="academic task chart"
+                                                    sizes="100vw"
+                                                    style={{
+                                                        height: 530,
+                                                        width: '100%'
+                                                    }}
+                                                    width="0"
+                                                    height="0"
+                                                    loading="eager"
+                                                    priority
+                                                />
+                                            </div>
+                                            : <div className={styles.emptyImageCard}>
+                                                <IoMdImage fontSize={70} />
+                                            </div>
+                                }
+                            </div>
+
                             <div className={styles.writingInputTitle}>Write at least 150 words.
                                 {
                                     changeInput &&
@@ -603,7 +664,7 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                                         handleChange(e);
                                         CreateTempEssay(e.target.value, values.topic);
                                     }}
-                                    placeHolder={'Dear...'}
+                                    placeHolder={'Type your essay here...'}
                                     secondError
                                     textarea
                                     textarea_name='body'
