@@ -7,10 +7,13 @@ import styles from './slider.module.css';
 
 interface _props {
     value?: number
-    total: number
+    total: number,
+    RefreshScore: any
 }
 
-const Slider: React.FC<_props> = ({ value, total }) => {
+const Slider: React.FC<_props> = ({ value, total, RefreshScore }) => {
+    const [refreshLoading, changeRefreshLoading] = React.useState<boolean>(false);
+
     return <div className={styles.sliderCard}>
         <CircularSlider
             r={80}
@@ -22,7 +25,15 @@ const Slider: React.FC<_props> = ({ value, total }) => {
             value={value ? (100 / total) * value : 0}
         // onChange={(value: any) => console.log(value)}
         />
-        <div className={styles.sliderProgress}>{value && value !== -1 ? value : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}</div>
+        <div className={styles.sliderProgress}>{!value && refreshLoading ? <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />
+            : value && value !== -1 ? value
+                : value === -1 ? <div style={{ marginLeft: 8, fontSize: 18, color: '#F3F3F3', cursor: 'pointer' }}
+                    onClick={async () => {
+                        changeRefreshLoading(true);
+                        await RefreshScore();
+                        changeRefreshLoading(false);
+                    }}>reload!</div>
+                    : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}</div>
     </div>
 };
 

@@ -24,7 +24,7 @@ import { Essay } from "../../../types/essay";
 //----------------------------------------------components
 const DialogComponent = lazy(() => import("@/components/dialog/dialog"));
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-import { SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_INSIGHT, SCORE_LEXICAL, SCORE_RECOMMENDATION, SCORE_TASK_RESPONSE } from "@/config/graphql";
+import { GET_OVERAL_SCORE, SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_INSIGHT, SCORE_LEXICAL, SCORE_RECOMMENDATION, SCORE_TASK_RESPONSE } from "@/config/graphql";
 
 const tabBarItems = [
     {
@@ -99,9 +99,9 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
         <SelectComponents values={[
             { title: 'Score', active: true, lock: false },
             { title: 'Essay', active: true, lock: false },
-            { title: 'Analysis', active: false, lock: true },
-            { title: 'Recommendations', active: false, lock: true },
-            { title: 'WWAI Tutor', active: false, lock: true }
+            { title: 'Analysis', active: true, lock: false },
+            { title: 'Recommendations', active: true, lock: false },
+            { title: 'Insights', active: true, lock: false }
         ]}
             selectedItem={currentStepIndex} className={styles.writingCardSelect} onChange={goTo} />
 
@@ -249,6 +249,35 @@ const EssayScore: React.FC<{ essay: Essay, setEssaies: any, essaies: Essay[], go
         });
     };
 
+    async function RefreshScore() {
+        if (!essay?.taskAchievementScore)
+            GetTaskScore();
+        if (!essay?.coherenceAndCohesionScore)
+            GetCoherenceAndCohesionScore();
+        if (!essay?.lexicalResourceScore)
+            GetLexicalResourceScore();
+        if (!essay?.grammaticalRangeAndAccuracyScore)
+            GetGrammaticalRangeAndAccuracyScore();
+
+        let Essaies: Essay[] = essaies;
+        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
+        await client.mutate({
+            mutation: GET_OVERAL_SCORE,
+            variables: {
+                id: essay.id
+            }
+        }).then(async (res) => {
+            if (Essay) {
+                Essay.overallBandScore = res.data.getEssay.overallBandScore;
+                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
+            };
+            await setEssaies(Essaies);
+            router.refresh();
+        }).catch((err) => {
+            console.log('get score error : ', err);
+        });
+    }
+
     return <div
         className={styles.writingScoreCard}>
         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
@@ -261,7 +290,7 @@ const EssayScore: React.FC<{ essay: Essay, setEssaies: any, essaies: Essay[], go
             </div>
 
             <div className={styles.sliderContainer}>
-                <Slider value={essay?.overallBandScore} total={9} />
+                <Slider value={essay?.overallBandScore} total={9} RefreshScore={RefreshScore} />
             </div>
         </div>
         <div className={styles.analusisButtonContainer}>

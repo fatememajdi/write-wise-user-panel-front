@@ -18,7 +18,7 @@ const autLink = setContext(async (_, { header }) => {
         headers: {
             ...header,
             'Content-Type': 'application/json',
-            "Authorization": user ? `Bearer ${JSON.parse(user)}` : ''
+            "Authorization": user ? `Bearer ${JSON.parse(user)}` : '',
         }
     }
 });
@@ -26,7 +26,7 @@ const autLink = setContext(async (_, { header }) => {
 
 const client = new ApolloClient({
     link: autLink.concat(httpLink),
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
 })
 
 

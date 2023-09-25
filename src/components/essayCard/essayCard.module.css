@@ -372,6 +372,14 @@
         line-height: normal;
     }
 
+    .writingEssayTopic {
+        color: #F3F3F3;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
     .essayButtonContainer {
         width: 100%;
         border-top: solid 1px var(--color-seccondary);
@@ -430,5 +438,13 @@
         align-items: flex-start;
     }
 
+    .writingScoreSummeryItemCard {
+        color: #F3F3F3;
+        font-size: 14px;
+    }
+
+    .writingScoreSummeryItemCard span {
+        font-size: 13px !important;
+    }
 
 }

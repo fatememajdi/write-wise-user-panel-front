@@ -316,7 +316,7 @@
     border: solid 1px var(--color-seccondary);
 }
 
-.imageCard{
+.imageCard {
     width: 66%;
     height: fit-content;
 }
@@ -364,6 +364,26 @@
 @media(max-width: 500px) {
     .writingContainer {
         padding: 0px 22px 50px 22px;
+    }
+
+    .emptyImageCard {
+        width: 100%;
+    }
+
+    .imageCard{
+        width: 100%;
+    }
+
+    .imagesContainer {
+        margin-left: 0px;
+    }
+
+    .wordsCount {
+        font-size: 13px !important;
+    }
+
+    .writingInputTitle {
+        flex-direction: column;
     }
 
     .wriritngTitle {
