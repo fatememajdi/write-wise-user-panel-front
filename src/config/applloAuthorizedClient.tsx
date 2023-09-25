@@ -17,6 +17,7 @@ const autLink = setContext(async (_, { header }) => {
     return {
         headers: {
             ...header,
+            'Content-Type': 'application/json',
             "Authorization": user ? `Bearer ${JSON.parse(user)}` : ''
         }
     }

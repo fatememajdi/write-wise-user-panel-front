@@ -398,7 +398,6 @@ const ScoreCard: React.FC<{ title: string, score?: number, getScore: any }> = ({
     </div>
 }
 
-
 const ScoreSummeryCard: React.FC<{ title: string, summery?: string, getScore: any }> = ({ title, summery, getScore }) => {
     const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
 
@@ -443,6 +442,7 @@ const ScoreRecommendationCard: React.FC<{ recommendation: string, essay: Essay, 
                     id: essay.id
                 }
             }).then(async (res) => {
+                console.log('reload recommendation : ', res);
                 if (Essay) {
                     Essay.essayRecommendations = res.data.recommendation.essayRecommendations;
                     Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
@@ -451,7 +451,7 @@ const ScoreRecommendationCard: React.FC<{ recommendation: string, essay: Essay, 
                 setEssaies(Essaies);
                 router.refresh();
             }).catch((err) => {
-                console.log('get score recommendation : ', err);
+                console.log('get recommendation error: ', err);
             });
             setRefetchLoading(false);
         };
