@@ -55,7 +55,6 @@ const Section3: React.FC = () => {
                 </div>
 
             </div>
-
         </FeaturesBackground>
     )
 };

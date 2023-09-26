@@ -73,7 +73,8 @@
 }
 
 .featuresItemIcon {
-    width: 133px;
+    min-width: 133px;
+    width: fit-content !important;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

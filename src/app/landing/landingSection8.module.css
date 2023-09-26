@@ -1,0 +1,117 @@
+.section8Container {
+    min-height: 100vh;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    /* position: relative; */
+    padding: 260px 350px 100px 350px;
+    width: 100vw;
+    background-image: url('/section8-background.svg');
+}
+
+.section6Card {
+    background: #FFFFFF;
+    box-shadow: 0px 15px 30px 5px rgba(123, 123, 123, 0.15);
+    border-radius: 50px;
+    padding: 98px 153px 74px 153px;
+    position: relative;
+}
+
+.section6Button {
+    color: var(--color-whiteText);
+    background-color: var(--color-red);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    border-radius: 30px !important;
+    margin-top: 30px;
+    height: 48px;
+    width: 146px;
+    align-items: center;
+    justify-content: center;
+    padding: 0px !important;
+}
+
+.cardDescription {
+    color: #252525;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 31.5px;
+    letter-spacing: 0.4px;
+    text-align: left;
+    margin-top: 30px;
+}
+
+.cardTitle {
+    color: var(--color-seccondary);
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    /* 87.5% */
+}
+
+.cardTitle span {
+    color: var(--color-red);
+}
+
+@media(max-width: 1440px) {
+    .section6Card {
+        padding: 88px 135px;
+        font-size: 18px;
+    }
+
+    .section6Button {
+        font-size: 18px;
+        right: 38%;
+        left: 38%;
+    }
+}
+
+@media(max-width: 480px) {
+    .section6Card {
+        padding: 0px 40px 0px 40px;
+        border-radius: 8px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cardDescription {
+        font-size: 13px;
+        line-height: 21px;
+    }
+
+    .cardTitle {
+        width: 258px;
+        height: 50px;
+        background-color: var(--color-seccondary);
+        position: relative;
+        top: -25px;
+        color: #F3F3F3;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+    }
+
+    .section6Button {
+        width: 106px;
+        height: 36px;
+        background-color: #DA282E;
+        padding: 0px;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        position: relative;
+        bottom: -18px;
+        margin-top: 70px;
+        right: auto;
+        left: auto;
+    }
+}

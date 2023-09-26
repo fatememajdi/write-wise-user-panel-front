@@ -1,97 +1,365 @@
-.section6Card {
-    background: #FFFFFF;
-    box-shadow: 0px 15px 30px 5px rgba(123, 123, 123, 0.15);
-    border-radius: 50px;
-    padding: 98px 153px 74px 153px;
+.pricigBackground {
+    background: linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%);
+    min-height: 100vh;
+    padding: 150px 153px 90px 167px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 169.52%;
+    color: var(--color-textGray);
+}
+
+.description {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 130.5%;
+    color: var(--color-textGray);
+    margin-right: 100px;
+}
+
+.pricingItemsContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 61px;
+    align-items: center;
+}
+
+.itemCard {
+    background: var(--color-background);
+    box-shadow: 0px 2px 2px rgba(0, 82, 147, 0.18);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 420px;
+    /* height: 100% !important; */
+    justify-content: center;
     position: relative;
 }
 
-.section6Button {
-    color: var(--color-whiteText);
-    background-color: var(--color-seccondary);
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 28px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 30px 0px rgba(129, 129, 129, 0.25);
-    margin-top: 30px;
+.rightCard {
+    background: var(--color-background);
+    box-shadow: 0px 2px 2px rgba(0, 82, 147, 0.18);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 600px;
+    /* height: 100% !important; */
+    justify-content: center;
+    position: relative;
 }
 
-.cardDescription {
-    color: #252525;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 31.5px;
-    letter-spacing: 0.4px;
-    text-align: left;
-    margin-top: 30px;
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 35px;
+    margin-right: 35px;
+    border-bottom: solid 1px #626E7E;
+    flex: 1;
+}
+
+.leftCard {}
+
+.leftContent {
+    flex: 1;
+    margin-right: 51.48px;
+}
+
+.tabBar {
+    height: 30px !important;
+    width: 100% !important;
+    border-top: solid 1px #F3F3F3;
+    box-shadow: 0px 2px 2px 0px rgba(0, 82, 147, 0.18);
+}
+
+.itemCardTopCard {
+    background-color: var(--color-seccondary);
+    height: 28.57px !important;
+    position: absolute;
+    top: 0px;
 }
 
 .cardTitle {
-    color: #252525;
-    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 169.52%;
+    cursor: context-menu !important;
+    color: var(--color-seccondary);
+}
+
+.itemDescriptionCard {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin-top: 8px;
+    cursor: context-menu !important;
+}
+
+.itemDescriptionCard span {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 169.52%;
+    margin-left: 10px;
+}
+
+.leftdescriptionsContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: auto;
+}
+
+.circleIcon {
+    font-size: 13px !important;
+    min-height: 13px !important;
+    min-width: 13px !important;
+    margin-top: 6px;
+}
+
+.signUpButton {
+    display: flex;
+    /* margin-top: auto; */
+    background-color: var(--color-red);
+    color: var(--color-whiteText);
+    margin-bottom: 25px !important;
+    margin-top: 30px;
+    font-style: normal;
     font-weight: 600;
-    line-height: 28px;
+    font-size: 20px;
+    line-height: 24px;
+    height: 48px;
+    width: 154px;
+    padding: 0px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rightdescriptionsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 39px 15px 45px;
+}
+
+.divider {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: fit-content;
+    align-items: center;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 230%;
+    margin: auto 37px;
+    justify-content: center;
+}
+
+.descriptionsContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.descriptionsContainer span {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 119.5%;
+    margin-bottom: 15px;
+}
+
+.mobileDivider {
+    display: none !important;
+}
+
+.mobileTabBar {
+    display: none;
+    height: 45px !important;
+    width: 100% !important;
+    background-color: var(--color-seccondary);
 }
 
 @media(max-width: 1440px) {
-    .section6Card {
-        padding: 88px 135px;
+    .pricigBackground {
+        padding: 100px 90px 70px 90px;
+    }
+
+    .title {
+        font-size: 36px;
+    }
+
+    .description {
+        font-size: 20px;
+    }
+
+    .leftdescriptionsContainer {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .rightdescriptionsContainer {
+        padding: 24px 20px 15px 25px;
+    }
+
+    .descriptionsContainer span {
+        font-size: 14px;
+    }
+
+    .signUpButton {
+        font-size: 14px;
+    }
+
+    .cardTitle {
         font-size: 18px;
     }
 
-    .section6Button {
+    .description {
+        margin-top: 20px;
+        font-size: 20px;
+    }
+}
+
+@media(max-width: 992px) {
+    .pricigBackground {
+        padding: 100px 90px 70px 90px;
+    }
+
+    .title {
+        font-size: 36px;
+    }
+
+    .description {
+        font-size: 20px;
+    }
+
+    .leftdescriptionsContainer {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .rightdescriptionsContainer {
+        padding: 24px 20px 15px 25px;
+    }
+
+    .descriptionsContainer span {
+        font-size: 14px;
+    }
+
+    .signUpButton {
+        font-size: 14px;
+    }
+
+    .cardTitle {
         font-size: 18px;
-        right: 38%;
-        left: 38%;
+    }
+
+    .description {
+        margin-top: 20px;
+        font-size: 20px;
     }
 }
 
 @media(max-width: 480px) {
-    .section6Card {
-        padding: 0px 40px 0px 40px;
-        border-radius: 8px;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    .pricigBackground {
+        padding: 30px 43px 40px 43px;
     }
 
-    .cardDescription {
+    .title {
+        font-size: 24px;
+    }
+
+    .description {
         font-size: 13px;
-        line-height: 21px;
+        font-weight: 300;
+        margin-right: 0px;
+        margin-top: 10px;
+    }
+
+    .pricingItemsContainer {
+        flex-direction: column;
+    }
+
+    .leftContent {
+        margin-right: 0px;
+    }
+
+    .itemCard {
+        align-items: flex-start;
+        overflow: visible;
+        margin-bottom: 50px;
+        max-height: fit-content;
     }
 
     .cardTitle {
-        width: 258px;
-        height: 50px;
-        background-color: var(--color-seccondary);
-        position: relative;
-        top: -25px;
-        color: #F3F3F3;
-        font-size: 22px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 28px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
+        font-size: 13px;
+        margin-left: 20px;
+        margin-bottom: 24px !important;
+        font-weight: 700;
     }
 
-    .section6Button {
-        width: 106px;
-        height: 36px;
-        background-color: #DA282E;
-        padding: 0px;
+    .leftdescriptionsContainer {
+        margin-left: 20px;
+    }
+
+    .itemDescriptionCard span {
+        font-size: 13px;
+        font-weight: 400;
+    }
+
+    .signUpButton {
+        position: relative;
+        bottom: -40px;
+        width: 114px;
+        height: 38px;
         align-items: center;
+        padding: 0px;
         justify-content: center;
         font-size: 13px;
-        position: relative;
-        bottom: -18px;
-        margin-top: 70px;
-        right: auto;
-        left: auto;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .itemCardTopCard {
+        border-top-right-radius: 19px;
+        border-top-left-radius: 19px;
+    }
+
+    .rightdescriptionsContainer {
+        flex-direction: column;
+        padding: 0px 10px 0px 20px;
+    }
+
+    .rightdescriptionsContainer span {
+        margin-top: 0px !important;
+    }
+
+    .divider {
+        display: none;
+    }
+
+    .mobileDivider {
+        display: flex !important;
+    }
+
+    .mobileTabBar {
+        display: flex;
     }
 }

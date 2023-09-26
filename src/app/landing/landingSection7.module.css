@@ -1,0 +1,51 @@
+.section7Container {
+    flex: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 290px;
+}
+
+.itemsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.itemCard {
+    color: var(--color-darkText);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 40px;
+}
+
+.itemCard span {
+    color: var(--color-red);
+}
+
+.itemContainer {
+    max-width: 622px;
+    padding: 50px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* z-index: 9 !important; */
+    border-bottom: solid 1px #252525 !important;
+}
+
+.icon {
+    cursor: pointer !important;
+    margin-left: 30px;
+}
+
+.readMoreButton {
+    color: #2E4057;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    margin-top: 50px;
+    padding: 0px;
+}

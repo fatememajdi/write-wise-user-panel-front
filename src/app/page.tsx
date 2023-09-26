@@ -13,6 +13,8 @@ const Section3 = lazy(() => import("./landing/section3"));
 const Section4 = lazy(() => import("./landing/section4"));
 const Section5 = lazy(() => import("./landing/section5"));
 const Section6 = lazy(() => import("./landing/section6"));
+const Section7 = lazy(() => import("./landing/section7"));
+const Section8 = lazy(() => import("./landing/section8"));
 const Footer = lazy(() => import("@/components/footer/footer"));
 const Loading = dynamic(() => import("@/components/loading/loading"));
 
@@ -43,6 +45,8 @@ const Home: React.FC = () => {
       <Section4 />
       <Section5 />
       <Section6 />
+      <Section7 />
+      <Section8 />
       <Footer />
     </Suspense>
   );

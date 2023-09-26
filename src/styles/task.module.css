@@ -294,8 +294,8 @@
 }
 
 .selectMenuItem {
-    background-color: #626E7E;
-    color: #F3F3F3;
+    background-color: #626E7E !important;
+    color: #F3F3F3 !important;
     margin: 0px !important;
 }
 
