@@ -8,15 +8,15 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { io } from 'socket.io-client';
+import { Socket, io } from 'socket.io-client';
+import { DefaultEventsMap } from "@socket.io/component-emitter";
 
 //--------------------------------------styles
 import styles from '../../../../styles/task.module.css';
 
 //--------------------------------------components
 import {
-    ADD_ESSAY, DELETE_ESSAY, GET_OVERAL_SCORE, GET_RANDOM_WRITING,
-    SCORE_COHERENCE, SCORE_ESSAY, SCORE_GRAMMATICAL, SCORE_INSIGHT, SCORE_LEXICAL, SCORE_RECOMMENDATION, SCORE_TASK_RESPONSE, SELECT_TOPIC
+    ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_WRITING, SCORE_ESSAY, SELECT_TOPIC
 } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
@@ -66,7 +66,7 @@ type _props = {
 
 const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
-
+    let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
     const router = useRouter();
     let DivRef2: any;
     if (typeof document !== 'undefined')
@@ -95,53 +95,24 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         setIsModalOpen(false);
     };
 
-    const socket = io("https://ielts.api.babyyodas.io/events", {
-        // autoConnect: false,
-        extraHeaders: {
-            authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWM1OWMxLWRlYTUtNDBjYi1iOGVkLWRmZDJkZTY0MGNiZiIsImlhdCI6MTY5Mzg5NDYzMywiZXhwIjoxNjk3NDk0NjMzfQ.Jy3dO132-bDgSn3d6OOjZ6YEH5aByIPIbA2LCU_tmT8"
-        }
-    });
+    const socketInitializer = async () => {
+        const user = await localStorage.getItem("user");
+        if (user)
+            socket = io("https://ielts.api.babyyodas.io/events", {
+                extraHeaders: {
+                    authorization: `Bearer ${JSON.parse(user)}`
+                }
+            });
 
-    // if (socket.connected === false)
-    //     socket.connect();
+        socket.on("connection_error", (err) => {
+            console.log(err);
+        });
 
-    socket.on("connection_error", (err) => {
-        console.log(err);
-    });
+        socket.on("connect", () => {
+            console.log('connected');
+        });
 
-
-    // socket.on("newMessage", (data) => {
-    //     let newEssay: Essay[] = essaies;
-    //     let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
-    //     if (data.part === 'Insight' && essay && !essay?.essayInsights)
-    //         essay.essayInsights = data.data;
-    //     else if (data.part === 'Recommendation' && essay && !essay?.essayRecommendations)
-    //         essay.essayRecommendations = data.data;
-    //     else if (data.part === 'Grammatical' && essay && !essay?.grammaticalRangeAndAccuracyScore)
-    //         essay.grammaticalRangeAndAccuracyScore = data.data as number;
-    //     else if (data.part === 'Grammatical Summary' && essay && !essay?.grammaticalRangeAndAccuracySummery)
-    //         essay.grammaticalRangeAndAccuracySummery = data.data;
-    //     else if (data.part === 'Coherence' && essay && !essay?.coherenceAndCohesionScore)
-    //         essay.coherenceAndCohesionScore = data.data as number;
-    //     else if (data.part === 'Coherence Summary' && essay && !essay?.coherenceAndCohesionSummery)
-    //         essay.coherenceAndCohesionSummery = data.data;
-    //     else if (data.part === 'Lexical' && essay && !essay?.lexicalResourceScore)
-    //         essay.lexicalResourceScore = data.data as number;
-    //     else if (data.part === 'Lexical Summary' && essay && !essay?.lexicalResourceSummery)
-    //         essay.lexicalResourceSummery = data.data;
-    //     else if (data.part === 'Task Achievement' && essay && !essay?.taskAchievementScore)
-    //         essay.taskAchievementScore = data.data as number;
-    //     else if (data.part === 'Task Achievement Summary' && essay && !essay?.taskAchievementSummery)
-    //         essay.taskAchievementSummery = data.data;
-    //     else if (data.part === 'overalScore' && essay && !essay?.overallBandScore)
-    //         essay.overallBandScore = data.data as number;
-
-    //     if (essay) {
-    //         newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-    //         setEssaies(newEssay);
-    //     }
-    //     console.log(essay);
-    // });
+    };
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
@@ -201,43 +172,74 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     //-----------------------------------------------------------------get essay scores
     async function GetScores(essaies: Essay[]) {
         let newEssay: Essay[] = essaies;
-        let score: number = 0;
-
         client.mutate({
             mutation: SCORE_ESSAY,
             variables: {
                 id: newEssay[0].id
             }
         }).then(async (res) => {
-
         });
-
 
         socket.on("newMessage", (data) => {
             let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
-            if (data.part === 'Insight' && essay && !essay?.essayInsights)
-                essay.essayInsights = data.data;
-            else if (data.part === 'Recommendation' && essay && !essay?.essayRecommendations)
-                essay.essayRecommendations = data.data;
-            else if (data.part === 'Grammatical' && essay && !essay?.grammaticalRangeAndAccuracyScore)
-                essay.grammaticalRangeAndAccuracyScore = data.data as number;
-            else if (data.part === 'Grammatical Summary' && essay && !essay?.grammaticalRangeAndAccuracySummery)
-                essay.grammaticalRangeAndAccuracySummery = data.data;
-            else if (data.part === 'Coherence' && essay && !essay?.coherenceAndCohesionScore)
-                essay.coherenceAndCohesionScore = data.data as number;
-            else if (data.part === 'Coherence Summary' && essay && !essay?.coherenceAndCohesionSummery)
-                essay.coherenceAndCohesionSummery = data.data;
-            else if (data.part === 'Lexical' && essay && !essay?.lexicalResourceScore)
-                essay.lexicalResourceScore = data.data as number;
-            else if (data.part === 'Lexical Summary' && essay && !essay?.lexicalResourceSummery)
-                essay.lexicalResourceSummery = data.data;
-            else if (data.part === 'Task Achievement' && essay && !essay?.taskAchievementScore)
-                essay.taskAchievementScore = data.data as number;
-            else if (data.part === 'Task Achievement Summary' && essay && !essay?.taskAchievementSummery)
-                essay.taskAchievementSummery = data.data;
-            else if (data.part === 'overalScore' && essay && !essay?.overallBandScore)
-                essay.overallBandScore = data.data as number;
+            switch (data.part) {
+                case 'Insight': {
+                    if (essay && !essay?.essayInsights)
+                        essay.essayInsights = data.data;
+                    break;
+                }
+                case 'Recommendation': {
+                    if (essay && !essay?.essayRecommendations)
+                        essay.essayRecommendations = data.data;
+                    break;
+                }
+                case 'Grammatical': {
+                    if (essay && !essay?.grammaticalRangeAndAccuracyScore)
+                        essay.grammaticalRangeAndAccuracyScore = data.data as number;
+                    break;
+                }
+                case 'Grammatical Summary': {
+                    if (essay && !essay?.grammaticalRangeAndAccuracySummery)
+                        essay.grammaticalRangeAndAccuracySummery = data.data;
+                    break;
+                }
+                case 'Coherence': {
+                    if (essay && !essay?.coherenceAndCohesionScore)
+                        essay.coherenceAndCohesionScore = data.data as number;
+                    break;
+                }
+                case 'Coherence Summary': {
+                    if (essay && !essay?.coherenceAndCohesionSummery)
+                        essay.coherenceAndCohesionSummery = data.data;
+                    break;
+                }
+                case 'Lexical': {
+                    if (essay && !essay?.lexicalResourceScore)
+                        essay.lexicalResourceScore = data.data as number;
+                    break;
+                }
+                case 'Lexical Summary': {
+                    if (essay && !essay?.lexicalResourceSummery)
+                        essay.lexicalResourceSummery = data.data;
+                    break;
+                }
+                case 'Task Achievement': {
+                    if (essay && !essay?.taskAchievementScore)
+                        essay.taskAchievementScore = data.data as number;
+                    break;
+                }
+                case 'Task Achievement Summary': {
+                    if (essay && !essay?.taskAchievementSummery)
+                        essay.taskAchievementSummery = data.data;
+                    break;
+                }
+                case 'overalScore': {
+                    if (essay && !essay?.overallBandScore)
+                        essay.overallBandScore = data.data as number;
+                    break;
+                }
 
+            }
             if (essay) {
                 newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
                 setEssaies(newEssay);
@@ -411,6 +413,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
     React.useEffect(() => {
         ChackTopic();
+        socketInitializer();
     }, []);
 
     const EssayValidationSchema = Yup.object().shape({
