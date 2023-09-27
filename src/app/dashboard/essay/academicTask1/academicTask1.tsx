@@ -9,6 +9,7 @@ import Typewriter from 'typewriter-effect';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Image from "next/image";
+import { io } from 'socket.io-client';
 
 //-------------------------------------------------------styles
 import styles from '../../../../styles/task.module.css';
@@ -93,6 +94,21 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+
+    // const socket = io("https://ielts.api.babyyodas.io/events", {
+    //     extraHeaders: {
+    //         authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWM1OWMxLWRlYTUtNDBjYi1iOGVkLWRmZDJkZTY0MGNiZiIsImlhdCI6MTY5Mzg5NDYzMywiZXhwIjoxNjk3NDk0NjMzfQ.Jy3dO132-bDgSn3d6OOjZ6YEH5aByIPIbA2LCU_tmT8"
+    //     }
+    // });
+
+    // socket.on("connect", () => {
+    //     console.log('socket connected : ', socket.id);
+    // })
+
+    // socket.on("connection_error", (err) => {
+    //     console.log(err);
+    // });
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {

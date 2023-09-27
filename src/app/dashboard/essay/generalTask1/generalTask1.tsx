@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { io } from 'socket.io-client';
 
 //--------------------------------------styles
 import styles from '../../../../styles/task.module.css';
@@ -15,7 +16,7 @@ import styles from '../../../../styles/task.module.css';
 //--------------------------------------components
 import {
     ADD_ESSAY, DELETE_ESSAY, GET_OVERAL_SCORE, GET_RANDOM_WRITING,
-    SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_INSIGHT, SCORE_LEXICAL, SCORE_RECOMMENDATION, SCORE_TASK_RESPONSE, SELECT_TOPIC
+    SCORE_COHERENCE, SCORE_ESSAY, SCORE_GRAMMATICAL, SCORE_INSIGHT, SCORE_LEXICAL, SCORE_RECOMMENDATION, SCORE_TASK_RESPONSE, SELECT_TOPIC
 } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
@@ -31,6 +32,7 @@ import { MdEdit } from 'react-icons/md';
 
 //--------------------------------------types
 import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../types/essay';
+import { useRouter } from "next/navigation";
 
 type topic = {
     id: string,
@@ -65,6 +67,7 @@ type _props = {
 const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
 
+    const router = useRouter();
     let DivRef2: any;
     if (typeof document !== 'undefined')
         DivRef2 = document.getElementById('scrollDiv');
@@ -91,6 +94,54 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+    const socket = io("https://ielts.api.babyyodas.io/events", {
+        // autoConnect: false,
+        extraHeaders: {
+            authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZWM1OWMxLWRlYTUtNDBjYi1iOGVkLWRmZDJkZTY0MGNiZiIsImlhdCI6MTY5Mzg5NDYzMywiZXhwIjoxNjk3NDk0NjMzfQ.Jy3dO132-bDgSn3d6OOjZ6YEH5aByIPIbA2LCU_tmT8"
+        }
+    });
+
+    // if (socket.connected === false)
+    //     socket.connect();
+
+    socket.on("connection_error", (err) => {
+        console.log(err);
+    });
+
+
+    // socket.on("newMessage", (data) => {
+    //     let newEssay: Essay[] = essaies;
+    //     let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
+    //     if (data.part === 'Insight' && essay && !essay?.essayInsights)
+    //         essay.essayInsights = data.data;
+    //     else if (data.part === 'Recommendation' && essay && !essay?.essayRecommendations)
+    //         essay.essayRecommendations = data.data;
+    //     else if (data.part === 'Grammatical' && essay && !essay?.grammaticalRangeAndAccuracyScore)
+    //         essay.grammaticalRangeAndAccuracyScore = data.data as number;
+    //     else if (data.part === 'Grammatical Summary' && essay && !essay?.grammaticalRangeAndAccuracySummery)
+    //         essay.grammaticalRangeAndAccuracySummery = data.data;
+    //     else if (data.part === 'Coherence' && essay && !essay?.coherenceAndCohesionScore)
+    //         essay.coherenceAndCohesionScore = data.data as number;
+    //     else if (data.part === 'Coherence Summary' && essay && !essay?.coherenceAndCohesionSummery)
+    //         essay.coherenceAndCohesionSummery = data.data;
+    //     else if (data.part === 'Lexical' && essay && !essay?.lexicalResourceScore)
+    //         essay.lexicalResourceScore = data.data as number;
+    //     else if (data.part === 'Lexical Summary' && essay && !essay?.lexicalResourceSummery)
+    //         essay.lexicalResourceSummery = data.data;
+    //     else if (data.part === 'Task Achievement' && essay && !essay?.taskAchievementScore)
+    //         essay.taskAchievementScore = data.data as number;
+    //     else if (data.part === 'Task Achievement Summary' && essay && !essay?.taskAchievementSummery)
+    //         essay.taskAchievementSummery = data.data;
+    //     else if (data.part === 'overalScore' && essay && !essay?.overallBandScore)
+    //         essay.overallBandScore = data.data as number;
+
+    //     if (essay) {
+    //         newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+    //         setEssaies(newEssay);
+    //     }
+    //     console.log(essay);
+    // });
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
@@ -147,113 +198,53 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         return id;
     };
 
+    //-----------------------------------------------------------------get essay scores
     async function GetScores(essaies: Essay[]) {
         let newEssay: Essay[] = essaies;
         let score: number = 0;
-        await Promise.all([
-            client.mutate({
-                mutation: SCORE_TASK_RESPONSE,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
-                newEssay[0].taskAchievementSummery = res.data.scoreTaskResponse.taskAchievementSummery;
-                score = score + res.data.scoreTaskResponse.taskAchievementScore;
-            }),
 
-            client.mutate({
-                mutation: SCORE_COHERENCE,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].coherenceAndCohesionScore = res.data.scoreCoherence.coherenceAndCohesionScore;
-                newEssay[0].coherenceAndCohesionSummery = res.data.scoreCoherence.coherenceAndCohesionSummery;
-                score = score + res.data.scoreCoherence.coherenceAndCohesionScore;
-            }),
+        client.mutate({
+            mutation: SCORE_ESSAY,
+            variables: {
+                id: newEssay[0].id
+            }
+        }).then(async (res) => {
 
-            client.mutate({
-                mutation: SCORE_LEXICAL,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].lexicalResourceScore = res.data.scoreLexical.lexicalResourceScore;
-                newEssay[0].lexicalResourceSummery = res.data.scoreLexical.lexicalResourceSummery;
-                score = score + res.data.scoreLexical.lexicalResourceScore;
-            }),
+        });
 
-            client.mutate({
-                mutation: SCORE_GRAMMATICAL,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
-                newEssay[0].grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
-                score = score + res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
-            }),
 
-            client.mutate({
-                mutation: SCORE_RECOMMENDATION,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].essayRecommendations = res.data.recommendation.essayRecommendations;
-            }),
+        socket.on("newMessage", (data) => {
+            let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
+            if (data.part === 'Insight' && essay && !essay?.essayInsights)
+                essay.essayInsights = data.data;
+            else if (data.part === 'Recommendation' && essay && !essay?.essayRecommendations)
+                essay.essayRecommendations = data.data;
+            else if (data.part === 'Grammatical' && essay && !essay?.grammaticalRangeAndAccuracyScore)
+                essay.grammaticalRangeAndAccuracyScore = data.data as number;
+            else if (data.part === 'Grammatical Summary' && essay && !essay?.grammaticalRangeAndAccuracySummery)
+                essay.grammaticalRangeAndAccuracySummery = data.data;
+            else if (data.part === 'Coherence' && essay && !essay?.coherenceAndCohesionScore)
+                essay.coherenceAndCohesionScore = data.data as number;
+            else if (data.part === 'Coherence Summary' && essay && !essay?.coherenceAndCohesionSummery)
+                essay.coherenceAndCohesionSummery = data.data;
+            else if (data.part === 'Lexical' && essay && !essay?.lexicalResourceScore)
+                essay.lexicalResourceScore = data.data as number;
+            else if (data.part === 'Lexical Summary' && essay && !essay?.lexicalResourceSummery)
+                essay.lexicalResourceSummery = data.data;
+            else if (data.part === 'Task Achievement' && essay && !essay?.taskAchievementScore)
+                essay.taskAchievementScore = data.data as number;
+            else if (data.part === 'Task Achievement Summary' && essay && !essay?.taskAchievementSummery)
+                essay.taskAchievementSummery = data.data;
+            else if (data.part === 'overalScore' && essay && !essay?.overallBandScore)
+                essay.overallBandScore = data.data as number;
 
-            client.mutate({
-                mutation: SCORE_INSIGHT,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].essayInsights = res.data.insights.essayInsights;
-            }),
+            if (essay) {
+                newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                setEssaies(newEssay);
+            }
+            router.refresh();
+        });
 
-        ]).catch(async (err) => {
-            await changeModalTitle('Get essay score error');
-            await changeModalContent(JSON.stringify(err.message));
-            showModal();
-        }).then(async () => {
-
-            await client.query({
-                query: GET_OVERAL_SCORE,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then((res) => {
-                newEssay[0].overallBandScore = res.data.getEssay.overallBandScore
-            }).catch(() => {
-                newEssay[0].overallBandScore = -1;
-            });
-            if (!newEssay[0].taskAchievementScore) {
-                newEssay[0].taskAchievementScore = -1;
-                newEssay[0].taskAchievementSummery = '';
-            };
-            if (!newEssay[0].coherenceAndCohesionScore) {
-                newEssay[0].coherenceAndCohesionScore = -1;
-                newEssay[0].coherenceAndCohesionSummery = '';
-            };
-            if (!newEssay[0].grammaticalRangeAndAccuracyScore) {
-                newEssay[0].grammaticalRangeAndAccuracyScore = -1;
-                newEssay[0].grammaticalRangeAndAccuracySummery = '';
-            };
-            if (!newEssay[0].lexicalResourceScore) {
-                newEssay[0].lexicalResourceScore = -1;
-                newEssay[0].lexicalResourceSummery = '';
-            };
-            if (!newEssay[0].essayInsights) {
-                newEssay[0].essayInsights = '';
-            };
-            if (!newEssay[0].essayRecommendations) {
-                newEssay[0].essayRecommendations = '';
-            };
-            setEssaies(newEssay);
-            handleNewTopic();
-        })
     };
 
     //-------------------------------------------------------------------add new essay
@@ -279,6 +270,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             setTimeout(() => {
                 DivRef2.scrollIntoView({ behavior: "smooth" });
             }, 1400);
+
             await client.mutate({
                 mutation: ADD_ESSAY,
                 variables: {
@@ -287,7 +279,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     durationMillisecond: Date.now() - essayTime
                 }
             }).then(async (res) => {
-                console.log(res);
                 let lastTemp = await localStorage.getItem('lastTempEssay');
                 let t = await localStorage.getItem('tempsEssayList');
                 let tempsLiset: SelectedTopicTempEssay[] = [];
@@ -301,23 +292,23 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                 };
 
                 await setEssaies([{
-                    id: res.data.finishEssay.id,
-                    essay: res.data.finishEssay.essay,
-                    date: res.data.finishEssay.date
+                    id: res.data.addNewEssay.id,
+                    essay: res.data.addNewEssay.essay,
+                    date: res.data.addNewEssay.date
 
                 }, ...essaies]);
                 changeEssayLoading(false);
                 await GetScores([{
-                    id: res.data.finishEssay.id,
-                    essay: res.data.finishEssay.essay,
-                    date: res.data.finishEssay.date
+                    id: res.data.addNewEssay.id,
+                    essay: res.data.addNewEssay.essay,
+                    date: res.data.addNewEssay.date
 
                 }, ...essaies]);
                 changeCcurrentId(id);
 
             }).catch(async (err) => {
                 await changeModalTitle('Add essay error');
-                console.log(err)
+                console.log('add essay error : ', err);
                 await changeModalContent(JSON.stringify(err.message));
                 changeLoading(false);
                 showModal();

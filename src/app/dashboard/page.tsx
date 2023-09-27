@@ -51,11 +51,11 @@ const tabBarItems = [
         active: true
     },
     {
-        title: 'Recommendations',
+        title: 'Insights',
         active: true
     },
     {
-        title: 'Insights',
+        title: 'Recommendations',
         active: true
     },
 ];
@@ -112,6 +112,7 @@ const Dashboard: React.FC = () => {
             essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type} essay={essay}
             changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
     ]);
+
 
     function ChangeType(type: string) {
         setType(type);

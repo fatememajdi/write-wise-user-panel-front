@@ -126,14 +126,20 @@ mutation SelectTopic($type:String! , $body:String, $id:String){
 `;
 
 export const ADD_ESSAY = gql`
-mutation finishEssay($id:String! , $body: String! ,$durationMillisecond:Float!){
-  finishEssay(addEssay:{id:$id ,body:$body ,durationMillisecond:$durationMillisecond}){
+mutation AddNewEssay($id:String! , $body: String! ,$durationMillisecond:Float!){
+  addNewEssay(addEssay:{id:$id ,body:$body ,durationMillisecond:$durationMillisecond}){
     id,
     essay,
-    date,
-    durationMillisecond,
-    essayRecommendations,
-    essayInsights
+    date
+  }
+}
+`;
+
+
+export const SCORE_ESSAY = gql`
+mutation ScoreEssay($id:String!){
+  scoreEssay(scoreEssay:{id:$id}){
+    recommendation
   }
 }
 `;

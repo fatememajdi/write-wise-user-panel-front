@@ -43,12 +43,12 @@ const tabBarItems = [
         index: 2,
     },
     {
-        title: 'Recommendations',
+        title: 'Insights',
         active: true,
         index: 3,
     },
     {
-        title: 'Insights',
+        title: 'Recommendations',
         active: true,
         index: 4,
     },
@@ -71,8 +71,8 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
         [<EssayScore key={0} essay={essay} goTo={analysisStep} essaies={essaies} setEssaies={setEssaies} />,
         <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} topic={topic} />,
         <EssayAnalysis key={2} essay={essay} essaies={essaies} setEssaies={setEssaies} />,
-        <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} essay={essay} essaies={essaies} setEssaies={setEssaies} />,
-        <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} essay={essay} essaies={essaies} setEssaies={setEssaies} />
+        <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} essay={essay} essaies={essaies} setEssaies={setEssaies} />,
+        <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} essay={essay} essaies={essaies} setEssaies={setEssaies} />
         ]);
 
     function analysisStep() { goTo(2) };
