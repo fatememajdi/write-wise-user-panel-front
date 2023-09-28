@@ -7,11 +7,10 @@ import styles from './slider.module.css';
 
 interface _props {
     value?: number
-    total: number,
-    RefreshScore: any
+    total: number
 }
 
-const Slider: React.FC<_props> = ({ value, total, RefreshScore }) => {
+const Slider: React.FC<_props> = ({ value, total }) => {
     const [refreshLoading, changeRefreshLoading] = React.useState<boolean>(false);
 
     return <div className={styles.sliderCard}>
@@ -30,7 +29,6 @@ const Slider: React.FC<_props> = ({ value, total, RefreshScore }) => {
                 : value === -1 ? <div style={{ marginLeft: 8, fontSize: 18, color: '#F3F3F3', cursor: 'pointer' }}
                     onClick={async () => {
                         changeRefreshLoading(true);
-                        await RefreshScore();
                         changeRefreshLoading(false);
                     }}>reload!</div>
                     : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}</div>

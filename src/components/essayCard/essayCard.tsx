@@ -1,7 +1,6 @@
 import React, { lazy } from "react";
 import ReactLoading from 'react-loading';
 import dynamic from 'next/dynamic';
-import client from "@/config/applloAuthorizedClient";
 import { useRouter } from "next/navigation";
 
 //--------------------------------------components
@@ -24,7 +23,6 @@ import { Essay } from "../../../types/essay";
 //----------------------------------------------components
 const DialogComponent = lazy(() => import("@/components/dialog/dialog"));
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-import { GET_OVERAL_SCORE, SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_INSIGHT, SCORE_LEXICAL, SCORE_RECOMMENDATION, SCORE_TASK_RESPONSE } from "@/config/graphql";
 
 const tabBarItems = [
     {
@@ -68,11 +66,11 @@ type _props = {
 const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, setEssaies, essaies, topic }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
-        [<EssayScore key={0} essay={essay} goTo={analysisStep} essaies={essaies} setEssaies={setEssaies} />,
+        [<EssayScore key={0} essay={essay} goTo={analysisStep} />,
         <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} topic={topic} />,
-        <EssayAnalysis key={2} essay={essay} essaies={essaies} setEssaies={setEssaies} />,
-        <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} essay={essay} essaies={essaies} setEssaies={setEssaies} />,
-        <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} essay={essay} essaies={essaies} setEssaies={setEssaies} />
+        <EssayAnalysis key={2} essay={essay} />,
+        <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} />,
+        <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} />
         ]);
 
     function analysisStep() { goTo(2) };
@@ -162,135 +160,21 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
         </div>
     };
 
-const EssayScore: React.FC<{ essay: Essay, setEssaies: any, essaies: Essay[], goTo: any }> = ({ goTo, essay, setEssaies, essaies }) => {
-    const router = useRouter();
-    async function GetTaskScore() {
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: SCORE_TASK_RESPONSE,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
-                Essay.taskAchievementSummery = res.data.scoreTaskResponse.taskAchievementSummery;
-                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-            };
-            setEssaies(Essaies);
-            router.refresh();
-        }).catch((err) => {
-            console.log('get score error : ', err);
-        });
-    };
-
-    async function GetCoherenceAndCohesionScore() {
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: SCORE_COHERENCE,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.coherenceAndCohesionScore = res.data.scoreCoherence.coherenceAndCohesionScore;
-                Essay.coherenceAndCohesionSummery = res.data.scoreCoherence.coherenceAndCohesionSummery;
-                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-            };
-            setEssaies(Essaies);
-            router.refresh();
-        }).catch((err) => {
-            console.log('get score error : ', err);
-        });
-    };
-
-    async function GetLexicalResourceScore() {
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: SCORE_LEXICAL,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.lexicalResourceScore = res.data.scoreLexical.lexicalResourceScore;
-                Essay.lexicalResourceSummery = res.data.scoreLexical.lexicalResourceSummery;
-                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-            };
-            setEssaies(Essaies);
-            router.refresh();
-
-        }).catch((err) => {
-            console.log('get score error : ', err);
-        });
-    };
-
-    async function GetGrammaticalRangeAndAccuracyScore() {
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: SCORE_GRAMMATICAL,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
-                Essay.grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
-                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-            };
-            await setEssaies(Essaies);
-            router.refresh();
-        }).catch((err) => {
-            console.log('get score error : ', err);
-        });
-    };
-
-    async function RefreshScore() {
-        if (!essay?.taskAchievementScore)
-            GetTaskScore();
-        if (!essay?.coherenceAndCohesionScore)
-            GetCoherenceAndCohesionScore();
-        if (!essay?.lexicalResourceScore)
-            GetLexicalResourceScore();
-        if (!essay?.grammaticalRangeAndAccuracyScore)
-            GetGrammaticalRangeAndAccuracyScore();
-
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: GET_OVERAL_SCORE,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.overallBandScore = res.data.getEssay.overallBandScore;
-                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-            };
-            await setEssaies(Essaies);
-            router.refresh();
-        }).catch((err) => {
-            console.log('get score error : ', err);
-        });
-    }
+const EssayScore: React.FC<{ essay: Essay, goTo: any }> = ({ goTo, essay }) => {
 
     return <div
         className={styles.writingScoreCard}>
         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
         <div className={styles.writingScoresContainer}>
             <div>
-                <ScoreCard key={0} title="Task Achievement" score={essay?.taskAchievementScore} getScore={GetTaskScore} />
-                <ScoreCard key={1} title="Coherence & Cohesion" score={essay?.coherenceAndCohesionScore} getScore={GetCoherenceAndCohesionScore} />
-                <ScoreCard key={2} title="Lexical resource" score={essay?.lexicalResourceScore} getScore={GetLexicalResourceScore} />
-                <ScoreCard key={3} title="Grammatical Range and accuracy" score={essay?.grammaticalRangeAndAccuracyScore} getScore={GetGrammaticalRangeAndAccuracyScore} />
+                <ScoreCard key={0} title="Task Achievement" score={essay?.taskAchievementScore} />
+                <ScoreCard key={1} title="Coherence & Cohesion" score={essay?.coherenceAndCohesionScore} />
+                <ScoreCard key={2} title="Lexical resource" score={essay?.lexicalResourceScore} />
+                <ScoreCard key={3} title="Grammatical Range and accuracy" score={essay?.grammaticalRangeAndAccuracyScore} />
             </div>
 
             <div className={styles.sliderContainer}>
-                <Slider value={essay?.overallBandScore} total={9} RefreshScore={RefreshScore} />
+                <Slider value={essay?.overallBandScore} total={9} />
             </div>
         </div>
         <div className={styles.analusisButtonContainer}>
@@ -305,114 +189,27 @@ const EssayScore: React.FC<{ essay: Essay, setEssaies: any, essaies: Essay[], go
     </div>
 };
 
-const EssayAnalysis: React.FC<{ essay: Essay, setEssaies: any, essaies: Essay[] }> = ({ essay, setEssaies, essaies }) => {
-    const router = useRouter();
-    async function GetTaskScore() {
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: SCORE_TASK_RESPONSE,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
-                Essay.taskAchievementSummery = res.data.scoreTaskResponse.taskAchievementSummery;
-                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-            };
-            setEssaies(Essaies);
-            router.refresh();
-        }).catch((err) => {
-            console.log('get score error : ', err);
-        });
-    };
-
-    async function GetCoherenceAndCohesionScore() {
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: SCORE_COHERENCE,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.coherenceAndCohesionScore = res.data.scoreCoherence.coherenceAndCohesionScore;
-                Essay.coherenceAndCohesionSummery = res.data.scoreCoherence.coherenceAndCohesionSummery;
-                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-            };
-            setEssaies(Essaies);
-            router.refresh();
-        }).catch((err) => {
-            console.log('get score error : ', err);
-        });
-    };
-
-    async function GetLexicalResourceScore() {
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: SCORE_LEXICAL,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.lexicalResourceScore = res.data.scoreLexical.lexicalResourceScore;
-                Essay.lexicalResourceSummery = res.data.scoreLexical.lexicalResourceSummery;
-                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-            };
-            setEssaies(Essaies);
-            router.refresh();
-
-        }).catch((err) => {
-            console.log('get score error : ', err);
-        });
-    };
-
-    async function GetGrammaticalRangeAndAccuracyScore() {
-        let Essaies: Essay[] = essaies;
-        let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-        await client.mutate({
-            mutation: SCORE_GRAMMATICAL,
-            variables: {
-                id: essay.id
-            }
-        }).then(async (res) => {
-            if (Essay) {
-                Essay.grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
-                Essay.grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
-                Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-            };
-            await setEssaies(Essaies);
-            router.refresh();
-        }).catch((err) => {
-            console.log('get score error : ', err);
-        });
-    };
+const EssayAnalysis: React.FC<{ essay: Essay }> = ({ essay }) => {
     return <div
         className={styles.writingScoreCard}>
         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
         <div className={styles.writingScoresContainer}>
             <div>
-                <ScoreSummeryCard key={0} title="Task Achievement" summery={essay?.taskAchievementSummery} getScore={GetTaskScore} />
-                <ScoreSummeryCard key={1} title="Coherence & Cohesion" summery={essay?.coherenceAndCohesionSummery} getScore={GetCoherenceAndCohesionScore} />
-                <ScoreSummeryCard key={2} title="Lexical resource" summery={essay?.lexicalResourceSummery} getScore={GetLexicalResourceScore} />
-                <ScoreSummeryCard key={3} title="Grammatical Range and accuracy" summery={essay?.grammaticalRangeAndAccuracySummery} getScore={GetGrammaticalRangeAndAccuracyScore} />
+                <ScoreSummeryCard key={0} title="Task Achievement" summery={essay?.taskAchievementSummery} />
+                <ScoreSummeryCard key={1} title="Coherence & Cohesion" summery={essay?.coherenceAndCohesionSummery} />
+                <ScoreSummeryCard key={2} title="Lexical resource" summery={essay?.lexicalResourceSummery} />
+                <ScoreSummeryCard key={3} title="Grammatical Range and accuracy" summery={essay?.grammaticalRangeAndAccuracySummery} />
             </div>
         </div>
     </div>
 
 };
 
-const ScoreCard: React.FC<{ title: string, score?: number, getScore: any }> = ({ title, score, getScore }) => {
+const ScoreCard: React.FC<{ title: string, score?: number }> = ({ title, score }) => {
     const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
 
     async function RefetchScore() {
         setRefetchLoading(true);
-        typeof (getScore());
-        await getScore();
         setRefetchLoading(false);
     };
 
@@ -427,13 +224,11 @@ const ScoreCard: React.FC<{ title: string, score?: number, getScore: any }> = ({
     </div>
 }
 
-const ScoreSummeryCard: React.FC<{ title: string, summery?: string, getScore: any }> = ({ title, summery, getScore }) => {
+const ScoreSummeryCard: React.FC<{ title: string, summery?: string }> = ({ title, summery }) => {
     const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
 
     async function RefetchScore() {
         setRefetchLoading(true);
-        typeof (getScore());
-        await getScore();
         setRefetchLoading(false);
     };
 
@@ -450,8 +245,8 @@ const ScoreSummeryCard: React.FC<{ title: string, summery?: string, getScore: an
     </div>
 }
 
-const ScoreRecommendationCard: React.FC<{ recommendation: string, essay: Essay, setEssaies: any, essaies: Essay[] }>
-    = ({ recommendation, essaies, essay, setEssaies }) => {
+const ScoreRecommendationCard: React.FC<{ recommendation: string }>
+    = ({ recommendation }) => {
         const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
         const [htmlString, setHtmlString] = React.useState(recommendation);
 
@@ -461,45 +256,20 @@ const ScoreRecommendationCard: React.FC<{ recommendation: string, essay: Essay, 
 
         const router = useRouter();
 
-        async function GetTaskRecommendation() {
-            setRefetchLoading(true);
-            let Essaies: Essay[] = essaies;
-            let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-            await client.mutate({
-                mutation: SCORE_RECOMMENDATION,
-                variables: {
-                    id: essay.id
-                }
-            }).then(async (res) => {
-                console.log('reload recommendation : ', res);
-                if (Essay) {
-                    Essay.essayRecommendations = res.data.recommendation.essayRecommendations;
-                    Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-                };
-                setHtmlString(res.data.recommendation.essayRecommendations);
-                setEssaies(Essaies);
-                router.refresh();
-            }).catch((err) => {
-                console.log('get recommendation error: ', err);
-            });
-            setRefetchLoading(false);
-        };
-
         return (<div className={styles.writingScoreCard}>
             {refetchLoading ?
                 <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />
                 : recommendation != '' ?
                     <div dangerouslySetInnerHTML={createMarkup()} />
                     : <div
-                        style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}
-                        onClick={() => GetTaskRecommendation()}>reload!</div>
+                        style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}>reload!</div>
             }
         </div>
         );
     }
 
-const ScoreInsightsCard: React.FC<{ Insight: string, essay: Essay, setEssaies: any, essaies: Essay[] }>
-    = ({ Insight, essaies, essay, setEssaies }) => {
+const ScoreInsightsCard: React.FC<{ Insight: string }>
+    = ({ Insight }) => {
         const [htmlString, setHtmlString] = React.useState(Insight);
         const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
 
@@ -509,38 +279,13 @@ const ScoreInsightsCard: React.FC<{ Insight: string, essay: Essay, setEssaies: a
 
         const router = useRouter();
 
-        async function GetTaskInsights() {
-            setRefetchLoading(true);
-            let Essaies: Essay[] = essaies;
-            let Essay: Essay | undefined = essaies.find(item => item.id === essay.id);
-            await client.mutate({
-                mutation: SCORE_INSIGHT,
-                variables: {
-                    id: essay.id
-                }
-            }).then(async (res) => {
-                if (Essay) {
-                    Essay.essayInsights = res.data.insights.essayInsights;
-                    Essaies[Essaies.findIndex(item => item.id === essay.id)] = Essay;
-                };
-                setHtmlString(res.data.insights.essayInsights);
-                setEssaies(Essaies);
-                router.refresh();
-            }).catch((err) => {
-                console.log('get score insights : ', err);
-            });
-            setRefetchLoading(false);
-        };
-
-
         return (<div className={styles.writingScoreCard}>
             {refetchLoading ?
                 <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />
                 : Insight != '' ?
                     <div dangerouslySetInnerHTML={createMarkup()} />
                     : <div
-                        style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}
-                        onClick={() => GetTaskInsights()}>reload!</div>
+                        style={{ marginLeft: 8, fontSize: 18, color: '#AB141D', cursor: 'pointer' }}>reload!</div>
             }
         </div >
         );

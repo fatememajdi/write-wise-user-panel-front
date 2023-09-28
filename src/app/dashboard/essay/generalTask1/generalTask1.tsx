@@ -60,13 +60,13 @@ type _props = {
     divRef?: any,
     type: string,
     targetRef: any,
-    essay?: string
+    essay?: string,
+    GetScores: any
 };
 
 
-const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay,
+const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
-    let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
     const router = useRouter();
     let DivRef2: any;
     if (typeof document !== 'undefined')
@@ -93,25 +93,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
     const handleCancel = () => {
         setIsModalOpen(false);
-    };
-
-    const socketInitializer = async () => {
-        const user = await localStorage.getItem("user");
-        if (user)
-            socket = io("https://ielts.api.babyyodas.io/events", {
-                extraHeaders: {
-                    authorization: `Bearer ${JSON.parse(user)}`
-                }
-            });
-
-        socket.on("connection_error", (err) => {
-            console.log(err);
-        });
-
-        socket.on("connect", () => {
-            console.log('connected');
-        });
-
     };
 
     //-----------------------------------------------------------------generate topic
@@ -167,86 +148,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             id = null;
         });
         return id;
-    };
-
-    //-----------------------------------------------------------------get essay scores
-    async function GetScores(essaies: Essay[]) {
-        let newEssay: Essay[] = essaies;
-        client.mutate({
-            mutation: SCORE_ESSAY,
-            variables: {
-                id: newEssay[0].id
-            }
-        }).then(async (res) => {
-        });
-
-        socket.on("newMessage", (data) => {
-            let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
-            switch (data.part) {
-                case 'Insight': {
-                    if (essay && !essay?.essayInsights)
-                        essay.essayInsights = data.data;
-                    break;
-                }
-                case 'Recommendation': {
-                    if (essay && !essay?.essayRecommendations)
-                        essay.essayRecommendations = data.data;
-                    break;
-                }
-                case 'Grammatical': {
-                    if (essay && !essay?.grammaticalRangeAndAccuracyScore)
-                        essay.grammaticalRangeAndAccuracyScore = data.data as number;
-                    break;
-                }
-                case 'Grammatical Summary': {
-                    if (essay && !essay?.grammaticalRangeAndAccuracySummery)
-                        essay.grammaticalRangeAndAccuracySummery = data.data;
-                    break;
-                }
-                case 'Coherence': {
-                    if (essay && !essay?.coherenceAndCohesionScore)
-                        essay.coherenceAndCohesionScore = data.data as number;
-                    break;
-                }
-                case 'Coherence Summary': {
-                    if (essay && !essay?.coherenceAndCohesionSummery)
-                        essay.coherenceAndCohesionSummery = data.data;
-                    break;
-                }
-                case 'Lexical': {
-                    if (essay && !essay?.lexicalResourceScore)
-                        essay.lexicalResourceScore = data.data as number;
-                    break;
-                }
-                case 'Lexical Summary': {
-                    if (essay && !essay?.lexicalResourceSummery)
-                        essay.lexicalResourceSummery = data.data;
-                    break;
-                }
-                case 'Task Achievement': {
-                    if (essay && !essay?.taskAchievementScore)
-                        essay.taskAchievementScore = data.data as number;
-                    break;
-                }
-                case 'Task Achievement Summary': {
-                    if (essay && !essay?.taskAchievementSummery)
-                        essay.taskAchievementSummery = data.data;
-                    break;
-                }
-                case 'overalScore': {
-                    if (essay && !essay?.overallBandScore)
-                        essay.overallBandScore = data.data as number;
-                    break;
-                }
-
-            }
-            if (essay) {
-                newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                setEssaies(newEssay);
-            }
-            router.refresh();
-        });
-
     };
 
     //-------------------------------------------------------------------add new essay
@@ -413,7 +314,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
     React.useEffect(() => {
         ChackTopic();
-        socketInitializer();
     }, []);
 
     const EssayValidationSchema = Yup.object().shape({

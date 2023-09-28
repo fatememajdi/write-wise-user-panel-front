@@ -16,9 +16,8 @@ import styles from '../../../../styles/task.module.css';
 
 //--------------------------------------components
 import {
-    ADD_ESSAY, DELETE_ESSAY, GET_OVERAL_SCORE, GET_RANDOM_WRITING,
-    GET_RANDOM_WRITING_AC_TASK,
-    SCORE_COHERENCE, SCORE_GRAMMATICAL, SCORE_INSIGHT, SCORE_LEXICAL, SCORE_RECOMMENDATION, SCORE_TASK_RESPONSE, SELECT_TOPIC
+    ADD_ESSAY, DELETE_ESSAY,
+    GET_RANDOM_WRITING_AC_TASK, SELECT_TOPIC
 } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
@@ -62,10 +61,11 @@ type _props = {
     divRef?: any,
     type: string,
     targetRef: any,
-    essay?: string
+    essay?: string,
+    GetScores: any
 };
 
-const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay,
+const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
 
     let DivRef2: any;
@@ -167,115 +167,6 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
         return id;
     };
 
-    async function GetScores(essaies: Essay[]) {
-        let newEssay: Essay[] = essaies;
-        let score: number = 0;
-        await Promise.all([
-            client.mutate({
-                mutation: SCORE_TASK_RESPONSE,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].taskAchievementScore = res.data.scoreTaskResponse.taskAchievementScore;
-                newEssay[0].taskAchievementSummery = res.data.scoreTaskResponse.taskAchievementSummery;
-                score = score + res.data.scoreTaskResponse.taskAchievementScore;
-            }),
-
-            client.mutate({
-                mutation: SCORE_COHERENCE,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].coherenceAndCohesionScore = res.data.scoreCoherence.coherenceAndCohesionScore;
-                newEssay[0].coherenceAndCohesionSummery = res.data.scoreCoherence.coherenceAndCohesionSummery;
-                score = score + res.data.scoreCoherence.coherenceAndCohesionScore;
-            }),
-
-            client.mutate({
-                mutation: SCORE_LEXICAL,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].lexicalResourceScore = res.data.scoreLexical.lexicalResourceScore;
-                newEssay[0].lexicalResourceSummery = res.data.scoreLexical.lexicalResourceSummery;
-                score = score + res.data.scoreLexical.lexicalResourceScore;
-            }),
-
-            client.mutate({
-                mutation: SCORE_GRAMMATICAL,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].grammaticalRangeAndAccuracyScore = res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
-                newEssay[0].grammaticalRangeAndAccuracySummery = res.data.scoreGrammatical.grammaticalRangeAndAccuracySummery;
-                score = score + res.data.scoreGrammatical.grammaticalRangeAndAccuracyScore;
-            }),
-
-            client.mutate({
-                mutation: SCORE_RECOMMENDATION,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].essayRecommendations = res.data.recommendation.essayRecommendations;
-            }),
-
-            client.mutate({
-                mutation: SCORE_INSIGHT,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then(async (res) => {
-                newEssay[0].essayInsights = res.data.insights.essayInsights;
-            }),
-
-        ]).catch(async (err) => {
-            await changeModalTitle('Get essay score error');
-            await changeModalContent(JSON.stringify(err.message));
-            showModal();
-        }).then(async () => {
-
-            await client.query({
-                query: GET_OVERAL_SCORE,
-                variables: {
-                    id: newEssay[0].id
-                }
-            }).then((res) => {
-                newEssay[0].overallBandScore = res.data.getEssay.overallBandScore
-            }).catch(() => {
-                newEssay[0].overallBandScore = -1;
-            });
-            if (!newEssay[0].taskAchievementScore) {
-                newEssay[0].taskAchievementScore = -1;
-                newEssay[0].taskAchievementSummery = '';
-            };
-            if (!newEssay[0].coherenceAndCohesionScore) {
-                newEssay[0].coherenceAndCohesionScore = -1;
-                newEssay[0].coherenceAndCohesionSummery = '';
-            };
-            if (!newEssay[0].grammaticalRangeAndAccuracyScore) {
-                newEssay[0].grammaticalRangeAndAccuracyScore = -1;
-                newEssay[0].grammaticalRangeAndAccuracySummery = '';
-            };
-            if (!newEssay[0].lexicalResourceScore) {
-                newEssay[0].lexicalResourceScore = -1;
-                newEssay[0].lexicalResourceSummery = '';
-            };
-            if (!newEssay[0].essayInsights) {
-                newEssay[0].essayInsights = '';
-            };
-            if (!newEssay[0].essayRecommendations) {
-                newEssay[0].essayRecommendations = '';
-            };
-            setEssaies(newEssay);
-            handleNewTopic();
-        })
-    };
-
     //-------------------------------------------------------------------add new essay
     async function AddNewEssay(Topic: string, body: string) {
         changeEssayLoading(true);
@@ -319,18 +210,17 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                 } else {
                     await localStorage.removeItem('tempEssay3');
                 };
-
                 await setEssaies([{
-                    id: res.data.finishEssay.id,
-                    essay: res.data.finishEssay.essay,
-                    date: res.data.finishEssay.date
+                    id: res.data.addNewEssay.id,
+                    essay: res.data.addNewEssay.essay,
+                    date: res.data.addNewEssay.date
 
                 }, ...essaies]);
                 changeEssayLoading(false);
                 await GetScores([{
-                    id: res.data.finishEssay.id,
-                    essay: res.data.finishEssay.essay,
-                    date: res.data.finishEssay.date
+                    id: res.data.addNewEssay.id,
+                    essay: res.data.addNewEssay.essay,
+                    date: res.data.addNewEssay.date
 
                 }, ...essaies]);
                 changeCcurrentId(id);

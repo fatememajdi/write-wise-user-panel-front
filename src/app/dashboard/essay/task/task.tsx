@@ -29,10 +29,11 @@ type _props = {
     divRef?: any,
     type: string,
     targetRef: any,
-    essay?: string
+    essay?: string,
+    GetScores: any
 }
 
-const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay,
+const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
     return <>
         {
@@ -40,26 +41,26 @@ const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimat
                 topic.type === 'general_task_1' ?
                     <GeneralTask key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                         essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                        handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
+                        handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores} />
                     : topic.type === 'academic_task_1' ?
                         <AcademicTask key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                             essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
+                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores}/>
                         : <Task2 key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                             essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
+                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores}/>
                 :
                 type === 'academic_task_1' ?
                     <AcademicTask changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                         essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                        handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
+                        handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores}/>
                     : type === 'general_task_1' ?
                         <GeneralTask changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                             essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
+                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores} />
                         : <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
                             essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} />
+                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores}/>
         }
     </>
 };

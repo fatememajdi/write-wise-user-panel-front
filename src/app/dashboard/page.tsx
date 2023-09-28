@@ -11,13 +11,15 @@ import { AnimatePresence, motion } from 'framer-motion';
 import ReactLoading from 'react-loading';
 import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
+import { Socket, io } from 'socket.io-client';
+import { DefaultEventsMap } from "@socket.io/component-emitter";
 
 //-----------------------------------------------------styles
 import styles from './dashboard.module.css';
 
 //-----------------------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-import { DELETE_TOPIC, GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS } from "@/config/graphql";
+import { DELETE_TOPIC, GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY } from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
 const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/dashboardPopOver"));
 const ChooseType = lazy(() => import("./essay/chooseType/chooseType"));
@@ -74,7 +76,7 @@ type topic = {
 
 const Dashboard: React.FC = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-
+    let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
     const targetRef = React.useRef();
     let divRef: any;
@@ -107,12 +109,11 @@ const Dashboard: React.FC = () => {
     const { step, goTo } = useMultiStepForm([
         <ChooseType changeType={ChangeType} />,
         <Task
-            targetRef={targetRef}
+            targetRef={targetRef} GetScores={GetScores}
             setEssaies={setEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} handleNewTopic={handleNewTopic}
             essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type} essay={essay}
             changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
     ]);
-
 
     function ChangeType(type: string) {
         setType(type);
@@ -179,7 +180,7 @@ const Dashboard: React.FC = () => {
                 changeMoreEssaies(false);
             }
         }).catch((err) => {
-            console.log('get users essay error : ', err)
+            // console.log('get users essay error : ', err)
         });
     };
 
@@ -249,6 +250,103 @@ const Dashboard: React.FC = () => {
         });
     };
 
+    async function GetScores(essaies: Essay[]) {
+        let newEssay: Essay[] = essaies;
+        client.mutate({
+            mutation: SCORE_ESSAY,
+            variables: {
+                id: newEssay[0].id
+            }
+        }).then(async (res) => {
+        });
+
+        socket.on("newMessage", (data) => {
+            let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
+            switch (data.part) {
+                case 'Insight': {
+                    if (essay && !essay?.essayInsights)
+                        essay.essayInsights = data.data;
+                    break;
+                }
+                case 'Recommendation': {
+                    if (essay && !essay?.essayRecommendations)
+                        essay.essayRecommendations = data.data;
+                    break;
+                }
+                case 'Grammatical': {
+                    if (essay && !essay?.grammaticalRangeAndAccuracyScore)
+                        essay.grammaticalRangeAndAccuracyScore = data.data as number;
+                    break;
+                }
+                case 'Grammatical Summary': {
+                    if (essay && !essay?.grammaticalRangeAndAccuracySummery)
+                        essay.grammaticalRangeAndAccuracySummery = data.data;
+                    break;
+                }
+                case 'Coherence': {
+                    if (essay && !essay?.coherenceAndCohesionScore)
+                        essay.coherenceAndCohesionScore = data.data as number;
+                    break;
+                }
+                case 'Coherence Summary': {
+                    if (essay && !essay?.coherenceAndCohesionSummery)
+                        essay.coherenceAndCohesionSummery = data.data;
+                    break;
+                }
+                case 'Lexical': {
+                    if (essay && !essay?.lexicalResourceScore)
+                        essay.lexicalResourceScore = data.data as number;
+                    break;
+                }
+                case 'Lexical Summary': {
+                    if (essay && !essay?.lexicalResourceSummery)
+                        essay.lexicalResourceSummery = data.data;
+                    break;
+                }
+                case 'Task Achievement': {
+                    if (essay && !essay?.taskAchievementScore)
+                        essay.taskAchievementScore = data.data as number;
+                    break;
+                }
+                case 'Task Achievement Summary': {
+                    if (essay && !essay?.taskAchievementSummery)
+                        essay.taskAchievementSummery = data.data;
+                    break;
+                }
+                case 'overalScore': {
+                    if (essay && !essay?.overallBandScore)
+                        essay.overallBandScore = data.data as number;
+                    break;
+                }
+
+            }
+            if (essay) {
+                newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                setEssaies(newEssay);
+            }
+            router.refresh();
+        });
+
+    };
+
+    //-------------------------------------------------------connect to socket
+    const socketInitializer = async () => {
+        const user = await localStorage.getItem("user");
+        if (user)
+            socket = io("https://ielts.api.babyyodas.io/events", {
+                // autoConnect: false,
+                extraHeaders: {
+                    authorization: `Bearer ${JSON.parse(user)}`
+                }
+            });
+        socket.on("connection_error", (err) => {
+            console.log(err);
+        });
+        socket.on("connect", () => {
+            console.log('connected');
+        });
+    };
+
     //------------------------------------------------------------------check user loged in
     // eslint-disable-next-line react-hooks/exhaustive-deps
     React.useEffect(() => {
@@ -264,6 +362,10 @@ const Dashboard: React.FC = () => {
             }
         } else {
             setLoading(false);
+        };
+
+        if (!socket) {
+            socketInitializer();
         }
     });
 
@@ -276,7 +378,8 @@ const Dashboard: React.FC = () => {
                 changeTopicsLoading(false);
             }
             GetProfile();
-        }
+        };
+        socketInitializer();
     }, []);
 
     const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
