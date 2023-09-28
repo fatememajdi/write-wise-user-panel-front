@@ -264,58 +264,91 @@ const Dashboard: React.FC = () => {
             let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
             switch (data.part) {
                 case 'Insight': {
-                    if (essay && !essay?.essayInsights)
+                    if (essay && !essay?.essayInsights) {
                         essay.essayInsights = data.data;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
                 case 'Recommendation': {
-                    if (essay && !essay?.essayRecommendations)
+                    if (essay && !essay?.essayRecommendations) {
                         essay.essayRecommendations = data.data;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
                 case 'Grammatical': {
-                    if (essay && !essay?.grammaticalRangeAndAccuracyScore)
+                    if (essay && !essay?.grammaticalRangeAndAccuracyScore) {
                         essay.grammaticalRangeAndAccuracyScore = data.data as number;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
                 case 'Grammatical Summary': {
-                    if (essay && !essay?.grammaticalRangeAndAccuracySummery)
+                    if (essay && !essay?.grammaticalRangeAndAccuracySummery) {
                         essay.grammaticalRangeAndAccuracySummery = data.data;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
                 case 'Coherence': {
-                    if (essay && !essay?.coherenceAndCohesionScore)
+                    if (essay && !essay?.coherenceAndCohesionScore) {
                         essay.coherenceAndCohesionScore = data.data as number;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
                 case 'Coherence Summary': {
-                    if (essay && !essay?.coherenceAndCohesionSummery)
+                    if (essay && !essay?.coherenceAndCohesionSummery) {
                         essay.coherenceAndCohesionSummery = data.data;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
                 case 'Lexical': {
-                    if (essay && !essay?.lexicalResourceScore)
+                    if (essay && !essay?.lexicalResourceScore) {
                         essay.lexicalResourceScore = data.data as number;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
                 case 'Lexical Summary': {
-                    if (essay && !essay?.lexicalResourceSummery)
+                    if (essay && !essay?.lexicalResourceSummery) {
                         essay.lexicalResourceSummery = data.data;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
                 case 'Task Achievement': {
-                    if (essay && !essay?.taskAchievementScore)
+                    if (essay && !essay?.taskAchievementScore) {
                         essay.taskAchievementScore = data.data as number;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
                 case 'Task Achievement Summary': {
-                    if (essay && !essay?.taskAchievementSummery)
+                    if (essay && !essay?.taskAchievementSummery) {
                         essay.taskAchievementSummery = data.data;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
                 case 'overalScore': {
-                    if (essay && !essay?.overallBandScore)
+                    if (essay && !essay?.overallBandScore) {
                         essay.overallBandScore = data.data as number;
+                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                        setEssaies(newEssay);
+                    }
                     break;
                 }
 
