@@ -13,6 +13,7 @@ import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 import { Socket, io } from 'socket.io-client';
 import { DefaultEventsMap } from "@socket.io/component-emitter";
+import Script from "next/script";
 
 //-----------------------------------------------------styles
 import styles from './dashboard.module.css';
@@ -258,6 +259,7 @@ const Dashboard: React.FC = () => {
                 id: newEssay[0].id
             }
         }).then(async (res) => {
+            console.log(res);
         });
 
         socket.on("newMessage", (data) => {
@@ -490,6 +492,9 @@ const Dashboard: React.FC = () => {
         return <Loading />
     else
         return <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
+
+            <div id="tawk"></div>
+
             <motion.div animate={{
                 width: isOpen && isMac ? '268px'
                     : isOpen && isMobile ? '270px'
@@ -715,6 +720,10 @@ const Dashboard: React.FC = () => {
                             className={'col-12 ' + styles.essayContainer}>
                             {step}
                         </div>
+
+                        {/* <TawkMessengerReact
+                            propertyId="property_id"
+                            widgetId="default" /> */}
 
                     </div>
 

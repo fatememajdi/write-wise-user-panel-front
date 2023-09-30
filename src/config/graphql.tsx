@@ -138,7 +138,7 @@ mutation AddNewEssay($id:String! , $body: String! ,$durationMillisecond:Float!){
 
 export const SCORE_ESSAY = gql`
 mutation ScoreEssay($id:String!){
-  scoreEssay(scoreEssay:{test:false,id:$id}){
+  scoreEssay(scoreEssay:{test:true,id:$id}){
     recommendation
   }
 }
