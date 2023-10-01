@@ -30,7 +30,7 @@ export function CountWords(text: string, message: boolean) {
     var words = splits.filter((x) => x.trim().length > 0);
     var count: any = words.length as number;
 
-    return <div style={{ fontSize: 20, fontWeight: 500, color: count < 100 ? '#DA282E' : count < 150 ? '#BCA434' : count < 200 ? '#28B81B' : '#DA282E' }}>
+    return <div style={{ fontSize: 20, fontWeight: 500, color: count < 100 ? '#DA282E' : '#28B81B' }}>
         {'you have written ' + count + ' words'}
         {/* {
             message ?
