@@ -7,14 +7,14 @@ import { useSession } from "next-auth/react";
 // import styles from '../styles/landing.module.css';
 
 //-------------------------------------------components
-const Section1 = lazy(() => import('./[subdomain]/landing/section1'));
-const Section2 = lazy(() => import("./[subdomain]/landing/section2"));
-const Section3 = lazy(() => import("./[subdomain]/landing/section3"));
-const Section4 = lazy(() => import("./[subdomain]/landing/section4"));
-const Section5 = lazy(() => import("./[subdomain]/landing/section5"));
-const Section6 = lazy(() => import("./[subdomain]/landing/section6"));
-const Section7 = lazy(() => import("./[subdomain]/landing/section7"));
-const Section8 = lazy(() => import("./[subdomain]/landing/section8"));
+const Section1 = lazy(() => import('./landing/section1'));
+const Section2 = lazy(() => import("./landing/section2"));
+const Section3 = lazy(() => import("./landing/section3"));
+const Section4 = lazy(() => import("./landing/section4"));
+const Section5 = lazy(() => import("./landing/section5"));
+const Section6 = lazy(() => import("./landing/section6"));
+const Section7 = lazy(() => import("./landing/section7"));
+const Section8 = lazy(() => import("./landing/section8"));
 const Footer = lazy(() => import("@/components/footer/footer"));
 const Loading = dynamic(() => import("@/components/loading/loading"));
 
