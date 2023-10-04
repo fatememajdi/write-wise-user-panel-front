@@ -57,6 +57,7 @@
 }
 
 .writingEssayCard {
+    background-color: #626E7E;
     display: flex;
     flex: 1;
     border-bottom-left-radius: 8px;
@@ -92,7 +93,7 @@
 
 
 .writingScoreDate {
-    color: #252525;
+    color: var(--color-whiteText);
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
@@ -100,7 +101,7 @@
 }
 
 .writingEssayTopic {
-    color: #252525;
+    color: var(--color-whiteText);
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -109,7 +110,7 @@
 
 .writingEssayText {
     margin-top: 25px;
-    color: #252525;
+    color: var(--color-whiteText);
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
@@ -158,7 +159,9 @@
 }
 
 .writingScoreCard {
+    background-color: #626E7E;
     display: flex;
+    color: var(--color-whiteText) !important;
     flex: 1;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -212,7 +215,7 @@
 }
 
 .writingScoreItemCard {
-    color: #252525;
+    color: var(--color-whiteText) !important;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -224,7 +227,7 @@
 }
 
 .writingScoreSummeryItemCard {
-    color: #252525;
+    color: var(--color-whiteText) !important;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -253,13 +256,13 @@
     width: 180px;
     align-items: center;
     justify-content: center;
-    color: #DA282E;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    border: solid 1px #DA282E;
+    border: solid 1px var(--color-whiteText);
 }
 
 

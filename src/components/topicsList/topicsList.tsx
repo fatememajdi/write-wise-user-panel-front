@@ -149,7 +149,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                     className={'col-12 ' + styles.taskCard} key={index} >
                                     <div
                                         onClick={() => {
-                                            HandleSelect({ id: item.id, body: item.topic, type: item.type, visuals: item.visuals },
+                                            HandleSelect({ id: item.id, body: item.topic, type: item.type, visuals: item.visuals, subType: item.subType },
                                                 tempsList.findIndex(tempItem => tempItem.id === item.id) === -1 ? ''
                                                     : tempsList[tempsList.findIndex(tempItem => tempItem.id === item.id)].essay);
                                             SetTempEssay();

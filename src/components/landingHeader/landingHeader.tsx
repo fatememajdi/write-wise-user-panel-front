@@ -112,10 +112,13 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
                     }
                     {
                         logedIn ?
-                            <div onClick={() => {
-                                router.push('/dashboard');
-                                StartLoader();
-                            }} className={styles.headerItem}>Dashboard</div>
+                            <a
+                                // onClick={() => {
+                                //     router.push('/dashboard');
+                                //     StartLoader();
+                                // }}
+                                href="https://dash.wwai.ai/"
+                                className={styles.headerItem}>Dashboard</a>
                             :
                             <div onClick={() => {
                                 router.push('/signIn');

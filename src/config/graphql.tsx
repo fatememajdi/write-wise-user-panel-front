@@ -46,7 +46,8 @@ query GetUserTopics($type:String!, $page:Float!, $pageSize:Float!){
         id,
         url,
         image
-      }
+      },
+      subType
     }
   }
 }

@@ -39,7 +39,7 @@ type topic = {
     id: string,
     body: string,
     type: string,
-    questionType?: string,
+    subType?: string,
     visuals?: {
         id: string,
         url: string,
@@ -118,12 +118,12 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
             fetchPolicy: "no-cache",
             variables: {
                 type: 'academic_task_1',
-                // questionType: subType
+                questionType: subType
             }
         }).then(async (res) => {
             await changeGeneratedTopic({
                 id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body,
-                type: res.data.getRandomWriting.type, questionType: res.data.getRandomWriting.questionType,
+                type: res.data.getRandomWriting.type, subType: res.data.getRandomWriting.questionType,
                 visuals: res.data.getRandomWriting.visuals
             });
             setFieldValue('topic', res.data.getRandomWriting.body);
@@ -334,7 +334,7 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
     React.useEffect(() => {
         ChackTopic();
     }, []);
-
+    const nameregex = /^[ a-zA-Z ]+$/;
     return <Formik
         initialValues={{
             topic: topic?.id === '' ? topic?.body : generatedTopic ? generatedTopic.body : '',
@@ -375,7 +375,9 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                             ]} selectedItem={0} className={styles.topSelect} />
 
                             <div className={styles.wriritngTitle}>
-                                Ac Task 1
+                                Ac Task 1 {topic && topic.subType ? `(${topic.subType})`
+                                    : generatedTopic ? `(${generatedTopic.subType})`
+                                        : values.subType && `(${values.subType})`}
                             </div>
 
                             <div className={styles.writingSecondTitle}>
@@ -403,9 +405,8 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                                                                 <Typewriter
                                                                     options={{
                                                                         delay: 0,
-                                                                        wrapperClassName: styles.writerClassname
-                                                                        // cursor: cursor
-                                                                        // cursorClassName: endTyping ? 'Typewriter__cursor ' + styles.cursor : 'Typewriter__cursor'
+                                                                        wrapperClassName: styles.writerClassname,
+                                                                        cursor: " "
                                                                     }}
                                                                     onInit={(typewriter) => {
                                                                         JSON.stringify(SplitText(values.topic)).slice(1, JSON.stringify(values.topic).length - 1).split(/(\s)/).map((str: any, index: number) => {
@@ -454,14 +455,14 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
 
                                                                 return selected;
                                                             }}
-                                                            defaultValue=""
+                                                            defaultValue="Random"
                                                             value={values.subType}
                                                             onChange={(e) => setFieldValue('subType', e.target.value)}
                                                             displayEmpty
                                                             inputProps={{ 'aria-label': 'gender select' }}
                                                             className={styles.select}
                                                         >
-
+                                                            <MenuItem className={styles.selectMenuItem} value={'Random'}>Random</MenuItem>
                                                             <MenuItem className={styles.selectMenuItem} value={'Bar Chart'}>Bar Chart</MenuItem>
                                                             <MenuItem className={styles.selectMenuItem} value={'Line Graph'}>Line Graph</MenuItem>
                                                             <MenuItem className={styles.selectMenuItem} value={'Table'}>Table</MenuItem>
@@ -563,12 +564,18 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                                     disable={!endTyping}
                                     className={styles.topicInput}
                                     onChange={(e: any) => {
-                                        if (!changeInput) {
-                                            setChangeInput(true);
-                                            changeEssayTime(Date.now());
+                                        if (nameregex.test(e.target.value)) {
+                                            if (!changeInput) {
+                                                setChangeInput(true);
+                                                changeEssayTime(Date.now());
+                                            }
+                                            handleChange(e);
+                                            CreateTempEssay(e.target.value, values.topic);
+                                        } else {
+                                            changeModalTitle('language error');
+                                            changeModalContent('only english letters');
+                                            showModal();
                                         }
-                                        handleChange(e);
-                                        CreateTempEssay(e.target.value, values.topic);
                                     }}
                                     placeHolder={'Type your essay here...'}
                                     secondError

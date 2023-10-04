@@ -6,7 +6,7 @@ export type Topic = {
     createdAt?: string,
     score?: string,
     overallBandScore?: number,
-    questionType?: string,
+    subType?: string,
     visuals?: {
         id: string,
         url: string,

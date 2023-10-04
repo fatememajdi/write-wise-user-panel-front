@@ -67,7 +67,7 @@ type topic = {
     id: string,
     body: string,
     type: string,
-    questionType?: string,
+    subType?: string,
     visuals?: {
         id: string,
         url: string,
@@ -196,6 +196,7 @@ const Dashboard: React.FC = () => {
             },
             fetchPolicy: "no-cache"
         }).then(async (res) => {
+            console.log(res);
             if (res.data.getUserTopics.userTopics.length != 0) {
                 await changeTopics([...topics, ...res.data.getUserTopics.userTopics]);
             } else {

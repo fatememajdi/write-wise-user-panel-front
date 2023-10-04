@@ -17,16 +17,16 @@ const Slider: React.FC<_props> = ({ value, total }) => {
         <CircularSlider
             r={80}
             trackWidth={5}
-            trackColor={'#2E4057'}
+            trackColor={'rgba(98, 110, 126, 0.32)'}
             thumbWidth={0}
-            thumbColor={'#2E4057'}
-            arcColor={'#FFF'}
+            thumbColor={'rgba(98, 110, 126, 0.32)'}
+            arcColor={'#2E4057'}
             value={value ? (100 / total) * value : 0}
         // onChange={(value: any) => console.log(value)}
         />
         <div className={styles.sliderProgress}>{!value && refreshLoading ? <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />
             : value && value !== -1 ? value
-                : value === -1 ? <div style={{ marginLeft: 8, fontSize: 18, color: '#F3F3F3', cursor: 'pointer' }}
+                : value === -1 ? <div style={{ marginLeft: 8, fontSize: 18, color: '#12263E', cursor: 'pointer' }}
                     onClick={async () => {
                         changeRefreshLoading(true);
                         changeRefreshLoading(false);

@@ -13,6 +13,7 @@ const Text = lazy(() => import("@/components/text/text"));
 import { MdEdit } from 'react-icons/md';
 import { Lock } from '../../../public/dashboard';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { LuAlarmClock } from 'react-icons/lu';
 
 //----------------------------------------------styles
 import styles from './essayCard.module.css';
@@ -127,7 +128,7 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
     = ({ essay, setFieldValue, divRef, setOpen, topic }) => {
         return <div className={styles.writingEssayCard}>
             {/* <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div> */}
-
+            {/* <div><LuAlarmClock /> {essay.durationMillisecond && essay.durationMillisecond / 60000}</div> */}
             <div className={styles.writingEssayTopic}>
                 <Text text={topic} />
             </div>
@@ -148,7 +149,6 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
                         setFieldValue('body', essay?.essay);
                         if (divRef)
                             divRef.scrollTop = divRef.offsetTop;
-
                     }}
                     type="button"
                     aria-label="edit button"
