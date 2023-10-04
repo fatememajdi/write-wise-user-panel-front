@@ -127,8 +127,13 @@ export default EssayCard;
 const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any, divRef?: any, setOpen: any, topic: string }>
     = ({ essay, setFieldValue, divRef, setOpen, topic }) => {
         return <div className={styles.writingEssayCard}>
-            {/* <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div> */}
-            {/* <div><LuAlarmClock /> {essay.durationMillisecond && essay.durationMillisecond / 60000}</div> */}
+
+            <div className={styles.writingTimeCard}>
+                <LuAlarmClock className={styles.clockIcon} />
+                {essay.durationMillisecond && Math.round(essay.durationMillisecond / 60000) + ' minutes'}
+                <span>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</span>
+            </div>
+
             <div className={styles.writingEssayTopic}>
                 <Text text={topic} />
             </div>

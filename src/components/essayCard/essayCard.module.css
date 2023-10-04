@@ -77,6 +77,25 @@
     animation: fadeInTop 1.5s both;
 }
 
+.writingTimeCard {
+    display: flex;
+    flex-direction: row;
+    color: #F3F3F3;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    margin-bottom: 25px;
+}
+
+.writingTimeCard span {
+    margin-left: 15px;
+}
+
+.clockIcon {
+    font-size: 22px;
+    margin-right: 10px;
+}
 
 .writingEssayCard::-webkit-scrollbar {
     /* display: none; */
