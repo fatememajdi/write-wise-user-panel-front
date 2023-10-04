@@ -12,7 +12,7 @@ import Image from "next/image";
 import { io } from 'socket.io-client';
 
 //-------------------------------------------------------styles
-import styles from '../../../../styles/task.module.css';
+import styles from '../../../../../styles/task.module.css';
 
 //--------------------------------------components
 import {
@@ -28,12 +28,12 @@ const Text = lazy(() => import("@/components/text/text"));
 const Timer = lazy(() => import("@/components/timer/timer"));
 
 //--------------------------------------icons
-import { Reload } from "../../../../../public";
+import { Reload } from "../../../../../../public";
 import { MdEdit } from 'react-icons/md';
 import { IoMdImage } from 'react-icons/io';
 
 //--------------------------------------types
-import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../types/essay';
+import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../../types/essay';
 
 type topic = {
     id: string,

@@ -7,7 +7,7 @@ const GeneralTask = lazy(() => import("../generalTask1/generalTask1"));
 const AcademicTask = lazy(() => import("../academicTask1/academicTask1"));
 
 //--------------------------------------types
-import { Essay } from '../../../../../types/essay';
+import { Essay } from '../../../../../../types/essay';
 
 type topic = {
     id: string,

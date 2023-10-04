@@ -8,11 +8,9 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Socket, io } from 'socket.io-client';
-import { DefaultEventsMap } from "@socket.io/component-emitter";
 
 //--------------------------------------styles
-import styles from '../../../../styles/task.module.css';
+import styles from '../../../../../styles/task.module.css';
 
 //--------------------------------------components
 import {
@@ -27,11 +25,11 @@ const Text = lazy(() => import("@/components/text/text"));
 const Timer = lazy(() => import("@/components/timer/timer"));
 
 //--------------------------------------icons
-import { Reload } from "../../../../../public";
+import { Reload } from "@/../public";
 import { MdEdit } from 'react-icons/md';
 
 //--------------------------------------types
-import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../types/essay';
+import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../../types/essay';
 import { useRouter } from "next/navigation";
 
 type topic = {

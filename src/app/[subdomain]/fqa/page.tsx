@@ -15,7 +15,7 @@ const Footer = lazy(() => import("@/components/footer/footer"));
 import { StopLoader } from "@/components/Untitled";
 
 //--------------------------------------------icons 
-import { Search } from '../../../public';
+import { Search } from '../../../../public';
 import { VscCircleFilled } from 'react-icons/vsc';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 

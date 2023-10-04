@@ -12,14 +12,13 @@ import dynamic from "next/dynamic";
 import { Modal } from 'antd';
 import { useSession } from "next-auth/react";
 import { signOut } from 'next-auth/react';
-import type { InferGetStaticPropsType, GetStaticProps } from 'next'
 
 //-------------------------------------styles
 import styles from './profile.module.css';
 
 //-------------------------------------icons
 import { MdOutlineArrowBackIosNew, MdModeEditOutline } from 'react-icons/md';
-import { Camera, Chat, Chat2, CloseButton, MobileCloseButton } from '../../../public';
+import { Camera, Chat, Chat2, CloseButton, MobileCloseButton } from '../../../../public';
 import { HiCheck } from 'react-icons/hi';
 import { RxExit } from 'react-icons/rx';
 
@@ -30,10 +29,10 @@ import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
 import { StopLoader } from "@/components/Untitled";
 const Loading = dynamic(() => import("@/components/loading/loading"), { ssr: false });
 const Input = dynamic(() => import("@/components/input/input"), { ssr: false });
-const DialogComponent = dynamic(() => import("../../components/dialog/dialog"), { ssr: false });
+const DialogComponent = dynamic(() => import("@/components/dialog/dialog"), { ssr: false });
 
 //-------------------------------------types
-import { UserProfile } from "../../../types/profile";
+import { UserProfile } from "../../../../types/profile";
 
 const Profile: React.FC = () => {
 

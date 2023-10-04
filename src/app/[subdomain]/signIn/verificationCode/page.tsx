@@ -12,7 +12,7 @@ import styles from '../signIn.module.css';
 
 //---------------------------------------------------components
 const OtpInput = lazy(() => import("@/components/otpIput/otpIput"));
-import { VERIFICATION_CODE } from '../../../config/graphql';
+import { VERIFICATION_CODE } from '../../../../config/graphql';
 import Loading from "@/components/loading/loading";
 
 //---------------------------------------------------------------validation

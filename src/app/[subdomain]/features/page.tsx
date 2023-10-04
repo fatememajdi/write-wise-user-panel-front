@@ -15,7 +15,7 @@ const Footer = lazy(() => import("@/components/footer/footer"));
 import { StartLoader, StopLoader } from "@/components/Untitled";
 
 //------------------------------------------------icons
-import { User, File, Step, Money, RegularRise } from '../../../public';
+import { User, File, Step, Money, RegularRise } from '../../../../public';
 
 const featuresItems = [
     {

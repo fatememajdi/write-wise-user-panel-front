@@ -13,7 +13,6 @@ import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 import { Socket, io } from 'socket.io-client';
 import { DefaultEventsMap } from "@socket.io/component-emitter";
-import Script from "next/script";
 
 //-----------------------------------------------------styles
 import styles from './dashboard.module.css';
@@ -29,15 +28,15 @@ const TopicsList = lazy(() => import("@/components/topicsList/topicsList"));
 import { StopLoader } from "@/components/Untitled";
 
 //----------------------------------------------------icons
-import { Lock } from '../../../public/dashboard';
+import { Lock } from '../../../../public/dashboard';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { TfiMenu } from 'react-icons/tfi';
 import { FiMoreVertical } from 'react-icons/fi';
 
 //---------------------------------------------------types
-import { Essay } from "../../../types/essay";
-import { Topic } from "../../../types/topic";
+import { Essay } from "../../../../types/essay";
+import { Topic } from "../../../../types/topic";
 
 
 const tabBarItems = [
