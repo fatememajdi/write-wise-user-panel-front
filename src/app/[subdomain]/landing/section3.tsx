@@ -11,7 +11,7 @@ import { FeaturesBackground } from "@/components/backgrounds/featuresBackground/
 import { StartLoader } from "@/components/Untitled";
 
 //-------------------------------------------icons
-import { File, Rate, Rise, User } from "../../../public";
+import { File, Rate, Rise, User } from "../../../../public";
 import { IoIosArrowForward } from 'react-icons/io';
 
 const Section3: React.FC = () => {
