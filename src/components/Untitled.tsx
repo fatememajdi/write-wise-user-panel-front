@@ -31,7 +31,7 @@ export function CountWords(text: string, message: boolean) {
     var count: any = words.length as number;
 
     return <div style={{ fontSize: 20, fontWeight: 500, color: count < 100 ? '#DA282E' : '#28B81B' }}>
-        {'you have written ' + count + ' words'}
+        {'words: ' + count}
         {/* {
             message ?
                 count < 100 ? ' words error' : count < 150 ? ' words warning' : count < 200 ? ' words success' : ' words error'

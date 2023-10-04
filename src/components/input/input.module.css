@@ -59,7 +59,7 @@
     border: none !important;
     font-size: 20px !important;
     transition: 0s border;
-    min-height: 250px;
+    min-height: 186px;
     background-color: var(--color-background) !important;
     color: var(--color-blackText) !important;
     border: solid 1px var(--color-seccondary) !important;

@@ -20,5 +20,8 @@ export async function middleware(req: NextRequest) {
     url.pathname = `/${subdomain}${url.pathname}`;
   }
 
+  // if (req.url.includes('/dashboard'))
+  //   return NextResponse.redirect(new URL('/dashboard', req.url));
+
   return NextResponse.rewrite(url);
 }

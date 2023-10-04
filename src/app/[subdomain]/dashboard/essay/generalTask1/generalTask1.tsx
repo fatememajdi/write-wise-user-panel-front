@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { lazy } from "react";
 import { Formik } from 'formik';
-import * as Yup from 'yup';
 import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -500,7 +499,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                             <div className={styles.bodyInputContainer}>
                                 <Input
                                     disable={!endTyping}
-                                    className={styles.topicInput}
+                                    className={styles.topicInput + ' ' + styles.essayInput}
                                     onChange={(e: any) => {
                                         if (nameregex.test(e.target.value)) {
                                             if (!changeInput) {
@@ -522,21 +521,26 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                     textarea_value={values.body}
                                     textarea_error={errors.body && touched.body && errors.body}
                                 />
-                                <button
-                                    type="submit"
-                                    className={styles.scoreButton}>
-                                    <div>
-                                        Score
-                                    </div>
-                                </button>
-
-                            </div>
-                            {
-                                changeInput &&
-                                <div className={styles.timer}>
-                                    <Timer time={1200} />
+                                <div className={styles.scoreButtonContainer}>
+                                    {
+                                        changeInput &&
+                                        <div className={styles.timer}>
+                                            <Timer time={1200} />
+                                        </div>
+                                    }
+                                    <button
+                                        type="submit"
+                                        className={styles.scoreButton}>
+                                        <div>
+                                            Score
+                                        </div>
+                                    </button>
+                                    <div
+                                        style={{ width: '50%' }}
+                                        className={styles.prossessBar}></div>
                                 </div>
-                            }
+                            </div>
+
 
                         </div>
                 }
