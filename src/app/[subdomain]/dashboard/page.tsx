@@ -395,11 +395,12 @@ const Dashboard: React.FC = () => {
                 else {
                     router.push('/signIn');
                 }
-            } else if (cookiesList.has('user')) {
+            } else {
                 let t = getCookie('user') !== undefined ? JSON.stringify(getCookie('user')) : '';
-                localStorage.setItem('user', t);
-
-                setLoading(false);
+                if (t != '') {
+                    localStorage.setItem('user', t);
+                    setLoading(false);
+                }
             }
         } else {
             setLoading(false);
