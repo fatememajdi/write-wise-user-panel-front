@@ -114,7 +114,7 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
                         logedIn ?
                             <a
                                 onClick={() => {
-                                    router.push('[subdomain]/dashboard');
+                                    router.push('/ielts');
                                     StartLoader();
                                 }}
                                 // href="https://dash.wwai.ai/"

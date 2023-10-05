@@ -6,14 +6,13 @@ import * as Yup from 'yup';
 import { useMutation } from "@apollo/react-hooks";
 import { Modal } from 'antd';
 import { useRouter } from "next/navigation";
-import { setCookie } from 'cookies-next';
 
 //---------------------------------------------------styles
 import styles from '../signIn.module.css';
 
 //---------------------------------------------------components
 const OtpInput = lazy(() => import("@/components/otpIput/otpIput"));
-import { VERIFICATION_CODE } from '../../../../config/graphql';
+import { VERIFICATION_CODE } from '../../../config/graphql';
 import Loading from "@/components/loading/loading";
 
 //---------------------------------------------------------------validation
@@ -50,8 +49,7 @@ const VerificationCode: React.FC = () => {
             },
         }).then(async (data) => {
             localStorage.setItem("user", JSON.stringify(data.data.verifyEmail.token));
-            setCookie('user', JSON.stringify(data.data.verifyEmail.token));
-            await router.push('/dashboard');
+            await router.push('/ielts');
             // setTimeout(() => {
             //     changeLoadig(false);
             // }, 5000);

@@ -22,7 +22,7 @@ const Input = lazy(() => import("@/components/input/input"));
 const Pagination = React.lazy(
     () => import("@/components/pagination/pagination").then(module => ({ default: module.Pagination }))
 );
-import { EMAIL_SIGN_IN } from '../../../config/graphql';
+import { EMAIL_SIGN_IN } from '../../config/graphql';
 import Loading from "@/components/loading/loading";
 import { StopLoader } from "@/components/Untitled";
 

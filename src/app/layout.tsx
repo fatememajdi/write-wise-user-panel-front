@@ -3,7 +3,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { ApolloProvider } from "@apollo/react-hooks";
 import { SessionProvider } from 'next-auth/react';
-import client from '../../config/applloClient';
+import client from '../config/applloClient';
 import React from 'react';
 import { Session } from "next-auth";
 import Head from 'next/head';
@@ -11,22 +11,22 @@ import Script from 'next/script';
 
 //--------------------------------------------------------components
 // import Loading from '@/components/loading/loading';
-import { lato } from '../../../fonts';
+import { lato } from '../../fonts';
 
 //--------------------------------------------------------css
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../styles/customBootstrapStyles.css';
-import '../../styles/customCarouselStyles.css';
-import '../../styles/customAntdStyles.css';
-import '../../styles/customMuiStyles.css';
+import '../styles/customBootstrapStyles.css';
+import '../styles/customCarouselStyles.css';
+import '../styles/customAntdStyles.css';
+import '../styles/customMuiStyles.css';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import '../../styles/global.css';
+import '../styles/global.css';
 import 'antd/dist/reset.css';
-import '../../styles/nprogress.css'
+import '../styles/nprogress.css'
 
 
 // export const metadata = {

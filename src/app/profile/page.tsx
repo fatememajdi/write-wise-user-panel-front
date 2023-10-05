@@ -18,7 +18,7 @@ import styles from './profile.module.css';
 
 //-------------------------------------icons
 import { MdOutlineArrowBackIosNew, MdModeEditOutline } from 'react-icons/md';
-import { Camera, Chat, Chat2, CloseButton, MobileCloseButton } from '../../../../public';
+import { Camera, Chat, Chat2, CloseButton, MobileCloseButton } from '../../../public';
 import { HiCheck } from 'react-icons/hi';
 import { RxExit } from 'react-icons/rx';
 
@@ -32,7 +32,7 @@ const Input = dynamic(() => import("@/components/input/input"), { ssr: false });
 const DialogComponent = dynamic(() => import("@/components/dialog/dialog"), { ssr: false });
 
 //-------------------------------------types
-import { UserProfile } from "../../../../types/profile";
+import { UserProfile } from "../../../types/profile";
 
 const Profile: React.FC = () => {
 

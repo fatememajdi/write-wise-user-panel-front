@@ -7,14 +7,16 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Image from "next/image";
 import { AnimatePresence, motion } from 'framer-motion';
 
-//--------------------------------------styles
-import styles from '../../../../../styles/task.module.css';
+//-------------------------------------------------------styles
+import styles from '../../../../styles/task.module.css';
 
 //--------------------------------------components
 import {
-    ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_WRITING, SELECT_TOPIC
+    ADD_ESSAY, DELETE_ESSAY,
+    GET_RANDOM_WRITING_AC_TASK, SELECT_TOPIC
 } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
@@ -25,11 +27,12 @@ const Text = lazy(() => import("@/components/text/text"));
 const Timer = lazy(() => import("@/components/timer/timer"));
 
 //--------------------------------------icons
-import { Reload } from "@/../public";
+import { Reload } from "../../../../../public";
 import { MdEdit } from 'react-icons/md';
+import { IoMdImage } from 'react-icons/io';
 
 //--------------------------------------types
-import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../../types/essay';
+import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../types/essay';
 
 type topic = {
     id: string,
@@ -37,10 +40,10 @@ type topic = {
     type: string,
     subType?: string,
     visuals?: {
-        id?: string,
-        url?: string,
-        image?: string
-    }
+        id: string,
+        url: string,
+        image: string
+    }[]
 };
 
 type _props = {
@@ -61,9 +64,9 @@ type _props = {
     GetScores: any
 };
 
-
-const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
+const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
+
     let DivRef2: any;
     if (typeof document !== 'undefined')
         DivRef2 = document.getElementById('scrollDiv');
@@ -94,16 +97,17 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
         changeGenerateWritingTopicLoading(true);
         await client.query({
-            query: GET_RANDOM_WRITING,
+            query: GET_RANDOM_WRITING_AC_TASK,
             fetchPolicy: "no-cache",
             variables: {
-                type: 'general_task_1',
+                type: 'academic_task_1',
                 questionType: subType
             }
         }).then(async (res) => {
             await changeGeneratedTopic({
                 id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body,
-                type: res.data.getRandomWriting.type, subType: res.data.getRandomWriting.questionType
+                type: res.data.getRandomWriting.type, subType: res.data.getRandomWriting.questionType,
+                visuals: res.data.getRandomWriting.visuals
             });
             setFieldValue('topic', res.data.getRandomWriting.body);
             ChangeTempTopic(essay, res.data.getRandomWriting.body, res.data.getRandomWriting.id);
@@ -133,7 +137,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             changeGeneratedTopic({
                 id: res.data.selectTopic.id,
                 body: res.data.selectTopic.topic,
-                type: res.data.selectTopic.type
+                type: res.data.selectTopic.type,
+                visuals: res.data.selectTopic.visuals
             });
         }).catch(async (err) => {
             await changeModalTitle('Select topic error');
@@ -168,7 +173,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             setTimeout(() => {
                 DivRef2.scrollIntoView({ behavior: "smooth" });
             }, 1400);
-
             await client.mutate({
                 mutation: ADD_ESSAY,
                 variables: {
@@ -177,18 +181,18 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                     durationMillisecond: Date.now() - essayTime
                 }
             }).then(async (res) => {
-                let lastTemp = await localStorage.getItem('lastTempEssay');
+                console.log(res);
+                let lastTemp = await localStorage.getItem('lastTempEssay3');
                 let t = await localStorage.getItem('tempsEssayList');
                 let tempsLiset: SelectedTopicTempEssay[] = [];
                 if (t) tempsLiset = JSON.parse(t);
                 if (tempsLiset.findIndex(item => item.id === currentId) != -1) {
                     await localStorage.setItem('tempsEssayList', JSON.stringify(tempsLiset.filter(item => item.id !== tempsLiset[tempsLiset.findIndex(item => item.id === currentId)].id)));
                 } else if (lastTemp) {
-                    await localStorage.removeItem('lastTempEssay');
+                    await localStorage.removeItem('lastTempEssay3');
                 } else {
-                    await localStorage.removeItem('tempEssay');
+                    await localStorage.removeItem('tempEssay3');
                 };
-
                 await setEssaies([{
                     id: res.data.addNewEssay.id,
                     essay: res.data.addNewEssay.essay,
@@ -206,7 +210,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
             }).catch(async (err) => {
                 await changeModalTitle('Add essay error');
-                console.log('add essay error : ', err);
+                console.log(err)
                 await changeModalContent(JSON.stringify(err.message));
                 changeLoading(false);
                 showModal();
@@ -235,16 +239,18 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
     //-------------------------------------------------------------------temp
     async function CreateTempEssay(essay: string, Topic: string) {
-        let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_1' }, essay: '' };
-        let oldestTemp = await localStorage.getItem('tempEssay');
+        let temp: tempEssay = { topic: { id: '', body: '', type: 'academic_task_1' }, essay: '' };
+        let oldestTemp = await localStorage.getItem('tempEssay3');
         let t = await localStorage.getItem('tempsEssayList');
         let tempsList: SelectedTopicTempEssay[] = [];
         if (t) tempsList = JSON.parse(t);
 
         if (generatedTopic) {
-            temp.topic = { id: generatedTopic.id as string, body: Topic, type: 'general_task_1' };
+            temp.topic = { id: generatedTopic.id as string, body: Topic, type: 'academic_task_1' };
+            if (generatedTopic?.visuals && generatedTopic.visuals.length > 0)
+                temp.visuals = generatedTopic.visuals[0]
         } else {
-            temp.topic = { id: '', body: Topic, type: 'general_task_1' }
+            temp.topic = { id: '', body: Topic, type: 'academic_task_1' }
         };
         temp.essay = essay;
 
@@ -261,21 +267,21 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             localStorage.setItem('tempsEssayList', JSON.stringify(tempsList));
         } else if (oldestTemp) {
             if (JSON.parse(oldestTemp).topic.body === Topic) {
-                localStorage.setItem('tempEssay', JSON.stringify(temp));
+                localStorage.setItem('tempEssay3', JSON.stringify(temp));
             } else {
-                localStorage.setItem('lastTempEssay', JSON.stringify(temp));
+                localStorage.setItem('lastTempEssay3', JSON.stringify(temp));
             }
         } else {
-            localStorage.setItem('tempEssay', JSON.stringify(temp));
+            localStorage.setItem('tempEssay3', JSON.stringify(temp));
         };
     };
 
     async function ChangeTempTopic(essay: string, Topic: string, id?: string) {
         if (essay != '') {
-            let temp: tempEssay = { topic: { id: '', body: '', type: 'general_task_1' }, essay: '' };
-            temp.topic = { id: id ? id : '', body: Topic, type: 'general_task_1' }
+            let temp: tempEssay = { topic: { id: '', body: '', type: 'academic_task_1' }, essay: '' };
+            temp.topic = { id: id ? id : '', body: Topic, type: 'academic_task_1' }
             temp.essay = essay;
-            localStorage.setItem('tempEssay', JSON.stringify(temp));
+            localStorage.setItem('tempEssay3', JSON.stringify(temp));
         }
     };
 
@@ -284,7 +290,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             changeCcurrentId(topic.id);
             changeMoreEssaies(true);
         } else if (topic && essay !== '') {
-            let temp = await localStorage.getItem('tempEssay');
+            let temp = await localStorage.getItem('tempEssay3');
             let t = await localStorage.getItem('tempsEssayList');
             let tempsLiset: SelectedTopicTempEssay[] = [];
             if (t)
@@ -294,7 +300,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                 let tempTopic: topic = {
                     id: JSON.parse(temp).topic.id,
                     body: JSON.parse(temp).topic.body,
-                    type: JSON.parse(temp).topic.type
+                    type: JSON.parse(temp).topic.type,
+                    visuals: JSON.parse(temp).topic.visuals
                 }
                 changeGeneratedTopic(tempTopic);
                 changeMoreEssaies(false);
@@ -310,11 +317,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     React.useEffect(() => {
         ChackTopic();
     }, []);
-
     const nameregex = /^[ A-Za-z ][ A-Za-z0-9  `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n]*$/;
-    // const EssayValidationSchema = Yup.object().shape({
-    //     body: Yup.string().matches(nameregex, "only english letters"),
-    // });
 
     const showAnimation = {
         hidden: {
@@ -330,6 +333,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
             }
         }
     };
+
 
     return <Formik
         initialValues={{
@@ -356,11 +360,11 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
 
                 {
                     loading ?
-                        <Loading style={{ height: 750, minHeight: 0 }} />
+                        <Loading style={{ height: 1220, minHeight: 0 }} />
                         :
                         <div
                             ref={targetRef}
-                            style={{ height: 'fit-content', minHeight: 764 }}
+                            style={{ height: 'fit-content', minHeight: 1255 }}
                             className={styles.writingForm}>
                             <SelectComponents values={[
                                 { title: 'Essay', active: false, lock: false },
@@ -371,7 +375,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                             ]} selectedItem={0} className={styles.topSelect} />
 
                             <div className={styles.wriritngTitle}>
-                                Gen Task 1 Topic {topic && topic.subType ? `(${topic.subType})`
+                                Ac Task 1 {topic && topic.subType ? `(${topic.subType})`
                                     : generatedTopic ? `(${generatedTopic.subType})`
                                         : values.subType && `(${values.subType})`}
                             </div>
@@ -389,22 +393,20 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                         : currentId != null ?
                                             <div className={styles.selectedTopcCard}><Text text={values.topic} /></div>
                                             : generateWritingTopicLoading ?
-                                                <Loading style={{ height: 250, minHeight: 0 }} />
+                                                <Loading style={{ height: 115, minHeight: 0 }} />
                                                 :
                                                 <div className={styles.topicInputContainer}>
 
                                                     {
                                                         generateWriting && !editedGeneratedTopic ?
                                                             <div
-                                                                style={{ height: 250 }}
+                                                                style={{ height: 115 }}
                                                                 className={styles.generatedWritingCard}>
                                                                 <Typewriter
                                                                     options={{
                                                                         delay: 0,
                                                                         wrapperClassName: styles.writerClassname,
                                                                         cursor: " "
-                                                                        // cursor: cursor
-                                                                        // cursorClassName: endTyping ? 'Typewriter__cursor ' + styles.cursor : 'Typewriter__cursor'
                                                                     }}
                                                                     onInit={(typewriter) => {
                                                                         JSON.stringify(SplitText(values.topic)).slice(1, JSON.stringify(values.topic).length - 1).split(/(\s)/).map((str: any, index: number) => {
@@ -427,8 +429,9 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                             </div>
                                                             :
                                                             <Input
+                                                                disable={true}
                                                                 style={{ width: '70%' }}
-                                                                className={styles.topicInputsecond + ' ' + styles.topicInput}
+                                                                className={styles.topicInputthird + ' ' + styles.topicInput}
                                                                 onChange={(e: any) => {
                                                                     changeEndTyping(true);
                                                                     handleChange(e);
@@ -459,9 +462,13 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                             className={styles.select}
                                                         >
                                                             <MenuItem className={styles.selectMenuItem} value={'Random'}>Random</MenuItem>
-                                                            <MenuItem className={styles.selectMenuItem} value={'Informal'}>Informal</MenuItem>
-                                                            <MenuItem className={styles.selectMenuItem} value={'Semi-formal'}>Semi-formal</MenuItem>
-                                                            <MenuItem className={styles.selectMenuItem} value={'Formal'}>Formal</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Bar Chart'}>Bar Chart</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Line Graph'}>Line Graph</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Table'}>Table</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Pie Chart'}>Pie Chart</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Process Diagram'}>Process Diagram</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Map'}>Map</MenuItem>
+                                                            <MenuItem className={styles.selectMenuItem} value={'Multiple Graphs'}>Multiple Graphs</MenuItem>
                                                         </Select>
 
                                                         <button
@@ -499,6 +506,49 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                 </div>
                             }
 
+                            <div className={styles.imagesContainer + ' col-12'}>
+
+                                {
+                                    topic && topic.visuals && topic.visuals?.length > 0 ?
+                                        <div className={styles.imageCard}>
+                                            <Image
+                                                // className={styles.rightTop3Background + ' ' + styles.mobile}
+                                                src={topic.visuals[0].url}
+                                                alt="academic task chart"
+                                                sizes="100vw"
+                                                style={{
+                                                    height: 530,
+                                                    width: '100%'
+                                                }}
+                                                width="0"
+                                                height="0"
+                                                loading="eager"
+                                                priority
+                                            />
+                                        </div>
+                                        : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
+                                            <div className={styles.imageCard}>
+                                                <Image
+                                                    // className={styles.rightTop3Background + ' ' + styles.mobile}
+                                                    src={generatedTopic.visuals[0].url}
+                                                    alt="academic task chart"
+                                                    sizes="100vw"
+                                                    style={{
+                                                        height: 530,
+                                                        width: '100%'
+                                                    }}
+                                                    width="0"
+                                                    height="0"
+                                                    loading="eager"
+                                                    priority
+                                                />
+                                            </div>
+                                            : <div className={styles.emptyImageCard}>
+                                                <IoMdImage fontSize={70} />
+                                            </div>
+                                }
+                            </div>
+
                             <div className={styles.writingInputTitle}>Write at least 150 words.
                                 {
                                     changeInput &&
@@ -513,7 +563,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                     disable={!endTyping}
                                     className={styles.topicInput + ' ' + styles.essayInput}
                                     onChange={(e: any) => {
-                                        if (nameregex.test(e.target.value) || e.nativeEvent.data === null || e.nativeEvent.inputType == 'insertLineBreak') {
+                                        if (nameregex.test(e.target.value)) {
                                             if (!changeInput) {
                                                 setChangeInput(true);
                                                 changeEssayTime(Date.now());
@@ -526,7 +576,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                             showModal();
                                         }
                                     }}
-                                    placeHolder={'Dear...'}
+                                    placeHolder={'Type your essay here...'}
                                     secondError
                                     textarea
                                     textarea_name='body'
@@ -557,9 +607,8 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                             className={styles.prossessBar}></motion.div>
                                     </div>
                                 </AnimatePresence>
+
                             </div>
-
-
                         </div>
                 }
                 <div
@@ -596,4 +645,4 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     </Formik >;
 };
 
-export default GeneralTask;
+export default AcademicTask;

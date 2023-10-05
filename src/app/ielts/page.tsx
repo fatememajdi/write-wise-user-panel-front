@@ -13,7 +13,6 @@ import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 import { Socket, io } from 'socket.io-client';
 import { DefaultEventsMap } from "@socket.io/component-emitter";
-import { getCookie } from 'cookies-next';
 
 //-----------------------------------------------------styles
 import styles from './dashboard.module.css';
@@ -29,15 +28,15 @@ const TopicsList = lazy(() => import("@/components/topicsList/topicsList"));
 import { StopLoader } from "@/components/Untitled";
 
 //----------------------------------------------------icons
-import { Lock } from '../../../../public/dashboard';
+import { Lock } from '../../../public/dashboard';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { TfiMenu } from 'react-icons/tfi';
 import { FiMoreVertical } from 'react-icons/fi';
 
 //---------------------------------------------------types
-import { Essay } from "../../../../types/essay";
-import { Topic } from "../../../../types/topic";
+import { Essay } from "../../../types/essay";
+import { Topic } from "../../../types/topic";
 
 const tabBarItems = [
     {
@@ -74,8 +73,7 @@ type topic = {
     }[]
 };
 
-const Dashboard: React.FC = () => {
-
+const IeltsDashboard: React.FC = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
@@ -394,12 +392,6 @@ const Dashboard: React.FC = () => {
                 }
                 else {
                     router.push('/signIn');
-                }
-            } else {
-                let t = getCookie('user') !== undefined ? JSON.stringify(getCookie('user')) : '';
-                if (t != '') {
-                    localStorage.setItem('user', t);
-                    setLoading(false);
                 }
             }
         } else {
@@ -744,4 +736,4 @@ const Dashboard: React.FC = () => {
         </div >
 };
 
-export default Dashboard;
+export default IeltsDashboard;
