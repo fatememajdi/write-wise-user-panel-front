@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useMutation } from "@apollo/react-hooks";
 import { Modal } from 'antd';
 import { useRouter } from "next/navigation";
+import { setCookie } from 'cookies-next';
 
 //---------------------------------------------------styles
 import styles from '../signIn.module.css';
@@ -49,6 +50,7 @@ const VerificationCode: React.FC = () => {
             },
         }).then(async (data) => {
             localStorage.setItem("user", JSON.stringify(data.data.verifyEmail.token));
+            setCookie('user', JSON.stringify(data.data.verifyEmail.token));
             await router.push('/dashboard');
             // setTimeout(() => {
             //     changeLoadig(false);

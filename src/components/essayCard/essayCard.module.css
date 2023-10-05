@@ -313,6 +313,7 @@
         font-size: 16px !important;
         font-weight: 500;
     }
+
 }
 
 @media(max-width: 500px) {
@@ -377,7 +378,9 @@
         border: solid 2px var(--color-seccondary);
         background-color: #626E7E;
         border-radius: 8px;
-        margin-top: 1px;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+        margin-top: 0px;
         height: fit-content;
         position: relative;
     }
@@ -450,9 +453,11 @@
         border: solid 2px var(--color-seccondary);
         background-color: #626E7E;
         border-radius: 8px;
-        margin-top: 1px;
+        margin-top: 0px;
         height: fit-content;
         position: relative;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
     }
 
     .writingScoresContainer {

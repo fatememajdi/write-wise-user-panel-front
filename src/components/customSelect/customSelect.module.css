@@ -12,6 +12,8 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 8px;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
     padding: 0px 26px;
     color: #F3F3F3;
     font-size: 16px;

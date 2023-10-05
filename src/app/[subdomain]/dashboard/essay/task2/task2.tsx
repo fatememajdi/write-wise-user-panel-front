@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { lazy } from "react";
 import { Formik } from 'formik';
-import * as Yup from 'yup';
 import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { AnimatePresence, motion } from 'framer-motion';
 
 //--------------------------------------styles
 import styles from '../../../../../styles/task.module.css';
@@ -70,7 +70,6 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
     const [essayTime, changeEssayTime] = React.useState<number>(0);
     const [changeInput, setChangeInput] = React.useState<boolean>(false);
     const [endTyping, changeEndTyping] = React.useState<boolean>(topic ? true : false);
-    const [cursor, changeCursor] = React.useState<string>('|');
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [essayLoading, changeEssayLoading] = React.useState<boolean>(false);
     const [deleteLoading, changeDeleteLoading] = React.useState<boolean>(false);
@@ -304,12 +303,23 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
     React.useEffect(() => {
         ChackTopic();
     }, []);
-    const nameregex = /^[ a-zA-Z ]+$/;
-    const EssayValidationSchema = Yup.object().shape({
-        topic: Yup
-            .string()
-            .required('Topic is required!'),
-    });
+    const nameregex = /^[ A-Za-z ][ A-Za-z0-9  `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n]*$/;
+
+    const showAnimation = {
+        hidden: {
+            width: '100%',
+            transition: {
+                duration: 0.5,
+            }
+        },
+        show: {
+            width: 0,
+            transition: {
+                duration: 2400,
+            }
+        }
+    };
+
 
     return <Formik
         initialValues={{
@@ -397,7 +407,6 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                                                                         });
                                                                         typewriter.callFunction(() => {
                                                                             changeEndTyping(true);
-                                                                            changeCursor(' ')
                                                                         })
                                                                     }}
 
@@ -488,7 +497,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                                 {
                                     changeInput &&
                                     <div className={styles.wordsCount}>
-                                        {CountWords(values.body, true)}
+                                        {CountWords(values.body, 250)}
                                     </div>
                                 }
                             </div>
@@ -496,7 +505,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                             <div className={styles.bodyInputContainer}>
                                 <Input
                                     disable={!endTyping}
-                                    className={styles.topicInput}
+                                    className={styles.topicInput + ' ' + styles.essayInput}
                                     onChange={(e: any) => {
                                         if (nameregex.test(e.target.value)) {
                                             if (!changeInput) {
@@ -518,22 +527,32 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                                     textarea_value={values.body}
                                     textarea_error={errors.body && touched.body && errors.body}
                                 />
-                                <button
-                                    type="submit"
-                                    className={styles.scoreButton}>
-                                    <div>
-                                        Score
+                          <AnimatePresence>
+                                    <div className={styles.scoreButtonContainer}>
+                                        {
+                                            changeInput &&
+                                            <div className={styles.timer}>
+                                                <Timer time={2400} />
+                                            </div>
+                                        }
+                                        <button
+                                            type="submit"
+                                            className={styles.scoreButton}>
+                                            <div>
+                                                Score
+                                            </div>
+                                        </button>
+                                        <motion.div
+                                            animate={{ width: changeInput ? 0 : '100%' }}
+                                            transition={{ duration: 2400 }}
+                                            variants={showAnimation}
+                                            initial='hidden'
+                                            exit='hidden'
+                                            className={styles.prossessBar}></motion.div>
                                     </div>
-                                </button>
+                                </AnimatePresence>
 
                             </div>
-                            {
-                                changeInput &&
-                                <div className={styles.timer}>
-                                    <Timer time={2400} />
-                                </div>
-                            }
-
                         </div>
                 }
                 <div

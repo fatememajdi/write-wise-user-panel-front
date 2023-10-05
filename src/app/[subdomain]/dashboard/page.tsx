@@ -13,6 +13,7 @@ import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 import { Socket, io } from 'socket.io-client';
 import { DefaultEventsMap } from "@socket.io/component-emitter";
+import { getCookie } from 'cookies-next';
 
 //-----------------------------------------------------styles
 import styles from './dashboard.module.css';
@@ -37,7 +38,6 @@ import { FiMoreVertical } from 'react-icons/fi';
 //---------------------------------------------------types
 import { Essay } from "../../../../types/essay";
 import { Topic } from "../../../../types/topic";
-
 
 const tabBarItems = [
     {
@@ -75,6 +75,7 @@ type topic = {
 };
 
 const Dashboard: React.FC = () => {
+
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
@@ -394,6 +395,11 @@ const Dashboard: React.FC = () => {
                 else {
                     router.push('/signIn');
                 }
+            } else if (cookiesList.has('user')) {
+                let t = getCookie('user') !== undefined ? JSON.stringify(getCookie('user')) : '';
+                localStorage.setItem('user', t);
+
+                setLoading(false);
             }
         } else {
             setLoading(false);
@@ -690,7 +696,7 @@ const Dashboard: React.FC = () => {
                             !endAnimation &&
                             <motion.div
                                 className={styles.topTabBarContainer}
-                                animate={{ y: tabBarLoc ? type === 'general_task_1' ? 750 : type === 'academic_task_1' ? 1255 : 650 : 0 }}
+                                animate={{ y: tabBarLoc ? type === 'general_task_1' ? 814 : type === 'academic_task_1' ? 1319 : 714 : 0 }}
                                 transition={{ type: "spring", duration: 2 }}
                             >
                                 {/* <div

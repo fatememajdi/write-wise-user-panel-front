@@ -7,13 +7,14 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Typewriter from 'typewriter-effect';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { AnimatePresence, motion } from 'framer-motion';
 
 //--------------------------------------styles
 import styles from '../../../../../styles/task.module.css';
 
 //--------------------------------------components
 import {
-    ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_WRITING, SCORE_ESSAY, SELECT_TOPIC
+    ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_WRITING, SELECT_TOPIC
 } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
@@ -29,7 +30,6 @@ import { MdEdit } from 'react-icons/md';
 
 //--------------------------------------types
 import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../../types/essay';
-import { useRouter } from "next/navigation";
 
 type topic = {
     id: string,
@@ -64,7 +64,6 @@ type _props = {
 
 const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
-    const router = useRouter();
     let DivRef2: any;
     if (typeof document !== 'undefined')
         DivRef2 = document.getElementById('scrollDiv');
@@ -72,7 +71,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     const [essayTime, changeEssayTime] = React.useState<number>(0);
     const [changeInput, setChangeInput] = React.useState<boolean>(false);
     const [endTyping, changeEndTyping] = React.useState<boolean>(topic ? true : false);
-    const [cursor, changeCursor] = React.useState<string>('|');
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [essayLoading, changeEssayLoading] = React.useState<boolean>(false);
     const [deleteLoading, changeDeleteLoading] = React.useState<boolean>(false);
@@ -313,10 +311,25 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
         ChackTopic();
     }, []);
 
-    const nameregex = /^[ a-zA-Z ]+$/;
+    const nameregex = /^[ A-Za-z ][ A-Za-z0-9  `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n]*$/;
     // const EssayValidationSchema = Yup.object().shape({
     //     body: Yup.string().matches(nameregex, "only english letters"),
     // });
+
+    const showAnimation = {
+        hidden: {
+            width: '100%',
+            transition: {
+                duration: 0.5,
+            }
+        },
+        show: {
+            width: 0,
+            transition: {
+                duration: 1200,
+            }
+        }
+    };
 
     return <Formik
         initialValues={{
@@ -347,7 +360,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                         :
                         <div
                             ref={targetRef}
-                            style={{ height: 'fit-content', minHeight: 700 }}
+                            style={{ height: 'fit-content', minHeight: 764 }}
                             className={styles.writingForm}>
                             <SelectComponents values={[
                                 { title: 'Essay', active: false, lock: false },
@@ -406,7 +419,6 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                                                         });
                                                                         typewriter.callFunction(() => {
                                                                             changeEndTyping(true);
-                                                                            changeCursor(' ')
                                                                         })
                                                                     }}
 
@@ -491,7 +503,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                 {
                                     changeInput &&
                                     <div className={styles.wordsCount}>
-                                        {CountWords(values.body, true)}
+                                        {CountWords(values.body, 150)}
                                     </div>
                                 }
                             </div>
@@ -501,7 +513,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                     disable={!endTyping}
                                     className={styles.topicInput + ' ' + styles.essayInput}
                                     onChange={(e: any) => {
-                                        if (nameregex.test(e.target.value)) {
+                                        if (nameregex.test(e.target.value) || e.nativeEvent.data === null || e.nativeEvent.inputType == 'insertLineBreak') {
                                             if (!changeInput) {
                                                 setChangeInput(true);
                                                 changeEssayTime(Date.now());
@@ -521,24 +533,30 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                     textarea_value={values.body}
                                     textarea_error={errors.body && touched.body && errors.body}
                                 />
-                                <div className={styles.scoreButtonContainer}>
-                                    {
-                                        changeInput &&
-                                        <div className={styles.timer}>
-                                            <Timer time={1200} />
-                                        </div>
-                                    }
-                                    <button
-                                        type="submit"
-                                        className={styles.scoreButton}>
-                                        <div>
-                                            Score
-                                        </div>
-                                    </button>
-                                    <div
-                                        style={{ width: '50%' }}
-                                        className={styles.prossessBar}></div>
-                                </div>
+                                <AnimatePresence>
+                                    <div className={styles.scoreButtonContainer}>
+                                        {
+                                            changeInput &&
+                                            <div className={styles.timer}>
+                                                <Timer time={1200} />
+                                            </div>
+                                        }
+                                        <button
+                                            type="submit"
+                                            className={styles.scoreButton}>
+                                            <div>
+                                                Score
+                                            </div>
+                                        </button>
+                                        <motion.div
+                                            animate={{ width: changeInput ? 0 : '100%' }}
+                                            transition={{ duration: 1200 }}
+                                            variants={showAnimation}
+                                            initial='hidden'
+                                            exit='hidden'
+                                            className={styles.prossessBar}></motion.div>
+                                    </div>
+                                </AnimatePresence>
                             </div>
 
 
