@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2017",
     "lib": [
       "dom",
       "dom.iterable",
@@ -8,7 +8,7 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -34,8 +34,9 @@
     "@types/alltypes.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.js",
     ".next/types/**/*.ts"
-, "src/app/api/appleLogInNextAuth.js", "src/app/dashboard/Essay.js"  ],
+, "src/app/api/appleLogInNextAuth.js", "src/app/dashboard/Essay.js", "src/app/blog/archive.js"  ],
   "exclude": [
     "node_modules"
   ]
