@@ -491,9 +491,6 @@ const IeltsDashboard: React.FC = () => {
         return <Loading />
     else
         return <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
-
-            <div id="tawk"></div>
-
             <motion.div animate={{
                 width: isOpen && isMac ? '268px'
                     : isOpen && isMobile ? '270px'

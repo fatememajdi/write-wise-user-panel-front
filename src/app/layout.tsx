@@ -81,6 +81,7 @@ export default function RootLayout({
                })();
               `}
               </Script>
+              <div id='tawk' />
             </body>
           </LocalizationProvider>
         </html>

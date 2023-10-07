@@ -61,7 +61,6 @@ type _props = {
     GetScores: any
 };
 
-
 const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
     let DivRef2: any;
@@ -312,10 +311,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     }, []);
 
     const nameregex = /^[ A-Za-z ][ A-Za-z0-9  `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n]*$/;
-    // const EssayValidationSchema = Yup.object().shape({
-    //     body: Yup.string().matches(nameregex, "only english letters"),
-    // });
-
+    
     const showAnimation = {
         hidden: {
             width: '100%',
