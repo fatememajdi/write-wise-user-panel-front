@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { lazy } from "react";
 import { Formik } from 'formik';
@@ -81,17 +82,20 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [showImage, changeShowImage] = React.useState<boolean>(false);
+    const [modalImage, changeModalImage] = React.useState<string>();
     const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
     const [modalTitle, changeModalTitle] = React.useState<string>('Add essay error');
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
 
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+    const showModal = () => setIsModalOpen(true);
+    const handleCancel = () => setIsModalOpen(false);
+    const handleCancelImageModal = () => changeShowImage(false);
 
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+    async function handleSelectImage(url: string) {
+        await changeModalImage(url);
+        changeShowImage(true);
+    }
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
@@ -110,6 +114,7 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                 visuals: res.data.getRandomWriting.visuals
             });
             setFieldValue('topic', res.data.getRandomWriting.body);
+            setFieldValue('subType', res.data.getRandomWriting.questionType);
             ChangeTempTopic(essay, res.data.getRandomWriting.body, res.data.getRandomWriting.id);
             changeGenerateWritingTopicLoading(false);
         }).catch(async (err) => {
@@ -248,7 +253,7 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
         if (generatedTopic) {
             temp.topic = { id: generatedTopic.id as string, body: Topic, type: 'academic_task_1' };
             if (generatedTopic?.visuals && generatedTopic.visuals.length > 0)
-                temp.visuals = generatedTopic.visuals[0]
+                temp.visuals = generatedTopic.visuals
         } else {
             temp.topic = { id: '', body: Topic, type: 'academic_task_1' }
         };
@@ -510,39 +515,34 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
 
                                 {
                                     topic && topic.visuals && topic.visuals?.length > 0 ?
-                                        <div className={styles.imageCard}>
-                                            <Image
-                                                // className={styles.rightTop3Background + ' ' + styles.mobile}
-                                                src={topic.visuals[0].url}
-                                                alt="academic task chart"
-                                                sizes="100vw"
-                                                style={{
-                                                    height: 530,
-                                                    width: '100%'
-                                                }}
-                                                width="0"
-                                                height="0"
-                                                loading="eager"
-                                                priority
-                                            />
-                                        </div>
-                                        : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
-                                            <div className={styles.imageCard}>
+                                        topic.visuals.map((item, index) =>
+                                            <div
+                                                onClick={() => handleSelectImage(item.url)}
+                                                className={styles.imageCard}>
                                                 <Image
-                                                    // className={styles.rightTop3Background + ' ' + styles.mobile}
-                                                    src={generatedTopic.visuals[0].url}
+                                                    key={index}
+                                                    src={item.url}
                                                     alt="academic task chart"
-                                                    sizes="100vw"
-                                                    style={{
-                                                        height: 530,
-                                                        width: '100%'
-                                                    }}
-                                                    width="0"
-                                                    height="0"
+                                                    height='428'
+                                                    width='600'
                                                     loading="eager"
                                                     priority
                                                 />
-                                            </div>
+                                            </div>)
+                                        : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
+                                            generatedTopic.visuals.map((item, index) => <div
+                                                onClick={() => handleSelectImage(item.url)}
+                                                className={styles.imageCard}>
+                                                <Image
+                                                    key={index}
+                                                    src={item.url}
+                                                    alt="academic task chart"
+                                                    height='428'
+                                                    width='600'
+                                                    loading="eager"
+                                                    priority
+                                                />
+                                            </div>)
                                             : <div className={styles.emptyImageCard}>
                                                 <IoMdImage fontSize={70} />
                                             </div>
@@ -627,7 +627,7 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                                 key={0}
                             >
                                 {
-                                    essaies.map((essay, index) => <EssayCard key={index} essay={essay} setFieldValue={setFieldValue}
+                                    essaies.map((essay) => <EssayCard key={essay.id} essay={essay} setFieldValue={setFieldValue}
                                         divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
                                 }
                             </InfiniteScroll>
@@ -638,6 +638,22 @@ const AcademicTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, e
                     footer={null}
                     title={modalTitle} open={isModalOpen} onCancel={handleCancel}>
                     <div className={styles.modalCard}> {modalContent}</div>
+                </Modal>
+
+
+                <Modal
+                    bodyStyle={{ width: 700 }}
+                    style={{ width: 700 }}
+                    footer={null} closeIcon={null} title={null} open={showImage} onCancel={handleCancelImageModal}>
+                    <div>
+                        <Image
+                            src={modalImage}
+                            alt="academic task chart"
+                            height='679'
+                            width='700'
+                            loading="eager"
+                            priority
+                        /></div>
                 </Modal>
 
             </form>

@@ -36,7 +36,7 @@
     "**/*.tsx",
     "**/*.js",
     ".next/types/**/*.ts"
-, "src/app/api/appleLogInNextAuth.js", "src/app/dashboard/Essay.js", "src/app/blog/archive.js"  ],
+, "src/app/api/appleLogInNextAuth.js", "src/app/dashboard/Essay.js", "src/app/blogs/archive.js"  ],
   "exclude": [
     "node_modules"
   ]

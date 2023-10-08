@@ -110,7 +110,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                 style={temp.topic.id === selectedTopic?.id ? { background: '#172E4A' } : {}}
                                 className={'col-12 ' + styles.taskCard} key={-1} >
                                 <div
-                                    onClick={() => HandleSelect({ id: temp.topic.id, body: temp.topic.body, type: temp.topic.type, visuals: [temp.visuals] }, temp.essay)}
+                                    onClick={() => HandleSelect({ id: temp.topic.id, body: temp.topic.body, type: temp.topic.type, visuals: temp.visuals }, temp.essay)}
                                     className={styles.taskCardTitle}>
                                     <h5>{temp.topic.body}</h5>
                                     {/* <span>

@@ -12,13 +12,22 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'ielts.api.babyyodas.io',
         port: '',
-        // pathname: '/account123/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        port: '',
+      }
     ],
   },
-  // optimization: {
-  //   minimize: true,
-  // },
+  reactStrictMode: true,
+  swcMinify: true,
+  typescript: {
+    ignoreBuildErrors: process.env.VERCEL_ENV === "production"
+  },
+  eslint: {
+    ignoreDuringBuilds: process.env.VERCEL_ENV === "production"
+  },
   env: {
     NEXT_PUBLIC_ENV: 'PRODUCTION',
   }

@@ -27,7 +27,7 @@ export type tempEssay = {
         id: string,
         url: string,
         image: string
-    }
+    }[]
 };
 
 export type SelectedTopicTempEssay = {

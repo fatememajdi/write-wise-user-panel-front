@@ -105,6 +105,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                 type: res.data.getRandomWriting.type, subType: res.data.getRandomWriting.questionType
             });
             setFieldValue('topic', res.data.getRandomWriting.body);
+            setFieldValue('subType', res.data.getRandomWriting.questionType);
             ChangeTempTopic(essay, res.data.getRandomWriting.body, res.data.getRandomWriting.id);
             changeGenerateWritingTopicLoading(false);
         }).catch(async (err) => {
@@ -311,7 +312,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
     }, []);
 
     const nameregex = /^[ A-Za-z ][ A-Za-z0-9  `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n]*$/;
-    
+
     const showAnimation = {
         hidden: {
             width: '100%',
@@ -574,7 +575,7 @@ const GeneralTask: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, en
                                 key={0}
                             >
                                 {
-                                    essaies.map((essay, index) => <EssayCard key={index} essay={essay} setFieldValue={setFieldValue}
+                                    essaies.map((essay) => <EssayCard key={essay.id} essay={essay} setFieldValue={setFieldValue}
                                         divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
                                 }
                             </InfiniteScroll>

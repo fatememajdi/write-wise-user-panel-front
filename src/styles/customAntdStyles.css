@@ -29,3 +29,9 @@
 .ant-divider-horizontal.ant-divider-with-text {
     border-block-start: 0 #2E4057 !important;
 }
+
+.ant-modal .ant-modal-content {
+    height: fit-content !important;
+    width: fit-content !important;
+    border-radius: 0px !important;
+}

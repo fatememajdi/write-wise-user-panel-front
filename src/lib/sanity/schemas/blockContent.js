@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import IframePreview from "./previews/iframe";
 import TablePreview from "./previews/table";
 

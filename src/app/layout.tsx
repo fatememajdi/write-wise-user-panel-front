@@ -8,6 +8,10 @@ import React from 'react';
 import { Session } from "next-auth";
 import Head from 'next/head';
 import Script from 'next/script';
+import "@/styles/tailwind.css";
+import { Providers } from "./providers";
+import { Inter, Lato } from "next/font/google";
+import { cx } from "@/utils/all";
 
 //--------------------------------------------------------components
 // import Loading from '@/components/loading/loading';
@@ -34,6 +38,18 @@ import '../styles/nprogress.css'
 //   description: 'Ielts Writing Ai',
 // }
 
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter"
+});
+
+const lora = Lato({
+  subsets: ["latin"],
+  variable: "--font-loto",
+  weight: '100'
+});
+
 export default function RootLayout({
   children,
   pageProps
@@ -53,7 +69,8 @@ export default function RootLayout({
     <SessionProvider session={pageProps?.session}>
       <ApolloProvider client={client}>
         <html lang="en"
-        // className={`${lato.variable} font-sans`}
+          suppressHydrationWarning
+          className={cx(inter.variable, lato.variable)}
         >
           <title>Write Wise Ai</title>
           <Head>
@@ -64,10 +81,10 @@ export default function RootLayout({
               and valuable recommendations"></meta>
           </Head>
           <LocalizationProvider dateAdapter={AdapterMoment}>
-            <body className={lato.className}>
-              {/* <Suspense fallback={<Loading />}> */}
-              {children}
-              {/* </Suspense> */}
+            <body
+              className="antialiased text-gray-800 dark:bg-black dark:text-gray-400"
+            >
+              <Providers>{children}</Providers>
               <Script id="tawk" strategy="lazyOnload">
                 {`
                var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

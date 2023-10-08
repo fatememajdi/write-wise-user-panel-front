@@ -17,6 +17,7 @@
     align-items: center;
     justify-content: space-between;
     border: solid 2px var(--color-seccondary);
+    z-index: 2;
 }
 
 .activeTopTabBarItemCard {
@@ -58,6 +59,7 @@
 
 .writingEssayCard {
     background-color: #626E7E;
+    z-index: 1;
     display: flex;
     flex: 1;
     border-bottom-left-radius: 8px;
@@ -179,6 +181,7 @@
 
 .writingScoreCard {
     background-color: #626E7E;
+    z-index: 1;
     display: flex;
     color: var(--color-whiteText) !important;
     flex: 1;

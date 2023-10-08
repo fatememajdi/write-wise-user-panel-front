@@ -104,6 +104,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                 type: res.data.getRandomWriting.type, subType: res.data.getRandomWriting.questionType
             });
             setFieldValue('topic', res.data.getRandomWriting.body);
+            setFieldValue('subType', res.data.getRandomWriting.questionType);
             ChangeTempTopic(essay, res.data.getRandomWriting.body, res.data.getRandomWriting.id);
             changeGenerateWritingTopicLoading(false);
         }).catch(async (err) => {
@@ -527,7 +528,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                                     textarea_value={values.body}
                                     textarea_error={errors.body && touched.body && errors.body}
                                 />
-                          <AnimatePresence>
+                                <AnimatePresence>
                                     <div className={styles.scoreButtonContainer}>
                                         {
                                             changeInput &&
@@ -571,7 +572,7 @@ const Task2: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnima
                                 key={0}
                             >
                                 {
-                                    essaies.map((essay, index) => <EssayCard key={index} essay={essay} setFieldValue={setFieldValue}
+                                    essaies.map((essay) => <EssayCard key={essay.id} essay={essay} setFieldValue={setFieldValue}
                                         divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
                                 }
                             </InfiniteScroll>

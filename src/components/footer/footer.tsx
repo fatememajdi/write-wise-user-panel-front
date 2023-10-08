@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Formik } from 'formik';
+// import ThemeSwitch from "@/components/themeSwitch";
 import * as Yup from 'yup';
 
 //----------------------------------------------------------------styles 
@@ -147,6 +148,7 @@ const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerConta
         )}
 
     </Formik>
+    {/* <ThemeSwitch /> */}
 </div>;
 
 export default Footer;

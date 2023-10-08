@@ -245,7 +245,8 @@
 .modalCard {
     color: #DA282E;
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 400;;
+
 }
 
 .generatedWritingCard {
@@ -339,6 +340,7 @@
     margin-left: 45px;
     margin-top: 10px;
     margin-bottom: 50px;
+    flex-wrap: wrap;
 }
 
 .emptyImageCard {
@@ -352,8 +354,10 @@
 }
 
 .imageCard {
-    width: 66%;
-    height: fit-content;
+    /* width: 66%;
+    height: fit-content; */
+    margin-right: 24px;
+    cursor: pointer;
 }
 
 @media(max-width: 1440px) {
