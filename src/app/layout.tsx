@@ -11,7 +11,7 @@ import Script from 'next/script';
 import "@/styles/tailwind.css";
 import { Providers } from "./providers";
 import { Inter, Lato } from "next/font/google";
-import { cx } from "@/utils/all";
+// import { cx } from "@/utils/all";
 
 //--------------------------------------------------------components
 // import Loading from '@/components/loading/loading';
@@ -70,7 +70,7 @@ export default function RootLayout({
       <ApolloProvider client={client}>
         <html lang="en"
           suppressHydrationWarning
-          className={cx(inter.variable, lato.variable)}
+          // className={cx(inter.variable, lato.variable)}
         >
           <title>Write Wise Ai</title>
           <Head>
