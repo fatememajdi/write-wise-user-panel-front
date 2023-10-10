@@ -1,10 +1,35 @@
 /** @type {import('next').NextConfig} */
+const { BLOG_URL, STUDIO_URL } = process.env
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        destination: `/:path*`,
+      },
+      {
+        source: '/blogs',
+        destination: `${BLOG_URL}/blogs`,
+      },
+      {
+        source: '/blogs/:path*',
+        destination: `${BLOG_URL}/blogs/:path*`,
+      },
+      {
+        source: '/editor',
+        destination: `${STUDIO_URL}/editor`,
+      },
+      {
+        source: '/editor/:path*',
+        destination: `${STUDIO_URL}/editor/:path*`,
+      },
+    ]
+  },
   images: {
     minimumCacheTTL: 60,
     remotePatterns: [
@@ -12,22 +37,13 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'ielts.api.babyyodas.io',
         port: '',
+        // pathname: '/account123/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
-        port: '',
-      }
     ],
   },
-  reactStrictMode: true,
-  swcMinify: true,
-  typescript: {
-    ignoreBuildErrors: process.env.VERCEL_ENV === "production"
-  },
-  eslint: {
-    ignoreDuringBuilds: process.env.VERCEL_ENV === "production"
-  },
+  // optimization: {
+  //   minimize: true,
+  // },
   env: {
     NEXT_PUBLIC_ENV: 'PRODUCTION',
   }
