@@ -82,7 +82,7 @@ export default function RootLayout({
           </Head>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <body
-              className="antialiased text-gray-800 dark:bg-black dark:text-gray-400"
+              className="antialiased text-gray-800 dark:bg-black dark:text-gray-400 mainContainer"
             >
               <Providers>{children}</Providers>
               <Script id="tawk" strategy="lazyOnload">

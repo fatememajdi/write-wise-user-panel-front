@@ -83,3 +83,7 @@ button {
   background-color: #12263E;
   border-radius: 33px;
 }
+
+.mainContainer {
+  overflow-x: hidden !important;
+}

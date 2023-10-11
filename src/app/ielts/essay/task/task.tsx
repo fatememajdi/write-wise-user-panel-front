@@ -2,9 +2,7 @@
 import React, { lazy } from "react";
 
 //--------------------------------------components
-const Task2 = lazy(() => import("../task2/task2"));
-const GeneralTask = lazy(() => import("../generalTask1/generalTask1"));
-const AcademicTask = lazy(() => import("../academicTask1/academicTask1"));
+const TaskForm = lazy(() => import("../taskForm/taskForm"));
 
 //--------------------------------------types
 import { Essay } from '../../../../../types/essay';
@@ -38,29 +36,14 @@ const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimat
     return <>
         {
             topic ?
-                topic.type === 'general_task_1' ?
-                    <GeneralTask key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
-                        essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                        handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores} />
-                    : topic.type === 'academic_task_1' ?
-                        <AcademicTask key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
-                            essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores}/>
-                        : <Task2 key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
-                            essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores}/>
-                :
-                type === 'academic_task_1' ?
-                    <AcademicTask changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
-                        essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                        handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores}/>
-                    : type === 'general_task_1' ?
-                        <GeneralTask changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
-                            essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores} />
-                        : <Task2 changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
-                            essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
-                            handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores}/>
+                <TaskForm key={topic.id} changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
+                    essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
+                    handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores} />
+
+                : <TaskForm changeTabBarLoc={changeTabBarLoc} changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={topic}
+                    essaies={essaies} GetUserEssaies={GetUserEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} setEssaies={setEssaies}
+                    handleNewTopic={handleNewTopic} divRef={divRef} type={type} targetRef={targetRef} essay={essay} GetScores={GetScores} />
+
         }
     </>
 };

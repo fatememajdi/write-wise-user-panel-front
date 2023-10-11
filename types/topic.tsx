@@ -12,4 +12,16 @@ export type Topic = {
         url: string,
         image: string
     }[]
-}
+};
+
+export type topic = {
+    id: string,
+    body: string,
+    type: string,
+    subType?: string,
+    visuals?: {
+        id: string,
+        url: string,
+        image: string
+    }[]
+};

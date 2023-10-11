@@ -75,7 +75,6 @@ type topic = {
 
 const IeltsDashboard: React.FC = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-    let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
     const targetRef = React.useRef();
     let divRef: any;
@@ -105,6 +104,7 @@ const IeltsDashboard: React.FC = () => {
     const [essaies, setEssaies] = React.useState<Essay[]>([]);
     const router = useRouter();
     const [essayTopic, changeTopic] = React.useState<topic | null>();
+    const [socket, setSocket] = React.useState<Socket<DefaultEventsMap, DefaultEventsMap>>(null);
     const { step, goTo } = useMultiStepForm([
         <ChooseType changeType={ChangeType} />,
         <Task
@@ -114,7 +114,11 @@ const IeltsDashboard: React.FC = () => {
             changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
     ]);
 
-    function ChangeType(type: string) {
+    async function ChangeType(type: string) {
+        if (!socket)
+            await socketInitializer();
+        else
+            console.log(socket.id);
         setType(type);
         if (topicsType !== type)
             SelectType(type);
@@ -122,6 +126,10 @@ const IeltsDashboard: React.FC = () => {
     };
 
     async function SelectTopic(topic?: topic, essay?: string) {
+        if (!socket)
+            await socketInitializer();
+
+        ChangeType(topic.type);
         changeTabBarLoc(true);
         changeEndAnimation(true);
         setEssaies([]);
@@ -194,7 +202,6 @@ const IeltsDashboard: React.FC = () => {
             },
             fetchPolicy: "no-cache"
         }).then(async (res) => {
-            console.log(res);
             if (res.data.getUserTopics.userTopics.length != 0) {
                 await changeTopics([...topics, ...res.data.getUserTopics.userTopics]);
             } else {
@@ -251,6 +258,7 @@ const IeltsDashboard: React.FC = () => {
     };
 
     async function GetScores(essaies: Essay[]) {
+
         let newEssay: Essay[] = essaies;
         client.mutate({
             mutation: SCORE_ESSAY,
@@ -367,18 +375,20 @@ const IeltsDashboard: React.FC = () => {
     const socketInitializer = async () => {
         const user = await localStorage.getItem("user");
         if (user)
-            socket = io("https://ielts.api.babyyodas.io/events", {
+            await setSocket(io("https://ielts.api.babyyodas.io/events", {
                 // autoConnect: false,
                 extraHeaders: {
                     authorization: `Bearer ${JSON.parse(user)}`
                 }
+            }).connect());
+        if (socket) {
+            socket.on("connection_error", (err) => {
+                console.log(err);
             });
-        socket.on("connection_error", (err) => {
-            console.log(err);
-        });
-        socket.on("connect", () => {
-            console.log('connected');
-        });
+            socket.on("connect", () => {
+                console.log('connected');
+            });
+        }
     };
 
     //------------------------------------------------------------------check user loged in
@@ -397,10 +407,6 @@ const IeltsDashboard: React.FC = () => {
         } else {
             setLoading(false);
         };
-
-        if (!socket) {
-            socketInitializer();
-        }
     });
 
     React.useEffect(() => {
@@ -413,7 +419,6 @@ const IeltsDashboard: React.FC = () => {
             }
             GetProfile();
         };
-        socketInitializer();
     }, []);
 
     const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -689,10 +694,6 @@ const IeltsDashboard: React.FC = () => {
                                 animate={{ y: tabBarLoc ? type === 'general_task_1' ? 814 : type === 'academic_task_1' ? 1319 : 714 : 0 }}
                                 transition={{ type: "spring", duration: 2 }}
                             >
-                                {/* <div
-                                style={endAnimation ? { display: 'none' } : { display: 'flex' }}
-                                className={tabBarLoc ? styles.topTabBarContainerAnimation : styles.topTabBarContainer}> */}
-
                                 <div className={styles.topTabBarCard}>
                                     {
                                         tabBarItems.map((item, index) =>
@@ -708,19 +709,12 @@ const IeltsDashboard: React.FC = () => {
                                         )
                                     }
                                 </div>
-
-                                {/* </div> */}
                             </motion.div>
                         }
                         <div
                             className={'col-12 ' + styles.essayContainer}>
                             {step}
                         </div>
-
-                        {/* <TawkMessengerReact
-                            propertyId="property_id"
-                            widgetId="default" /> */}
-
                     </div>
 
                 </div>
