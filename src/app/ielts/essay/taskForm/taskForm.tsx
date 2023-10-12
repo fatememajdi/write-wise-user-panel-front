@@ -398,12 +398,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                         changeEndTyping(false);
                                                                         changeEditedGeneratedTopic(false);
                                                                         changeGenerateWriting(true);
-                                                                        // await GenerateTopic(setFieldValue, values.body, values.subType);
-                                                                        await changeGeneratedTopic({
-                                                                            id: 'res.data.getRandomWriting.id', body: 'I think it’s important for you to be able to summarise your argument / position. Your summary should be completely clear and coherent.I disagree with the statement because I believe that the Internet cannot do the job of a good teacher. ',
-                                                                            type: 'res.data.getRandomWriting.type', subType: 'res.data.getRandomWriting.questionType',
-
-                                                                        });
+                                                                        await GenerateTopic(setFieldValue, values.body, values.subType);
+                                            
                                                                     }}
                                                                     type="button" className={styles.generateButton}>
                                                                     <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
