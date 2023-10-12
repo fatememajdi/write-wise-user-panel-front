@@ -5,6 +5,7 @@ import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Image from "next/image";
+import { AnimatePresence, motion } from 'framer-motion';
 
 //--------------------------------------styles
 import styles from '../../../../styles/task.module.css';
@@ -367,79 +368,121 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                         < div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
                                         : currentId != null ?
                                             <div className={styles.selectedTopcCard}><Text text={values.topic} /></div>
-                                            : generateWritingTopicLoading ?
+                                            : generateWritingTopicLoading && type !== 'academic_task_1' ?
                                                 <Loading style={{ height: 250, minHeight: 0 }} />
-                                                :
-                                                <div className={styles.topicInputContainer}>
-
-                                                    {
-                                                        generateWriting && !editedGeneratedTopic ?
+                                                : type === 'academic_task_1' ?
+                                                    <div className={styles.academicTaskTopic}>
+                                                        {
+                                                            generateWriting &&
                                                             <Writer
                                                                 changeEndTyping={changeEndTyping}
                                                                 type={type}
                                                                 topic={values.topic}
                                                             />
-                                                            :
-                                                            <Input
-                                                                style={{ width: '70%' }}
-                                                                className={type === 'general_task_1' ? styles.topicInputsecond + ' ' + styles.topicInput
-                                                                    : type === 'general_task_2' ? styles.topicInputfirst + ' ' + styles.topicInput
-                                                                        : styles.topicInputthird + ' ' + styles.topicInput}
-                                                                onChange={(e: any) => {
-                                                                    changeEndTyping(true);
-                                                                    handleChange(e);
-                                                                    ChangeTempTopic(values.body, e.target.value);
-                                                                }}
-                                                                placeHolder="Type your topic here..."
-                                                                secondError
-                                                                textarea
-                                                                textarea_name='topic'
-                                                                textarea_value={values.topic}
-                                                                textarea_error={errors.topic && touched.topic && errors.topic}
-                                                            />
-                                                    }
-                                                    <div className={styles.topicButtonsContainer}>
+                                                        }
+                                                        <AnimatePresence>
+                                                            <motion.div
+                                                                animate={{ left: generateWriting ? '70%' : 0 }}
+                                                                transition={{ type: "spring", duration: 3 }}
+                                                                className={styles.academicTaskbuttonContainer}>
+                                                                <SubTypeSelect
+                                                                    defaultValue={values.subType}
+                                                                    setFieldValue={setFieldValue}
+                                                                    type={type}
+                                                                />
 
-                                                        <SubTypeSelect
-                                                            defaultValue={values.subType}
-                                                            setFieldValue={setFieldValue}
-                                                            type={type}
-                                                        />
+                                                                <button
+                                                                    aria-label="edit tipic"
+                                                                    onClick={async () => {
+                                                                        setChangeInput(false);
+                                                                        changeEndTyping(false);
+                                                                        changeEditedGeneratedTopic(false);
+                                                                        changeGenerateWriting(true);
+                                                                        // await GenerateTopic(setFieldValue, values.body, values.subType);
+                                                                        await changeGeneratedTopic({
+                                                                            id: 'res.data.getRandomWriting.id', body: 'I think it’s important for you to be able to summarise your argument / position. Your summary should be completely clear and coherent.I disagree with the statement because I believe that the Internet cannot do the job of a good teacher. ',
+                                                                            type: 'res.data.getRandomWriting.type', subType: 'res.data.getRandomWriting.questionType',
 
-                                                        <button
-                                                            aria-label="edit tipic"
-                                                            onClick={async () => {
-                                                                setChangeInput(false);
-                                                                changeEndTyping(false);
-                                                                changeEditedGeneratedTopic(false);
-                                                                changeGenerateWriting(true);
-                                                                await GenerateTopic(setFieldValue, values.body, values.subType);
-                                                            }}
-                                                            type="button" className={styles.generateButton}>
-                                                            <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
-                                                            {
-                                                                generatedTopic ? 'Regenereate' :
-                                                                    'Generate'
-                                                            }
-                                                        </button>
+                                                                        });
+                                                                    }}
+                                                                    type="button" className={styles.generateButton}>
+                                                                    <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
+                                                                    {
+                                                                        generatedTopic ? 'Regenereate' :
+                                                                            'Generate'
+                                                                    }
+                                                                </button>
+                                                            </motion.div>
+                                                        </AnimatePresence>
                                                     </div>
+                                                    : <div className={styles.topicInputContainer}>
+                                                        {
+                                                            generateWriting && !editedGeneratedTopic ?
+                                                                <Writer
+                                                                    changeEndTyping={changeEndTyping}
+                                                                    type={type}
+                                                                    topic={values.topic}
+                                                                />
+                                                                :
+                                                                <Input
+                                                                    style={{ width: '70%' }}
+                                                                    className={type === 'general_task_1' ? styles.topicInputsecond + ' ' + styles.topicInput
+                                                                        : type === 'general_task_2' ? styles.topicInputfirst + ' ' + styles.topicInput
+                                                                            : styles.topicInputthird + ' ' + styles.topicInput}
+                                                                    onChange={(e: any) => {
+                                                                        changeEndTyping(true);
+                                                                        handleChange(e);
+                                                                        ChangeTempTopic(values.body, e.target.value);
+                                                                    }}
+                                                                    placeHolder="Type your topic here..."
+                                                                    secondError
+                                                                    textarea
+                                                                    textarea_name='topic'
+                                                                    textarea_value={values.topic}
+                                                                    textarea_error={errors.topic && touched.topic && errors.topic}
+                                                                />
+                                                        }
+                                                        <div className={styles.topicButtonsContainer}>
 
-                                                    {
-                                                        generateWriting &&
-                                                        <button
-                                                            aria-label="edit topic"
-                                                            type="button"
-                                                            onClick={() => {
-                                                                changeEditedGeneratedTopic(true);
-                                                                setFieldValue('topic', '');
-                                                            }}
-                                                            className={styles.editButton}>
-                                                            <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
-                                                        </button>
-                                                    }
+                                                            <SubTypeSelect
+                                                                defaultValue={values.subType}
+                                                                setFieldValue={setFieldValue}
+                                                                type={type}
+                                                            />
 
-                                                </div>
-                            }
+                                                            <button
+                                                                aria-label="edit tipic"
+                                                                onClick={async () => {
+                                                                    setChangeInput(false);
+                                                                    changeEndTyping(false);
+                                                                    changeEditedGeneratedTopic(false);
+                                                                    changeGenerateWriting(true);
+                                                                    await GenerateTopic(setFieldValue, values.body, values.subType);
+                                                                }}
+                                                                type="button" className={styles.generateButton}>
+                                                                <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
+                                                                {
+                                                                    generatedTopic ? 'Regenereate' :
+                                                                        'Generate'
+                                                                }
+                                                            </button>
+                                                        </div>
+
+                                                        {
+                                                            generateWriting &&
+                                                            <button
+                                                                aria-label="edit topic"
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    changeEditedGeneratedTopic(true);
+                                                                    setFieldValue('topic', '');
+                                                                }}
+                                                                className={styles.editButton}>
+                                                                <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
+                                                            </button>
+                                                        }
+
+                                                    </div>}
                             {
                                 type === 'academic_task_1' &&
                                 <div className={styles.imagesContainer + ' col-12'}>
