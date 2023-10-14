@@ -373,7 +373,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                 : type === 'academic_task_1' ?
                                                     <div className={styles.academicTaskTopic}>
                                                         {
-                                                            generateWriting &&
+                                                            generateWriting && !generateWritingTopicLoading &&
                                                             <Writer
                                                                 changeEndTyping={changeEndTyping}
                                                                 type={type}
@@ -399,7 +399,6 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                         changeEditedGeneratedTopic(false);
                                                                         changeGenerateWriting(true);
                                                                         await GenerateTopic(setFieldValue, values.body, values.subType);
-                                            
                                                                     }}
                                                                     type="button" className={styles.generateButton}>
                                                                     <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />

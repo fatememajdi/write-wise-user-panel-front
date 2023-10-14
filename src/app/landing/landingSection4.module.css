@@ -84,39 +84,74 @@
     font-style: normal;
     font-weight: 400;
     line-height: 30px;
-    padding: 10px;
+    /* padding: 10px; */
+    max-width: 340px !important;
+    width: 340px;
+    margin-left: auto;
+    position: relative;
 }
+
+.step1TopCard {
+    border-top: solid 1px #F3F3F3;
+    height: 7vh;
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    padding: 10px;
+    max-width: 340px !important;
+    position: relative;
+    margin-left: auto;
+}
+
+.activeStepCard {
+    border-right: solid 1px #F3F3F3;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+}
+
 
 .step3 {
     width: 340px;
     position: relative;
-    height: 36vh !important;
+    min-height: 36vh !important;
 }
 
 .step4 {
     width: 340px;
     position: relative;
-    height: 29vh !important;
+    min-height: 29vh !important;
 }
 
 .step5 {
-    flex: 1;
     position: relative;
-    height: 22vh !important;
+    min-height: 22vh !important;
+    width: 340px;
+}
+
+.step6 {
+    position: relative;
+    flex: 1 !important;
+    min-height: 22vh !important;
     border-top: solid 1px #F3F3F3;
+    /* width: 100% ; */
+    /* width: 20px; */
 }
 
 .stepTitle {
     color: #F3F3F3;
     font-size: 32px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 38.5px;
     position: absolute;
     top: -60px;
     white-space: nowrap;
     right: 13px;
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 .stepTitle span {
