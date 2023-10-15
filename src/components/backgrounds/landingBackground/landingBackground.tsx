@@ -17,6 +17,30 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
     }, [])
 
     return <div className={'col-12 ' + styles.landingBackground}>
+      
+        <Image
+            className={"w-full h-auto " + styles.headerBackground}
+            src='/landing/landing-header-background.svg'
+            alt="Background"
+            width="0"
+            height="0"
+            sizes="100vw"
+            priority
+            loading="eager"
+        />
+
+        <Image
+            className={'col-12 ' + styles.headerShadow}
+            src='/landing/landing-header-shadow.svg'
+            alt="Background"
+            width="0"
+            height="0"
+            sizes="100vw"
+            priority
+            loading="eager"
+        />
+
+
         <LandingHeader logedIn={logedIn} />
         <Image
             className={styles.topLeftBackground}

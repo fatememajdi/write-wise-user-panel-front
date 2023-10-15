@@ -20,20 +20,6 @@ const Section1: React.FC = () => {
     return <LandingBackground>
         <section className={'col-12 ' + styles.section1Container} id="section-1">
 
-            <div className={'col-lg-6 col-md-6 col-12 ' + styles.leftContainer}>
-                {/* <LeftImage /> */}
-                {/* <div className={styles.leftContainerCircle}></div> */}
-                <Image
-                    // className={styles.rightTop3Background + ' ' + styles.mobile}
-                    src="/landing/ai illustartion 1.svg"
-                    alt="ai illustartion"
-                    width={632}
-                    height={486}
-                    loading="eager"
-                    priority
-                />
-            </div>
-
             <div className={'col-lg-6 col-md-6 col-12 ' + styles.rightContainer}>
                 <div className={styles.rightContainerTitle}>
                     Boost Your IELTS Writing <br />with AI-Powered Precision
@@ -66,6 +52,20 @@ const Section1: React.FC = () => {
                     Unlock AI-Powered Excellence Now
                 </button>
 
+            </div>
+
+            <div className={'col-lg-6 col-md-6 col-12 ' + styles.leftContainer}>
+                {/* <LeftImage /> */}
+                {/* <div className={styles.leftContainerCircle}></div> */}
+                <Image
+                    className={styles.leftContainerBackground}
+                    src="/landing/section1-background.svg"
+                    alt="ai illustartion"
+                    width={1601}
+                    height={1665}
+                    loading="eager"
+                    priority
+                />
             </div>
 
         </section>

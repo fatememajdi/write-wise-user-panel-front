@@ -1,3 +1,66 @@
-.section5Container {
+.section5 {
     min-height: 100vh !important;
+    display: flex;
+    flex-direction: column;
+    padding-left: 320px;
+    justify-content: center;
+}
+
+.text2 {
+    background: linear-gradient(269deg, #2E4057 -1.47%, #3B3E54 24.79%, #453D52 44.67%, #763646 72.37%, #98313E 91.04%, #DA282E 114.17%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text1 {
+    color: #2E4057;
+}
+
+
+.text3 {
+    background: radial-gradient(27318.89% 136.63% at -9.11% 84.62%, #8B3240 0%, #3B3E54 22.71%, #453D52 39.9%, #763646 63.85%, #98313E 80%, #DA282E 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.title {
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.description {
+    color: var(--color-darkText);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 31.2px;
+    margin-top: 28px;
+}
+
+.button {
+    color: #AB141D;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    align-items: center;
+    display: flex;
+    padding: 0px;
+    cursor: pointer !important;
+    z-index: 5 !important;
+    margin-left: 55px;
+}
+
+.button span {
+    padding-bottom: 3px;
+}
+
+.mainCard {
+    margin: 120px 0px;
+    display: flex;
+    flex-direction: row;
 }

@@ -6,6 +6,21 @@
     position: relative;
 }
 
+.headerBackground {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.headerShadow {
+    position: absolute;
+    top: -30px;
+    left: 0px;
+    right: 0px;
+    z-index: -1 !important;
+}
+
 .topLeftBackground {
     height: 477px;
     width: 509px;
@@ -101,7 +116,28 @@
     z-index: -1 !important;
 }
 
+@media(max-width: 1440px) {
+    .headerBackground {
+        top: 0px;
+    }
+}
+
+@media(max-width: 992px) {
+    .headerBackground {
+        top: 0px;
+    }
+}
+
 @media(max-width: 480px) {
+
+    .headerBackground {
+        display: none;
+    }
+
+    .headerShadow {
+        display: none;
+    }
+
 
     .landingBackground {
         background: #F4DEDF;

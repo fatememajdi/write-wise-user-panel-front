@@ -1,0 +1,22 @@
+.section5Background {
+    position: relative;
+    min-height: 100vh;
+    background-color: #F3F3F3;
+    z-index: -1;
+}
+
+.hands {
+    position: absolute;
+    right: -110px;
+    top: -60px;
+    /* z-index: -1; */
+    width: 660px;
+    height: 371px;
+    flex-shrink: 0;
+}
+
+.topBackground {
+    position: absolute;
+    left: 0px;
+    top: -100px;
+}

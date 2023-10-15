@@ -14,6 +14,7 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
+    position: relative;
 }
 
 .leftContainerCircle {
@@ -29,6 +30,16 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    padding-left: 230px;
+}
+
+.leftContainerBackground {
+    position: absolute;
+    right: 0px;
+    top: -550px;
+    z-index: -2;
+    width: 1601px;
+    height: 1665px
 }
 
 .rightContainerTitle {

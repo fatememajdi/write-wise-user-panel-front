@@ -49,133 +49,109 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
         });
     };
 
-    return (
-        <div className={'col-12 ' + styles.headerContainer}>
-            <Image
-                className={"w-full h-auto " + styles.headerBackground}
-                src='/landing/landing-header-background.svg'
-                alt="Background"
-                // width={2000}
-                // height={184}
-                width="0"
-                height="0"
-                sizes="100vw"
-                priority
-                loading="eager"
-            />
+    return (<div className={'col-12 ' + styles.headerContainer}>
+        {/* ---------------------------------------------------------------------mobile header */}
+        <div className={styles.responsiveMenuIcon}>
+            <MdOutlineMenu />
+        </div>
+  
+        <Image
+            className={styles.responsiveLogo}
+            src="/logo3.svg"
+            alt="Logo"
+            width={81}
+            height={17}
+            priority
+            loading="eager"
+        />
+        <button
+            aria-label="chat button"
+            className={styles.responsiveChatButton}
+        >
+            <Chat2 />
+        </button>
 
-            <Image
-                className={'col-12 ' + styles.headerShadow}
-                src='/landing/landing-header-shadow.svg'
-                alt="Background"
-                width="0"
-                height="0"
-                sizes="100vw"
-                priority
-                loading="eager"
-            />
-
-            {/* ---------------------------------------------------------------------mobile header */}
-            <div className={styles.responsiveMenuIcon}>
-                <MdOutlineMenu />
-            </div>
-            <Image
-                className={styles.responsiveLogo}
-                src="/logo3.svg"
-                alt="Logo"
-                width={81}
-                height={17}
-                priority
-                loading="eager"
-            />
-            <button
-                aria-label="chat button"
-                className={styles.responsiveChatButton}
-            >
-                <Chat2 />
-            </button>
-
-            <div className={'col-12 ' + styles.headerCard}>
-                <div className={styles.headerItemsContainer}>
-                    <Image
-                        className={styles.headerLogo}
-                        src="/logo.svg"
-                        alt="Logo"
-                        width={133}
-                        height={15}
-                        priority
-                        loading="eager"
-                    />
-                    {
-                        headerItems.map(
-                            (item, index) => <Link href={item.route} key={index} className={styles.headerItem} onClick={handleScroll} >{item.title}</Link>)
-                    }
-                    {
-                        logedIn ?
-                            <a
-                                onClick={() => {
-                                    router.push('/ielts');
-                                    StartLoader();
-                                }}
-                                // href="https://dash.wwai.ai/"
-                                className={styles.headerItem}>Dashboard</a>
-                            :
-                            <div onClick={() => {
-                                router.push('/signIn');
+        <div className={'col-12 ' + styles.headerCard}>
+            <div className={styles.headerItemsContainer}>
+                <Image
+                    className={styles.headerLogo}
+                    src="/logo.svg"
+                    alt="Logo"
+                    width={133}
+                    height={15}
+                    priority
+                    loading="eager"
+                />
+                {
+                    headerItems.map(
+                        (item, index) => <Link href={item.route} key={index} className={styles.headerItem} onClick={handleScroll} >{item.title}</Link>)
+                }
+                {
+                    logedIn ?
+                        <a
+                            onClick={() => {
+                                router.push('/ielts');
                                 StartLoader();
-                            }} className={styles.headerItem}>Signup</div>
-                    }
+                            }}
+                            // href="https://dash.wwai.ai/"
+                            className={styles.headerItem}>Dashboard</a>
+                        :
+                        <div onClick={() => {
+                            router.push('/signIn');
+                            StartLoader();
+                        }} className={styles.headerItem}>Signup</div>
+                }
 
-                </div>
-                <Formik
-                    initialValues={{
-                        search: ''
-                    }}
-                    // validationSchema={WritingValidationSchema}
-                    enableReinitialize
-                    onSubmit={async (values) => {
-                        // await handleSubmit(values);
-                    }}
-
-                >
-                    {({
-                        values,
-                        errors,
-                        touched,
-                        handleSubmit,
-                        setFieldValue,
-                        handleChange
-                    }) => (
-
-                        <form
-                            className={styles.headerItemsContainer}
-                            onSubmit={handleSubmit}>
-                            <Image
-                                src="/help.svg"
-                                alt="Help Icon"
-                                width={33}
-                                height={33}
-                                priority
-                                loading="eager"
-                            />
-                            <Input
-                                className={styles.searchInput}
-                                onChange={handleChange}
-                                placeHolder='try something...'
-                                input
-                                inputtype='search'
-                                input_name='search'
-                                input_value={values.search}
-                                input_error={errors.search && touched.search && errors.search} />
-
-                            <Search width={60} />
-                        </form>
-
-                    )}
-
-                </Formik>
             </div>
-        </div >
+            <Formik
+                initialValues={{
+                    search: ''
+                }}
+                // validationSchema={WritingValidationSchema}
+                enableReinitialize
+                onSubmit={async (values) => {
+                    // await handleSubmit(values);
+                }}
+
+            >
+                {({
+                    values,
+                    errors,
+                    touched,
+                    handleSubmit,
+                    setFieldValue,
+                    handleChange
+                }) => (
+
+                    <form
+                        className={styles.headerItemsContainer}
+                        onSubmit={handleSubmit}>
+                        <Image
+                            src="/help.svg"
+                            alt="Help Icon"
+                            width={33}
+                            height={33}
+                            priority
+                            loading="eager"
+                        />
+                        <Input
+                            className={styles.searchInput}
+                            onChange={handleChange}
+                            placeHolder='try something...'
+                            input
+                            inputtype='search'
+                            input_name='search'
+                            input_value={values.search}
+                            input_error={errors.search && touched.search && errors.search} />
+
+                        <Search width={60} />
+                    </form>
+
+                )}
+
+            </Formik>
+        </div>
+    </div >
     )
 };
 
