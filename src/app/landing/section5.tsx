@@ -1,4 +1,5 @@
 import React from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 
 //------------------------------------------components
@@ -19,7 +20,23 @@ const steps = [
 const Section5: React.FC = () => {
 
     const [scroll, setScroll] = React.useState<boolean>(true);
-    // !scroll ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
+    const [selectedItem, setSelectedItem] = React.useState<number>(0);
+    const [watchedItems, changeWatchedItems] = React.useState<boolean>(false);
+
+    function lockScroll() {
+        if (document)
+            !watchedItems ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
+        setTimeout(() => {
+            if (!watchedItems) {
+                if (selectedItem < 2)
+                    setSelectedItem(selectedItem + 1);
+                if (selectedItem === 2)
+                    changeWatchedItems(true);
+            }
+        }, 1000);
+
+    }
+
     // document.body.addEventListener("mousewheel", function () {
     //     console.log('df')
     // });
@@ -30,7 +47,7 @@ const Section5: React.FC = () => {
 
 
     return <Section5Background>
-        <div onWheel={() => console.log('hi')} className={'col-12 ' + styles.section5}>
+        <div onWheel={() => lockScroll()} className={'col-12 ' + styles.section5}>
             <div className={styles.title}>
                 <span className={styles.text1}>Experience </span>
                 <span className={styles.text2}>WiseSensei</span>
@@ -40,14 +57,42 @@ const Section5: React.FC = () => {
             <div className={styles.description}>Experience a transformative IELTS preparation <br />journey tailored for every stage of your essay writing.</div>
 
             <div className={styles.mainCard}>
-                dfkjn
+                <AnimatePresence>
+                    <motion.div
+                        animate={{ paddingBottom: selectedItem === 0 ? 0 : selectedItem === 1 ? 55 : 160, paddingTop: selectedItem === 0 ? 100 : 0 }}
+                        transition={{ type: "spring", duration: 3 }}
+                        className={styles.leftCard}>
+                        {
+                            steps.map((item, index) => <motion.div
+
+                                onClick={() => { setSelectedItem(index); changeWatchedItems(true); console.log(selectedItem) }}
+                                animate={selectedItem === index ?
+                                    { color: '#252525', borderBottomColor: '#000', borderBottomWidth: 1 }
+                                    : {
+                                        background: 'linear-gradient(345deg, rgba(110, 110, 110, 0.77) 14.41%, rgba(37, 37, 37, 0.00) 93.5%)',
+                                        backgroundClip: 'text',
+                                        WebkitBackgroundClip: 'text',
+                                        WebkitTextFillColor: 'transparent'
+                                    }}
+                                transition={{ type: "spring", duration: 3 }}
+                                className={styles.stepTitle}
+                                key={index}>
+                                <span>{'0' + (index + 1)}   </span>{item.title}
+                            </motion.div>)
+                        }
+                    </motion.div>
+
+                    <div className={styles.rightCard}>
+                        {steps[selectedItem].description}
+                    </div>
+                </AnimatePresence>
             </div>
 
-            <button onClick={() => setScroll(!scroll)} className={styles.button}>
+            {/* <button onClick={() => setScroll(!scroll)} className={styles.button}>
                 <span>Start Your IELTS Tutoring Journey</span> <MdKeyboardArrowRight fontSize={30} />
-            </button>
+            </button> */}
         </div>
-    </Section5Background>
+    </Section5Background >
 };
 
 export default Section5;

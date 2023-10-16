@@ -4,6 +4,8 @@
     flex-direction: column;
     padding-left: 320px;
     justify-content: center;
+    overflow-x: hidden !important;
+    padding-top: 100px;
 }
 
 .text2 {
@@ -62,5 +64,48 @@
 .mainCard {
     margin: 120px 0px;
     display: flex;
+    height: fit-content !important;
     flex-direction: row;
 }
+
+.leftCard {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: fit-content !important;
+}
+
+.rightCard {
+    width: 35%;
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    padding: 15px;
+    color: #252525;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 36px;
+}
+
+.stepTitle {
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38.5px;
+    padding: 16px 0px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* .stepTitle {
+    background: linear-gradient(345deg, rgba(110, 110, 110, 0.77) 14.41%, rgba(37, 37, 37, 0.00) 93.5%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    padding: 16px 0px;
+    line-height: 38.5px;
+} */

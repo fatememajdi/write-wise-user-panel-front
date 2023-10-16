@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
-import React, { useState } from "react";
+import React from "react";
 import { AnimatePresence, motion } from 'framer-motion';
 
 //------------------------------------------------styles
@@ -14,7 +14,11 @@ const Section4: React.FC = () => {
 
     const [selectedItem, changeSelectedItem] = React.useState<number>(0);
 
-    return <div className={styles.section4Container}>
+    return <div
+        onWheel={() => {
+            if (selectedItem === 0)
+                changeSelectedItem(1);
+        }} className={styles.section4Container}>
         <div className={styles.title}>Progressive IELTS Learning with WriteWiseAI</div>
         <div className={styles.description}>
             Empower your IELTS preparation by tracking and<br /> visualizing your writing improvements.
