@@ -2,30 +2,83 @@
 'use client';
 import React from "react";
 import { AnimatePresence, motion } from 'framer-motion';
+import { useMediaQuery } from 'react-responsive';
 
 //------------------------------------------------styles
 import styles from './landingSection4.module.css';
 
 //------------------------------------------------icons
-import { MdOutlineFlag } from 'react-icons/md';
+import { MdOutlineFlag, MdKeyboardArrowRight, MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
+const steps = [
+    { title: 'Dynamic Visuals', description: 'Dive deep into your IELTS learning journey with interactive charts showing your evolving scores over time. Whether you are just starting out or refining advanced skills, these visuals offer a clear picture of your progress.' },
+    { title: 'Unlimited Revisions', description: 'As part of your comprehensive IELTS preparation, refine and resubmit your essays. Each revision brings fresh scores and insights, allowing you to witness your growth and continuously improve English writing skills.' },
+    { title: 'Diverse Feedback', description: 'Beyond scores, gain insights across varied IELTS tasks and topics. This holistic feedback is crucial for a well-rounded preparation for the IELTS writing exam' },
+    { title: 'Motivation Booster', description: 'Visual feedback is a catalyst for motivation. With our progress recording service, celebrate each leap in your IELTS learning journey, setting and achieving higher milestones.' },
+]
 
 const Section4: React.FC = () => {
 
     const [selectedItem, changeSelectedItem] = React.useState<number>(0);
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+
+    function selectStep(id: number) {
+        if (id === selectedItem)
+            changeSelectedItem(0);
+        else
+            changeSelectedItem(id);
+    }
 
     return <div
         onWheel={() => {
-            if (selectedItem === 0)
+            if (selectedItem === 0 && !isMobile)
                 changeSelectedItem(1);
         }} className={styles.section4Container}>
         <div className={styles.title}>Progressive IELTS Learning with WriteWiseAI</div>
+        <div className={styles.Divider} />
         <div className={styles.description}>
             Empower your IELTS preparation by tracking and<br /> visualizing your writing improvements.
         </div>
-        <button className={styles.button}>
+
+        {/* <button className={styles.button}>
             Boost My IELTS Preparation Now!
-        </button>
+        </button> */}
+
+        {/* //-----------------------------------------------------------------------------mobile mode steps */}
+        <AnimatePresence>
+            <div className={'col-12 ' + styles.responsiveStepsContainer}>
+                {
+                    steps.map((item, index) => <div key={index} className={styles.responsiveStepCard}>
+                        <motion.div
+                            animate={{ opacity: selectedItem !== (index + 1) && selectedItem !== 0 ? 0.5 : 1 }}
+                            transition={{ type: "spring", duration: 2 }}
+                            onClick={() => selectStep(index + 1)}
+                            className={styles.responsiveStepTitle}>
+                            {
+                                selectedItem === (index + 1) ?
+                                    <MdOutlineKeyboardArrowDown fontSize={20} />
+                                    :
+                                    <MdKeyboardArrowRight fontSize={20} />
+                            }
+                            {' 0' + (index + 1) + ' ' + item.title}
+                        </motion.div>
+                        <motion.div
+                            animate={{ height: selectedItem === (index + 1) ? 'fit-content' : 0 }}
+                            transition={{ type: "spring", duration: 2 }}
+                            className={styles.responsiveStepDescription}
+                        >
+                            {selectedItem === (index + 1) &&
+                                item.description
+                            }
+                        </motion.div>
+                    </div>)
+                }
+            </div>
+        </AnimatePresence>
+
+        <div className={styles.Divider} />
+
+        {/* //-----------------------------------------------------------------------------desktop mode steps */}
 
         <AnimatePresence>
             <div className={styles.bottomContainer}>

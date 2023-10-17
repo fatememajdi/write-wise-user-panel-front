@@ -9,7 +9,7 @@ const Section5Background = dynamic(() => import('@/components/backgrounds/sectio
 import styles from './landingSection5.module.css';
 
 //------------------------------------------icons
-import { MdKeyboardArrowRight } from 'react-icons/md';
+// import { MdKeyboardArrowRight } from 'react-icons/md';
 
 const steps = [
     { title: 'Prompt Generation', description: 'Dive deeper into your IELTS learning with a structured plan designed for optimal essay flow. If you have your own approach in mind, you can still integrate our AI-driven insights to enhance your preparation.' },
@@ -19,7 +19,6 @@ const steps = [
 
 const Section5: React.FC = () => {
 
-    const [scroll, setScroll] = React.useState<boolean>(true);
     const [selectedItem, setSelectedItem] = React.useState<number>(0);
     const [watchedItems, changeWatchedItems] = React.useState<boolean>(false);
 
@@ -35,16 +34,7 @@ const Section5: React.FC = () => {
             }
         }, 1000);
 
-    }
-
-    // document.body.addEventListener("mousewheel", function () {
-    //     console.log('df')
-    // });
-
-    // document.body.addEventListener("DOMMouseScroll", function () {
-    //     console.log('df')
-    // });
-
+    };
 
     return <Section5Background>
         <div onWheel={() => lockScroll()} className={'col-12 ' + styles.section5}>
@@ -88,9 +78,11 @@ const Section5: React.FC = () => {
                 </AnimatePresence>
             </div>
 
-            {/* <button onClick={() => setScroll(!scroll)} className={styles.button}>
-                <span>Start Your IELTS Tutoring Journey</span> <MdKeyboardArrowRight fontSize={30} />
-            </button> */}
+            {
+                /* <button onClick={() => setScroll(!scroll)} className={styles.button}>
+                    <span>Start Your IELTS Tutoring Journey</span> <MdKeyboardArrowRight fontSize={30} />
+                </button> */
+            }
         </div>
     </Section5Background >
 };

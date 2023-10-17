@@ -22,7 +22,7 @@ const Section3: React.FC = () => {
 
             <div className={'col-12 ' + styles.section3Container}>
 
-                <div className={'col-lg-6 col-md-6 ' + styles.leftContainer}>
+                <div className={'col-lg-6 col-md-6 col-12 ' + styles.leftContainer}>
                     <div className={styles.leftTitle}>
                         Unlock IELTS Writing Mastery with<br />
                         WriteWiseAI's Pioneering Features
@@ -35,7 +35,7 @@ const Section3: React.FC = () => {
                         IELTS writing results.
                     </div>
 
-                    <button
+                    {/* <button
                         aria-label="read more button"
                         onClick={() => {
                             router.push('/features');
@@ -43,11 +43,11 @@ const Section3: React.FC = () => {
                         }}
                         className={styles.featuresButton}>
                         Dive into IELTS Writing Mastery Now!  <IoIosArrowForward />
-                    </button>
+                    </button> */}
 
                 </div>
 
-                <div className={'col-lg-6 col-md-6 ' + styles.rightContainer}>
+                <div className={'col-lg-6 col-md-6 col-12 ' + styles.rightContainer}>
                     <FeaturesItemCard icon={<Rate />} title="AI-Powered Essay Rating" />
                     <FeaturesItemCard icon={<File />} title="AI-Driven Topic Generator" />
                     <FeaturesItemCard icon={<User />} title="Personalized Feedback and Recommendations" />

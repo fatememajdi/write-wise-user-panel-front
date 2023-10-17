@@ -85,4 +85,36 @@
 
 @media(max-width: 992px) {}
 
-@media(max-width: 480px) {}
+@media(max-width: 480px) {
+    .section3Container {
+        flex-direction: column;
+    }
+
+    .rightContainer {
+        padding: 0px;
+        margin-top: 40px;
+    }
+
+    .leftContainer {
+        padding: 0px;
+    }
+
+    .leftTitle {
+        font-size: 24px;
+    }
+
+    .leftDescription {
+        font-size: 13px;
+        line-height: 26px;
+    }
+
+    .featuresItemCard{
+        width: 278px;
+    }
+
+    .featuresItemTitle{
+        font-size: 13px;
+        padding: 15px 10px 15px 13px;
+    }
+
+}

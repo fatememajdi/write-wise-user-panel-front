@@ -138,10 +138,10 @@
         display: none;
     }
 
-
     .landingBackground {
         background: #F4DEDF;
         background: linear-gradient(90deg, #F4DEDF, #DBE8F2);
+        min-height: fit-content;
     }
 
     .topLeftBackground {

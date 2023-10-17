@@ -16,7 +16,7 @@ import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 const steps = [
     {
         step: 'Step 1',
-        title: 'Register and Select Your IELTS Exam',
+        title: 'Sign Up and Select Your IELTS Exam',
         description: 'Kickstart your IELTS success by signing up for a WriteWiseAI account. Once registered, choose your IELTS category - General or Academic - ensuring feedback tailored to specific IELTS criteria.'
     },
     {
@@ -46,13 +46,14 @@ const Section2: React.FC = () => {
                 </div>
 
                 <div className={styles.secondTitle}>
-                    achieve IELTS Writing Success in 4 Simple Steps!
+                    Achieve IELTS Writing Success in 3 Simple Steps!
                 </div>
 
                 <div className={styles.description}>
-                    Embark on a transformative journey to refine your IELTS writing skills. WriteWiseAI, powered by advanced GPT-4 technology,<br />
-                    offers a seamless experience, ensuring your essays align with IELTS standards. Dive into our intuitive four-step process for AI- <br />
-                    powered insights, personalized feedback, and actionable recommendations.
+                    Embark on a transformative journey to refine your IELTS writing skills.
+                    <span className={styles.boldLetter}>W</span>rite<span className={styles.boldLetter}>W</span>ise<span className={styles.boldLetter}>AI</span>, powered by advanced GPT-4<br />
+                    technology, offers a seamless experience, ensuring your essays align with IELTS standards. Dive into our intuitive four-<br />
+                    step process for AI-powered insights, personalized feedback, and actionable recommendations.
                 </div>
             </div>
 

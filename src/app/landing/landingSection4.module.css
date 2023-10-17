@@ -6,6 +6,8 @@
     padding: 250px 0px 0px 0px;
     display: flex;
     flex-direction: column;
+    height: fit-content;
+    overflow-y: hidden;
 }
 
 .title {
@@ -25,6 +27,7 @@
     line-height: 31px;
     margin-left: 280px;
     margin-top: 48px;
+    margin-bottom: 90px;
 }
 
 .button {
@@ -137,8 +140,6 @@
     flex: 1 !important;
     min-height: 22vh !important;
     border-top: solid 1px #F3F3F3;
-    /* width: 100% ; */
-    /* width: 20px; */
 }
 
 .stepTitle {
@@ -156,4 +157,83 @@
 
 .stepTitle span {
     color: rgba(243, 243, 243, 0.50);
+}
+
+.Divider {
+    width: 259px !important;
+    height: 0.5px !important;
+    background: linear-gradient(90deg, #D4DCE7 3.15%, rgba(104, 122, 146, 0.30) 104.87%);
+    margin-top: 18px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.responsiveStepsContainer {
+    flex-direction: column;
+    margin-top: 16px;
+    display: none;
+}
+
+.responsiveStepCard {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    height: fit-content;
+    max-width: 242px;
+}
+
+.responsiveStepTitle {
+    display: flex;
+    flex-direction: row;
+    color: var(--color-whiteText);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38.5px;
+    align-items: center;
+}
+
+.responsiveStepDescription {
+    color: #FFF;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16.9px;
+    overflow: hidden !important;
+}
+
+@media(max-width: 480px) {
+
+    .responsiveStepsContainer {
+        display: flex;
+    }
+
+    .section4Container {
+        padding: 55px 0px 0px 50px;
+        min-height: fit-content !important;
+    }
+
+    .title {
+        margin-left: 0px;
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    .Divider {
+        display: block;
+    }
+
+    .description {
+        margin-left: 0px;
+        margin-top: 0px;
+        font-size: 13px;
+        line-height: 19.5px;
+        margin-bottom: 0px;
+    }
+
+    .bottomContainer {
+        display: none;
+    }
+
 }

@@ -25,44 +25,52 @@ const Section1: React.FC = () => {
                     Boost Your IELTS Writing <br />with AI-Powered Precision
                 </div>
                 <div className={styles.rightContainerDescription}>
-                    Discover WriteWiseAI's GPT-4 Technology: Delivering instant <br />
-                    IELTS scoring with results mirroring the 0.5 band human <br />
-                    inter-rater difference
+                    <span>Discover <span className={styles.boldLetter}>W</span>rite<span className={styles.boldLetter}>W</span>ise<span className={styles.boldLetter}>AI</span>'s Technology:
+                    </span> Delivering instant IELTS <br />scoring with results mirroring an inter-rater difference of <br />0.5 with Humans
 
                     <div
                         style={{ marginTop: 14 }}
                         className={styles.rightContainerDescriptionItem}>
                         <VscCircleFilled className={styles.rightContainerDescriptionItemIcon} />
-                        Claim your FREE AI-powered IELTS writing analysis.
+                        Claim your AI-powered IELTS writing analysis
                     </div>
                     <div className={styles.rightContainerDescriptionItem}>
                         <div> <VscCircleFilled className={styles.rightContainerDescriptionItemIcon} /></div>
-                        Benefit from personalized IELTS feedback tailored to elevate your skills.
+                        Benefit from personalised IELTS feedback tailored to elevate your skills.
                     </div>
 
                 </div>
 
-                <button
-                    aria-label="write like a pro button"
-                    onClick={() => {
-                        router.push('/signIn');
-                        StartLoader();
-                    }}
-                    className={styles.rightContainerButton}>
-                    Unlock AI-Powered Excellence Now
-                </button>
-
             </div>
 
             <div className={'col-lg-6 col-md-6 col-12 ' + styles.leftContainer}>
-                {/* <LeftImage /> */}
-                {/* <div className={styles.leftContainerCircle}></div> */}
                 <Image
                     className={styles.leftContainerBackground}
                     src="/landing/section1-background.svg"
-                    alt="ai illustartion"
-                    width={1601}
-                    height={1665}
+                    alt="section background"
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                    loading="eager"
+                    priority
+                />
+                <Image
+                    className={styles.robot}
+                    src="/landing/robot.svg"
+                    alt="robot"
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                    loading="eager"
+                    priority
+                />
+                <Image
+                    className={styles.human}
+                    src="/landing/human.svg"
+                    alt="human"
+                    width="0"
+                    height="0"
+                    sizes="100vw"
                     loading="eager"
                     priority
                 />

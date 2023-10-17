@@ -121,6 +121,10 @@
     color: #172E4A;
 }
 
+.boldLetter {
+    font-weight: 400 !important;
+}
+
 @media(max-width: 1440px) {
 
     .section2Container {
@@ -195,7 +199,7 @@
     }
 
     .stepCardSecondtitle {
-        font-size: 24px;
+        font-size: 20px;
         color: #172E4A;
         line-height: 119.023%;
         font-weight: 700;

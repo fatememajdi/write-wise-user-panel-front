@@ -17,13 +17,6 @@
     position: relative;
 }
 
-.leftContainerCircle {
-    height: 355px;
-    width: 355px;
-    background-color: #D9D9D9;
-    border-radius: 100%;
-}
-
 .rightContainer {
     height: 100%;
     display: flex;
@@ -36,44 +29,52 @@
 .leftContainerBackground {
     position: absolute;
     right: 0px;
-    top: -550px;
+    top: -350px;
     z-index: -2;
     width: 1601px;
     height: 1665px
 }
 
 .rightContainerTitle {
-    font-weight: 700;
-    font-size: 48px;
+    font-feature-settings: 'ss04' on, 'ss03' on, 'ss02' on, 'ss01' on, 'salt' on;
+    font-size: 55px;
     font-style: normal;
-    line-height: 60px;
-    letter-spacing: -0.005em;
-    color: var(--color-seccondary);
+    font-weight: 800;
+    line-height: 70.4px;
+    letter-spacing: -0.32px;
+    background: linear-gradient(91deg, #2E4057 -75.62%, #533346 -56.29%, #722838 -40.33%, #87212E -8.05%, #652C3D 35.85%, #4D3549 57.88%, #2E4057 85.71%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .rightContainerDescription {
     margin-top: 52px;
+    color: #252525;
     font-size: 24px;
-    /* line-height: 12px; */
-    font-weight: 200;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 31.2px;
     text-transform: capitalize;
-    hanging-punctuation: first last;
+}
+
+.boldLetter {
+    font-weight: 800 !important;
+}
+
+.rightContainerDescription span {
+    font-weight: 700;
 }
 
 .rightContainerDescriptionItem {
     display: flex;
     flex-direction: row;
     align-items: center;
+    color: #252525;
     font-size: 24px;
     font-style: normal;
-    font-weight: 300;
-    line-height: 31.2px;
-    /* 130% */
-}
-
-.rightContainerDescriptionItem span {
     font-weight: 400;
-    font-size: 25px;
+    line-height: 37.2px;
 }
 
 .rightContainerDescriptionItemIcon {
@@ -81,15 +82,17 @@
     margin-right: 10px;
 }
 
-.rightContainerButton {
-    background-color: var(--color-red);
-    color: var(--color-whiteText);
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 40px;
-    margin-top: 86px;
-    border: 1px solid var(--color-red);
-    box-shadow: 5px 5px 29px 4px rgba(16, 24, 40, 0.05);
+.robot {
+    width: 616px;
+    height: 476px
+}
+
+.human {
+    position: absolute;
+    width: 338px;
+    height: 488px;
+    right: 10%;
+    top: -3%;
 }
 
 @media(max-width: 1440px) {
@@ -150,62 +153,76 @@
 }
 
 @media(max-width: 480px) {
-    .section1Container {
-        flex-direction: column;
-        padding: 85px 40px 37px 40px;
+
+    .leftContainerBackground {
+        z-index: unset;
+        left: -60px;
+        top: -740px;
+        transform: rotate(-460deg);
     }
 
-    .leftContainerCircle {
-        background-color: #F3F3F3;
-        height: 266px;
-        width: 266px;
+    .leftContainer {
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 40px;
+        padding-left: 0px;
+        padding-right: 0px;
+        height: fit-content;
+        padding-top: 14px;
+    }
+
+    .robot {
+        width: 253px;
+        height: 196px;
+        z-index: 2;
+    }
+
+    .human {
+        width: 151px;
+        height: 219px;
+        z-index: 2;
+    }
+
+    .section1Container {
+        flex-direction: column-reverse;
+        padding: 100px 0px 50px 0px;
+        min-height: fit-content;
+    }
+
+    .rightContainer {
+        height: fit-content;
+        padding: 0px 20px 0px 50px;
     }
 
     .rightContainerTitle {
         font-size: 24px;
         font-weight: 800;
-        margin-top: 33px;
-        line-height: 26px;
-        width: 100%;
+        line-height: 26.4px;
+        letter-spacing: -0.12px;
     }
 
     .rightContainerDescription {
         font-size: 13px;
-        margin-top: 20px;
-        width: 100%;
-        /* line-height: 0px; */
+        font-weight: 300;
+        line-height: 20px;
     }
-
-    .rightContainerDescriptionItem span {
-        font-size: 13px;
-    }
-
 
     .rightContainerDescriptionItem {
-        margin-top: 5px;
+        font-size: 13px;
+        font-weight: 300;
+        line-height: 20px;
     }
 
-    .rightContainerDescriptionItemIcon {
-        /* font-size: medium !important; */
+    .rightContainerDescription span {
+        font-weight: 500;
         font-size: 14px !important;
     }
 
-    .rightContainer {
-        height: fit-content;
-        align-items: center;
+    .boldLetter {
+        font-weight: 600 !important;
     }
 
-    .leftContainer {
-        height: fit-content;
-        align-items: center !important;
-        padding: 0px;
-    }
-
-    .rightContainerButton {
-        height: 42px;
-        width: 226px;
-        font-size: 13px;
-        align-items: center;
-        margin-top: 30px;
+    .rightContainerDescriptionItemIcon {
+        font-size: small !important;
     }
 }
