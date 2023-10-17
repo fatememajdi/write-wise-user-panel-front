@@ -81,7 +81,28 @@
     padding-right: 20px;
 }
 
-@media(max-width: 1440px) {}
+@media(max-width: 1440px) {
+    .leftContainer {
+        padding-left: 117px;
+    }
+
+    .leftTitle {
+        font-size: 24px;
+    }
+
+    .leftDescription {
+        font-size: 16px;
+        line-height: 22.169px;
+    }
+
+    .featuresItemTitle {
+        font-size: 16px;
+    }
+
+    .featuresItemCard {
+        margin-bottom: 45px;
+    }
+}
 
 @media(max-width: 992px) {}
 
@@ -108,11 +129,11 @@
         line-height: 26px;
     }
 
-    .featuresItemCard{
+    .featuresItemCard {
         width: 278px;
     }
 
-    .featuresItemTitle{
+    .featuresItemTitle {
         font-size: 13px;
         padding: 15px 10px 15px 13px;
     }

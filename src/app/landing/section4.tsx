@@ -76,7 +76,7 @@ const Section4: React.FC = () => {
             </div>
         </AnimatePresence>
 
-        <div className={styles.Divider} />
+        {/* <div className={styles.Divider} /> */}
 
         {/* //-----------------------------------------------------------------------------desktop mode steps */}
 

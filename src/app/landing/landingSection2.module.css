@@ -22,7 +22,6 @@
     font-size: 32px;
     line-height: 167.02%;
     color: var(--color-whiteText);
-    /* or 80px */
 }
 
 .secondTitle {
@@ -30,17 +29,14 @@
     font-weight: 500;
     font-size: 20px;
     line-height: 167.02%;
-    /* margin-top: 52px; */
     color: var(--color-whiteText);
 }
 
 .description {
-    /* margin-top: 20px; */
     font-style: normal;
     font-weight: 300;
     font-size: 20px;
     line-height: 130.52%;
-    /* or 26px */
     color: var(--color-whiteText);
     letter-spacing: 0.005em;
 }
@@ -127,16 +123,38 @@
 
 @media(max-width: 1440px) {
 
-    .section2Container {
-        padding: 170px 90px 0px 90px;
+    .arrowContainer {
+        height: 50px !important;
+        width: 50px !important;
+    }
+
+    .stepCardDescription {
+        font-size: 16px;
+    }
+
+    .stepCardtitle {
+        font-size: 16px;
+    }
+
+    .stepCardSecondtitle {
+        font-size: 24px;
     }
 
     .title {
-        font-size: 43px;
+        font-size: 24px;
     }
 
-    .stepCard {
-        padding: 19px 90px 40px 40px;
+    .secondTitle {
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .description {
+        font-size: 16px;
+    }
+
+    .section2Container {
+        padding: 180px 100px 40px 100px;
     }
 }
 

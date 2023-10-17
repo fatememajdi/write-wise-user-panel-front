@@ -10,6 +10,13 @@
     width: auto !important;
 }
 
+@media(max-width: 1440px) {
+    .carousel .control-dots .dot {
+        height: 12px !important;
+        width: 12px !important;
+    }
+}
+
 @media(max-width: 480px) {
     .carousel .control-dots .dot {
         height: 8px !important;
