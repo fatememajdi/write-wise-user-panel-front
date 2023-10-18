@@ -16,8 +16,12 @@ import Message from './message';
 import Chat from './chat';
 import Chat2 from './chat2';
 import MobileCloseButton from './mobileCloseButton';
+import Flag from './flag';
+import Steps from './steps';
 
 export {
+    Steps,
+    Flag,
     Search,
     Rate,
     Rise,

@@ -203,6 +203,20 @@
     overflow: hidden !important;
 }
 
+.stepsImage {
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+    margin-top: 100px;
+    right: -55px;
+    display: none;
+}
+
+.flagIcon {
+    position: absolute;
+    right: 15px;
+}
+
 @media(max-width: 1440px) {
     .title {
         margin-left: 102px;
@@ -265,6 +279,10 @@
 
 @media(max-width: 480px) {
 
+    .stepsImage {
+        display: block;
+    }
+
     .responsiveStepsContainer {
         display: flex;
     }
@@ -282,6 +300,8 @@
 
     .Divider {
         display: block;
+        margin-left: 0px !important;
+        width: 259px !important;
     }
 
     .description {

@@ -21,3 +21,14 @@
     left: 0px;
     top: -100px;
 }
+
+
+@media(max-width: 500px) {
+    .hands {
+        display: none;
+    }
+
+    .section5Background {
+        min-height: fit-content;
+    }
+}

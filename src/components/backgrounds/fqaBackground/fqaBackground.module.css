@@ -72,12 +72,12 @@
     display: flex;
 }
 
-@media(max-width: 480px) {
+@media(max-width: 500px) {
     .fqadBackground {
-        background: linear-gradient(129deg, #172E4A 0%, #2E4057 89.76%);
+        min-height: fit-content;
     }
 
-    .mobile {
+    /* .mobile {
         display: none;
-    }
+    } */
 }

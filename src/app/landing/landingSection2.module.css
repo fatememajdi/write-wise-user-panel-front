@@ -172,9 +172,10 @@
     }
 }
 
-@media(max-width: 480px) {
+@media(max-width: 500px) {
     .section2Container {
         padding: 60px 10px 40px 10px;
+        min-height: fit-content !important;
     }
 
     .title {
@@ -234,8 +235,8 @@
     }
 
     .arrowContainer {
-        height: 30px;
-        width: 30px;
+        height: 30px !important;
+        width: 30px !important;
         padding-top: 0px;
     }
 

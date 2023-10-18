@@ -54,26 +54,29 @@ const Section1: React.FC = () => {
                     loading="eager"
                     priority
                 />
-                <Image
-                    className={styles.robot}
-                    src="/landing/robot.svg"
-                    alt="robot"
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                    loading="eager"
-                    priority
-                />
-                <Image
-                    className={styles.human}
-                    src="/landing/human.svg"
-                    alt="human"
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                    loading="eager"
-                    priority
-                />
+                <div className={styles.leftImageCard}>
+                    <Image
+                        className={styles.robot}
+                        src="/landing/robot.svg"
+                        alt="robot"
+                        width="0"
+                        height="0"
+                        sizes="100vw"
+                        loading="eager"
+                        priority
+                    />
+                    <Image
+                        className={styles.human}
+                        src="/landing/human.svg"
+                        alt="human"
+                        width="0"
+                        height="0"
+                        sizes="100vw"
+                        loading="eager"
+                        priority
+                    />
+                    <div className={styles.leftLogo}>WriteWiseAI</div>
+                </div>
             </div>
 
         </section>

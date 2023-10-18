@@ -13,7 +13,7 @@ const Section8: React.FC = () => {
     const router = useRouter();
 
     return <div className={styles.section8Container}>
-        <div className={styles.section6Card}>
+        <div className={styles.section8Card}>
 
             <div className={styles.cardTitle}>
                 Join <span>W</span>rite<span>W</span>ise<span>AI</span> now!
@@ -25,13 +25,13 @@ const Section8: React.FC = () => {
                 gain personalized insights, and conquer your IELTS test with confidence. Start your journey to IELTS <br />
                 success today and take a step closer to a brighter future.
             </div>
-            <button
+            {/* <button
                 aria-label="sign up button"
                 onClick={() => {
                     router.push('/signIn');
                     StartLoader();
                 }}
-                className={styles.section6Button}>Signup now!</button>
+                className={styles.section6Button}>Signup now!</button> */}
 
         </div>
     </div>

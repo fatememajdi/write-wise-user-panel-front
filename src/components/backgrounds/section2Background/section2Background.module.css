@@ -43,10 +43,13 @@
 
 }
 
-@media(max-width: 1440px) {
-   
-}
+@media(max-width: 1440px) {}
 
-@media(max-width: 992px) {
-   
+@media(max-width: 992px) {}
+
+
+@media(max-width: 500px) {
+    .section2Background {
+        min-height: fit-content !important;
+    }
 }

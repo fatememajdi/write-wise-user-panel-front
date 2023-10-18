@@ -82,6 +82,12 @@
     margin-right: 10px;
 }
 
+.leftImageCard {
+    position: relative;
+    height: fit-content !important;
+    width: fit-content !important;
+}
+
 .robot {
     width: 616px;
     height: 476px
@@ -91,8 +97,19 @@
     position: absolute;
     width: 338px;
     height: 488px;
-    right: 10%;
-    top: -3%;
+    right: -3% !important;
+    top: -3% !important;
+}
+
+.leftLogo {
+    color: #FFF;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 12px;
+    position: absolute;
+    top: 17%;
+    left: 35%;
 }
 
 @media(max-width: 1440px) {
@@ -114,8 +131,10 @@
         position: absolute;
         width: 184px;
         height: 267px;
-        right: 15%;
-        top: -3%;
+    }
+
+    .leftLogo {
+        font-size: 13px;
     }
 
 
@@ -169,7 +188,11 @@
     }
 }
 
-@media(max-width: 480px) {
+@media(max-width: 500px) {
+
+    .leftLogo {
+        font-size: 10px;
+    }
 
     .leftContainerBackground {
         z-index: unset;
@@ -195,9 +218,11 @@
     }
 
     .human {
-        width: 151px;
-        height: 219px;
+        width: 151px !important;
+        height: 219px !important;
         z-index: 2;
+        /* right: -3%; */
+        top: -10% !important;
     }
 
     .section1Container {

@@ -2,7 +2,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Formik } from 'formik';
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
@@ -10,17 +9,20 @@ import { useSession } from "next-auth/react";
 import styles from './landingHeader.module.css';
 
 //-------------------------------------------components
-import Input from "../input/input";
 import { StartLoader } from "../Untitled";
 
 //-------------------------------------------icons
-import { Chat2, Search } from "../../../public";
+import { Chat2 } from "../../../public";
 import { MdOutlineMenu } from 'react-icons/md';
 
 const headerItems = [
     {
         title: 'Home',
         route: '#section-1'
+    },
+    {
+        title: 'How it works',
+        route: '#section-5'
     },
     {
         title: 'Features',
@@ -54,7 +56,7 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
         <div className={styles.responsiveMenuIcon}>
             <MdOutlineMenu />
         </div>
-  
+
         <Image
             className={styles.responsiveLogo}
             src="/logo3.svg"
@@ -103,53 +105,6 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
                 }
 
             </div>
-            <Formik
-                initialValues={{
-                    search: ''
-                }}
-                // validationSchema={WritingValidationSchema}
-                enableReinitialize
-                onSubmit={async (values) => {
-                    // await handleSubmit(values);
-                }}
-
-            >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleSubmit,
-                    setFieldValue,
-                    handleChange
-                }) => (
-
-                    <form
-                        className={styles.headerItemsContainer}
-                        onSubmit={handleSubmit}>
-                        <Image
-                            src="/help.svg"
-                            alt="Help Icon"
-                            width={33}
-                            height={33}
-                            priority
-                            loading="eager"
-                        />
-                        <Input
-                            className={styles.searchInput}
-                            onChange={handleChange}
-                            placeHolder='try something...'
-                            input
-                            inputtype='search'
-                            input_name='search'
-                            input_value={values.search}
-                            input_error={errors.search && touched.search && errors.search} />
-
-                        <Search width={60} />
-                    </form>
-
-                )}
-
-            </Formik>
         </div>
     </div >
     )

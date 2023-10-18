@@ -39,7 +39,7 @@ const steps = [
 const Section2: React.FC = () => {
 
     return <Section2Background>
-        <div className={styles.section2Container}>
+        <section className={styles.section2Container} id="section-5">
             <div className={styles.textContainer}>
                 <div className={styles.title}>
                     How it works
@@ -99,7 +99,7 @@ const Section2: React.FC = () => {
                     steps.map((item, index) => <StepCard Step={item} key={index} />)
                 }
             </Carousel>
-        </div >
+        </section >
     </Section2Background >
 };
 
