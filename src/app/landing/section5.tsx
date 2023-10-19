@@ -103,7 +103,7 @@ const Section5: React.FC = () => {
             <div className={styles.mainCard}>
                 <AnimatePresence>
                     <motion.div
-                        animate={{ paddingBottom: selectedItem === 0 ? 0 : selectedItem === 1 ? 55 : 160, paddingTop: selectedItem === 0 ? 100 : 0 }}
+                        animate={{ paddingTop: selectedItem === 0 ? 130 : selectedItem === 1 ? 70 : 0 }}
                         transition={{ type: "spring", duration: 3 }}
                         className={styles.leftCard}>
                         {
