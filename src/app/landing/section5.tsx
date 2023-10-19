@@ -104,7 +104,7 @@ const Section5: React.FC = () => {
                 <AnimatePresence>
                     <motion.div
                         animate={{ paddingTop: selectedItem === 0 ? 130 : selectedItem === 1 ? 70 : 0 }}
-                        transition={{ type: "spring", duration: 1.2 }}
+                        transition={{ type: "spring", duration: 1 }}
                         className={styles.leftCard}>
                         {
                             steps.map((item, index) => <motion.div
@@ -118,7 +118,7 @@ const Section5: React.FC = () => {
                                         WebkitBackgroundClip: 'text',
                                         WebkitTextFillColor: 'transparent'
                                     }}
-                                transition={{ type: "spring", duration: 1.2 }}
+                                transition={{ type: "spring", duration: 1 }}
                                 className={styles.stepTitle}
                                 key={index}>
                                 <span>{'0' + (index + 1)}   </span>{item.title}

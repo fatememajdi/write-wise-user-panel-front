@@ -95,19 +95,19 @@ const Section4: React.FC = () => {
                 <motion.div
                     // onMouseLeave={() => changeSelectedItem(0)}
                     animate={{ height: selectedItem === 1 ? '36vh' : '22vh' }}
-                    transition={{ type: "spring", duration: 3 }}
+                    transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 1 || selectedItem === 0 ? 1 : 0.5 }}
                     className={styles.step5}>
                     <motion.div
                         animate={{ height: selectedItem === 1 ? '14vh' : 0 }}
-                        transition={{ type: "spring", duration: 3 }}
+                        transition={{ type: "spring", duration: 1.5 }}
                         className={styles.step2TopCard}>
                         <motion.div animate={{ height: selectedItem === 1 ? '7vh' : 0 }}
-                            transition={{ type: "spring", duration: 3 }} className={styles.activeStepCard} />
+                            transition={{ type: "spring", duration: 1.5 }} className={styles.activeStepCard} />
                         <motion.div
                             animate={{ opacity: selectedItem === 1 ? 1 : 0 }}
                             style={{ padding: 10, zIndex: 1 }}
-                            transition={{ type: "spring", duration: 3 }}>
+                            transition={{ type: "spring", duration: 1.5 }}>
                             Dive deep into your IELTS learning journey with interactive charts showing your evolving scores over time. Whether you're just starting out or refining advanced skills, these visuals offer a clear picture of your progress.
                         </motion.div>
                     </motion.div>
@@ -118,19 +118,19 @@ const Section4: React.FC = () => {
                 </motion.div>
                 <motion.div
                     animate={{ height: selectedItem === 2 ? '39vh' : '29vh' }}
-                    transition={{ type: "spring", duration: 3 }}
+                    transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 2 || selectedItem === 0 ? 1 : 0.5 }}
                     className={styles.step4}>
                     <motion.div animate={{ height: selectedItem === 2 ? '3vh' : 0 }}
-                        transition={{ type: "spring", duration: 3 }} className={styles.activeStepCard} />
+                        transition={{ type: "spring", duration: 1.5 }} className={styles.activeStepCard} />
                     <motion.div
                         animate={{ height: selectedItem === 2 ? '17vh' : selectedItem === 1 ? 0 : '7vh' }}
-                        transition={{ type: "spring", duration: 3 }}
+                        transition={{ type: "spring", duration: 1.5 }}
                         className={styles.step2TopCard}>
                         <motion.div
                             animate={{ opacity: selectedItem === 2 ? 1 : 0 }}
                             style={{ padding: 10, zIndex: 1 }}
-                            transition={{ type: "spring", duration: 3 }}>
+                            transition={{ type: "spring", duration: 1.5 }}>
                             As part of your comprehensive IELTS preparation, refine and resubmit your essays. Each revision brings fresh scores and insights, allowing you to witness your growth and continuously improve English writing skills.
                         </motion.div>
                     </motion.div>
@@ -141,19 +141,19 @@ const Section4: React.FC = () => {
                 </motion.div>
                 <motion.div
                     animate={{ height: selectedItem === 3 ? '50vh' : '36vh' }}
-                    transition={{ type: "spring", duration: 3 }}
+                    transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 3 || selectedItem === 0 ? 1 : 0.5 }}
                     className={styles.step3}>
                     <motion.div
                         animate={{ height: selectedItem === 3 ? '21vh' : selectedItem === 2 ? 0 : '7vh' }}
-                        transition={{ type: "spring", duration: 3 }}
+                        transition={{ type: "spring", duration: 1.5 }}
                         className={styles.step2TopCard}>
                         <motion.div animate={{ height: selectedItem === 3 ? '7vh' : 0 }}
-                            transition={{ type: "spring", duration: 3 }} className={styles.activeStepCard} />
+                            transition={{ type: "spring", duration: 1.5 }} className={styles.activeStepCard} />
                         <motion.div
                             animate={{ opacity: selectedItem === 3 ? 1 : 0 }}
                             style={{ padding: 10, zIndex: 1 }}
-                            transition={{ type: "spring", duration: 3 }}>
+                            transition={{ type: "spring", duration: 1.5 }}>
                             Beyond scores, gain insights across varied IELTS tasks and topics. This holistic feedback is crucial for a well-rounded preparation for the IELTS writing exam
                         </motion.div>
                     </motion.div>
@@ -164,18 +164,18 @@ const Section4: React.FC = () => {
                 </motion.div>
                 <motion.div
                     animate={{ height: selectedItem === 4 ? '57vh' : '43vh' }}
-                    transition={{ type: "spring", duration: 3 }}
+                    transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 4 || selectedItem === 0 ? 1 : 0.5 }}
                     className={styles.step2}>
                     <motion.div animate={{ height: selectedItem === 4 ? '7vh' : 0 }}
-                        transition={{ type: "spring", duration: 3 }} className={styles.activeStepCard} />
+                        transition={{ type: "spring", duration: 1.5 }} className={styles.activeStepCard} />
                     <motion.div
                         animate={{ height: selectedItem === 4 ? '21vh' : selectedItem === 3 ? 0 : '7vh' }}
-                        transition={{ type: "spring", duration: 3 }} className={styles.step2TopCard}>
+                        transition={{ type: "spring", duration: 1.5 }} className={styles.step2TopCard}>
                         <motion.div
                             animate={{ opacity: selectedItem === 4 ? 1 : 0 }}
                             style={{ padding: 10, zIndex: 1 }}
-                            transition={{ type: "spring", duration: 3 }}>
+                            transition={{ type: "spring", duration: 1.5 }}>
                             Visual feedback is a catalyst for motivation. With our progress recording service, celebrate each leap in your IELTS learning journey, setting and achieving higher milestones.
                         </motion.div>
                     </motion.div>
@@ -190,7 +190,7 @@ const Section4: React.FC = () => {
                     <MdOutlineFlag className={styles.flagIcon} />
                     <motion.div
                         animate={{ height: selectedItem === 4 ? 0 : '7vh' }}
-                        transition={{ type: "spring", duration: 3 }}
+                        transition={{ type: "spring", duration: 1.5 }}
                         className={styles.step2TopCard}>  </motion.div>
                 </motion.div>
             </div>
