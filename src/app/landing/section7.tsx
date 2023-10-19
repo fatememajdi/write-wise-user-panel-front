@@ -54,7 +54,7 @@ const Section7: React.FC = () => {
     return (<FqaBackground>
         <AnimatePresence>
             <div className={styles.section7Container}>
-                <div className={'col-lg-6 col-md-6 ' + styles.itemsContainer}>
+                <div className={'col-lg-6 col-md-6 col-12 ' + styles.itemsContainer}>
                     {
                         questions.slice(0, 3).map((item, index) => <QuestionCard selectedItem={selectedItem} QA={item} key={index} ChangeSelectedItem={ChangeSelectedItem} />)
                     }
@@ -69,7 +69,8 @@ const Section7: React.FC = () => {
                 </div>
 
                 <div
-                    className={'col-lg-6 col-md-6 ' + styles.itemsContainer}>
+                    style={{ marginLeft: 30 }}
+                    className={'col-lg-6 col-md-6 col-12 ' + styles.itemsContainer}>
                     {
                         questions.slice(3, 6).map((item, index) => <QuestionCard selectedItem={selectedItem} QA={item} key={index} ChangeSelectedItem={ChangeSelectedItem} />)
                     }
@@ -112,7 +113,7 @@ const QuestionCard: React.FC<_props> = ({ QA, selectedItem, ChangeSelectedItem }
 
         <motion.div
             animate={{ height: selectedItem === QA.id ? 'fit-content' : 0, opacity: selectedItem === QA.id ? 1 : 0 }}
-            transition={{ type: "spring", duration: 2 }}
+            transition={{ type: "spring", duration: 1 }}
             className={styles.answerCard}
         >
             {
