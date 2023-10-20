@@ -39,7 +39,7 @@ const steps = [
 const Section2: React.FC = () => {
 
     return <Section2Background>
-        <section className={styles.section2Container} id="section-5">
+        <section className={styles.section2Container} id="how-it-works">
             <div className={styles.textContainer}>
                 <div className={styles.title}>
                     How it works

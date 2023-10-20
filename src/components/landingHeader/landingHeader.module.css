@@ -54,6 +54,8 @@
 
 .headerLogo {
     margin-right: 38px;
+    width: 185px;
+    height: 15px;
 }
 
 .responsiveChatButton {
@@ -81,7 +83,10 @@
     }
 
     .headerItem {
-        margin-right: 20px;
+        margin-right: 25px;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 18px;
     }
 
     .headerContainer {
@@ -91,6 +96,12 @@
 
     .headerItemsContainer {
         height: 100px;
+    }
+
+    .headerLogo {
+        /* height: 8px;
+        width: 98px; */
+        margin-right: 10px;
     }
 
 }

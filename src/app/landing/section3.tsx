@@ -22,17 +22,15 @@ const Section3: React.FC = () => {
 
             <div className={'col-12 ' + styles.section3Container}>
 
-                <div className={'col-lg-6 col-md-6 col-12 ' + styles.leftContainer}>
+                <div className={'col-lg-7 col-md-6 col-12 ' + styles.leftContainer}>
                     <div className={styles.leftTitle}>
-                        Unlock IELTS Writing Mastery with<br />
+                        Unlock IELTS Writing Mastery with
                         WriteWiseAI's Pioneering Features
                     </div>
                     <div className={styles.leftDescription}>
-                        Experience a seamless fusion of advanced<br />
-                        technology and intuitive design, tailored to <br />
-                        elevate every aspect of your IELTS<br />
-                        preparation journey, and ensure top-tier <br />
-                        IELTS writing results.
+                        Experience a seamless fusion of advanced technology and intuitive<br />
+                        design, tailored to elevate every aspect of your IELTS preparation<br />
+                        journey, and ensure top-tier IELTS writing results.
                     </div>
 
                     {/* <button
@@ -47,7 +45,7 @@ const Section3: React.FC = () => {
 
                 </div>
 
-                <div className={'col-lg-6 col-md-6 col-12 ' + styles.rightContainer}>
+                <div className={'col-lg-5 col-md-6 col-12 ' + styles.rightContainer}>
                     <FeaturesItemCard icon={<Rate />} title="AI-Powered Essay Rating" />
                     <FeaturesItemCard icon={<File />} title="AI-Driven Topic Generator" />
                     <FeaturesItemCard icon={<User />} title="Personalized Feedback and Recommendations" />

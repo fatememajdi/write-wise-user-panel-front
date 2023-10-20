@@ -21,6 +21,7 @@ const steps = [
 const Section4: React.FC = () => {
 
     const [selectedItem, changeSelectedItem] = React.useState<number>(0);
+    // const [animating, changeAnimating] = React.useState<boolean>(false);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     function selectStep(id: number) {
@@ -28,7 +29,25 @@ const Section4: React.FC = () => {
             changeSelectedItem(0);
         else
             changeSelectedItem(id);
-    }
+    };
+
+    function DesktopSelectStep(id: number) {
+        if (id !== selectedItem) {
+            changeSelectedItem(id);
+            // if (animating) {
+            //     setTimeout(() => {
+            //         changeSelectedItem(id);
+            //         changeAnimating(true);
+            //     }, 1000);
+            // } else {
+            //     changeSelectedItem(id);
+            //     changeAnimating(true);
+            // }
+        };
+        // setTimeout(() => {
+        //     changeAnimating(false);
+        // }, 1500);
+    };
 
     return <div
         onWheel={() => {
@@ -93,7 +112,6 @@ const Section4: React.FC = () => {
                     style={{ opacity: selectedItem === 1 || selectedItem === 0 ? 1 : 0.5 }}
                     className={styles.step6}></div>
                 <motion.div
-                    // onMouseLeave={() => changeSelectedItem(0)}
                     animate={{ height: selectedItem === 1 ? '36vh' : '22vh' }}
                     transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 1 || selectedItem === 0 ? 1 : 0.5 }}
@@ -112,8 +130,7 @@ const Section4: React.FC = () => {
                         </motion.div>
                     </motion.div>
                     <div
-                        // onMouseEnter={() => changeSelectedItem(1)}
-                        onClick={() => changeSelectedItem(1)}
+                        onClick={() => DesktopSelectStep(1)}
                         className={styles.stepTitle}><span>01</span> Dynamic Visuals</div>
                 </motion.div>
                 <motion.div
@@ -135,8 +152,7 @@ const Section4: React.FC = () => {
                         </motion.div>
                     </motion.div>
                     <div
-                        // onMouseEnter={() => changeSelectedItem(2)}
-                        onClick={() => changeSelectedItem(2)}
+                        onClick={() => DesktopSelectStep(2)}
                         className={styles.stepTitle}><span>02</span> Unlimited Revisions</div>
                 </motion.div>
                 <motion.div
@@ -158,8 +174,7 @@ const Section4: React.FC = () => {
                         </motion.div>
                     </motion.div>
                     <div
-                        // onMouseEnter={() => changeSelectedItem(3)}
-                        onClick={() => changeSelectedItem(3)}
+                        onClick={() => DesktopSelectStep(3)}
                         className={styles.stepTitle}><span>03</span> Diverse Feedback</div>
                 </motion.div>
                 <motion.div
@@ -180,8 +195,7 @@ const Section4: React.FC = () => {
                         </motion.div>
                     </motion.div>
                     <div
-                        // onMouseEnter={() => changeSelectedItem(4)}
-                        onClick={() => changeSelectedItem(4)}
+                        onClick={() => DesktopSelectStep(4)}
                         className={styles.stepTitle}><span>04</span> Motivation Booster</div>
                 </motion.div>
                 <motion.div

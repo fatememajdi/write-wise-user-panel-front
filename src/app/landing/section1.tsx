@@ -18,7 +18,7 @@ const Section1: React.FC = () => {
     const router = useRouter();
 
     return <LandingBackground>
-        <section className={'col-12 ' + styles.section1Container} id="section-1">
+        <section className={'col-12 ' + styles.section1Container} id="home">
 
             <div className={'col-lg-6 col-md-6 col-12 ' + styles.rightContainer}>
                 <div className={styles.rightContainerTitle}>

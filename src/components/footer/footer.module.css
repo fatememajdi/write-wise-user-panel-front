@@ -1,179 +1,96 @@
 .footerContainer {
     background-color: var(--color-seccondary);
-    padding: 37px 64px 23px 64px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.leftContainer {
+    padding: 45px 0px 60px 197px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    width: fit-content;
 }
 
-.logo {
-    margin-bottom: 24px;
+.firstLineItems {
+    display: flex;
+    flex-direction: row;
 }
 
 .link {
-    color: #FFFFFF !important;
-    opacity: 0.5;
-    margin-bottom: 12px;
-    line-height: 24px;
+    margin-top: 10px;
+    color: #F3F3F3;
+    font-size: 20px;
     font-style: normal;
-    font-size: 16px;
     font-weight: 400;
-    margin-right: 28px;
+    line-height: 24px;
+    text-decoration-line: underline;
+    opacity: 0.5;
+    margin-right: 30px;
+    margin-bottom: 10px;
 }
 
-.rightContainer {
-    width: fit-content;
+.secondLineItems {
     display: flex;
     flex-direction: row;
-    height: 100% !important;
-    align-items: center;
-}
-
-.socialMediaContainer {
-    display: flex;
-    flex-direction: row;
-    margin-right: 24px;
-    padding-top: 20px;
 }
 
 .socialIcon {
-    height: 24px;
-    width: 24px;
-    margin-right: 24px;
+    margin-top: 10px;
+    margin-left: 15px;
+    color: #F3F3F3;
+    font-size: 25px;
+    font-style: normal;
+    opacity: 0.5;
+    cursor: pointer;
 }
 
-.emailCardTiitle {
-    margin-top: 26px;
-    font-size: 12px;
+.logo {
+    color: #F3F3F3;
+    font-size: 32px;
+    font-style: normal;
     font-weight: 700;
-    line-height: 20px;
-    color: var(--color-whiteText);
+    line-height: 12px;
+    margin-bottom: 20px;
 }
 
-.emailInput {
-    width: 296px !important;
-    border: none !important;
-}
-
-.emailInput input {
-    height: 44px !important;
-}
-
-.emailInput input::placeholder {
-    color: var(--color-seccondary) !important;
-}
-
-.emailCardText {
-    color: var(--color-gray);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    font-style: normal;
-    margin-top: 12px;
-}
-
-.inputContainer {
-    display: flex;
-    flex-direction: row;
-    margin-top: 15px;
-}
-
-.sibscribeButton {
-    height: 44px;
-    border: solid 1px var(--color-background);
-    display: flex;
-    align-items: center;
-    color: var(--color-whiteText);
-    margin-left: 24px;
-    font-size: 16px;
-    font-style: normal;
-    line-height: 24px;
-    font-weight: 600;
-}
-
-.mobileEmailCardText {
-    display: none;
-    font-size: 8px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 11px;
-    color: #667085;
-}
-
-.mobileSocialMediaContainer {
-    display: none;
-    flex-direction: row;
-    margin-top: 15px;
-}
-
-@media(max-width: 480px) {
-    .socialMediaContainer {
-        display: none !important;
-    }
-
-    /* .rightContainer{
-        display: none;
-    } */
+@media(max-width: 1440px) {
     .footerContainer {
-        padding: 17px;
+        padding: 30px 0px 30px 120px;
     }
 
-    .inputContainer {
-        width: 182px;
-        margin-top: 0px;
-        flex-direction: column;
+    .logo {
+        font-size: 16px;
+        margin-bottom: 0px;
+        font-weight: 700;
+    }
+
+    .link {
+        font-size: 12px;
+        font-weight: 400;
+        margin-bottom: 0px;
+    }
+
+    .socialIcon {
+        font-size: 20px;
+    }
+}
+
+@media(max-width: 500px) {
+    .footerContainer {
+        padding: 20px 0px 20px 17px;
+    }
+
+    .firstLineItems {
+        flex-direction: column-reverse;
+    }
+
+    .logo {
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 0px;
     }
 
     .link {
         font-size: 10px;
-        text-decoration: underline;
+        font-weight: 400;
+        margin-bottom: 0px;
     }
 
-    .mobileLinksContainer {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .emailCardText {
-        display: none;
-    }
-
-    .mobileEmailCardText {
-        display: flex;
-    }
-
-    .emailCardTiitle {
-        margin-top: 0px;
-        font-size: 10px;
-    }
-
-    .emailInput {
-        width: 182px !important;
-    }
-
-    .emailInput input {
-        height: 36px !important;
-    }
-
-    .sibscribeButton {
-        width: 82px;
-        height: 27px;
-        margin-top: 15px;
-        font-size: 13px;
-        padding: 0px;
-        align-items: center;
-        justify-content: center;
-        margin-left: auto;
-    }
-
-    .mobileSocialMediaContainer {
-        display: flex;
+    .socialIcon {
+        font-size: 20px;
     }
 }

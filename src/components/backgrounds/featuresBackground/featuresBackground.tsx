@@ -5,7 +5,7 @@ import Image from "next/image";
 import styles from './featuresBackground.module.css';
 
 const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
-    <section className={'col-12 ' + styles.featuresBackground} id='section-3'>
+    <section className={'col-12 ' + styles.featuresBackground} id='features'>
         <Image
             className={styles.rightTop3Background + ' ' + styles.mobile}
             src="/features/right-top.svg"

@@ -1,154 +1,45 @@
 'use client';
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { Formik } from 'formik';
-// import ThemeSwitch from "@/components/themeSwitch";
-import * as Yup from 'yup';
 
 //----------------------------------------------------------------styles 
 import styles from './footer.module.css';
 
-//----------------------------------------------------------------components
-import Input from "../input/input";
+//----------------------------------------------------------------icons
+import { BiLogoLinkedinSquare } from 'react-icons/bi';
+import { IoLogoFacebook } from 'react-icons/io';
+import { AiFillInstagram } from 'react-icons/ai';
 
 //----------------------------------------------------------------social media items
 const socialMediaItems = [
     {
-        icon: '/twitter.svg',
-        link: 'https://twitter.com'
-    },
-    {
-        icon: '/linkedin.svg',
+        icon: <BiLogoLinkedinSquare />,
         link: 'https://www.linkedin.com'
     },
     {
-        icon: '/facebook.svg',
+        icon: <IoLogoFacebook />,
         link: 'https://www.facebook.com'
     },
     {
-        icon: '/github.svg',
-        link: 'https://github.com'
-    },
-    {
-        icon: '/dribbble.svg',
-        link: 'https://dribbble.com'
-    },
-]
-
-//---------------------------------------------------------------validation
-const EmailValidationSchema = Yup.object().shape({
-    email: Yup
-        .string()
-        .email("Invalid email format")
-        .required('Username is required!'),
-});
+        icon: <AiFillInstagram />,
+        link: 'https://instagram.com'
+    }
+];
 
 const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerContainer}>
-    <div className={styles.leftContainer}>
-        <Image
-            className={styles.logo}
-            src="/logo2.svg"
-            alt="Logo"
-            width={133}
-            height={15}
-            loading="eager"
-            priority
-        />
+    <div className={styles.logo}>WriteWiseAI</div>
+    <div className={styles.firstLineItems}>
         <Link className={styles.link} href={'/'}>Terms of Service</Link>
-        <div className={styles.mobileLinksContainer}>
-            <Link className={styles.link} href={'/'}>Privacy Policy</Link>
-            <Link className={styles.link} href={'/'}>about us</Link>
-        </div>
-        <div className={styles.mobileSocialMediaContainer}>
-            {
-                socialMediaItems.map((item, index) => <a key={index} href={item.link}>
-                    <Image
-                        className={styles.socialIcon}
-                        src={item.icon}
-                        alt="social media"
-                        width={24}
-                        height={24}
-                        priority
-                    />
-                </a>)
-            }
-        </div>
+        <Link className={styles.link} href={'/'}>about us</Link>
     </div>
-    <Formik
-        initialValues={{
-            email: ''
-        }}
-        validationSchema={EmailValidationSchema}
-        enableReinitialize
-        onSubmit={async (values) => {
-            // await handleSubmit(values);
-        }}
 
-    >
-        {({
-            values,
-            errors,
-            touched,
-            handleSubmit,
-            setFieldValue,
-            handleChange
-        }) => (
+    <div className={styles.secondLineItems}>
+        <Link className={styles.link} href={'/'}>Privacy Policy</Link>
+        {
+            socialMediaItems.map((item, index) => <a className={styles.socialIcon} href={item.link} key={index}>{item.icon}</a>)
+        }
+    </div>
 
-            <form
-                className={styles.rightContainer}
-                onSubmit={handleSubmit}>
-                <div className={styles.socialMediaContainer}>
-                    {
-                        socialMediaItems.map((item, index) => <a key={index} href={item.link}>
-                            <Image
-                                className={styles.socialIcon}
-                                src={item.icon}
-                                alt="social media"
-                                width={24}
-                                height={24}
-                                priority
-                            />
-                        </a>)
-                    }
-                </div>
-                <div>
-                    <div className={styles.emailCardTiitle}>
-                        Stay up to date !
-                    </div>
-                    <div className={styles.inputContainer}>
-                        <Input
-                            style={{ width: 182 }}
-                            className={styles.emailInput}
-                            onChange={handleChange}
-                            placeHolder='Enter your email'
-                            input
-                            inputtype='email'
-                            input_name='email'
-                            input_value={values.email}
-                            input_error={errors.email && touched.email && errors.email}
-                        />
-                        <div className={styles.mobileEmailCardText}>
-                            We care about your data in our <Link className={styles.emailCardText} href={'/'}>privacy policy</Link>
-                        </div>
-                        <button
-                            aria-label="email submit button"
-                            type="submit" className={styles.sibscribeButton}>
-                            Subscribe
-                        </button>
-                    </div>
-
-                    <div className={styles.emailCardText}>
-                        We care about your data in our <Link className={styles.emailCardText} href={'/'}>privacy policy</Link>
-                    </div>
-
-                </div>
-            </form>
-
-        )}
-
-    </Formik>
-    {/* <ThemeSwitch /> */}
 </div>;
 
 export default Footer;

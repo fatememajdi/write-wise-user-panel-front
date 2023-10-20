@@ -18,19 +18,19 @@ import { MdOutlineMenu } from 'react-icons/md';
 const headerItems = [
     {
         title: 'Home',
-        route: '#section-1'
+        route: '#home'
     },
     {
         title: 'How it works',
-        route: '#section-5'
+        route: '#how-it-works'
     },
     {
         title: 'Features',
-        route: '#section-3'
+        route: '#features'
     },
     {
         title: 'Pricing',
-        route: '#section-4'
+        route: '#pricing'
     }
 ];
 
@@ -79,10 +79,11 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
                     className={styles.headerLogo}
                     src="/logo.svg"
                     alt="Logo"
-                    width={133}
-                    height={15}
-                    priority
+                    width="0"
+                    height="0"
+                    sizes="100vw"
                     loading="eager"
+                    priority
                 />
                 {
                     headerItems.map(

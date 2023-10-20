@@ -16,13 +16,13 @@ import { StartLoader } from "@/components/Untitled";
 const Section6: React.FC = () => {
     const router = useRouter();
 
-    return <div className={styles.section6}>
+    return <section className={styles.section6} id="pricing">
         <div className={styles.title}>No Monthly Commitments, Pure Flexibility</div>
         <div className={styles.description}>
             At WriteWiseAI, we have streamlined our pricing to ensure you get the<br />
             best value for your IELTS writing needs.
         </div>
-    </div>
+    </section>
 };
 
 export default Section6;

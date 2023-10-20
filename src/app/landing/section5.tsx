@@ -22,10 +22,10 @@ const steps = [
 ];
 
 const Section5: React.FC = () => {
-
     const [selectedItem, setSelectedItem] = React.useState<number>(0);
     const [watchedItems, changeWatchedItems] = React.useState<boolean>(false);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+    const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
 
     function lockScroll() {
         if (!isMobile) {
@@ -103,7 +103,7 @@ const Section5: React.FC = () => {
             <div className={styles.mainCard}>
                 <AnimatePresence>
                     <motion.div
-                        animate={{ paddingTop: selectedItem === 0 ? 130 : selectedItem === 1 ? 70 : 0 }}
+                        animate={{ paddingTop: selectedItem === 0 ? isMac ? 140 : 130 : selectedItem === 1 ? isMac ? 80 : 70 : isMac ? 30 : 0 }}
                         transition={{ type: "spring", duration: 1 }}
                         className={styles.leftCard}>
                         {
