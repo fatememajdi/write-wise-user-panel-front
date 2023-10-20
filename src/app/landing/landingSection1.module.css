@@ -159,6 +159,10 @@
         line-height: 20.8px;
     }
 
+    .rightContainerDescriptionItemIcon {
+        margin-top: 0px;
+    }
+
 }
 
 @media(max-width: 992px) {
@@ -187,6 +191,7 @@
     .rightContainerButton {
         font-size: 22px;
     }
+
 }
 
 @media(max-width: 500px) {
