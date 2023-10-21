@@ -4,6 +4,10 @@ import Image from "next/image";
 //-----------------------------------styles
 import styles from './fqaBackground.module.css';
 
+//---------------------------------------------components
+import LandingHeader from "@/components/landingHeader/landingHeader";
+
+
 const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => <div className={'col-12 ' + styles.fqadBackground}>
     <Image
         className={styles.rightTopBackground + ' ' + styles.mobile}
@@ -46,51 +50,64 @@ const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
 </div>;
 
-const FqaQuestionsBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => <div className={'col-12 ' + styles.fqadBackground}>
+const FqaQuestionsBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [logedIn, changeLogedIn] = React.useState<boolean>(false);
 
-    <Image
-        className={styles.rightTop2Background}
-        src="/fqa/right-top-2.svg"
-        alt="background"
-        width={427.75}
-        height={357}
-        priority
-    />
-    <Image
-        className={styles.rightTop2Background}
-        src="/fqa/right-top-2.svg"
-        alt="background"
-        width={427.75}
-        height={357}
-        priority
-    />
-    <Image
-        className={styles.rightCenterBackground}
-        src="/fqa/right-center.svg"
-        alt="background"
-        width={427.75}
-        height={357}
-        priority
-    />
-    <Image
-        className={styles.leftTop2Background}
-        src="/fqa/left-top-2.svg"
-        alt="background"
-        width={377}
-        height={237}
-        priority
-    />
-    <Image
-        className={styles.leftCenter2Background}
-        src="/fqa/left-center-2.svg"
-        alt="background"
-        width={427.75}
-        height={357}
-        priority
-    />
+    React.useEffect(() => {
+        const item = localStorage.getItem('user');
+        if (item)
+            changeLogedIn(true);
+        else
+            changeLogedIn(false);
+    }, []);
 
-    {children}
+    return <div className={'col-12 ' + styles.fqadBackground}>
 
-</div>;
+        <LandingHeader logedIn={logedIn} />
+        <Image
+            className={styles.rightTop2Background}
+            src="/fqa/right-top-2.svg"
+            alt="background"
+            width={427.75}
+            height={357}
+            priority
+        />
+        <Image
+            className={styles.rightTop2Background}
+            src="/fqa/right-top-2.svg"
+            alt="background"
+            width={427.75}
+            height={357}
+            priority
+        />
+        <Image
+            className={styles.rightCenterBackground}
+            src="/fqa/right-center.svg"
+            alt="background"
+            width={427.75}
+            height={357}
+            priority
+        />
+        <Image
+            className={styles.leftTop2Background}
+            src="/fqa/left-top-2.svg"
+            alt="background"
+            width={377}
+            height={237}
+            priority
+        />
+        <Image
+            className={styles.leftCenter2Background}
+            src="/fqa/left-center-2.svg"
+            alt="background"
+            width={427.75}
+            height={357}
+            priority
+        />
+
+        {children}
+
+    </div>
+};
 
 export { FqaBackground, FqaQuestionsBackground };

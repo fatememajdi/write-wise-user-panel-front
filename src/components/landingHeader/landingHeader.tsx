@@ -34,7 +34,7 @@ const headerItems = [
     }
 ];
 
-const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
+const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ logedIn, shadow }) => {
     const { data: session, status } = useSession({
         required: true, onUnauthenticated() {
             return;
@@ -51,7 +51,8 @@ const LandingHeader: React.FC<{ logedIn: boolean }> = ({ logedIn }) => {
         });
     };
 
-    return (<div className={'col-12 ' + styles.headerContainer}>
+    return (<div className={shadow ? 'col-12 ' + styles.headerContainer + ' ' + styles.blackShadow :
+        'col-12 ' + styles.headerContainer + ' ' + styles.lightShadow}>
         {/* ---------------------------------------------------------------------mobile header */}
         <div className={styles.responsiveMenuIcon}>
             <MdOutlineMenu />

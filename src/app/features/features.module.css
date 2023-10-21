@@ -5,20 +5,20 @@
 
 .featuresDetailsContent {
     height: 100%;
-    padding: 141px 206px 203px 208px;
+    padding: 200px 380px 203px 380px;
 }
 
 .description {
-    color: #1F1F1F;
-    font-weight: 500;
-    font-size: 18px;
-    text-align: left;
-    line-height: 127.52%;
-    font-style: normal;
     display: flex;
     margin-right: auto;
     margin-left: auto;
     width: fit-content;
+    color: #252525;
+    text-align: justify;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 127.523%;
 }
 
 .featuresItemsContainer {
@@ -26,67 +26,7 @@
     flex-wrap: wrap;
     z-index: 1;
     margin-top: 70px;
-}
-
-.itemCard {
-    z-index: 1;
-    margin-bottom: 70px;
-    background-color: #DA282E;
-}
-
-.itemTitle {
-    color: var(--color-whiteText);
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 133.02%;
-    font-style: normal;
-    margin-top: 52px;
-    text-align: left;
-}
-
-.itemCardContent {
-    background-color: var(--color-seccondary);
-    border-radius: 30px;
-    min-height: 320px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 50px 96px 50px 96px;
-}
-
-.itemCard :nth-of-type(2n-1) {
-    margin-left: 35px !important;
-}
-
-.itemCard :nth-of-type(2n) {
-    margin-right: 35px !important;
-}
-
-.lastItemCard {
-    z-index: 1 !important;
-    margin-bottom: 70px;
-}
-
-
-.lastItemCardContent {
-    background: linear-gradient(179.62deg, rgba(46, 64, 87, 0.1) -19.6%, rgba(218, 40, 46, 0.007) 139.2%);
-    color: #000000;
-    line-height: 26px;
-    font-size: 20px;
-    text-align: center;
-    font-weight: 300;
-    min-height: 320px;
-    border-radius: 20px;
-    padding: 95px 37px;
-}
-
-.lastItemCard :nth-of-type(2n-1) {
-    margin-left: 35px !important;
-}
-
-.lastItemCard :nth-of-type(2n) {
-    margin-right: 35px !important;
+    height: fit-content;
 }
 
 .SignUpTitle {
@@ -94,10 +34,12 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    font-style: normal;
-    font-weight: 300;
+    color: #5C5D60;
     font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
     line-height: 40px;
+    margin-top: 116px;
 }
 
 .signUpButton {
@@ -111,4 +53,74 @@
     font-weight: 600;
     font-size: 24px;
     line-height: 40px;
+}
+
+.itemCardFront {
+    width: 569px;
+    height: 320px;
+    perspective: 1000px;
+    padding: 24px;
+}
+
+.card {
+    height: 100%;
+    width: 100%;
+    border-radius: 30px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1000ms;
+}
+
+.card:hover {
+    transform: rotateY(180deg);
+}
+
+.rotateCard {
+    transform: rotateY(180deg);
+}
+
+.cardFront,
+.cardBack {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+    position: absolute;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.cardFront {
+    background: #2E4057;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 140px;
+    padding-right: 122px;
+    color: #FFF;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 133.023%;
+}
+
+.cardFront span {
+    margin-top: 24px;
+}
+
+.cardBack {
+    color: #252525;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    letter-spacing: -0.12px;
+    padding-left: 60px;
+    padding-right: 47px;
+    background: linear-gradient(180deg, rgba(46, 64, 87, 0.10) -40.94%, rgba(218, 40, 46, 0.01) 128.59%);
+    transform: rotateY(180deg);
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 
 //-----------------------------------------styles
 import styles from './featuresBackground.module.css';
+import LandingHeader from "@/components/landingHeader/landingHeader";
 
 const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     <section className={'col-12 ' + styles.featuresBackground} id='features'>
@@ -115,24 +116,37 @@ const FeaturesBackground: React.FC<{ children: React.ReactNode }> = ({ children 
     </section>;
 
 
-const FeaturesDetailsBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => <div className={'col-12 ' + styles.featuresDetailsBackground}>
-    <Image
-        className={styles.centerBackground}
-        src="/features/center.svg"
-        alt="background"
-        width={427.75}
-        height={357}
-        priority
-    />
-    <Image
-        className={styles.center2Background}
-        src="/features/center-2.svg"
-        alt="background"
-        width={205.58}
-        height={546.45}
-        priority
-    />
-    {children}
-</div>
+const FeaturesDetailsBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [logedIn, changeLogedIn] = React.useState<boolean>(false);
 
+    React.useEffect(() => {
+        const item = localStorage.getItem('user');
+        if (item)
+            changeLogedIn(true);
+        else
+            changeLogedIn(false);
+    }, []);
+
+
+    return <div className={'col-12 ' + styles.featuresDetailsBackground}>
+        <LandingHeader logedIn={logedIn} shadow />
+        <Image
+            className={styles.centerBackground}
+            src="/features/center.svg"
+            alt="background"
+            width={427.75}
+            height={357}
+            priority
+        />
+        <Image
+            className={styles.center2Background}
+            src="/features/center-2.svg"
+            alt="background"
+            width={205.58}
+            height={546.45}
+            priority
+        />
+        {children}
+    </div>
+}
 export { FeaturesBackground, FeaturesDetailsBackground };

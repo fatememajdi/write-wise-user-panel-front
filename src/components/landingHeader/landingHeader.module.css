@@ -23,9 +23,18 @@
     height: 142px;
     z-index: 10 !important;
     background-color: #FDFDFD;
+    align-items: center;
+}
+
+.blackShadow {
+    box-shadow: -1px 7px 13px -7px rgba(181, 178, 178, 0.75);
+    -webkit-box-shadow: -1px 7px 13px -7px rgba(181, 178, 178, 0.75);
+    -moz-box-shadow: -1px 7px 13px -7px rgba(181, 178, 178, 0.75);
+}
+
+.lightShadow {
     box-shadow: -1px 13px 0px 3px rgba(243, 243, 243, 0.17);
     -webkit-box-shadow: -1px 13px 0px 3px rgba(243, 243, 243, 0.17);
-    align-items: center;
 }
 
 .headerItem {

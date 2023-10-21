@@ -9,7 +9,6 @@ import styles from './fqa.module.css';
 const FqaQuestionsBackground = React.lazy(
     () => import("@/components/backgrounds/fqaBackground/fqaBackground").then(module => ({ default: module.FqaQuestionsBackground }))
 );
-const LandingThirdHeader = lazy(() => import("@/components/landingThirdHeader/landingThirdHeader"));
 const Input = lazy(() => import("@/components/input/input"));
 const Footer = lazy(() => import("@/components/footer/footer"));
 import { StopLoader } from "@/components/Untitled";
@@ -86,47 +85,8 @@ const FQA: React.FC = () => {
 
     return <FqaQuestionsBackground>
         <div className={'col-12 ' + styles.topContainer}>
-            <LandingThirdHeader />
-            <div className={styles.title}>How can I help you ?</div>
-            <Formik
-                initialValues={{
-                    search: ''
-                }}
-                // validationSchema={WritingValidationSchema}
-                enableReinitialize
-                onSubmit={async (values) => {
-                    // await handleSubmit(values);
-                }}
-
-            >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleSubmit,
-                    setFieldValue,
-                    handleChange
-                }) => (
-
-                    <form
-                        className={styles.searchCard}
-                        onSubmit={handleSubmit}>
-
-                        <Search color='#FFFFFF' height={50} width={51.27} />
-                        <Input
-                            className={styles.searchInput}
-                            onChange={handleChange}
-                            placeHolder='type here...'
-                            input
-                            inputtype='search'
-                            input_name='search'
-                            input_value={values.search}
-                            input_error={errors.search && touched.search && errors.search} />
-                    </form>
-
-                )}
-
-            </Formik>
+            <div className={styles.title}>Frequently Asked Questions</div>
+            
         </div>
         <div className={'col-12 ' + styles.mainContainer}>
             {

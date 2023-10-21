@@ -1,6 +1,6 @@
 .topContainer {
     background-color: var(--color-seccondary);
-    height: 70vh;
+    height: 80vh;
     position: relative;
     top: 0px;
     display: flex;
@@ -10,52 +10,15 @@
 }
 
 .title {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 40px;
-    line-height: 40px;
+    color: #FFF;
     text-align: center;
-    letter-spacing: -0.05em;
-    hanging-punctuation: first last;
-    color: var(--color-whiteText);
-}
-
-.searchCard {
-    border: 5px solid #FFFFFF;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: 16px;
-    height: fit-content !important;
-    min-height: 85px;
-    margin-top: 38px;
-    z-index: 0;
-}
-
-.searchInput {
-    background-color: var(--color-seccondary) !important;
-}
-
-.searchInput input {
-    background-color: var(--color-seccondary) !important;
-    border-color: none !important;
-    width: 700px !important;
-    color: var(--color-whiteText) !important;
-}
-
-.searchInput input::placeholder {
-    color: var(--color-whiteText) !important;
+    font-size: 64px;
     font-style: normal;
-    font-weight: 300;
-    font-size: 24px;
+    font-weight: 700;
     line-height: 40px;
-    letter-spacing: -0.05em;
-}
-
-.searchInput input:focus {
-    border: none !important;
+    letter-spacing: 3.2px;
+    text-align: center;
+    color: var(--color-whiteText);
 }
 
 .mainContainer {

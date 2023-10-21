@@ -40,7 +40,7 @@
 }
 
 .featuresButton {
-    color: var(--color-lightRed);
+    color: var(--color-red);
     font-style: normal;
     font-weight: 700;
     line-height: 40px;
@@ -48,7 +48,7 @@
     display: flex;
     align-items: center;
     padding: 0px !important;
-    margin-top: 70px;
+    margin-top: 24px;
 }
 
 .featuresItemCard {
@@ -113,11 +113,22 @@
         font-weight: 700;
         line-height: 133.023%;
     }
+
+    .featuresButton {
+        font-size: 16px;
+        font-weight: 700;
+    }
 }
 
 @media(max-width: 992px) {}
 
 @media(max-width: 480px) {
+
+    .featuresButton {
+        font-size: 13px;
+        font-weight: 900;
+    }
+
     .section3Container {
         flex-direction: column;
     }

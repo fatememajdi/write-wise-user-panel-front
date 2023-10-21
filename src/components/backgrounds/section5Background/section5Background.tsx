@@ -4,7 +4,7 @@ import Image from "next/image";
 //-------------------------------------styles
 import styles from './section5Background.module.css';
 
-const Section5Background: React.FC<{ children: React.ReactNode }> = ({ children }) => <section className={'col-12 ' + styles.section5Background}>
+const Section5Background: React.FC<{ children: React.ReactNode }> = ({ children }) => <section className={'col-12 ' + styles.section5Background} id='wiseSense'>
     <Image
         className={styles.hands}
         src="/landing/hands.svg"

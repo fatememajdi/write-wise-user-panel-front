@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 'use client';
-import React, { lazy } from "react";
+import React, { lazy, useState, useRef, useEffect } from "react";
 import { useRouter } from 'next/navigation';
+import { motion, useSpring, AnimatePresence } from "framer-motion";
 
 //------------------------------------------------styles
 import styles from './features.module.css';
-import './animationCard.css';
 
 //------------------------------------------------components
 const FeaturesDetailsBackground = React.lazy(
@@ -21,24 +21,44 @@ import { User, File, Step, Money, RegularRise } from '../../../public';
 const featuresItems = [
     {
         icon: User,
-        title: 'Personalized Feedback and Recommendations'
+        title: 'AI-Powered Essay Rating',
+        description: ' text 1 Kickstart your IELTS success by signing up for a WriteWiseAI account. Once registered, choose your IELTS category - General or Academic - ensuring feedback tailored to specific IELTS criteria.'
     },
     {
         icon: File,
-        title: 'AI-Powered Topic Generator'
+        title: 'Personalized Feedback and Recommendations',
+        description: 'Enhance your IELTS writing preparation with in-depth feedback tailored to your essays. Our system identifies areas for growth, providing insights and actionable steps to refine your English writing skills.'
     },
     {
         icon: Step,
-        title: 'AI-Powered Step-by-Step Writing Tutor'
+        title: 'AI-Driven Topic Generator',
+        description: 'Stay perpetually inspired with our topic generator, designed to offer a plethora of IELTS-relevant prompts, ensuring you are always ready for any exam topic.'
     },
     {
         icon: Money,
-        title: 'Affordable Pricing and Token System'
+        title: 'Step-by-Step IELTS Writing Tutoring',
+        description: 'Transform your approach to IELTS essay writing with our WriteWiseAI Tutor. Receive real-time guidance and feedback as you craft your essay, focusing on structure, vocabulary, coherence, and argument depth, closely resembling the guidance of a personal tutor.'
     },
     {
         icon: RegularRise,
-        title: 'Progress Tracking'
-    }
+        title: 'In-Depth Progress Tracking',
+        description: 'Visualize your IELTS learning growth. With our analytics dashboard, monitor improvements across essays, ensuring thorough preparation for the IELTS writing exam.'
+    },
+    {
+        icon: RegularRise,
+        title: 'Flexible Feedback Options',
+        description: 'Tailor your feedback experience, from detailed analyses to targeted recommendations. Our token system ensures this premium feature is both efficient and cost-effective.'
+    },
+    {
+        icon: RegularRise,
+        title: 'Intuitive User Experience',
+        description: 'Navigate with ease. Our user-centric design, from the editor to the analytics dashboard, guarantees a seamless IELTS preparation experience.'
+    },
+    {
+        icon: RegularRise,
+        title: 'Affordable Pricing and Token System',
+        description: 'Navigate with ease. Our user-centric design, from the editor to the analytics dashboard, guarantees a seamless IELTS preparation experience.'
+    },
 ];
 
 const Features: React.FC = () => {
@@ -52,13 +72,16 @@ const Features: React.FC = () => {
     return <FeaturesDetailsBackground>
         <div className={'col-12 ' + styles.featuresDetailsContent}>
             <div className={'col-12 ' + styles.description}>
-                embrace the power of WriteWiseAI and unlock your full potential in IELTS writing. With our innovative features and benefits, you'll be well-<br />
-                equipped to achieve your desired IELTS score and open the door to new opportunities:
+                Embrace the power of WriteWiseAI and unlock your full potential in IELTS writing. With our innovative<br />
+                features and benefits, you'll be well-equipped to achieve your desired IELTS score and open the door to<br />
+                new opportunities:
             </div>
             <div className={'col-12 ' + styles.featuresItemsContainer}>
-                {
-                    featuresItems.map((item, index) => <FeaturesItemCard item={item} key={index} />)
-                }
+                <AnimatePresence>
+                    {
+                        featuresItems.map((item, index) => <FeaturesItemCard item={item} key={index} />)
+                    }
+                </AnimatePresence>
             </div>
             <div className={'col-12 ' + styles.SignUpTitle}>
                 Sign up today and start your journey to IELTS writing mastery
@@ -78,28 +101,23 @@ const Features: React.FC = () => {
 
 export default Features;
 
-const FeaturesItemCard: React.FC<{ item: { icon: any, title: string } }> = ({ item }) => {
-    if (typeof window !== "undefined") {
-        var cards = document.querySelectorAll('.card');
 
-        cards.forEach((card) => {
-            card.addEventListener('click', function () {
-                card.classList.toggle('is-flipped');
-            });
-        });
-    }
-    return <div className="scene scene--card col-lg-6">
-        <div className="card">
-            <div className="card__face card__face--front">
-                <item.icon color={'#FFF'} />
-                <div className={styles.itemTitle}>{item.title}</div>
+const FeaturesItemCard: React.FC<{ item: { icon: any, title: string, description: string } }> = ({ item }) => {
+
+    const [flipping, setFlipping] = React.useState<boolean>(false);
+
+    return <div className={styles.itemCardFront}>
+        <div
+            onClick={() => setFlipping(!flipping)}
+            className={flipping ? styles.rotateCard + ' ' + styles.card : styles.card}>
+
+            <div className={styles.cardFront}>
+                <item.icon color='#FFF' />
+                <span>{item.title}</span>
             </div>
-            <div className="card__face card__face--back">
-                Receive objective and accurate essay ratings based on the official
-                IELTS criteria. Our advanced AI technology analyzes your essays to
-                give you a clear understanding of your current writing proficiency.
-            </div>
+
+            <div className={styles.cardBack}>{item.description}</div>
+
         </div>
     </div>
-
 };

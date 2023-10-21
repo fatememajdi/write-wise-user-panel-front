@@ -33,15 +33,15 @@ const Section3: React.FC = () => {
                         journey, and ensure top-tier IELTS writing results.
                     </div>
 
-                    {/* <button
+                    <button
                         aria-label="read more button"
                         onClick={() => {
                             router.push('/features');
                             StartLoader();
                         }}
                         className={styles.featuresButton}>
-                        Dive into IELTS Writing Mastery Now!  <IoIosArrowForward />
-                    </button> */}
+                        Read More  <IoIosArrowForward />
+                    </button>
 
                 </div>
 

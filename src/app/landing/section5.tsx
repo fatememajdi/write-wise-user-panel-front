@@ -3,6 +3,7 @@ import { Carousel } from 'react-responsive-carousel';
 import { AnimatePresence, motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useMediaQuery } from 'react-responsive';
+import { useRouter } from 'next/navigation';
 
 //------------------------------------------components
 const Section5Background = dynamic(() => import('@/components/backgrounds/section5Background/section5Background'));
@@ -11,8 +12,6 @@ const Section5Background = dynamic(() => import('@/components/backgrounds/sectio
 import styles from './landingSection5.module.css';
 
 //------------------------------------------icons
-// import { MdKeyboardArrowRight } from 'react-icons/md';
-import { ArrowLeft, ArrowRight } from "../../../public";
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 
 const steps = [
@@ -26,24 +25,37 @@ const Section5: React.FC = () => {
     const [watchedItems, changeWatchedItems] = React.useState<boolean>(false);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
+    const router = useRouter();
 
-    function lockScroll() {
+    async function lockScroll(deltaY: number) {
         if (!isMobile) {
             if (document)
-                !watchedItems ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
-            setTimeout(() => {
                 if (!watchedItems) {
-                    if (selectedItem < 2)
-                        setSelectedItem(selectedItem + 1);
-                    if (selectedItem === 2)
-                        changeWatchedItems(true);
+                    await router.push('/#wiseSense');
+                    document.body.style.overflow = "hidden";
+                    setTimeout(() => {
+                        if (!watchedItems) {
+                            if (deltaY === 100) {
+                                if (selectedItem < 2)
+                                    setSelectedItem(selectedItem + 1);
+                                if (selectedItem === 2)
+                                    changeWatchedItems(true);
+                            }else{
+                                if (selectedItem > 0)
+                                    setSelectedItem(selectedItem - 1);
+                                if (selectedItem === 0)
+                                    changeWatchedItems(true);
+                            }
+                        }
+                    }, 500);
+                } else {
+                    document.body.style.overflow = "auto";
                 }
-            }, 1000);
         }
     };
 
     return <Section5Background>
-        <div onWheel={() => lockScroll()} className={'col-12 ' + styles.section5}>
+        <div onWheel={(e) => lockScroll(e.deltaY)} className={'col-12 ' + styles.section5}>
             <div className={styles.title}>
                 <span className={styles.text1}>Experience </span>
                 <span className={styles.text2}>WiseSensei</span>
@@ -104,7 +116,7 @@ const Section5: React.FC = () => {
                 <AnimatePresence>
                     <motion.div
                         animate={{ paddingTop: selectedItem === 0 ? isMac ? 140 : 130 : selectedItem === 1 ? isMac ? 80 : 70 : isMac ? 30 : 0 }}
-                        transition={{ type: "spring", duration: 1 }}
+                        transition={{ type: "spring", duration: 0.5 }}
                         className={styles.leftCard}>
                         {
                             steps.map((item, index) => <motion.div
@@ -118,7 +130,7 @@ const Section5: React.FC = () => {
                                         WebkitBackgroundClip: 'text',
                                         WebkitTextFillColor: 'transparent'
                                     }}
-                                transition={{ type: "spring", duration: 1 }}
+                                transition={{ type: "spring", duration: 0.5 }}
                                 className={styles.stepTitle}
                                 key={index}>
                                 <span>{'0' + (index + 1)}   </span>{item.title}
