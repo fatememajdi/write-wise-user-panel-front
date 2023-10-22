@@ -3,6 +3,7 @@ import Image from "next/image";
 
 //-----------------------------------styles
 import styles from './fqaBackground.module.css';
+import '../../../styles/global.css';
 
 //---------------------------------------------components
 import LandingHeader from "@/components/landingHeader/landingHeader";
@@ -10,7 +11,7 @@ import LandingHeader from "@/components/landingHeader/landingHeader";
 
 const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => <div className={'col-12 ' + styles.fqadBackground}>
     <Image
-        className={styles.rightTopBackground + ' ' + styles.mobile}
+        className={styles.rightTopBackground + ' selectBack ' + styles.mobile}
         src="/fqa/right-top.svg"
         alt="background"
         width={259}
@@ -19,7 +20,7 @@ const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         priority
     />
     <Image
-        className={styles.rightTopBackground + ' ' + styles.mobile}
+        className={styles.rightTopBackground + ' selectBack ' + styles.mobile}
         src="/fqa/right-top.svg"
         alt="background"
         width={259}
@@ -28,7 +29,7 @@ const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         priority
     />
     <Image
-        className={styles.leftTopBackground + ' ' + styles.mobile}
+        className={styles.leftTopBackground + ' selectBack ' + styles.mobile}
         src="/fqa/left-top.svg"
         alt="background"
         width={301.14}
@@ -37,7 +38,7 @@ const FqaBackground: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         priority
     />
     <Image
-        className={styles.leftCenterBackground + ' ' + styles.mobile}
+        className={styles.leftCenterBackground + ' selectBack ' + styles.mobile}
         src="/fqa/left-center.svg"
         alt="background"
         width={377}
@@ -63,9 +64,9 @@ const FqaQuestionsBackground: React.FC<{ children: React.ReactNode }> = ({ child
 
     return <div className={'col-12 ' + styles.fqadBackground}>
 
-        <LandingHeader logedIn={logedIn} />
+        <LandingHeader logedIn={logedIn} shadow />
         <Image
-            className={styles.rightTop2Background}
+            className={'selectBack ' + styles.rightTop2Background}
             src="/fqa/right-top-2.svg"
             alt="background"
             width={427.75}
@@ -73,7 +74,7 @@ const FqaQuestionsBackground: React.FC<{ children: React.ReactNode }> = ({ child
             priority
         />
         <Image
-            className={styles.rightTop2Background}
+            className={'selectBack ' + styles.rightTop2Background}
             src="/fqa/right-top-2.svg"
             alt="background"
             width={427.75}
@@ -81,7 +82,7 @@ const FqaQuestionsBackground: React.FC<{ children: React.ReactNode }> = ({ child
             priority
         />
         <Image
-            className={styles.rightCenterBackground}
+            className={'selectBack ' + styles.rightCenterBackground}
             src="/fqa/right-center.svg"
             alt="background"
             width={427.75}
@@ -89,7 +90,7 @@ const FqaQuestionsBackground: React.FC<{ children: React.ReactNode }> = ({ child
             priority
         />
         <Image
-            className={styles.leftTop2Background}
+            className={'selectBack ' + styles.leftTop2Background}
             src="/fqa/left-top-2.svg"
             alt="background"
             width={377}
@@ -97,7 +98,7 @@ const FqaQuestionsBackground: React.FC<{ children: React.ReactNode }> = ({ child
             priority
         />
         <Image
-            className={styles.leftCenter2Background}
+            className={'selectBack ' + styles.leftCenter2Background}
             src="/fqa/left-center-2.svg"
             alt="background"
             width={427.75}

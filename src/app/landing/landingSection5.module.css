@@ -154,6 +154,42 @@
     display: none;
 }
 
+@media(max-width: 1620px) {
+    .section5 {
+        padding-left: 136px;
+    }
+
+    .title {
+        font-size: 24px;
+        line-height: 30.937px;
+        font-weight: 700;
+    }
+
+    .description {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20.8px;
+    }
+
+    .rightCard {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 20.8px;
+    }
+
+    .stepTitle {
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 23.633px;
+        padding-left: 40px;
+    }
+
+    .mainCard {
+        margin: 25px 0px;
+    }
+
+}
+
 @media(max-width: 1440px) {
     .section5 {
         padding-left: 136px;

@@ -78,6 +78,41 @@
 
 .arrowIcon {
     font-size: 26px;
+    margin-top: 5px;
+}
+
+@media(max-width: 1620px) {
+    .section7Container {
+        padding: 150px 85px;
+    }
+
+    .itemCard {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .itemContainer {
+        padding: 30px 0px;
+    }
+
+    .QuestionIcon {
+        font-size: 24px;
+    }
+
+    .answerCard {
+        font-size: 16px;
+    }
+
+    .readMoreButton {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .arrowIcon {
+        font-size: 18px;
+        margin-top: 5px;
+    }
+
 }
 
 @media(max-width: 1440px) {

@@ -40,7 +40,7 @@ const Section3: React.FC = () => {
                             StartLoader();
                         }}
                         className={styles.featuresButton}>
-                        Read More  <IoIosArrowForward />
+                        Read More  <IoIosArrowForward style={{ marginTop: 5 }} />
                     </button>
 
                 </div>

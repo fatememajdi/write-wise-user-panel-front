@@ -116,6 +116,12 @@
     z-index: -1 !important;
 }
 
+@media(max-width: 1620px) {
+    .headerBackground {
+        top: 0px;
+    }
+}
+
 @media(max-width: 1440px) {
     .headerBackground {
         top: 0px;

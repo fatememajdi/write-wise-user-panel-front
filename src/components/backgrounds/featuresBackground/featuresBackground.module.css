@@ -118,6 +118,12 @@
     z-index: -1;
 }
 
+@media(max-width: 1620px) {
+    .featuresBackground {
+        padding: 157px 0px 129px 0px;
+    }
+}
+
 @media(max-width: 1440px) {
     .featuresBackground {
         padding: 157px 0px 129px 0px;

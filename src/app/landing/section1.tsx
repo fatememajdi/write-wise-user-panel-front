@@ -6,6 +6,7 @@ import Image from "next/image";
 
 //------------------------------------------------styles
 import styles from './landingSection1.module.css';
+import '../../styles/global.css';
 
 //------------------------------------------------icons
 import { VscCircleFilled } from 'react-icons/vsc';
@@ -45,7 +46,7 @@ const Section1: React.FC = () => {
 
             <div className={'col-lg-6 col-md-6 col-12 ' + styles.leftContainer}>
                 <Image
-                    className={styles.leftContainerBackground}
+                    className={'selectBack ' + styles.leftContainerBackground}
                     src="/landing/section1-background.svg"
                     alt="section background"
                     width="0"
@@ -56,7 +57,7 @@ const Section1: React.FC = () => {
                 />
                 <div className={styles.leftImageCard}>
                     <Image
-                        className={styles.robot}
+                        className={'selectBack ' + styles.robot}
                         src="/landing/robot.svg"
                         alt="robot"
                         width="0"
@@ -66,7 +67,7 @@ const Section1: React.FC = () => {
                         priority
                     />
                     <Image
-                        className={styles.human}
+                        className={'selectBack ' + styles.human}
                         src="/landing/human.svg"
                         alt="human"
                         width="0"

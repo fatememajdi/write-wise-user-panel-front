@@ -113,6 +113,59 @@
     left: 35%;
 }
 
+
+@media(max-width: 1620px) {
+    .section1Container {
+        padding: 170px 0px 50px 0px;
+    }
+
+    .robot {
+        width: 337px;
+        height: 260px
+    }
+
+    .leftContainerBackground {
+        right: 0px;
+        top: -500px;
+    }
+
+    .human {
+        position: absolute;
+        width: 184px;
+        height: 267px;
+    }
+
+    .leftLogo {
+        font-size: 13px;
+    }
+
+
+    .rightContainer {
+        padding-left: 116px;
+    }
+
+    .rightContainerTitle {
+        font-size: 32px;
+        line-height: 35.2px;
+        letter-spacing: -0.16px;
+    }
+
+    .rightContainerDescription {
+        font-size: 16px;
+        line-height: 19.7px;
+    }
+
+    .rightContainerDescriptionItem {
+        font-size: 16px;
+        line-height: 20.8px;
+    }
+
+    .rightContainerDescriptionItemIcon {
+        margin-top: 0px;
+    }
+
+}
+
 @media(max-width: 1440px) {
     .section1Container {
         padding: 170px 0px 50px 0px;

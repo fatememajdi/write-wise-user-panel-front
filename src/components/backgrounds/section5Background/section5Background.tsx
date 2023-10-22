@@ -2,11 +2,12 @@ import React from "react";
 import Image from "next/image";
 
 //-------------------------------------styles
+import '../../../styles/global.css';
 import styles from './section5Background.module.css';
 
 const Section5Background: React.FC<{ children: React.ReactNode }> = ({ children }) => <section className={'col-12 ' + styles.section5Background} id='wiseSense'>
     <Image
-        className={styles.hands}
+        className={'selectBack ' + styles.hands}
         src="/landing/hands.svg"
         alt="ai hands"
         width={660}
@@ -16,7 +17,7 @@ const Section5Background: React.FC<{ children: React.ReactNode }> = ({ children 
     />
 
     <Image
-        className={styles.topBackground}
+        className={'selectBack ' + styles.topBackground}
         src="/landing/section5-top.svg"
         alt="ai hands"
         width={881}

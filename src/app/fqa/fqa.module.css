@@ -23,9 +23,17 @@
 
 .mainContainer {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
     min-height: 30vh;
     padding: 147px 40px 150px 180px;
+    align-items: flex-start;
+}
+
+.left,
+.right {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
 }
 
 .questionCard {
@@ -33,26 +41,37 @@
     height: fit-content !important;
     max-height: fit-content !important;
     /* height: auto !important; */
-    align-self: flex-start;
+    align-self: flex-start !important;
+    display: flex;
+    width: 100%;
+    margin-bottom: auto !important;
 }
 
 .questionContent {
-    border-bottom: 0.5px solid #2E4057;
     flex: 1;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 0px;
+    padding-top: 32px;
+}
+
+.questionMainCard {
+    border-bottom: 0.5px solid #2E4057;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* min-height: 200px; */
+    height: fit-content;
 }
 
 .question {
     height: fit-content;
-    font-style: normal;
-    font-weight: 700;
     font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
     line-height: 30px;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.48px;
     color: var(--color-blackText);
     margin-right: 45px;
     display: flex;
@@ -75,13 +94,13 @@
 }
 
 .answer {
-    background: linear-gradient(180deg, rgba(46, 64, 87, 0.1) 0%, rgba(46, 64, 87, 0) 100%);
     border-radius: 5px;
-    padding: 31px 40px 33px 40px;
+    margin: 21px 22px 32px 0px;
+    color: #000;
+    font-size: 24px;
     font-style: normal;
     font-weight: 300;
-    font-size: 20px;
     line-height: 30px;
-    text-align: center;
-    color: #000000;
+    letter-spacing: -0.12px;
+    overflow: hidden;
 }

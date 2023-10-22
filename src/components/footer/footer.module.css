@@ -47,6 +47,28 @@
     margin-bottom: 20px;
 }
 
+@media(max-width: 1620px) {
+    .footerContainer {
+        padding: 30px 0px 30px 120px;
+    }
+
+    .logo {
+        font-size: 16px;
+        margin-bottom: 0px;
+        font-weight: 700;
+    }
+
+    .link {
+        font-size: 12px;
+        font-weight: 400;
+        margin-bottom: 0px;
+    }
+
+    .socialIcon {
+        font-size: 20px;
+    }
+}
+
 @media(max-width: 1440px) {
     .footerContainer {
         padding: 30px 0px 30px 120px;

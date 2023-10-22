@@ -22,7 +22,7 @@ const Writer: React.FC<_props> = ({ type, topic, changeEndTyping }) => {
             options={{
                 delay: 0,
                 wrapperClassName: styles.writerClassname,
-                cursor: ' '
+                cursor: null
             }}
             onInit={(typewriter) => {
                 JSON.stringify(SplitText(topic)).slice(1, JSON.stringify(topic).length - 1).split(/(\s)/).map((str: any, index: number) => {

@@ -81,6 +81,43 @@
     padding-right: 20px;
 }
 
+@media(max-width: 1620px) {
+    .leftContainer {
+        padding-left: 117px;
+    }
+
+    .leftTitle {
+        font-size: 24px;
+    }
+
+    .leftDescription {
+        font-size: 16px;
+        line-height: 22.169px;
+    }
+
+    .featuresItemTitle {
+        font-size: 16px;
+    }
+
+    .featuresItemCard {
+        margin-bottom: 45px;
+    }
+
+    .rightContainer {
+        padding-left: 60px;
+    }
+
+    .featuresItemTitle {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 133.023%;
+    }
+
+    .featuresButton {
+        font-size: 16px;
+        font-weight: 700;
+    }
+}
 
 @media(max-width: 1440px) {
     .leftContainer {

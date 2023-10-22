@@ -1,6 +1,7 @@
 'use client';
 import React from "react";
 import { AnimatePresence, motion } from 'framer-motion';
+import { useMediaQuery } from 'react-responsive';
 import { useRouter } from 'next/navigation';
 
 //--------------------------styles
@@ -48,6 +49,8 @@ const questions = [
 ];
 
 const Section7: React.FC = () => {
+
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const router = useRouter();
     const [selectedItem, ChangeSelectedItem] = React.useState<number>(null);
 
@@ -69,7 +72,7 @@ const Section7: React.FC = () => {
                 </div>
 
                 <div
-                    style={{ marginLeft: 30 }}
+                    style={{ marginLeft: isMobile ? 0 : 30 }}
                     className={'col-lg-6 col-md-6 col-12 ' + styles.itemsContainer}>
                     {
                         questions.slice(3, 6).map((item, index) => <QuestionCard selectedItem={selectedItem} QA={item} key={index} ChangeSelectedItem={ChangeSelectedItem} />)

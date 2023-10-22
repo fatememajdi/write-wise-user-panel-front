@@ -285,7 +285,48 @@
     margin-top: 40px;
 }
 
-@media(max-width: 1500px) {
+@media(max-width: 1620px) {
+    .circle1 {
+        height: 223px;
+        width: 223px;
+    }
+
+    .circle2 {
+        height: 356px;
+        width: 356px;
+    }
+
+    .circle2 {
+        height: 356px;
+        width: 356px;
+    }
+
+    .circle4 {
+        height: 187px;
+        width: 187px;
+    }
+
+    .circle5 {
+        height: 223px;
+        width: 223px;
+        top: -111px;
+    }
+
+    .title {
+        margin-top: 70px;
+        margin-bottom: 80px;
+    }
+
+    .select {
+        width: 190px;
+    }
+
+    .datePicker {
+        width: 190px;
+    }
+}
+
+@media(max-width: 1440px) {
     .circle1 {
         height: 223px;
         width: 223px;

@@ -96,6 +96,24 @@
     font-size: 15px;
 }
 
+@media(max-width: 1620px) {
+    .formSectionInput textarea {
+        font-size: 16px !important;
+    }
+
+    .formSectionInput input {
+        font-size: 16px !important;
+    }
+
+    .formSectionInput textarea::placeholder {
+        font-size: 16px !important;
+    }
+
+    .formSectionInput input::placeholder {
+        font-size: 16px !important;
+    }
+}
+
 @media(max-width: 1440px) {
     .formSectionInput textarea {
         font-size: 16px !important;

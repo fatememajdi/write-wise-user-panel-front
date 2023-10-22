@@ -4,6 +4,7 @@ import Image from "next/image";
 //-------------------------------------------styles
 import styles from './landingBackground.module.css';
 import LandingHeader from "../../landingHeader/landingHeader";
+import '../../../styles/global.css';
 
 const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [logedIn, changeLogedIn] = React.useState<boolean>(false);
@@ -17,9 +18,9 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
     }, [])
 
     return <div className={'col-12 ' + styles.landingBackground}>
-      
+
         <Image
-            className={"w-full h-auto " + styles.headerBackground}
+            className={"w-full h-auto selectBack " + styles.headerBackground}
             src='/landing/landing-header-background.svg'
             alt="Background"
             width="0"
@@ -30,7 +31,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
         />
 
         <Image
-            className={'col-12 ' + styles.headerShadow}
+            className={'col-12 selectBack ' + styles.headerShadow}
             src='/landing/landing-header-shadow.svg'
             alt="Background"
             width="0"
@@ -43,7 +44,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
 
         <LandingHeader logedIn={logedIn} />
         <Image
-            className={styles.topLeftBackground}
+            className={'selectBack ' + styles.topLeftBackground}
             src="/landing/top-left.svg"
             alt="Background"
             width={509}
@@ -52,7 +53,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             priority
         />
         <Image
-            className={styles.topLeft2Background}
+            className={'selectBack ' + styles.topLeft2Background}
             src="/landing/top-left-2.svg"
             alt="Background"
             width={509}
@@ -61,7 +62,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             priority
         />
         <Image
-            className={styles.topLeft3Background}
+            className={'selectBack ' + styles.topLeft3Background}
             src="/landing/top-left-3.svg"
             alt="Background"
             width={360}
@@ -70,7 +71,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             priority
         />
         <Image
-            className={styles.topBackground}
+            className={'selectBack ' + styles.topBackground}
             src="/landing/top.svg"
             alt="Background"
             width={1719}
@@ -79,7 +80,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             priority
         />
         <Image
-            className={styles.topRightBackground}
+            className={'selectBack ' + styles.topRightBackground}
             src="/landing/top-right.svg"
             alt="Background"
             width={427}
@@ -88,7 +89,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             priority
         />
         <Image
-            className={styles.leftCenterBackground}
+            className={'selectBack ' + styles.leftCenterBackground}
             src="/landing/left-center.svg"
             alt="Background"
             width={328}
@@ -97,7 +98,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             priority
         />
         <Image
-            className={styles.leftCenter2Background}
+            className={'selectBack ' + styles.leftCenter2Background}
             src="/landing/left-center-2.svg"
             alt="Background"
             width={377}
@@ -106,7 +107,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             priority
         />
         <Image
-            className={styles.leftBottomBackground}
+            className={'selectBack ' + styles.leftBottomBackground}
             src="/landing/left-bottom.svg"
             alt="Background"
             width={377}
