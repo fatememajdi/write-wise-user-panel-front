@@ -118,7 +118,7 @@
     z-index: -1;
 }
 
-@media(max-width: 1620px) {
+@media(max-width: 1680px) {
     .featuresBackground {
         padding: 157px 0px 129px 0px;
     }

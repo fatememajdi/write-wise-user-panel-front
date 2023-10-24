@@ -125,7 +125,7 @@
     z-index: 3;
 }
 
-@media(max-width: 1620px) {
+@media(max-width: 1680px) {
 
     .arrowContainer {
         height: 50px !important;

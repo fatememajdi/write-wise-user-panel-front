@@ -287,7 +287,7 @@
     border: solid 1px var(--color-whiteText);
 }
 
-@media(max-width: 1620px) {
+@media(max-width: 1680px) {
     .writingDataTabBarCard {
         height: 50px !important;
         padding: 0px !important;

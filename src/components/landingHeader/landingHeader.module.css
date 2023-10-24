@@ -85,7 +85,7 @@
     display: none;
 }
 
-@media(max-width: 1620px) {
+@media(max-width: 1680px) {
     .headerCard {
         height: 100px;
         padding: 0px 50px;

@@ -372,7 +372,7 @@
     mask-image: linear-gradient(to bottom, transparent 5%, black 100%);
 }
 
-@media(max-width: 1620px) {
+@media(max-width: 1680px) {
     .topTabBarCard {
         height: 50px !important;
         padding: 0px !important;

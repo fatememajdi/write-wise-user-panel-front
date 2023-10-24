@@ -154,7 +154,7 @@
     display: none;
 }
 
-@media(max-width: 1620px) {
+@media(max-width: 1680px) {
     .section5 {
         padding-left: 136px;
     }

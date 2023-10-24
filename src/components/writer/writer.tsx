@@ -18,6 +18,7 @@ const Writer: React.FC<_props> = ({ type, topic, changeEndTyping }) => {
         style={{ height: type === 'general_task_1' ? 250 : type === 'general_task_2' ? 200 : 115 }}
         className={type === 'academic_task_1' ? styles.generatedWritingCard + ' ' + styles.academicGeneratedWritingCard :
             styles.generatedWritingCard}>
+
         <Typewriter
             options={{
                 delay: 0,
@@ -25,7 +26,7 @@ const Writer: React.FC<_props> = ({ type, topic, changeEndTyping }) => {
                 cursor: null
             }}
             onInit={(typewriter) => {
-                JSON.stringify(SplitText(topic)).slice(1, JSON.stringify(topic).length - 1).split(/(\s)/).map((str: any, index: number) => {
+                JSON.stringify(SplitText(topic + '         ')).slice(1, JSON.stringify(topic + '         ').length + 1).split(/(\s)/).map((str: any, index: number) => {
                     if (index % 10 !== 0) {
                         typewriter.typeString(str)
                             .pauseFor(100);

@@ -11,6 +11,8 @@
     top: 0px;
     left: 0px;
     right: 0px;
+    width: 1920px;
+    height: 149px;
 }
 
 .headerShadow {
@@ -19,6 +21,8 @@
     left: 0px;
     right: 0px;
     z-index: -1 !important;
+    width: 1920px;
+    height: 153px;
 }
 
 .topLeftBackground {
@@ -116,7 +120,7 @@
     z-index: -1 !important;
 }
 
-@media(max-width: 1620px) {
+@media(max-width: 1680px) {
     .headerBackground {
         top: 0px;
     }

@@ -252,7 +252,35 @@
     display: none;
 }
 
-@media(max-width: 1500px) {
+
+@media(max-width: 1680px) {
+    .profileCard {
+        height: 190px;
+        width: 190px;
+    }
+
+    .userName {
+        font-size: 30px;
+    }
+
+    .joinDate {
+        font-size: 27px;
+    }
+
+    .age {
+        font-size: 30px;
+    }
+
+    .gender {
+        font-size: 30px;
+    }
+
+    .username {
+        font-size: 27px;
+    }
+}
+
+@media(max-width: 1440px) {
     .profileCard {
         height: 190px;
         width: 190px;

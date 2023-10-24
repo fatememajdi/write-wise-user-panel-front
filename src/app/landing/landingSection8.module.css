@@ -55,7 +55,7 @@
     color: var(--color-red);
 }
 
-@media(max-width: 1620px) {
+@media(max-width: 1680px) {
     .section8Container {
         padding: 80px 130px;
         display: flex;

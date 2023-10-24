@@ -104,12 +104,24 @@ export default Features;
 
 const FeaturesItemCard: React.FC<{ item: { icon: any, title: string, description: string } }> = ({ item }) => {
 
-    const [flipping, setFlipping] = React.useState<boolean>(false);
+    const [flipping, setFlipping] = React.useState<number>(0);
+
+    function changeCardState() {
+        if (flipping === 2) {
+            setFlipping(1);
+        } else {
+            setFlipping(flipping + 1);
+        }
+
+    }
+
+
 
     return <div className={styles.itemCardFront}>
         <div
-            onClick={() => setFlipping(!flipping)}
-            className={flipping ? styles.rotateCard + ' ' + styles.card : styles.card}>
+            // onClick={() => changeCardState()}
+            className={flipping === 1 ? styles.rotateCard + ' ' + styles.card
+                : flipping === 2 ?styles.rotateCard2 + ' ' +  styles.card : styles.card}>
 
             <div className={styles.cardFront}>
                 <item.icon color='#FFF' />

@@ -79,6 +79,10 @@
     transform: rotateY(180deg);
 }
 
+.rotateCard2 {
+    transform: rotateY(360deg);
+}
+
 .cardFront,
 .cardBack {
     height: 100%;
@@ -105,6 +109,7 @@
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
+    transform: rotateY(0deg);
     line-height: 133.023%;
 }
 
@@ -123,4 +128,141 @@
     padding-right: 47px;
     background: linear-gradient(180deg, rgba(46, 64, 87, 0.10) -40.94%, rgba(218, 40, 46, 0.01) 128.59%);
     transform: rotateY(180deg);
+}
+
+@media(max-width: 1680px) {
+    .featuresDetailsContent {
+        padding: 200px 230px 50px 230px;
+    }
+
+    .description {
+        font-size: 20px;
+    }
+
+    .cardBack {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 25px;
+        padding-left: 30px;
+        padding-right: 17px;
+    }
+
+    .cardFront {
+        padding-left: 40px;
+        padding-right: 22px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .SignUpTitle {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 20px;
+        margin-top: 70px;
+    }
+
+    .signUpButton {
+        margin-top: 40px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 30px;
+        padding: 10px 20px;
+    }
+
+    .itemCardFront {
+        padding: 13px;
+    }
+
+}
+
+@media(max-width: 1440px) {
+    .featuresDetailsContent {
+        padding: 200px 130px 50px 130px;
+        align-items: center;
+    }
+
+    .description {
+        font-size: 20px;
+    }
+
+    .cardBack {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 25px;
+        padding-left: 30px;
+        padding-right: 17px;
+    }
+
+    .cardFront {
+        padding-left: 40px;
+        padding-right: 22px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .SignUpTitle {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 20px;
+        margin-top: 70px;
+    }
+
+    .signUpButton {
+        margin-top: 40px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 30px;
+        padding: 10px 20px;
+    }
+
+    .itemCardFront {
+        padding: 13px;
+    }
+
+}
+
+@media(max-width: 500px) {
+    .featuresDetailsContent {
+        padding: 90px 10px 50px 10px;
+    }
+
+    .description {
+        font-size: 16px;
+    }
+
+    .cardBack {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        padding-left: 30px;
+        padding-right: 17px;
+    }
+
+    .cardFront {
+        padding-left: 40px;
+        padding-right: 22px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .SignUpTitle {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 20px;
+        margin-top: 50px;
+    }
+
+    .signUpButton {
+        margin-top: 40px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 30px;
+        padding: 10px 20px;
+    }
+
+    .itemCardFront {
+        width: 100%;
+        height: 260px;
+        padding: 10px;
+    }
 }

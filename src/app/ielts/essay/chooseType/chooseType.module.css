@@ -46,7 +46,7 @@
     background-color: #132740 !important;
 }
 
-@media(max-width: 1620px) {
+@media(max-width: 1680px) {
     .chooseTypeTitle {
         font-size: 20px;
     }
