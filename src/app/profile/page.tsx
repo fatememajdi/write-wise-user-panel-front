@@ -18,7 +18,8 @@ import styles from './profile.module.css';
 
 //-------------------------------------icons
 import { MdOutlineArrowBackIosNew, MdModeEditOutline } from 'react-icons/md';
-import { Camera, Chat, Chat2, CloseButton, MobileCloseButton } from '../../../public';
+import { CloseButton, MobileCloseButton } from '../../../public';
+import { Camera, Chat, Chat2 } from '../../../public/icons';
 import { HiCheck } from 'react-icons/hi';
 import { RxExit } from 'react-icons/rx';
 

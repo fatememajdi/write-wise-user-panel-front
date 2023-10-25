@@ -9,7 +9,7 @@ import styles from './landingSection2.module.css';
 import Section2Background from "@/components/backgrounds/section2Background/section2Background";
 
 //--------------------------------icons
-import { ArrowLeft, ArrowRight } from "../../../public";
+import { ArrowLeft, ArrowRight } from "../../../public/icons";
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 
 //--------------------------------data 

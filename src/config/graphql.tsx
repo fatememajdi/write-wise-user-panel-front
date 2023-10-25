@@ -196,3 +196,33 @@ mutation DeleteEssay($id:String!){
   }
 }
 `;
+
+export const GET_CURRENCIES = gql`
+query{
+  getCurrencies{
+    code,
+    symbol,
+    name,
+    icon
+  }
+}
+`;
+
+export const GET_PACKAGES = gql`
+query GetPackages($currency:String!){
+  getPackages(filter:{currency:$currency}){
+    id,
+    name,
+    discountPercent,
+    currencyName,
+    originalAmount,
+    description,
+    title,
+    subDescription,
+    amountWithDiscount,
+    showingPrice,
+    showingPriceWithDiscount,
+    currency
+  }
+}
+`;

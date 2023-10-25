@@ -25,6 +25,8 @@ const Section1: React.FC = () => {
                 <div className={styles.rightContainerTitle}>
                     Boost Your IELTS Writing <br />with AI-Powered Precision
                 </div>
+
+
                 <div className={styles.rightContainerDescription}>
                     <span>Discover <span className={styles.boldLetter}>W</span>rite<span className={styles.boldLetter}>W</span>ise<span className={styles.boldLetter}>AI</span>'s Technology:
                     </span> Delivering instant IELTS <br />scoring with results mirroring an inter-rater difference of <br />0.5 with Humans

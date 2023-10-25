@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 import React from "react";
+import { useMediaQuery } from 'react-responsive';
 import { useRouter } from 'next/navigation';
 
 //-------------------------------------------styles
@@ -11,11 +12,12 @@ import { FeaturesBackground } from "@/components/backgrounds/featuresBackground/
 import { StartLoader } from "@/components/Untitled";
 
 //-------------------------------------------icons
-import { File, Rate, Rise, User } from "../../../public";
+import { File, Stars, Rise, User, UserMobile, FileMobile, StarsMobile, RiseMobile } from "../../../public/icons";
 import { IoIosArrowForward } from 'react-icons/io';
 
 const Section3: React.FC = () => {
     const router = useRouter();
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     return (
         <FeaturesBackground>
@@ -46,12 +48,11 @@ const Section3: React.FC = () => {
                 </div>
 
                 <div className={'col-lg-5 col-md-6 col-12 ' + styles.rightContainer}>
-                    <FeaturesItemCard icon={<Rate />} title="AI-Powered Essay Rating" />
-                    <FeaturesItemCard icon={<File />} title="AI-Driven Topic Generator" />
-                    <FeaturesItemCard icon={<User />} title="Personalized Feedback and Recommendations" />
-                    <FeaturesItemCard icon={<Rise />} title="In-Depth Progress Tracking" />
+                    <FeaturesItemCard icon={isMobile ? <StarsMobile /> : <Stars />} title="AI-Powered Essay Rating" />
+                    <FeaturesItemCard icon={isMobile ? <FileMobile /> : <File />} title="AI-Driven Topic Generator" />
+                    <FeaturesItemCard icon={isMobile ? <UserMobile /> : <User />} title="Personalized Feedback and Recommendations" />
+                    <FeaturesItemCard icon={isMobile ? <RiseMobile /> : <Rise />} title="In-Depth Progress Tracking" />
                 </div>
-
             </div>
         </FeaturesBackground>
     )

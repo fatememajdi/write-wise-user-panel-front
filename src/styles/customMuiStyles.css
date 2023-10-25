@@ -26,6 +26,10 @@
     background-color: #626E7E !important;
 }
 
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input{
+    display: flex !important;
+    align-items: center !important;
+}
 
 @media(max-width: 500px) {
     .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {

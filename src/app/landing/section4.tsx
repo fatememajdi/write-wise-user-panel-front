@@ -3,13 +3,14 @@
 import React from "react";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMediaQuery } from 'react-responsive';
+import Image from "next/image";
 
 //------------------------------------------------styles
 import styles from './landingSection4.module.css';
 
 //------------------------------------------------icons
 import { MdOutlineFlag, MdKeyboardArrowRight, MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { Flag, Steps } from "../../../public";
+import { Steps } from "../../../public";
 
 const steps = [
     { title: 'Dynamic Visuals', description: 'Dive deep into your IELTS learning journey with interactive charts showing your evolving scores over time. Whether you are just starting out or refining advanced skills, these visuals offer a clear picture of your progress.' },
@@ -100,7 +101,15 @@ const Section4: React.FC = () => {
             animate={{ opacity: selectedItem !== 0 ? 0.5 : 1 }}
             transition={{ type: "spring", duration: 2 }}
             className={styles.stepsImage}>
-            <Flag className={styles.flagIcon} />
+            <Image
+                className={styles.flagIcon}
+                src="/icons/flag.svg"
+                alt="flag icon"
+                width={35}
+                height={64}
+                loading="eager"
+                priority
+            />
             <Steps />
         </motion.div>
 
@@ -201,7 +210,15 @@ const Section4: React.FC = () => {
                 <motion.div
                     style={{ opacity: selectedItem === 4 || selectedItem === 0 ? 1 : 0.5 }}
                     className={styles.step1}>
-                    <MdOutlineFlag className={styles.flagIcon} />
+                    <Image
+                        className={styles.flagIcon}
+                        src="/icons/flag.svg"
+                        alt="flag icon"
+                        width={52}
+                        height={113}
+                        loading="eager"
+                        priority
+                    />
                     <motion.div
                         animate={{ height: selectedItem === 4 ? 0 : '7vh' }}
                         transition={{ type: "spring", duration: 1.5 }}

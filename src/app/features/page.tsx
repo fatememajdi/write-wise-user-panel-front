@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 'use client';
-import React, { lazy, useState, useRef, useEffect } from "react";
+import React, { lazy } from "react";
 import { useRouter } from 'next/navigation';
-import { motion, useSpring, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 //------------------------------------------------styles
 import styles from './features.module.css';
@@ -16,26 +16,26 @@ const Footer = lazy(() => import("@/components/footer/footer"));
 import { StartLoader, StopLoader } from "@/components/Untitled";
 
 //------------------------------------------------icons
-import { User, File, Step, Money, RegularRise } from '../../../public';
+import { Step, User, File, Stars, RegularRise, Chat, Quality, Money } from '../../../public/icons';
 
 const featuresItems = [
     {
-        icon: User,
+        icon: Stars,
         title: 'AI-Powered Essay Rating',
         description: ' text 1 Kickstart your IELTS success by signing up for a WriteWiseAI account. Once registered, choose your IELTS category - General or Academic - ensuring feedback tailored to specific IELTS criteria.'
     },
     {
-        icon: File,
+        icon: User,
         title: 'Personalized Feedback and Recommendations',
         description: 'Enhance your IELTS writing preparation with in-depth feedback tailored to your essays. Our system identifies areas for growth, providing insights and actionable steps to refine your English writing skills.'
     },
     {
-        icon: Step,
+        icon: File,
         title: 'AI-Driven Topic Generator',
         description: 'Stay perpetually inspired with our topic generator, designed to offer a plethora of IELTS-relevant prompts, ensuring you are always ready for any exam topic.'
     },
     {
-        icon: Money,
+        icon: Step,
         title: 'Step-by-Step IELTS Writing Tutoring',
         description: 'Transform your approach to IELTS essay writing with our WriteWiseAI Tutor. Receive real-time guidance and feedback as you craft your essay, focusing on structure, vocabulary, coherence, and argument depth, closely resembling the guidance of a personal tutor.'
     },
@@ -45,17 +45,17 @@ const featuresItems = [
         description: 'Visualize your IELTS learning growth. With our analytics dashboard, monitor improvements across essays, ensuring thorough preparation for the IELTS writing exam.'
     },
     {
-        icon: RegularRise,
+        icon: Chat,
         title: 'Flexible Feedback Options',
         description: 'Tailor your feedback experience, from detailed analyses to targeted recommendations. Our token system ensures this premium feature is both efficient and cost-effective.'
     },
     {
-        icon: RegularRise,
+        icon: Quality,
         title: 'Intuitive User Experience',
         description: 'Navigate with ease. Our user-centric design, from the editor to the analytics dashboard, guarantees a seamless IELTS preparation experience.'
     },
     {
-        icon: RegularRise,
+        icon: Money,
         title: 'Affordable Pricing and Token System',
         description: 'Navigate with ease. Our user-centric design, from the editor to the analytics dashboard, guarantees a seamless IELTS preparation experience.'
     },
@@ -121,7 +121,7 @@ const FeaturesItemCard: React.FC<{ item: { icon: any, title: string, description
         <div
             // onClick={() => changeCardState()}
             className={flipping === 1 ? styles.rotateCard + ' ' + styles.card
-                : flipping === 2 ?styles.rotateCard2 + ' ' +  styles.card : styles.card}>
+                : flipping === 2 ? styles.rotateCard2 + ' ' + styles.card : styles.card}>
 
             <div className={styles.cardFront}>
                 <item.icon color='#FFF' />

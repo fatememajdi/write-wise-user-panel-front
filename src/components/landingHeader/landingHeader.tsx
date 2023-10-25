@@ -12,7 +12,7 @@ import styles from './landingHeader.module.css';
 import { StartLoader } from "../Untitled";
 
 //-------------------------------------------icons
-import { Chat2 } from "../../../public";
+import { Chat2 } from "../../../public/icons";
 import { MdOutlineMenu } from 'react-icons/md';
 
 const headerItems = [

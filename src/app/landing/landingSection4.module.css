@@ -214,7 +214,8 @@
 
 .flagIcon {
     position: absolute;
-    right: 15px;
+    top: -105px ;
+    right: 60px;
 }
 
 @media(max-width: 1680px) {
@@ -337,7 +338,12 @@
 
 }
 
-@media(max-width: 480px) {
+@media(max-width: 500px) {
+
+    .flagIcon {
+        right: 15px;
+        top: -70px;
+    }
 
     .stepsImage {
         display: block;

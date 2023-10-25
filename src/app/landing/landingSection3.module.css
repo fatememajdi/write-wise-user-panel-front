@@ -173,6 +173,11 @@
     .rightContainer {
         padding: 0px;
         margin-top: 40px;
+        padding-left: 0px !important;
+    }
+
+    .featuresItemIcon{
+        min-width: 60px;
     }
 
     .leftContainer {
@@ -189,7 +194,7 @@
     }
 
     .featuresItemCard {
-        width: 278px;
+        width: 100%; 
     }
 
     .featuresItemTitle {
