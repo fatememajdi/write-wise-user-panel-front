@@ -52,6 +52,7 @@
     padding: 37px 0px;
     align-items: flex-start;
     padding-left: 30px;
+    padding-right: 20px !important;
 }
 
 .discountCard {
@@ -149,4 +150,9 @@
     font-weight: 400;
     line-height: 144%;
     margin-top: 8px;
+}
+
+.loading{
+    display: flex;
+    margin: auto;
 }
