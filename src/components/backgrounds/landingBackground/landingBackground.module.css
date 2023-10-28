@@ -2,8 +2,8 @@
     min-height: 100vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
-    /* padding: 217px 75px 86px 83px; */
     position: relative;
+    background-image: url('/landing/section1-desktop-background.svg');
 }
 
 .headerBackground {
@@ -25,100 +25,6 @@
     height: 153px;
 }
 
-.topLeftBackground {
-    height: 477px;
-    width: 509px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: -1 !important;
-}
-
-.topLeft2Background {
-    height: 326px;
-    width: 360px;
-    position: absolute;
-    top: -500px;
-    left: 70px;
-    z-index: -1 !important;
-}
-
-.topLeft3Background {
-    height: 326px;
-    width: 360px;
-    position: absolute;
-    top: 100px;
-    left: 80px;
-    z-index: -1 !important;
-}
-
-.topBackground {
-    height: 267px;
-    width: 1719px;
-    position: absolute;
-    top: 0px;
-    left: -164px;
-    z-index: -1 !important;
-}
-
-.topCenterBackground {
-    height: 491px;
-    width: 576px;
-    position: absolute;
-    top: -40px;
-    left: 400px;
-    z-index: -1 !important;
-    /* transform: rotate(39.59deg); */
-}
-
-.topCenter2Background {
-    height: 491px;
-    width: 576px;
-    position: absolute;
-    top: -60px;
-    left: 630px;
-    z-index: -1 !important;
-    /* transform: rotate(29.59deg); */
-}
-
-
-.topRightBackground {
-    height: 491px;
-    width: 576px;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    z-index: -1 !important;
-    /* filter: blur(85px); */
-    /* transform: rotate(41.59deg); */
-}
-
-.leftCenterBackground {
-    height: 377px;
-    width: 328px;
-    position: absolute;
-    top: 340px;
-    left: -30px;
-    z-index: -1 !important;
-}
-
-.leftCenter2Background {
-    height: 377px;
-    width: 377px;
-    position: absolute;
-    top: 230px;
-    left: -30px;
-    z-index: -1 !important;
-}
-
-.leftBottomBackground {
-    height: 350px;
-    width: 377px;
-    position: absolute;
-    top: 540px;
-    left: -30px;
-    z-index: -1 !important;
-}
 
 @media(max-width: 1680px) {
     .headerBackground {
@@ -150,48 +56,8 @@
 
     .landingBackground {
         background: #F4DEDF;
-        background: linear-gradient(90deg, #F4DEDF, #DBE8F2);
+        background: linear-gradient(90deg, #F4DEDF, #DBE8F2) !important;
         min-height: fit-content;
-    }
-
-    .topLeftBackground {
-        display: none;
-    }
-
-    .topLeft2Background {
-        display: none;
-    }
-
-    .topLeft3Background {
-        display: none;
-    }
-
-    .topBackground {
-        display: none;
-    }
-
-    .topCenterBackground {
-        display: none;
-    }
-
-    .topCenter2Background {
-        display: none;
-    }
-
-
-    .topRightBackground {
-        display: none;
-    }
-
-    .leftCenterBackground {
-        display: none;
-    }
-
-    .leftCenter2Background {
-        display: none;
-    }
-
-    .leftBottomBackground {
-        display: none;
+        background-image: none;
     }
 }

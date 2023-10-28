@@ -13,16 +13,16 @@
 .header {
     position: fixed;
     top: 0px;
-    height: 145px;
+    height: 125px;
     z-index: 9 !important;
 }
 
 .headerContainer {
     position: fixed;
     top: 0px;
-    height: 142px;
+    height: 122px;
     z-index: 10 !important;
-    background-color: #FDFDFD;
+    background-color: #F3F3F3;
     align-items: center;
 }
 
@@ -33,8 +33,8 @@
 }
 
 .lightShadow {
-    box-shadow: -1px 13px 0px 3px rgba(243, 243, 243, 0.17);
-    -webkit-box-shadow: -1px 13px 0px 3px rgba(243, 243, 243, 0.17);
+    /* box-shadow: -1px 13px 0px 3px rgba(243, 243, 243, 0.17);
+    -webkit-box-shadow: -1px 13px 0px 3px rgba(243, 243, 243, 0.17); */
 }
 
 .headerItem {

@@ -5,9 +5,6 @@ import { Carousel } from 'react-responsive-carousel';
 //-------------------------------styles
 import styles from './landingSection2.module.css';
 
-//--------------------------------components
-import Section2Background from "@/components/backgrounds/section2Background/section2Background";
-
 //--------------------------------icons
 import { ArrowLeft, ArrowRight } from "../../../public/icons";
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
@@ -38,69 +35,67 @@ const steps = [
 
 const Section2: React.FC = () => {
 
-    return <Section2Background>
-        <section className={styles.section2Container} id="how-it-works">
-            <div className={styles.textContainer}>
-                <div className={styles.title}>
-                    How it works
-                </div>
-
-                <div className={styles.secondTitle}>
-                    Achieve IELTS Writing Success in 3 Simple Steps!
-                </div>
-
-                <div className={styles.description}>
-                    Embark on a transformative journey to refine your IELTS writing skills.
-                    <span className={styles.boldLetter}>W</span>rite<span className={styles.boldLetter}>W</span>ise<span className={styles.boldLetter}>AI</span>, powered by advanced GPT-4<br />
-                    technology, offers a seamless experience, ensuring your essays align with IELTS standards. Dive into our intuitive four-<br />
-                    step process for AI-powered insights, personalized feedback, and actionable recommendations.
-                </div>
+    return <section className={styles.section2Container} id="how-it-works">
+        <div className={styles.textContainer}>
+            <div className={styles.title}>
+                How it works
             </div>
 
-            <Carousel
-                showThumbs={false}
-                renderArrowPrev={(clickHandler: React.MouseEventHandler<HTMLDivElement> | undefined, hasPrev: any) => {
-                    return (
-                        <div
-                            className={`${hasPrev ? "absolute" : "hidden"
-                                } top-0 bottom-0 left-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20 ` + styles.arrowCard}
-                            onClick={clickHandler}
-                        >
-                            <div
-                                style={{ paddingRight: 5 }}
-                                className={styles.arrowContainer}>
-                                <ArrowLeft className={styles.arrowIcon} />
-                                <IoIosArrowBack className={styles.mobileArrowIcon} />
-                            </div>
-                        </div>
-                    );
-                }}
-                renderArrowNext={(clickHandler: React.MouseEventHandler<HTMLDivElement> | undefined, hasNext: any) => {
-                    return (
-                        <div
-                            className={`${hasNext ? "absolute" : "hidden"
-                                } top-0 bottom-0 right-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20 ` + styles.arrowCard}
-                            onClick={clickHandler}
-                        >
-                            <div
-                                style={{ paddingLeft: 5 }}
-                                className={styles.arrowContainer}>
-                                <ArrowRight className={styles.arrowIcon} />
-                                <IoIosArrowForward className={styles.mobileArrowIcon} />
-                            </div>
+            <div className={styles.secondTitle}>
+                Achieve IELTS Writing Success in 3 Simple Steps!
+            </div>
 
+            <div className={styles.description}>
+                Embark on a transformative journey to refine your IELTS writing skills.
+                <span className={styles.boldLetter}>W</span>rite<span className={styles.boldLetter}>W</span>ise<span className={styles.boldLetter}>AI</span>, powered by advanced GPT-4<br />
+                technology, offers a seamless experience, ensuring your essays align with IELTS standards. Dive into our intuitive four-<br />
+                step process for AI-powered insights, personalized feedback, and actionable recommendations.
+            </div>
+        </div>
+
+        <Carousel
+            showThumbs={false}
+            renderArrowPrev={(clickHandler: React.MouseEventHandler<HTMLDivElement> | undefined, hasPrev: any) => {
+                return (
+                    <div
+                        className={`${hasPrev ? "absolute" : "hidden"
+                            } top-0 bottom-0 left-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20 ` + styles.arrowCard}
+                        onClick={clickHandler}
+                    >
+                        <div
+                            style={{ paddingRight: 5 }}
+                            className={styles.arrowContainer}>
+                            <ArrowLeft className={styles.arrowIcon} />
+                            <IoIosArrowBack className={styles.mobileArrowIcon} />
                         </div>
-                    );
-                }}
-                showStatus={false}
-                thumbWidth={100}
-                className={'col-12 col-md-10 col-lg-8 col-12 ' + styles.section2carousel}>
-                {
-                    steps.map((item, index) => <StepCard Step={item} key={index} />)
-                }
-            </Carousel>
-        </section >
-    </Section2Background >
+                    </div>
+                );
+            }}
+            renderArrowNext={(clickHandler: React.MouseEventHandler<HTMLDivElement> | undefined, hasNext: any) => {
+                return (
+                    <div
+                        className={`${hasNext ? "absolute" : "hidden"
+                            } top-0 bottom-0 right-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20 ` + styles.arrowCard}
+                        onClick={clickHandler}
+                    >
+                        <div
+                            style={{ paddingLeft: 5 }}
+                            className={styles.arrowContainer}>
+                            <ArrowRight className={styles.arrowIcon} />
+                            <IoIosArrowForward className={styles.mobileArrowIcon} />
+                        </div>
+
+                    </div>
+                );
+            }}
+            showStatus={false}
+            thumbWidth={100}
+            className={'col-12 col-md-10 col-lg-8 col-12 ' + styles.section2carousel}>
+            {
+                steps.map((item, index) => <StepCard Step={item} key={index} />)
+            }
+        </Carousel>
+    </section >
 };
 
 export default Section2;

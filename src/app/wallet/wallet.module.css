@@ -1,0 +1,6 @@
+.walletContainer{
+    min-height: 100vh;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    background-image: url('/dashboard/wallet-background.svg');
+}

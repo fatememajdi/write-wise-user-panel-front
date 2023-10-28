@@ -1,3 +1,9 @@
+.section7{
+    min-height: 100vh;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    background-image: url('/landing/section7-background.svg');
+}
 .section7Container {
     flex: 1;
     min-height: 100vh;

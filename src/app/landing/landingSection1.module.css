@@ -28,11 +28,9 @@
 
 .leftContainerBackground {
     position: absolute;
-    right: 0px;
-    top: -350px;
-    z-index: -2;
     width: 1601px;
-    height: 1665px
+    height: 1665px;
+    display: none;
 }
 
 .rightContainerTitle {

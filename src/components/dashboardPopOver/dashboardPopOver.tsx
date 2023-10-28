@@ -31,7 +31,7 @@ const menuItems = [
     {
         title: 'Wallet',
         icon: Wallet,
-        route: ''
+        route: '/wallet'
     },
     {
         title: 'Support',

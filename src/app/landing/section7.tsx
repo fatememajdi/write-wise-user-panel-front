@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 import styles from './landingSection7.module.css';
 
 //------------------------------------------components
-import { FqaBackground } from "@/components/backgrounds/fqaBackground/fqaBackground";
 import { StartLoader } from "@/components/Untitled";
 
 //------------------------------------------icons
@@ -54,7 +53,7 @@ const Section7: React.FC = () => {
     const router = useRouter();
     const [selectedItem, ChangeSelectedItem] = React.useState<number>(null);
 
-    return (<FqaBackground>
+    return (<section className={styles.section7}>
         <AnimatePresence>
             <div className={styles.section7Container}>
                 <div className={'col-lg-6 col-md-6 col-12 ' + styles.itemsContainer}>
@@ -80,7 +79,7 @@ const Section7: React.FC = () => {
                 </div>
             </div>
         </AnimatePresence>
-    </FqaBackground>)
+    </section>)
 }
 
 export default Section7;
