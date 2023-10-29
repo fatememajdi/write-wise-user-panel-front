@@ -46,7 +46,7 @@ const nextConfig = {
   // },
   env: {
     NEXT_PUBLIC_ENV: 'PRODUCTION',
-  }
+  },
 }
 
 

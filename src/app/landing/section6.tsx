@@ -4,15 +4,13 @@
 import React from "react";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import ReactLoading from 'react-loading';
 import client from '@/config/applloAuthorizedClient';
+import dynamic from 'next/dynamic';
 
 //---------------------------------------------------styles
 import styles from './landingSection6.module.css';
 import '../../styles/section6Select.css';
-
-//---------------------------------------------------icons
-import { FiCheck } from 'react-icons/fi';
+import '../../styles/customMuiStyles.css';
 
 //---------------------------------------------------types
 import { Currency } from "../../../types/currency";
@@ -20,6 +18,7 @@ import { Package } from "../../../types/package";
 
 //---------------------------------------------------components
 import { GET_CURRENCIES, GET_PACKAGES } from "@/config/graphql";
+const PackageCard = dynamic(() => import("@/components/packageCard/packageCard"));
 
 
 const Section6: React.FC = () => {
@@ -95,35 +94,3 @@ const Section6: React.FC = () => {
 };
 
 export default Section6;
-
-type _props = {
-    pack: Package,
-    loading: boolean
-}
-
-const PackageCard: React.FC<_props> = ({ pack, loading }) => {
-    return <div className={styles.packageContainer}>
-        {
-            pack.discountPercent > 0 &&
-            <div className={styles.discountCard}>
-                <span>%{pack.discountPercent}</span>
-                <span>Off</span>
-            </div>
-        }
-        {
-            loading ?
-                <ReactLoading className={styles.loading} type={'bubbles'} color={'#172E4A'} height={50} width={50} />
-                :
-                <div className={styles.packageCard}>
-                    <div className={styles.packageCardTitle}>{pack.title}</div>
-                    <div className={styles.packagePrice}>{pack.showingPrice}</div>
-                    <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Scoring</div>
-                    <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Analysis</div>
-                    <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Insights</div>
-                    <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />recommendations</div>
-                    <div className={styles.taskNumberCard}>{pack.description}</div>
-                    <div className={styles.subDescription}>{pack.subDescription}</div>
-                </div>
-        }
-    </div>
-};

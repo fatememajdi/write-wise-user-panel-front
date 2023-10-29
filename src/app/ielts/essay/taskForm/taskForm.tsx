@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 //--------------------------------------styles
 import styles from '../../../../styles/task.module.css';
+import '../../../../styles/customMuiStyles.css';
 
 //--------------------------------------components
 import {
