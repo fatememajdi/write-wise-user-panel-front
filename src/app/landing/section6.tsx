@@ -6,6 +6,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import client from '@/config/applloAuthorizedClient';
 import dynamic from 'next/dynamic';
+import ReactLoading from 'react-loading';
 
 //---------------------------------------------------styles
 import styles from './landingSection6.module.css';
@@ -43,12 +44,14 @@ const Section6: React.FC = () => {
     };
 
     async function GetCurrencies() {
+        setLoading(true);
         await client.query({
             query: GET_CURRENCIES,
             fetchPolicy: "no-cache",
         }).then((res) => {
             setCurrencies(res.data.getCurrencies);
             GetPackage(res.data.getCurrencies[0].code);
+            setLoading(false);
         })
     };
 
@@ -65,7 +68,8 @@ const Section6: React.FC = () => {
         <Select
             renderValue={(selected) => {
                 if (selected.length === 0) {
-                    return <em>{currencies.length > 0 && currencies[0].code}</em>;
+                    return <em>{currencies.length > 0 ? currencies[0].code
+                        : <ReactLoading className={styles.loading} type={'bubbles'} color={'#FFF'} height={30} width={30} />}</em>;
                 }
 
                 return selected;
@@ -87,9 +91,14 @@ const Section6: React.FC = () => {
 
         </Select>
 
-        <div className={'col-12 ' + styles.mainContainer}>
-            {packages.map((item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
-        </div>
+        {
+            loading && currencies.length === 0 ?
+                <ReactLoading className={styles.loading} type={'spin'} color={'#FFF'} height={50} width={50} />
+                :
+                <div className={'col-12 ' + styles.mainContainer}>
+                    {packages.map((item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
+                </div>
+        }
     </section>
 };
 

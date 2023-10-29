@@ -14,14 +14,14 @@
     position: fixed;
     top: 0px;
     height: 125px;
-    z-index: 9 !important;
+    z-index: 100 !important;
 }
 
 .headerContainer {
     position: fixed;
     top: 0px;
     height: 122px;
-    z-index: 10 !important;
+    z-index: 100 !important;
     background-color: #F3F3F3;
     align-items: center;
 }
