@@ -26,9 +26,37 @@
     background-color: #626E7E !important;
 }
 
-.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input{
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
     display: flex !important;
     align-items: center !important;
+}
+
+.css-qiwgdb.css-qiwgdb.css-qiwgdb {
+    color: #FFF !important;
+}
+
+.MuiButtonBase-root .MuiMenuItem-root .MuiMenuItem-gutters .MuiMenuItem-root .MuiMenuItem-gutters .landingSection6_selectItem__ZwORo .css-1km1ehz {
+    background-color: #626E7E !important;
+    color: #FFF !important;
+}
+
+.MuiList-root .MuiList-padding .MuiMenu-list .css-r8u8y9 {
+    background-color: #626E7E !important;
+    color: #FFF !important;
+}
+
+.css-r8u8y9 {
+    background-color: #626E7E !important;
+}
+
+.MuiSvgIcon-root .MuiSvgIcon-fontSizeMedium .MuiSelect-icon .MuiSelect-iconOutlined .css-1636szt path svg {
+    color: #FFF !important;
+    fill: #FFF !important;
+}
+
+.css-1636szt {
+    fill: #FFF !important;
+    color: #FFF !important;
 }
 
 @media(max-width: 500px) {
