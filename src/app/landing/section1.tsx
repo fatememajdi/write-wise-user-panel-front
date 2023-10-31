@@ -42,6 +42,16 @@ const Section1: React.FC = () => {
                         Benefit from personalised IELTS feedback tailored to elevate your skills.
                     </div>
 
+                    <button
+                        onClick={() => {
+                            StartLoader();
+                            router.push('/signIn');
+                        }}
+                        className={styles.startButton}
+                    >
+                        Start Now
+                    </button>
+
                 </div>
 
             </div>

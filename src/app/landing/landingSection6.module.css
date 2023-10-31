@@ -48,6 +48,141 @@
     line-height: normal;
 }
 
-.loading{
+.loading {
     margin: auto;
+}
+
+.arrowContainer {
+    height: 30px !important;
+    width: 30px !important;
+    padding-top: 0px;
+    border-radius: 100%;
+    border-radius: 65.448px;
+    background: linear-gradient(141deg, #B5C0CE 0%, rgba(234, 234, 234, 0.20) 83.58%);
+    filter: blur(0px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrowIcon {
+    display: flex;
+}
+
+.mobileArrowIcon {
+    display: flex;
+    font-size: 30px;
+    color: #172E4A;
+}
+
+.mobileCarousel {
+    display: flex;
+    align-self: center;
+    margin-top: 50px !important;
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+}
+
+@media(max-width: 1680px) {
+    .section6 {
+        padding: 150px 82px 70px 90px;
+    }
+
+    .title {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 76.806px;
+        margin-left: 80px;
+    }
+
+    .description {
+        margin-top: 16px;
+        font-size: 20px;
+        font-weight: 400;
+        margin-left: 80px;
+        line-height: 26px;
+    }
+
+    .select {
+        width: 222.678px;
+        height: 31.384px;
+    }
+
+
+    .selectItem {
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 1440px) {
+    .section6 {
+        padding: 150px 82px 70px 90px;
+    }
+
+    .title {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 76.806px;
+        margin-left: 80px;
+    }
+
+    .description {
+        margin-top: 16px;
+        font-size: 20px;
+        font-weight: 400;
+        margin-left: 80px;
+        line-height: 26px;
+    }
+
+    .select {
+        width: 222.678px;
+        height: 31.384px;
+    }
+
+    .selectItem {
+        font-size: 16px;
+    }
+
+}
+
+@media(max-width: 500px) {
+    .section6 {
+        padding: 77px 10px 39px 10px;
+        min-height: fit-content;
+    }
+
+    .title {
+        color: #F3F3F3;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 20.8px;
+        margin-left: 43px;
+    }
+
+    .description {
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 130%;
+        margin-left: 43px;
+        margin-top: 32px;
+    }
+
+    .select {
+        margin-top: 40px;
+        margin-right: 43px;
+        width: 200px;
+    }
+
+    .selectItem {
+        font-size: 13px;
+    }
+
+    .mainContainer {
+        display: none;
+    }
+
+    .mobileCarousel {
+        display: block;
+    }
 }

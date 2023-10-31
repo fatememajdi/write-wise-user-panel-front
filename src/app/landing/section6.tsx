@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import client from '@/config/applloAuthorizedClient';
 import dynamic from 'next/dynamic';
 import ReactLoading from 'react-loading';
+import { Carousel } from 'react-responsive-carousel';
 
 //---------------------------------------------------styles
 import styles from './landingSection6.module.css';
@@ -20,6 +21,9 @@ import { Package } from "../../../types/package";
 //---------------------------------------------------components
 import { GET_CURRENCIES, GET_PACKAGES } from "@/config/graphql";
 const PackageCard = dynamic(() => import("@/components/packageCard/packageCard"));
+
+//---------------------------------------------------icons
+import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 
 
 const Section6: React.FC = () => {
@@ -90,6 +94,48 @@ const Section6: React.FC = () => {
             }
 
         </Select>
+
+
+        <Carousel
+            showThumbs={false}
+            renderArrowPrev={(clickHandler: React.MouseEventHandler<HTMLDivElement> | undefined, hasPrev: any) => {
+                return (
+                    <div
+                        className={`${hasPrev ? "absolute" : "hidden"
+                            } top-0 bottom-0 left-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20 ` + styles.arrowCard}
+                        onClick={clickHandler}
+                    >
+                        <div
+                            style={{ paddingRight: 5 }}
+                            className={styles.arrowContainer}>
+                            <IoIosArrowBack className={styles.mobileArrowIcon} />
+                        </div>
+                    </div>
+                );
+            }}
+            renderArrowNext={(clickHandler: React.MouseEventHandler<HTMLDivElement> | undefined, hasNext: any) => {
+                return (
+                    <div
+                        className={`${hasNext ? "absolute" : "hidden"
+                            } top-0 bottom-0 right-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20 ` + styles.arrowCard}
+                        onClick={clickHandler}
+                    >
+                        <div
+                            style={{ paddingLeft: 5 }}
+                            className={styles.arrowContainer}>
+                            <IoIosArrowForward className={styles.mobileArrowIcon} />
+                        </div>
+
+                    </div>
+                );
+            }}
+            showStatus={false}
+            showIndicators={false}
+            thumbWidth={100}
+            className={'col-12 ' + styles.mobileCarousel}>
+            {packages.map((item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
+
+        </Carousel>
 
         {
             loading && currencies.length === 0 ?

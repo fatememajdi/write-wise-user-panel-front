@@ -2,9 +2,11 @@
 import React, { Suspense, lazy } from 'react';
 import dynamic from 'next/dynamic';
 import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
+import { StartLoader } from "@/components/Untitled";
 
 //-------------------------------------------styles
-// import styles from '../styles/landing.module.css';
+import styles from '../styles/landing.module.css';
 
 //-------------------------------------------components
 const Section1 = lazy(() => import('./landing/section1'));
@@ -37,17 +39,29 @@ const Home: React.FC = () => {
     }
   });
 
+  const router = useRouter();
+
   return (
     <Suspense fallback={<Loading />}>
-      <Section1 />
-      <Section2 />
-      <Section3 />
-      <Section4 />
-      <Section5 />
-      <Section6 />
-      <Section7 />
-      <Section8 />
-      <Footer />
+      <div className={'col-12 ' + styles.landingContainer}>
+        <Section1 />
+        <Section2 />
+        <Section3 />
+        <Section4 />
+        <Section5 />
+        <Section6 />
+        <Section7 />
+        <Section8 />
+        <Footer />
+        <button
+          onClick={() => {
+            StartLoader();
+            router.push('/signIn');
+          }}
+          className={styles.startButton}>
+          start now
+        </button>
+      </div>
     </Suspense>
   );
 };

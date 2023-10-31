@@ -35,7 +35,14 @@ const PackageCard: React.FC<_props> = ({ pack, loading }) => {
                 :
                 <div className={styles.packageCard}>
                     <div className={styles.packageCardTitle}>{pack.title}</div>
-                    <div className={styles.packagePrice}>{pack.showingPrice}</div>
+                    <div className={styles.packagePrice}>
+                        {
+                            pack.discountPercent > 0 &&
+                            <span>{pack.amountWithDiscount}</span>
+                        }
+                        {pack.showingPrice}
+
+                    </div>
                     <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Scoring</div>
                     <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Analysis</div>
                     <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Insights</div>

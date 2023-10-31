@@ -12,7 +12,6 @@ import styles from './landingHeader.module.css';
 import { StartLoader } from "../Untitled";
 
 //-------------------------------------------icons
-import { Chat2 } from "../../../public/icons";
 import { MdOutlineMenu } from 'react-icons/md';
 
 const headerItems = [
@@ -67,12 +66,6 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
             priority
             loading="eager"
         />
-        <button
-            aria-label="chat button"
-            className={styles.responsiveChatButton}
-        >
-            <Chat2 />
-        </button>
 
         <div className={'col-12 ' + styles.headerCard}>
             <div className={styles.headerItemsContainer}>
