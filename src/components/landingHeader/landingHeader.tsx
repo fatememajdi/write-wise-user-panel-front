@@ -3,7 +3,9 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from 'framer-motion';
 import { useSession } from "next-auth/react";
+import { useMediaQuery } from 'react-responsive';
 
 //-------------------------------------------styles
 import styles from './landingHeader.module.css';
@@ -13,6 +15,7 @@ import { StartLoader } from "../Untitled";
 
 //-------------------------------------------icons
 import { MdOutlineMenu } from 'react-icons/md';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const headerItems = [
     {
@@ -34,6 +37,10 @@ const headerItems = [
 ];
 
 const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ logedIn, shadow }) => {
+
+    const [showPopup, changeShowPopup] = React.useState<boolean>(false);
+    const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
+
     const { data: session, status } = useSession({
         required: true, onUnauthenticated() {
             return;
@@ -50,7 +57,15 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
         });
     };
 
-    return (<div className={shadow ? 'col-12 ' + styles.headerContainer + ' ' + styles.blackShadow :
+    window.addEventListener("wheel", function (e: any) {
+        console.log(e.deltaY);
+        if (e.deltaY > 0)
+            changeShowPopup(true);
+        else if (e.deltaY)
+            changeShowPopup(false);
+    });
+
+    return (<div className={shadow || showPopup ? 'col-12 ' + styles.headerContainer + ' ' + styles.blackShadow :
         'col-12 ' + styles.headerContainer + ' ' + styles.lightShadow}>
         {/* ---------------------------------------------------------------------mobile header */}
         <div className={styles.responsiveMenuIcon}>
@@ -101,6 +116,25 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
 
             </div>
         </div>
+        <AnimatePresence>
+            {
+                showPopup &&
+                <motion.div
+                    animate={{ height: showPopup ? isMac ? 49 : 66 : 0 }}
+                    transition={{ type: "spring", duration: 1 }}
+                    className={styles.popup}>
+                    <div className={styles.popupTitle}>Limited Time Offer!</div>
+                    <button className={styles.popupButton}>
+                        Start Now
+                    </button>
+
+                    <AiOutlineClose
+                        className={styles.popupCloseButton}
+                        onClick={() => changeShowPopup(false)}
+                    />
+                </motion.div>
+            }
+        </AnimatePresence>
     </div >
     )
 };
