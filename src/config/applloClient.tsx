@@ -7,7 +7,7 @@ import { setContext } from '@apollo/client/link/context';
 
 
 const httpLink = createHttpLink({
-    uri: "https://ielts.api.babyyodas.io/graphql",
+    uri: "https://api.wwai.ai/graphql",
 });
 
 // const autLink = setContext(async (_, { header }) => {

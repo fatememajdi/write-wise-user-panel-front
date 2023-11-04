@@ -6,7 +6,7 @@ import { createUploadLink } from "apollo-upload-client";
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createUploadLink({
-    uri: "https://ielts.api.babyyodas.io/graphql",
+    uri: "https://api.wwai.ai/graphql",
 });
 
 
