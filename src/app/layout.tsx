@@ -15,7 +15,6 @@ import { Inter, Lato } from "next/font/google";
 
 //--------------------------------------------------------components
 // import Loading from '@/components/loading/loading';
-import { lato } from '../../fonts';
 
 //--------------------------------------------------------css
 import "react-responsive-carousel/lib/styles/carousel.min.css";
