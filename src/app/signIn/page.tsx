@@ -45,12 +45,12 @@ const SignIn: React.FC = () => {
                     loading="eager"
                     priority
                 />
-                {
+                {/* {
                     loginStep === 0 ?
                         <Step1 changeStep={changeLoginStep} />
-                        :
+                        : */}
                         <Step2 />
-                }
+                {/* // } */}
             </div>
 
             <div className={'col-lg-5 col-md-5 ' + styles.signInrightContainer}>
@@ -228,7 +228,7 @@ const Step2: React.FC = () => {
 
                     <Pagination className={styles.pagination} lenght={2} currentPage={1} color="#2E4057" />
 
-                    <Divider style={{ marginTop: 20 }} plain>or</Divider>
+                    {/* <Divider style={{ marginTop: 20 }} plain>or</Divider>
 
                     <a
                         onClick={handeClickGoogle}
@@ -245,7 +245,7 @@ const Step2: React.FC = () => {
                         onClick={handeClickApple}
                         className={styles.signInOptionsbutton + ' ' + styles.appleSingInCard}>
                         <GrApple className={styles.signInOptionsIcon} />Sign in with Apple
-                    </a>
+                    </a> */}
 
                     <div className={styles.footerText}>
                         By login, you agree to our <a>Terms of<br /> Service</a> and <a>Privacy Policy .</a>

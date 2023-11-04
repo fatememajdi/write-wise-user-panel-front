@@ -20,19 +20,19 @@ import { AiOutlineClose } from 'react-icons/ai';
 const headerItems = [
     {
         title: 'Home',
-        route: '/#home'
+        route: '#home'
     },
     {
         title: 'How it works',
-        route: '/#how-it-works'
+        route: '#how-it-works'
     },
     {
         title: 'Features',
-        route: '/#features'
+        route: '#features'
     },
     {
         title: 'Pricing',
-        route: '/#pricing'
+        route: '#pricing'
     }
 ];
 
