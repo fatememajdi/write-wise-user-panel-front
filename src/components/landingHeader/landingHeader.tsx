@@ -57,13 +57,14 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
         });
     };
 
-    window.addEventListener("wheel", function (e: any) {
-        console.log(e.deltaY);
-        if (e.deltaY > 0)
-            changeShowPopup(true);
-        else if (e.deltaY)
-            changeShowPopup(false);
-    });
+    if (typeof document != 'undefined')
+        window.addEventListener("wheel", function (e: any) {
+            console.log(e.deltaY);
+            if (e.deltaY > 0)
+                changeShowPopup(true);
+            else if (e.deltaY)
+                changeShowPopup(false);
+        });
 
     return (<div className={shadow || showPopup ? 'col-12 ' + styles.headerContainer + ' ' + styles.blackShadow :
         'col-12 ' + styles.headerContainer + ' ' + styles.lightShadow}>
