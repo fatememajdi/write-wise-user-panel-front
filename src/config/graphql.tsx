@@ -153,7 +153,8 @@ query{
     email,
     age,
     gender,
-    profile
+    profile,
+    token
   }
 }
 `;
@@ -209,8 +210,8 @@ query{
 `;
 
 export const GET_PACKAGES = gql`
-query GetPackages($currency:String!){
-  getPackages(filter:{currency:$currency}){
+query GetPackages($currency:String!,$userToken:String!){
+  getPackages(filter:{currency:$currency,userToken:$userToken}){
     id,
     name,
     discountPercent,
@@ -223,6 +224,29 @@ query GetPackages($currency:String!){
     showingPrice,
     showingPriceWithDiscount,
     currency
+  }
+}
+`;
+
+export const TRANSACTION_HISTORY = gql`
+query TransactionHistory($page:Float!,$pageSize:Float!){
+  transactionHistory(pagination:{page:$page,pageSize:$pageSize}){
+    transactions{
+      id,
+      shortId, 
+      invoiceNumber,
+      paymentServiceType,
+      originalAmount,
+      discountPercent,
+      amountAfterDiscount,
+      amountPaidShow,
+      tax,
+      tokenNumber,
+      currency,
+      paymentStatus,
+      paidDate,
+      
+    }
   }
 }
 `;

@@ -8,6 +8,7 @@
     padding: 0px 97px 0px 97px;
     height: 122px;
     position: relative;
+
 }
 
 .header {
@@ -23,6 +24,7 @@
     height: 122px;
     z-index: 100 !important;
     background-color: #F3F3F3;
+    /* max-width: 1900px !important; */
     align-items: center;
 }
 

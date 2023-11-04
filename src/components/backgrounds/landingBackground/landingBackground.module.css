@@ -1,9 +1,12 @@
 .landingBackground {
     min-height: 100vh;
+    height: fit-content !important;
     overflow: hidden !important;
     overflow-x: hidden !important;
     position: relative;
     background-image: url('/landing/section1-desktop-background.svg');
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
     z-index: 501;
 }
 

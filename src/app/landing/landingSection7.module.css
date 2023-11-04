@@ -3,6 +3,8 @@
     overflow: hidden !important;
     overflow-x: hidden !important;
     background-image: url('/landing/section7-background.svg');
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
 }
 .section7Container {
     flex: 1;

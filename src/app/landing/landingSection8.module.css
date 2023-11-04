@@ -6,6 +6,8 @@
     padding: 260px 350px 100px 350px;
     width: 100vw;
     background-image: url('/landing/section8-background.svg');
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
 }
 
 .section8Card {

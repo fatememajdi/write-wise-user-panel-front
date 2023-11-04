@@ -38,9 +38,9 @@ const PackageCard: React.FC<_props> = ({ pack, loading }) => {
                     <div className={styles.packagePrice}>
                         {
                             pack.discountPercent > 0 &&
-                            <span>{pack.amountWithDiscount}</span>
+                            <span>{pack.showingPrice}</span>
                         }
-                        {pack.showingPrice}
+                        {pack.showingPriceWithDiscount}
 
                     </div>
                     <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Scoring</div>

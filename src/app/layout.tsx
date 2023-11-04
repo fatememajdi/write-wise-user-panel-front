@@ -64,14 +64,16 @@ export default function RootLayout({
     description: 'Ielts Writing Ai'
   };
 
+
   return (
     <SessionProvider session={pageProps?.session}>
       <ApolloProvider client={client}>
         <html lang="en"
           suppressHydrationWarning
-          // className={cx(inter.variable, lato.variable)}
+        // className={cx(inter.variable, lato.variable)}
         >
           <title>Write Wise Ai</title>
+
           <Head>
             <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
             <meta

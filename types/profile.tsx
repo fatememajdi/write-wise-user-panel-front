@@ -4,5 +4,6 @@ export type UserProfile = {
     email?: string,
     age?: string,
     gender?: string,
-    profile?: string
+    profile?: string,
+    token?: number
 }

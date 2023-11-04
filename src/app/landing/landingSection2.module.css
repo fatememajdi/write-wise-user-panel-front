@@ -2,6 +2,8 @@
     overflow: hidden !important;
     overflow-x: hidden !important;
     background-image: url('/landing/section2-background.svg');
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
     padding: 180px 119px 40px 169px;
     min-height: 100vh;
     width: 100vw;

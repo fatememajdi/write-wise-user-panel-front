@@ -49,7 +49,7 @@ const SignIn: React.FC = () => {
                     loginStep === 0 ?
                         <Step1 changeStep={changeLoginStep} />
                         : */}
-                        <Step2 />
+                <Step2 />
                 {/* // } */}
             </div>
 
@@ -153,7 +153,8 @@ const Step2: React.FC = () => {
             variables: {
                 email: values.email,
             },
-        }).then(async () => {
+        }).then(async (res) => {
+            console.log(res)
             await router.push('/signIn/verificationCode');
             setTimeout(() => {
                 changeLoading(false);

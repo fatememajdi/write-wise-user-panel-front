@@ -39,7 +39,8 @@ const Section6: React.FC = () => {
             query: GET_PACKAGES,
             fetchPolicy: "no-cache",
             variables: {
-                currency: code.toLowerCase()
+                currency: code.toLowerCase(),
+                userToken:''
             }
         }).then((res) => {
             setPackages(res.data.getPackages);

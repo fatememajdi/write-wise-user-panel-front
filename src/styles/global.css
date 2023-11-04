@@ -65,6 +65,11 @@ button {
   display: flex;
 }
 
+body {
+  padding: 0;
+  margin: auto !important;
+}
+
 ::-webkit-scrollbar {
   /* display: none; */
   width: 13px;
@@ -80,4 +85,12 @@ button {
 
 .mainContainer {
   overflow-x: hidden !important;
+}
+
+@media (min-width: 1200px) {
+  .container {
+
+    max-width: 1140px;
+  }
+
 }
