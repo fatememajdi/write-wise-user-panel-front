@@ -10,5 +10,6 @@ export type Package = {
     amountWithDiscount: number,
     showingPrice: string,
     showingPriceWithDiscount: string,
-    currency: string
+    currency: string,
+    adjustableQuantity: boolean
 }

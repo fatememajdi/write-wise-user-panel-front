@@ -223,7 +223,8 @@ query GetPackages($currency:String!,$userToken:String!){
     amountWithDiscount,
     showingPrice,
     showingPriceWithDiscount,
-    currency
+    currency,
+    adjustableQuantity
   }
 }
 `;
@@ -247,6 +248,30 @@ query TransactionHistory($page:Float!,$pageSize:Float!){
       paidDate,
       
     }
+  }
+}
+`;
+
+export const RECEIPT_LINK = gql`
+query ReceiptLink($id:String!){
+  receiptLink(getPayment:{id:$id}){
+    link
+  }
+}
+`;
+
+export const REGENERATE_PAYMENT_LINK = gql`
+query RegeneratePaymentLink($id:String!){
+  regeneratePaymentLink(getPayment:{id:$id}){
+    link
+  }
+}
+`;
+
+export const CREATE_PAYMENT_LINK = gql`
+mutation CreatePaymentLink($id:String!, $currency:String!, $adjustedQuantity:Float!, $promotionCode:String!){
+  createPaymentLink(createPaymentLink:{id:$id,currency:$currency,adjustedQuantity:$adjustedQuantity,promotionCode:$promotionCode}){
+    link
   }
 }
 `;
