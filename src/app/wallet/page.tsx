@@ -366,8 +366,9 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack }
             changeValidPromotionCode(true);
             changeSendPromotionCode(true);
             setLoading(false);
-        }).catch((err) => {
+        }).catch(async (err) => {
             console.log('validation promotion code error : ', err);
+            await changePromotion(null);
             changeValidPromotionCode(false);
             changeSendPromotionCode(true);
             setLoading(false);
