@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React from "react";
@@ -53,7 +54,7 @@ const Wallet: React.FC = () => {
         <ModalFirstStep key={0} currencies={currencies} currencyCode={currencyCode}
             changeCurrencyCode={changeCurrencyCode} GetPackage={GetPackage} handleCancel={handleCancel}
             loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
-        <ModalSecondStep key={1} handleCancel={handleCancel} pack={selectedPackage} />
+        <ModalSecondStep key={1} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
     ]);
 
     const router = useRouter();
@@ -180,8 +181,8 @@ const Wallet: React.FC = () => {
                 promotionCode: promotionCode
             }
         }).then(async (res) => {
-            console.log(res.data.createPaymentLink.link);
-            setPageLoading(false);
+            window.location = res.data.createPaymentLink.link;
+            // setPageLoading(false);
         }).catch((err) => {
             console.log("create payment link error : ", err);
             setPageLoading(false);
@@ -201,6 +202,7 @@ const Wallet: React.FC = () => {
     }, []);
     return pageLoading ? <Loading />
         : <div className={styles.walletContainer}>
+
             <div className={styles.tokenCard}>
                 <div className={styles.title}>wallet balance</div>
 
@@ -329,7 +331,8 @@ const ModalFirstStep: React.FC<_modalFirstStepProps> = ({ currencies, currencyCo
 
 type _modalSecondStepProps = {
     handleCancel: any,
-    pack: Package
+    pack: Package,
+    CreatePaymentLink: any
 };
 
 type Promotion = {
@@ -339,7 +342,7 @@ type Promotion = {
     discountAmount: string
 }
 
-const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack }) => {
+const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, CreatePaymentLink }) => {
 
     const [counter, changeCounter] = React.useState<number>(1);
     const [promotionCode, changePromotionCode] = React.useState<string>('');
@@ -460,7 +463,12 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack }
                             Total due
                             <span>{promotion ? promotion.amountAfterDiscount : pack.showingPriceWithDiscount}</span>
                         </div>
-                        <button className={styles.checkoutButton}>Checkout</button>
+                        <button
+                            onClick={() => {
+                                handleCancel();
+                                CreatePaymentLink(pack.adjustableQuantity ? counter : 1, pack.id, pack.currency.toLowerCase(), pack.discountName !== '' ? pack.currencyName : promotionCode);
+                            }}
+                            className={styles.checkoutButton}>Checkout</button>
                     </div>
             }
         </div>
