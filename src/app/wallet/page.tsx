@@ -16,12 +16,12 @@ import styles from './wallet.module.css';
 
 //------------------------------------------icons
 import { PiPlusBold } from 'react-icons/pi';
-import { BiSolidRightArrow, BiSolidLeftArrow } from 'react-icons/bi';
-import { AiOutlineClose } from 'react-icons/ai';
+import { BiSolidRightArrow, BiSolidLeftArrow, BiSolidCheckCircle } from 'react-icons/bi';
+import { AiOutlineClose, AiFillCloseCircle } from 'react-icons/ai';
 
 //------------------------------------------components
 import { StopLoader } from "@/components/Untitled";
-import { CREATE_PAYMENT_LINK, GET_CURRENCIES, GET_PACKAGES, GET_PROFILE, RECEIPT_LINK, REGENERATE_PAYMENT_LINK, TRANSACTION_HISTORY } from "@/config/graphql";
+import { CREATE_PAYMENT_LINK, GET_CURRENCIES, GET_PACKAGES, GET_PROFILE, RECEIPT_LINK, REGENERATE_PAYMENT_LINK, TRANSACTION_HISTORY, VALIDATION_PROMOTION_CODE } from "@/config/graphql";
 const PackageCard = dynamic(() => import("@/components/packageCard/packageCard"));
 const Loading = dynamic(() => import("@/components/loading/loading"));
 const TableCol = dynamic(() => import("@/components/walletTableCol/walletTableCol"));
@@ -42,19 +42,18 @@ const Wallet: React.FC = () => {
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [pageLoading, setPageLoading] = React.useState<boolean>(true);
-    const [modalStep, changeModalStep] = React.useState<number>(1);
     const [moreTransaction, setMoreTransaction] = React.useState<boolean>(true);
     const [tableLoading, setTableLoading] = React.useState<boolean>(true);
+    const [selectedPackage, setSelectedPackage] = React.useState<Package>();
     const [profile, setprofile] = React.useState<UserProfile>();
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => { setIsModalOpen(false); Back(); }
-    const Next = () => next();
     const Back = () => back();
     const { step, back, next } = useMultiStepForm([
-        <ModalFirstStep currencies={currencies} currencyCode={currencyCode}
+        <ModalFirstStep key={0} currencies={currencies} currencyCode={currencyCode}
             changeCurrencyCode={changeCurrencyCode} GetPackage={GetPackage} handleCancel={handleCancel}
-            loading={loading} packages={packages} Next={Next} CreatePaymentLink={CreatePaymentLink} />,
-        <ModalSecondStep handleCancel={handleCancel} />
+            loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
+        <ModalSecondStep key={1} handleCancel={handleCancel} pack={selectedPackage} />
     ]);
 
     const router = useRouter();
@@ -189,6 +188,11 @@ const Wallet: React.FC = () => {
         });
     };
 
+    async function ChangeModalStep(pack: Package) {
+        await setSelectedPackage(pack);
+        next();
+    }
+
     React.useEffect(() => {
         StopLoader();
         GetProfile();
@@ -267,12 +271,11 @@ type _modalFirstStepProps = {
     handleCancel: any,
     loading: boolean,
     packages: Package[],
-    Next: any,
-    CreatePaymentLink: any
+    changeModalStep: any
 };
 
 const ModalFirstStep: React.FC<_modalFirstStepProps> = ({ currencies, currencyCode, changeCurrencyCode,
-    GetPackage, handleCancel, loading, packages, Next, CreatePaymentLink }) => {
+    GetPackage, handleCancel, loading, packages, changeModalStep }) => {
     return <div className={'col-12 ' + styles.modalCard}>
         <div className={'col-12 ' + styles.modalTopContainer}>
             <Select
@@ -312,16 +315,9 @@ const ModalFirstStep: React.FC<_modalFirstStepProps> = ({ currencies, currencyCo
                     :
                     <>
                         {packages.map((item: Package, index: number) => <div
+                            key={index}
                             style={{ cursor: 'pointer' }}
-                            onClick={() => {
-                                console.log(item);
-                                if (item.adjustableQuantity)
-                                    Next();
-                                else {
-                                    handleCancel();
-                                    CreatePaymentLink(1, item.id, item.currency.toLowerCase(), "");
-                                }
-                            }}>
+                            onClick={() => changeModalStep(item)}>
                             <PackageCard loading={loading} pack={item} key={index} />
                         </div>)}
                     </>
@@ -332,12 +328,51 @@ const ModalFirstStep: React.FC<_modalFirstStepProps> = ({ currencies, currencyCo
 
 
 type _modalSecondStepProps = {
-    handleCancel: any
+    handleCancel: any,
+    pack: Package
 };
 
-const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel }) => {
+type Promotion = {
+    name: string,
+    percentOff: number,
+    amountAfterDiscount: string,
+    discountAmount: string
+}
+
+const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack }) => {
 
     const [counter, changeCounter] = React.useState<number>(1);
+    const [promotionCode, changePromotionCode] = React.useState<string>('');
+    const [validpromotionCode, changeValidPromotionCode] = React.useState<boolean>(false);
+    const [sendPromotionCode, changeSendPromotionCode] = React.useState<boolean>(false);
+    const [promotion, changePromotion] = React.useState<Promotion>();
+    const [loading, setLoading] = React.useState<boolean>(false);
+
+    async function validationPromotionCode() {
+        setLoading(true);
+        console.log(promotionCode);
+        await client.query({
+            query: VALIDATION_PROMOTION_CODE,
+            fetchPolicy: "no-cache",
+            variables: {
+                id: pack.id,
+                currency: pack.currency.toLowerCase(),
+                adjustedQuantity: pack.adjustableQuantity ? counter : 1,
+                promotionCode: promotionCode
+            }
+        }).then((res) => {
+            console.log(res.data.validationPromotionCode);
+            changePromotion(res.data.validationPromotionCode);
+            changeValidPromotionCode(true);
+            changeSendPromotionCode(true);
+            setLoading(false);
+        }).catch((err) => {
+            console.log('validation promotion code error : ', err);
+            changeValidPromotionCode(false);
+            changeSendPromotionCode(true);
+            setLoading(false);
+        })
+    }
 
     return <div className={'col-12 ' + styles.modalCard}>
         <AiOutlineClose
@@ -347,30 +382,86 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel }) => {
         <div className={'col-12 ' + styles.buyPackageCard}>
             <div className={'col-lg-5 col-md-5 ' + styles.buyPackageLeftCard}>
                 <div className={styles.buyPackageLeftCardTitle}>
-                    $10
+                    {pack.showingPrice}
                     <span> Start your journey with us.</span>
                 </div>
             </div>
 
-            <div className={'col-lg-7 col-md-7 ' + styles.buyPackageRightCard}>
-                <div className={'col-12 ' + styles.buyPackageRightCardTitle}>
-                    Start your journey with us.
-                    <span>$10</span>
-                </div>
-                <div className={styles.countercontainer}>
-                    <BiSolidLeftArrow
-                        className={styles.arrowIcon}
-                        onClick={() => { if (counter > 1) changeCounter(counter - 1) }} />
-                    <div className={styles.countCard}>{counter}</div>
-                    <BiSolidRightArrow
-                        className={styles.arrowIcon}
-                        onClick={() => changeCounter(counter + 1)} />
-                </div>
-                <div className={'col-12 ' + styles.buyPackageRightCardSubTitle}>
-                    Subtotal
-                    <span>$10 </span>
-                </div>
-            </div>
+            {
+                loading ?
+                    <Loading style={{ minHeight: 400, height: 400 }} />
+                    :
+                    <div className={'col-lg-7 col-md-7 ' + styles.buyPackageRightCard}>
+                        <div className={'col-12 ' + styles.buyPackageRightCardTitle}>
+                            Start your journey with us.
+                            <span>{pack.showingPrice}</span>
+                        </div>
+                        <div className={styles.countercontainer}>
+                            <button
+                                disabled={!pack.adjustableQuantity}
+                                onClick={() => { if (counter > 1) changeCounter(counter - 1) }} >
+                                <BiSolidLeftArrow
+                                    className={styles.arrowIcon} />
+                            </button>
+
+                            <div className={styles.countCard}>{counter}</div>
+
+                            <button
+                                disabled={!pack.adjustableQuantity}
+                                onClick={() => changeCounter(counter + 1)}>
+                                <BiSolidRightArrow
+                                    className={styles.arrowIcon} />
+                            </button>
+
+                        </div>
+                        <div className={'col-12 ' + styles.buyPackageRightCardSubTitle}>
+                            Subtotal
+                            <span>{pack.showingPrice}</span>
+                        </div>
+                        {
+                            !pack.isPopup &&
+                            <div className={styles.applyCodeContainer}>
+                                <div className={styles.inputCard}>
+                                    <input
+                                        type="text"
+                                        onChange={(e) => {
+                                            changePromotionCode(e.target.value);
+                                            changeSendPromotionCode(false);
+                                        }}
+                                        disabled={pack.discountName !== ""}
+                                        placeholder="Add promotion code"
+                                        value={pack.discountName ? pack.discountName : promotionCode}></input>
+
+                                    {sendPromotionCode ?
+                                        validpromotionCode ?
+                                            <BiSolidCheckCircle className={styles.checkCodeIcon} />
+                                            :
+                                            <AiFillCloseCircle className={styles.checkCodeIcon} />
+                                        : <></>
+                                    }
+                                </div>
+
+                                <button
+                                    disabled={pack.discountName !== ''}
+                                    className={styles.applyCodeButton}
+                                    onClick={() => validationPromotionCode()}
+                                >Apply code</button>
+
+                                <span>{pack.discountPercent !== 0 ? '-' + pack.showingDiscountAmount : promotion && '-' + promotion.discountAmount}</span>
+
+                            </div>
+                        }
+                        {
+                            sendPromotionCode && !validpromotionCode &&
+                            <div className={styles.inputError}>The promo code you entered is invalid. Please try again,</div>
+                        }
+                        <div className={'col-12 ' + styles.buyPackageRightCardSubTitle + ' ' + styles.totalDueCard}>
+                            Total due
+                            <span>{promotion ? promotion.amountAfterDiscount : pack.showingPriceWithDiscount}</span>
+                        </div>
+                        <button className={styles.checkoutButton}>Checkout</button>
+                    </div>
+            }
         </div>
     </div>;
 }

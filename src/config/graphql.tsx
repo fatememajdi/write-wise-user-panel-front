@@ -224,7 +224,10 @@ query GetPackages($currency:String!,$userToken:String!){
     showingPrice,
     showingPriceWithDiscount,
     currency,
-    adjustableQuantity
+    adjustableQuantity,
+    discountName,
+    showingDiscountAmount,
+    isPopup
   }
 }
 `;
@@ -246,7 +249,8 @@ query TransactionHistory($page:Float!,$pageSize:Float!){
       currency,
       paymentStatus,
       paidDate,
-      
+      essayShortId,
+      essayShortName
     }
   }
 }
@@ -275,3 +279,18 @@ mutation CreatePaymentLink($id:String!, $currency:String!, $adjustedQuantity:Flo
   }
 }
 `;
+
+export const VALIDATION_PROMOTION_CODE = gql`
+query validationPromotionCode($id:String!, $currency:String!, $adjustedQuantity:Float!, $promotionCode:String!){
+  validationPromotionCode(createPaymentLink:{
+    id:$id,
+    currency:$currency,
+    adjustedQuantity:$adjustedQuantity,
+    promotionCode:$promotionCode
+  }){
+    name,
+    percentOff,
+    amountAfterDiscount,
+    discountAmount
+  }
+}`;

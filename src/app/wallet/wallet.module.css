@@ -268,7 +268,6 @@
 .arrowIcon {
     color: #FFF;
     font-size: 20px;
-    cursor: pointer;
 }
 
 .countCard {
@@ -295,4 +294,117 @@
     border-top: solid 1px #626E7E;
     font-weight: 300;
     padding-top: 24px;
+}
+
+.applyCodeContainer {
+    display: flex;
+    flex-direction: row;
+    padding-right: 44px;
+    margin-top: 40px;
+    align-items: center;
+}
+
+.applyCodeButton {
+    width: 129px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border: 1px solid var(--card-f, #2E4057);
+    background: var(--card-f, #2E4057);
+    padding: 0px;
+    align-items: center;
+    justify-content: center;
+    color: #F3F3F3;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 24px;
+}
+
+.applyCodeContainer input {
+    width: 269px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border: 1px solid #F3F3F3;
+    background: #626E7E;
+    color: #FFF !important;
+    text-align: left;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 9.5px;
+    padding-left: 3px;
+
+}
+
+.applyCodeContainer input ::placeholder {
+    color: #FFF !important;
+    text-align: center !important;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 9.5px;
+}
+
+.totalDueCard {
+    padding-top: 24px !important;
+}
+
+.totalDueCard span {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.checkoutButton {
+    width: 172px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #F3F3F3;
+    background: #F3F3F3;
+    padding: 0px !important;
+    align-items: center;
+    justify-content: center;
+    color: #252525;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: 50px;
+    margin-right: auto;
+}
+
+.applyCodeContainer span {
+    color: #FFF;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: auto;
+}
+
+.inputCard {
+    position: relative;
+}
+
+.checkCodeIcon {
+    font-size: 25px;
+    color: #FFF;
+    position: absolute;
+    top: 9px;
+    right: 4px;
+}
+
+.inputError {
+    color: #F3F3F3;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 27.3px;
+    margin-top: 16px;
 }
