@@ -10,6 +10,7 @@ import '../../styles/section6Select.css';
 
 //---------------------------------------------------icons
 import { FiCheck } from 'react-icons/fi';
+import { TbCurrencyIranianRial } from 'react-icons/tb';
 
 //---------------------------------------------------types
 import { Package } from "../../../types/package";
@@ -40,7 +41,9 @@ const PackageCard: React.FC<_props> = ({ pack, loading }) => {
                             pack.discountPercent > 0 &&
                             <span>{pack.showingPrice}</span>
                         }
+                        {/* {pack.showingPriceWithDiscount[pack.showingPriceWithDiscount.length - 1]} */}
                         {pack.showingPriceWithDiscount}
+                        {/* <TbCurrencyIranianRial /> */}
 
                     </div>
                     <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Scoring</div>

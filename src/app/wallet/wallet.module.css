@@ -408,3 +408,7 @@
     line-height: 27.3px;
     margin-top: 16px;
 }
+
+.errorForm{
+    border: solid 1px #AB141D !important;
+}

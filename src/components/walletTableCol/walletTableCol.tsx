@@ -9,6 +9,8 @@ import styles from './walletTableCol.module.css';
 //------------------------------------------icons
 import { PiPlusBold, PiMinus } from 'react-icons/pi';
 import { MdSmsFailed } from 'react-icons/md';
+import { BiSolidCheckCircle } from 'react-icons/bi';
+
 
 //---------------------------------------------------types
 import { Transaction } from "../../../types/transaction";
@@ -20,14 +22,20 @@ type _props = {
 };
 
 const TableCol: React.FC<_props> = ({ transaction, RecieptLink, RegeneratePaymentLink }) => {
-    return <div className={transaction.paymentStatus !== 'analysis' ? styles.transactionCard + ' ' + styles.positiveTransactionCard
-        : styles.transactionCard + ' ' + styles.negativeTransactionCard}>
+    return <div className={transaction.paymentStatus !== 'analysis' && transaction.paymentStatus !== 'expired' ? styles.transactionCard + ' ' + styles.positiveTransactionCard
+        : transaction.paymentStatus === 'expired' ? styles.transactionCard + ' ' + styles.expierdTransactionCard
+            : styles.transactionCard + ' ' + styles.negativeTransactionCard}>
         <span className={styles.tableItem}>{
-            transaction.paymentStatus === 'success' || transaction.paymentStatus === 'waiting' ?
-                <div className={styles.plusCard}><PiPlusBold /></div>
-                : transaction.paymentStatus === 'analysis' ?
-                    <div className={styles.minusCard}><PiMinus /></div>
-                    : <div className={styles.faildCard}><MdSmsFailed /></div>
+            transaction.paymentStatus === 'success' ?
+                <div className={styles.checkIconCardCard}><BiSolidCheckCircle /></div>
+                : transaction.paymentStatus === 'waiting' ?
+                    <div className={styles.plusCard}><PiPlusBold /></div>
+                    : transaction.paymentStatus === 'faild' ?
+                        <div className={styles.faildCard}><MdSmsFailed /></div>
+                        :
+                        <div className={transaction.paymentStatus === 'expired' ? styles.expiredCard 
+                        : styles.minusCard}><PiMinus /></div>
+
         }{transaction.paymentStatus}</span>
         <span className={styles.tableItem}>{transaction.amountPaidShow}</span>
         <span className={styles.tableItem}>
@@ -41,9 +49,10 @@ const TableCol: React.FC<_props> = ({ transaction, RecieptLink, RegeneratePaymen
                 <button onClick={() => RecieptLink(transaction.id)} className={styles.tableItemButton}>Receipt</button>
                 : transaction.paymentStatus === 'waiting' ?
                     <button onClick={() => RegeneratePaymentLink(transaction.id)} className={styles.tableItemButton}>Continue</button>
-                    : transaction.paymentStatus === 'expired' ?
+                    : transaction.paymentStatus === 'faild' ?
                         <Popover placement="topLeft" content={'some text..'}> <button className={styles.tableItemButton}>Faild</button></Popover>
-                        : <div className={styles.essayName}>short name of essay</div>
+                        : transaction.paymentStatus !== 'expired' &&
+                        <div className={styles.essayName}>short name of essay</div>
 
 
             }

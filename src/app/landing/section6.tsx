@@ -40,7 +40,7 @@ const Section6: React.FC = () => {
             fetchPolicy: "no-cache",
             variables: {
                 currency: code.toLowerCase(),
-                userToken:''
+                userToken: ''
             }
         }).then((res) => {
             setPackages(res.data.getPackages);
@@ -73,13 +73,13 @@ const Section6: React.FC = () => {
         <Select
             renderValue={(selected) => {
                 if (selected.length === 0) {
-                    return <em>{currencies.length > 0 ? currencies[0].code
+                    return <em>{currencies.length > 0 ? currencies[0].icon + ' ' + currencies[0].name
                         : <ReactLoading className={styles.loading} type={'bubbles'} color={'#FFF'} height={30} width={30} />}</em>;
                 }
 
-                return selected;
+                return currencies.find(item => item.code === selected).icon + ' ' + currencies.find(item => item.code === selected).name;
             }}
-            defaultValue="USD"
+            defaultValue="select currency"
             value={currencyCode}
             onChange={(e) => {
                 changeCurrencyCode(e.target.value);
@@ -91,7 +91,7 @@ const Section6: React.FC = () => {
         >
             {
                 currencies.map((item: Currency, index: number) =>
-                    <MenuItem key={index} className={styles.selectItem} value={item.code}>{item.code}</MenuItem>)
+                    <MenuItem key={index} className={styles.selectItem} value={item.code}>{item.icon + ' ' + item.name}</MenuItem>)
             }
 
         </Select>
@@ -134,7 +134,8 @@ const Section6: React.FC = () => {
             showIndicators={false}
             thumbWidth={100}
             className={'col-12 ' + styles.mobileCarousel}>
-            {packages.map((item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
+            {packages.filter(item => !item.isPopup).map(
+                (item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
 
         </Carousel>
 
@@ -143,7 +144,8 @@ const Section6: React.FC = () => {
                 <ReactLoading className={styles.loading} type={'spin'} color={'#FFF'} height={50} width={50} />
                 :
                 <div className={'col-12 ' + styles.mainContainer}>
-                    {packages.map((item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
+                    {packages.filter(item => !item.isPopup).map(
+                        (item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
                 </div>
         }
     </section>

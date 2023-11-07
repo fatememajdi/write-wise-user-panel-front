@@ -20,6 +20,14 @@
     color: #F3F3F3;
 }
 
+.expierdTransactionCard {
+    background: radial-gradient(239.71% 140.05% at 0.9% 2.98%, rgba(171, 20, 29, 0.83) 0%, rgba(171, 20, 29, 0.89) 35.37%, rgba(171, 20, 29, 0.81) 66.98%, rgba(171, 20, 29, 0.88) 85.73%, #AB141D 97.98%);
+    stroke-width: 2px;
+    stroke: rgba(250, 255, 252, 0.00);
+    backdrop-filter: blur(21px);
+    color: #F3F3F3 !important;
+}
+
 .negativeTransactionCard {
     border: 2px solid rgba(114, 123, 139, 0.00);
     background: radial-gradient(231% 135.8% at 0.9% 2.98%, rgba(145, 154, 165, 0.40) 0%, rgba(255, 255, 255, 0.00) 100%);
@@ -48,7 +56,16 @@
     justify-content: center;
 }
 
-.minusCard {
+.checkIconCardCard {
+    height: fit-content;
+    width: fit-content;
+    margin-right: 18px;
+    font-size: 35px;
+
+}
+
+.minusCard,
+.expiredCard {
     height: 30px;
     width: 30px;
     border-radius: 100%;
@@ -59,6 +76,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.expiredCard {
+    background-color: #F3F3F3;
+    color: #2E4057;
 }
 
 .faildCard {

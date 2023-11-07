@@ -22,17 +22,20 @@ import { AiOutlineClose, AiFillCloseCircle } from 'react-icons/ai';
 
 //------------------------------------------components
 import { StopLoader } from "@/components/Untitled";
-import { CREATE_PAYMENT_LINK, GET_CURRENCIES, GET_PACKAGES, GET_PROFILE, RECEIPT_LINK, REGENERATE_PAYMENT_LINK, TRANSACTION_HISTORY, VALIDATION_PROMOTION_CODE } from "@/config/graphql";
+import {
+    CREATE_PAYMENT_LINK, GET_CURRENCIES, GET_PACKAGES, GET_PROFILE, RECEIPT_LINK,
+    REGENERATE_PAYMENT_LINK, TRANSACTION_HISTORY, VALIDATION_PROMOTION_CODE
+} from "@/config/graphql";
 const PackageCard = dynamic(() => import("@/components/packageCard/packageCard"));
 const Loading = dynamic(() => import("@/components/loading/loading"));
 const TableCol = dynamic(() => import("@/components/walletTableCol/walletTableCol"));
+import { useMultiStepForm } from "@/components/multiStepForm/useMultiStepForm";
 
 //---------------------------------------------------types
 import { Currency } from "../../../types/currency";
 import { Package } from "../../../types/package";
 import { UserProfile } from "../../../types/profile";
 import { Transaction } from "../../../types/transaction";
-import { useMultiStepForm } from "@/components/multiStepForm/useMultiStepForm";
 
 const Wallet: React.FC = () => {
 
@@ -93,7 +96,6 @@ const Wallet: React.FC = () => {
         })
     };
 
-
     async function GetProfile() {
         await client.query({
             query: GET_PROFILE,
@@ -106,7 +108,6 @@ const Wallet: React.FC = () => {
             setPageLoading(false);
         });
     };
-
 
     async function GetTransactionsHistory() {
         await client.query({
@@ -191,7 +192,7 @@ const Wallet: React.FC = () => {
     async function ChangeModalStep(pack: Package) {
         await setSelectedPackage(pack);
         next();
-    }
+    };
 
     React.useEffect(() => {
         StopLoader();
@@ -199,6 +200,7 @@ const Wallet: React.FC = () => {
         GetTransactionsHistory();
         GetCurrencies();
     }, []);
+
     return pageLoading ? <Loading />
         : <div className={styles.walletContainer}>
 
@@ -282,13 +284,13 @@ const ModalFirstStep: React.FC<_modalFirstStepProps> = ({ currencies, currencyCo
             <Select
                 renderValue={(selected) => {
                     if (selected.length === 0) {
-                        return <em>{currencies.length > 0 ? currencies[0].code
+                        return <em>{currencies.length > 0 ? currencies[0].icon + ' ' + currencies[0].name
                             : <ReactLoading className={styles.loading} type={'bubbles'} color={'#FFF'} height={30} width={30} />}</em>;
                     }
 
-                    return selected;
+                    return currencies.find(item => item.code === selected).icon + ' ' + currencies.find(item => item.code === selected).name;
                 }}
-                defaultValue="USD"
+                defaultValue="select currency"
                 value={currencyCode}
                 onChange={(e) => {
                     changeCurrencyCode(e.target.value);
@@ -300,7 +302,7 @@ const ModalFirstStep: React.FC<_modalFirstStepProps> = ({ currencies, currencyCo
             >
                 {
                     currencies.map((item: Currency, index: number) =>
-                        <MenuItem key={index} className={styles.selectItem} value={item.code}>{item.code}</MenuItem>)
+                        <MenuItem key={index} className={styles.selectItem} value={item.code}>{item.icon + ' ' + item.name}</MenuItem>)
                 }
 
             </Select>
@@ -327,7 +329,6 @@ const ModalFirstStep: React.FC<_modalFirstStepProps> = ({ currencies, currencyCo
     </div>
 };
 
-
 type _modalSecondStepProps = {
     handleCancel: any,
     pack: Package,
@@ -339,7 +340,7 @@ type Promotion = {
     percentOff: number,
     amountAfterDiscount: string,
     discountAmount: string
-}
+};
 
 const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, CreatePaymentLink }) => {
 
@@ -390,86 +391,99 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
                 </div>
             </div>
 
-            {
-                loading ?
-                    <Loading style={{ minHeight: 400, height: 400 }} />
-                    :
-                    <div className={'col-lg-7 col-md-7 ' + styles.buyPackageRightCard}>
-                        <div className={'col-12 ' + styles.buyPackageRightCardTitle}>
-                            Start your journey with us.
-                            <span>{pack.showingPrice}</span>
-                        </div>
-                        <div className={styles.countercontainer}>
-                            <button
-                                disabled={!pack.adjustableQuantity}
-                                onClick={() => { if (counter > 1) changeCounter(counter - 1) }} >
-                                <BiSolidLeftArrow
-                                    className={styles.arrowIcon} />
-                            </button>
-
-                            <div className={styles.countCard}>{counter}</div>
-
-                            <button
-                                disabled={!pack.adjustableQuantity}
-                                onClick={() => changeCounter(counter + 1)}>
-                                <BiSolidRightArrow
-                                    className={styles.arrowIcon} />
-                            </button>
-
-                        </div>
-                        <div className={'col-12 ' + styles.buyPackageRightCardSubTitle}>
-                            Subtotal
-                            <span>{pack.showingPrice}</span>
-                        </div>
-                        {
-                            !pack.isPopup &&
-                            <div className={styles.applyCodeContainer}>
-                                <div className={styles.inputCard}>
-                                    <input
-                                        type="text"
-                                        onChange={(e) => {
-                                            changePromotionCode(e.target.value);
-                                            changeSendPromotionCode(false);
-                                        }}
-                                        disabled={pack.discountName !== ""}
-                                        placeholder="Add promotion code"
-                                        value={pack.discountName ? pack.discountName : promotionCode}></input>
-
-                                    {sendPromotionCode ?
-                                        validpromotionCode ?
-                                            <BiSolidCheckCircle className={styles.checkCodeIcon} />
-                                            :
-                                            <AiFillCloseCircle className={styles.checkCodeIcon} />
-                                        : <></>
-                                    }
-                                </div>
-
-                                <button
-                                    disabled={pack.discountName !== ''}
-                                    className={styles.applyCodeButton}
-                                    onClick={() => validationPromotionCode()}
-                                >Apply code</button>
-
-                                <span>{pack.discountPercent !== 0 ? '-' + pack.showingDiscountAmount : promotion && '-' + promotion.discountAmount}</span>
-
-                            </div>
-                        }
-                        {
-                            sendPromotionCode && !validpromotionCode &&
-                            <div className={styles.inputError}>The promo code you entered is invalid. Please try again,</div>
-                        }
-                        <div className={'col-12 ' + styles.buyPackageRightCardSubTitle + ' ' + styles.totalDueCard}>
-                            Total due
-                            <span>{promotion ? promotion.amountAfterDiscount : pack.showingPriceWithDiscount}</span>
-                        </div>
+            <div className={'col-lg-7 col-md-7 ' + styles.buyPackageRightCard}>
+                <div className={'col-12 ' + styles.buyPackageRightCardTitle}>
+                    Start your journey with us.
+                    <span>{pack.showingPrice}</span>
+                </div>
+                <div className={styles.countercontainer}>
+                    {
+                        pack.adjustableQuantity &&
                         <button
-                            onClick={() => {
-                                handleCancel();
-                                CreatePaymentLink(pack.adjustableQuantity ? counter : 1, pack.id, pack.currency.toLowerCase(), pack.discountName !== '' ? pack.currencyName : promotionCode);
-                            }}
-                            className={styles.checkoutButton}>Checkout</button>
+                            disabled={!pack.adjustableQuantity || loading}
+                            onClick={() => { if (counter > 1) changeCounter(counter - 1) }} >
+                            <BiSolidLeftArrow
+                                className={styles.arrowIcon} />
+                        </button>
+                    }
+                    <div className={styles.countCard}>{counter}</div>
+
+                    {
+                        pack.adjustableQuantity &&
+                        <button
+                            disabled={!pack.adjustableQuantity || loading}
+                            onClick={() => changeCounter(counter + 1)}>
+                            <BiSolidRightArrow
+                                className={styles.arrowIcon} />
+                        </button>
+                    }
+
+                </div>
+                <div className={'col-12 ' + styles.buyPackageRightCardSubTitle}>
+                    Subtotal
+                    <span>{pack.showingPrice}</span>
+                </div>
+                {
+                    !pack.isPopup &&
+                    <div className={styles.applyCodeContainer}>
+                        <div className={styles.inputCard}>
+                            <input
+                                className={sendPromotionCode && !validpromotionCode && styles.errorForm}
+                                type="text"
+                                onChange={(e) => {
+                                    changePromotionCode(e.target.value);
+                                    changeSendPromotionCode(false);
+                                }}
+                                disabled={pack.discountName !== ""}
+                                placeholder="Add promotion code"
+                                value={pack.discountName ? pack.discountName : promotionCode}></input>
+
+                            {sendPromotionCode ?
+                                validpromotionCode ?
+                                    <BiSolidCheckCircle className={styles.checkCodeIcon} />
+                                    :
+                                    <AiFillCloseCircle className={styles.checkCodeIcon} />
+                                : <></>
+                            }
+                        </div>
+
+                        {pack.discountName === '' &&
+                            <button
+                                disabled={pack.discountName !== '' || promotionCode.length === 0}
+                                className={styles.applyCodeButton}
+                                onClick={() => validationPromotionCode()}
+                            >
+                                {
+                                    loading ?
+                                        <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} />
+                                        :
+                                        'Apply code'
+                                }
+                            </button>
+                        }
+
+                        <span>{pack.discountPercent !== 0 ? '-' + pack.showingDiscountAmount
+                            : promotion && '-' + promotion.discountAmount}</span>
+
                     </div>
-            }
+                }
+                {
+                    sendPromotionCode && !validpromotionCode &&
+                    <div className={styles.inputError}>The promo code you entered is invalid. Please try again,</div>
+                }
+                <div className={'col-12 ' + styles.buyPackageRightCardSubTitle + ' ' + styles.totalDueCard}>
+                    Total due
+                    <span>{promotion ? promotion.amountAfterDiscount : pack.showingPriceWithDiscount}</span>
+                </div>
+                <button
+                    disabled={loading}
+                    onClick={() => {
+                        handleCancel();
+                        CreatePaymentLink(pack.adjustableQuantity ? counter : 1, pack.id, pack.currency.toLowerCase(), pack.discountName !== '' ? pack.currencyName : promotionCode);
+                    }}
+                    className={styles.checkoutButton}>Checkout</button>
+            </div>
+
         </div>
-    </div>;
-}
+    </div>
+};

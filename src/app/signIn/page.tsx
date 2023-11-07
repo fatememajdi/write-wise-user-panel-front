@@ -154,7 +154,6 @@ const Step2: React.FC = () => {
                 email: values.email,
             },
         }).then(async (res) => {
-            console.log(res)
             await router.push('/signIn/verificationCode');
             setTimeout(() => {
                 changeLoading(false);
