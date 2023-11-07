@@ -294,3 +294,15 @@ query validationPromotionCode($id:String!, $currency:String!, $adjustedQuantity:
     discountAmount
   }
 }`;
+
+
+export const AFTER_PAYMENT = gql`
+query AfterPayment($id:String!){
+  afterPayment(getPayment:{id:$id}){
+    amountPaidShow,
+    tokenNumber,
+    id, 
+    currency
+  }
+}
+`;

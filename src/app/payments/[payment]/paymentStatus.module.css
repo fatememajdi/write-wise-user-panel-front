@@ -1,0 +1,78 @@
+.paymentStatusContainer {
+    display: flex;
+    padding: auto;
+    height: 100vh;
+}
+
+.statusCard {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: #252525;
+    text-align: center;
+    font-style: normal;
+    line-height: normal;
+}
+
+.title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-top: 66px;
+}
+
+.description {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 48px;
+}
+
+.amount {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 32px;
+}
+
+.amount span {
+    color: var(--card-f, #2E4057);
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+.recieptButton {
+    width: 200px;
+    height: 48px;
+    flex-shrink: 0;
+    padding: 0px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--card-f, #2E4057);
+    margin-top: 82px;
+    color: #F3F3F3;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 82px;
+}
+
+.buttonContainer button {
+    width: 200px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #AB141D;
+    color: #F3F3F3;
+    font-size: 24px;
+    font-weight: 700;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    margin: 0px 10px;
+}

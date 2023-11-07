@@ -59,7 +59,6 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
 
     if (typeof document != 'undefined')
         window.addEventListener("wheel", function (e: any) {
-            console.log(e.deltaY);
             if (e.deltaY > 0)
                 changeShowPopup(true);
             else if (e.deltaY)

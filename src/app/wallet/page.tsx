@@ -78,7 +78,6 @@ const Wallet: React.FC = () => {
                 userToken: user ? `Bearer ${JSON.parse(user)}` : '',
             }
         }).then((res) => {
-            console.log(res);
             setPackages(res.data.getPackages);
             setLoading(false);
         })
@@ -207,7 +206,7 @@ const Wallet: React.FC = () => {
                 <div className={styles.title}>wallet balance</div>
 
                 {profile?.token} Tokens
-                <span>7 Assessments</span>
+                <span>{profile?.token} Assessments</span>
                 <button
                     onClick={() => showModal()}
                     className={styles.addTokenButton}>
@@ -234,7 +233,7 @@ const Wallet: React.FC = () => {
                                     pageStart={0}
                                     loadMore={() => GetTransactionsHistory()}
                                     hasMore={moreTransaction}
-                                    loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} />}
+                                    loader={<Loading style={{ height: 50, minHeight: 0, marginTop: 5 }} />}
                                     useWindow={false}
                                     key={0}
                                 >
