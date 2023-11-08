@@ -39,11 +39,34 @@ const PackageCard: React.FC<_props> = ({ pack, loading }) => {
                     <div className={styles.packagePrice}>
                         {
                             pack.discountPercent > 0 &&
-                            <span>{pack.showingPrice}</span>
+                            <span>
+                                {
+                                    pack.currency === 'IRR' ?
+                                        pack.showingPrice.slice(0, pack.showingPrice.length - 1)
+                                        :
+                                        pack.showingPrice
+                                }
+                                {
+                                    pack.currency === 'IRR' &&
+                                    <TbCurrencyIranianRial className={styles.rialIcon} />
+                                }
+                            </span>
                         }
-                        {/* {pack.showingPriceWithDiscount[pack.showingPriceWithDiscount.length - 1]} */}
-                        {pack.showingPriceWithDiscount}
-                        {/* <TbCurrencyIranianRial /> */}
+
+                        <div
+                            style={pack.showingPriceWithDiscount.length > 12 ? { fontSize: 24 } : {}}
+                            className={styles.packageShowingPrice}>
+                            {
+                                pack.currency === 'IRR' ?
+                                    pack.showingPriceWithDiscount.slice(0, pack.showingPriceWithDiscount.length - 1)
+                                    :
+                                    pack.showingPriceWithDiscount
+                            }
+                            {
+                                pack.currency === 'IRR' &&
+                                <TbCurrencyIranianRial className={styles.rialIcon} />
+                            }
+                        </div>
 
                     </div>
                     <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Scoring</div>
