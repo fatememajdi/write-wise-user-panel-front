@@ -44,16 +44,8 @@
 }
 
 .plusCard {
-    height: 30px;
-    width: 30px;
-    border-radius: 100%;
-    margin-right: 18px;
-    color: #2E4057;
-    padding: auto;
-    background-color: #F3F3F3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #2E4057 !important;
+    background-color: #F3F3F3 !important;
 }
 
 .checkIconCardCard {
@@ -65,7 +57,8 @@
 }
 
 .minusCard,
-.expiredCard {
+.expiredCard,
+.plusCard {
     height: 30px;
     width: 30px;
     border-radius: 100%;
@@ -126,4 +119,35 @@
     line-height: normal;
     text-decoration-line: underline;
     cursor: pointer;
+}
+
+@media(max-width: 1440px) {
+    .transactionCard {
+        height: 70px !important;
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .tableItemButton {
+        width: 100px;
+        height: 35px;
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .essayName {
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .minusCard,
+    .expiredCard,
+    .plusCard {
+        height: 25px;
+        width: 25px;
+    }
+
+    .checkIconCardCard {
+        font-size: 30px;
+    }
 }

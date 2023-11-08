@@ -3,13 +3,16 @@
 'use client';
 import React from "react";
 import { Modal } from 'antd';
+import Image from "next/image";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import client from '@/config/applloAuthorizedClient';
+import { signOut } from 'next-auth/react';
 import dynamic from 'next/dynamic';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ReactLoading from 'react-loading';
+import { useMediaQuery } from 'react-responsive';
 import InfiniteScroll from 'react-infinite-scroller';
 
 //------------------------------------------styles 
@@ -18,10 +21,13 @@ import styles from './wallet.module.css';
 //------------------------------------------icons
 import { PiPlusBold } from 'react-icons/pi';
 import { BiSolidRightArrow, BiSolidLeftArrow, BiSolidCheckCircle } from 'react-icons/bi';
+import { TbCurrencyIranianRial } from 'react-icons/tb';
 import { AiOutlineClose, AiFillCloseCircle } from 'react-icons/ai';
+import { IoMdArrowBack, IoMdMenu } from 'react-icons/io';
 
 //------------------------------------------components
-import { StopLoader } from "@/components/Untitled";
+import { StartLoader, StopLoader } from "@/components/Untitled";
+const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/dashboardPopOver"));
 import {
     CREATE_PAYMENT_LINK, GET_CURRENCIES, GET_PACKAGES, GET_PROFILE, RECEIPT_LINK,
     REGENERATE_PAYMENT_LINK, TRANSACTION_HISTORY, VALIDATION_PROMOTION_CODE
@@ -39,7 +45,10 @@ import { Transaction } from "../../../types/transaction";
 
 const Wallet: React.FC = () => {
 
+    const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
+    const isMac2 = useMediaQuery({ query: "(max-width: 1680px)" });
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const [currencyCode, changeCurrencyCode] = React.useState<string>('');
     const [packages, setPackages] = React.useState<Package[]>([]);
     const [currencies, setCurrencies] = React.useState<Currency[]>([]);
@@ -59,6 +68,13 @@ const Wallet: React.FC = () => {
             loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
         <ModalSecondStep key={1} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
     ]);
+    const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handlePopOverClose = () => {
+        setAnchorEl(null);
+    };
 
     const router = useRouter();
     const { status } = useSession({
@@ -69,6 +85,13 @@ const Wallet: React.FC = () => {
                 router.push('/signIn');
         },
     });
+
+    async function LogOut() {
+        setPageLoading(true);
+        localStorage.clear();
+        if (status === 'authenticated')
+            signOut();
+    };
 
     async function GetPackage(code: string) {
         let user = await localStorage.getItem('user');
@@ -202,65 +225,100 @@ const Wallet: React.FC = () => {
     }, []);
 
     return pageLoading ? <Loading />
-        : <div className={styles.walletContainer}>
-
-            <div className={styles.tokenCard}>
-                <div className={styles.title}>wallet balance</div>
-
-                {profile?.token} Tokens
-                <span>{profile?.token} Assessments</span>
+        : <div className={'col-12 ' + styles.wallet}>
+            <div className={styles.leftNavBardCard}>
+                <Image
+                    className={styles.logo}
+                    src="/dashboard/W W AI.svg"
+                    alt="Logo"
+                    loading="eager"
+                    width={19}
+                    height={69}
+                    priority
+                />
                 <button
-                    onClick={() => showModal()}
-                    className={styles.addTokenButton}>
-                    <PiPlusBold className={styles.plusIcon} />Add tokens
+                    onClick={() => {
+                        StartLoader();
+                        router.push('/ielts');
+                    }
+                    }
+                    className={styles.backButton}
+                    aria-label="back button"
+                >
+                    <IoMdArrowBack />
+                </button>
+                <button
+                    onClick={handlePopOverOpen}
+                    className={styles.menuButton}
+                    aria-label="menu button"
+                >
+                    <IoMdMenu />
                 </button>
             </div>
+            <div className={styles.walletContainer}>
+
+                <div className={styles.tokenCard}>
+                    <div className={styles.title}>wallet balance</div>
+
+                    {profile?.token} Tokens
+                    <span>{profile?.token} Assessments</span>
+                    <button
+                        onClick={() => showModal()}
+                        className={styles.addTokenButton}>
+                        <PiPlusBold className={styles.plusIcon} />Add tokens
+                    </button>
+                </div>
 
 
-            <div className={'col-12 ' + styles.mainContainer}>
-                <div className={styles.transactionTable}>
-                    <div className={styles.tabaleTitleCard}>
-                        <span className={styles.tableItem}>Status</span>
-                        <span className={styles.tableItem}>Amount</span>
-                        <span className={styles.tableItem}>Date</span>
-                        <span className={styles.tableItem}>Tokens</span>
-                        <span className={styles.tableItem}></span>
-                    </div>
-                    <div className={'col-12 ' + styles.tableContent}>
-                        {
-                            tableLoading ?
-                                <Loading style={{ height: 300, minHeight: 300 }} />
-                                :
-                                <InfiniteScroll
-                                    pageStart={0}
-                                    loadMore={() => GetTransactionsHistory()}
-                                    hasMore={moreTransaction}
-                                    loader={<Loading style={{ height: 50, minHeight: 0, marginTop: 5 }} />}
-                                    useWindow={false}
-                                    key={0}
-                                >
-                                    {
-                                        transactions.map((item, index) =>
-                                            <TableCol key={index} transaction={item} RecieptLink={RecieptLink} RegeneratePaymentLink={RegeneratePaymentLink} />)
-                                    }
-                                </InfiniteScroll>
-                        }
+                <div className={'col-12 ' + styles.mainContainer}>
+                    <div className={styles.transactionTable}>
+                        <div className={styles.tabaleTitleCard}>
+                            <span className={styles.tableItem}>Status</span>
+                            <span className={styles.tableItem}>Amount</span>
+                            <span className={styles.tableItem}>Date</span>
+                            <span className={styles.tableItem}>Tokens</span>
+                            <span className={styles.tableItem}></span>
+                        </div>
+                        <div className={'col-12 ' + styles.tableContent}>
+                            {
+                                tableLoading ?
+                                    <Loading style={{ height: 300, minHeight: 300 }} />
+                                    :
+                                    <InfiniteScroll
+                                        pageStart={0}
+                                        loadMore={() => GetTransactionsHistory()}
+                                        hasMore={moreTransaction}
+                                        loader={<Loading style={{ height: 50, minHeight: 0, marginTop: 5 }} />}
+                                        useWindow={false}
+                                        key={0}
+                                    >
+                                        {
+                                            transactions.map((item, index) =>
+                                                <TableCol key={index} transaction={item} RecieptLink={RecieptLink} RegeneratePaymentLink={RegeneratePaymentLink} />)
+                                        }
+                                    </InfiniteScroll>
+                            }
+                        </div>
                     </div>
                 </div>
+                <Modal
+                    style={{ top: 200 }}
+                    footer={null}
+                    closeIcon={null}
+                    open={isModalOpen}
+                    onCancel={handleCancel}
+                    width={isMac ? 1300 : isMac2 ? 1500 : 1700}
+                    className={styles.modalContainer}
+
+                >
+                    {step}
+                </Modal>
+
             </div>
-            <Modal
-                style={{ top: 200 }}
-                footer={null}
-                closeIcon={null}
-                open={isModalOpen}
-                onCancel={handleCancel}
-                width={1700}
-                className={styles.modalContainer}
 
-            >
-                {step}
-            </Modal>
-
+            <DashboardPopOver
+                page='/wallet' anchorEl={anchorEl}
+                handlePopOverClose={handlePopOverClose} LogOut={LogOut} />
         </div>
 };
 
@@ -386,7 +444,20 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
         <div className={'col-12 ' + styles.buyPackageCard}>
             <div className={'col-lg-5 col-md-5 ' + styles.buyPackageLeftCard}>
                 <div className={styles.buyPackageLeftCardTitle}>
-                    {pack.showingPrice}
+                    <div
+                        style={pack.showingPrice.length > 9 ? { fontSize: 34 } : {}}
+                        className={styles.buyPackLeftCardTitleText}>
+                        {
+                            pack.currency === 'IRR' ?
+                                pack.showingPrice.slice(0, pack.showingPrice.length - 1)
+                                :
+                                pack.showingPrice
+                        }
+                        {
+                            pack.currency === 'IRR' &&
+                            <TbCurrencyIranianRial className={styles.rialIcon} />
+                        }
+                    </div>
                     <span> Start your journey with us.</span>
                 </div>
             </div>

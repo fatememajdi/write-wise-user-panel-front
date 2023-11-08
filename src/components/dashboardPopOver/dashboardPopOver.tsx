@@ -19,7 +19,8 @@ const DialogComponent = dynamic(() => import("../../components/dialog/dialog"), 
 interface _props {
     anchorEl: HTMLButtonElement | null,
     handlePopOverClose: any,
-    LogOut: any
+    LogOut: any,
+    page?: string
 }
 
 const menuItems = [
@@ -40,7 +41,7 @@ const menuItems = [
     }
 ];
 
-const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogOut }) => {
+const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogOut, page }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const router = useRouter();
     const Open = Boolean(anchorEl);
@@ -72,7 +73,7 @@ const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogO
         >
             <div className={styles.popOverCard}>
                 {
-                    menuItems.map((item, index) =>
+                    menuItems.filter(item => item.route !== page).map((item, index) =>
                         <a
                             onClick={() => {
                                 router.push(item.route);

@@ -1,5 +1,49 @@
-.walletContainer {
+.wallet {
     height: 100vh !important;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    display: flex;
+    flex-direction: row;
+}
+
+.leftNavBardCard {
+    height: 100%;
+    width: 103px;
+    background-color: var(--color-seccondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.logo {
+    margin-top: 47px;
+}
+
+.backButton {
+    border-radius: 8px;
+    background: #626E7E;
+    padding: 0px;
+    width: 52px;
+    height: 54px;
+    flex-shrink: 0;
+    margin-top: 25px;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-whiteText);
+    font-size: 30px;
+}
+
+.menuButton {
+    margin-top: auto;
+    font-size: 40px;
+    color: var(--color-whiteText);
+    margin-bottom: 30px;
+    padding: 0px;
+}
+
+.walletContainer {
+    height: 100%;
     overflow: hidden !important;
     overflow-x: hidden !important;
     background-image: url('/dashboard/wallet-background.svg');
@@ -8,7 +52,7 @@
     align-items: center;
     padding: 0px 0px 20px 0px;
     background: #F3F3F3;
-
+    flex: 1;
 }
 
 .title {
@@ -409,6 +453,192 @@
     margin-top: 16px;
 }
 
-.errorForm{
+.errorForm {
     border: solid 1px #AB141D !important;
+}
+
+.buyPackLeftCardTitleText {
+    position: relative;
+    padding-right: 30px;
+}
+
+.rialIcon {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 24px;
+}
+
+@media(max-width: 1680px) {
+    .tokenCard {
+        padding: 0px 80px;
+        font-size: 36px;
+        font-weight: 600;
+    }
+
+    .title {
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    .tokenCard span {
+        font-size: 16px;
+    }
+
+    .addTokenButton {
+        width: 130px;
+        height: 40px;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .plusIcon {
+        font-size: 20px;
+        margin-right: 5px;
+    }
+
+    .mainContainer {
+        padding: 64px 50px 0px 80px;
+    }
+
+    .tableContent::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .tableContent::-webkit-scrollbar-thumb {
+        width: 8px;
+    }
+
+    .tabaleTitleCard {
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .modalCard {
+        min-width: 1300px;
+    }
+
+    .buyPackageLeftCardTitle {
+        width: 248px;
+        padding: 0px 30px 0px 10px;
+        height: 306px;
+        font-size: 32px;
+        font-weight: 600;
+    }
+
+    .buyPackageLeftCardTitle span {
+        font-size: 18px;
+        font-weight: 300;
+    }
+
+    .buyPackageRightCardTitle,
+    .buyPackageRightCardSubTitle {
+        font-size: 20px;
+    }
+
+    .totalDueCard span {
+        font-size: 28px;
+    }
+
+    .checkoutButton {
+        width: 132px;
+        height: 40px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .applyCodeButton {
+        font-size: 18px;
+    }
+
+    .leftNavBardCard {
+        width: 80px;
+    }
+}
+
+@media(max-width: 1440px) {
+    .tokenCard {
+        padding: 0px 80px;
+        font-size: 36px;
+        font-weight: 600;
+    }
+
+    .title {
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    .tokenCard span {
+        font-size: 16px;
+    }
+
+    .addTokenButton {
+        width: 130px;
+        height: 40px;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .plusIcon {
+        font-size: 20px;
+        margin-right: 5px;
+    }
+
+    .mainContainer {
+        padding: 64px 50px 0px 80px;
+    }
+
+    .tableContent::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .tableContent::-webkit-scrollbar-thumb {
+        width: 8px;
+    }
+
+    .tabaleTitleCard {
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .modalCard {
+        min-width: 1300px;
+    }
+
+    .buyPackageLeftCardTitle {
+        width: 248px;
+        padding: 0px 30px 0px 10px;
+        height: 306px;
+        font-size: 32px;
+        font-weight: 600;
+    }
+
+    .buyPackageLeftCardTitle span {
+        font-size: 18px;
+        font-weight: 300;
+    }
+
+    .buyPackageRightCardTitle,
+    .buyPackageRightCardSubTitle {
+        font-size: 20px;
+    }
+
+    .totalDueCard span {
+        font-size: 28px;
+    }
+
+    .checkoutButton {
+        width: 132px;
+        height: 40px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .applyCodeButton {
+        font-size: 18px;
+    }
+
+    .leftNavBardCard {
+        width: 80px;
+    }
 }

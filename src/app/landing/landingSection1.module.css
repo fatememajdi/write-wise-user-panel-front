@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     padding: 200px 0px 50px 0px;
+    font-style: normal;
     min-height: 100vh;
 }
 
@@ -36,7 +37,6 @@
 .rightContainerTitle {
     font-feature-settings: 'ss04' on, 'ss03' on, 'ss02' on, 'ss01' on, 'salt' on;
     font-size: 55px;
-    font-style: normal;
     font-weight: 800;
     line-height: 70.4px;
     letter-spacing: -0.32px;
@@ -48,7 +48,7 @@
 
 .rightContainerDescription {
     margin-top: 52px;
-    color: #252525;
+    color: var(--color-blackText);
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -68,7 +68,7 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    color: #252525;
+    color: var(--color-blackText);
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -101,7 +101,7 @@
 }
 
 .leftLogo {
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -112,14 +112,14 @@
 }
 
 .startButton {
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
     line-height: 40px;
     border-radius: 8px;
-    border: 1px solid #AB141D;
-    background-color: #AB141D !important;
+    border: 1px solid var(--color-red);
+    background-color: var(--color-red) !important;
     box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
     padding: 16px 28px;
     margin-top: 80px;
@@ -314,7 +314,6 @@
         width: 151px !important;
         height: 219px !important;
         z-index: 2;
-        /* right: -3%; */
         top: -10% !important;
     }
 

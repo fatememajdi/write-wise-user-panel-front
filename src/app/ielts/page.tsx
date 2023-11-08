@@ -434,7 +434,7 @@ const IeltsDashboard: React.FC = () => {
         localStorage.clear();
         if (status === 'authenticated')
             signOut();
-    }
+    };
 
     async function handleNewTopic(topic: Topic) {
         try {

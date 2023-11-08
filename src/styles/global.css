@@ -17,25 +17,22 @@
   }
 }
 
-/* body { */
-/* color: rgb(var(--foreground-rgb)); */
-/* background:  */
-/* } */
-
-
 html {
   --color-primary: #172E4A;
   --color-seccondary: #2E4057;
-  --color-background: #FFFFFF;
+  --color-background: #FFF;
   --color-darkGray: #4F6272;
-  --color-gray: #667085;
-  --color-blue: #005293;
-  --color-whiteText: #FFFDFD;
+  --color-gray: #626E7E;
+  --color-secondGray: #5C5D60;
+  --color-blue: #132740;
+  --color-whiteText: #FFF;
   --color-blackText: #252525;
+  --color-black: #000;
   --color-red: #AB141D;
   --color-lightRed: #DA282E;
   --color-orange: #FF8C00;
   --color-textGray: #D9D9D9;
+  --color-navyBlue: #12263E;
   direction: ltr;
 }
 
@@ -68,10 +65,11 @@ button {
 body {
   padding: 0;
   margin: auto !important;
+  color: var(--color-blackText);
 }
 
+
 ::-webkit-scrollbar {
-  /* display: none; */
   width: 13px;
   background-color: transparent;
   border-radius: 33px;
@@ -89,8 +87,17 @@ body {
 
 @media (min-width: 1200px) {
   .container {
-
     max-width: 1140px;
   }
 
+}
+
+@media (min-width: 1680px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    width: 8px;
+  }
 }

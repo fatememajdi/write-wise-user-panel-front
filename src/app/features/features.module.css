@@ -1,6 +1,7 @@
 .featuresDetailsContainer {
     min-height: 100vh;
     background-color: var(--color-background);
+    font-style: normal;
 }
 
 .featuresDetailsContent {
@@ -13,10 +14,8 @@
     margin-right: auto;
     margin-left: auto;
     width: fit-content;
-    color: #252525;
     text-align: justify;
     font-size: 24px;
-    font-style: normal;
     font-weight: 400;
     line-height: 127.523%;
 }
@@ -34,9 +33,8 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    color: #5C5D60;
+    color: var(--color-secondGray);
     font-size: 24px;
-    font-style: normal;
     font-weight: 600;
     line-height: 40px;
     margin-top: 116px;
@@ -47,9 +45,8 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 49px;
-    background-color: #DA282E;
+    background-color: var(--color-lightRed);
     color: var(--color-whiteText);
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 40px;
@@ -90,7 +87,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #FFF;
     position: absolute;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -99,15 +95,14 @@
 }
 
 .cardFront {
-    background: #2E4057;
+    background: var(--color-seccondary);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-left: 140px;
     padding-right: 122px;
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 24px;
-    font-style: normal;
     font-weight: 600;
     transform: rotateY(0deg);
     line-height: 133.023%;
@@ -118,9 +113,7 @@
 }
 
 .cardBack {
-    color: #252525;
     font-size: 24px;
-    font-style: normal;
     font-weight: 400;
     line-height: 30px;
     letter-spacing: -0.12px;

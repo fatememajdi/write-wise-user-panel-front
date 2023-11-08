@@ -7,18 +7,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-style: normal;
 }
 
 .title {
-    color: #FFF;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 64px;
-    font-style: normal;
     font-weight: 700;
     line-height: 40px;
     letter-spacing: 3.2px;
     text-align: center;
-    color: var(--color-whiteText);
 }
 
 .mainContainer {
@@ -40,7 +39,6 @@
     padding-right: 127px;
     height: fit-content !important;
     max-height: fit-content !important;
-    /* height: auto !important; */
     align-self: flex-start !important;
     display: flex;
     width: 100%;
@@ -57,18 +55,16 @@
 }
 
 .questionMainCard {
-    border-bottom: 0.5px solid #2E4057;
+    border-bottom: 0.5px solid var(--color-seccondary);
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* min-height: 200px; */
     height: fit-content;
 }
 
 .question {
     height: fit-content;
     font-size: 24px;
-    font-style: normal;
     font-weight: 400;
     line-height: 30px;
     letter-spacing: 0.48px;
@@ -96,9 +92,8 @@
 .answer {
     border-radius: 5px;
     margin: 21px 22px 32px 0px;
-    color: #000;
+    color: var(--color-black);
     font-size: 24px;
-    font-style: normal;
     font-weight: 300;
     line-height: 30px;
     letter-spacing: -0.12px;

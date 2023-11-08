@@ -3,6 +3,7 @@
     flex-direction: row;
     height: 100vh !important;
     overflow: hidden;
+    font-style: normal;
     overflow-y: hidden;
 }
 
@@ -13,8 +14,6 @@
     height: 100vh;
 }
 
-/* .dashboardRightCard {} */
-
 .logo {
     margin: 32px auto;
     cursor: pointer;
@@ -23,8 +22,8 @@
 .tabsContainer {
     display: flex;
     flex-direction: column;
-    border-top: solid 1px #626E7E;
-    border-bottom: solid 1px #626E7E;
+    border-top: solid 1px var(--color-gray);
+    border-bottom: solid 1px var(--color-gray);
     padding: 0px 5px;
 }
 
@@ -37,13 +36,12 @@
 }
 
 .newEssayButton {
-    background-color: #626E7E;
+    background-color: var(--color-gray);
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 24px;
-    font-style: normal;
     font-weight: 400;
     line-height: 28px;
     margin: 0px 8px 0px 13px;
@@ -58,7 +56,7 @@
 .arrowLeftButton {
     height: 52px !important;
     width: 55px;
-    background-color: #626E7E;
+    background-color: var(--color-gray);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,17 +64,15 @@
 
 .plusIcon {
     margin-left: 16px;
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 30px;
-    font-style: normal;
     font-weight: 700;
     margin-right: 13px;
 }
 
 .arrowIcon {
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 30px;
-    font-style: normal;
     font-weight: 700;
 }
 
@@ -90,13 +86,13 @@
 }
 
 .taskTabButton {
-    color: #FFF;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    background-color: #626E7E;
+    background-color: var(--color-gray);
     padding: 0px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -110,13 +106,13 @@
 }
 
 .activeTaskTabButton {
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
     padding: 0px;
-    background-color: #132740;
+    background-color: var(--color-blue);
     line-height: normal;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -130,7 +126,7 @@
 }
 
 .drawerFooterContainer {
-    border-top: solid 1px #626E7E;
+    border-top: solid 1px var(--color-gray);
     display: flex;
     flex-direction: row;
     align-self: flex-end !important;
@@ -147,9 +143,8 @@
 .menuButton {
     height: 100%;
     border-radius: 0px !important;
-    /* background-color: var(--color-seccondary); */
     padding: 0px 0px !important;
-    border-right: solid 1px #626E7E;
+    border-right: solid 1px var(--color-gray);
     width: 80px;
     display: flex;
     align-items: center;
@@ -161,7 +156,7 @@
     border-radius: 0px !important;
     /* background-color: #132740; */
     padding: 0px 0px !important;
-    border-right: solid 1px #626E7E;
+    border-right: solid 1px var(--color-gray);
     width: 82px;
     display: flex;
     align-items: center;
@@ -169,7 +164,7 @@
 }
 
 .menuIcon {
-    color: #FFFFFF;
+    color: var(--color-whiteText);
     font-size: 30px;
 }
 
@@ -178,7 +173,7 @@
     display: flex;
     align-items: center;
     padding-left: 20px;
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 20px;
     font-style: normal;
     font-weight: 300;
@@ -210,7 +205,7 @@
 }
 
 .leftTabBarButton {
-    border-top: solid 1px #626E7E;
+    border-top: solid 1px var(--color-gray);
     display: flex;
     height: 74px;
     padding-top: 2px;
@@ -218,7 +213,7 @@
 }
 
 .openDrawerButtonCard {
-    border-top: solid 1px #626E7E;
+    border-top: solid 1px var(--color-gray);
     width: 100%;
     padding: 12px 13px;
     display: flex;
@@ -227,7 +222,7 @@
 }
 
 .openDrawerButton {
-    background-color: #626E7E;
+    background-color: var(--color-gray);
     border-radius: 8px;
     height: 52px;
     width: 55px;
@@ -239,7 +234,6 @@
 .topTabBarCard {
     height: 64px;
     display: flex;
-    /* flex: 1; */
     background-color: var(--color-seccondary);
     width: 100%;
     border-radius: 8px;
@@ -262,13 +256,13 @@
 .dashboardContentRightContainer::-webkit-scrollbar {
     /* display: none; */
     width: 12px;
-    background-color: #D9D9D9;
+    background-color: var(--color-textGray);
     border-radius: 33px;
 }
 
 .dashboardContentRightContainer::-webkit-scrollbar-thumb {
     width: 12px;
-    background-color: #12263E;
+    background-color: var(--color-navyBlue);
     border-radius: 33px;
 }
 
@@ -277,7 +271,7 @@
     flex: 1;
     align-items: center;
     justify-content: center;
-    color: #FFF;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 20px;
     font-style: normal;
@@ -290,12 +284,12 @@
 }
 
 .lockIcon {
-    color: #FFF;
+    color: var(--color-whiteText);
     margin-left: 5px;
 }
 
 .activeTopTabBarItemCard {
-    background-color: #12263E !important;
+    background-color: var(--color-navyBlue) !important;
 }
 
 .activeTopTabBarItemCard span {
@@ -352,16 +346,16 @@
     align-items: center;
     justify-content: center;
     margin-right: 5px;
-    background-color: #626E7E;
+    background-color: var(--color-gray);
 }
 
 .responsivePlusIcon {
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 24px;
 }
 
 .moreIcon {
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 25px;
     display: none;
 }
@@ -552,10 +546,6 @@
         display: none;
     }
 
-    /* .leftTabBar {
-        display: none;
-    } */
-
     .topResponsiveTabBar {
         display: flex;
     }
@@ -583,7 +573,6 @@
     }
 
     .dashboardContentRightContainer::-webkit-scrollbar {
-        /* display: none; */
         width: 6px;
         background-color: var(--color-background);
         border-radius: 33px;
@@ -591,7 +580,7 @@
 
     .dashboardContentRightContainer::-webkit-scrollbar-thumb {
         width: 6px;
-        background-color: #626E7E;
+        background-color: var(--color-gray);
         border-radius: 33px;
     }
 
@@ -600,7 +589,7 @@
     }
 
     .arrowLeftButton {
-        background-color: #F3F3F3;
+        background-color: var(--color-whiteText);
         height: 45px !important;
         width: 45px !important;
         padding: 0px;
@@ -611,8 +600,7 @@
     }
 
     .newEssayButton {
-        background-color: #132740;
-        /* justify-content: space-between; */
+        background-color: var(--color-blue);
         font-size: 16px;
         height: 40px;
     }

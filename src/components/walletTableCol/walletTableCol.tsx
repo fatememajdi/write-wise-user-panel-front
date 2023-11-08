@@ -33,14 +33,16 @@ const TableCol: React.FC<_props> = ({ transaction, RecieptLink, RegeneratePaymen
                     : transaction.paymentStatus === 'faild' ?
                         <div className={styles.faildCard}><MdSmsFailed /></div>
                         :
-                        <div className={transaction.paymentStatus === 'expired' ? styles.expiredCard 
-                        : styles.minusCard}><PiMinus /></div>
+                        <div className={transaction.paymentStatus === 'expired' ? styles.expiredCard
+                            : styles.minusCard}><PiMinus /></div>
 
         }{transaction.paymentStatus}</span>
+        
         <span className={styles.tableItem}>{transaction.amountPaidShow}</span>
+        
         <span className={styles.tableItem}>
-            {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(transaction.paidDate))).toUpperCase()
-                + new Date(transaction.paidDate).getDate()
+            {new Intl.DateTimeFormat('en-US', { month: "short" }).format((new Date(transaction.paidDate))).toUpperCase()
+                + ' ' + new Date(transaction.paidDate).getDate()
                 + ' ' + new Date(transaction.paidDate).getFullYear()}
         </span>
         <span className={styles.tableItem}>{transaction.tokenNumber + ' Tokens'}</span>
