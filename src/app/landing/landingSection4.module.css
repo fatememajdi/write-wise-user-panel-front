@@ -11,7 +11,7 @@
 }
 
 .title {
-    color: #EAEFF6;
+    color: var(--color-whiteText);
     font-size: 48px;
     font-style: normal;
     font-weight: 500;
@@ -20,7 +20,7 @@
 }
 
 .description {
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -34,12 +34,12 @@
     width: 415px;
     height: 71px;
     border-radius: 8px;
-    border: 0.5px solid #F3F3F3;
+    border: 0.5px solid var(--color-whiteText);
     background: #626E7E;
     align-items: center;
     justify-content: center;
     margin-left: 280px;
-    color: #EAEFF6;
+    color: var(--color-whiteText);
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -68,7 +68,7 @@
     position: absolute;
     top: -63px;
     right: 100px;
-    color: #F3F3F3 !important;
+    color: var(--color-whiteText) !important;
 }
 
 .step2 {
@@ -79,15 +79,14 @@
 }
 
 .step2TopCard {
-    border-top: solid 1px #F3F3F3;
+    border-top: solid 1px var(--color-whiteText);
     height: 7vh;
-    border-left: solid 1px #F3F3F3;
-    color: #FFF;
+    border-left: solid 1px var(--color-whiteText);
+    color: var(--color-whiteText);
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: 30px;
-    /* padding: 10px; */
     max-width: 340px !important;
     width: 340px;
     margin-left: auto;
@@ -95,9 +94,9 @@
 }
 
 .step1TopCard {
-    border-top: solid 1px #F3F3F3;
+    border-top: solid 1px var(--color-whiteText);
     height: 7vh;
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -109,7 +108,7 @@
 }
 
 .activeStepCard {
-    border-right: solid 1px #F3F3F3;
+    border-right: solid 1px var(--color-whiteText);
     position: absolute;
     top: 0;
     right: 0;
@@ -139,11 +138,11 @@
     position: relative;
     flex: 1 !important;
     min-height: 22vh !important;
-    border-top: solid 1px #F3F3F3;
+    border-top: solid 1px var(--color-whiteText);
 }
 
 .stepTitle {
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 32px;
     font-style: normal;
     font-weight: 400;
@@ -195,7 +194,7 @@
 }
 
 .responsiveStepDescription {
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
@@ -214,7 +213,7 @@
 
 .flagIcon {
     position: absolute;
-    top: -105px ;
+    top: -105px;
     right: 60px;
 }
 

@@ -73,7 +73,7 @@ type topic = {
     }[]
 };
 
-const IeltsDashboard: React.FC = () => {
+const Page: React.FC = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
     const targetRef = React.useRef();
@@ -727,4 +727,4 @@ const IeltsDashboard: React.FC = () => {
         </div >
 };
 
-export default IeltsDashboard;
+export default Page;

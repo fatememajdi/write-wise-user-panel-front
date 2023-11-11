@@ -9,6 +9,7 @@ import styles from './footer.module.css';
 import { BiLogoLinkedinSquare } from 'react-icons/bi';
 import { IoLogoFacebook } from 'react-icons/io';
 import { AiFillInstagram } from 'react-icons/ai';
+import { StartLoader } from "../Untitled";
 
 //----------------------------------------------------------------social media items
 const socialMediaItems = [
@@ -34,7 +35,9 @@ const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerConta
     </div>
 
     <div className={styles.secondLineItems}>
-        <Link className={styles.link} href={'/'}>Privacy Policy</Link>
+        <Link
+            onClick={() => StartLoader()}
+            className={styles.link} href={'/privacyPolicy'}>Privacy Policy</Link>
         {
             socialMediaItems.map((item, index) => <a className={styles.socialIcon} href={item.link} key={index}>{item.icon}</a>)
         }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSession } from "next-auth/react";
+import { Modal } from 'antd';
 import { useMediaQuery } from 'react-responsive';
 
 //-------------------------------------------styles
@@ -38,8 +39,13 @@ const headerItems = [
 
 const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ logedIn, shadow }) => {
 
+    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [showPopup, changeShowPopup] = React.useState<boolean>(false);
+    const [disablePopup, setDisablePopup] = React.useState<boolean>(false);
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
+
+    const showModal = () => setIsModalOpen(true);
+    const handleCancel = () => setIsModalOpen(false);
 
     const { data: session, status } = useSession({
         required: true, onUnauthenticated() {
@@ -59,10 +65,11 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
 
     if (typeof document != 'undefined')
         window.addEventListener("wheel", function (e: any) {
-            if (e.deltaY > 0)
-                changeShowPopup(true);
-            else if (e.deltaY)
-                changeShowPopup(false);
+            if (!disablePopup)
+                if (e.deltaY > 0)
+                    changeShowPopup(true);
+                else if (e.deltaY)
+                    changeShowPopup(false);
         });
 
     return (<div className={shadow || showPopup ? 'col-12 ' + styles.headerContainer + ' ' + styles.blackShadow :
@@ -118,23 +125,62 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
         </div>
         <AnimatePresence>
             {
-                showPopup &&
+                showPopup && !disablePopup &&
                 <motion.div
                     animate={{ height: showPopup ? isMac ? 49 : 66 : 0 }}
                     transition={{ type: "spring", duration: 1 }}
                     className={styles.popup}>
                     <div className={styles.popupTitle}>Limited Time Offer!</div>
-                    <button className={styles.popupButton}>
+                    <button
+                        onClick={showModal}
+                        className={styles.popupButton}>
                         Start Now
                     </button>
 
                     <AiOutlineClose
                         className={styles.popupCloseButton}
-                        onClick={() => changeShowPopup(false)}
+                        onClick={() => {
+                            changeShowPopup(false);
+                            setDisablePopup(true);
+                        }}
                     />
                 </motion.div>
             }
         </AnimatePresence>
+
+
+        <Modal
+            style={{ top: 10 }}
+            footer={null}
+            open={isModalOpen}
+            onCancel={handleCancel}
+            width={772}
+            className={styles.modalContainer}
+        >
+
+            <div className={styles.modalCard}>
+                <Image
+                    className={styles.banner}
+                    src="/landing/banner.svg"
+                    alt="banner"
+                    width={478}
+                    height={314}
+                    priority
+                    loading="eager"
+                />
+                <div className={styles.bannerTitle}>
+                    Claim Your First Essay Assessment for Just $1
+                </div>
+                <div className={styles.bannerDescription}>
+                    Unlock AI-driven personalized feedback, insights, and expert recommendations.
+                </div>
+                <button className={styles.bannerButton}>
+                    Start Now
+                </button>
+            </div>
+
+        </Modal>
+
     </div >
     )
 };

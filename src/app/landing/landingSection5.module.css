@@ -118,11 +118,11 @@
 .mobileArrowIcon {
     display: flex;
     font-size: 30px;
-    color: #172E4A;
+    color: var(--color-primary);
 }
 
 .mobileStepCard {
-    color: #252525;
+    color: var(--color-blackText);
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

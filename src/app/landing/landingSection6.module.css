@@ -7,7 +7,7 @@
 }
 
 .title {
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 48px;
     font-style: normal;
     font-weight: 700;
@@ -15,7 +15,7 @@
 }
 
 .description {
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -36,12 +36,12 @@
     display: flex;
     margin-left: auto;
     border-radius: 8px;
-    border: 1px solid #626E7E;
+    border: 1px solid var(--color-gray);
     margin-top: 60px;
 }
 
 .selectItem {
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -72,7 +72,7 @@
 .mobileArrowIcon {
     display: flex;
     font-size: 30px;
-    color: #172E4A;
+    color: var(--color-primary);
 }
 
 .mobileCarousel {
@@ -153,7 +153,7 @@
     }
 
     .title {
-        color: #F3F3F3;
+        color: var(--color-whiteText);
         font-size: 20px;
         font-weight: 700;
         line-height: 20.8px;

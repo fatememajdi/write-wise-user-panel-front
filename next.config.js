@@ -30,6 +30,9 @@ const nextConfig = {
   //     },
   //   ]
   // },
+  rewrites: async () => [
+    { source: '/privacyPolicy', destination: '/test.html' },
+  ],
   images: {
     minimumCacheTTL: 60,
     remotePatterns: [

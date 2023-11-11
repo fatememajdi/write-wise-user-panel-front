@@ -11,7 +11,7 @@
     height: 100%;
     align-items: center;
     justify-content: center;
-    color: #252525;
+    color: var(--color-blackText);
     text-align: center;
     font-style: normal;
     line-height: normal;
@@ -36,7 +36,7 @@
 }
 
 .amount span {
-    color: var(--card-f, #2E4057);
+    color: var(--color-seccondary);
     font-weight: 500;
     margin-left: 5px;
 }
@@ -49,9 +49,9 @@
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    background: var(--card-f, #2E4057);
+    background: var(--color-seccondary);
     margin-top: 82px;
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 24px;
     font-weight: 700;
 }
@@ -67,8 +67,8 @@
     height: 48px;
     flex-shrink: 0;
     border-radius: 8px;
-    background: #AB141D;
-    color: #F3F3F3;
+    background: var(--color-red);
+    color: var(--color-whiteText);
     font-size: 24px;
     font-weight: 700;
     align-items: center;

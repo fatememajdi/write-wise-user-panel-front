@@ -1,4 +1,4 @@
-.section7{
+.section7 {
     min-height: 100vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
@@ -6,6 +6,7 @@
     background-size: cover !important;
     background-repeat: no-repeat !important;
 }
+
 .section7Container {
     flex: 1;
     min-height: 100vh;
@@ -51,7 +52,7 @@
 }
 
 .answerCard {
-    color: #000;
+    color: var(--color-black);
     font-size: 24px;
     font-style: normal;
     font-weight: 300;
@@ -66,7 +67,7 @@
 }
 
 .readMoreButton {
-    color: #2E4057;
+    color: var(--color-seccondary);
     font-size: 24px;
     font-style: normal;
     font-weight: 500;

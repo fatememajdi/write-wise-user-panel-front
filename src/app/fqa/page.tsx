@@ -75,7 +75,7 @@ const questions = [
     },
 ];
 
-const FQA: React.FC = () => {
+const Page: React.FC = () => {
     React.useEffect(() => {
         StopLoader();
     }, []);
@@ -105,7 +105,7 @@ const FQA: React.FC = () => {
     </FqaQuestionsBackground>
 };
 
-export default FQA;
+export default Page;
 
 interface _props {
     question: string,

@@ -302,7 +302,7 @@ const Wallet: React.FC = () => {
                     </div>
                 </div>
                 <Modal
-                    style={{ top: 200 }}
+                    style={{ top: isMac ? 70 : 200 }}
                     footer={null}
                     closeIcon={null}
                     open={isModalOpen}

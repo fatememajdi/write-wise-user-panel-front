@@ -68,15 +68,14 @@ body {
   color: var(--color-blackText);
 }
 
-
 ::-webkit-scrollbar {
-  width: 13px;
+  width: 8px !important;
   background-color: transparent;
   border-radius: 33px;
 }
 
 ::-webkit-scrollbar-thumb {
-  width: 13px;
+  width: 8px !important;
   background-color: #667085;
   border-radius: 33px;
 }
@@ -92,12 +91,6 @@ body {
 
 }
 
-@media (min-width: 1680px) {
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
+@media (min-width: 1680px) {}
 
-  ::-webkit-scrollbar-thumb {
-    width: 8px;
-  }
-}
+@media (min-width: 1440px) {}

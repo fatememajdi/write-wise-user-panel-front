@@ -39,9 +39,9 @@
     top: 30px;
     left: 40px;
     align-items: center;
-    background-color: #132740;
+    background-color: var(--color-blue);
     border-radius: 8px;
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
@@ -139,7 +139,6 @@
     border-radius: 100% !important;
     border-radius: 127.373px;
     background: linear-gradient(210deg, rgb(46, 64, 87) 0%, rgb(218, 40, 46) 100%);
-    /* filter: blur(12.5px); */
     position: absolute;
     right: -50px;
     bottom: -50px;
@@ -150,7 +149,7 @@
 }
 
 .editUserJoinDate {
-    color: #000;
+    color: var(--color-black);
     font-size: 32px;
     font-weight: 300;
     line-height: 12px;
@@ -158,8 +157,6 @@
     margin-top: 30px;
     margin-bottom: 50px;
 }
-
-/* .input {} */
 
 .input input {
     height: 62px;
@@ -192,7 +189,7 @@
 }
 
 .username {
-    color: #2E4057;
+    color: var(--color-seccondary);
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
@@ -327,7 +324,7 @@
     }
 
     .profileContainer {
-        background: #FFF3F5;
+        background: var(--color-background);
         background: linear-gradient(90deg, #FFF3F5, #F2F5FA);
     }
 
@@ -341,7 +338,7 @@
     }
 
     .userInformationCard {
-        background: #FFFFFF;
+        background: var(--color-background);
         background: linear-gradient(135deg, #FFFFFF, #F2F5FA);
         margin: 40px 0px 0px 0px;
     }

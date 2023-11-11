@@ -22,7 +22,7 @@
 
 .backButton {
     border-radius: 8px;
-    background: #626E7E;
+    background: var(--color-gray);
     padding: 0px;
     width: 52px;
     height: 54px;
@@ -51,12 +51,12 @@
     flex-direction: column;
     align-items: center;
     padding: 0px 0px 20px 0px;
-    background: #F3F3F3;
+    background: var(--color-background);
     flex: 1;
 }
 
 .title {
-    color: #FFF;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 24px;
     font-style: normal;
@@ -73,7 +73,7 @@
     background: linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%);
     filter: drop-shadow(3px 8px 60px rgba(0, 82, 147, 0.23));
     box-shadow: 3px 8px 60px -5px rgba(0, 82, 147, 0.23);
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 48px;
     font-style: normal;
@@ -97,11 +97,11 @@
 
 .addTokenButton {
     border-radius: 8px;
-    background: #F3F3F3;
+    background: var(--color-background);
     width: 168px;
     height: 45px !important;
     min-height: 45px !important;
-    color: #172E4A;
+    color: var(--color-primary);
     text-align: center;
     font-size: 20px;
     font-style: normal;
@@ -137,7 +137,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: #252525;
+    color: var(--color-blackText);
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -157,13 +157,13 @@
 .tableContent::-webkit-scrollbar {
     /* display: none; */
     width: 12px;
-    background-color: #F3F3F3;
+    background-color: var(--color-background);
     border-radius: 33px;
 }
 
 .tableContent::-webkit-scrollbar-thumb {
     width: 12px;
-    background-color: #12263E;
+    background-color: var(--color-navyBlue);
     border-radius: 33px;
 }
 
@@ -205,12 +205,12 @@
     width: 298px;
     height: 42px;
     border-radius: 8px;
-    border: 1px solid #626E7E;
-    background: #2E4057;
+    border: 1px solid var(--color-gray);
+    background: var(--color-seccondary);
 }
 
 .selectItem {
-    color: #F3F3F3 !important;
+    color: var(--color-whiteText) !important;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -219,7 +219,7 @@
 
 .closeModalButton {
     font-size: 45px;
-    color: #626E7E !important;
+    color: var(--color-gray) !important;
     cursor: pointer;
 }
 
@@ -260,7 +260,7 @@
     height: 336px;
     background: rgba(243, 243, 243, 0.03);
     filter: drop-shadow(-11px 4px 25px rgba(0, 0, 0, 0.20));
-    color: #FFF;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 48px;
     font-style: normal;
@@ -292,7 +292,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -310,7 +310,7 @@
 }
 
 .arrowIcon {
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 20px;
 }
 
@@ -324,7 +324,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #FFF;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 24px;
     font-style: normal;
@@ -335,7 +335,7 @@
 
 .buyPackageRightCardSubTitle {
     margin-top: 33px;
-    border-top: solid 1px #626E7E;
+    border-top: solid 1px var(--color-gray);
     font-weight: 300;
     padding-top: 24px;
 }
@@ -358,7 +358,7 @@
     padding: 0px;
     align-items: center;
     justify-content: center;
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 20px;
     font-style: normal;
@@ -374,7 +374,7 @@
     border-radius: 6px;
     border: 1px solid #F3F3F3;
     background: #626E7E;
-    color: #FFF !important;
+    color: var(--color-whiteText) !important;
     text-align: left;
     font-size: 20px;
     font-style: normal;
@@ -385,7 +385,7 @@
 }
 
 .applyCodeContainer input ::placeholder {
-    color: #FFF !important;
+    color: var(--color-whiteText) !important;
     text-align: center !important;
     font-size: 20px;
     font-style: normal;
@@ -408,11 +408,11 @@
     flex-shrink: 0;
     border-radius: 8px;
     border: 1px solid #F3F3F3;
-    background: #F3F3F3;
+    background: var(--color-background);
     padding: 0px !important;
     align-items: center;
     justify-content: center;
-    color: #252525;
+    color: var(--color-blackText);
     text-align: center;
     font-size: 24px;
     font-style: normal;
@@ -423,7 +423,7 @@
 }
 
 .applyCodeContainer span {
-    color: #FFF;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 24px;
     font-style: normal;
@@ -438,14 +438,14 @@
 
 .checkCodeIcon {
     font-size: 25px;
-    color: #FFF;
+    color: var(--color-whiteText);
     position: absolute;
     top: 9px;
     right: 4px;
 }
 
 .inputError {
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 20px;
     font-style: normal;
     font-weight: 300;
@@ -454,7 +454,7 @@
 }
 
 .errorForm {
-    border: solid 1px #AB141D !important;
+    border: solid 1px var(--color-red) !important;
 }
 
 .buyPackLeftCardTitleText {

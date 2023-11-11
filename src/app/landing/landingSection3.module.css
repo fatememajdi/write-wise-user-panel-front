@@ -61,7 +61,7 @@
 
 .featuresItemTitle {
     border-radius: 8px;
-    border: 1px solid #FFF;
+    border: 1px solid var(--color-whiteText);
     background: linear-gradient(91deg, #F9F9F9 1.87%, rgba(255, 255, 255, 0.58) 41.79%, #ECEFF2 95.39%);
     padding: 15px 20px 15px 13px;
     color: var(--color-seccondary);
@@ -69,7 +69,6 @@
     font-style: normal;
     font-weight: 600;
     line-height: 31.2px;
-    /* 130% */
 }
 
 .featuresItemIcon {
@@ -157,9 +156,7 @@
     }
 }
 
-@media(max-width: 992px) {}
-
-@media(max-width: 480px) {
+@media(max-width: 500px) {
 
     .featuresButton {
         font-size: 13px;
@@ -176,7 +173,7 @@
         padding-left: 0px !important;
     }
 
-    .featuresItemIcon{
+    .featuresItemIcon {
         min-width: 60px;
     }
 
@@ -194,7 +191,7 @@
     }
 
     .featuresItemCard {
-        width: 100%; 
+        width: 100%;
     }
 
     .featuresItemTitle {
