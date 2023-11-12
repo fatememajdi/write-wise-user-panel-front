@@ -469,6 +469,10 @@
     font-size: 24px;
 }
 
+.responsiveLogo {
+    display: none;
+}
+
 @media(max-width: 1680px) {
     .tokenCard {
         padding: 0px 80px;
@@ -640,5 +644,99 @@
 
     .leftNavBardCard {
         width: 80px;
+    }
+}
+
+@media(max-width: 500px) {
+    .wallet {
+        flex-direction: column;
+    }
+
+    .leftNavBardCard {
+        width: 100%;
+        height: 45px;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .backButton {
+        display: none;
+    }
+
+    .menuButton {
+        margin-right: auto;
+        margin-left: 15px;
+        font-size: 25px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+
+    .tokenCard {
+        background: linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%);
+        filter: drop-shadow(3px 8px 60px rgba(0, 82, 147, 0.23));
+        height: 167px;
+        padding-left: 40px;
+        padding-right: 20px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .tokenCard span {
+        margin-left: 0px;
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: 300;
+    }
+
+    .title {
+        font-size: 12.3px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    .addTokenButton {
+        margin-right: auto;
+        margin-left: 0px;
+        margin-top: 16px;
+        width: 78px;
+        height: 20.893px !important;
+        font-size: 9.286px;
+        font-weight: 500;
+        padding: 0px;
+        min-height: 20.893px !important;
+        border-radius: 3px !important;
+    }
+
+    .plusIcon {
+        font-size: 13px;
+    }
+
+    .responsiveLogo {
+        display: flex;
+        margin-right: auto;
+    }
+
+    .mainContainer {
+        padding: 21px 10px 0px 17px;
+    }
+
+    .tabaleTitleCard {
+        display: none;
+    }
+
+    .tableContent {
+        padding: 0px 14px 0px 0px;
+    }
+
+    .tableContent::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .tableContent::-webkit-scrollbar-thumb {
+        width: 6px;
     }
 }

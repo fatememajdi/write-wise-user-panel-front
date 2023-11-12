@@ -30,7 +30,9 @@ const socialMediaItems = [
 const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerContainer}>
     <div className={styles.logo}>WriteWiseAI</div>
     <div className={styles.firstLineItems}>
-        <Link className={styles.link} href={'/'}>Terms of Service</Link>
+        <Link
+            onClick={() => StartLoader()}
+            className={styles.link} href={'/termsOfService'}>Terms of Service</Link>
         <Link className={styles.link} href={'/'}>about us</Link>
     </div>
 

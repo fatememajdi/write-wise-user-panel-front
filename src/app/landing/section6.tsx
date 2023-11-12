@@ -33,6 +33,8 @@ const Section6: React.FC = () => {
     const [currencies, setCurrencies] = React.useState<Currency[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
 
+    const isMac = typeof window !== 'undefined' ? navigator.platform.toUpperCase().indexOf("MAC") >= 0 : false;
+
     async function GetPackage(code: string) {
         setLoading(true);
         await client.query({
@@ -73,7 +75,7 @@ const Section6: React.FC = () => {
         <Select
             renderValue={(selected) => {
                 if (selected.length === 0) {
-                    return <em>{currencies.length > 0 ? currencies[0].icon + ' ' + currencies[0].name
+                    return <em>{currencies.length > 0 ? isMac ? currencies[0].icon + ' ' + currencies[0].name : currencies[0].name
                         : <ReactLoading className={styles.loading} type={'bubbles'} color={'#FFF'} height={30} width={30} />}</em>;
                 }
 
@@ -91,7 +93,7 @@ const Section6: React.FC = () => {
         >
             {
                 currencies.map((item: Currency, index: number) =>
-                    <MenuItem key={index} className={styles.selectItem} value={item.code}>{item.icon + ' ' + item.name}</MenuItem>)
+                    <MenuItem key={index} className={styles.selectItem} value={item.code}>{isMac ? item.icon + ' ' + item.name : item.name}</MenuItem>)
             }
 
         </Select>

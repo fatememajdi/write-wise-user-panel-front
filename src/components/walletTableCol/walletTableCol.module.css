@@ -89,7 +89,7 @@
 }
 
 .tableItem {
-    width: 20% !important;
+    width: 20%;
 }
 
 .tableItemButton {
@@ -121,6 +121,18 @@
     cursor: pointer;
 }
 
+.mobileTableItem {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.mobileTableItem span {
+    width: 50% !important;
+}
+
 @media(max-width: 1440px) {
     .transactionCard {
         height: 70px !important;
@@ -150,4 +162,60 @@
     .checkIconCardCard {
         font-size: 30px;
     }
+}
+
+@media(max-width: 500px) {
+
+    .mobileTableItem {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        font-size: 8px !important;
+        font-weight: 400 !important;
+        left: 60px;
+        bottom: 12px;
+        width: fit-content;
+    }
+
+    .mobileTableItem span {
+        width: fit-content !important;
+    }
+
+    .tableItem {
+        width: fit-content !important;
+        margin-right: 8px;
+    }
+
+    .transactionCard {
+        height: 64px !important;
+        padding: 0px 11px 0px 17px;
+        position: relative;
+    }
+
+    .tableItemButton {
+        width: 58.208px;
+        height: 22px;
+        flex-shrink: 0;
+        border-radius: 3px !important;
+        font-size: 9.167px;
+        font-weight: 500;
+    }
+
+    .mobileStatusTitle {
+        padding-bottom: 12px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .checkIconCardCard,
+    .plusCard,
+    .faildCard,
+    .expiredCard {
+        margin-top: 12px !important;
+    }
+
+    .mobielTableButton {
+        margin-left: auto;
+    }
+
 }

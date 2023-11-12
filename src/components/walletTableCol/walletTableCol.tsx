@@ -25,7 +25,8 @@ const TableCol: React.FC<_props> = ({ transaction, RecieptLink, RegeneratePaymen
     return <div className={transaction.paymentStatus !== 'analysis' && transaction.paymentStatus !== 'expired' ? styles.transactionCard + ' ' + styles.positiveTransactionCard
         : transaction.paymentStatus === 'expired' ? styles.transactionCard + ' ' + styles.expierdTransactionCard
             : styles.transactionCard + ' ' + styles.negativeTransactionCard}>
-        <span className={styles.tableItem}>{
+
+        <span className={styles.tableItem + ' ' + styles.mobileStatusTitle}>{
             transaction.paymentStatus === 'success' ?
                 <div className={styles.checkIconCardCard}><BiSolidCheckCircle /></div>
                 : transaction.paymentStatus === 'waiting' ?
@@ -37,16 +38,19 @@ const TableCol: React.FC<_props> = ({ transaction, RecieptLink, RegeneratePaymen
                             : styles.minusCard}><PiMinus /></div>
 
         }{transaction.paymentStatus}</span>
-        
-        <span className={styles.tableItem}>{transaction.amountPaidShow}</span>
-        
-        <span className={styles.tableItem}>
-            {new Intl.DateTimeFormat('en-US', { month: "short" }).format((new Date(transaction.paidDate))).toUpperCase()
-                + ' ' + new Date(transaction.paidDate).getDate()
-                + ' ' + new Date(transaction.paidDate).getFullYear()}
-        </span>
-        <span className={styles.tableItem}>{transaction.tokenNumber + ' Tokens'}</span>
-        <span className={styles.tableItem}>
+
+        <span className={styles.tableItem + ' ' + styles.mobileStatusTitle}>{transaction.amountPaidShow}</span>
+
+        <div className={styles.mobileTableItem}>
+            <span className={styles.tableItem}>
+                {new Intl.DateTimeFormat('en-US', { month: "short" }).format((new Date(transaction.paidDate))).toUpperCase()
+                    + ' ' + new Date(transaction.paidDate).getDate()
+                    + ' ' + new Date(transaction.paidDate).getFullYear()}
+            </span>
+            <span className={styles.tableItem}>{transaction.tokenNumber + ' Tokens'}</span>
+        </div>
+
+        <span className={styles.tableItem + ' ' + styles.mobielTableButton}>
             {transaction.paymentStatus === 'success' ?
                 <button onClick={() => RecieptLink(transaction.id)} className={styles.tableItemButton}>Receipt</button>
                 : transaction.paymentStatus === 'waiting' ?

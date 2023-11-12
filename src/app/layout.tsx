@@ -11,7 +11,6 @@ import Script from 'next/script';
 import "@/styles/tailwind.css";
 import { Providers } from "./providers";
 import { Inter, Lato } from "next/font/google";
-// import { cx } from "@/utils/all";
 
 //--------------------------------------------------------components
 // import Loading from '@/components/loading/loading';
@@ -30,6 +29,7 @@ import '@fontsource/roboto/700.css';
 import '../styles/global.css';
 import 'antd/dist/reset.css';
 import '../styles/nprogress.css'
+import CookieConsent from '@/components/cookies/cookies';
 
 
 // export const metadata = {
@@ -102,6 +102,7 @@ export default function RootLayout({
               <div id='tawk' />
             </body>
           </LocalizationProvider>
+          <CookieConsent />
         </html>
       </ApolloProvider>
     </SessionProvider>
