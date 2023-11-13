@@ -41,35 +41,115 @@ import { Transaction } from "../../../types/transaction";
 const Page: React.FC = () => {
 
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-    const { step, goTo } = useMultiStepForm([
-        <Wallet />
+    const [packages, setPackages] = React.useState<Package[]>([]);
+    const [currencies, setCurrencies] = React.useState<Currency[]>([]);
+    const [pageLoading, setPageLoading] = React.useState<boolean>(true);
+    const [currencyCode, changeCurrencyCode] = React.useState<string>('');
+    const [selectedPackage, setSelectedPackage] = React.useState<Package>();
+    const [loading, setLoading] = React.useState<boolean>(true);
+
+    async function GetCurrencies() {
+        await client.query({
+            query: GET_CURRENCIES,
+            fetchPolicy: "no-cache",
+        }).then((res) => {
+            setCurrencies(res.data.getCurrencies);
+            GetPackage(res.data.getCurrencies[0].code);
+        })
+    };
+
+    async function GetPackage(code: string) {
+        let user = await localStorage.getItem('user');
+        setLoading(true);
+        await client.query({
+            query: GET_PACKAGES,
+            fetchPolicy: "no-cache",
+            variables: {
+                currency: code.toLowerCase(),
+                userToken: user ? `Bearer ${JSON.parse(user)}` : '',
+            }
+        }).then((res) => {
+            setPackages(res.data.getPackages);
+            setLoading(false);
+        })
+    };
+
+    async function CreatePaymentLink(quantity: number, id: string, currency: string, promotionCode: string) {
+        setPageLoading(true);
+        await client.mutate({
+            mutation: CREATE_PAYMENT_LINK,
+            fetchPolicy: "no-cache",
+            variables: {
+                id: id,
+                currency: currency,
+                adjustedQuantity: quantity,
+                promotionCode: promotionCode
+            }
+        }).then(async (res) => {
+            window.location = res.data.createPaymentLink.link;
+            // setPageLoading(false);
+        }).catch((err) => {
+            console.log("create payment link error : ", err);
+            setPageLoading(false);
+        });
+    };
+
+    const Back = () => { back() };
+    const Next = (pack?: Package) => {
+        if (pack) setSelectedPackage(pack);
+        next()
+    };
+    const { step, back, next } = useMultiStepForm([
+        <Wallet key={0} loading={loading} GetPackage={GetPackage} packages={packages} selectedPackage={selectedPackage} Next={Next}
+            currencies={currencies} GetCurrencies={GetCurrencies} CreatePaymentLink={CreatePaymentLink} setSelectedPackage={setSelectedPackage}
+            pageLoading={pageLoading} setPageLoading={setPageLoading} currencyCode={currencyCode} changeCurrencyCode={changeCurrencyCode}
+        />,
+        <ModalFirstStep key={1} currencies={currencies} currencyCode={currencyCode}
+            changeCurrencyCode={changeCurrencyCode} GetPackage={GetPackage} handleCancel={Back}
+            loading={loading} packages={packages} changeModalStep={Next} />,
+        <ModalSecondStep key={2} handleCancel={Back} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
+
     ]);
+
 
     return isMobile ?
         <>{step}</>
-        : <Wallet />
+        : <Wallet key={0} loading={loading} GetPackage={GetPackage} packages={packages} selectedPackage={selectedPackage} Next={Next}
+            currencies={currencies} GetCurrencies={GetCurrencies} CreatePaymentLink={CreatePaymentLink} setSelectedPackage={setSelectedPackage}
+            pageLoading={pageLoading} setPageLoading={setPageLoading} currencyCode={currencyCode} changeCurrencyCode={changeCurrencyCode}
+        />
 
 };
 
 export default Page;
 
+type _walletProps = {
+    packages: Package[],
+    GetPackage: any,
+    loading: boolean,
+    currencies: Currency[],
+    GetCurrencies: any,
+    CreatePaymentLink: any,
+    pageLoading: boolean,
+    setPageLoading: any,
+    currencyCode: string,
+    changeCurrencyCode: any,
+    selectedPackage: Package,
+    setSelectedPackage: any,
+    Next: any
+}
 
-const Wallet: React.FC = () => {
+const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeCurrencyCode, selectedPackage, setSelectedPackage,
+    currencies, GetCurrencies, CreatePaymentLink, pageLoading, setPageLoading, currencyCode, Next }) => {
 
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
     const isMac2 = useMediaQuery({ query: "(max-width: 1680px)" });
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-    const [currencyCode, changeCurrencyCode] = React.useState<string>('');
-    const [packages, setPackages] = React.useState<Package[]>([]);
-    const [currencies, setCurrencies] = React.useState<Currency[]>([]);
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
-    const [loading, setLoading] = React.useState<boolean>(true);
-    const [pageLoading, setPageLoading] = React.useState<boolean>(true);
     const [moreTransaction, setMoreTransaction] = React.useState<boolean>(true);
     const [tableLoading, setTableLoading] = React.useState<boolean>(true);
-    const [selectedPackage, setSelectedPackage] = React.useState<Package>();
     const [profile, setprofile] = React.useState<UserProfile>();
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => { setIsModalOpen(false); Back(); }
@@ -103,32 +183,6 @@ const Wallet: React.FC = () => {
         localStorage.clear();
         if (status === 'authenticated')
             signOut();
-    };
-
-    async function GetPackage(code: string) {
-        let user = await localStorage.getItem('user');
-        setLoading(true);
-        await client.query({
-            query: GET_PACKAGES,
-            fetchPolicy: "no-cache",
-            variables: {
-                currency: code.toLowerCase(),
-                userToken: user ? `Bearer ${JSON.parse(user)}` : '',
-            }
-        }).then((res) => {
-            setPackages(res.data.getPackages);
-            setLoading(false);
-        })
-    };
-
-    async function GetCurrencies() {
-        await client.query({
-            query: GET_CURRENCIES,
-            fetchPolicy: "no-cache",
-        }).then((res) => {
-            setCurrencies(res.data.getCurrencies);
-            GetPackage(res.data.getCurrencies[0].code);
-        })
     };
 
     async function GetProfile() {
@@ -204,26 +258,6 @@ const Wallet: React.FC = () => {
         });
     };
 
-    async function CreatePaymentLink(quantity: number, id: string, currency: string, promotionCode: string) {
-        setPageLoading(true);
-        await client.mutate({
-            mutation: CREATE_PAYMENT_LINK,
-            fetchPolicy: "no-cache",
-            variables: {
-                id: id,
-                currency: currency,
-                adjustedQuantity: quantity,
-                promotionCode: promotionCode
-            }
-        }).then(async (res) => {
-            window.location = res.data.createPaymentLink.link;
-            // setPageLoading(false);
-        }).catch((err) => {
-            console.log("create payment link error : ", err);
-            setPageLoading(false);
-        });
-    };
-
     async function ChangeModalStep(pack: Package) {
         await setSelectedPackage(pack);
         next();
@@ -286,7 +320,7 @@ const Wallet: React.FC = () => {
                     {profile?.token} Tokens
                     <span>{profile?.token} Assessments</span>
                     <button
-                        onClick={() => { if (!isMobile) showModal() }}
+                        onClick={() => { if (isMobile) Next(); else showModal(); }}
                         className={styles.addTokenButton}>
                         <PiPlusBold className={styles.plusIcon} />Add tokens
                     </button>

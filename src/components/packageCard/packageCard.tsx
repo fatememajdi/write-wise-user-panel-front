@@ -18,14 +18,15 @@ import { Package } from "../../../types/package";
 
 type _props = {
     pack: Package,
-    loading: boolean
+    loading: boolean,
+    style?: any
 }
 
-const PackageCard: React.FC<_props> = ({ pack, loading }) => {
-    return <div className={styles.packageContainer}>
+const PackageCard: React.FC<_props> = ({ pack, loading, style }) => {
+    return <div className={styles.packageContainer} style={{ ...style }}>
         {
             pack.discountPercent > 0 &&
-            <div className={styles.discountCard}>
+            <div className={styles.discountCard} >
                 <span>%{pack.discountPercent}</span>
                 <span>Off</span>
             </div>

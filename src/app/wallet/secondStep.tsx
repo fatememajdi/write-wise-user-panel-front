@@ -74,7 +74,7 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
             style={{ marginLeft: 'auto' }}
             className={styles.closeModalButton} />
         <div className={'col-12 ' + styles.buyPackageCard}>
-            <div className={'col-lg-5 col-md-5 ' + styles.buyPackageLeftCard}>
+            <div className={'col-lg-5 col-md-5 col-12 ' + styles.buyPackageLeftCard}>
                 <div className={styles.buyPackageLeftCardTitle}>
                     <div
                         style={pack.showingPrice.length > 9 ? { fontSize: 34 } : {}}
@@ -94,7 +94,7 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
                 </div>
             </div>
 
-            <div className={'col-lg-7 col-md-7 ' + styles.buyPackageRightCard}>
+            <div className={'col-lg-7 col-md-7 col-12 ' + styles.buyPackageRightCard}>
                 <div className={'col-12 ' + styles.buyPackageRightCardTitle}>
                     Start your journey with us.
                     <span>{pack.showingPrice}</span>

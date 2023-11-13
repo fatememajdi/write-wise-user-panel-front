@@ -5,6 +5,7 @@ import React from "react";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import dynamic from 'next/dynamic';
+import { useMediaQuery } from 'react-responsive';
 import ReactLoading from 'react-loading';
 
 //------------------------------------------styles 
@@ -35,6 +36,7 @@ const ModalFirstStep: React.FC<_modalFirstStepProps> = ({ currencies, currencyCo
     GetPackage, handleCancel, loading, packages, changeModalStep }) => {
 
     const isMac = typeof window !== 'undefined' ? navigator.platform.toUpperCase().indexOf("MAC") >= 0 : false;
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     return <div className={'col-12 ' + styles.modalCard}>
         <div className={'col-12 ' + styles.modalTopContainer}>
@@ -78,7 +80,7 @@ const ModalFirstStep: React.FC<_modalFirstStepProps> = ({ currencies, currencyCo
                             key={index}
                             style={{ cursor: 'pointer' }}
                             onClick={() => changeModalStep(item)}>
-                            <PackageCard loading={loading} pack={item} key={index} />
+                            <PackageCard loading={loading} pack={item} key={index} style={isMobile && { width: 298, marginBottom: 13 }} />
                         </div>)}
                     </>
             }

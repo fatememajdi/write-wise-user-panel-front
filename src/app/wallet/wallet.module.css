@@ -648,6 +648,154 @@
 }
 
 @media(max-width: 500px) {
+
+    .inputCard input {
+        width: 148px;
+        height: 28px;
+        flex-shrink: 0;
+        font-size: 10px;
+        font-weight: 400;
+        border-radius: 3px;
+        line-height: 7.198px;
+    }
+
+    .inputCard input::placeholder {
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 7.198px;
+    }
+
+    .applyCodeContainer span {
+        display: none;
+    }
+
+    .checkCodeIcon {
+        font-size: 20px;
+        top: 4px;
+        right: 8px;
+    }
+
+    .applyCodeButton {
+        width: 85.815px;
+        height: 27.94px;
+        font-size: 10px;
+        font-weight: 400;
+        border-radius: 3px !important;
+    }
+
+    .applyCodeContainer {
+        width: fit-content;
+        align-self: center;
+        padding-right: 0px;
+    }
+
+    .checkoutButton {
+        width: 78px;
+        height: 24px;
+        font-size: 10px;
+        font-weight: 600;
+        border-radius: 3px !important;
+    }
+
+    .buyPackageRightCardSubTitle {
+        padding-right: 0px;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 26px;
+        margin-top: 26px;
+    }
+
+    .buyPackageRightCardSubTitle span {
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .arrowIcon {
+        font-size: 14px;
+    }
+
+    .buyPackageRightCardTitle {
+        padding-right: 0px;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 26px;
+    }
+
+    .buyPackageRightCardTitle span {
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .countercontainer {
+        margin-right: auto !important;
+        margin-left: 0px;
+        width: fit-content;
+        margin-top: 19px;
+    }
+
+    .countCard {
+        width: 48px !important;
+        height: 28px;
+        font-size: 12px;
+        font-weight: 400;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .buyPackageRightCard {
+        padding: 0px 0px 50px 0px;
+    }
+
+    .buyPackageLeftCardTitle {
+        width: 172px;
+        height: 149px;
+        font-size: 16px;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 39px;
+    }
+
+    .buyPackLeftCardTitleText {
+        padding-right: 0px;
+    }
+
+    .buyPackageLeftCardTitle span {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20.8px;
+    }
+
+    .buyPackageCard {
+        flex-direction: column;
+    }
+
+    .select {
+        width: 224px;
+        height: 31px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .selectItem {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .modalCard {
+        min-width: 0px;
+        padding: 48px 36px 48px 26px;
+        min-height: none;
+        height: fit-content;
+    }
+
+    .closeModalButton {
+        font-size: 30px;
+    }
+
+    .packagesContainer {
+        flex-direction: column;
+    }
+
     .wallet {
         flex-direction: column;
     }
