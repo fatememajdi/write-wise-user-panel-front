@@ -59,7 +59,7 @@ const Section1: React.FC = () => {
             <div className={'col-lg-6 col-md-6 col-12 ' + styles.leftContainer}>
                 <Image
                     className={'selectBack ' + styles.leftContainerBackground}
-                    src="/landing/section1-background.svg"
+                    src="/landing/section1-mobile-background.svg"
                     alt="section background"
                     width="0"
                     height="0"

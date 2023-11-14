@@ -84,6 +84,10 @@ body {
   overflow-x: hidden !important;
 }
 
+button:hover {
+  box-shadow: -5px 15px 22px -5px rgba(0, 0, 0, 0.19);
+}
+
 @media (min-width: 1200px) {
   .container {
     max-width: 1140px;

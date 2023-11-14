@@ -172,6 +172,28 @@
 .banner {}
 
 @media(max-width: 1680px) {
+    .bannerButton {
+        padding: 8px 18px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .bannerTitle {
+        font-size: 32px;
+        font-weight: 600;
+        line-height: normal;
+        margin-top: 70px;
+    }
+
+    .bannerDescription {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .modalCard {
+        width: 500px;
+    }
+
     .headerCard {
         height: 100px;
         padding: 0px 50px;
@@ -194,14 +216,35 @@
     }
 
     .headerLogo {
-        /* height: 8px;
-        width: 98px; */
         margin-right: 10px;
     }
 
 }
 
 @media(max-width: 1440px) {
+
+    .bannerButton {
+        padding: 8px 18px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .bannerTitle {
+        font-size: 32px;
+        font-weight: 600;
+        line-height: normal;
+        margin-top: 70px;
+    }
+
+    .bannerDescription {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .modalCard {
+        width: 500px;
+    }
+
     .popupTitle {
         font-size: 16px;
         font-weight: 500;
@@ -261,7 +304,7 @@
 
 }
 
-@media(max-width: 480px) {
+@media(max-width: 500px) {
 
     .headerCard {
         display: none;
@@ -290,4 +333,51 @@
         margin: 0px auto;
     }
 
+    .popup {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: -45px;
+    }
+
+    .popupTitle {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 52.8px;
+    }
+
+    .popupButton {
+        width: 95px;
+        height: 21.983px;
+        font-size: 14.132px !important;
+        font-weight: 400;
+        line-height: 31.405px;
+    }
+
+    .popupCloseButton {
+        font-size: 20px;
+    }
+
+    .modalCard {
+        width: 100%;
+    }
+
+    .bannerButton {
+        padding: 0px 14px !important;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .bannerTitle {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: normal;
+        margin-top: 50px;
+    }
+
+    .bannerDescription {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: normal;
+    }
 }

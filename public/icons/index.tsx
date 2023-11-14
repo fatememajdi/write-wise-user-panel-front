@@ -16,8 +16,6 @@ import ArrowLeft from './arrowLeft';
 import Camera from './camera';
 import Edit from './edit';
 import Chat2 from './chat2';
-import Success from './success';
-import Faild from './faild';
 
 export {
     UserMobile,
@@ -37,7 +35,5 @@ export {
     ArrowLeft,
     Camera,
     Edit,
-    Chat2,
-    Success,
-    Faild
+    Chat2
 }

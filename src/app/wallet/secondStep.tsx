@@ -3,6 +3,7 @@
 'use client';
 import React from "react";
 import client from '@/config/applloAuthorizedClient';
+import { useMediaQuery } from 'react-responsive';
 import ReactLoading from 'react-loading';
 
 //------------------------------------------styles 
@@ -34,6 +35,7 @@ type Promotion = {
 
 const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, CreatePaymentLink }) => {
 
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const [counter, changeCounter] = React.useState<number>(1);
     const [promotionCode, changePromotionCode] = React.useState<string>('');
     const [validpromotionCode, changeValidPromotionCode] = React.useState<boolean>(false);
@@ -77,7 +79,7 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
             <div className={'col-lg-5 col-md-5 col-12 ' + styles.buyPackageLeftCard}>
                 <div className={styles.buyPackageLeftCardTitle}>
                     <div
-                        style={pack.showingPrice.length > 9 ? { fontSize: 34 } : {}}
+                        style={pack.showingPrice.length > 9 ? { fontSize: isMobile ? 14 : 34 } : {}}
                         className={styles.buyPackLeftCardTitleText}>
                         {
                             pack.currency === 'IRR' ?

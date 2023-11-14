@@ -6,6 +6,10 @@
     justify-content: center;
 }
 
+.section3Container button:hover {
+    box-shadow: none !important;
+}
+
 .rightContainer {
     display: flex;
     flex-direction: column;

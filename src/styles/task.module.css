@@ -4,7 +4,6 @@
     flex-direction: column;
     padding: 0px 95px 100px 90px;
     min-height: 90vh;
-    /* background-color: var(--color-background); */
 }
 
 .wriritngTitle {
@@ -16,10 +15,6 @@
     line-height: normal;
     margin-left: 60px;
     display: flex;
-    /* flex-direction: row;
-    align-items: center;
-    justify-content: space-between; */
-    /* height: 75px; */
 }
 
 .writingSecondTitle {
@@ -43,13 +38,11 @@
     line-height: normal;
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
     justify-content: space-between;
     padding-right: 40px;
 }
 
 .selectedTopcCard {
-    /* border: solid 1px #132740; */
     border-radius: 8px !important;
     margin: 15px 40px 0px 45px;
     padding: 15px 52px 10px 18px !important;
@@ -64,7 +57,6 @@
 }
 
 .selectedTopcCard::-webkit-scrollbar {
-    /* display: none; */
     width: 8px;
     background-color: #D9D9D9;
     border-radius: 33px;
@@ -86,7 +78,6 @@
 .topicInput {
     margin-top: 26px;
     border-radius: 8px !important;
-    /* border: solid 1px #132740; */
     overflow: hidden !important;
 }
 
@@ -117,6 +108,11 @@
     width: 8px;
     background-color: #D9D9D9;
     border-radius: 33px;
+}
+
+.topicButtonsContainer button:hover {
+    box-shadow: none !important;
+    box-shadow: #F3F3F3 !important;
 }
 
 .topicInput textarea::-webkit-scrollbar-thumb {
@@ -426,6 +422,10 @@
 }
 
 @media(max-width: 500px) {
+    .academicTaskbuttonContainer {
+        margin-top: 26px;
+    }
+
     .writingContainer {
         padding: 0px 22px 50px 22px;
     }
@@ -440,6 +440,7 @@
 
     .imagesContainer {
         margin-left: 0px;
+        margin-top: 20px;
     }
 
     .wordsCount {

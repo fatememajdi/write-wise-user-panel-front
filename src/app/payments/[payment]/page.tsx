@@ -4,9 +4,7 @@ import React from "react";
 import dynamic from 'next/dynamic';
 import client from '@/config/applloAuthorizedClient';
 import { useRouter } from "next/navigation";
-
-//--------------------------------------------------icons
-import { Faild, Success } from "../../../../public/icons";
+import Image from "next/image";
 
 //--------------------------------------------------styles
 import styles from './paymentStatus.module.css';
@@ -88,17 +86,33 @@ const PaymentStatus: React.FC<pageProps> = ({ params, searchParams }) => {
 export default PaymentStatus;
 
 const SuccessCard: React.FC<{ payment: paymentData, RecieptLink: any }> = ({ payment, RecieptLink }) => {
+    const router = useRouter();
 
     return <div className={styles.statusCard}>
-        <Success />
+        <Image
+            className={styles.statusIcon}
+            src="/icons/success.svg"
+            alt="success"
+            width="0"
+            height="0"
+            sizes="100vw"
+            loading="eager"
+            priority
+        />
         <div className={styles.title}>Successful</div>
         <div className={styles.description}>Your payment has been processed successfully</div>
         <div className={styles.amount}>Amount paid : {payment.amountPaidShow}
             <span>{payment.tokenNumber} Tokens </span></div>
-        <button
-            onClick={() => RecieptLink()}
-            aria-label="reciept button"
-            className={styles.recieptButton}>Receipt</button>
+        <div className={styles.successButtonContainer}>
+            <button
+                onClick={() => router.push('/wallet')}
+                aria-label="back button"
+            >back</button>
+            <button
+                onClick={() => RecieptLink()}
+                aria-label="reciept button">
+                Receipt</button>
+        </div>
     </div>
 };
 
@@ -106,7 +120,16 @@ const FaildCard: React.FC<{ payment: paymentData }> = ({ payment }) => {
     const router = useRouter();
 
     return <div className={styles.statusCard}>
-        <Faild />
+        <Image
+            className={styles.statusIcon}
+            src="/icons/faild.svg"
+            alt="faild"
+            width="0"
+            height="0"
+            sizes="100vw"
+            loading="eager"
+            priority
+        />
         <div className={styles.title}>Faild</div>
         <div className={styles.description}>Unfortunately your payment was rejected .</div>
         <div className={styles.amount}>Amount paid : {payment.amountPaidShow}

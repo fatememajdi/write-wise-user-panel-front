@@ -7,6 +7,10 @@
     background-repeat: no-repeat !important;
 }
 
+.section7 button:hover{
+    box-shadow: none !important;
+}
+
 .section7Container {
     flex: 1;
     min-height: 100vh;

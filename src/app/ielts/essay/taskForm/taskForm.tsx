@@ -5,6 +5,7 @@ import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Image from "next/image";
+import { useMediaQuery } from 'react-responsive';
 import { AnimatePresence, motion } from 'framer-motion';
 
 //--------------------------------------styles
@@ -73,6 +74,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
     const [showImage, changeShowImage] = React.useState<boolean>(false);
     const [modalImage, changeModalImage] = React.useState<string>();
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => setIsModalOpen(false);
@@ -383,7 +385,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                         }
                                                         <AnimatePresence>
                                                             <motion.div
-                                                                animate={{ left: generateWriting ? '70%' : 0 }}
+                                                                animate={{ left: generateWriting ? isMobile ? '63%' : '70%' : 0 }}
                                                                 transition={{ type: "spring", duration: 3 }}
                                                                 className={styles.academicTaskbuttonContainer}>
                                                                 <SubTypeSelect

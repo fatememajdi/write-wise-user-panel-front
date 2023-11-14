@@ -3,7 +3,7 @@ import React, { Suspense, lazy } from 'react';
 import dynamic from 'next/dynamic';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
-import { StartLoader } from "@/components/Untitled";
+import { StartLoader, StopLoader } from "@/components/Untitled";
 
 //-------------------------------------------styles
 import styles from '../styles/landing.module.css';
@@ -30,6 +30,7 @@ const Home: React.FC = () => {
 
   //------------------------------------------------------------------check user loged in
   React.useEffect(() => {
+    StopLoader();
     if (!localStorage.getItem('user')) {
       if (status != "loading") {
         if (status === 'authenticated') {

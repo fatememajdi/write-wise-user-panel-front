@@ -449,7 +449,7 @@
     }
 }
 
-@media(max-width: 480px) {
+@media(max-width: 500px) {
     .signInrightContainer {
         display: none;
     }
@@ -457,6 +457,8 @@
     .signInLeftContainer {
         padding: 57px 23px 65px 23px;
         height: fit-content;
+        background: var(--color-background);
+        background: linear-gradient(360deg, rgb(246, 229, 230), #e5edf4, #FFF) !important;
     }
 
     .signInOptionsbutton {

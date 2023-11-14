@@ -41,28 +41,15 @@
     margin-left: 5px;
 }
 
-.recieptButton {
-    width: 200px;
-    height: 48px;
-    flex-shrink: 0;
-    padding: 0px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    background: var(--color-seccondary);
-    margin-top: 82px;
-    color: var(--color-whiteText);
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.buttonContainer {
+.buttonContainer,
+.successButtonContainer {
     display: flex;
     flex-direction: row;
-    margin-top: 82px;
+    margin-top: 82px !important;
 }
 
-.buttonContainer button {
+.buttonContainer,
+.successButtonContainer button {
     width: 200px;
     height: 48px;
     flex-shrink: 0;
@@ -75,4 +62,115 @@
     justify-content: center;
     padding: 0px;
     margin: 0px 10px;
+}
+
+.successButtonContainer button {
+    background: var(--color-seccondary);
+}
+
+.statusIcon {
+    height: 354px;
+    width: 354px;
+}
+
+@media(max-width: 1680px) {
+    .statusIcon {
+        height: 254px;
+        width: 254px;
+    }
+
+    .title {
+        font-size: 32px;
+        font-weight: 600;
+    }
+
+    .description {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .amount {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .amount span {
+        font-weight: 400;
+    }
+
+    .buttonContainer,
+    .successButtonContainer button {
+        width: 150px;
+        height: 38px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+
+@media(max-width: 1440px) {
+    .statusIcon {
+        height: 254px;
+        width: 254px;
+    }
+
+    .title {
+        font-size: 32px;
+        font-weight: 600;
+    }
+
+    .description {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .amount {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .amount span {
+        font-weight: 400;
+    }
+
+    .buttonContainer,
+    .successButtonContainer button {
+        width: 150px;
+        height: 38px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+
+@media(max-width: 500px) {
+    .statusIcon {
+        height: 200px;
+        width: 200px;
+    }
+
+    .title {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .description {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .amount {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .amount span {
+        font-weight: 400;
+    }
+
+    .buttonContainer,
+    .successButtonContainer button {
+        width: 100px;
+        height: 31px;
+        font-size: 16px;
+        font-weight: 600;
+    }
 }

@@ -29,8 +29,8 @@
 
 .leftContainerBackground {
     position: absolute;
-    width: 1601px;
-    height: 1665px;
+    width: 1001px;
+    height: 1065px;
     display: none;
 }
 
@@ -289,9 +289,9 @@
 
     .leftContainerBackground {
         z-index: unset;
-        left: -60px;
-        top: -740px;
-        transform: rotate(-460deg);
+        display: flex;
+        top: -300px;
+        right: 0px;
     }
 
     .leftContainer {
@@ -360,5 +360,12 @@
         font-size: small !important;
     }
 
+    .startButton {
+        width: 100px;
+        height: 42px;
+        font-size: 13px;
+        font-weight: 900;
+        line-height: 40px;
+    }
 
 }

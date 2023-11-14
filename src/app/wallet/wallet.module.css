@@ -202,7 +202,8 @@
 }
 
 .select {
-    width: 298px;
+    min-width: 298px;
+    width: fit-content;
     height: 42px;
     border-radius: 8px;
     border: 1px solid var(--color-gray);
@@ -558,6 +559,17 @@
     .leftNavBardCard {
         width: 80px;
     }
+
+    .select {
+        min-width: 222.678px;
+        width: fit-content;
+        height: 31.384px;
+    }
+
+
+    .selectItem {
+        font-size: 13px !important;
+    }
 }
 
 @media(max-width: 1440px) {
@@ -645,9 +657,24 @@
     .leftNavBardCard {
         width: 80px;
     }
+
+    .select {
+        min-width: 222.678px;
+        width: fit-content;
+        height: 31.384px;
+    }
+
+
+    .selectItem {
+        font-size: 13px !important;
+    }
 }
 
 @media(max-width: 500px) {
+
+    .wallet{
+        height: fit-content !important;
+    }
 
     .inputCard input {
         width: 148px;
@@ -760,7 +787,7 @@
     }
 
     .buyPackageLeftCardTitle span {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 400;
         line-height: 20.8px;
     }
@@ -770,15 +797,16 @@
     }
 
     .select {
-        width: 224px;
+        min-width: 224px;
+        width: fit-content;
         height: 31px;
         margin-left: auto;
         margin-right: auto;
     }
 
     .selectItem {
-        font-size: 16px;
-        font-weight: 700;
+        font-size: 13px;
+        height: 25px !important;
     }
 
     .modalCard {

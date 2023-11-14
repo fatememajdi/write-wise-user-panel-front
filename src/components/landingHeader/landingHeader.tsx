@@ -6,17 +6,22 @@ import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSession } from "next-auth/react";
 import { Modal } from 'antd';
+import client from '@/config/applloAuthorizedClient';
 import { useMediaQuery } from 'react-responsive';
 
 //-------------------------------------------styles
 import styles from './landingHeader.module.css';
 
 //-------------------------------------------components
+import { GET_CURRENCIES, GET_PACKAGES } from "@/config/graphql";
 import { StartLoader } from "../Untitled";
 
 //-------------------------------------------icons
 import { MdOutlineMenu } from 'react-icons/md';
 import { AiOutlineClose } from 'react-icons/ai';
+
+//-------------------------------------------type
+import { Package } from "../../../types/package";
 
 const headerItems = [
     {
@@ -41,8 +46,10 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
 
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [showPopup, changeShowPopup] = React.useState<boolean>(false);
+    const [packages, setPackages] = React.useState<Package[]>([]);
     const [disablePopup, setDisablePopup] = React.useState<boolean>(false);
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => setIsModalOpen(false);
@@ -62,6 +69,29 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
             behavior: "smooth",
         });
     };
+
+    async function GetPackage() {
+        await client.query({
+            query: GET_CURRENCIES,
+            fetchPolicy: "no-cache",
+        }).then(async (res) => {
+            await client.query({
+                query: GET_PACKAGES,
+                fetchPolicy: "no-cache",
+                variables: {
+                    currency: res.data.getCurrencies[0].code.toLowerCase(),
+                    userToken: ''
+                }
+            }).then((res) => {
+                setPackages(res.data.getPackages);
+            })
+        });
+    };
+
+    React.useEffect(() => {
+        GetPackage();
+    }, []);
+
 
     if (typeof document != 'undefined')
         window.addEventListener("wheel", function (e: any) {
@@ -127,7 +157,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
             {
                 showPopup && !disablePopup &&
                 <motion.div
-                    animate={{ height: showPopup ? isMac ? 49 : 66 : 0 }}
+                    animate={{ height: showPopup ? isMac ? 49 : isMobile ? 54 : 66 : 0 }}
                     transition={{ type: "spring", duration: 1 }}
                     className={styles.popup}>
                     <div className={styles.popupTitle}>Limited Time Offer!</div>
@@ -154,7 +184,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
             footer={null}
             open={isModalOpen}
             onCancel={handleCancel}
-            width={772}
+            width={isMac ? 500 : isMobile ? '100%' : 772}
             className={styles.modalContainer}
         >
 
@@ -163,18 +193,20 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
                     className={styles.banner}
                     src="/landing/banner.svg"
                     alt="banner"
-                    width={478}
-                    height={314}
+                    width={isMac ? 278 : isMobile ? 178 : 478}
+                    height={isMac ? 114 : isMobile ? 54 : 314}
                     priority
                     loading="eager"
                 />
                 <div className={styles.bannerTitle}>
-                    Claim Your First Essay Assessment for Just $1
+                    Claim Your First Essay Assessment for Just {packages?.find(item => item.isPopup === true)?.showingPriceWithDiscount}
                 </div>
                 <div className={styles.bannerDescription}>
                     Unlock AI-driven personalized feedback, insights, and expert recommendations.
                 </div>
-                <button className={styles.bannerButton}>
+                <button
+                    onClick={() => router.push('/signIn')}
+                    className={styles.bannerButton}>
                     Start Now
                 </button>
             </div>

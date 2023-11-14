@@ -31,7 +31,8 @@
 }
 
 .select {
-    width: 298px;
+    min-width: 298px;
+    width: fit-content;
     height: 42px;
     display: flex;
     margin-left: auto;
@@ -105,13 +106,14 @@
     }
 
     .select {
-        width: 222.678px;
+        min-width: 222.678px;
+        width: fit-content;
         height: 31.384px;
     }
 
 
     .selectItem {
-        font-size: 16px;
+        font-size: 13px !important;
     }
 }
 
@@ -136,12 +138,13 @@
     }
 
     .select {
-        width: 222.678px;
+        min-width: 222.678px;
+        width: fit-content;
         height: 31.384px;
     }
 
     .selectItem {
-        font-size: 16px;
+        font-size: 13px !important;
     }
 
 }
@@ -171,11 +174,13 @@
     .select {
         margin-top: 40px;
         margin-right: 43px;
-        width: 200px;
+        min-width: 200px;
+        width: fit-content;
     }
 
     .selectItem {
         font-size: 13px;
+        height: 25px !important;
     }
 
     .mainContainer {
