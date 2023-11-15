@@ -47,7 +47,8 @@ const ModalFirstStep: React.FC<_modalFirstStepProps> = ({ currencies, currencyCo
                             : <ReactLoading className={styles.loading} type={'bubbles'} color={'#FFF'} height={30} width={30} />}</em>;
                     }
 
-                    return currencies.find(item => item.code === selected).icon + ' ' + currencies.find(item => item.code === selected).name;
+                    return isMac ? currencies.find(item => item.code === selected).icon + ' ' + currencies.find(item => item.code === selected).name
+                        : currencies.find(item => item.code === selected).name;
                 }}
                 defaultValue="select currency"
                 value={currencyCode}

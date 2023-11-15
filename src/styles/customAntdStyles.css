@@ -35,3 +35,24 @@
     width: fit-content !important;
     border-radius: 0px !important;
 }
+
+.ant-select-single.ant-select-show-arrow .ant-select-selection-item {
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.12px;
+}
+
+
+@media(max-width: 500px) {
+    .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+    }
+}
+
+@media(max-width: 1440px) {
+    .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+    }
+}

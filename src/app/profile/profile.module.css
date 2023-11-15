@@ -1,9 +1,20 @@
+.profile {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
 .profileContainer {
-    min-height: 100vh;
+    height: 100%;
     padding-bottom: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    overflow-y: scroll;
+    background-image: url('/profile/background.svg');
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
 }
 
 .profileHeader {
@@ -34,6 +45,42 @@
     text-decoration: none !important;
 }
 
+.leftNavBardCard {
+    height: 100% !important;
+    width: 103px;
+    background-color: var(--color-seccondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.navBarLogo {
+    margin-top: 47px;
+}
+
+.backButton {
+    border-radius: 8px;
+    background: var(--color-gray);
+    padding: 0px;
+    width: 52px;
+    height: 54px;
+    flex-shrink: 0;
+    margin-top: 25px;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-whiteText);
+    font-size: 30px;
+}
+
+.menuButton {
+    margin-top: auto;
+    font-size: 40px;
+    color: var(--color-whiteText);
+    margin-bottom: 30px;
+    padding: 0px;
+}
+
 .logOutButton {
     position: absolute;
     top: 30px;
@@ -45,11 +92,16 @@
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
-    padding: 9px 30px !important;
+    padding: 11px 30px !important;
+}
+
+.NavBaresponsiveLogo {
+    display: none;
 }
 
 .exitIcon {
     margin-right: 16px;
+    font-size: 26px;
 }
 
 .profileCard {
@@ -94,8 +146,9 @@
     margin: 73px 45px;
     border-radius: 8px;
     border: 1px solid #FFF;
-    background: linear-gradient(133deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.32) 100%);
     box-shadow: -5px 8px 23px -5px rgba(0, 0, 0, 0.14);
+    position: relative;
+    padding: 86px 0px 54px 52px;
 }
 
 .userName {
@@ -107,8 +160,8 @@
 }
 
 .joinDate {
-    color: #000;
-    font-size: 32px;
+    color: var(--color-black);
+    font-size: 24px;
     font-weight: 300;
     line-height: 12px;
     letter-spacing: -0.16px;
@@ -146,11 +199,12 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    padding: 0px !important;
 }
 
 .editUserJoinDate {
     color: var(--color-black);
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 300;
     line-height: 12px;
     letter-spacing: -0.16px;
@@ -162,6 +216,13 @@
     height: 62px;
     width: 360px;
     border-radius: 8px !important;
+    border: 1px solid rgba(46, 64, 87, 0.64);
+    background: var(--color-background) !important;
+    box-shadow: 3px 2px 11px -2px rgba(0, 0, 0, 0.10);
+    color: var(--card-f, #2E4057);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 12px;
 }
 
 .input input::placeholder {
@@ -169,12 +230,12 @@
 }
 
 .select {
-    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
     margin-top: 30px !important;
     border-radius: 8px !important;
-    border: 1px solid #2E4057 !important;
     width: 360px !important;
     height: 62px !important;
+    background: var(--color-backgroun) !important;
+    box-shadow: -4px 4px 8px 0px rgba(0, 0, 0, 0.10) !important;
 }
 
 .checkIcon {
@@ -184,8 +245,10 @@
 
 .closeButton {
     position: absolute;
-    right: 64px;
-    bottom: -90px;
+    right: 92px;
+    bottom: -50px;
+    padding: 0px !important;
+    border-radius: 100% !important;
 }
 
 .username {
@@ -197,120 +260,108 @@
     margin-top: 40px;
 }
 
-.chatButton {
-    background: linear-gradient(210deg, rgb(46, 64, 87) 0%, rgb(218, 40, 46) 100%);
-    height: 93px;
-    width: 93px;
-    border-radius: 100% !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    right: 30px;
-    top: 30px;
-}
-
-.responsiveProfileHeader {
-    background-color: var(--color-seccondary);
-    height: 45px;
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
-    padding: 0px 15px;
-}
-
-.responsiveBackcard {
-    color: var(--color-whiteText);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 14px;
-    font-weight: 300;
-    text-decoration: none !important;
-}
-
-.responsiveChatButton {
-    background: linear-gradient(210deg, rgb(46, 64, 87) 0%, rgb(218, 40, 46) 100%);
-    padding: 6px !important;
-    border-radius: 100% !important;
-}
-
 .editIcon {
     color: #FFF;
     font-size: 60px;
 }
 
 .closeIcon {
-    display: flex;
+    height: 68px;
+    width: 68px;
 }
 
-.mobileCloseIcon {
+.responsiveLogOutButton {
     display: none;
 }
 
-
-@media(max-width: 1680px) {
-    .profileCard {
-        height: 190px;
-        width: 190px;
-    }
-
-    .userName {
-        font-size: 30px;
-    }
-
-    .joinDate {
-        font-size: 27px;
-    }
-
-    .age {
-        font-size: 30px;
-    }
-
-    .gender {
-        font-size: 30px;
-    }
-
-    .username {
-        font-size: 27px;
-    }
-}
+@media(max-width: 1680px) {}
 
 @media(max-width: 1440px) {
     .profileCard {
-        height: 190px;
-        width: 190px;
+        height: 180px;
+        width: 180px;
     }
 
     .userName {
-        font-size: 30px;
+        font-size: 24px;
     }
 
     .joinDate {
-        font-size: 27px;
+        font-size: 18px;
+        margin-top: 30px;
+    }
+
+    .editUserJoinDate {
+        font-size: 18px;
     }
 
     .age {
-        font-size: 30px;
+        font-size: 24px;
+        margin-top: 70px;
     }
 
     .gender {
-        font-size: 30px;
+        font-size: 24px;
     }
 
     .username {
-        font-size: 27px;
+        font-size: 18px;
     }
+
+    .leftNavBardCard {
+        width: 80px;
+    }
+
+    .logOutButton {
+        padding: 7px 20px !important;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+    }
+
+    .editIcon {
+        font-size: 43px;
+    }
+
+    .editButton {
+        height: 90px;
+        width: 90px;
+        right: -40px;
+        bottom: -40px;
+    }
+
+    .select {
+        height: 46px !important;
+    }
+
+    .checkIcon {
+        font-size: 55px;
+    }
+
+    .input input {
+        font-size: 17px !important;
+        font-weight: 500;
+        line-height: 12px;
+    }
+
+    .input input::placeholder {
+        font-size: 16px !important;
+    }
+
+    .closeButton{
+        right: 60px;
+    }
+
 }
 
-@media(max-width: 480px) {
-    .profileHeader {
-        display: none;
+@media(max-width: 500px) {
+    .profile {
+        flex-direction: column;
+        height: fit-content !important;
     }
 
-    .responsiveProfileHeader {
-        display: flex;
+    .profileHeader {
+        display: none;
     }
 
     .profileCard {
@@ -323,13 +374,9 @@
         padding: 62px 23px;
     }
 
-    .profileContainer {
-        background: var(--color-background);
-        background: linear-gradient(90deg, #FFF3F5, #F2F5FA);
-    }
-
     .profilePictureContainer {
         margin-top: 0px;
+        padding: 0px 25px;
     }
 
     .leftDivider {
@@ -341,10 +388,16 @@
         background: var(--color-background);
         background: linear-gradient(135deg, #FFFFFF, #F2F5FA);
         margin: 40px 0px 0px 0px;
+        padding: 45px 10px 65px 32px;
     }
 
     .userName {
         font-size: 16px;
+    }
+
+    .closeIcon {
+        height: 36px;
+        width: 36px;
     }
 
     .joinDate {
@@ -363,13 +416,17 @@
     }
 
     .username {
-        font-size: 16px;
+        font-size: 13px;
+        font-weight: 500;
         margin-top: 18px;
+        line-height: normal;
+        height: fit-content;
+        overflow: hidden;
     }
 
     .editButton {
-        height: 48px;
-        width: 48px;
+        height: 48px !important;
+        width: 48px !important;
         right: 14px;
         bottom: -30px;
     }
@@ -385,8 +442,15 @@
     }
 
     .input input {
-        height: 32px;
+        height: 32px !important;
         width: 252px;
+        font-size: 13px !important;
+        font-weight: 500;
+        line-height: 12px;
+    }
+
+    .input input::placeholder {
+        font-size: 13px !important;
     }
 
     .select {
@@ -399,17 +463,60 @@
         font-size: 30px;
     }
 
-    .closeIcon {
+    .closeButton {
+        right: 70px;
+        bottom: -26px;
+    }
+
+    .backButton {
         display: none;
     }
 
-    .mobileCloseIcon {
+    .leftNavBardCard {
+        width: 100%;
+        height: 45px !important;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+
+    .navBarLogo {
+        display: none;
+    }
+
+    .menuButton {
+        margin-right: auto;
+        margin-left: 15px;
+        font-size: 25px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+
+    .NavBaresponsiveLogo {
         display: flex;
+        margin-right: auto;
     }
 
-    .closeButton {
-        right: 50px;
-        bottom: -40px;
+    .responsiveLogOutButton {
+        display: flex;
+        background-color: var(--color-gray);
+        color: var(--color-whiteText);
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;
+        min-width: 110px;
+        width: fit-content;
+        height: 31px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 10px;
+        margin-right: auto;
+        margin-left: 23px;
     }
 
+    .exitIcon {
+        margin-right: 5px;
+        font-size: 20px;
+    }
 }

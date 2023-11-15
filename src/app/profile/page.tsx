@@ -14,18 +14,19 @@ import { signOut } from 'next-auth/react';
 import styles from './profile.module.css';
 
 //-------------------------------------icons
-import { MdOutlineArrowBackIosNew } from 'react-icons/md';
-import { Camera, Chat, Chat2 } from '../../../public/icons';
-import { RxExit } from 'react-icons/rx';
+import { Camera } from '../../../public/icons';
+import { IoMdArrowBack, IoMdMenu } from 'react-icons/io';
+import { AiOutlineUserDelete } from 'react-icons/ai';
 
 //-------------------------------------components
 import { GET_PROFILE, UPDATE_USER, UPLOAD_PROFILE_FILE } from "@/config/graphql";
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-import { StopLoader } from "@/components/Untitled";
+import { StopLoader, StartLoader } from "@/components/Untitled";
 const Loading = dynamic(() => import("@/components/loading/loading"), { ssr: false });
 const DialogComponent = dynamic(() => import("@/components/dialog/dialog"), { ssr: false });
 const UserInformationCard = dynamic(() => import("./userInformationCard"));
 const EditUserCard = dynamic(() => import("./editUserCard"));
+const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/dashboardPopOver"));
 
 //-------------------------------------types
 import { UserProfile } from "../../../types/profile";
@@ -37,6 +38,7 @@ const Page: React.FC = () => {
     const [loading, setLoading] = React.useState<boolean>(true);
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
+    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
         [<UserInformationCard user={profile} goTo={GoTo} />, <EditUserCard goTo={GoTo} UpdateProfile={UpdateProfile} user={profile} />]);
     const router = useRouter();
@@ -130,55 +132,28 @@ const Page: React.FC = () => {
         await LogOut();
     }
 
-    return <div className={'col-12 ' + styles.profileContainer}>
-        {/* ------------------------------------------------------------------------desktop header */}
-        <div className={'col-12 ' + styles.profileHeader}>
-            <button
-                aria-label="chat button"
-                className={styles.chatButton}>
-                <Chat />
-            </button>
+    const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handlePopOverClose = () => {
+        setAnchorEl(null);
+    };
+
+    return <div className={'col-12 ' + styles.profile}>
+        <div className={styles.leftNavBardCard}>
             <Image
-                className={styles.logo}
-                src="/logo.svg"
+                className={styles.navBarLogo}
+                src="/dashboard/W W AI.svg"
                 alt="Logo"
-                width={133}
-                height={15}
-                priority
                 loading="eager"
+                width={19}
+                height={69}
+                priority
             />
-            {/* <a
-                onClick={() => {
-                    if (currentStepIndex > 0) goTo(currentStepIndex - 1);
-                    else router.back();
-                }}
-                className={styles.backcard}>
-                <MdOutlineArrowBackIosNew /> Back
-            </a> */}
-
-            <button
-                onClick={() => setOpen(true)}
-                className={styles.logOutButton}
-                aria-label="logout button"
-            >
-                <RxExit className={styles.exitIcon} /> Log out
-            </button>
-
-        </div>
-
-        {/* ------------------------------------------------------------------------mobile header */}
-        <div className={'col-12 ' + styles.responsiveProfileHeader}>
-            <a
-                onClick={() => {
-                    if (currentStepIndex > 0) goTo(currentStepIndex - 1);
-                    else router.back();
-                }}
-                className={styles.responsiveBackcard}>
-                <MdOutlineArrowBackIosNew /> Back
-            </a>
 
             <Image
-                className={styles.responsiveLogo}
+                className={styles.NavBaresponsiveLogo}
                 src="/logo3.svg"
                 alt="Logo"
                 width={81}
@@ -186,58 +161,107 @@ const Page: React.FC = () => {
                 priority
                 loading="eager"
             />
+
             <button
-                aria-label="chat button"
-                className={styles.responsiveChatButton}
+                onClick={() => {
+                    StartLoader();
+                    router.push('/ielts');
+                }
+                }
+                className={styles.backButton}
+                aria-label="back button"
             >
-                <Chat2 />
+                <IoMdArrowBack />
+            </button>
+            <button
+                onClick={handlePopOverOpen}
+                className={styles.menuButton}
+                aria-label="menu button"
+            >
+                <IoMdMenu />
             </button>
         </div>
+        <div className={styles.profileContainer}>
+            {/* ------------------------------------------------------------------------desktop header */}
+            <div className={'col-12 ' + styles.profileHeader}>
+                <Image
+                    className={styles.logo}
+                    src="/logo.svg"
+                    alt="Logo"
+                    width={133}
+                    height={15}
+                    priority
+                    loading="eager"
+                />
 
-        {/* <label className="image-picker flex" id="image-show">
+                <button
+                    // onClick={() => setOpen(true)}
+                    className={styles.logOutButton}
+                    aria-label="logout button"
+                >
+                    <AiOutlineUserDelete className={styles.exitIcon} /> Delete account
+                </button>
+
+            </div>
+
+
+            {/* <label className="image-picker flex" id="image-show">
             <input type="file" id="fileupload" style={{ width: '100%', height: '100%' }} className="hide" onChange={onChangePic} />
         </label> */}
 
-        {/* <button onClick={() => UploadProfile()}>
+            {/* <button onClick={() => UploadProfile()}>
             upload
         </button> */}
 
-        {
-            loading ?
-                <Loading /> :
-                <div className={'col-lg-9 col-md-9 col-12 ' + styles.profilePageContent}>
-                    <div className={'col-12 ' + styles.profilePictureContainer}>
-                        <div className={styles.leftDivider} />
-                        <div className={styles.profileCard}>
-                            {
-                                profile?.profile ?
-                                    <Image
-                                        className={styles.profileImage}
-                                        src="/profile.jpg"
-                                        alt="profile"
-                                        width={207}
-                                        height={207}
-                                        priority
-                                        loading="eager"
-                                    />
-                                    :
-                                    <Camera />
-                            }
+            {
+                loading ?
+                    <Loading /> :
+                    <div className={'col-lg-9 col-md-9 col-12 ' + styles.profilePageContent}>
+                        <div className={'col-12 ' + styles.profilePictureContainer}>
+                            <div className={styles.leftDivider} />
+                            <div className={styles.profileCard}>
+                                {
+                                    profile?.profile ?
+                                        <Image
+                                            className={styles.profileImage}
+                                            src="/profile.jpg"
+                                            alt="profile"
+                                            width={207}
+                                            height={207}
+                                            priority
+                                            loading="eager"
+                                        />
+                                        :
+                                        <Camera />
+                                }
+                            </div>
+                            <div className={styles.rightDivider} />
                         </div>
-                        <div className={styles.rightDivider} />
+                        {step}
                     </div>
-                    {step}
-                </div>
-        }
+            }
 
-        <DialogComponent open={open} handleClose={handleClose} handleDelete={handleDelete}
-            title="Log out" dialog="Are you sure you want to log out?" deleteButton='Log out' />
+            <button
+                // onClick={() => setOpen(true)}
+                className={styles.responsiveLogOutButton}
+                aria-label="logout button"
+            >
+                <AiOutlineUserDelete className={styles.exitIcon} />
+                 Delete account
+            </button>
 
-        <Modal
-            footer={null}
-            title={"Update profile error"} open={isModalOpen} onCancel={handleCancel}>
-            <div className={styles.modalCard}> {modalContent}</div>
-        </Modal>
+            <DialogComponent open={open} handleClose={handleClose} handleDelete={handleDelete}
+                title="Log out" dialog="Are you sure you want to log out?" deleteButton='Log out' />
+
+            <Modal
+                footer={null}
+                title={"Update profile error"} open={isModalOpen} onCancel={handleCancel}>
+                <div className={styles.modalCard}> {modalContent}</div>
+            </Modal>
+        </div>
+        <DashboardPopOver
+            page='/profile' anchorEl={anchorEl}
+            handlePopOverClose={handlePopOverClose} LogOut={LogOut} />
     </div>
 };
 
