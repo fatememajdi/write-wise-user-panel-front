@@ -328,6 +328,7 @@
         width: 90px;
         right: -40px;
         bottom: -40px;
+        background: linear-gradient(210deg, rgb(46, 64, 87) 0%, rgb(218, 40, 46) 100%) !important;
     }
 
     .select {
@@ -348,7 +349,7 @@
         font-size: 16px !important;
     }
 
-    .closeButton{
+    .closeButton {
         right: 60px;
     }
 

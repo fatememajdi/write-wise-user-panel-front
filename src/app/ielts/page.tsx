@@ -101,6 +101,7 @@ const Page: React.FC = () => {
     const [topics, changeTopics] = React.useState<Topic[]>([]);
     const [topicsType, setTopicsType] = React.useState('general_task_1');
     const [type, setType] = React.useState('');
+    const [developer, setDeveloper] = React.useState<boolean>();
     const [essaies, setEssaies] = React.useState<Essay[]>([]);
     const router = useRouter();
     const [essayTopic, changeTopic] = React.useState<topic | null>();
@@ -263,7 +264,8 @@ const Page: React.FC = () => {
         client.mutate({
             mutation: SCORE_ESSAY,
             variables: {
-                id: newEssay[0].id
+                id: newEssay[0].id,
+                test: developer
             }
         }).then(async (res) => {
             console.log(res);
@@ -419,6 +421,9 @@ const Page: React.FC = () => {
             }
             GetProfile();
         };
+        let dev = localStorage.getItem('devMode');
+        if (dev)
+            setDeveloper(JSON.parse(dev));
     }, []);
 
     const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {

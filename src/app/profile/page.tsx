@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Modal } from 'antd';
 import { useSession } from "next-auth/react";
+import { Switch } from 'antd';
 import { signOut } from 'next-auth/react';
 
 //-------------------------------------styles
@@ -37,6 +38,7 @@ const Page: React.FC = () => {
     const [profile, setprofile] = React.useState<UserProfile>();
     const [loading, setLoading] = React.useState<boolean>(true);
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [developer, setDeveloper] = React.useState<boolean>();
     const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
@@ -114,6 +116,9 @@ const Page: React.FC = () => {
     React.useEffect(() => {
         StopLoader();
         GetProfile();
+        let dev = localStorage.getItem('devMode');
+        if (dev)
+            setDeveloper(JSON.parse(dev));
     }, []);
 
     function handleClose() {
@@ -139,6 +144,12 @@ const Page: React.FC = () => {
     const handlePopOverClose = () => {
         setAnchorEl(null);
     };
+
+    const onChangeSwitch = (checked: boolean) => {
+        setDeveloper(checked);
+        localStorage.setItem('devMode', JSON.stringify(checked));
+    };
+
 
     return <div className={'col-12 ' + styles.profile}>
         <div className={styles.leftNavBardCard}>
@@ -237,6 +248,8 @@ const Page: React.FC = () => {
                             </div>
                             <div className={styles.rightDivider} />
                         </div>
+                        <div style={{ marginTop: 20, padding: 10, backgroundColor: 'rgb(206, 208, 215)', borderRadius: 6, width: 'fit-content' }}>
+                            {'developer '} <Switch onChange={onChangeSwitch} checked={developer} /></div>
                         {step}
                     </div>
             }
@@ -247,7 +260,7 @@ const Page: React.FC = () => {
                 aria-label="logout button"
             >
                 <AiOutlineUserDelete className={styles.exitIcon} />
-                 Delete account
+                Delete account
             </button>
 
             <DialogComponent open={open} handleClose={handleClose} handleDelete={handleDelete}

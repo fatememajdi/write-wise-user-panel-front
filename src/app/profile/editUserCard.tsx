@@ -10,7 +10,6 @@ import Image from "next/image";
 import styles from './profile.module.css';
 
 //-------------------------------------icons
-import { CloseButton, MobileCloseButton } from '../../../public';
 import { HiCheck } from 'react-icons/hi';
 
 //-------------------------------------components
