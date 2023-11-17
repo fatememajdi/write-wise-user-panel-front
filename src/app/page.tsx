@@ -3,7 +3,9 @@ import React, { Suspense, lazy } from 'react';
 import dynamic from 'next/dynamic';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
+import Head from 'next/head';
 import { StartLoader, StopLoader } from "@/components/Untitled";
+import { SessionProvider } from 'next-auth/react';
 
 //-------------------------------------------styles
 import styles from '../styles/landing.module.css';
@@ -45,6 +47,10 @@ const Home: React.FC = () => {
   return (
     <Suspense fallback={<Loading />}>
       <div className={'col-12 ' + styles.landingContainer}>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" />
+
+        </Head>
         <Section1 />
         <Section2 />
         <Section3 />
