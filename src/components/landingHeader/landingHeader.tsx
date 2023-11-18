@@ -236,8 +236,8 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
             className={styles.drawer}
         >
             {
-                headerItems.map((item, index) => <p style={selectedDrawerItem === index ? { backgroundColor: '#172E4A' } : {}}>
-                    <Link href={item.route} key={index} onClick={() => {
+                headerItems.map((item, index) => <p key={index} style={selectedDrawerItem === index ? { backgroundColor: '#172E4A' } : {}}>
+                    <Link href={item.route} onClick={() => {
                         handleScroll;
                         onCloseDrawer();
                         setSelectedDrawerItem(index);

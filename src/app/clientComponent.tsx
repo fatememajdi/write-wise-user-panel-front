@@ -42,9 +42,6 @@ export default function ClientComponent({
                     suppressHydrationWarning
                     className={lato.className}
                 >
-                    <head>
-                        <meta name="viewport" content="width=device-width, initial-scale=1" />
-                    </head>
                     <title>Write Wise Ai</title>
 
                     <Head>
