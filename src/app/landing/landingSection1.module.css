@@ -6,6 +6,7 @@
     padding: 200px 0px 50px 0px;
     font-style: normal;
     min-height: 100vh;
+    font-family: var(--font-lato);
 }
 
 .leftContainer {
@@ -36,18 +37,22 @@
 
 .rightContainerTitle {
     font-feature-settings: 'ss04' on, 'ss03' on, 'ss02' on, 'ss01' on, 'salt' on;
-    font-size: 55px;
+    font-size: 82px;
     font-weight: 800;
-    line-height: 70.4px;
-    letter-spacing: -0.32px;
+    line-height: 86.2px;
+    letter-spacing: -0.41px;
     background: linear-gradient(91deg, #2E4057 -75.62%, #533346 -56.29%, #722838 -40.33%, #87212E -8.05%, #652C3D 35.85%, #4D3549 57.88%, #2E4057 85.71%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
+.rightContainerTitle span {
+    white-space: nowrap;
+}
+
 .rightContainerDescription {
-    margin-top: 52px;
+    margin-top: 48px;
     color: var(--color-blackText);
     font-size: 24px;
     font-style: normal;
@@ -56,29 +61,9 @@
     text-transform: capitalize;
 }
 
-.boldLetter {
-    font-weight: 800 !important;
-}
-
 .rightContainerDescription span {
-    font-weight: 700;
-}
-
-.rightContainerDescriptionItem {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    color: var(--color-blackText);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 37.2px;
-}
-
-.rightContainerDescriptionItemIcon {
-    font-size: medium !important;
-    margin-right: 10px;
-    margin-top: 10px;
+    padding-right: 211px;
 }
 
 .leftImageCard {
@@ -127,6 +112,10 @@
 
 
 @media(max-width: 1680px) {
+    .rightContainerDescription span {
+        padding-right: 50px;
+    }
+
     .section1Container {
         padding: 170px 0px 50px 0px;
     }
@@ -190,6 +179,10 @@
 }
 
 @media(max-width: 1440px) {
+    .rightContainerDescription span {
+        padding-right: 50px;
+    }
+
     .section1Container {
         padding: 170px 0px 50px 0px;
     }
@@ -282,6 +275,10 @@
 }
 
 @media(max-width: 500px) {
+
+    .rightContainerDescription span {
+        padding-right: 0px;
+    }
 
     .leftLogo {
         font-size: 10px;

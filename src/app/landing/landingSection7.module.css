@@ -34,7 +34,7 @@
 }
 
 .itemCard span {
-    color: var(--color-red);
+    font-weight: 700 !important;
 }
 
 .itemContainer {

@@ -13,6 +13,11 @@ import { Providers } from "./providers";
 import { Inter, Lato } from "next/font/google";
 import CookieConsent from '@/components/cookies/cookies';
 
+const lato = Lato({
+    subsets: ["latin"],
+    variable: "--font-lato",
+    weight: '100'
+});
 
 export default function ClientComponent({
     children,
@@ -29,13 +34,17 @@ export default function ClientComponent({
         // image: product.image,
         description: 'Ielts Writing Ai'
     };
+
     return (
         <SessionProvider session={pageProps?.session}>
             <ApolloProvider client={client}>
                 <html lang="en"
                     suppressHydrationWarning
-                // className={cx(inter.variable, lato.variable)}
+                    className={lato.className}
                 >
+                    <head>
+                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    </head>
                     <title>Write Wise Ai</title>
 
                     <Head>
@@ -44,6 +53,8 @@ export default function ClientComponent({
                             name="description"
                             content="Unlock your IELTS writing potential with WriteWiseAI,  four-step process to get accurate essay ratings, personalized feedback,
                 and valuable recommendations"></meta>
+                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
                     </Head>
                     <LocalizationProvider dateAdapter={AdapterMoment}>
                         <body

@@ -21,27 +21,18 @@ const Section1: React.FC = () => {
     return <LandingBackground>
         <section className={'col-12 ' + styles.section1Container} id="home">
 
-            <div className={'col-lg-6 col-md-6 col-12 ' + styles.rightContainer}>
-                <div className={styles.rightContainerTitle}>
-                    Boost Your IELTS Writing <br />with AI-Powered Precision
+            <div className={'col-lg-7 col-md-7 col-12 ' + styles.rightContainer}>
+                <div className={styles.rightContainerTitle} >
+                    <div> Achieve IELTS Writing Excellence with</div>
+                    <span> AI-Driven </span>
+                    Rating
                 </div>
 
 
                 <div className={styles.rightContainerDescription}>
-                    <span>Discover <span className={styles.boldLetter}>W</span>rite<span className={styles.boldLetter}>W</span>ise<span className={styles.boldLetter}>AI</span>'s Technology:
-                    </span> Delivering instant IELTS <br />scoring with results mirroring an inter-rater difference of <br />0.5 with Humans
-
-                    <div
-                        style={{ marginTop: 14 }}
-                        className={styles.rightContainerDescriptionItem}>
-                        <VscCircleFilled className={styles.rightContainerDescriptionItemIcon} />
-                        Claim your AI-powered IELTS writing analysis
-                    </div>
-                    <div className={styles.rightContainerDescriptionItem}>
-                        <div> <VscCircleFilled className={styles.rightContainerDescriptionItemIcon} /></div>
-                        Benefit from personalised IELTS feedback tailored to elevate your skills.
-                    </div>
-
+                    <span>
+                        Unlock the full potential of your IELTS writing Skills with our state-of-the-art AI technology. Experience a comprehensive journey to success.
+                    </span>
                     <button
                         onClick={() => {
                             StartLoader();
@@ -56,7 +47,7 @@ const Section1: React.FC = () => {
 
             </div>
 
-            <div className={'col-lg-6 col-md-6 col-12 ' + styles.leftContainer}>
+            <div className={'col-lg-5 col-md-5 col-12 ' + styles.leftContainer}>
                 <Image
                     className={'selectBack ' + styles.leftContainerBackground}
                     src="/landing/section1-mobile-background.svg"

@@ -30,6 +30,7 @@ const Loading = dynamic(() => import("@/components/loading/loading"));
 const ModalFirstStep = dynamic(() => import("./firstStep"));
 const ModalSecondStep = dynamic(() => import("./secondStep"));
 const TableCol = dynamic(() => import("@/components/walletTableCol/walletTableCol"));
+const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"));
 import { useMultiStepForm } from "@/components/multiStepForm/useMultiStepForm";
 
 //---------------------------------------------------types
@@ -272,46 +273,52 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
 
     return pageLoading ? <Loading />
         : <div className={'col-12 ' + styles.wallet}>
-            <div className={styles.leftNavBardCard}>
-                <Image
-                    className={styles.logo}
-                    src="/dashboard/W W AI.svg"
-                    alt="Logo"
-                    loading="eager"
-                    width={19}
-                    height={69}
-                    priority
-                />
 
-                <Image
-                    className={styles.responsiveLogo}
-                    src="/logo3.svg"
-                    alt="Logo"
-                    width={81}
-                    height={17}
-                    priority
-                    loading="eager"
-                />
+            {
+                isMobile ?
+                    <LandingHeader logedIn />
+                    :
+                    <div className={styles.leftNavBardCard}>
+                        <Image
+                            className={styles.logo}
+                            src="/dashboard/W W AI.svg"
+                            alt="Logo"
+                            loading="eager"
+                            width={19}
+                            height={69}
+                            priority
+                        />
 
-                <button
-                    onClick={() => {
-                        StartLoader();
-                        router.push('/ielts');
-                    }
-                    }
-                    className={styles.backButton}
-                    aria-label="back button"
-                >
-                    <IoMdArrowBack />
-                </button>
-                <button
-                    onClick={handlePopOverOpen}
-                    className={styles.menuButton}
-                    aria-label="menu button"
-                >
-                    <IoMdMenu />
-                </button>
-            </div>
+                        <Image
+                            className={styles.responsiveLogo}
+                            src="/logo3.svg"
+                            alt="Logo"
+                            width={81}
+                            height={17}
+                            priority
+                            loading="eager"
+                        />
+
+                        <button
+                            onClick={() => {
+                                StartLoader();
+                                router.push('/ielts');
+                            }
+                            }
+                            className={styles.backButton}
+                            aria-label="back button"
+                        >
+                            <IoMdArrowBack />
+                        </button>
+                        <button
+                            onClick={handlePopOverOpen}
+                            className={styles.menuButton}
+                            aria-label="menu button"
+                        >
+                            <IoMdMenu />
+                        </button>
+                    </div>
+            }
             <div className={styles.walletContainer}>
 
                 <div className={styles.tokenCard}>

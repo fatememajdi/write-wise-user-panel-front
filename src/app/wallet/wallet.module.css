@@ -672,8 +672,9 @@
 
 @media(max-width: 500px) {
 
-    .wallet{
+    .wallet {
         height: fit-content !important;
+        padding-top: 45px;
     }
 
     .inputCard input {

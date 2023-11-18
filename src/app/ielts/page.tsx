@@ -127,8 +127,6 @@ const Page: React.FC = () => {
     };
 
     async function SelectTopic(topic?: topic, essay?: string) {
-        if (!socket)
-            await socketInitializer();
 
         ChangeType(topic.type);
         changeTabBarLoc(true);

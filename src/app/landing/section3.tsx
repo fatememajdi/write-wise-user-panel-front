@@ -26,13 +26,10 @@ const Section3: React.FC = () => {
 
                 <div className={'col-lg-7 col-md-6 col-12 ' + styles.leftContainer}>
                     <div className={styles.leftTitle}>
-                        Unlock IELTS Writing Mastery with
-                        WriteWiseAI's Pioneering Features
+                        Unlock IELTS Writing Mastery with WriteWiseAI's Pioneering Features
                     </div>
                     <div className={styles.leftDescription}>
-                        Experience a seamless fusion of advanced technology and intuitive<br />
-                        design, tailored to elevate every aspect of your IELTS preparation<br />
-                        journey, and ensure top-tier IELTS writing results.
+                        Experience a seamless fusion of advanced technology and intuitive design, tailored to elevate every aspect of your IELTS preparation journey, and ensure top-tier IELTS writing results.
                     </div>
 
                     <button

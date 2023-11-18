@@ -26,16 +26,10 @@ const inter = Inter({
   variable: "--font-inter"
 });
 
-const lora = Lato({
-  subsets: ["latin"],
-  variable: "--font-loto",
-  weight: '100'
-});
-
 export const metadata: Metadata = {
   title: 'Write Wise Ai',
   description: 'Ielts Writing Ai',
-  viewport: 'width=device-width,  initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+  viewport: 'width=device-width, initial-scale=1'
 }
 
 export default function RootLayout({

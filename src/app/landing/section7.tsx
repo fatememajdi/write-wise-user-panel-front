@@ -17,33 +17,33 @@ import { IoIosArrowForward } from 'react-icons/io';
 const questions = [
     {
         id: 0,
-        question: <div className={styles.itemCard}>How does the <span>W</span>rite<span>W</span>ise<span>AI</span> platform work?</div>,
-        answer: 'WriteWiseAI is an AI-powered platform designed to help IELTS test-takers improve their writing skills. Users can submit essays for rating, receive personalized feedback, and access our AI-powered writing tutor. Simply sign up, log in, write or upload your essay, and choose the services that best suit your needs.'
+        question: <div className={styles.itemCard}>How does the <span>WriteWiseAI</span> platform work?</div>,
+        answer: 'WriteWiseAI is an AI-powered platform designed to help IELTS test-takers improve their writing skills. Users can submit essays for rating, receive personalized feedback, and track your progress. Simply sign up, log in, write or upload your essay, and have it rated to receive your score and individualized insights and resommendations.'
     },
     {
         id: 1,
-        question: <div className={styles.itemCard}>How does <span>W</span>rite<span>W</span>ise<span>AI</span> score and analyze essays?</div>,
-        answer: 'WriteWiseAI uses advanced artificial intelligence algorithms to accurately score and analyze essays based on the specific criteria of IELTS writing exams. The AI evaluates Task Achievement, grammar, vocabulary, coherence, and cohesion. Then it provides your score, and if you choose to, personalized feedback and recommendations to help you improve your writing skills.'
+        question: <div className={styles.itemCard}>How does <span>WriteWiseAI</span> score and analyze essays?</div>,
+        answer: 'WriteWiseAI uses advanced artificial intelligence algorithms to accurately score and analyze essays based on the specific criteria of IELTS writing exams. The AI evaluates Task Achievement/Response, Cohesion and Coherence, Lexical Resource, and Grammatical Range and Accuracy. Then it provides your score, and personalized feedback and recommendations to help you improve your writing skills.'
     },
     {
         id: 2,
         question: <div className={styles.itemCard}>How long does it take to get feedback on my essay?</div>,
-        answer: 'WriteWiseAI provides feedback on your essay almost instantly. Within seconds of submitting your essay, you will receive a comprehensive analysis, personalized feedback, and targeted recommendations to help you improve.'
+        answer: 'WriteWiseAI provides feedback on your essay almost instantly. Within seconds of submitting your essay, you will receive a comprehensive analysis, personalized feedback, and targeted recommendations to help you improve'
     },
     {
         id: 3,
-        question: <div className={styles.itemCard}>How long does it take to get feedback on my essay?</div>,
-        answer: 'WriteWiseAI provides feedback on your essay almost instantly. Within seconds of submitting your essay, you will receive a comprehensive analysis, personalized feedback, and targeted recommendations to help you improve.'
+        question: <div className={styles.itemCard}>Can I use <span>WriteWiseAI</span> for both General and Academic IELTS writing tasks?</div>,
+        answer: 'Absolutely! WriteWiseAI supports Task 1 General, Task 1 Academic, and Task 2 essay types, allowing you to practice and improve your writing skills for any IELTS test format.'
     },
     {
         id: 4,
-        question: <div className={styles.itemCard}>Is my personal information and essay data secure on <span>W</span>rite<span>W</span>ise<span>AI</span>?</div>,
-        answer: 'Yes, WriteWiseAI offers a free essay rating service that provides an overall band score and 4 criteria-specific band scores for your essay. There is no cost for this service, and you can use it an unlimited number of times.'
+        question: <div className={styles.itemCard}>How do I pay for <span>WriteWiseAI</span> services?</div>,
+        answer: ' To use our Pay-as-you-Go system, after signing up and logging in, navigate to the "Wallet" section in your user panel. Then, select a payment model , and complete the payment process. You can then use your wallet to access rating, analysis and personalized feedback and recommendations.'
     },
     {
         id: 5,
-        question: <div className={styles.itemCard}>How much does it cost to get personalized feedback and access the AI-powered writing tutor?</div>,
-        answer: 'Personalized feedback and recommendation costs 1 token per essay. Using the AI-powered writing tutor costs 3 tokens per essay (1 token = $1). Simply purchase tokens and use them to submit your essays for detailed feedback and real-time writing guidance.'
+        question: <div className={styles.itemCard}>How accurate are the AI-generated essay ratings?</div>,
+        answer: 'WriteWiseAI uses advanced AI technology to analyze your essays based on the official IELTS criteria. While our system is highly accurate and reliable, it\'s important to remember that AI-generated ratings may not perfectly match those of human examiners. We suggest a “between-rater” difference of half a band score to be considered. Nonetheless, our ratings serve as a valuable tool for understanding your current writing proficiency and tracking your progress.'
     }
 ];
 

@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { Modal } from 'antd';
 import client from '@/config/applloAuthorizedClient';
 import { useMediaQuery } from 'react-responsive';
+import { Drawer } from 'antd';
 
 //-------------------------------------------styles
 import styles from './landingHeader.module.css';
@@ -42,12 +43,15 @@ const headerItems = [
     }
 ];
 
+
 const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ logedIn, shadow }) => {
 
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+    const [showDrawer, setShowDrawer] = React.useState<boolean>(false);
     const [showPopup, changeShowPopup] = React.useState<boolean>(false);
     const [packages, setPackages] = React.useState<Package[]>([]);
     const [disablePopup, setDisablePopup] = React.useState<boolean>(false);
+    const [selectedDrawerItem, setSelectedDrawerItem] = React.useState<number>();
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
@@ -88,6 +92,14 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
         });
     };
 
+    const SetShowDrawer = () => {
+        setShowDrawer(true);
+    };
+
+    const onCloseDrawer = () => {
+        setShowDrawer(false);
+    };
+
     React.useEffect(() => {
         GetPackage();
     }, []);
@@ -105,7 +117,9 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
     return (<div className={shadow || showPopup ? 'col-12 ' + styles.headerContainer + ' ' + styles.blackShadow :
         'col-12 ' + styles.headerContainer + ' ' + styles.lightShadow}>
         {/* ---------------------------------------------------------------------mobile header */}
-        <div className={styles.responsiveMenuIcon}>
+        <div
+            onClick={() => SetShowDrawer()}
+            className={styles.responsiveMenuIcon}>
             <MdOutlineMenu />
         </div>
 
@@ -212,6 +226,53 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
             </div>
 
         </Modal>
+
+        <Drawer
+            placement={'left'}
+            closable={false}
+            onClose={onCloseDrawer}
+            visible={showDrawer}
+            width={216}
+            className={styles.drawer}
+        >
+            {
+                headerItems.map((item, index) => <p style={selectedDrawerItem === index ? { backgroundColor: '#172E4A' } : {}}>
+                    <Link href={item.route} key={index} onClick={() => {
+                        handleScroll;
+                        onCloseDrawer();
+                        setSelectedDrawerItem(index);
+                    }} >{item.title}</Link></p>)
+            }
+            {
+                logedIn ?
+                    <>
+                        <p
+                            onClick={() => {
+                                router.push('/ielts');
+                                StartLoader();
+                            }}
+                            className={styles.headerItem}>Dashboard</p>
+                        <p
+                            onClick={() => {
+                                router.push('/profile');
+                                StartLoader();
+                            }}
+                            className={styles.headerItem}>Profile</p>
+                        <p
+                            onClick={() => {
+                                router.push('/wallet');
+                                StartLoader();
+                            }}
+                            className={styles.headerItem}>Wallet</p>
+                    </>
+                    :
+                    <p
+                        onClick={() => {
+                            router.push('/signIn');
+                            StartLoader();
+                        }} className={styles.headerItem}>Signup</p>
+            }
+        </Drawer>
 
     </div >
     )
