@@ -8,9 +8,6 @@ import Image from "next/image";
 import styles from './landingSection1.module.css';
 import '../../styles/global.css';
 
-//------------------------------------------------icons
-import { VscCircleFilled } from 'react-icons/vsc';
-
 //------------------------------------------------componnets
 import LandingBackground from "@/components/backgrounds/landingBackground/landingBackground";
 import { StartLoader } from "@/components/Untitled";

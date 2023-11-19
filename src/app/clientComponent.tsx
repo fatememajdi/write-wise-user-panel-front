@@ -9,7 +9,6 @@ import { Session } from "next-auth";
 import Head from 'next/head';
 import Script from 'next/script';
 import "@/styles/tailwind.css";
-import { Providers } from "./providers";
 import { Inter, Lato } from "next/font/google";
 import CookieConsent from '@/components/cookies/cookies';
 
@@ -51,9 +50,10 @@ export default function ClientComponent({
                             content="Unlock your IELTS writing potential with WriteWiseAI,  four-step process to get accurate essay ratings, personalized feedback,
                 and valuable recommendations"></meta>
                         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
                     </Head>
+
                     <LocalizationProvider dateAdapter={AdapterMoment}>
+
                         <body
                             className="antialiased text-gray-800 dark:bg-black dark:text-gray-400 mainContainer"
                         >
@@ -73,6 +73,7 @@ export default function ClientComponent({
                             </Script>
                             <div id='tawk' />
                         </body>
+
                     </LocalizationProvider>
                     <CookieConsent />
                 </html>

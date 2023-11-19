@@ -121,8 +121,8 @@
     }
 
     .robot {
-        width: 337px;
-        height: 260px
+        width: 587px;
+        height: 470px
     }
 
     .leftContainerBackground {
@@ -132,12 +132,14 @@
 
     .human {
         position: absolute;
-        width: 184px;
-        height: 267px;
+        width: 302px;
+        height: 435px;
+        right: -7% !important;
     }
 
     .leftLogo {
-        font-size: 13px;
+        font-size: 20px;
+        top: 22%;
     }
 
 
@@ -146,14 +148,16 @@
     }
 
     .rightContainerTitle {
-        font-size: 32px;
-        line-height: 35.2px;
-        letter-spacing: -0.16px;
+        font-size: 64px;
+        font-weight: 800;
+        line-height: 68.4px;
+        letter-spacing: -0.32px;
     }
 
     .rightContainerDescription {
-        font-size: 16px;
-        line-height: 19.7px;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 26px;
     }
 
     .rightContainerDescriptionItem {
@@ -178,6 +182,7 @@
 
 }
 
+
 @media(max-width: 1440px) {
     .rightContainerDescription span {
         padding-right: 50px;
@@ -188,8 +193,8 @@
     }
 
     .robot {
-        width: 337px;
-        height: 260px
+        width: 587px;
+        height: 470px
     }
 
     .leftContainerBackground {
@@ -199,12 +204,14 @@
 
     .human {
         position: absolute;
-        width: 184px;
-        height: 267px;
+        width: 302px;
+        height: 435px;
+        right: -7% !important;
     }
 
     .leftLogo {
-        font-size: 13px;
+        font-size: 20px;
+        top: 22%;
     }
 
 
@@ -213,14 +220,16 @@
     }
 
     .rightContainerTitle {
-        font-size: 32px;
-        line-height: 35.2px;
-        letter-spacing: -0.16px;
+        font-size: 64px;
+        font-weight: 800;
+        line-height: 68.4px;
+        letter-spacing: -0.32px;
     }
 
     .rightContainerDescription {
-        font-size: 16px;
-        line-height: 19.7px;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 26px;
     }
 
     .rightContainerDescriptionItem {

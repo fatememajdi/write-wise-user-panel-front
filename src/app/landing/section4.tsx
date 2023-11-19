@@ -58,7 +58,7 @@ const Section4: React.FC = () => {
         <div className={styles.title}>Progressive IELTS Learning with WriteWiseAI</div>
         <div className={styles.Divider} />
         <div className={styles.description}>
-            Empower your IELTS preparation by tracking and<br /> visualizing your writing improvements.
+            Empower your IELTS preparation by tracking and visualizing your writing improvements.
         </div>
 
         {/* <button className={styles.button}>

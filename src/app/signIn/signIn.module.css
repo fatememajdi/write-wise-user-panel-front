@@ -18,6 +18,11 @@
     padding-top: 90px;
 }
 
+.rightBackground {
+    height: 100%;
+    width: 100%;
+}
+
 .signInrightContainer {
     min-height: 100vh;
     height: 100% !important;
@@ -25,58 +30,6 @@
     position: relative;
 }
 
-.circle1 {
-    background-color: var(--color-primary);
-    height: 243px;
-    width: 243px;
-    border-radius: 100%;
-    position: absolute;
-    top: 181px;
-    right: 57px;
-}
-
-.circle2 {
-    position: absolute;
-    width: 376px;
-    height: 376px;
-    right: 208px;
-    border-radius: 100%;
-    background-color: var(--color-background);
-    top: 251px;
-    z-index: 1;
-}
-
-.circle3 {
-    background-color: var(--color-primary);
-    width: 376px;
-    height: 376px;
-    border-radius: 100%;
-    position: absolute;
-    top: 297px;
-    right: 179px;
-    z-index: 0;
-}
-
-.circle4 {
-    position: absolute;
-    width: 207px;
-    height: 207px;
-    right: 57px;
-    border-radius: 100%;
-    background-color: var(--color-background);
-    top: 610px;
-}
-
-.circle5 {
-    background-color: var(--color-primary);
-    width: 243px;
-    height: 243px;
-    border-radius: 100%;
-    position: absolute;
-    top: -121px;
-    right: 379px;
-    z-index: 0;
-}
 
 .logo {
     height: 16px;
@@ -286,31 +239,6 @@
 }
 
 @media(max-width: 1680px) {
-    .circle1 {
-        height: 223px;
-        width: 223px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle4 {
-        height: 187px;
-        width: 187px;
-    }
-
-    .circle5 {
-        height: 223px;
-        width: 223px;
-        top: -111px;
-    }
 
     .title {
         margin-top: 70px;
@@ -327,31 +255,7 @@
 }
 
 @media(max-width: 1440px) {
-    .circle1 {
-        height: 223px;
-        width: 223px;
-    }
 
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle4 {
-        height: 187px;
-        width: 187px;
-    }
-
-    .circle5 {
-        height: 223px;
-        width: 223px;
-        top: -111px;
-    }
 
     .title {
         margin-top: 70px;
@@ -368,31 +272,7 @@
 }
 
 @media(max-width: 992px) {
-    .circle1 {
-        height: 223px;
-        width: 223px;
-    }
 
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle4 {
-        height: 187px;
-        width: 187px;
-    }
-
-    .circle5 {
-        height: 223px;
-        width: 223px;
-        top: -111px;
-    }
 
     .title {
         margin-top: 70px;
@@ -409,31 +289,7 @@
 }
 
 @media(max-height: 900px) {
-    .circle1 {
-        height: 223px;
-        width: 223px;
-    }
 
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle4 {
-        height: 187px;
-        width: 187px;
-    }
-
-    .circle5 {
-        height: 223px;
-        width: 223px;
-        top: -111px;
-    }
 
     .title {
         margin-top: 70px;

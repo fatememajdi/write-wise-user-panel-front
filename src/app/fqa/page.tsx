@@ -14,6 +14,7 @@ import { StopLoader } from "@/components/Untitled";
 
 //--------------------------------------------icons 
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import { IoMdChatbubbles } from 'react-icons/io';
 
 //--------------------------------------------------------fake data
 const questions = [
@@ -75,7 +76,9 @@ const Page: React.FC = () => {
     return <FqaQuestionsBackground>
         <AnimatePresence>
             <div className={'col-12 ' + styles.topContainer}>
-                <div className={styles.title}>Frequently Asked Questions</div>
+                <div className={styles.title}>
+                    <IoMdChatbubbles className={styles.chatIcon} /><br />
+                    Frequently Asked Questions</div>
 
             </div>
             <div className={'col-12 ' + styles.mainContainer}>

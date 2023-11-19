@@ -2,8 +2,7 @@
     min-height: 100vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
-    /* position: relative; */
-    padding: 260px 350px 100px 350px;
+    padding: 260px 380px 100px 380px;
     width: 100vw;
     background-image: url('/landing/section8-background.svg');
     background-size: cover !important;

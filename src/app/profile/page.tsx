@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 import { Modal } from 'antd';
 import { useSession } from "next-auth/react";
 import { Switch } from 'antd';
+import { useMediaQuery } from 'react-responsive';
 import { signOut } from 'next-auth/react';
 
 //-------------------------------------styles
@@ -27,6 +28,7 @@ const Loading = dynamic(() => import("@/components/loading/loading"), { ssr: fal
 const DialogComponent = dynamic(() => import("@/components/dialog/dialog"), { ssr: false });
 const UserInformationCard = dynamic(() => import("./userInformationCard"));
 const EditUserCard = dynamic(() => import("./editUserCard"));
+const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"));
 const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/dashboardPopOver"));
 
 //-------------------------------------types
@@ -34,6 +36,7 @@ import { UserProfile } from "../../../types/profile";
 
 const Page: React.FC = () => {
 
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const [open, setOpen] = React.useState<boolean>(false);
     const [profile, setprofile] = React.useState<UserProfile>();
     const [loading, setLoading] = React.useState<boolean>(true);
@@ -150,48 +153,54 @@ const Page: React.FC = () => {
         localStorage.setItem('devMode', JSON.stringify(checked));
     };
 
-
     return <div className={'col-12 ' + styles.profile}>
-        <div className={styles.leftNavBardCard}>
-            <Image
-                className={styles.navBarLogo}
-                src="/dashboard/W W AI.svg"
-                alt="Logo"
-                loading="eager"
-                width={19}
-                height={69}
-                priority
-            />
 
-            <Image
-                className={styles.NavBaresponsiveLogo}
-                src="/logo3.svg"
-                alt="Logo"
-                width={81}
-                height={17}
-                priority
-                loading="eager"
-            />
+        {
+            isMobile ?
+                <LandingHeader logedIn />
+                :
+                <div className={styles.leftNavBardCard}>
+                    <Image
+                        className={styles.navBarLogo}
+                        src="/dashboard/W W AI.svg"
+                        alt="Logo"
+                        loading="eager"
+                        width={19}
+                        height={69}
+                        priority
+                    />
 
-            <button
-                onClick={() => {
-                    StartLoader();
-                    router.push('/ielts');
-                }
-                }
-                className={styles.backButton}
-                aria-label="back button"
-            >
-                <IoMdArrowBack />
-            </button>
-            <button
-                onClick={handlePopOverOpen}
-                className={styles.menuButton}
-                aria-label="menu button"
-            >
-                <IoMdMenu />
-            </button>
-        </div>
+                    <Image
+                        className={styles.NavBaresponsiveLogo}
+                        src="/logo3.svg"
+                        alt="Logo"
+                        width={81}
+                        height={17}
+                        priority
+                        loading="eager"
+                    />
+
+                    <button
+                        onClick={() => {
+                            StartLoader();
+                            router.push('/ielts');
+                        }
+                        }
+                        className={styles.backButton}
+                        aria-label="back button"
+                    >
+                        <IoMdArrowBack />
+                    </button>
+
+                    <button
+                        onClick={handlePopOverOpen}
+                        className={styles.menuButton}
+                        aria-label="menu button"
+                    >
+                        <IoMdMenu />
+                    </button>
+                </div>
+        }
         <div className={styles.profileContainer}>
             {/* ------------------------------------------------------------------------desktop header */}
             <div className={'col-12 ' + styles.profileHeader}>

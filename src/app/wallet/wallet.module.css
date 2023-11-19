@@ -1,4 +1,5 @@
 .wallet {
+    /* height: 140vh !important; */
     height: 100vh !important;
     overflow: hidden !important;
     overflow-x: hidden !important;
@@ -41,6 +42,15 @@
     margin-bottom: 30px;
     padding: 0px;
 }
+
+/* .wallet ::-webkit-scrollbar {
+    display: none !important;
+}
+
+.wallet ::-webkit-scrollbar-thumb {
+    display: none !important;
+} */
+
 
 .walletContainer {
     height: 100%;
@@ -121,6 +131,7 @@
 .transactionTable {
     border-radius: 8px;
     backdrop-filter: blur(17px);
+    /* height: 88vh; */
     height: 48vh;
     flex-shrink: 0;
     width: max-content;
@@ -673,7 +684,6 @@
 @media(max-width: 500px) {
 
     .wallet {
-        height: fit-content !important;
         padding-top: 45px;
     }
 
@@ -855,7 +865,7 @@
     .tokenCard {
         background: linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%);
         filter: drop-shadow(3px 8px 60px rgba(0, 82, 147, 0.23));
-        height: 167px;
+        height: 20vh;
         padding-left: 40px;
         padding-right: 20px;
         font-size: 24px;
@@ -916,4 +926,9 @@
     .tableContent::-webkit-scrollbar-thumb {
         width: 6px;
     }
+
+    .transactionTable {
+        height: 70vh;
+    }
+
 }

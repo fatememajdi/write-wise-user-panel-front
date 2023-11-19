@@ -54,10 +54,16 @@ const SignIn: React.FC = () => {
             </div>
 
             <div className={'col-lg-5 col-md-5 ' + styles.signInrightContainer}>
-                <div className={styles.circle1} />
-                <div className={styles.circle2} />
-                <div className={styles.circle3} />
-                <div className={styles.circle4} />
+                <Image
+                    className={styles.rightBackground}
+                    src={"/signIn/background.svg"}
+                    alt="Logo"
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                    loading="eager"
+                    priority
+                />
             </div>
         </div>
     )

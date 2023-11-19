@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSession } from "next-auth/react";
 import { Modal } from 'antd';
@@ -44,7 +44,7 @@ const headerItems = [
 ];
 
 
-const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ logedIn, shadow }) => {
+const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: boolean }> = ({ logedIn, shadow, landing }) => {
 
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [showDrawer, setShowDrawer] = React.useState<boolean>(false);
@@ -52,9 +52,9 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
     const [packages, setPackages] = React.useState<Package[]>([]);
     const [disablePopup, setDisablePopup] = React.useState<boolean>(false);
     const [selectedDrawerItem, setSelectedDrawerItem] = React.useState<number>();
-    const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
+    const isMac = useMediaQuery({ query: "(max-width: 1680px)" });
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-
+    const pathname = usePathname();
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => setIsModalOpen(false);
 
@@ -106,16 +106,12 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
 
 
     if (typeof document != 'undefined')
-        window.addEventListener("wheel", function (e: any) {
-            if (!disablePopup)
-                if (e.deltaY > 0)
-                    changeShowPopup(true);
-                else if (e.deltaY)
-                    changeShowPopup(false);
+        window.addEventListener("scroll", function (e: any) {
+            if (!showPopup)
+                changeShowPopup(true);
         });
 
-    return (<div className={shadow || showPopup ? 'col-12 ' + styles.headerContainer + ' ' + styles.blackShadow :
-        'col-12 ' + styles.headerContainer + ' ' + styles.lightShadow}>
+    return (<div className={'col-12 ' + styles.headerContainer + ' ' + styles.blackShadow}>
         {/* ---------------------------------------------------------------------mobile header */}
         <div
             onClick={() => SetShowDrawer()}
@@ -135,19 +131,36 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
 
         <div className={'col-12 ' + styles.headerCard}>
             <div className={styles.headerItemsContainer}>
-                <Image
-                    className={styles.headerLogo}
-                    src="/logo.svg"
-                    alt="Logo"
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                    loading="eager"
-                    priority
-                />
+                {
+                    isMac ?
+                        <Image
+                            className={styles.headerLogo}
+                            src={"/logoIcon.svg"}
+                            alt="Logo"
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            loading="eager"
+                            priority
+                        />
+                        :
+                        <Image
+                            className={styles.headerLogo}
+                            src={"/logoWithIcon.svg"}
+                            alt="Logo"
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            loading="eager"
+                            priority
+                        />
+
+                }
                 {
                     headerItems.map(
-                        (item, index) => <Link href={item.route} key={index} className={styles.headerItem} onClick={handleScroll} >{item.title}</Link>)
+                        (item, index) => landing ? <Link href={item.route} key={index} className={styles.headerItem} onClick={handleScroll} >{item.title}</Link>
+                            : <Link href={'/' + item.route} key={index} className={styles.headerItem} onClick={() => router.push('/' + item.route)} >{item.title}</Link>
+                    )
                 }
                 {
                     logedIn ?
@@ -156,7 +169,6 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
                                 router.push('/ielts');
                                 StartLoader();
                             }}
-                            // href="https://dash.wwai.ai/"
                             className={styles.headerItem}>Dashboard</a>
                         :
                         <div onClick={() => {
@@ -171,7 +183,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
             {
                 showPopup && !disablePopup &&
                 <motion.div
-                    animate={{ height: showPopup ? isMac ? 49 : isMobile ? 54 : 66 : 0 }}
+                    animate={{ height: showPopup ? isMac ? 49 : isMobile ? 54 : 54 : 0 }}
                     transition={{ type: "spring", duration: 1 }}
                     className={styles.popup}>
                     <div className={styles.popupTitle}>Limited Time Offer!</div>
@@ -237,41 +249,63 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean }> = ({ loged
         >
             {
                 headerItems.map((item, index) => <p key={index} style={selectedDrawerItem === index ? { backgroundColor: '#172E4A' } : {}}>
-                    <Link href={item.route} onClick={() => {
-                        handleScroll;
-                        onCloseDrawer();
-                        setSelectedDrawerItem(index);
-                    }} >{item.title}</Link></p>)
+                    {landing ?
+                        <Link href={item.route} onClick={() => {
+                            handleScroll;
+                            onCloseDrawer();
+                            setSelectedDrawerItem(index);
+                        }} >{item.title}</Link>
+                        :
+                        <Link href={'/' + item.route} onClick={() => {
+                            router.push('/' + item.route);
+                            handleScroll;
+                            onCloseDrawer();
+                            setSelectedDrawerItem(index);
+                        }} >{item.title}</Link>
+                    }
+                </p>)
             }
             {
                 logedIn ?
                     <>
                         <p
+                            style={pathname === '/ielts' ? { backgroundColor: '#172E4A' } : {}}
                             onClick={() => {
                                 router.push('/ielts');
+                                setSelectedDrawerItem(4);
                                 StartLoader();
+                                onCloseDrawer();
                             }}
                             className={styles.headerItem}>Dashboard</p>
                         <p
+                            style={pathname === '/profile' ? { backgroundColor: '#172E4A' } : {}}
                             onClick={() => {
                                 router.push('/profile');
+                                setSelectedDrawerItem(5);
                                 StartLoader();
+                                onCloseDrawer();
                             }}
                             className={styles.headerItem}>Profile</p>
                         <p
+                            style={pathname === '/wallet' ? { backgroundColor: '#172E4A' } : {}}
                             onClick={() => {
                                 router.push('/wallet');
+                                setSelectedDrawerItem(6);
                                 StartLoader();
+                                onCloseDrawer();
                             }}
                             className={styles.headerItem}>Wallet</p>
                     </>
                     :
                     <p
+                        style={selectedDrawerItem === 7 ? { backgroundColor: '#172E4A' } : {}}
                         onClick={() => {
                             router.push('/signIn');
+                            setSelectedDrawerItem(6);
                             StartLoader();
                         }} className={styles.headerItem}>Signup</p>
             }
+
         </Drawer>
 
     </div >

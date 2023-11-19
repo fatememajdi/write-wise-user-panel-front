@@ -20,9 +20,9 @@ const Section8: React.FC = () => {
             </div>
 
             <div className={styles.cardDescription}>
-                Don't let IELTS writing hold you back from achieving your dreams. Join WriteWiseAI now and <br />
-                unlock a world of opportunity with our innovative, AI-powered platform. Elevate your writing skills,<br />
-                gain personalized insights, and conquer your IELTS test with confidence. Start your journey to IELTS <br />
+                Don't let IELTS writing hold you back from achieving your dreams. Join WriteWiseAI now and
+                unlock a world of opportunity with our innovative, AI-powered platform. Elevate your writing skills,
+                gain personalized insights, and conquer your IELTS test with confidence. Start your journey to IELTS
                 success today and take a step closer to a brighter future.
             </div>
             {/* <button

@@ -1,7 +1,7 @@
 .section6 {
     min-height: 100vh;
     background: linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%);
-    padding: 180px 180px 70px 100px;
+    padding: 120px 180px 70px 100px;
     display: flex;
     flex-direction: column;
 }
@@ -21,32 +21,14 @@
     font-weight: 400;
     line-height: 130%;
     margin-top: 18px;
+    max-width: 850px;
 }
 
 .mainContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-top: 32px;
-}
-
-.select {
-    min-width: 298px;
-    width: fit-content;
-    height: 42px;
-    display: flex;
-    margin-left: auto;
-    border-radius: 8px;
-    border: 1px solid var(--color-gray);
-    margin-top: 60px;
-}
-
-.selectItem {
-    color: var(--color-whiteText);
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    margin-top: 72px;
 }
 
 .loading {
@@ -87,7 +69,7 @@
 
 @media(max-width: 1680px) {
     .section6 {
-        padding: 150px 82px 70px 90px;
+        padding: 110px 82px 70px 90px;
     }
 
     .title {
@@ -102,24 +84,15 @@
         font-size: 20px;
         font-weight: 400;
         margin-left: 80px;
+        max-width: 700px;
         line-height: 26px;
     }
 
-    .select {
-        min-width: 222.678px;
-        width: fit-content;
-        height: 31.384px;
-    }
-
-
-    .selectItem {
-        font-size: 13px !important;
-    }
 }
 
 @media(max-width: 1440px) {
     .section6 {
-        padding: 150px 82px 70px 90px;
+        padding: 110px 82px 70px 90px;
     }
 
     .title {
@@ -135,16 +108,7 @@
         font-weight: 400;
         margin-left: 80px;
         line-height: 26px;
-    }
-
-    .select {
-        min-width: 222.678px;
-        width: fit-content;
-        height: 31.384px;
-    }
-
-    .selectItem {
-        font-size: 13px !important;
+        max-width: 700px;
     }
 
 }
@@ -169,18 +133,7 @@
         line-height: 130%;
         margin-left: 43px;
         margin-top: 32px;
-    }
-
-    .select {
-        margin-top: 40px;
-        margin-right: 43px;
-        min-width: 200px;
-        width: fit-content;
-    }
-
-    .selectItem {
-        font-size: 13px;
-        height: 25px !important;
+        max-width: 100%;
     }
 
     .mainContainer {
