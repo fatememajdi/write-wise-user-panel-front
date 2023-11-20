@@ -267,24 +267,9 @@
     margin-top: 5px;
 }
 
-.analusisButtonContainer {
+.titleLoading {
     display: flex;
-    align-self: flex-end;
-    margin-top: auto;
-}
-
-.analusisButton {
-    height: 48px;
-    width: 180px;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-whiteText);
-    text-align: center;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    border: solid 1px var(--color-whiteText);
+    margin-left: 8px;
 }
 
 @media(max-width: 1680px) {
@@ -351,26 +336,6 @@
 }
 
 @media(max-width: 500px) {
-
-    .analusisButton {
-        width: 108px;
-        height: 28px;
-        border-color: var(--color-seccondary);
-        color: #F3F3F3;
-        font-size: 15px;
-    }
-
-    .analusisButtonContainer {
-        width: 100%;
-        border-top: solid 1px var(--color-seccondary);
-        position: absolute;
-        right: 0px;
-        left: 0px;
-        bottom: 0px;
-        height: 53px;
-        align-items: center;
-        justify-content: center;
-    }
 
     .sliderContainer {
         margin-bottom: 63px;

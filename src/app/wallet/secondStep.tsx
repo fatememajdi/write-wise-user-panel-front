@@ -39,6 +39,7 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
     const [counter, changeCounter] = React.useState<number>(1);
     const [promotionCode, changePromotionCode] = React.useState<string>('');
     const [validpromotionCode, changeValidPromotionCode] = React.useState<boolean>(false);
+    const [typing, changeTyping] = React.useState<boolean>(false);
     const [sendPromotionCode, changeSendPromotionCode] = React.useState<boolean>(false);
     const [promotion, changePromotion] = React.useState<Promotion>();
     const [loading, setLoading] = React.useState<boolean>(false);
@@ -61,11 +62,13 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
             changeValidPromotionCode(true);
             changeSendPromotionCode(true);
             setLoading(false);
+            changeTyping(false);
         }).catch(async (err) => {
             console.log('validation promotion code error : ', err);
             await changePromotion(null);
             changeValidPromotionCode(false);
             changeSendPromotionCode(true);
+            changeTyping(false);
             setLoading(false);
         })
     }
@@ -136,6 +139,7 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
                                 className={sendPromotionCode && !validpromotionCode && styles.errorForm}
                                 type="text"
                                 onChange={(e) => {
+                                    changeTyping(true);
                                     changePromotionCode(e.target.value);
                                     changeSendPromotionCode(false);
                                 }}
@@ -181,7 +185,7 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
                     <span>{promotion ? promotion.amountAfterDiscount : pack.showingPriceWithDiscount}</span>
                 </div>
                 <button
-                    disabled={loading}
+                    disabled={loading || typing}
                     onClick={() => {
                         handleCancel();
                         CreatePaymentLink(pack.adjustableQuantity ? counter : 1, pack.id, pack.currency.toLowerCase(), pack.discountName !== '' ? pack.currencyName : promotionCode);

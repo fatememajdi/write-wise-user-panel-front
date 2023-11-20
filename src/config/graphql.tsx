@@ -306,3 +306,9 @@ query AfterPayment($id:String!){
   }
 }
 `;
+
+export const IS_FROM_IRAN = gql`
+query{
+  isFromIran
+}
+`;

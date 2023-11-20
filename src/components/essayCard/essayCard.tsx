@@ -64,7 +64,7 @@ type _props = {
     topic: string
 }
 
-const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, setEssaies, essaies, topic }) => {
+const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, topic }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
         [<EssayScore key={0} essay={essay} goTo={analysisStep} />,
@@ -90,6 +90,17 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
                         <span
                             style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
                         {!item.active && <Lock className={styles.lockIcon} />}
+                        {
+                            index === 1 && essay.overallBandScore === undefined ?
+                                <ReactLoading type={'spin'} color={'#98313E'} height={25} width={25} className={styles.titleLoading} />
+                                : index === 2 && essay.taskAchievementScore === undefined ?
+                                    <ReactLoading type={'spin'} color={'#98313E'} height={25} width={25} className={styles.titleLoading} />
+                                    : index === 3 && essay.essayInsights === undefined ?
+                                        <ReactLoading type={'spin'} color={'#98313E'} height={25} width={25} className={styles.titleLoading} />
+                                        : index === 4 && essay.essayRecommendations === undefined ?
+                                            <ReactLoading type={'spin'} color={'#98313E'} height={25} width={25} className={styles.titleLoading} />
+                                            : <></>
+                        }
                     </div>
                 )
             }
@@ -181,15 +192,6 @@ const EssayScore: React.FC<{ essay: Essay, goTo: any }> = ({ goTo, essay }) => {
             <div className={styles.sliderContainer}>
                 <Slider value={essay?.overallBandScore} total={9} />
             </div>
-        </div>
-        <div className={styles.analusisButtonContainer}>
-            <button
-                type="button"
-                aria-label="anausis button"
-                onClick={() => goTo(3)}
-                className={styles.analusisButton}>
-                Analysis
-            </button>
         </div>
     </div>
 };

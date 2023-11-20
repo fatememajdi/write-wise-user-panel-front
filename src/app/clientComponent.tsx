@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/inline-script-id */
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -9,8 +11,9 @@ import { Session } from "next-auth";
 import Head from 'next/head';
 import Script from 'next/script';
 import "@/styles/tailwind.css";
-import { Inter, Lato } from "next/font/google";
+import { Lato } from "next/font/google";
 import CookieConsent from '@/components/cookies/cookies';
+import { IS_FROM_IRAN } from '@/config/graphql';
 
 const lato = Lato({
     subsets: ["latin"],
@@ -26,6 +29,20 @@ export default function ClientComponent({
     pageProps: { session: Session },
     children: React.ReactNode,
 }) {
+
+    const [fromIran, setFromIran] = React.useState<boolean>(false);
+
+    async function CheckCountry() {
+        await client.query({
+            query: IS_FROM_IRAN,
+            fetchPolicy: "no-cache"
+        }).then(async (res) => {
+            setFromIran(res.data.isFromIran);
+        }).catch((err) => {
+            console.log("get county error : ", err);
+        });
+    };
+
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Blog',
@@ -33,6 +50,10 @@ export default function ClientComponent({
         // image: product.image,
         description: 'Ielts Writing Ai'
     };
+
+    React.useEffect(() => {
+        CheckCountry();
+    }, []);
 
     return (
         <SessionProvider session={pageProps?.session}>
@@ -71,7 +92,18 @@ export default function ClientComponent({
                })();
               `}
                             </Script>
-                            <div id='tawk' />
+                            {
+                                fromIran ?
+                                    <Script type="text/javascript">
+                                        {
+                                            `["keydown","touchmove","touchstart","mouseover"].forEach(function(v){window.addEventListener(v, function () { if (!window.isGoftinoAdded) { window.isGoftinoAdded = 1;
+                                             var i = "7aFKEK", d = document, g = d.createElement("script"), s = "https://www.goftino.com/widget/" + i, l = localStorage.getItem("goftino_" + i);
+                                              g.type = "text/javascript", g.async = !0, g.src = l ? s + "?o=" + l : s;
+                                               d.getElementsByTagName("head")[0].appendChild(g); } })});`}
+                                    </Script>
+                                    :
+                                    <div id='tawk' />
+                            }
                         </body>
 
                     </LocalizationProvider>
