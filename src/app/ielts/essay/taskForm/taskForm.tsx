@@ -6,6 +6,7 @@ import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Image from "next/image";
 import { useMediaQuery } from 'react-responsive';
+import ReactLoading from 'react-loading';
 import { AnimatePresence, motion } from 'framer-motion';
 
 //--------------------------------------styles
@@ -29,7 +30,7 @@ const EssayProcessBar = lazy(() => import("@/components/essayProcessBar/essayPro
 //--------------------------------------icons
 import { Reload } from "@/../public";
 import { IoMdImage } from 'react-icons/io';
-import { MdEdit } from 'react-icons/md';
+import { MdEdit, MdCheck } from 'react-icons/md';
 
 //--------------------------------------types
 import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../types/essay';
@@ -61,6 +62,9 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [essayTime, changeEssayTime] = React.useState<number>(0);
     const [changeInput, setChangeInput] = React.useState<boolean>(false);
+    const [topicLoading, setTopicLoading] = React.useState<boolean>(false);
+    const [addEssayLoading, setAddEssayLoading] = React.useState<boolean>(false);
+    const [typed, setTyped] = React.useState<boolean>(false);
     const [endTyping, changeEndTyping] = React.useState<boolean>(topic ? true : false);
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [essayLoading, changeEssayLoading] = React.useState<boolean>(false);
@@ -116,6 +120,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
     //------------------------------------------------------------------select essay topic
     async function SelectTopic(topic: string): Promise<string | null> {
+        setTopicLoading(true);
         let id: any;
         await client.mutate({
             mutation: SELECT_TOPIC,
@@ -140,13 +145,14 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             showModal();
             id = null;
         });
+        setTopicLoading(false);
         return id;
     };
 
     //-------------------------------------------------------------------add new essay
     async function AddNewEssay(Topic: string, body: string) {
-        changeEssayLoading(true);
-        changeLoading(true);
+        // changeEssayLoading(true);
+        // changeLoading(true);
         setChangeInput(false);
         let id: any;
 
@@ -166,6 +172,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 DivRef2.scrollIntoView({ behavior: "smooth" });
             }, 1400);
 
+            setAddEssayLoading(true);
             await client.mutate({
                 mutation: ADD_ESSAY,
                 variables: {
@@ -201,6 +208,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
                 }, ...essaies]);
                 changeCcurrentId(id);
+                setAddEssayLoading(false);
 
             }).catch(async (err) => {
                 await changeModalTitle('Add essay error');
@@ -208,6 +216,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 await changeModalContent(JSON.stringify(err.message));
                 changeLoading(false);
                 showModal();
+                setAddEssayLoading(false);
+
             })
         };
     };
@@ -353,7 +363,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
                             <div className={styles.wriritngTitle}>
                                 {type === 'general_task_1' ? 'Gen Task 1 Topic' : type === 'general_task_2' ? 'Gen Task 2 Topic' : ' Ac Task 1'}
-                                {topic && topic.subType ? `(${topic.subType})`
+                                {type !== 'general_task_1' && topic && topic.subType ? `(${topic.subType})`
                                     : generatedTopic ? `(${generatedTopic.subType})`
                                         : values.subType && `(${values.subType})`}
                             </div>
@@ -427,7 +437,9 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                         : type === 'general_task_2' ? styles.topicInputfirst + ' ' + styles.topicInput
                                                                             : styles.topicInputthird + ' ' + styles.topicInput}
                                                                     onChange={(e: any) => {
-                                                                        changeEndTyping(true);
+                                                                        changeEndTyping(false);
+                                                                        setChangeInput(false);
+                                                                        setTyped(true);
                                                                         handleChange(e);
                                                                         ChangeTempTopic(values.body, e.target.value);
                                                                     }}
@@ -466,17 +478,41 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                         </div>
 
                                                         {
-                                                            generateWriting &&
-                                                            <button
-                                                                aria-label="edit topic"
-                                                                type="button"
-                                                                onClick={() => {
-                                                                    changeEditedGeneratedTopic(true);
-                                                                    setFieldValue('topic', '');
-                                                                }}
-                                                                className={styles.editButton}>
-                                                                <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
-                                                            </button>
+                                                            generateWriting ?
+                                                                <button
+                                                                    aria-label="edit topic"
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        changeEditedGeneratedTopic(true);
+                                                                        changeEndTyping(false);
+                                                                        changeGenerateWriting(false);
+                                                                        setChangeInput(false);
+                                                                        changeGeneratedTopic(null);
+                                                                        setFieldValue('topic', '');
+                                                                    }}
+                                                                    className={styles.editButton}>
+                                                                    <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
+                                                                </button>
+                                                                : typed &&
+                                                                <button
+                                                                    aria-label="edit topic"
+                                                                    type="button"
+                                                                    onClick={async () => {
+                                                                        changeCcurrentId(await SelectTopic(values.topic));
+                                                                    }}
+                                                                    style={generatedTopic ? { backgroundColor: '#2E4057' } : { backgroundColor: '#d5d7db' }}
+                                                                    className={styles.checkButton}>
+                                                                    <div>
+                                                                        {
+                                                                            topicLoading ?
+                                                                                <ReactLoading type={'spin'} color={'#d5d7db'} height={25} width={25} className={styles.titleLoading} />
+                                                                                : generatedTopic ?
+                                                                                    <MdCheck className={styles.editIconResponsive} color="#d5d7db" style={{ fontSize: 40 }} />
+                                                                                    :
+                                                                                    <MdCheck className={styles.editIconResponsive} color="#2E4057" style={{ fontSize: 40 }} />
+                                                                        }
+                                                                    </div>
+                                                                </button>
                                                         }
 
                                                     </div>}
@@ -532,7 +568,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 }
                             </div>
 
-                            <div className={styles.bodyInputContainer}>
+                            <div className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}}>
                                 <Input
                                     disable={!endTyping}
                                     className={styles.topicInput + ' ' + styles.essayInput}
@@ -557,7 +593,12 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                     textarea_value={values.body}
                                     textarea_error={errors.body && touched.body && errors.body}
                                 />
-                                <EssayProcessBar type={type} changeInput={changeInput} />
+
+                                {
+                                    addEssayLoading ?
+                                        <ReactLoading type={'spin'} color={'#d5d7db'} height={25} width={25} className={styles.titleLoading} /> :
+                                        <EssayProcessBar type={type} changeInput={changeInput} />
+                                }
                             </div>
 
 

@@ -92,13 +92,14 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
                         {!item.active && <Lock className={styles.lockIcon} />}
                         {
                             index === 1 && essay.overallBandScore === undefined ?
-                                <ReactLoading type={'spin'} color={'#98313E'} height={25} width={25} className={styles.titleLoading} />
-                                : index === 2 && essay.taskAchievementScore === undefined ?
-                                    <ReactLoading type={'spin'} color={'#98313E'} height={25} width={25} className={styles.titleLoading} />
+                                <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
+                                : index === 2 && essay.taskAchievementSummery === undefined || essay.coherenceAndCohesionSummery === undefined ||
+                                    essay.grammaticalRangeAndAccuracySummery === undefined || essay.lexicalResourceSummery === undefined ?
+                                    <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
                                     : index === 3 && essay.essayInsights === undefined ?
-                                        <ReactLoading type={'spin'} color={'#98313E'} height={25} width={25} className={styles.titleLoading} />
+                                        <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
                                         : index === 4 && essay.essayRecommendations === undefined ?
-                                            <ReactLoading type={'spin'} color={'#98313E'} height={25} width={25} className={styles.titleLoading} />
+                                            <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
                                             : <></>
                         }
                     </div>

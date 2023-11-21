@@ -200,11 +200,29 @@
 }
 
 .editButton {
-    height: 70px;
-    width: 70px;
+    height: fit-content;
+    width: fit-content;
     position: absolute;
     bottom: 10px;
     right: 32%;
+    padding: 0px !important;
+    border-radius: 100% !important;
+}
+
+.editButton:hover {
+    box-shadow: none !important;
+}
+
+.checkButton {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    bottom: 10px;
+    right: 32%;
+    border-radius: 100% !important;
+    padding: 0px !important;
+    align-items: center;
+    justify-content: center;
 }
 
 .writingForm {
@@ -380,6 +398,7 @@
     width: fit-content;
     height: fit-content;
 }
+
 
 @media(max-width: 1440px) {
     .writingContainer {
