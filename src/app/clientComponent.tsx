@@ -85,7 +85,7 @@ export default function ClientComponent({
                (function(){
                var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
                s1.async=true;
-               s1.src='https://embed.tawk.to/6517b2cbe6bed319d0046a9c/1hbi94raq';
+               s1.src='https://embed.tawk.to/651990a910c0b257248765ee/1hbmfd0ck';
                s1.charset='UTF-8';
                s1.setAttribute('crossorigin','*');
                s0.parentNode.insertBefore(s1,s0);

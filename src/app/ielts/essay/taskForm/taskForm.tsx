@@ -319,7 +319,6 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             body: essay ? essay : '',
             subType: ''
         }}
-        // validationSchema={EssayValidationSchema}
         enableReinitialize
         onSubmit={async (values, { resetForm }) => {
             await AddNewEssay(values.topic, values.body);

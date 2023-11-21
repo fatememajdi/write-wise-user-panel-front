@@ -41,7 +41,7 @@ const Page: React.FC = () => {
     const [profile, setprofile] = React.useState<UserProfile>();
     const [loading, setLoading] = React.useState<boolean>(true);
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-    const [developer, setDeveloper] = React.useState<boolean>();
+    const [developer, setDeveloper] = React.useState<boolean>(true);
     const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
@@ -122,6 +122,8 @@ const Page: React.FC = () => {
         let dev = localStorage.getItem('devMode');
         if (dev)
             setDeveloper(JSON.parse(dev));
+        else
+            localStorage.setItem('devMode', JSON.stringify(true));
     }, []);
 
     function handleClose() {
