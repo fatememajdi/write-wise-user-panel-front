@@ -272,6 +272,37 @@
     margin-left: 8px;
 }
 
+.retryContainer {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.retryContainer button {
+    width: 180px;
+    height: 48px;
+    border-radius: 8px;
+    border: 2px solid #F3F3F3;
+    background: #F3F3F3;
+    padding: 0px !important;
+    color: #763646;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    margin-top: 64px;
+    align-items: center;
+    justify-content: center;
+}
+
 @media(max-width: 1680px) {
     .writingDataTabBarCard {
         height: 50px !important;

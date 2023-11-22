@@ -57,8 +57,11 @@ type _props = {
 const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
     let DivRef2: any;
-    if (typeof document !== 'undefined')
+    let DivRef3: any;
+    if (typeof document !== 'undefined') {
         DivRef2 = document.getElementById('scrollDiv');
+        DivRef3 = document.getElementById('essayScrollDiv');
+    }
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [essayTime, changeEssayTime] = React.useState<number>(0);
     const [changeInput, setChangeInput] = React.useState<boolean>(false);
@@ -138,6 +141,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 body: res.data.selectTopic.topic,
                 type: res.data.selectTopic.type
             });
+            DivRef3.scrollIntoView({ behavior: "smooth" });
         }).catch(async (err) => {
             await changeModalTitle('Select topic error');
             await changeModalContent(JSON.stringify(err.message));
@@ -505,7 +509,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                     <div>
                                                                         {
                                                                             topicLoading ?
-                                                                                <ReactLoading type={'spin'} color={'#d5d7db'} height={25} width={25} className={styles.titleLoading} />
+                                                                                <ReactLoading type={'spin'} color={'#d5d7db'} height={25} width={25} />
                                                                                 : generatedTopic ?
                                                                                     <MdCheck className={styles.editIconResponsive} color="#d5d7db" style={{ fontSize: 40 }} />
                                                                                     :
@@ -568,7 +572,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 }
                             </div>
 
-                            <div className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}}>
+                            <div className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
                                 <Input
                                     disable={!endTyping}
                                     className={styles.topicInput + ' ' + styles.essayInput}
@@ -594,11 +598,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                     textarea_error={errors.body && touched.body && errors.body}
                                 />
 
-                                {
-                                    addEssayLoading ?
-                                        <ReactLoading type={'spin'} color={'#d5d7db'} height={25} width={25} className={styles.titleLoading} /> :
-                                        <EssayProcessBar type={type} changeInput={changeInput} />
-                                }
+                                <EssayProcessBar type={type} changeInput={changeInput} loading={addEssayLoading} />
+
                             </div>
 
 
@@ -620,7 +621,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 key={0}
                             >
                                 {
-                                    essaies.map((essay) => <EssayCard key={essay.id} essay={essay} setFieldValue={setFieldValue}
+                                    essaies.map((essay) => <EssayCard key={essay.id} essay={essay} setFieldValue={setFieldValue} GetScores={GetScores}
                                         divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
                                 }
                             </InfiniteScroll>

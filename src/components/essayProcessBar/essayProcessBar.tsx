@@ -1,4 +1,5 @@
 import React, { lazy } from "react";
+import ReactLoading from 'react-loading';
 import { AnimatePresence, motion } from 'framer-motion';
 
 //--------------------------------styles 
@@ -9,10 +10,11 @@ const Timer = lazy(() => import("@/components/timer/timer"));
 
 type _props = {
     changeInput: boolean,
-    type: string
+    type: string,
+    loading: boolean
 };
 
-const EssayProcessBar: React.FC<_props> = ({ changeInput, type }) => {
+const EssayProcessBar: React.FC<_props> = ({ changeInput, type, loading }) => {
     const showAnimation = {
         hidden: {
             width: '100%',
@@ -36,13 +38,20 @@ const EssayProcessBar: React.FC<_props> = ({ changeInput, type }) => {
                     <Timer time={type === 'general_task_2' ? 2400 : 1200} />
                 </div>
             }
-            <button
-                type="submit"
-                className={styles.scoreButton}>
-                <div>
-                    Score
-                </div>
-            </button>
+            {
+                loading ?
+                    <div style={{ zIndex: 10 }}>
+                        <ReactLoading type={'spin'} color={'#FFF'} height={30} width={30} />
+                    </div>
+                    :
+                    <button
+                        type="submit"
+                        className={styles.scoreButton}>
+                        <div>
+                            Score
+                        </div>
+                    </button>
+            }
             <motion.div
                 animate={{ width: changeInput ? 0 : '100%' }}
                 transition={{ duration: type === 'general_task_2' ? 2400 : 1200 }}
