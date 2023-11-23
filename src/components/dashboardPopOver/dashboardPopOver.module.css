@@ -14,12 +14,12 @@
     flex-direction: row;
     align-items: center;
     color: #FFF;
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 28px;
-    padding: 20px 14px;
-    min-width: 270px;
+    padding: 15px 14px;
+    min-width: 230px;
     text-decoration: none !important;
     cursor: pointer;
 }
@@ -34,7 +34,7 @@
     font-weight: 500;
     line-height: 28px;
     padding: 20px 14px;
-    min-width: 270px;
+    min-width: 220px;
     text-decoration: none !important;
     cursor: pointer;
     border-top: solid 1px #626E7E;
@@ -42,7 +42,7 @@
 }
 
 .exitIcon {
-    font-size: 30px;
+    font-size: 25px;
     margin-right: 18px;
 }
 

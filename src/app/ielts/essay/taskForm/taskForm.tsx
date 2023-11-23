@@ -21,7 +21,7 @@ import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
 const Input = lazy(() => import('@/components/input/input'));
 const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
-import { CountWords } from "@/components/Untitled";
+import { CheckCountWords, CountWords } from "@/components/Untitled";
 const Text = lazy(() => import("@/components/text/text"));
 const SubTypeSelect = lazy(() => import("@/components/subTypeSelect/subTypeSelect"));
 const Writer = lazy(() => import("@/components/writer/writer"));
@@ -142,6 +142,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 body: res.data.selectTopic.topic,
                 type: res.data.selectTopic.type
             });
+            setAddEssayLoading(true);
             DivRef3.scrollIntoView({ behavior: "smooth" });
         }).catch(async (err) => {
             await changeModalTitle('Select topic error');
@@ -176,8 +177,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             setTimeout(() => {
                 DivRef2.scrollIntoView({ behavior: "smooth" });
             }, 1400);
+            await setAddEssayLoading(true);
 
-            setAddEssayLoading(true);
             await client.mutate({
                 mutation: ADD_ESSAY,
                 variables: {
@@ -368,9 +369,9 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
                             <div className={styles.wriritngTitle}>
                                 {type === 'general_task_1' ? 'Gen Task 1 Topic' : type === 'general_task_2' ? 'Gen Task 2 Topic' : ' Ac Task 1'}
-                                {type !== 'general_task_1' && topic && topic.subType ? `(${topic.subType})`
-                                    : generatedTopic ? `(${generatedTopic.subType})`
-                                        : values.subType && `(${values.subType})`}
+                                {type !== 'general_task_1' ? topic && topic.subType !== undefined && topic.subType !== '' ? `(${topic.subType})`
+                                    : generatedTopic && generatedTopic.subType !== undefined && generatedTopic.subType !== '' ? `(${generatedTopic.subType})`
+                                        : values.subType !== undefined && values.subType !== '' && `(${values.subType})` : ''}
                             </div>
 
                             <div className={styles.writingSecondTitle}>
@@ -496,7 +497,11 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                         setFieldValue('topic', '');
                                                                     }}
                                                                     className={styles.editButton}>
-                                                                    <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
+                                                                    <div>
+                                                                        {
+                                                                            topicLoading ?
+                                                                                <ReactLoading type={'spin'} color={'#2E4057'} height={28} width={28} /> :
+                                                                                <MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} />}</div>
                                                                 </button>
                                                                 : typed &&
                                                                 <button
@@ -575,7 +580,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
                             <div className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
                                 <Input
-                                    disable={!endTyping}
+                                    disable={!endTyping || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249)}
                                     className={styles.topicInput + ' ' + styles.essayInput}
                                     onChange={(e: any) => {
                                         if (nameregex.test(e.target.value) || e.nativeEvent.data === null || e.nativeEvent.inputType == 'insertLineBreak') {

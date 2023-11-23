@@ -30,7 +30,7 @@ export function CountWords(text: string, Words: number) {
     var words = splits.filter((x) => x.trim().length > 0);
     var count: any = words.length as number;
 
-    return <div style={{ fontSize: 20, fontWeight: 500, color: count < Words ? '#DA282E' : '#28B81B' }}>
+    return <div style={{ fontSize: 20, fontWeight: 500, color: count < Words ? '#DA282E' : Words === 250 && count > 300 ? '#DA282E' : Words === 150 && count > 220 ? '#DA282E' : '#28B81B' }}>
         {'words: ' + count}
         {/* {
             message ?
@@ -39,4 +39,14 @@ export function CountWords(text: string, Words: number) {
                 ' words'
         } */}
     </div>;
+};
+
+
+export function CheckCountWords(text: string, Words: number) {
+    var splits = text.split(/(\s+)/);
+    var splits = splits.filter(item => item != 'a' && item != 'A' && item != 'an' && item != 'An' && item != 'the' && item != 'The');
+    var words = splits.filter((x) => x.trim().length > 0);
+    var count: any = words.length as number;
+
+    return count <= Words;
 };
