@@ -8,6 +8,8 @@ import Loading from "@/components/loading/loading";
 const Slider = dynamic(() => import("@/components/slider/slider"));
 const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
 const Text = lazy(() => import("@/components/text/text"));
+const DialogComponent = lazy(() => import("@/components/dialog/dialog"));
+import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
 
 //--------------------------------------icons
 import { MdEdit } from 'react-icons/md';
@@ -21,10 +23,6 @@ import styles from './essayCard.module.css';
 
 //----------------------------------------------types
 import { Essay } from "../../../types/essay";
-
-//----------------------------------------------components
-const DialogComponent = lazy(() => import("@/components/dialog/dialog"));
-import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
 
 const tabBarItems = [
     {
@@ -64,26 +62,21 @@ type _props = {
     essaies: Essay[],
     topic: string,
     GetScores: any
-}
+};
 
-const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, topic, GetScores }) => {
-    const [refetch, setRefetch] = React.useState<boolean>(false);
+const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, topic, GetScores, essaies }) => {
+    const router = useRouter();
     async function Retry() {
-        setRefetch(true);
-        try {
-            await GetScores([essay]);
-        } finally {
-            setRefetch(false);
-        }
+        await GetScores(essaies, essay);
     };
     const [open, setOpen] = React.useState<boolean>(false);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
         [
-            <EssayScore key={0} essay={essay} goTo={analysisStep} GetScores={Retry} refetch={refetch} />,
+            <EssayScore key={0} essay={essay} goTo={analysisStep} GetScores={Retry} />,
             <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} topic={topic} />,
-            <EssayAnalysis key={2} essay={essay} GetScores={GetScores} refetch={refetch} />,
-            <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} GetScores={Retry} refetch={refetch} />,
-            <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} GetScores={Retry} refetch={refetch} />
+            <EssayAnalysis key={2} essay={essay} GetScores={Retry} />,
+            <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} GetScores={Retry} essay={essay} />,
+            <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} GetScores={Retry} />
         ]);
 
     function analysisStep() { goTo(2) };
@@ -105,7 +98,8 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
                         {
                             index === 1 ? essay.overallBandScore === undefined ?
                                 <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                : essay.overallBandScore <= 0 ?
+                                : essay.taskAchievementScore <= 0 || essay.coherenceAndCohesionScore <= 0
+                                    || essay.lexicalResourceScore <= 0 || essay.grammaticalRangeAndAccuracyScore <= 0 ?
                                     <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
 
                                 : index === 2 ? essay.taskAchievementSummery === undefined || essay.coherenceAndCohesionSummery === undefined ||
@@ -201,14 +195,20 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
         </div>
     };
 
-const EssayScore: React.FC<{ essay: Essay, goTo: any, GetScores: any, refetch: boolean }> = ({ goTo, essay, GetScores, refetch }) => {
+const EssayScore: React.FC<{ essay: Essay, goTo: any, GetScores: any }> = ({ goTo, essay, GetScores }) => {
 
-    return <div style={essay.overallBandScore <= 0 && !refetch ? { backgroundColor: "#763646" } : {}} className={styles.writingScoreCard}>
+    const [reloadStatus, setReloadStatus] = React.useState<boolean>(essay.taskAchievementScore <= 0 || essay.coherenceAndCohesionScore <= 0
+        || essay.lexicalResourceScore <= 0 || essay.grammaticalRangeAndAccuracyScore <= 0
+    )
+
+    return <div style={reloadStatus ? { padding: 0 } : {}} className={styles.writingScoreCard}>
         {
-            essay.overallBandScore === undefined || refetch ?
+            essay.overallBandScore === undefined ?
                 <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
-                : essay.overallBandScore <= 0 && !refetch ?
-                    <RetryCard GetScores={GetScores} />
+                : reloadStatus ?
+                    <>
+                        <RetryCard GetScores={GetScores} />
+                    </>
                     :
                     <>
                         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
@@ -229,15 +229,15 @@ const EssayScore: React.FC<{ essay: Essay, goTo: any, GetScores: any, refetch: b
     </div>
 };
 
-const EssayAnalysis: React.FC<{ essay: Essay, GetScores: any, refetch: boolean }> = ({ essay, GetScores, refetch }) => {
+const EssayAnalysis: React.FC<{ essay: Essay, GetScores: any }> = ({ essay, GetScores }) => {
     const [reloadStatus, setReloadStatus] = React.useState<boolean>(essay.taskAchievementSummery === '' || essay.coherenceAndCohesionSummery === ''
         || essay.lexicalResourceSummery === '' || essay.grammaticalRangeAndAccuracySummery === ''
     )
-    return <div style={reloadStatus && !refetch ? { backgroundColor: "#763646" } : {}} className={styles.writingScoreCard}>
+    return <div style={reloadStatus ? { padding: 0 } : {}} className={styles.writingScoreCard}>
         {
-            essay.taskAchievementSummery === undefined || refetch ?
+            essay.taskAchievementSummery === undefined ?
                 <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
-                : reloadStatus && !refetch ?
+                : reloadStatus ?
                     <RetryCard GetScores={GetScores} />
                     : <>
                         <div className={styles.writingScoreDate}>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</div>
@@ -255,6 +255,62 @@ const EssayAnalysis: React.FC<{ essay: Essay, GetScores: any, refetch: boolean }
 
 };
 
+const ScoreRecommendationCard: React.FC<{ recommendation: string, GetScores: any }> = ({ recommendation, GetScores }) => {
+    const [htmlString, setHtmlString] = React.useState(recommendation);
+
+    const createMarkup = () => {
+        return { __html: htmlString };
+    };
+
+    return (<div style={recommendation === '' ? { padding: 0 } : {}} className={styles.writingScoreCard}>
+        {
+            recommendation === '' ?
+                <RetryCard GetScores={GetScores} />
+                : recommendation === undefined ?
+                    <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
+                    : <div dangerouslySetInnerHTML={createMarkup()} />
+        }
+    </div>
+    );
+};
+
+const ScoreInsightsCard: React.FC<{ Insight: string, GetScores: any, essay: Essay }> = ({ Insight, GetScores, essay }) => {
+    const [htmlString, setHtmlString] = React.useState(Insight);
+    const createMarkup = () => {
+        return { __html: htmlString };
+    };
+
+    return (<div style={Insight === '' ? { padding: 0 } : {}} className={styles.writingScoreCard}>
+        {
+            Insight === '' ?
+                <RetryCard GetScores={GetScores} essay={essay} />
+                : Insight === undefined ?
+                    <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
+                    : <div dangerouslySetInnerHTML={createMarkup()} />
+        }
+    </div >
+    );
+};
+
+const RetryCard: React.FC<{ GetScores: any, essay?: Essay }> = ({ GetScores, essay }) => {
+    const [reload, setReload] = React.useState<boolean>(false);
+
+    return !reload ? <div className={styles.retryContainer}>
+        Sorry, something went wrong please try again !
+        <button
+            type="button"
+            onClick={async () => {
+                await setReload(true);
+                GetScores();
+            }}
+        >
+            Retry
+        </button>
+    </div>
+        :
+        <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
+};
+
 const ScoreCard: React.FC<{ title: string, score?: number }> = ({ title, score }) => {
     const [refetchLoading, setRefetchLoading] = React.useState<boolean>(false);
 
@@ -266,61 +322,12 @@ const ScoreCard: React.FC<{ title: string, score?: number }> = ({ title, score }
     return <div className={styles.writingScoreItemCard}>
         {title}:{score}
     </div>
-}
+};
 
 const ScoreSummeryCard: React.FC<{ title: string, summery?: string }> = ({ title, summery }) => {
     return <div className={styles.writingScoreSummeryItemCard}>
         {title}: <br /><span>
             {summery}
         </span>
-    </div>
-}
-
-const ScoreRecommendationCard: React.FC<{ recommendation: string, GetScores: any, refetch: boolean }>
-    = ({ recommendation, GetScores, refetch }) => {
-        const [htmlString, setHtmlString] = React.useState(recommendation);
-
-        const createMarkup = () => {
-            return { __html: htmlString };
-        };
-
-        return (<div style={recommendation === '' && !refetch ? { backgroundColor: "#763646" } : {}} className={styles.writingScoreCard}>
-            {recommendation === undefined || refetch ?
-                <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
-                : recommendation != '' ?
-                    <div dangerouslySetInnerHTML={createMarkup()} />
-                    : <RetryCard GetScores={GetScores} />
-            }
-        </div>
-        );
-    }
-
-const ScoreInsightsCard: React.FC<{ Insight: string, GetScores: any, refetch: boolean }>
-    = ({ Insight, GetScores, refetch }) => {
-        const [htmlString, setHtmlString] = React.useState(Insight);
-
-        const createMarkup = () => {
-            return { __html: htmlString };
-        };
-
-        return (<div style={Insight === '' && !refetch ? { backgroundColor: "#763646" } : {}} className={styles.writingScoreCard}>
-            {Insight === undefined || refetch ?
-                <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
-                : Insight != '' ?
-                    <div dangerouslySetInnerHTML={createMarkup()} />
-                    : <RetryCard GetScores={GetScores} />
-            }
-        </div >
-        );
-    }
-
-const RetryCard: React.FC<{ GetScores: any }> = ({ GetScores }) => {
-    return <div className={styles.retryContainer}>
-        Sorry, something went wrong please try again !
-        <button
-        // onClick={() => GetScores()}
-        >
-            Retry
-        </button>
     </div>
 };

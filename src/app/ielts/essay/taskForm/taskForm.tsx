@@ -81,6 +81,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
     const [showImage, changeShowImage] = React.useState<boolean>(false);
     const [modalImage, changeModalImage] = React.useState<string>();
+    const [topicError, changeTopicError] = React.useState<string>('');
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     const showModal = () => setIsModalOpen(true);
@@ -509,7 +510,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                     <div>
                                                                         {
                                                                             topicLoading ?
-                                                                                <ReactLoading type={'spin'} color={'#d5d7db'} height={25} width={25} />
+                                                                                <ReactLoading type={'spin'} color={'#2E4057'} height={28} width={28} />
                                                                                 : generatedTopic ?
                                                                                     <MdCheck className={styles.editIconResponsive} color="#d5d7db" style={{ fontSize: 40 }} />
                                                                                     :

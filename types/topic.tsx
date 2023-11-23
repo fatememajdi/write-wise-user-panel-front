@@ -1,5 +1,6 @@
 export type Topic = {
     id?: string,
+    shortId?: string,
     type?: string,
     topic?: string,
     shortName?: string,

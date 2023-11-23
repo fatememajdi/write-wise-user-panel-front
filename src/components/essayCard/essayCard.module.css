@@ -283,6 +283,9 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    background-color: #763646;
+    height: 100% !important;
+    width: 100% !important;
 }
 
 .retryContainer button {

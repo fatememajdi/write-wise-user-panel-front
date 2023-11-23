@@ -256,13 +256,13 @@ const Page: React.FC = () => {
         });
     };
 
-    async function GetScores(essaies: Essay[]) {
+    async function GetScores(essaies: Essay[], essay?: Essay) {
 
         let newEssay: Essay[] = essaies;
         client.mutate({
             mutation: SCORE_ESSAY,
             variables: {
-                id: newEssay[0].id,
+                id: essay ? essay.id : newEssay[0].id,
                 test: developer
             }
         }).then(async (res) => {
