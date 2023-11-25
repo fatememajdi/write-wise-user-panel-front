@@ -14,6 +14,7 @@ import "@/styles/tailwind.css";
 import { Lato } from "next/font/google";
 import CookieConsent from '@/components/cookies/cookies';
 import { IS_FROM_IRAN } from '@/config/graphql';
+import { Toaster } from 'react-hot-toast';
 
 const lato = Lato({
     subsets: ["latin"],
@@ -79,6 +80,8 @@ export default function ClientComponent({
                             className="antialiased text-gray-800 dark:bg-black dark:text-gray-400 mainContainer"
                         >
                             {children}
+                            <Toaster position='top-center' />
+
                             <Script id="tawk" strategy="lazyOnload">
                                 {`
                var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

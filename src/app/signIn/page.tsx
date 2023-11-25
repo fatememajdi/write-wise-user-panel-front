@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { useMutation } from "@apollo/react-hooks";
-import { Modal } from 'antd';
+import toast from "react-hot-toast";
 import { signIn } from 'next-auth/react';
 
 //---------------------------------------------------styles
@@ -139,17 +139,7 @@ const Step2: React.FC = () => {
     const router = useRouter();
     const [emailSignIn] = useMutation(EMAIL_SIGN_IN);
     const [loading, changeLoading] = React.useState<boolean>(false);
-    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-    const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
 
-
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
 
 
     const handleEmailSignIn = async (values: any) => {
@@ -166,9 +156,8 @@ const Step2: React.FC = () => {
             }, 9000);
         }
         ).catch(async (err) => {
-            await changeModalContent(JSON.stringify(err.message));
+            toast.error(err.message);
             changeLoading(false);
-            showModal();
         });
 
     };
@@ -257,11 +246,6 @@ const Step2: React.FC = () => {
                         By login, you agree to our <a>Terms of<br /> Service</a> and <a>Privacy Policy .</a>
                     </div>
 
-                    <Modal
-                        footer={null}
-                        title={'Sign up error'} open={isModalOpen} onCancel={handleCancel}>
-                        <div className={styles.modalCard}> {modalContent}</div>
-                    </Modal>
                 </form>
             )}
         </Formik>

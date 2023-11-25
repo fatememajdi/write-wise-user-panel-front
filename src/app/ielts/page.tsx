@@ -13,6 +13,7 @@ import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 import { Socket, io } from 'socket.io-client';
 import { DefaultEventsMap } from "@socket.io/component-emitter";
+import toast from "react-hot-toast";
 
 //-----------------------------------------------------styles
 import styles from './dashboard.module.css';
@@ -164,7 +165,7 @@ const Page: React.FC = () => {
             changeTopic(null);
             goTo(0);
         }).catch((err) => {
-            console.log("delete topic error : ", err);
+            toast.error(err.message);
         });
     };
 
@@ -181,12 +182,11 @@ const Page: React.FC = () => {
         }).then(async (res) => {
             if (res.data.getUserEssay.essaies.length != 0) {
                 await setEssaies([...essaies, ...res.data.getUserEssay.essaies]);
-                // changeEssayPage(essayPage + 1);
             } else {
                 changeMoreEssaies(false);
             }
         }).catch((err) => {
-            // console.log('get users essay error : ', err)
+            // toast.error(err.message);
         });
     };
 
@@ -207,12 +207,11 @@ const Page: React.FC = () => {
                 changeMoreTopics(false);
             }
         }).catch((err) => {
-            console.log("get user topics error : ", err);
+            toast.error(err.message);
         });
     };
 
     async function SelectType(type: string) {
-        // setType(type);
         changeTopicsLoading(true);
         await setTopicsType(type);
         changeMoreTopics(true);
@@ -227,7 +226,7 @@ const Page: React.FC = () => {
         }).then(async (res) => {
             await changeTopics(res.data.getUserTopics.userTopics);
         }).catch((err) => {
-            console.log("get user topics error : ", err);
+            toast.error(err.message);
         });
         changeTopicsLoading(false);
     };
@@ -252,7 +251,7 @@ const Page: React.FC = () => {
         }).then(async (res) => {
             setuserName(res.data.getUserProfile.firstName + ' ' + res.data.getUserProfile.lastName);
         }).catch((err) => {
-            console.log("get user profile error : ", err);
+            toast.error(err.message);
         });
     };
 
@@ -266,17 +265,19 @@ const Page: React.FC = () => {
                 test: developer
             }
         }).then(async (res) => {
-            console.log(res);
-        });
+        }).catch((err) => {
+            toast.error(err.message);
+        })
 
-        socket.on("newMessage", (data) => {
+        socket.on("newMessage", async (data) => {
             let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
             switch (data.part) {
                 case 'Insight': {
                     if (essay && !essay?.essayInsights) {
                         essay.essayInsights = data.data;
                         newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
+                        await setEssaies(newEssay);
+                        router.refresh();
                     }
                     break;
                 }
@@ -364,9 +365,12 @@ const Page: React.FC = () => {
             }
             if (essay) {
                 newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                setEssaies(newEssay);
+                await setEssaies(newEssay);
+                router.refresh();
+                return;
             }
             router.refresh();
+            return;
         });
 
     };
@@ -470,7 +474,7 @@ const Page: React.FC = () => {
                         changeMoreTopics(false);
                     }
                 }).catch((err) => {
-                    console.log("get user topics error : ", err);
+                    toast.error(err.message);
                 });
                 changeTopicsLoading(false);
             };

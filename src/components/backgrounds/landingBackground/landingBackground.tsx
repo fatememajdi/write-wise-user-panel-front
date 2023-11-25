@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 //-------------------------------------------styles
 import styles from './landingBackground.module.css';
@@ -19,7 +19,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
     return <div className={'col-12 ' + styles.landingBackground}>
         <LandingHeader logedIn={logedIn} landing />
         {children}
-    </div>
+    </div >
 };
 
 export default LandingBackground;

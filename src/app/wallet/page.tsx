@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from 'react-responsive';
 import InfiniteScroll from 'react-infinite-scroller';
+import toast from "react-hot-toast";
 
 //------------------------------------------styles 
 import styles from './wallet.module.css';
@@ -56,6 +57,8 @@ const Page: React.FC = () => {
         }).then((res) => {
             setCurrencies(res.data.getCurrencies);
             GetPackage(res.data.getCurrencies[0].code);
+        }).catch((err) => {
+            toast.error(err.message);
         })
     };
 
@@ -72,6 +75,8 @@ const Page: React.FC = () => {
         }).then((res) => {
             setPackages(res.data.getPackages);
             setLoading(false);
+        }).catch((err) => {
+            toast.error(err.message);
         })
     };
 
@@ -90,7 +95,7 @@ const Page: React.FC = () => {
             window.location = res.data.createPaymentLink.link;
             // setPageLoading(false);
         }).catch((err) => {
-            console.log("create payment link error : ", err);
+            toast.error(err.message);
             setPageLoading(false);
         });
     };

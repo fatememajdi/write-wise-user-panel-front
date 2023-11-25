@@ -6,11 +6,11 @@ import client from '@/config/applloAuthorizedClient';
 import uploadFileClient from "@/config/appolloUploadFileClient";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { Modal } from 'antd';
 import { useSession } from "next-auth/react";
 import { Switch } from 'antd';
 import { useMediaQuery } from 'react-responsive';
 import { signOut } from 'next-auth/react';
+import toast from "react-hot-toast";
 
 //-------------------------------------styles
 import styles from './profile.module.css';
@@ -40,9 +40,7 @@ const Page: React.FC = () => {
     const [open, setOpen] = React.useState<boolean>(false);
     const [profile, setprofile] = React.useState<UserProfile>();
     const [loading, setLoading] = React.useState<boolean>(true);
-    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [developer, setDeveloper] = React.useState<boolean>(true);
-    const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
         [<UserInformationCard user={profile} goTo={GoTo} />, <EditUserCard goTo={GoTo} UpdateProfile={UpdateProfile} user={profile} />]);
@@ -70,7 +68,7 @@ const Page: React.FC = () => {
             setprofile(res.data.getUserProfile);
             setLoading(false);
         }).catch((err) => {
-            console.log("get user profile error : ", err);
+            toast.error(err.message);
         });
     }
 
@@ -89,18 +87,9 @@ const Page: React.FC = () => {
             goTo(0);
             setLoading(false);
         }).catch(async (err) => {
-            await changeModalContent(JSON.stringify(err.message));
+            toast.error(err.message);
             setLoading(false);
-            showModal();
         });
-    }
-
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
     };
 
     async function UploadProfile() {
@@ -114,7 +103,7 @@ const Page: React.FC = () => {
         }).catch((err) => {
             console.log("update user profile error : ", err);
         });
-    }
+    };
 
     React.useEffect(() => {
         StopLoader();
@@ -277,11 +266,6 @@ const Page: React.FC = () => {
             <DialogComponent open={open} handleClose={handleClose} handleDelete={handleDelete}
                 title="Log out" dialog="Are you sure you want to log out?" deleteButton='Log out' />
 
-            <Modal
-                footer={null}
-                title={"Update profile error"} open={isModalOpen} onCancel={handleCancel}>
-                <div className={styles.modalCard}> {modalContent}</div>
-            </Modal>
         </div>
         <DashboardPopOver
             page='/profile' anchorEl={anchorEl}

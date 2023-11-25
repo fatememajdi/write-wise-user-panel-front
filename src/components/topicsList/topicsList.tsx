@@ -118,26 +118,28 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                     </span> */}
                                 </div>
                                 <div className={styles.taskCardScore}>
-                                    <span style={{ fontSize: 26 }}>
-                                        ?
-                                    </span>
-                                    <AiOutlineDelete className={styles.deleteIcon}
-                                        onClick={() => {
-                                            if (type === 'general_task_1') {
-                                                localStorage.removeItem('tempEssay');
-                                                localStorage.removeItem('lastTempEssay');
-                                                setTemp(null);
-                                            } else if (type === 'academic_task_1') {
-                                                localStorage.removeItem('tempEssay3');
-                                                localStorage.removeItem('lastTempEssay3');
-                                                setTemp(null);
-                                            } else {
-                                                localStorage.removeItem('tempEssay2');
-                                                localStorage.removeItem('lastTempEssay2');
-                                                setTemp(null);
-                                            }
-                                        }}
-                                    />
+                                    <div>
+                                        <span style={{ fontSize: 26 }}>
+                                            ?
+                                        </span>
+                                        <AiOutlineDelete className={styles.deleteIcon}
+                                            onClick={() => {
+                                                if (type === 'general_task_1') {
+                                                    localStorage.removeItem('tempEssay');
+                                                    localStorage.removeItem('lastTempEssay');
+                                                    setTemp(null);
+                                                } else if (type === 'academic_task_1') {
+                                                    localStorage.removeItem('tempEssay3');
+                                                    localStorage.removeItem('lastTempEssay3');
+                                                    setTemp(null);
+                                                } else {
+                                                    localStorage.removeItem('tempEssay2');
+                                                    localStorage.removeItem('lastTempEssay2');
+                                                    setTemp(null);
+                                                }
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         }
@@ -157,16 +159,21 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                         className={styles.taskCardTitle}>
                                         <h5>{item.shortName}</h5>
                                         <span>
-                                            {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}
+                                            {item.shortId}
                                         </span>
                                     </div>
                                     <div className={styles.taskCardScore}>
-                                        {item.overallBandScore}
-                                        <AiOutlineDelete className={styles.deleteIcon}
-                                            onClick={() => {
-                                                setOpen(true);
-                                                changeSelectedId(item.id);
-                                            }} />
+                                        <div>
+                                            {item.overallBandScore}
+                                            <AiOutlineDelete className={styles.deleteIcon}
+                                                onClick={() => {
+                                                    setOpen(true);
+                                                    changeSelectedId(item.id);
+                                                }} />
+                                        </div>
+                                        <span>
+                                            {new Intl.DateTimeFormat('en-US').format((new Date(item.createdAt)))}
+                                        </span>
                                     </div>
                                 </div>
 

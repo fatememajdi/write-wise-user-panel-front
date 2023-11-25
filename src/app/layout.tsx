@@ -20,6 +20,7 @@ import '../styles/global.css';
 import 'antd/dist/reset.css';
 import '../styles/nprogress.css'
 import ClientComponent from './clientComponent';
+import ErrorBoundary from '@/components/error/ErrorBoundary';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,7 +43,9 @@ export default function RootLayout({
 
   return (
     <ClientComponent pageProps={pageProps} >
-      <Providers>{children}</Providers>
+      <ErrorBoundary fallback='There was an error!'>
+        <Providers>{children}</Providers>
+      </ErrorBoundary>
     </ClientComponent>
   )
 }

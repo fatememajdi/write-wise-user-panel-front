@@ -105,6 +105,18 @@
     justify-content: center;
 }
 
+.taskTabButton:hover {
+    font-size: 19px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+
+.activeTaskTabButton:hover {
+    font-size: 19px;
+    font-weight: 600;
+    box-shadow: none !important;
+}
+
 .activeTaskTabButton {
     color: var(--color-whiteText);
     text-align: center;
@@ -400,6 +412,18 @@
         height: 38px !important;
     }
 
+    .taskTabButton:hover {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
+    }
+
+    .activeTaskTabButton:hover {
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: none !important;
+    }
+
     .taskTabsContainer {
         margin-top: 0px;
     }
@@ -477,6 +501,18 @@
     .taskTabButton {
         font-size: 12px;
         height: 38px !important;
+    }
+
+    .taskTabButton:hover {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
+    }
+
+    .activeTaskTabButton:hover {
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: none !important;
     }
 
     .taskTabsContainer {

@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useMediaQuery } from 'react-responsive';
 import ReactLoading from 'react-loading';
 import { AnimatePresence, motion } from 'framer-motion';
+import toast from "react-hot-toast";
 
 //--------------------------------------styles
 import styles from '../../../../styles/task.module.css';
@@ -75,17 +76,11 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
-    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-    const [modalContent, changeModalContent] = React.useState<string>('Try again!');
-    const [modalTitle, changeModalTitle] = React.useState<string>('Add essay error');
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
     const [showImage, changeShowImage] = React.useState<boolean>(false);
     const [modalImage, changeModalImage] = React.useState<string>();
-    const [topicError, changeTopicError] = React.useState<string>('');
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
-    const showModal = () => setIsModalOpen(true);
-    const handleCancel = () => setIsModalOpen(false);
     const handleCancelImageModal = () => changeShowImage(false);
 
     async function handleSelectImage(url: string) {
@@ -115,10 +110,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             ChangeTempTopic(essay, res.data.getRandomWriting.body, res.data.getRandomWriting.id);
             changeGenerateWritingTopicLoading(false);
         }).catch(async (err) => {
-            await changeModalTitle('Generate topic error');
-            await changeModalContent(JSON.stringify(err.message));
+            toast.error(err.message);
             changeGenerateWritingTopicLoading(false);
-            showModal();
         });
     };
 
@@ -145,10 +138,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             setAddEssayLoading(true);
             DivRef3.scrollIntoView({ behavior: "smooth" });
         }).catch(async (err) => {
-            await changeModalTitle('Select topic error');
-            await changeModalContent(JSON.stringify(err.message));
+            toast.error(err.message);
             changeLoading(false);
-            showModal();
             id = null;
         });
         setTopicLoading(false);
@@ -217,13 +208,9 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 setAddEssayLoading(false);
 
             }).catch(async (err) => {
-                await changeModalTitle('Add essay error');
-                console.log('add essay error : ', err);
-                await changeModalContent(JSON.stringify(err.message));
+                toast.error(err.message);
                 changeLoading(false);
-                showModal();
                 setAddEssayLoading(false);
-
             })
         };
     };
@@ -240,10 +227,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             changeDeleteLoading(false);
             setEssaies(essaies.filter(item => item.id !== id));
         }).catch(async (err) => {
-            await changeModalTitle('Delete essay error');
-            await changeModalContent(JSON.stringify(err.message));
+            toast.error(err.message);
             changeDeleteLoading(false);
-            showModal();
         });
     };
 
@@ -321,6 +306,11 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 changeMoreEssaies(false);
             }
         }
+    };
+
+    async function OnEditEssay() {
+        setChangeInput(true);
+        changeEssayTime(Date.now());
     };
 
     React.useEffect(() => {
@@ -591,9 +581,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                             handleChange(e);
                                             CreateTempEssay(e.target.value, values.topic);
                                         } else {
-                                            changeModalTitle('language error');
-                                            changeModalContent('only english letters');
-                                            showModal();
+                                            toast.error('only english letters!');
                                         }
                                     }}
                                     placeHolder={'Dear...'}
@@ -627,18 +615,12 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 key={0}
                             >
                                 {
-                                    essaies.map((essay) => <EssayCard key={essay.id} essay={essay} setFieldValue={setFieldValue} GetScores={GetScores}
+                                    essaies.map((essay) => <EssayCard key={essay.id} essay={essay} setFieldValue={setFieldValue} GetScores={GetScores} OnEditEssay={OnEditEssay}
                                         divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
                                 }
                             </InfiniteScroll>
                     }
                 </div>
-
-                <Modal
-                    footer={null}
-                    title={modalTitle} open={isModalOpen} onCancel={handleCancel}>
-                    <div className={styles.modalCard}> {modalContent}</div>
-                </Modal>
 
                 {
                     type === 'academic_task_1' &&

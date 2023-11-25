@@ -61,10 +61,11 @@ type _props = {
     setEssaies: any,
     essaies: Essay[],
     topic: string,
-    GetScores: any
+    GetScores: any,
+    OnEditEssay: any
 };
 
-const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, topic, GetScores, essaies }) => {
+const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, topic, GetScores, essaies, OnEditEssay }) => {
     const router = useRouter();
     async function Retry() {
         await GetScores(essaies, essay);
@@ -73,14 +74,14 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
     const { step, goTo, currentStepIndex } = useMultiStepForm(
         [
             <EssayScore key={0} essay={essay} goTo={analysisStep} GetScores={Retry} />,
-            <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} topic={topic} />,
+            <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} topic={topic} OnEditEssay={OnEditEssay} />,
             <EssayAnalysis key={2} essay={essay} GetScores={Retry} />,
-            <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} GetScores={Retry} essay={essay} />,
+            <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} GetScores={Retry} essay={essay} goTo={GoTo} />,
             <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} GetScores={Retry} />
         ]);
 
     function analysisStep() { goTo(2) };
-
+    function GoTo(index: number) { goTo(index) };
 
     return <div className={styles.writingDataCard}>
         <div className={styles.writingDataTabBarCard}>
@@ -154,8 +155,8 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
 
 export default EssayCard;
 
-const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any, divRef?: any, setOpen: any, topic: string }>
-    = ({ essay, setFieldValue, divRef, setOpen, topic }) => {
+const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any, divRef?: any, setOpen: any, topic: string, OnEditEssay: any }>
+    = ({ essay, setFieldValue, divRef, setOpen, topic, OnEditEssay }) => {
         return <div className={styles.writingEssayCard}>
 
             <div className={styles.writingTimeCard}>
@@ -182,6 +183,7 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
                 <button
                     onClick={() => {
                         setFieldValue('body', essay?.essay);
+                        OnEditEssay();
                         if (divRef)
                             divRef.scrollTop = divRef.offsetTop;
                     }}
@@ -274,26 +276,50 @@ const ScoreRecommendationCard: React.FC<{ recommendation: string, GetScores: any
     );
 };
 
-const ScoreInsightsCard: React.FC<{ Insight: string, GetScores: any, essay: Essay }> = ({ Insight, GetScores, essay }) => {
+const ScoreInsightsCard: React.FC<{ Insight: string, GetScores: any, essay: Essay, goTo: any }> = ({ Insight, GetScores, essay, goTo }) => {
     const [htmlString, setHtmlString] = React.useState(Insight);
     const createMarkup = () => {
         return { __html: htmlString };
     };
+    const router = useRouter();
 
-    return (<div style={Insight === '' ? { padding: 0 } : {}} className={styles.writingScoreCard}>
-        {
-            Insight === '' ?
-                <RetryCard GetScores={GetScores} essay={essay} />
-                : Insight === undefined ?
-                    <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
-                    : <div dangerouslySetInnerHTML={createMarkup()} />
-        }
-    </div >
-    );
+    // return (<div style={Insight === '' ? { padding: 0 } : {}} className={styles.writingScoreCard}>
+    //     {
+    //         Insight === '' ?
+    //             <RetryCard GetScores={GetScores} essay={essay} />
+    //             : Insight === undefined ?
+    //                 <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
+    //                 : <div dangerouslySetInnerHTML={createMarkup()} />
+    //     }
+    // </div >
+    // );
+
+    if (Insight === '') {
+        goTo(3);
+        return <div style={Insight === '' ? { padding: 0 } : {}} className={styles.writingScoreCard}>
+
+            <RetryCard GetScores={GetScores} essay={essay} />
+        </div >
+    }
+    else if (Insight === undefined) {
+        goTo(3);
+
+        return <div style={Insight === '' ? { padding: 0 } : {}} className={styles.writingScoreCard}>
+            <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
+        </div >
+    } else {
+        goTo(3);
+
+        return <div style={Insight === '' ? { padding: 0 } : {}} className={styles.writingScoreCard}>
+            <div dangerouslySetInnerHTML={createMarkup()} />
+        </div >
+    }
 };
 
 const RetryCard: React.FC<{ GetScores: any, essay?: Essay }> = ({ GetScores, essay }) => {
     const [reload, setReload] = React.useState<boolean>(false);
+
+    const router = useRouter();
 
     return !reload ? <div className={styles.retryContainer}>
         Sorry, something went wrong please try again !
@@ -301,7 +327,8 @@ const RetryCard: React.FC<{ GetScores: any, essay?: Essay }> = ({ GetScores, ess
             type="button"
             onClick={async () => {
                 await setReload(true);
-                GetScores();
+                await GetScores();
+
             }}
         >
             Retry

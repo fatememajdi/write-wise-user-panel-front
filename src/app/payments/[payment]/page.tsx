@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import client from '@/config/applloAuthorizedClient';
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 //--------------------------------------------------styles
 import styles from './paymentStatus.module.css';
@@ -42,9 +43,8 @@ const PaymentStatus: React.FC<pageProps> = ({ params, searchParams }) => {
             setPayment(res.data.afterPayment);
             setLoading(false);
         }).catch((err) => {
-            console.log("after payment error : ", err);
+            toast.error(err.message);
             setLoading(false);
-
         });
     };
 
@@ -61,9 +61,8 @@ const PaymentStatus: React.FC<pageProps> = ({ params, searchParams }) => {
             setLoading(false);
 
         }).catch((err) => {
-            console.log("get transaction reciept error : ", err);
+            toast.error(err.message);
             setLoading(false);
-
         });
     };
 

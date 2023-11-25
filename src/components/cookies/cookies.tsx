@@ -9,8 +9,8 @@ import styles from './cookies.module.css';
 const CookieConsent = (props) => {
     const [showConsent, setShowConsent] = React.useState(true);
     React.useEffect(() => {
-        console.log(getCookie("localConsent"))
-        setShowConsent(hasCookie("localConsent"));
+        // console.log(getCookie("localConsent"))
+        // setShowConsent(hasCookie("localConsent"));
     }, []);
     const acceptCookie = () => {
         setShowConsent(true);

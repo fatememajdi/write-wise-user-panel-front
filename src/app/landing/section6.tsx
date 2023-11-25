@@ -2,12 +2,11 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 import React from "react";
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import client from '@/config/applloAuthorizedClient';
 import dynamic from 'next/dynamic';
 import ReactLoading from 'react-loading';
 import { Carousel } from 'react-responsive-carousel';
+import toast from "react-hot-toast";
 
 //---------------------------------------------------styles
 import styles from './landingSection6.module.css';
@@ -42,6 +41,8 @@ const Section6: React.FC = () => {
         }).then((res) => {
             setPackages(res.data.getPackages);
             setLoading(false);
+        }).catch((err) => {
+            toast.error(err.message);
         })
     };
 

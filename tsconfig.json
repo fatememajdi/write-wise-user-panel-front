@@ -36,7 +36,7 @@
     "**/*.tsx",
     "**/*.js",
     ".next/types/**/*.ts"
-, "src/app/api/appleLogInNextAuth.js", "src/app/dashboard/Essay.js", "src/app/blogs/archive.js", "src/app/payments/[payment]", "src/app/providers.jsx"  ],
+, "src/app/api/appleLogInNextAuth.js", "src/app/dashboard/Essay.js", "src/app/blogs/archive.js", "src/app/payments/[payment]", "src/app/providers.jsx", "src/components/error/ErrorBoundary.jsx"  ],
   "exclude": [
     "node_modules"
   ]
