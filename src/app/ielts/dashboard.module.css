@@ -5,6 +5,7 @@
     overflow: hidden;
     font-style: normal;
     overflow-y: hidden;
+    background-color: var(--color-background);
 }
 
 .dashboardLeftCard {
