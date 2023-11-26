@@ -46,7 +46,6 @@ const Section3: React.FC = () => {
 
                 <div className={'col-lg-5 col-md-6 col-12 ' + styles.rightContainer}>
                     <FeaturesItemCard icon={isMobile ? <StarsMobile /> : <Stars />} title="AI-Powered Essay Rating" />
-                    <FeaturesItemCard icon={isMobile ? <FileMobile /> : <File />} title="AI-Driven Topic Generator" />
                     <FeaturesItemCard icon={isMobile ? <UserMobile /> : <User />} title="Personalized Feedback and Recommendations" />
                     <FeaturesItemCard icon={isMobile ? <RiseMobile /> : <Rise />} title="In-Depth Progress Tracking" />
                 </div>

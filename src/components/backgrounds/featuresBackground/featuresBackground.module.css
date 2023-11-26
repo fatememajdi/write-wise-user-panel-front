@@ -1,9 +1,9 @@
 .featuresBackground {
-    min-height: 100vh;
+    min-height: 95vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
     position: relative;
-    padding: 217px 156px 129px 156px;
+    padding: 217px 156px 129px 229px;
     background-color: #F3F3F3 !important;
     /* background-color: rgb(238, 237, 237) !important; */
 }

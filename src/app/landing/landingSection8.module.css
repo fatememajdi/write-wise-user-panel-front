@@ -1,54 +1,39 @@
 .section8Container {
-    min-height: 100vh;
+    min-height: 80vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
-    padding: 260px 380px 100px 380px;
+    padding: 200px 380px 0px 380px;
     width: 100vw;
-    background-image: url('/landing/section8-background.svg');
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
+    font-style: normal;
+    background-color: var(--color-background);
+    /* display: flex;
+    align-items: center; */
+    /* background-size: cover !important;
+    background-repeat: no-repeat !important; */
 }
 
 .section8Card {
     background: var(--color-background);
-    box-shadow: 0px 15px 30px 5px rgba(123, 123, 123, 0.15);
-    border-radius: 50px;
-    padding: 98px 153px 74px 153px;
     position: relative;
-}
-
-.section6Button {
-    color: var(--color-whiteText);
-    background-color: var(--color-red);
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 28px;
-    border-radius: 30px !important;
-    margin-top: 30px;
-    height: 48px;
-    width: 146px;
-    align-items: center;
-    justify-content: center;
-    padding: 0px !important;
 }
 
 .cardDescription {
     color: var(--color-blackText);
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 31.5px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 36px;
     letter-spacing: 0.4px;
     text-align: left;
-    margin-top: 30px;
+    font-family: var(--font-lato);
+    margin-top: 64px;
 }
 
 .cardTitle {
     color: var(--color-seccondary);
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 700;
+    font-size: 48px;
+    font-weight: 800;
     line-height: 28px;
+    font-family: var(--font-lato);
 }
 
 .cardTitle span {

@@ -2,12 +2,12 @@
     min-height: 100vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
-    background-image: url('/landing/section7-background.svg');
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
+    background-color: var(--color-background);
+    /* background-size: cover !important;
+    background-repeat: no-repeat !important; */
 }
 
-.section7 button:hover{
+.section7 button:hover {
     box-shadow: none !important;
 }
 
@@ -29,8 +29,9 @@
     color: var(--color-darkText);
     font-size: 24px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 40px;
+    font-family: var(--font-lato);
 }
 
 .itemCard span {
@@ -74,10 +75,11 @@
     color: var(--color-seccondary);
     font-size: 24px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 900;
     line-height: 24px;
     margin-top: 50px;
     padding: 0px;
+    font-family: var(--font-inter);
     align-items: center;
 }
 

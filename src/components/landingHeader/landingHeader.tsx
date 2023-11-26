@@ -54,7 +54,6 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
     const [selectedDrawerItem, setSelectedDrawerItem] = React.useState<number>();
     const isMac = useMediaQuery({ query: "(max-width: 1680px)" });
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-    const pathname = usePathname();
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => setIsModalOpen(false);
 
@@ -63,6 +62,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
             return;
         }
     });
+    const pathname = usePathname();
     const router = useRouter();
 
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -158,8 +158,8 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                 }
                 {
                     headerItems.map(
-                        (item, index) => landing ? <Link href={item.route} key={index} className={styles.headerItem} onClick={handleScroll} >{item.title}</Link>
-                            : <Link href={'/' + item.route} key={index} className={styles.headerItem} onClick={() => router.push('/' + item.route)} >{item.title}</Link>
+                        (item, index) => <Link className={styles.headerItem} onClick={() => { if (pathname === '/') handleScroll; else router.push('/' + item.route); handleScroll }}
+                        key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>
                     )
                 }
                 {
@@ -243,7 +243,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
             placement={'left'}
             closable={false}
             onClose={onCloseDrawer}
-            visible={showDrawer}
+            open={showDrawer}
             width={216}
             className={styles.drawer}
         >

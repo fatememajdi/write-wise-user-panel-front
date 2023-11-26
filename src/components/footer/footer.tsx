@@ -1,19 +1,21 @@
 'use client';
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 //----------------------------------------------------------------styles 
 import styles from './footer.module.css';
 
 //----------------------------------------------------------------icons
-import { BiLogoLinkedinSquare } from 'react-icons/bi';
-import { IoLogoFacebook } from 'react-icons/io';
+import { IoLogoFacebook, IoLogoLinkedin } from 'react-icons/io';
 import { AiFillInstagram } from 'react-icons/ai';
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 //----------------------------------------------------------------social media items
-const socialMediaItems = [
+const SocialMediaItems = [
     {
-        icon: <BiLogoLinkedinSquare />,
+        icon: <IoLogoLinkedin />,
         link: 'https://www.linkedin.com'
     },
     {
@@ -26,22 +28,101 @@ const socialMediaItems = [
     }
 ];
 
+const FooterLinks = [
+    {
+        title: 'Terms of Service',
+        route: '/termsOfService'
+    },
+    {
+        title: 'Privacy Policy ',
+        route: '/privacyPolicy'
+    },
+    {
+        title: 'Cookie Policy',
+        route: '/cookies'
+    },
+    {
+        title: 'Disclaimers',
+        route: ''
+    }
+];
+
+const LandingItems = [
+    {
+        title: 'Home',
+        route: '#home'
+    },
+    {
+        title: 'Features',
+        route: '#features'
+    },
+    {
+        title: 'How it works',
+        route: '#how-it-works'
+    },
+    {
+        title: 'Pricing',
+        route: '#pricing'
+    },
+    {
+        title: 'Signup',
+        route: '/singIn'
+    }
+];
+
 const Footer: React.FC = () => {
 
-    return <div className={'col-lg-12 ' + styles.footerContainer}>
-        <div className={styles.logo}>WriteWiseAI</div>
-        <div className={styles.firstLineItems}>
-            <Link
-                className={styles.link} href={'/termsOfService'}>Terms of Service</Link>
-            {/* <Link className={styles.link} href={'/'}>about us</Link> */}
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        e.preventDefault();
+        const targetId = e.currentTarget.href.replace(/.*\#/, "");
+        const elem = document.getElementById(targetId);
+        elem?.scrollIntoView({
+            behavior: "smooth",
+        });
+    };
+
+    const pathname = usePathname();
+    const router = useRouter();
+
+    return <div className={'col-12 ' + styles.footer}>
+
+        <div className={styles.leftCard}>
+            <div className={styles.logoContainer}>
+                <div className={styles.logoCard}>
+                    <Image
+                        className={styles.logo}
+                        src={"/logoIcon.svg"}
+                        alt="Logo"
+                        width="0"
+                        height="0"
+                        sizes="100vw"
+                        loading="eager"
+                        priority
+                    />
+                </div>
+                <span>WriteWiseAI</span>
+            </div>
+
+            <div className={styles.linksContainer}>
+                {
+                    FooterLinks.map((item, index) => <Link key={index} href={item.route}>{item.title}</Link>)
+                }
+            </div>
+
+            <div className={styles.name}>(C) WriteWiseAI 2023</div>
+
         </div>
 
-        <div className={styles.secondLineItems}>
-            <Link
-                className={styles.link} href={'/privacyPolicy'}>Privacy Policy</Link>
+        <div className={styles.rightCard}>
             {
-                socialMediaItems.map((item, index) => <a className={styles.socialIcon} href={item.link} key={index}>{item.icon}</a>)
+                LandingItems.map((item, index) => <Link onClick={() => { if (pathname === '/') handleScroll; else router.push('/' + item.route); handleScroll }}
+                    key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>)
             }
+            <div className={styles.socialMediaContainer}>
+                {
+                    SocialMediaItems.map((item, index) => <a key={index} href={item.link}>{item.icon}</a>)
+                }
+            </div>
         </div>
 
     </div>

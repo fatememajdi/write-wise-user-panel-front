@@ -44,7 +44,9 @@ export default function RootLayout({
   return (
     <ClientComponent pageProps={pageProps} >
       <ErrorBoundary fallback='There was an error!'>
-        <Providers>{children}</Providers>
+        {/* <Providers> */}
+        {children}
+        {/* </Providers> */}
       </ErrorBoundary>
     </ClientComponent>
   )

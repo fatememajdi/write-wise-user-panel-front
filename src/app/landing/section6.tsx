@@ -57,6 +57,9 @@ const Section6: React.FC = () => {
             best value for your IELTS writing needs.
         </div>
 
+
+        <div className={styles.subDescription}>Use of a VPN might change your regional currency!</div>
+
         <Carousel
             showThumbs={false}
             renderArrowPrev={(clickHandler: React.MouseEventHandler<HTMLDivElement> | undefined, hasPrev: any) => {
@@ -94,7 +97,7 @@ const Section6: React.FC = () => {
             showIndicators={false}
             thumbWidth={100}
             className={'col-12 ' + styles.mobileCarousel}>
-            {packages.filter(item => !item.isPopup).map(
+            {packages.map(
                 (item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
 
         </Carousel>
@@ -104,7 +107,7 @@ const Section6: React.FC = () => {
                 <ReactLoading className={styles.loading} type={'spin'} color={'#FFF'} height={50} width={50} />
                 :
                 <div className={'col-12 ' + styles.mainContainer}>
-                    {packages.filter(item => !item.isPopup).map(
+                    {packages.map(
                         (item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
                 </div>
         }

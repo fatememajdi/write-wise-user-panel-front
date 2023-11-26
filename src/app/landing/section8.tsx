@@ -6,9 +6,6 @@ import { useRouter } from 'next/navigation';
 //-------------------------------------------styles
 import styles from './landingSection8.module.css';
 
-//-------------------------------------------components
-import { StartLoader } from "@/components/Untitled";
-
 const Section8: React.FC = () => {
     const router = useRouter();
 
@@ -25,14 +22,6 @@ const Section8: React.FC = () => {
                 gain personalized insights, and conquer your IELTS test with confidence. Start your journey to IELTS
                 success today and take a step closer to a brighter future.
             </div>
-            {/* <button
-                aria-label="sign up button"
-                onClick={() => {
-                    router.push('/signIn');
-                    StartLoader();
-                }}
-                className={styles.section6Button}>Signup now!</button> */}
-
         </div>
     </div>
 }

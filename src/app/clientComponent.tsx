@@ -11,7 +11,7 @@ import { Session } from "next-auth";
 import Head from 'next/head';
 import Script from 'next/script';
 import "@/styles/tailwind.css";
-import { Lato } from "next/font/google";
+import { Lato, Roboto, Inter } from "next/font/google";
 import CookieConsent from '@/components/cookies/cookies';
 import { IS_FROM_IRAN } from '@/config/graphql';
 import { Toaster } from 'react-hot-toast';
@@ -19,6 +19,18 @@ import { Toaster } from 'react-hot-toast';
 const lato = Lato({
     subsets: ["latin"],
     variable: "--font-lato",
+    weight: '100'
+});
+
+const inter = Inter({
+    subsets: ["latin"],
+    variable: "--font-inter",
+    weight: '100'
+});
+
+const roboto = Roboto({
+    subsets: ["latin"],
+    variable: "--font-roboto",
     weight: '100'
 });
 
@@ -61,7 +73,7 @@ export default function ClientComponent({
             <ApolloProvider client={client}>
                 <html lang="en"
                     suppressHydrationWarning
-                    className={lato.className}
+                    className={lato.className + ' ' + inter.className + ' ' + roboto.className}
                 >
                     <title>Write Wise Ai</title>
 
@@ -77,7 +89,7 @@ export default function ClientComponent({
                     <LocalizationProvider dateAdapter={AdapterMoment}>
 
                         <body
-                            className="antialiased text-gray-800 dark:bg-black dark:text-gray-400 mainContainer"
+                        // className="antialiased text-gray-800 dark:bg-black dark:text-gray-400 mainContainer"
                         >
                             {children}
                             <Toaster position='top-center' />

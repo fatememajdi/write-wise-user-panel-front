@@ -3,7 +3,7 @@
     min-height: 100vh !important;
     width: 100vw;
     overflow-x: hidden;
-    padding: 250px 0px 0px 0px;
+    padding: 150px 0px 0px 0px;
     display: flex;
     flex-direction: column;
     height: fit-content;
@@ -15,8 +15,9 @@
     font-size: 48px;
     font-style: normal;
     font-weight: 800;
-    line-height: 62.4px;
+    line-height: 61.5px;
     margin-left: 234px;
+    font-family: var(--font-lato);
 }
 
 .description {
@@ -29,6 +30,7 @@
     margin-top: 48px;
     margin-bottom: 90px;
     max-width: 500px;
+    font-family: var(--font-lato);
 }
 
 .button {

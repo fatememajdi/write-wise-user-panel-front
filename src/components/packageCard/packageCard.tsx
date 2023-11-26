@@ -23,19 +23,24 @@ type _props = {
 }
 
 const PackageCard: React.FC<_props> = ({ pack, loading, style }) => {
-    return <div className={styles.packageContainer} style={{ ...style }}>
+    return <div className={styles.packageContainer} style={{ ...style, backgroundColor: pack.isPopup && '#F3F3F3' }}>
         {
-            pack.discountPercent > 0 &&
-            <div className={styles.discountCard} >
-                <span>%{pack.discountPercent}</span>
-                <span>Off</span>
-            </div>
+            pack.discountPercent > 0 ?
+                <div className={styles.discountCard} >
+                    <span>%{pack.discountPercent}</span>
+                    <span>Off</span>
+                </div>
+                : pack.isPopup &&
+                <div style={{ paddingRight: 5 }} className={styles.discountCard} >
+                    <span>Limited</span>
+                    <span>Offer</span>
+                </div>
         }
         {
             loading ?
                 <ReactLoading className={styles.loading} type={'bubbles'} color={'#172E4A'} height={50} width={50} />
                 :
-                <div className={styles.packageCard}>
+                <div style={pack.isPopup ? { backgroundColor: '#AB141D' } : {}} className={styles.packageCard}>
                     <div className={styles.packageCardTitle}>{pack.title}</div>
                     <div className={styles.packagePrice}>
                         {

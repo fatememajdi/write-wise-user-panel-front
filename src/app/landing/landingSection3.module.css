@@ -22,15 +22,16 @@
     display: flex;
     flex-direction: column;
     height: fit-content;
-    padding-left: 150px;
+    padding-right: 60px;
 }
 
 .leftTitle {
     color: var(--color-seccondary);
     font-size: 48px;
     font-style: normal;
-    font-weight: 700;
-    line-height: 138.023%;
+    font-weight: 800;
+    line-height: 68.4px;
+    font-family: var(--font-lato);
     letter-spacing: -0.16px;
 }
 
@@ -41,18 +42,20 @@
     font-weight: 400;
     line-height: 36px;
     margin-top: 40px;
+    font-family: var(--font-lato);
 }
 
 .featuresButton {
     color: var(--color-red);
     font-style: normal;
-    font-weight: 700;
+    font-weight: 900;
     line-height: 40px;
     font-size: 24px;
     display: flex;
     align-items: center;
     padding: 0px !important;
-    margin-top: 24px;
+    font-family: var(--font-lato);
+    margin-top: 54px;
 }
 
 .featuresItemCard {
@@ -87,6 +90,7 @@
 @media(max-width: 1680px) {
     .leftContainer {
         padding-left: 117px;
+        padding-right: 50px;
     }
 
     .leftTitle {
@@ -124,6 +128,7 @@
 
 @media(max-width: 1440px) {
     .leftContainer {
+        padding-right: 50px;
         padding-left: 117px;
     }
 
@@ -182,7 +187,7 @@
     }
 
     .leftContainer {
-        padding: 0px;
+        padding: 0px !important;
     }
 
     .leftTitle {
