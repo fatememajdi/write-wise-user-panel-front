@@ -2,134 +2,103 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 import React, { lazy } from "react";
-import { useRouter } from 'next/navigation';
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from 'framer-motion';
+import Image from "next/image";
 
 //------------------------------------------------styles
 import styles from './features.module.css';
 
 //------------------------------------------------components
-const FeaturesDetailsBackground = React.lazy(
-    () => import("@/components/backgrounds/featuresBackground/featuresBackground").then(module => ({ default: module.FeaturesDetailsBackground }))
-);
-const Footer = lazy(() => import("@/components/footer/footer"));
-import { StartLoader, StopLoader } from "@/components/Untitled";
+const LandingHeader = React.lazy(() => import("@/components/landingHeader/landingHeader"));
 
-//------------------------------------------------icons
-import { Step, User, File, Stars, RegularRise, Chat, Quality, Money } from '../../../public/icons';
+const Footer = lazy(() => import("@/components/footer/footer"));
+import { StopLoader } from "@/components/Untitled";
 
 const featuresItems = [
     {
-        icon: Stars,
-        title: 'AI-Powered Essay Rating',
-        description: ' text 1 Kickstart your IELTS success by signing up for a WriteWiseAI account. Once registered, choose your IELTS category - General or Academic - ensuring feedback tailored to specific IELTS criteria.'
+        icon: 'stars.svg',
+        title: 'AI-Powered Essay Rating and Analysis',
+        description: 'WriteWiseAI\'s AI-powered essay rating and analysis goes beyond basic grammar checks to emulate the nuanced evaluation of a human examiner. Leveraging the latest in AI technology, it scrutinizes essays for structural coherence, argument strength, vocabulary range, and task response. The system simulates an IELTS examiner\'s approach, providing a comprehensive assessment that prepares users for the actual exam conditions.'
     },
     {
-        icon: User,
-        title: 'Personalized Feedback and Recommendations',
-        description: 'Enhance your IELTS writing preparation with in-depth feedback tailored to your essays. Our system identifies areas for growth, providing insights and actionable steps to refine your English writing skills.'
+        icon: 'user.svg',
+        title: 'Human-Equivalent Precision in Rating',
+        description: 'WriteWiseAI offers a cutting-edge rating system meticulously calibrated to match the precision of a human rater, boasting an impressively minimal inter-rater difference of just 0.5. This exceptional accuracy is achieved by adhering to the most recent IELTS Organization assessment criteria, ensuring that users receive evaluations that are as close as possible to the actual IELTS scoring standards. With WriteWiseAI, students can trust in a rating system that mirrors the discernment and high standards of experienced IELTS examiners.'
     },
     {
-        icon: File,
-        title: 'AI-Driven Topic Generator',
-        description: 'Stay perpetually inspired with our topic generator, designed to offer a plethora of IELTS-relevant prompts, ensuring you are always ready for any exam topic.'
+        icon: 'user.svg',
+        title: 'Personalized Feedback, Insights and Recommendations',
+        description: 'Each user\'s writing is unique, and WriteWiseAI recognizes this by providing personalized feedback. It offers detailed insights into individual writing patterns, pinpointing strengths and areas for improvement. The platform generates customized recommendations to guide learners on how to refine their writing skills, enhance their style, and avoid common pitfalls, effectively making each learning experience as unique as the user\'s own writing.'
     },
     {
-        icon: Step,
-        title: 'Step-by-Step IELTS Writing Tutoring',
-        description: 'Transform your approach to IELTS essay writing with our WriteWiseAI Tutor. Receive real-time guidance and feedback as you craft your essay, focusing on structure, vocabulary, coherence, and argument depth, closely resembling the guidance of a personal tutor.'
+        icon: 'rise.svg',
+        title: 'In-Depth Smart Progress Tracking',
+        description: 'With WriteWiseAI, progress is quantifiable and insights are actionable. The platform\'s in-depth smart progress tracking feature allows users to see their improvements over time across various parameters such as lexical resource, grammatical range, and coherence.This intelligent tracking system helps learners identify trends in their learning, adjust their study focus, and maintain a clear path towards achieving their IELTS score goals.'
     },
     {
-        icon: RegularRise,
-        title: 'In-Depth Progress Tracking',
-        description: 'Visualize your IELTS learning growth. With our analytics dashboard, monitor improvements across essays, ensuring thorough preparation for the IELTS writing exam.'
+        icon: 'rise.svg',
+        title: 'Password less Signup/Login',
+        description: 'WriteWiseAI streamlines the start of your IELTS writing journey with a passwordless signup/login feature. This modern approach simplifies access, allowing users to set up their personal accounts quickly and securely without the hassle of remembering another password. Begin your IELTS writing preparation with ease and focus on what truly matters—your learning.'
     },
     {
-        icon: Chat,
-        title: 'Flexible Feedback Options',
-        description: 'Tailor your feedback experience, from detailed analyses to targeted recommendations. Our token system ensures this premium feature is both efficient and cost-effective.'
+        icon: 'money.svg',
+        title: 'Affordable Pricing',
+        description: 'WriteWiseAI\'s affordable pricing model is designed with the user\'s financial ease in mind. The pay-as-you-go system ensures you only invest in what you need, NO MONTHLY COMMITMENT needed! This flexible approach to pricing democratizes IELTS preparation, making it accessible to a broader range of learners.'
     },
     {
-        icon: Quality,
+        icon: 'quality.svg',
         title: 'Intuitive User Experience',
-        description: 'Navigate with ease. Our user-centric design, from the editor to the analytics dashboard, guarantees a seamless IELTS preparation experience.'
-    },
-    {
-        icon: Money,
-        title: 'Affordable Pricing and Token System',
-        description: 'Navigate with ease. Our user-centric design, from the editor to the analytics dashboard, guarantees a seamless IELTS preparation experience.'
-    },
+        description: 'The intuitive user experience at WriteWiseAI is at the heart of its design philosophy. The platform\'s interface is crafted to be user- centric, ensuring a seamless and straightforward experience throughout your IELTS preparation journey.Engage with your learning material effortlessly, with all the tools you need arranged logically and accessibly.'
+    }
 ];
 
 const Features: React.FC = () => {
-    const router = useRouter();
+    const [logedIn, changeLogedIn] = React.useState<boolean>(false);
+    const [selectedItem, changeSelectedItem] = React.useState<number>(-1);
 
     React.useEffect(() => {
+        const item = localStorage.getItem('user');
+        if (item)
+            changeLogedIn(true);
+        else
+            changeLogedIn(false);
         StopLoader();
-        router.refresh();
     }, []);
 
-    return <FeaturesDetailsBackground>
-        <div className={'col-12 ' + styles.featuresDetailsContent}>
-            <div className={'col-12 ' + styles.description}>
-                Embrace the power of WriteWiseAI and unlock your full potential in IELTS writing. With our innovative<br />
-                features and benefits, you'll be well-equipped to achieve your desired IELTS score and open the door to<br />
-                new opportunities:
-            </div>
-            <div className={'col-12 ' + styles.featuresItemsContainer}>
-                <AnimatePresence>
+    return <div className={'col-12 ' + styles.featuresContainer}>
+        <LandingHeader logedIn={logedIn} shadow />
+        <div className={'col-12 ' + styles.mainContainer}>
+            <AnimatePresence>
+                <div className={styles.leftCard}>
                     {
-                        featuresItems.map((item, index) => <FeaturesItemCard item={item} key={index} />)
+                        featuresItems.map((item, index) =>
+                            <motion.div key={index} onClick={() => changeSelectedItem(index)}
+                                animate={selectedItem === index ?
+                                    { color: '#2E4057', opacity: 1, marginLeft: 81, fontSize: 48 }
+                                    : { color: '#252525', opacity: 0.5, marginLeft: 0, fontSize: 32 }}
+                                transition={{ type: "spring", duration: 1 }}
+                                className={selectedItem === index ? styles.activeTitleCard + ' ' + styles.titleCard : styles.titleCard}>
+                                <Image
+                                    className={selectedItem === index ? styles.activeTitleIcon : styles.titleIcon}
+                                    src={"/features/" + item.icon}
+                                    alt="Logo"
+                                    width="0"
+                                    height="0"
+                                    sizes="100vw"
+                                    loading="eager"
+                                    priority
+                                />
+                                {item.title}
+                            </motion.div>)
                     }
-                </AnimatePresence>
-            </div>
-            <div className={'col-12 ' + styles.SignUpTitle}>
-                Sign up today and start your journey to IELTS writing mastery
-            </div>
-            <button
-                onClick={() => {
-                    router.push('/signIn');
-                    StartLoader();
-                }}
-                className={styles.signUpButton}>
-                Sign up
-            </button>
+                </div>
+                <div className={styles.rightCard}>
+                    {selectedItem !== -1 && featuresItems[selectedItem].description}
+                </div>
+            </AnimatePresence>
         </div>
         <Footer />
-    </FeaturesDetailsBackground>
+    </div>
 };
 
 export default Features;
-
-
-const FeaturesItemCard: React.FC<{ item: { icon: any, title: string, description: string } }> = ({ item }) => {
-
-    const [flipping, setFlipping] = React.useState<number>(0);
-
-    function changeCardState() {
-        if (flipping === 2) {
-            setFlipping(1);
-        } else {
-            setFlipping(flipping + 1);
-        }
-
-    }
-
-
-
-    return <div className={styles.itemCardFront}>
-        <div
-            // onClick={() => changeCardState()}
-            className={flipping === 1 ? styles.rotateCard + ' ' + styles.card
-                : flipping === 2 ? styles.rotateCard2 + ' ' + styles.card : styles.card}>
-
-            <div className={styles.cardFront}>
-                <item.icon color='#FFF' />
-                <span>{item.title}</span>
-            </div>
-
-            <div className={styles.cardBack}>{item.description}</div>
-
-        </div>
-    </div>
-};

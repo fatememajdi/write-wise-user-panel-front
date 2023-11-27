@@ -12,7 +12,7 @@ import { FeaturesBackground } from "@/components/backgrounds/featuresBackground/
 import { StartLoader } from "@/components/Untitled";
 
 //-------------------------------------------icons
-import { File, Stars, Rise, User, UserMobile, FileMobile, StarsMobile, RiseMobile } from "../../../public/icons";
+import {  Stars, Rise, User, UserMobile, StarsMobile, RiseMobile } from "../../../public/icons";
 import { IoIosArrowForward } from 'react-icons/io';
 
 const Section3: React.FC = () => {

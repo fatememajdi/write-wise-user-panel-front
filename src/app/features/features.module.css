@@ -1,261 +1,77 @@
-.featuresDetailsContainer {
+.featuresContainer {
     min-height: 100vh;
-    background-color: var(--color-background);
-    font-style: normal;
-}
-
-.featuresDetailsContent {
-    height: 100%;
-    padding: 200px 380px 203px 380px;
-}
-
-.description {
-    display: flex;
-    margin-right: auto;
-    margin-left: auto;
-    width: fit-content;
-    text-align: justify;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 127.523%;
-}
-
-.featuresItemsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    z-index: 1;
-    margin-top: 70px;
-    height: fit-content;
-}
-
-.SignUpTitle {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-secondGray);
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 40px;
-    margin-top: 116px;
-}
-
-.signUpButton {
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 49px;
-    background-color: var(--color-lightRed);
-    color: var(--color-whiteText);
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 40px;
-}
-
-.itemCardFront {
-    width: 569px;
-    height: 320px;
-    perspective: 1000px;
-    padding: 24px;
-}
-
-.card {
-    height: 100%;
-    width: 100%;
-    border-radius: 30px;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 1000ms;
-}
-
-.card:hover {
-    transform: rotateY(180deg);
-}
-
-.rotateCard {
-    transform: rotateY(180deg);
-}
-
-.rotateCard2 {
-    transform: rotateY(360deg);
-}
-
-.cardFront,
-.cardBack {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    border-radius: 30px;
-    cursor: pointer;
-}
-
-.cardFront {
-    background: var(--color-seccondary);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding-left: 140px;
-    padding-right: 122px;
-    color: var(--color-whiteText);
-    font-size: 24px;
+}
+
+.mainContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 140px 0px 130px 0px;
+    justify-content: space-between;
+}
+
+.leftCard {
+    display: flex;
+    flex-direction: column;
+    padding-left: 87px;
+    width: max-content !important;
+    max-width: 60%;
+    padding-right: 30px;
+}
+
+.titleIcon,
+.activeTitleIcon {
+    margin-right: 16px;
+}
+
+.titleIcon {
+    height: 50px;
+    width: 50px;
+}
+
+.activeTitleIcon {
+    height: 70px;
+    width: 70px;
+}
+
+.titleCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 64px;
+    cursor: pointer;
     font-weight: 600;
-    transform: rotateY(0deg);
+    font-family: var(--font-lato);
     line-height: 133.023%;
+    font-size: 32px;
+    width: fit-content;
+    padding-bottom: 8px;
 }
 
-.cardFront span {
-    margin-top: 24px;
+.titleCard:hover {
+    opacity: 1;
 }
 
-.cardBack {
+.activeTitleCard {
+    border-bottom: solid 1px var(--color-seccondary);
+    font-size: 48px !important;
+}
+
+.rightCard {
+    color: var(--color-blackText);
+    font-family: var(--font-lato);
     font-size: 24px;
     font-weight: 400;
-    line-height: 30px;
-    letter-spacing: -0.12px;
-    padding-left: 60px;
-    padding-right: 47px;
-    background: linear-gradient(180deg, rgba(46, 64, 87, 0.10) -40.94%, rgba(218, 40, 46, 0.01) 128.59%);
-    transform: rotateY(180deg);
+    line-height: 42.6px;
+    padding-right: 133px;
+    max-width: 40%;
 }
 
-@media(max-width: 1680px) {
-    .featuresDetailsContent {
-        padding: 200px 230px 50px 230px;
-    }
+@media(max-width: 1680px) {}
 
-    .description {
-        font-size: 20px;
-    }
+@media(max-width: 1440px) {}
 
-    .cardBack {
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 25px;
-        padding-left: 30px;
-        padding-right: 17px;
-    }
-
-    .cardFront {
-        padding-left: 40px;
-        padding-right: 22px;
-        font-size: 20px;
-        font-weight: 500;
-    }
-
-    .SignUpTitle {
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 20px;
-        margin-top: 70px;
-    }
-
-    .signUpButton {
-        margin-top: 40px;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 30px;
-        padding: 10px 20px;
-    }
-
-    .itemCardFront {
-        padding: 13px;
-    }
-
-}
-
-@media(max-width: 1440px) {
-    .featuresDetailsContent {
-        padding: 200px 130px 50px 130px;
-        align-items: center;
-    }
-
-    .description {
-        font-size: 20px;
-    }
-
-    .cardBack {
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 25px;
-        padding-left: 30px;
-        padding-right: 17px;
-    }
-
-    .cardFront {
-        padding-left: 40px;
-        padding-right: 22px;
-        font-size: 20px;
-        font-weight: 500;
-    }
-
-    .SignUpTitle {
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 20px;
-        margin-top: 70px;
-    }
-
-    .signUpButton {
-        margin-top: 40px;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 30px;
-        padding: 10px 20px;
-    }
-
-    .itemCardFront {
-        padding: 13px;
-    }
-
-}
-
-@media(max-width: 500px) {
-    .featuresDetailsContent {
-        padding: 90px 10px 50px 10px;
-    }
-
-    .description {
-        font-size: 16px;
-    }
-
-    .cardBack {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 20px;
-        padding-left: 30px;
-        padding-right: 17px;
-    }
-
-    .cardFront {
-        padding-left: 40px;
-        padding-right: 22px;
-        font-size: 16px;
-        font-weight: 500;
-    }
-
-    .SignUpTitle {
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 20px;
-        margin-top: 50px;
-    }
-
-    .signUpButton {
-        margin-top: 40px;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 30px;
-        padding: 10px 20px;
-    }
-
-    .itemCardFront {
-        width: 100%;
-        height: 260px;
-        padding: 10px;
-    }
-}
+@media(max-width: 500px) {}
