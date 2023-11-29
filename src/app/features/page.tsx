@@ -26,7 +26,7 @@ const featuresItems = [
         description: 'WriteWiseAI offers a cutting-edge rating system meticulously calibrated to match the precision of a human rater, boasting an impressively minimal inter-rater difference of just 0.5. This exceptional accuracy is achieved by adhering to the most recent IELTS Organization assessment criteria, ensuring that users receive evaluations that are as close as possible to the actual IELTS scoring standards. With WriteWiseAI, students can trust in a rating system that mirrors the discernment and high standards of experienced IELTS examiners.'
     },
     {
-        icon: 'user.svg',
+        icon: 'check.svg',
         title: 'Personalized Feedback, Insights and Recommendations',
         description: 'Each user\'s writing is unique, and WriteWiseAI recognizes this by providing personalized feedback. It offers detailed insights into individual writing patterns, pinpointing strengths and areas for improvement. The platform generates customized recommendations to guide learners on how to refine their writing skills, enhance their style, and avoid common pitfalls, effectively making each learning experience as unique as the user\'s own writing.'
     },
@@ -36,7 +36,7 @@ const featuresItems = [
         description: 'With WriteWiseAI, progress is quantifiable and insights are actionable. The platform\'s in-depth smart progress tracking feature allows users to see their improvements over time across various parameters such as lexical resource, grammatical range, and coherence.This intelligent tracking system helps learners identify trends in their learning, adjust their study focus, and maintain a clear path towards achieving their IELTS score goals.'
     },
     {
-        icon: 'rise.svg',
+        icon: 'lock.svg',
         title: 'Password less Signup/Login',
         description: 'WriteWiseAI streamlines the start of your IELTS writing journey with a passwordless signup/login feature. This modern approach simplifies access, allowing users to set up their personal accounts quickly and securely without the hassle of remembering another password. Begin your IELTS writing preparation with ease and focus on what truly matters—your learning.'
     },

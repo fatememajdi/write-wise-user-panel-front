@@ -25,7 +25,8 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    padding-left: 230px;
+    padding-left: 205px;
+    margin-right: auto;
 }
 
 .leftContainerBackground {
@@ -36,15 +37,33 @@
 }
 
 .rightContainerTitle {
-    font-feature-settings: 'ss04' on, 'ss03' on, 'ss02' on, 'ss01' on, 'salt' on;
     font-size: 82px;
     font-weight: 800;
-    line-height: 86.2px;
+    line-height: 96.2px;
     letter-spacing: -0.41px;
-    background: linear-gradient(91deg, #2E4057 -75.62%, #533346 -56.29%, #722838 -40.33%, #87212E -8.05%, #652C3D 35.85%, #4D3549 57.88%, #2E4057 85.71%);
+    color: var(--color-primary);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.animationText {
+    background: linear-gradient(89deg, #533346 0.23%, #722838 20.51%, #87212E 39.9%, #652C3D 59.26%, #4D3549 85.44%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-feature-settings: 'ss04' on, 'ss03' on, 'ss02' on, 'ss01' on, 'salt' on;
+    color: var(--color-primary);
+}
+
+.cursorStyle {
+    -webkit-text-fill-color: var(--color-primary);
+    animation: blinker 1.5s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
 }
 
 .rightContainerTitle span {
@@ -59,6 +78,7 @@
     font-weight: 400;
     line-height: 31.2px;
     text-transform: capitalize;
+    max-width: 85%;
 }
 
 .rightContainerDescription span {

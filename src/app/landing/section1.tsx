@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
+import Typewriter from 'typewriter-effect';
 
 //------------------------------------------------styles
 import styles from './landingSection1.module.css';
@@ -18,13 +19,23 @@ const Section1: React.FC = () => {
     return <LandingBackground>
         <section className={'col-12 ' + styles.section1Container} id="home">
 
-            <div className={'col-lg-7 col-md-7 col-12 ' + styles.rightContainer}>
+            <div className={'col-lg-9 col-md-9 col-12 ' + styles.rightContainer}>
                 <div className={styles.rightContainerTitle} >
                     <div> Achieve IELTS Writing Excellence with</div>
-                    <span> AI-Driven </span>
-                    Rating
-                </div>
+                    <span> AI-Driven &nbsp;</span>
+                    <div className={styles.animationText}>
+                        <Typewriter
+                            options={{
+                                strings: ['Rating', 'Analyse', 'Progress Tracking'],
+                                autoStart: true,
+                                loop: true,
+                                cursorClassName: styles.cursorStyle
+                            }}
 
+                        />
+                    </div>
+
+                </div>
 
                 <div className={styles.rightContainerDescription}>
                     <span>
@@ -44,7 +55,7 @@ const Section1: React.FC = () => {
 
             </div>
 
-            <div className={'col-lg-5 col-md-5 col-12 ' + styles.leftContainer}>
+            {/* <div className={'col-lg-5 col-md-5 col-12 ' + styles.leftContainer}>
                 <Image
                     className={'selectBack ' + styles.leftContainerBackground}
                     src="/landing/section1-mobile-background.svg"
@@ -78,7 +89,7 @@ const Section1: React.FC = () => {
                     />
                     <div className={styles.leftLogo}>WriteWiseAI</div>
                 </div>
-            </div>
+            </div> */}
 
         </section>
     </LandingBackground>

@@ -10,6 +10,10 @@
     width: auto !important;
 }
 
+.carousel .slide {
+    /* min-width: 33% !important; */
+}
+
 @media(max-width: 1440px) {
     .carousel .control-dots .dot {
         height: 12px !important;
