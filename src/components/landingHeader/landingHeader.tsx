@@ -123,8 +123,8 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
         });
 
     const variants = {
-        open: { backgroundColor: 'transparent', boxShadow: 'none'},
-        closed: { backgroundColor: '#FFF', boxShadow: "38px 4px 14.6px 0px rgba(0, 0, 0, 0.25)" },
+        open: { backgroundColor: 'transparent', boxShadow: 'none', height: isMac ? 100 : 130 },
+        closed: { backgroundColor: '#FFF', boxShadow: "38px 4px 14.6px 0px rgba(0, 0, 0, 0.25)", height: isMac ? 106 : 112 },
     }
 
     return (<AnimatePresence>

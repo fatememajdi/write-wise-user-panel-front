@@ -4,12 +4,7 @@ import { Carousel } from 'react-responsive-carousel';
 import UAParser from 'ua-parser-js'
 
 //-------------------------------styles
-import "react-multi-carousel/lib/styles.css";
 import styles from './landingSection2.module.css';
-
-//--------------------------------icons
-import { ArrowLeft, ArrowRight } from "../../../public/icons";
-import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 
 //--------------------------------data 
 const steps = [
@@ -41,23 +36,6 @@ const steps = [
 ];
 
 const Section2: React.FC = () => {
-
-    const getInitialProps = ({ req }) => {
-        let userAgent
-
-        if (req) {
-            userAgent = req.headers['user-agent']
-        } else {
-            userAgent = navigator.userAgent
-        }
-
-        const parser = new UAParser()
-        parser.setUA(userAgent)
-        const result = parser.getResult()
-        const deviceType = (result.device && result.device.type) || 'desktop'
-
-        return { deviceType }
-    };
 
     return <section className={styles.section2Container} id="how-it-works">
         <div className={styles.textContainer}>
@@ -107,6 +85,7 @@ const Section2: React.FC = () => {
                 //     );
                 // }}
                 autoPlay
+                interval={6000}
                 showStatus={false}
                 showArrows={false}
                 showIndicators={false}
