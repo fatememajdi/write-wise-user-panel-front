@@ -49,6 +49,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [showDrawer, setShowDrawer] = React.useState<boolean>(false);
     const [showPopup, changeShowPopup] = React.useState<boolean>(false);
+    const [topHeader, changeTopHeader] = React.useState<boolean>(landing);
     const [packages, setPackages] = React.useState<Package[]>([]);
     const [disablePopup, setDisablePopup] = React.useState<boolean>(false);
     const [selectedDrawerItem, setSelectedDrawerItem] = React.useState<number>();
@@ -104,6 +105,16 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
         GetPackage();
     }, []);
 
+    if (typeof document !== 'undefined')
+        window.addEventListener("scroll", function () {
+            if (document.documentElement.scrollTop <= 10) {
+                if (!topHeader && landing)
+                    changeTopHeader(true);
+            } else {
+                if (topHeader && landing)
+                    changeTopHeader(false);
+            }
+        });
 
     if (typeof document != 'undefined')
         window.addEventListener("scroll", function (e: any) {
@@ -111,75 +122,83 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                 changeShowPopup(true);
         });
 
-    return (<div className={'col-12 ' + styles.headerContainer + ' ' + styles.blackShadow}>
-        {/* ---------------------------------------------------------------------mobile header */}
-        <div
-            onClick={() => SetShowDrawer()}
-            className={styles.responsiveMenuIcon}>
-            <MdOutlineMenu />
-        </div>
+    const variants = {
+        open: { backgroundColor: 'transparent', boxShadow: 'none'},
+        closed: { backgroundColor: '#FFF', boxShadow: "38px 4px 14.6px 0px rgba(0, 0, 0, 0.25)" },
+    }
 
-        <Image
-            className={styles.responsiveLogo}
-            src="/logo3.svg"
-            alt="Logo"
-            width={81}
-            height={17}
-            priority
-            loading="eager"
-        />
-
-        <div className={'col-12 ' + styles.headerCard}>
-            <div className={styles.headerItemsContainer}>
-                {
-                    isMac ?
-                        <Image
-                            className={styles.headerLogo}
-                            src={"/logoIcon.svg"}
-                            alt="Logo"
-                            width="0"
-                            height="0"
-                            sizes="100vw"
-                            loading="eager"
-                            priority
-                        />
-                        :
-                        <Image
-                            className={styles.headerLogo}
-                            src={"/logoWithIcon.svg"}
-                            alt="Logo"
-                            width="0"
-                            height="0"
-                            sizes="100vw"
-                            loading="eager"
-                            priority
-                        />
-
-                }
-                {
-                    headerItems.map(
-                        (item, index) => <Link className={styles.headerItem} onClick={() => { if (pathname === '/') handleScroll; else router.push('/' + item.route); handleScroll }}
-                        key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>
-                    )
-                }
-                {
-                    logedIn ?
-                        <a
-                            onClick={() => {
-                                router.push('/ielts');
-                                StartLoader();
-                            }}
-                            className={styles.headerItem}>Dashboard</a>
-                        :
-                        <div onClick={() => {
-                            router.push('/signIn');
-                            StartLoader();
-                        }} className={styles.headerItem}>Signup</div>
-                }
-
+    return (<AnimatePresence>
+        <motion.nav
+            animate={topHeader ? 'open' : 'closed'}
+            variants={variants}
+            className={'col-12 ' + styles.headerContainer}>
+            {/* ---------------------------------------------------------------------mobile header */}
+            <div
+                onClick={() => SetShowDrawer()}
+                className={styles.responsiveMenuIcon}>
+                <MdOutlineMenu />
             </div>
-        </div>
-        <AnimatePresence>
+
+            <Image
+                className={styles.responsiveLogo}
+                src="/logo3.svg"
+                alt="Logo"
+                width={81}
+                height={17}
+                priority
+                loading="eager"
+            />
+
+            <div className={'col-12 ' + styles.headerCard}>
+                <div className={styles.headerItemsContainer}>
+                    {
+                        isMac ?
+                            <Image
+                                className={styles.headerLogo}
+                                src={"/logoIcon.svg"}
+                                alt="Logo"
+                                width="0"
+                                height="0"
+                                sizes="100vw"
+                                loading="eager"
+                                priority
+                            />
+                            :
+                            <Image
+                                className={styles.headerLogo}
+                                src={"/logoWithIcon.svg"}
+                                alt="Logo"
+                                width="0"
+                                height="0"
+                                sizes="100vw"
+                                loading="eager"
+                                priority
+                            />
+
+                    }
+                    {
+                        headerItems.map(
+                            (item, index) => <Link className={styles.headerItem} onClick={() => { if (pathname === '/') handleScroll; else router.push('/' + item.route); handleScroll }}
+                                key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>
+                        )
+                    }
+                    {
+                        logedIn ?
+                            <a
+                                onClick={() => {
+                                    router.push('/ielts');
+                                    StartLoader();
+                                }}
+                                className={styles.headerItem}>Dashboard</a>
+                            :
+                            <div onClick={() => {
+                                router.push('/signIn');
+                                StartLoader();
+                            }} className={styles.headerItem}>Signup</div>
+                    }
+
+                </div>
+            </div>
             {
                 showPopup && !disablePopup &&
                 <motion.div
@@ -202,113 +221,113 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     />
                 </motion.div>
             }
-        </AnimatePresence>
 
 
-        <Modal
-            style={{ top: 10 }}
-            footer={null}
-            open={isModalOpen}
-            onCancel={handleCancel}
-            width={isMac ? 500 : isMobile ? '100%' : 772}
-            className={styles.modalContainer}
-        >
+            <Modal
+                style={{ top: 10 }}
+                footer={null}
+                open={isModalOpen}
+                onCancel={handleCancel}
+                width={isMac ? 500 : isMobile ? '100%' : 772}
+                className={styles.modalContainer}
+            >
 
-            <div className={styles.modalCard}>
-                <Image
-                    className={styles.banner}
-                    src="/landing/banner.svg"
-                    alt="banner"
-                    width={isMac ? 278 : isMobile ? 178 : 478}
-                    height={isMac ? 114 : isMobile ? 54 : 314}
-                    priority
-                    loading="eager"
-                />
-                <div className={styles.bannerTitle}>
-                    Claim Your First Essay Assessment for Just {packages?.find(item => item.isPopup === true)?.showingPriceWithDiscount}
+                <div className={styles.modalCard}>
+                    <Image
+                        className={styles.banner}
+                        src="/landing/banner.svg"
+                        alt="banner"
+                        width={isMac ? 278 : isMobile ? 178 : 478}
+                        height={isMac ? 114 : isMobile ? 54 : 314}
+                        priority
+                        loading="eager"
+                    />
+                    <div className={styles.bannerTitle}>
+                        Claim Your First Essay Assessment for Just {packages?.find(item => item.isPopup === true)?.showingPriceWithDiscount}
+                    </div>
+                    <div className={styles.bannerDescription}>
+                        Unlock AI-driven personalized feedback, insights, and expert recommendations.
+                    </div>
+                    <button
+                        onClick={() => router.push('/signIn')}
+                        className={styles.bannerButton}>
+                        Start Now
+                    </button>
                 </div>
-                <div className={styles.bannerDescription}>
-                    Unlock AI-driven personalized feedback, insights, and expert recommendations.
-                </div>
-                <button
-                    onClick={() => router.push('/signIn')}
-                    className={styles.bannerButton}>
-                    Start Now
-                </button>
-            </div>
 
-        </Modal>
+            </Modal>
 
-        <Drawer
-            placement={'left'}
-            closable={false}
-            onClose={onCloseDrawer}
-            open={showDrawer}
-            width={216}
-            className={styles.drawer}
-        >
-            {
-                headerItems.map((item, index) => <p key={index} style={selectedDrawerItem === index ? { backgroundColor: '#172E4A' } : {}}>
-                    {landing ?
-                        <Link href={item.route} onClick={() => {
-                            handleScroll;
-                            onCloseDrawer();
-                            setSelectedDrawerItem(index);
-                        }} >{item.title}</Link>
+            <Drawer
+                placement={'left'}
+                closable={false}
+                onClose={onCloseDrawer}
+                open={showDrawer}
+                width={216}
+                className={styles.drawer}
+            >
+                {
+                    headerItems.map((item, index) => <p key={index} style={selectedDrawerItem === index ? { backgroundColor: '#172E4A' } : {}}>
+                        {landing ?
+                            <Link href={item.route} onClick={() => {
+                                handleScroll;
+                                onCloseDrawer();
+                                setSelectedDrawerItem(index);
+                            }} >{item.title}</Link>
+                            :
+                            <Link href={'/' + item.route} onClick={() => {
+                                router.push('/' + item.route);
+                                handleScroll;
+                                onCloseDrawer();
+                                setSelectedDrawerItem(index);
+                            }} >{item.title}</Link>
+                        }
+                    </p>)
+                }
+                {
+                    logedIn ?
+                        <>
+                            <p
+                                style={pathname === '/ielts' ? { backgroundColor: '#172E4A' } : {}}
+                                onClick={() => {
+                                    router.push('/ielts');
+                                    setSelectedDrawerItem(4);
+                                    StartLoader();
+                                    onCloseDrawer();
+                                }}
+                                className={styles.headerItem}>Dashboard</p>
+                            <p
+                                style={pathname === '/profile' ? { backgroundColor: '#172E4A' } : {}}
+                                onClick={() => {
+                                    router.push('/profile');
+                                    setSelectedDrawerItem(5);
+                                    StartLoader();
+                                    onCloseDrawer();
+                                }}
+                                className={styles.headerItem}>Profile</p>
+                            <p
+                                style={pathname === '/wallet' ? { backgroundColor: '#172E4A' } : {}}
+                                onClick={() => {
+                                    router.push('/wallet');
+                                    setSelectedDrawerItem(6);
+                                    StartLoader();
+                                    onCloseDrawer();
+                                }}
+                                className={styles.headerItem}>Wallet</p>
+                        </>
                         :
-                        <Link href={'/' + item.route} onClick={() => {
-                            router.push('/' + item.route);
-                            handleScroll;
-                            onCloseDrawer();
-                            setSelectedDrawerItem(index);
-                        }} >{item.title}</Link>
-                    }
-                </p>)
-            }
-            {
-                logedIn ?
-                    <>
                         <p
-                            style={pathname === '/ielts' ? { backgroundColor: '#172E4A' } : {}}
+                            style={selectedDrawerItem === 7 ? { backgroundColor: '#172E4A' } : {}}
                             onClick={() => {
-                                router.push('/ielts');
-                                setSelectedDrawerItem(4);
-                                StartLoader();
-                                onCloseDrawer();
-                            }}
-                            className={styles.headerItem}>Dashboard</p>
-                        <p
-                            style={pathname === '/profile' ? { backgroundColor: '#172E4A' } : {}}
-                            onClick={() => {
-                                router.push('/profile');
-                                setSelectedDrawerItem(5);
-                                StartLoader();
-                                onCloseDrawer();
-                            }}
-                            className={styles.headerItem}>Profile</p>
-                        <p
-                            style={pathname === '/wallet' ? { backgroundColor: '#172E4A' } : {}}
-                            onClick={() => {
-                                router.push('/wallet');
+                                router.push('/signIn');
                                 setSelectedDrawerItem(6);
                                 StartLoader();
-                                onCloseDrawer();
-                            }}
-                            className={styles.headerItem}>Wallet</p>
-                    </>
-                    :
-                    <p
-                        style={selectedDrawerItem === 7 ? { backgroundColor: '#172E4A' } : {}}
-                        onClick={() => {
-                            router.push('/signIn');
-                            setSelectedDrawerItem(6);
-                            StartLoader();
-                        }} className={styles.headerItem}>Signup</p>
-            }
+                            }} className={styles.headerItem}>Signup</p>
+                }
 
-        </Drawer>
+            </Drawer>
 
-    </div >
+        </motion.nav >
+    </AnimatePresence>
     )
 };
 

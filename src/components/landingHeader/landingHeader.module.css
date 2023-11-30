@@ -24,7 +24,7 @@
     top: 0px;
     height: 112px;
     z-index: 100 !important;
-    background-color: #F3F3F3;
+    /* background-color: transparent; */
     /* max-width: 1900px !important; */
     align-items: center;
 }

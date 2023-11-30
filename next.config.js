@@ -40,7 +40,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'ielts.api.babyyodas.io',
+        hostname: 'devapi.wwai.ai',
         port: '',
         // pathname: '/account123/**',
       },
