@@ -13,7 +13,8 @@ export type Essay = {
     overallBandScore?: number,
     durationMillisecond?: number,
     essayRecommendations?: any,
-    essayInsights?: any
+    essayInsights?: any,
+    shortId?:string
 };
 
 export type tempEssay = {

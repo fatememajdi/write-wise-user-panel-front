@@ -358,7 +358,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                             ]} selectedItem={0} className={styles.topSelect} />
 
                             <div className={styles.wriritngTitle}>
-                                {type === 'general_task_1' ? 'Gen Task 1 Topic' : type === 'general_task_2' ? 'Gen Task 2 Topic' : ' Ac Task 1'}
+                                {type === 'general_task_1' ? 'GT Task 1 Topic' : type === 'general_task_2' ? 'GT Task 2 Topic' : ' AC Task 1'}
                                 {type !== 'general_task_1' ? topic && topic.subType !== undefined && topic.subType !== '' ? `(${topic.subType})`
                                     : generatedTopic && generatedTopic.subType !== undefined && generatedTopic.subType !== '' ? `(${generatedTopic.subType})`
                                         : values.subType !== undefined && values.subType !== '' && `(${values.subType})` : ''}
@@ -400,7 +400,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                     handleChange(e);
                                                                     ChangeTempTopic(values.body, e.target.value);
                                                                 }}
-                                                                placeHolder="Type your topic here..."
+                                                                placeHolder="Please generate a topic!"
                                                                 secondError
                                                                 textarea
                                                                 textarea_name='topic'
@@ -434,91 +434,110 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                         </button>
                                                     </div>
 
-                                                    {
+                                                    {type !== 'academic_task_1' &&
                                                         generateWriting ?
-                                                            <button
-                                                                aria-label="edit topic"
-                                                                type="button"
-                                                                onClick={() => {
-                                                                    changeEditedGeneratedTopic(true);
-                                                                    changeEndTyping(false);
-                                                                    changeGenerateWriting(false);
-                                                                    setChangeInput(false);
-                                                                    changeGeneratedTopic(null);
-                                                                    setFieldValue('topic', '');
-                                                                }}
-                                                                className={styles.editButton}>
-                                                                <div>
-                                                                    {
-                                                                        topicLoading ?
-                                                                            <ReactLoading type={'spin'} color={'#2E4057'} height={28} width={28} /> :
-                                                                            <MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} />}</div>
-                                                            </button>
-                                                            : typed &&
-                                                            <button
-                                                                aria-label="edit topic"
-                                                                type="button"
-                                                                onClick={async () => {
-                                                                    changeCcurrentId(await SelectTopic(values.topic));
-                                                                }}
-                                                                style={generatedTopic ? { backgroundColor: '#2E4057' } : { backgroundColor: '#d5d7db' }}
-                                                                className={styles.checkButton}>
-                                                                <div>
-                                                                    {
-                                                                        topicLoading ?
-                                                                            <ReactLoading type={'spin'} color={'#2E4057'} height={28} width={28} />
-                                                                            : generatedTopic ?
-                                                                                <MdCheck className={styles.editIconResponsive} color="#d5d7db" style={{ fontSize: 40 }} />
-                                                                                :
-                                                                                <MdCheck className={styles.editIconResponsive} color="#2E4057" style={{ fontSize: 40 }} />
-                                                                    }
-                                                                </div>
-                                                            </button>
+                                                        <button
+                                                            aria-label="edit topic"
+                                                            type="button"
+                                                            onClick={() => {
+                                                                changeEditedGeneratedTopic(true);
+                                                                changeEndTyping(false);
+                                                                changeGenerateWriting(false);
+                                                                setChangeInput(false);
+                                                                changeGeneratedTopic(null);
+                                                                setFieldValue('topic', '');
+                                                            }}
+                                                            className={styles.editButton}>
+                                                            <div>
+                                                                {
+                                                                    topicLoading ?
+                                                                        <ReactLoading type={'spin'} color={'#2E4057'} height={28} width={28} /> :
+                                                                        <MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} />}</div>
+                                                        </button>
+                                                        : typed &&
+                                                        <button
+                                                            aria-label="edit topic"
+                                                            type="button"
+                                                            onClick={async () => {
+                                                                changeCcurrentId(await SelectTopic(values.topic));
+                                                            }}
+                                                            style={generatedTopic ? { backgroundColor: '#2E4057' } : { backgroundColor: '#d5d7db' }}
+                                                            className={styles.checkButton}>
+                                                            <div>
+                                                                {
+                                                                    topicLoading ?
+                                                                        <ReactLoading type={'spin'} color={'#2E4057'} height={28} width={28} />
+                                                                        : generatedTopic ?
+                                                                            <MdCheck className={styles.editIconResponsive} color="#d5d7db" style={{ fontSize: 40 }} />
+                                                                            :
+                                                                            <MdCheck className={styles.editIconResponsive} color="#2E4057" style={{ fontSize: 40 }} />
+                                                                }
+                                                            </div>
+                                                        </button>
                                                     }
 
                                                 </div>}
-                            {
-                                type === 'academic_task_1' &&
-                                <div className={styles.imagesContainer + ' col-12'}>
+                            <AnimatePresence>
+                                {
+                                    type === 'academic_task_1' &&
+                                    <div className={styles.imagesContainer + ' col-12'}>
 
-                                    {
-                                        topic && topic.visuals && topic.visuals?.length > 0 ?
-                                            topic.visuals.map((item, index) =>
-                                                <div
-                                                    key={index}
-                                                    onClick={() => handleSelectImage(item.url)}
-                                                    className={styles.imageCard}>
-                                                    <Image
-                                                        src={item.url}
-                                                        alt="academic task chart"
-                                                        height='428'
-                                                        width='600'
-                                                        loading="eager"
-                                                        priority
-                                                    />
-                                                </div>)
-                                            : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
-                                                generatedTopic.visuals.map((item, index) =>
+                                        {
+                                            topic && topic.visuals && topic.visuals?.length > 0 ?
+                                                topic.visuals.map((item, index) =>
                                                     <div
                                                         key={index}
                                                         onClick={() => handleSelectImage(item.url)}
                                                         className={styles.imageCard}>
-                                                        <Image
-                                                            key={index}
-                                                            src={item.url}
-                                                            alt="academic task chart"
-                                                            height='428'
-                                                            width='600'
-                                                            loading="eager"
-                                                            priority
-                                                        />
+                                                        <motion.div
+                                                            initial={{ filter: "blur(5px)" }}
+                                                            animate={{
+                                                                filter: "blur(0px)",
+                                                                transition: { type: "spring", duration: 3 }
+                                                            }}
+                                                        >
+                                                            <Image
+                                                                src={item.url}
+                                                                alt="academic task chart"
+                                                                height='428'
+                                                                width='600'
+                                                                loading="eager"
+                                                                priority
+                                                            />
+                                                        </motion.div>
                                                     </div>)
-                                                : <div className={styles.emptyImageCard}>
-                                                    <IoMdImage fontSize={70} />
-                                                </div>
-                                    }
-                                </div>
-                            }
+                                                : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
+                                                    generatedTopic.visuals.map((item, index) =>
+                                                        <div
+                                                            key={index}
+                                                            onClick={() => handleSelectImage(item.url)}
+                                                            className={styles.imageCard}>
+                                                            <motion.div
+                                                                initial={{ filter: "blur(5px)" }}
+                                                                animate={{
+                                                                    filter: "blur(0px)",
+                                                                    transition: { type: "spring", duration: 3 }
+                                                                }}
+                                                            >
+                                                                <Image
+                                                                    key={index}
+                                                                    src={item.url}
+                                                                    alt="academic task chart"
+                                                                    height='428'
+                                                                    width='600'
+                                                                    loading="eager"
+                                                                    priority
+                                                                />
+                                                            </motion.div>
+                                                        </div>)
+                                                    : <div className={styles.emptyImageCard}>
+                                                        <IoMdImage fontSize={70} />
+                                                    </div>
+                                        }
+                                    </div>
+                                }
+                            </AnimatePresence>
+
 
                             <div className={styles.writingInputTitle}>Write at least {type === 'general_task_2' ? 250 : 150} words.
                                 {
@@ -545,7 +564,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                             toast.error('only english letters!');
                                         }
                                     }}
-                                    placeHolder={'Dear...'}
+                                    placeHolder={type === 'general_task_1' ? 'Dear...' : 'Type your response here...'}
                                     secondError
                                     textarea
                                     textarea_name='body'
@@ -576,7 +595,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 key={0}
                             >
                                 {
-                                    essaies.map((essay) => <EssayCard key={essay.id} essay={essay} setFieldValue={setFieldValue} GetScores={GetScores} OnEditEssay={OnEditEssay}
+                                    essaies.map((essay) => <EssayCard type={type} key={essay.id} essay={essay} setFieldValue={setFieldValue} GetScores={GetScores} OnEditEssay={OnEditEssay}
                                         divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
                                 }
                             </InfiniteScroll>
@@ -602,7 +621,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
                 }
 
-            </form>
+            </form >
         )}
     </Formik >;
 };

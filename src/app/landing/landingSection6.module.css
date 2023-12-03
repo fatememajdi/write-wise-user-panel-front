@@ -1,7 +1,6 @@
 .section6 {
-    min-height: 100vh;
     background: linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%);
-    padding: 120px 160px 70px 130px;
+    padding: 120px 160px 132px 130px;
     display: flex;
     flex-direction: column;
 }

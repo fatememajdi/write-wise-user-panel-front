@@ -1,8 +1,7 @@
 import React from 'react';
 import { Session } from "next-auth";
 import "@/styles/tailwind.css";
-import { Providers } from "./providers";
-import { Inter, Lato } from "next/font/google";
+import Head from 'next/head';
 import type { Metadata } from 'next'
 
 //--------------------------------------------------------css
@@ -22,15 +21,13 @@ import '../styles/nprogress.css'
 import ClientComponent from './clientComponent';
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter"
-});
-
 export const metadata: Metadata = {
   title: 'Write Wise Ai',
   description: 'Ielts Writing Ai',
-  viewport: 'width=device-width, initial-scale=1'
+  viewport: 'viewport-fit=cover,width=device-width, initial-scale=1, maximum-scale=1',
+  icons: {
+    icon: '/logoIcon.svg'
+  }
 }
 
 export default function RootLayout({
@@ -44,9 +41,7 @@ export default function RootLayout({
   return (
     <ClientComponent pageProps={pageProps} >
       <ErrorBoundary fallback='There was an error!'>
-        {/* <Providers> */}
         {children}
-        {/* </Providers> */}
       </ErrorBoundary>
     </ClientComponent>
   )

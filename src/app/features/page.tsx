@@ -63,6 +63,11 @@ const Features: React.FC = () => {
         else
             changeLogedIn(false);
         StopLoader();
+
+        setTimeout(() => {
+            changeSelectedItem(0);
+        }, 1500);
+
     }, []);
 
     return <div className={'col-12 ' + styles.featuresContainer}>

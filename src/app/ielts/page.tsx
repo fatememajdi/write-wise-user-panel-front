@@ -39,29 +39,6 @@ import { FiMoreVertical } from 'react-icons/fi';
 import { Essay } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
 
-const tabBarItems = [
-    {
-        title: 'Essay',
-        active: true
-    },
-    {
-        title: 'Score',
-        active: true
-    },
-    {
-        title: 'Analysis',
-        active: true
-    },
-    {
-        title: 'Insights',
-        active: true
-    },
-    {
-        title: 'Recommendations',
-        active: true
-    },
-];
-
 type topic = {
     id: string,
     body: string,
@@ -115,6 +92,29 @@ const Page: React.FC = () => {
             essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type} essay={essay}
             changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
     ]);
+
+    const tabBarItems = [
+        {
+            title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay',
+            active: true
+        },
+        {
+            title: 'Score',
+            active: true
+        },
+        {
+            title: 'Analysis',
+            active: true
+        },
+        {
+            title: 'Insights',
+            active: true
+        },
+        {
+            title: 'Recommendations',
+            active: true
+        },
+    ];
 
     async function ChangeType(type: string) {
         if (!socket)
@@ -564,13 +564,13 @@ const Page: React.FC = () => {
                                             aria-label="general task1 button"
                                             onClick={() => SelectType('general_task_1')}
                                             className={topicsType === 'general_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
-                                            Gen Task 1</button>
+                                            GT Task 1</button>
 
                                         <button
                                             aria-label="academic task1 button"
                                             onClick={() => SelectType('academic_task_1')}
                                             className={topicsType === 'academic_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
-                                            Ac Task 1</button>
+                                            AC Task 1</button>
 
                                         <button
                                             aria-label="task2 button"

@@ -2,7 +2,7 @@
 'use client';
 import React from "react";
 import { useRouter } from 'next/navigation';
-import Image from "next/image";
+import dynamic from 'next/dynamic';
 import Typewriter from 'typewriter-effect';
 
 //------------------------------------------------styles
@@ -10,7 +10,7 @@ import styles from './landingSection1.module.css';
 import '../../styles/global.css';
 
 //------------------------------------------------componnets
-import LandingBackground from "@/components/backgrounds/landingBackground/landingBackground";
+const LandingBackground = dynamic(() => import("@/components/backgrounds/landingBackground/landingBackground"));
 import { StartLoader } from "@/components/Untitled";
 
 const Section1: React.FC = () => {
@@ -26,7 +26,7 @@ const Section1: React.FC = () => {
                     <div className={styles.animationText}>
                         <Typewriter
                             options={{
-                                strings: ['Rating', 'Analyse', 'Progress Tracking'],
+                                strings: ['Rating', 'Analysis', 'Progress Tracking'],
                                 autoStart: true,
                                 loop: true,
                                 cursorClassName: styles.cursorStyle

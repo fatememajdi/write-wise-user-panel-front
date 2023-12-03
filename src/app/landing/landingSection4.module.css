@@ -1,7 +1,5 @@
 .section4Container {
     background: linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%);
-    min-height: 100vh !important;
-    width: 100vw;
     overflow-x: hidden;
     padding: 150px 0px 0px 0px;
     display: flex;

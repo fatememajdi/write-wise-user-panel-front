@@ -67,11 +67,13 @@ body {
   margin: auto !important;
   color: var(--color-blackText);
   zoom: 1 !important;
+  max-width: 1920px !important;
+  max-height: 1080px !important;
 }
 
 ::-webkit-scrollbar {
   width: 8px !important;
-  background-color: transparent;
+  background-color: transparent !important;
   border-radius: 33px;
 }
 

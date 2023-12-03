@@ -1,7 +1,6 @@
 .dashboardContainer {
     display: flex;
     flex-direction: row;
-    height: 100vh !important;
     overflow: hidden;
     font-style: normal;
     overflow-y: hidden;
@@ -12,7 +11,7 @@
     background-color: var(--color-seccondary);
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
 }
 
 .logo {

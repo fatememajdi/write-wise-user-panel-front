@@ -72,7 +72,8 @@ query GetUserEssay($id:String!, $page:Float!, $pageSize:Float!){
       overallBandScore,
       durationMillisecond,
       essayRecommendations,
-      essayInsights
+      essayInsights,
+      shortId
     }
   }
 }

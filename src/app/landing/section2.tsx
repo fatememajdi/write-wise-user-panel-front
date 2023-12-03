@@ -1,7 +1,6 @@
 'use client';
 import React from "react";
 import { Carousel } from 'react-responsive-carousel';
-import UAParser from 'ua-parser-js'
 
 //-------------------------------styles
 import styles from './landingSection2.module.css';

@@ -103,6 +103,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
     React.useEffect(() => {
         GetPackage();
+        handleScroll
     }, []);
 
     if (typeof document !== 'undefined')
@@ -124,7 +125,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
     const variants = {
         open: { backgroundColor: 'transparent', boxShadow: 'none', height: isMac ? 100 : 130 },
-        closed: { backgroundColor: '#FFF', boxShadow: "38px 4px 14.6px 0px rgba(0, 0, 0, 0.25)", height: isMac ? 106 : 112 },
+        closed: { backgroundColor: '#FFF', boxShadow: "0px 4px 14.6px 0px rgba(0, 0, 0, 0.25)", height: isMac ? 106 : 112 },
     }
 
     return (<AnimatePresence>
@@ -178,7 +179,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     }
                     {
                         headerItems.map(
-                            (item, index) => <Link className={styles.headerItem} onClick={() => { if (pathname === '/') handleScroll; else router.push('/' + item.route); handleScroll }}
+                            (item, index) => <Link className={styles.headerItem} onClick={() => { if (pathname === '/') handleScroll; else router.back; handleScroll }}
                                 key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>
                         )
                     }

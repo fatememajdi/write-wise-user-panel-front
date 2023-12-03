@@ -57,10 +57,10 @@ export default function ClientComponent({
     };
 
     const jsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'Blog',
+        // '@context': 'https://schema.org',
+        // '@type': 'Blog',
         name: 'Write Wise Ai',
-        // image: product.image,
+        image: '/logoIcon.svg',
         description: 'Ielts Writing Ai'
     };
 
@@ -83,7 +83,8 @@ export default function ClientComponent({
                             name="description"
                             content="Unlock your IELTS writing potential with WriteWiseAI,  four-step process to get accurate essay ratings, personalized feedback,
                 and valuable recommendations"></meta>
-                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+                        {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" /> */}
+                        <link rel="icon" href="/logoIcon.svg" />
                     </Head>
 
                     <LocalizationProvider dateAdapter={AdapterMoment}>

@@ -1,9 +1,13 @@
-import React, { Suspense } from "react";
+import dynamic from 'next/dynamic';
+import React from "react";
 
 //-------------------------------------------styles
 import styles from './landingBackground.module.css';
-import LandingHeader from "../../landingHeader/landingHeader";
 import '../../../styles/global.css';
+
+//-------------------------------------------components
+const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"));
+
 
 const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [logedIn, changeLogedIn] = React.useState<boolean>(false);

@@ -1,5 +1,4 @@
 .section7 {
-    min-height: 100vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
     background-color: var(--color-background);
@@ -13,11 +12,10 @@
 
 .section7Container {
     flex: 1;
-    min-height: 100vh;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 150px 290px;
+    padding: 240px 290px 303px 290px;
 }
 
 .itemsContainer {
@@ -40,6 +38,7 @@
 
 .itemContainer {
     max-width: 622px;
+    min-height: 197px;
     padding: 50px 0px;
     display: flex;
     flex-direction: column;

@@ -2,6 +2,7 @@
     overflow-x: hidden;
     position: relative;
     padding: 0px;
+    max-width: 1920 !important;
 }
 
 .startButton {

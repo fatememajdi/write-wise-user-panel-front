@@ -9,7 +9,7 @@ import Image from "next/image";
 import styles from './landingSection4.module.css';
 
 //------------------------------------------------icons
-import { MdOutlineFlag, MdKeyboardArrowRight, MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { MdKeyboardArrowRight, MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { Steps } from "../../../public";
 
 const steps = [

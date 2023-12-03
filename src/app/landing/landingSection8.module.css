@@ -1,9 +1,7 @@
 .section8Container {
-    min-height: 80vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
-    padding: 200px 380px 0px 380px;
-    width: 100vw;
+    padding: 150px 380px 248px 380px;
     font-style: normal;
     background-color: var(--color-background);
     /* display: flex;

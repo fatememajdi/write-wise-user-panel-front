@@ -1,6 +1,6 @@
 .landingBackground {
-    min-height: 100vh;
-    height: fit-content !important;
+    /* min-height: 100vh; */
+    /* height: fit-content !important; */
     overflow: hidden !important;
     overflow-x: hidden !important;
     position: relative;

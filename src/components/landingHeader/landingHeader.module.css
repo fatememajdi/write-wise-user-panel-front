@@ -22,11 +22,10 @@
 .headerContainer {
     position: fixed;
     top: 0px;
-    /* height: 112px; */
     z-index: 100 !important;
-    /* background-color: transparent; */
-    /* max-width: 1900px !important; */
     align-items: center;
+    width: 100% !important;
+    max-width: 1920px !important;
 }
 
 .blackShadow {

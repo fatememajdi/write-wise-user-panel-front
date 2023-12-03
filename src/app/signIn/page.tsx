@@ -26,7 +26,7 @@ import { EMAIL_SIGN_IN } from '../../config/graphql';
 import Loading from "@/components/loading/loading";
 import { StopLoader } from "@/components/Untitled";
 
-const SignIn: React.FC = () => {
+const Page: React.FC = () => {
     const [loginStep, changeLoginStep] = React.useState<number>(0);
 
     React.useEffect(() => {
@@ -69,7 +69,7 @@ const SignIn: React.FC = () => {
     )
 };
 
-export default SignIn;
+export default Page;
 
 const Step1: React.FC<{ changeStep: any }> = async ({ changeStep }) => {
 

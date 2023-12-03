@@ -9,11 +9,11 @@ interface chooseTypeProps {
 
 const types = [
     {
-        label: 'Gen Task 1',
+        label: 'GT Task 1',
         value: 'general_task_1'
     },
     {
-        label: 'Ac Task 1',
+        label: 'AC Task 1',
         value: 'academic_task_1'
     },
     {

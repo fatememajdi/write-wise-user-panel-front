@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React from "react";
 import ReactLoading from 'react-loading';
 import dynamic from 'next/dynamic';
 import { useRouter } from "next/navigation";
@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 //--------------------------------------components
 import Loading from "@/components/loading/loading";
 const Slider = dynamic(() => import("@/components/slider/slider"));
-const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
-const Text = lazy(() => import("@/components/text/text"));
-const DialogComponent = lazy(() => import("@/components/dialog/dialog"));
+const SelectComponents = dynamic(() => import('@/components/customSelect/customSelect'));
+const Text = dynamic(() => import("@/components/text/text"));
+const DialogComponent = dynamic(() => import("@/components/dialog/dialog"));
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
 
 //--------------------------------------icons
@@ -20,37 +20,10 @@ import { HiExclamationCircle } from 'react-icons/hi';
 
 //----------------------------------------------styles
 import styles from './essayCard.module.css';
+import './htmlStyles.css';
 
 //----------------------------------------------types
 import { Essay } from "../../../types/essay";
-
-const tabBarItems = [
-    {
-        title: 'Essay',
-        active: true,
-        index: 1,
-    },
-    {
-        title: 'Score',
-        active: true,
-        index: 0,
-    },
-    {
-        title: 'Analysis',
-        active: true,
-        index: 2,
-    },
-    {
-        title: 'Insights',
-        active: true,
-        index: 3,
-    },
-    {
-        title: 'Recommendations',
-        active: true,
-        index: 4,
-    },
-];
 
 type _props = {
     essay: Essay,
@@ -61,12 +34,41 @@ type _props = {
     setEssaies: any,
     essaies: Essay[],
     topic: string,
+    type: string,
     GetScores: any,
     OnEditEssay: any
 };
 
-const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, topic, GetScores, essaies, OnEditEssay }) => {
-    const router = useRouter();
+const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, topic, GetScores, essaies, OnEditEssay, type }) => {
+
+    const tabBarItems = [
+        {
+            title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay',
+            active: true,
+            index: 1,
+        },
+        {
+            title: 'Score',
+            active: true,
+            index: 0,
+        },
+        {
+            title: 'Analysis',
+            active: true,
+            index: 2,
+        },
+        {
+            title: 'Insights',
+            active: true,
+            index: 3,
+        },
+        {
+            title: 'Recommendations',
+            active: true,
+            index: 4,
+        },
+    ];
+
     async function Retry() {
         await GetScores(essaies, essay);
     };
@@ -162,9 +164,15 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
             <div className={styles.writingTimeCard}>
                 <LuAlarmClock className={styles.clockIcon} />
                 {essay.durationMillisecond && Math.round(essay.durationMillisecond / 60000) + ' minutes'}
-                <span>{new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(essay?.date))) + ' ' + new Date(essay?.date).getDate()}</span>
+                <span>{new Intl.DateTimeFormat('en-US').format((new Date(essay?.date)))}</span>
+                <span>{essay.shortId}</span>
             </div>
 
+            <ul>
+                <li>
+                    zxc
+                </li>
+            </ul>
             <div className={styles.writingEssayTopic}>
                 <Text text={topic} />
             </div>

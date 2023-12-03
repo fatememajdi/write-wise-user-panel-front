@@ -102,7 +102,7 @@
 .writingEssayCard::-webkit-scrollbar {
     /* display: none; */
     width: 8px;
-    background-color: #FFF;
+    background-color: #626E7E !important;
     border-radius: 33px;
 }
 
@@ -218,7 +218,7 @@
 .writingScoreCard::-webkit-scrollbar {
     /* display: none; */
     width: 8px;
-    background-color: #FFF;
+    background-color: #626E7E !important;
     border-radius: 33px;
 }
 

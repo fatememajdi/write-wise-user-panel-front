@@ -3,7 +3,7 @@
     flex: 1;
     flex-direction: column;
     padding: 0px 95px 100px 90px;
-    min-height: 90vh;
+    /* min-height: 90vh; */
 }
 
 .wriritngTitle {
