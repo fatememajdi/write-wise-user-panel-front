@@ -127,9 +127,9 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
     if (typeof document != 'undefined')
         window.addEventListener("scroll", function (e: any) {
-            if (!showPopup && document.documentElement.scrollTop >= 2800)
+            if (!showPopup && document.documentElement.scrollTop >= 200)
                 changeShowPopup(true);
-            else if (showPopup && document.documentElement.scrollTop <= 2800)
+            else if (showPopup && document.documentElement.scrollTop <= 200)
                 changeShowPopup(false);
         });
 
