@@ -92,6 +92,7 @@ export default function ClientComponent({
                         <body
                         // className="antialiased text-gray-800 dark:bg-black dark:text-gray-400 mainContainer"
                         >
+                            
                             {children}
                             <Toaster position='top-center' />
 

@@ -2,6 +2,8 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 //----------------------------------------------------------------styles 
 import styles from './footer.module.css';
@@ -9,8 +11,6 @@ import styles from './footer.module.css';
 //----------------------------------------------------------------icons
 import { IoLogoFacebook, IoLogoLinkedin } from 'react-icons/io';
 import { AiFillInstagram } from 'react-icons/ai';
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
 
 //----------------------------------------------------------------social media items
 const SocialMediaItems = [
@@ -83,6 +83,18 @@ const Footer: React.FC = () => {
 
     const pathname = usePathname();
     const router = useRouter();
+
+
+    React.useEffect(() => {
+        if (typeof document != 'undefined') {
+            if (window.location.hash) {
+                let hash = window.location.hash;
+                if (hash.length) {
+                    router.push(hash);
+                }
+            }
+        }
+    }, []);
 
     return <div className={'col-12 ' + styles.footer}>
 

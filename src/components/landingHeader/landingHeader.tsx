@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React from "react";
 import Image from "next/image";
@@ -103,7 +104,14 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
     React.useEffect(() => {
         GetPackage();
-        handleScroll
+        if (typeof document != 'undefined') {
+            if (window.location.hash) {
+                let hash = window.location.hash;
+                if (hash.length) {
+                    router.push(hash);
+                }
+            }
+        }
     }, []);
 
     if (typeof document !== 'undefined')
@@ -119,8 +127,10 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
     if (typeof document != 'undefined')
         window.addEventListener("scroll", function (e: any) {
-            if (!showPopup)
+            if (!showPopup && document.documentElement.scrollTop >= 2800)
                 changeShowPopup(true);
+            else if (showPopup && document.documentElement.scrollTop <= 2800)
+                changeShowPopup(false);
         });
 
     const variants = {
@@ -179,7 +189,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     }
                     {
                         headerItems.map(
-                            (item, index) => <Link className={styles.headerItem} onClick={() => { if (pathname === '/') handleScroll; else router.back; handleScroll }}
+                            (item, index) => <Link className={styles.headerItem} onClick={() => { if (pathname === '/') handleScroll; }}
                                 key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>
                         )
                     }

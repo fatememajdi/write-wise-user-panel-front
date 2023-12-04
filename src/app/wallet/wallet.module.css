@@ -18,21 +18,69 @@
 }
 
 .logo {
-    margin-top: 47px;
+    width: 314px;
+    height: 34px;
+    margin-top: 36px;
 }
 
-.backButton {
-    border-radius: 8px;
-    background: var(--color-gray);
-    padding: 0px;
-    width: 52px;
-    height: 54px;
-    flex-shrink: 0;
-    margin-top: 25px;
+.tokens {
+    margin-top: 30px !important;
+    text-align: center;
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: auto;
+}
+
+.tabsContainer {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding: 0px 65px;
+    margin-bottom: 64px;
+}
+
+.tabsContainer div {
+    flex: 1;
+    border-bottom: solid 5px var(--color-seccondary);
+    text-align: center;
+    height: 100%;
+    padding: 33px 0px;
+    cursor: pointer;
+    color: var(--color-seccondary);
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.assessments {
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 29px !important;
+}
+
+.tokenCardMainContainer {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--color-whiteText);
-    font-size: 30px;
+}
+
+.firstTitle {
+    margin-top: 48px;
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
 .menuButton {
@@ -77,23 +125,18 @@
 }
 
 .tokenCard {
-    height: 40vh;
+    height: 314px;
     width: 100%;
     flex-shrink: 0;
     background: linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%);
     filter: drop-shadow(3px 8px 60px rgba(0, 82, 147, 0.23));
     box-shadow: 3px 8px 60px -5px rgba(0, 82, 147, 0.23);
     color: var(--color-whiteText);
-    text-align: center;
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    padding-left: 180px;
-    padding-right: 180px;
+    padding-left: 261px;
+    padding-right: 200px;
 }
 
 .tokenCard span {
@@ -120,7 +163,7 @@
     padding: 0px;
     align-items: center;
     justify-content: center;
-    margin: 2px 0px 32px auto;
+    margin: auto 0px 32px auto;
 }
 
 .plusIcon {
@@ -396,6 +439,24 @@
 
 }
 
+.backButton {
+    background-color: var(--color-seccondary);
+    margin: 34px auto 0px 0px;
+    padding: 0px !important;
+    width: 130px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-lato);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.backIcon {
+    font-size: 40px;
+}
+
 .applyCodeContainer input ::placeholder {
     color: var(--color-whiteText) !important;
     text-align: center !important;
@@ -492,11 +553,6 @@
         font-weight: 600;
     }
 
-    .title {
-        font-size: 20px;
-        font-weight: 400;
-    }
-
     .tokenCard span {
         font-size: 16px;
     }
@@ -588,11 +644,6 @@
         padding: 0px 80px;
         font-size: 36px;
         font-weight: 600;
-    }
-
-    .title {
-        font-size: 20px;
-        font-weight: 400;
     }
 
     .tokenCard span {
@@ -846,14 +897,6 @@
         align-items: center;
     }
 
-    .logo {
-        display: none;
-    }
-
-    .backButton {
-        display: none;
-    }
-
     .menuButton {
         margin-right: auto;
         margin-left: 15px;
@@ -877,12 +920,6 @@
         margin-top: 10px;
         font-size: 16px;
         font-weight: 300;
-    }
-
-    .title {
-        font-size: 12.3px;
-        font-weight: 500;
-        margin-bottom: 10px;
     }
 
     .addTokenButton {

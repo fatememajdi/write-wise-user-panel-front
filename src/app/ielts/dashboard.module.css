@@ -48,7 +48,7 @@
     flex: 1;
     height: 52px !important;
     border-radius: 8px !important;
-    padding: 16px 28px;
+    padding: 16px 10px;
     display: flex;
     cursor: pointer;
 }
@@ -407,6 +407,11 @@
         height: 38px !important;
     }
 
+    .plusIcon {
+        font-size: 25px;
+        margin-right: 5px;
+    }
+
     .taskTabButton {
         font-size: 12px;
         height: 38px !important;
@@ -433,8 +438,8 @@
     }
 
     .newEssayButton {
-        font-size: 20px;
-        padding: 0px;
+        font-size: 16px;
+        padding: 0px !important;
         margin: 0px 8px 0px 0px;
         height: 48px !important;
     }
@@ -474,6 +479,11 @@
         height: 50px !important;
         padding: 0px !important;
         height: fit-content;
+    }
+
+    .plusIcon {
+        font-size: 25px;
+        margin-right: 5px;
     }
 
     .topTabBarContainer {
@@ -524,8 +534,8 @@
     }
 
     .newEssayButton {
-        font-size: 20px;
-        padding: 0px;
+        font-size: 16px;
+        padding: 0px !important;
         margin: 0px 8px 0px 0px;
         height: 48px !important;
     }

@@ -50,28 +50,29 @@ const Home: React.FC = () => {
   }, []);
 
   return isLoading ?
-      <Loading />
-      :
+    <Loading />
+    :
     <Suspense fallback={<Loading />}>
-          <div className={'col-12 ' + styles.landingContainer}>
-            <Section1 />
-            <Section2 />
-            <Section3 />
-            <Section6 />
-            {/* <Section5 /> */}
-            <Section7 />
-            <Section4 />
-            <Section8 />
-            <Footer />
-            <button
-              onClick={() => {
-                StartLoader();
-                router.push('/signIn');
-              }}
-              className={styles.startButton}>
-              Start Now
-            </button>
-          </div>
+      <div className={'col-12 ' + styles.landingContainer}>
+        <Section1 />
+        <Section2 />
+        <Section3 />
+        <Section6 />
+        {/* <Section5 /> */}
+        <Section7 />
+        <div id='test7'></div>
+        <Section4 />
+        <Section8 />
+        <Footer />
+        <button
+          onClick={() => {
+            StartLoader();
+            router.push('/signIn');
+          }}
+          className={styles.startButton}>
+          Start Now
+        </button>
+      </div>
     </Suspense>
 };
 

@@ -18,7 +18,7 @@ import styles from './wallet.module.css';
 
 //------------------------------------------icons
 import { PiPlusBold } from 'react-icons/pi';
-import { IoMdArrowBack, IoMdMenu } from 'react-icons/io';
+import { IoIosArrowRoundBack, IoMdMenu } from 'react-icons/io';
 
 //------------------------------------------components
 import { StartLoader, StopLoader } from "@/components/Untitled";
@@ -156,6 +156,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
     const [moreTransaction, setMoreTransaction] = React.useState<boolean>(true);
     const [tableLoading, setTableLoading] = React.useState<boolean>(true);
+    const [paymentCategory, setPaymentCategory] = React.useState<boolean>(true);
     const [profile, setprofile] = React.useState<UserProfile>();
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => { setIsModalOpen(false); Back(); }
@@ -210,7 +211,8 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
             fetchPolicy: "no-cache",
             variables: {
                 page: transactions.length + 1,
-                pageSize: transactions.length === 0 ? 5 : 1
+                pageSize: transactions.length === 0 ? 5 : 1,
+                paymentHistory: paymentCategory
             }
         }).then(async (res) => {
             if (res.data.transactionHistory.transactions != 0) {
@@ -277,116 +279,97 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
     }, []);
 
     return pageLoading ? <Loading />
-        : <div className={'col-12 ' + styles.wallet}>
+        : <div className={'col-12 ' + styles.walletContainer}>
 
             {
-                isMobile ?
-                    <LandingHeader logedIn />
-                    :
-                    <div className={styles.leftNavBardCard}>
-                        <Image
-                            className={styles.logo}
-                            src="/dashboard/W W AI.svg"
-                            alt="Logo"
-                            loading="eager"
-                            width={19}
-                            height={69}
-                            priority
-                        />
-
-                        <Image
-                            className={styles.responsiveLogo}
-                            src="/logo3.svg"
-                            alt="Logo"
-                            width={81}
-                            height={17}
-                            priority
-                            loading="eager"
-                        />
-
-                        <button
-                            onClick={() => {
-                                StartLoader();
-                                router.push('/ielts');
-                            }
-                            }
-                            className={styles.backButton}
-                            aria-label="back button"
-                        >
-                            <IoMdArrowBack />
-                        </button>
-                        <button
-                            onClick={handlePopOverOpen}
-                            className={styles.menuButton}
-                            aria-label="menu button"
-                        >
-                            <IoMdMenu />
-                        </button>
-                    </div>
+                isMobile &&
+                <LandingHeader logedIn />
             }
-            <div className={styles.walletContainer}>
 
-                <div className={styles.tokenCard}>
-                    <div className={styles.title}>wallet balance</div>
+            <div className={styles.tokenCard}>
+                <button
+                    aria-label="back button"
+                    onClick={() => router.push('/ielts')}
+                    className={styles.backButton}><IoIosArrowRoundBack className={styles.backIcon} />Back</button>
+                <div className={styles.tokenCardMainContainer}>
+                    <Image
+                        className={styles.logo}
+                        src="/whiteLogo.svg"
+                        alt="Logo"
+                        width="0"
+                        height="0"
+                        sizes="100vw"
+                        priority
+                        loading="eager"
+                    />
 
-                    {profile?.token} Tokens
-                    <span>{profile?.token} Assessments</span>
-                    <button
-                        onClick={() => { if (isMobile) Next(); else showModal(); }}
-                        className={styles.addTokenButton}>
-                        <PiPlusBold className={styles.plusIcon} />Add tokens
-                    </button>
+                    <div className={styles.firstTitle}>Wallet Balance: </div>
+
+                    <div className={styles.tokens}>{profile?.token + ' Tokens'}</div>
+                    <div className={styles.assessments}>{profile?.token + ' Assessments'}</div>
+
                 </div>
-
-
-                <div className={'col-12 ' + styles.mainContainer}>
-                    <div className={styles.transactionTable}>
-                        <div className={styles.tabaleTitleCard}>
-                            <span className={styles.tableItem}>Status</span>
-                            <span className={styles.tableItem}>Amount</span>
-                            <span className={styles.tableItem}>Date</span>
-                            <span className={styles.tableItem}>Tokens</span>
-                            <span className={styles.tableItem}></span>
-                        </div>
-                        <div className={'col-12 ' + styles.tableContent}>
-                            {
-                                tableLoading ?
-                                    <Loading style={{ height: 300, minHeight: 300 }} />
-                                    :
-                                    <InfiniteScroll
-                                        pageStart={0}
-                                        loadMore={() => GetTransactionsHistory()}
-                                        hasMore={moreTransaction}
-                                        loader={<Loading style={{ height: 50, minHeight: 0, marginTop: 5 }} />}
-                                        useWindow={false}
-                                        key={0}
-                                    >
-                                        {
-                                            transactions.map((item, index) =>
-                                                <TableCol key={index} transaction={item} RecieptLink={RecieptLink} RegeneratePaymentLink={RegeneratePaymentLink} />)
-                                        }
-                                    </InfiniteScroll>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <Modal
-                    style={{ top: isMac ? 70 : 200 }}
-                    footer={null}
-                    closeIcon={null}
-                    open={isModalOpen}
-                    onCancel={handleCancel}
-                    width={isMac ? 1300 : isMac2 ? 1500 : 1700}
-                    className={styles.modalContainer}
-
-                >
-                    {step}
-                </Modal>
-
+                <button
+                    aria-label="add token button"
+                    onClick={() => { if (isMobile) Next(); else showModal(); }}
+                    className={styles.addTokenButton}>
+                    <PiPlusBold className={styles.plusIcon} />Add tokens
+                </button>
             </div>
 
-            <DashboardPopOver
-                page='/wallet' anchorEl={anchorEl}
-                handlePopOverClose={handlePopOverClose} LogOut={LogOut} />
+
+            <div className={'col-12 ' + styles.mainContainer}>
+                <div className={styles.tabsContainer}>
+                    <div
+                        onClick={() => setPaymentCategory(true)}
+                        style={paymentCategory ? { opacity: 1 } : { opacity: 0.2 }}>Payment Hx</div>
+
+                    <div
+                        onClick={() => setPaymentCategory(false)}
+                        style={!paymentCategory ? { opacity: 1 } : { opacity: 0.2 }}>Assessment Hx</div>
+                </div>
+                <div className={styles.transactionTable}>
+                    <div className={styles.tabaleTitleCard}>
+                        <span className={styles.tableItem}>Status</span>
+                        <span className={styles.tableItem}>Amount</span>
+                        <span className={styles.tableItem}>Date</span>
+                        <span className={styles.tableItem}>Tokens</span>
+                        <span className={styles.tableItem}></span>
+                    </div>
+                    <div className={'col-12 ' + styles.tableContent}>
+                        {
+                            tableLoading ?
+                                <Loading style={{ height: 300, minHeight: 300 }} />
+                                :
+                                <InfiniteScroll
+                                    pageStart={0}
+                                    loadMore={() => GetTransactionsHistory()}
+                                    hasMore={moreTransaction}
+                                    loader={<Loading style={{ height: 50, minHeight: 0, marginTop: 5 }} />}
+                                    useWindow={false}
+                                    key={0}
+                                >
+                                    {
+                                        transactions.map((item, index) =>
+                                            <TableCol key={index} transaction={item} RecieptLink={RecieptLink} RegeneratePaymentLink={RegeneratePaymentLink} />)
+                                    }
+                                </InfiniteScroll>
+                        }
+                    </div>
+                </div>
+            </div>
+            <Modal
+                style={{ top: isMac ? 70 : 200 }}
+                footer={null}
+                closeIcon={null}
+                open={isModalOpen}
+                onCancel={handleCancel}
+                width={isMac ? 1300 : isMac2 ? 1500 : 1700}
+                className={styles.modalContainer}
+
+            >
+                {step}
+            </Modal>
+
         </div>
 };

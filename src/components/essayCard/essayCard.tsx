@@ -167,12 +167,6 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
                 <span>{new Intl.DateTimeFormat('en-US').format((new Date(essay?.date)))}</span>
                 <span>{essay.shortId}</span>
             </div>
-
-            <ul>
-                <li>
-                    zxc
-                </li>
-            </ul>
             <div className={styles.writingEssayTopic}>
                 <Text text={topic} />
             </div>

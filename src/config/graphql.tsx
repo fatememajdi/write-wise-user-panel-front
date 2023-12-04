@@ -236,8 +236,8 @@ query GetPackages($currency:String!,$userToken:String!){
 `;
 
 export const TRANSACTION_HISTORY = gql`
-query TransactionHistory($page:Float!,$pageSize:Float!){
-  transactionHistory(pagination:{page:$page,pageSize:$pageSize}){
+query TransactionHistory($page:Float!,$pageSize:Float!,$paymentHistory:Boolean!){
+  transactionHistory(pagination:{page:$page,pageSize:$pageSize,paymentHistory:$paymentHistory}){
     transactions{
       id,
       shortId, 

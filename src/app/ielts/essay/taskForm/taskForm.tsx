@@ -490,7 +490,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                         onClick={() => handleSelectImage(item.url)}
                                                         className={styles.imageCard}>
                                                         <motion.div
-                                                            initial={{ filter: "blur(5px)" }}
+                                                            initial={{ filter: "blur(10px)" }}
                                                             animate={{
                                                                 filter: "blur(0px)",
                                                                 transition: { type: "spring", duration: 3 }
@@ -513,7 +513,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                             onClick={() => handleSelectImage(item.url)}
                                                             className={styles.imageCard}>
                                                             <motion.div
-                                                                initial={{ filter: "blur(5px)" }}
+                                                                initial={{ filter: "blur(10px)" }}
                                                                 animate={{
                                                                     filter: "blur(0px)",
                                                                     transition: { type: "spring", duration: 3 }

@@ -84,7 +84,7 @@ const Page: React.FC = () => {
     const router = useRouter();
     const [essayTopic, changeTopic] = React.useState<topic | null>();
     const [socket, setSocket] = React.useState<Socket<DefaultEventsMap, DefaultEventsMap>>(null);
-    const { step, goTo } = useMultiStepForm([
+    const { step, goTo, currentStepIndex } = useMultiStepForm([
         <ChooseType changeType={ChangeType} />,
         <Task
             targetRef={targetRef} GetScores={GetScores}
@@ -550,7 +550,7 @@ const Page: React.FC = () => {
                                     <div className={'col-12 ' + styles.newEssayContainer}>
                                         <button
                                             onClick={async () => NewEssay()}
-                                            className={styles.newEssayButton}><AiOutlinePlus className={styles.plusIcon} />New essay
+                                            className={styles.newEssayButton}><AiOutlinePlus className={styles.plusIcon} />New IELTS Writing
                                         </button>
                                         <button
                                             aria-label="close drawer button"
@@ -697,7 +697,7 @@ const Page: React.FC = () => {
                         className={styles.dashboardContentRightContainer}>
 
                         {
-                            !endAnimation &&
+                            !endAnimation && currentStepIndex !== 0 &&
                             <motion.div
                                 className={styles.topTabBarContainer}
                                 animate={{ y: tabBarLoc ? type === 'general_task_1' ? 814 : type === 'academic_task_1' ? 1319 : 714 : 0 }}

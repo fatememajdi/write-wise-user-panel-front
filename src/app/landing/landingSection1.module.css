@@ -129,7 +129,6 @@
     margin-top: 80px;
 }
 
-
 @media(max-width: 1680px) {
     .rightContainerDescription span {
         padding-right: 50px;
@@ -200,7 +199,6 @@
     }
 
 }
-
 
 @media(max-width: 1440px) {
     .rightContainerDescription span {

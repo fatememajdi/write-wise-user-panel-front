@@ -19,14 +19,12 @@
     color: #2E4057;
 }
 
-
 .text3 {
     background: radial-gradient(27318.89% 136.63% at -9.11% 84.62%, #8B3240 0%, #3B3E54 22.71%, #453D52 39.9%, #763646 63.85%, #98313E 80%, #DA282E 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 
 .title {
     font-size: 48px;

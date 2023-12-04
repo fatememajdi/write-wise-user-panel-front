@@ -66,7 +66,7 @@ const Section7: React.FC = () => {
                             StartLoader();
                         }}
                         className={styles.readMoreButton}>
-                        Read more <IoIosArrowForward className={styles.arrowIcon} />
+                        Read More <IoIosArrowForward className={styles.arrowIcon} />
                     </button>
                 </div>
 
