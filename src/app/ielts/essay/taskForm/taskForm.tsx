@@ -419,6 +419,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                         <button
                                                             aria-label="edit tipic"
                                                             onClick={async () => {
+                                                                changeGeneratedTopic(null);
                                                                 setChangeInput(false);
                                                                 changeEndTyping(false);
                                                                 changeEditedGeneratedTopic(false);
