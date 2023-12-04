@@ -20,8 +20,8 @@ const Section1: React.FC = () => {
         <section className={'col-12 ' + styles.section1Container} id="home">
 
             <div className={'col-lg-9 col-md-9 col-12 ' + styles.rightContainer}>
-                <div className={styles.rightContainerTitle} >
-                    <div> Achieve IELTS Writing Excellence with</div>
+                <h1 className={styles.rightContainerTitle} >
+                    <h1> Achieve IELTS Writing Excellence with</h1>
                     <span> AI-Driven &nbsp;</span>
                     <div className={styles.animationText}>
                         <Typewriter
@@ -35,7 +35,7 @@ const Section1: React.FC = () => {
                         />
                     </div>
 
-                </div>
+                </h1>
 
                 <div className={styles.rightContainerDescription}>
                     <span>

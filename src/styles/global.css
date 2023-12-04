@@ -37,11 +37,10 @@ html {
 }
 
 h1 {
+  font-size: 82px;
   font-weight: 800;
-  font-size: 48px;
-  font-style: normal;
-  line-height: 60px;
-  letter-spacing: -0.005em;
+  line-height: 96.2px;
+  letter-spacing: -0.41px;
 }
 
 h2 {

@@ -493,7 +493,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                             initial={{ filter: "blur(10px)" }}
                                                             animate={{
                                                                 filter: "blur(0px)",
-                                                                transition: { type: "spring", duration: 3 }
+                                                                transition: { type: "spring", duration: 10 }
                                                             }}
                                                         >
                                                             <Image
@@ -516,7 +516,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                 initial={{ filter: "blur(10px)" }}
                                                                 animate={{
                                                                     filter: "blur(0px)",
-                                                                    transition: { type: "spring", duration: 3 }
+                                                                    transition: { type: "spring", duration: 10 }
                                                                 }}
                                                             >
                                                                 <Image

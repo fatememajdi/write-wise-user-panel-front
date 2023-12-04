@@ -36,10 +36,6 @@
 }
 
 .rightContainerTitle {
-    font-size: 82px;
-    font-weight: 800;
-    line-height: 96.2px;
-    letter-spacing: -0.41px;
     color: var(--color-primary);
     display: flex;
     flex-wrap: wrap;
