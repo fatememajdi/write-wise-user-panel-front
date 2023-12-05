@@ -189,9 +189,8 @@
 
 .tabaleTitleCard {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    color: var(--color-blackText);
+    color: var(--color-gray);
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -200,16 +199,20 @@
     text-align: center;
 }
 
+.tabaleTitleCard th {
+    flex: 1;
+}
+
 .tableContent {
     overflow-y: auto;
     width: 100%;
     flex: 1;
     text-align: center;
     padding: 0px 65px;
+    max-height: 340px;
 }
 
 .tableContent::-webkit-scrollbar {
-    /* display: none; */
     width: 12px;
     background-color: var(--color-background);
     border-radius: 33px;
@@ -288,10 +291,6 @@
 
 .loading {
     margin: auto;
-}
-
-.tableItem {
-    width: 20% !important;
 }
 
 .buyPackageCard {

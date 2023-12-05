@@ -5,9 +5,7 @@ import React from "react";
 import { Modal } from 'antd';
 import Image from "next/image";
 import client from '@/config/applloAuthorizedClient';
-import { signOut } from 'next-auth/react';
 import dynamic from 'next/dynamic';
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from 'react-responsive';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -18,11 +16,10 @@ import styles from './wallet.module.css';
 
 //------------------------------------------icons
 import { PiPlusBold } from 'react-icons/pi';
-import { IoIosArrowRoundBack, IoMdMenu } from 'react-icons/io';
+import { IoIosArrowRoundBack } from 'react-icons/io';
 
 //------------------------------------------components
-import { StartLoader, StopLoader } from "@/components/Untitled";
-const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/dashboardPopOver"));
+import { StopLoader } from "@/components/Untitled";
 import {
     CREATE_PAYMENT_LINK, GET_CURRENCIES, GET_PACKAGES, GET_PROFILE, RECEIPT_LINK,
     REGENERATE_PAYMENT_LINK, TRANSACTION_HISTORY
@@ -143,7 +140,7 @@ type _walletProps = {
     selectedPackage: Package,
     setSelectedPackage: any,
     Next: any
-}
+};
 
 const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeCurrencyCode, selectedPackage, setSelectedPackage,
     currencies, GetCurrencies, CreatePaymentLink, pageLoading, setPageLoading, currencyCode, Next }) => {
@@ -152,8 +149,8 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
     const isMac2 = useMediaQuery({ query: "(max-width: 1680px)" });
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
+    const [assessment, setAssessments] = React.useState<Transaction[]>([]);
     const [moreTransaction, setMoreTransaction] = React.useState<boolean>(true);
     const [tableLoading, setTableLoading] = React.useState<boolean>(true);
     const [paymentCategory, setPaymentCategory] = React.useState<boolean>(true);
@@ -167,30 +164,8 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
             loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
         <ModalSecondStep key={1} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
     ]);
-    const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handlePopOverClose = () => {
-        setAnchorEl(null);
-    };
 
     const router = useRouter();
-    const { status } = useSession({
-        required: true, onUnauthenticated() {
-            if (localStorage.getItem('user'))
-                return
-            else
-                router.push('/signIn');
-        },
-    });
-
-    async function LogOut() {
-        setPageLoading(true);
-        localStorage.clear();
-        if (status === 'authenticated')
-            signOut();
-    };
 
     async function GetProfile() {
         await client.query({
@@ -205,18 +180,21 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
         });
     };
 
-    async function GetTransactionsHistory() {
+    async function GetTransactionsHistory(status: boolean) {
         await client.query({
             query: TRANSACTION_HISTORY,
             fetchPolicy: "no-cache",
             variables: {
-                page: transactions.length + 1,
-                pageSize: transactions.length === 0 ? 5 : 1,
-                paymentHistory: paymentCategory
+                page: paymentCategory ? transactions.length + 1 : assessment.length + 1,
+                pageSize: paymentCategory ? transactions.length === 0 ? 5 : 1 : assessment.length === 0 ? 5 : 1,
+                paymentHistory: status
             }
         }).then(async (res) => {
             if (res.data.transactionHistory.transactions != 0) {
-                await setTransactions([...transactions, ...res.data.transactionHistory.transactions]);
+                if (status)
+                    await setTransactions([...transactions, ...res.data.transactionHistory.transactions]);
+                else
+                    await setAssessments([...assessment, ...res.data.transactionHistory.transactions]);
             } else {
                 setMoreTransaction(false);
             }
@@ -258,7 +236,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
             setTableLoading(false);
             window.location = res.data.regeneratePaymentLink.link;
             setTransactions([]);
-            GetTransactionsHistory();
+            GetTransactionsHistory(paymentCategory);
         }).catch((err) => {
             console.log("regenerate payment link error : ", err);
             setTableLoading(false);
@@ -271,10 +249,16 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
         next();
     };
 
+    async function SelectTab(status: boolean) {
+        setPaymentCategory(status);
+        setMoreTransaction(true);
+        GetTransactionsHistory(status);
+    };
+
     React.useEffect(() => {
         StopLoader();
         GetProfile();
-        GetTransactionsHistory();
+        GetTransactionsHistory(true);
         GetCurrencies();
     }, []);
 
@@ -321,42 +305,23 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
             <div className={'col-12 ' + styles.mainContainer}>
                 <div className={styles.tabsContainer}>
                     <div
-                        onClick={() => setPaymentCategory(true)}
+                        onClick={() => SelectTab(true)}
                         style={paymentCategory ? { opacity: 1 } : { opacity: 0.2 }}>Payment Hx</div>
 
                     <div
-                        onClick={() => setPaymentCategory(false)}
+                        onClick={() => SelectTab(false)}
                         style={!paymentCategory ? { opacity: 1 } : { opacity: 0.2 }}>Assessment Hx</div>
                 </div>
-                <div className={styles.transactionTable}>
-                    <div className={styles.tabaleTitleCard}>
-                        <span className={styles.tableItem}>Status</span>
-                        <span className={styles.tableItem}>Amount</span>
-                        <span className={styles.tableItem}>Date</span>
-                        <span className={styles.tableItem}>Tokens</span>
-                        <span className={styles.tableItem}></span>
-                    </div>
-                    <div className={'col-12 ' + styles.tableContent}>
-                        {
-                            tableLoading ?
-                                <Loading style={{ height: 300, minHeight: 300 }} />
-                                :
-                                <InfiniteScroll
-                                    pageStart={0}
-                                    loadMore={() => GetTransactionsHistory()}
-                                    hasMore={moreTransaction}
-                                    loader={<Loading style={{ height: 50, minHeight: 0, marginTop: 5 }} />}
-                                    useWindow={false}
-                                    key={0}
-                                >
-                                    {
-                                        transactions.map((item, index) =>
-                                            <TableCol key={index} transaction={item} RecieptLink={RecieptLink} RegeneratePaymentLink={RegeneratePaymentLink} />)
-                                    }
-                                </InfiniteScroll>
-                        }
-                    </div>
-                </div>
+                {
+                    paymentCategory ?
+                        <PaymentHistoryTable tableLoading={tableLoading} GetTransactionsHistory={GetTransactionsHistory}
+                            moreTransaction={moreTransaction} transactions={transactions} RecieptLink={RecieptLink}
+                            RegeneratePaymentLink={RegeneratePaymentLink} />
+                        :
+                        <AssessmentHistoryTable tableLoading={tableLoading} GetTransactionsHistory={GetTransactionsHistory}
+                            moreTransaction={moreTransaction} transactions={assessment} RecieptLink={RecieptLink}
+                            RegeneratePaymentLink={RegeneratePaymentLink} />
+                }
             </div>
             <Modal
                 style={{ top: isMac ? 70 : 200 }}
@@ -372,4 +337,78 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
             </Modal>
 
         </div>
+};
+
+type _props = {
+    tableLoading: boolean,
+    GetTransactionsHistory: any,
+    moreTransaction: boolean,
+    transactions: Transaction[],
+    RecieptLink: any,
+    RegeneratePaymentLink: any
+};
+
+const PaymentHistoryTable: React.FC<_props> = ({ tableLoading, GetTransactionsHistory, moreTransaction, transactions, RecieptLink, RegeneratePaymentLink }) => {
+    return <table className={styles.transactionTable}>
+        <tr className={styles.tabaleTitleCard}>
+            <th>Receipt No.</th>
+            <th>Date & Time</th>
+            <th>Method</th>
+            <th>Amount</th>
+            <th>Token</th>
+            <th>Status</th>
+            <th>Description</th>
+        </tr>
+        <tr className={'col-12 ' + styles.tableContent}>
+            {
+                tableLoading ?
+                    <Loading style={{ height: 300, minHeight: 300 }} />
+                    :
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={() => GetTransactionsHistory(true)}
+                        hasMore={moreTransaction}
+                        loader={<Loading style={{ height: 50, minHeight: 0, marginTop: 5 }} />}
+                        useWindow={false}
+                        key={0}
+                    >
+                        {
+                            transactions.map((item, index) =>
+                                <TableCol key={index} transaction={item} RecieptLink={RecieptLink} RegeneratePaymentLink={RegeneratePaymentLink} status={true} />)
+                        }
+                    </InfiniteScroll>
+            }
+        </tr>
+    </table>
+};
+
+const AssessmentHistoryTable: React.FC<_props> = ({ tableLoading, GetTransactionsHistory, moreTransaction, transactions, RecieptLink, RegeneratePaymentLink }) => {
+    return <table className={styles.transactionTable}>
+        <tr className={styles.tabaleTitleCard}>
+            <th>ID</th>
+            <th>Date & Time</th>
+            <th>Task type</th>
+            <th>Token used</th>
+        </tr>
+        <tr className={'col-12 ' + styles.tableContent}>
+            {
+                tableLoading ?
+                    <Loading style={{ height: 300, minHeight: 300 }} />
+                    :
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={() => GetTransactionsHistory(false)}
+                        hasMore={moreTransaction}
+                        loader={<Loading style={{ height: 50, minHeight: 0, marginTop: 5 }} />}
+                        useWindow={false}
+                        key={0}
+                    >
+                        {
+                            transactions.map((item, index) =>
+                                <TableCol key={index} transaction={item} RecieptLink={RecieptLink} RegeneratePaymentLink={RegeneratePaymentLink} status={false} />)
+                        }
+                    </InfiniteScroll>
+            }
+        </tr>
+    </table>
 };

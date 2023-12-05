@@ -60,7 +60,6 @@ const Home: React.FC = () => {
         <Section6 />
         {/* <Section5 /> */}
         <Section7 />
-        <div id='test7'></div>
         <Section4 />
         <Section8 />
         <Footer />

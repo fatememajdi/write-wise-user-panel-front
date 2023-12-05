@@ -8,11 +8,10 @@ import { useRouter } from 'next/navigation';
 import styles from './landingSection3.module.css';
 
 //-------------------------------------------components
-import { FeaturesBackground } from "@/components/backgrounds/featuresBackground/featuresBackground";
 import { StartLoader } from "@/components/Untitled";
 
 //-------------------------------------------icons
-import {  Stars, Rise, User, UserMobile, StarsMobile, RiseMobile } from "../../../public/icons";
+import { Stars, Rise, User, UserMobile, StarsMobile, RiseMobile } from "../../../public/icons";
 import { IoIosArrowForward } from 'react-icons/io';
 
 const Section3: React.FC = () => {
@@ -20,17 +19,16 @@ const Section3: React.FC = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     return (
-        <FeaturesBackground>
-
+        <section className={'col-12 ' + styles.featuresBackground} id='features'>
             <div className={'col-12 ' + styles.section3Container}>
 
                 <div className={'col-lg-7 col-md-6 col-12 ' + styles.leftContainer}>
-                    <div className={styles.leftTitle}>
+                    <h2 className={styles.leftTitle}>
                         Unlock IELTS Writing Mastery with WriteWiseAI's Pioneering Features
-                    </div>
-                    <div className={styles.leftDescription}>
+                    </h2>
+                    <h4 className={styles.leftDescription}>
                         Experience a seamless fusion of advanced technology and intuitive design, tailored to elevate every aspect of your IELTS preparation journey, and ensure top-tier IELTS writing results.
-                    </div>
+                    </h4>
 
                     <button
                         aria-label="read more button"
@@ -50,7 +48,7 @@ const Section3: React.FC = () => {
                     <FeaturesItemCard icon={isMobile ? <RiseMobile /> : <Rise />} title="In-Depth Progress Tracking" />
                 </div>
             </div>
-        </FeaturesBackground>
+        </section>
     )
 };
 
@@ -61,8 +59,8 @@ const FeaturesItemCard: React.FC<{ title: string, icon: any, description?: strin
         <div className={styles.featuresItemIcon}>
             {icon}
         </div>
-        <div className={styles.featuresItemTitle}>
+        <h3 className={styles.featuresItemTitle}>
             {title}
-        </div>
+        </h3>
         <div className={styles.featuresItemDescription}>{description && description}</div>
     </div>;

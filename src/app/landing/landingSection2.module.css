@@ -21,10 +21,6 @@
 .title {
     color: var(--color-whiteText);
     font-feature-settings: 'ss04' on, 'ss03' on, 'ss02' on, 'ss01' on, 'salt' on;
-    font-family: var(--font-lato);
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 800;
     line-height: 60px;
     text-align: center;
     width: 100%;
@@ -38,8 +34,6 @@
 }
 
 .description {
-    font-weight: 400;
-    font-size: 24px;
     line-height: 130.52%;
     color: var(--color-whiteText);
     letter-spacing: 0.005em;
@@ -84,16 +78,12 @@
     font-weight: 700;
     font-size: 32px;
     line-height: 167.02%;
-    /* text-align: justify; */
-    /* letter-spacing: -0.005em; */
     text-align: left;
     color: var(--color-whiteText);
 }
 
 .stepCardDescription {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 167.02%;
+    line-height: 36px;
     margin-top: 26px;
     letter-spacing: -0.005em;
     text-align: left;

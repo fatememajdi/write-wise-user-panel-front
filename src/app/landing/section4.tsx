@@ -50,16 +50,16 @@ const Section4: React.FC = () => {
         // }, 1500);
     };
 
-    return <div
+    return <section
         onWheel={() => {
             if (selectedItem === 0 && !isMobile)
                 changeSelectedItem(1);
         }} className={styles.section4Container}>
-        <div className={styles.title}>Progressive IELTS Learning with WriteWiseAI</div>
+        <h2 className={styles.title}>Progressive IELTS Learning with WriteWiseAI</h2>
         <div className={styles.Divider} />
-        <div className={styles.description}>
+        <h4 className={styles.description}>
             Empower your IELTS preparation by tracking and visualizing your writing improvements.
-        </div>
+        </h4>
 
         {/* <button className={styles.button}>
             Boost My IELTS Preparation Now!
@@ -226,7 +226,7 @@ const Section4: React.FC = () => {
                 </motion.div>
             </div>
         </AnimatePresence>
-    </div>
+    </section>
 };
 
 export default Section4;

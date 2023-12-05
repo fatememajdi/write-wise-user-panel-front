@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 'use client';
-import React, { lazy } from "react";
+import React from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
@@ -16,16 +16,16 @@ import { DefaultEventsMap } from "@socket.io/component-emitter";
 import toast from "react-hot-toast";
 
 //-----------------------------------------------------styles
-import styles from './dashboard.module.css';
+import styles from './ielts.module.css';
 
 //-----------------------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
 import { DELETE_TOPIC, GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY } from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
 const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/dashboardPopOver"));
-const ChooseType = lazy(() => import("./essay/chooseType/chooseType"));
-const Task = lazy(() => import("./essay/task/task"));
-const TopicsList = lazy(() => import("@/components/topicsList/topicsList"));
+const ChooseType = dynamic(() => import("./essay/chooseType/chooseType"));
+const Task = dynamic(() => import("./essay/task/task"));
+const TopicsList = dynamic(() => import("@/components/topicsList/topicsList"));
 import { StopLoader } from "@/components/Untitled";
 
 //----------------------------------------------------icons

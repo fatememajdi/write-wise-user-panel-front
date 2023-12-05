@@ -13,5 +13,7 @@ export type Transaction = {
     paymentStatus: string,
     paidDate: number,
     essayShortId: string,
-    essayShortName: string
+    essayShortName: string,
+    paymentMethod: string,
+    taskType: string
 }

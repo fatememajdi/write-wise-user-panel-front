@@ -17,21 +17,15 @@
 
 .cardDescription {
     color: var(--color-blackText);
-    font-size: 24px;
-    font-weight: 400;
     line-height: 36px;
     letter-spacing: 0.4px;
     text-align: left;
-    font-family: var(--font-lato);
     margin-top: 64px;
 }
 
 .cardTitle {
     color: var(--color-seccondary);
-    font-size: 48px;
-    font-weight: 800;
     line-height: 28px;
-    font-family: var(--font-lato);
 }
 
 .cardTitle span {

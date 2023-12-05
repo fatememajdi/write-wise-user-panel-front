@@ -51,11 +51,11 @@ const Section6: React.FC = () => {
     }, []);
 
     return <section className={styles.section6} id="pricing">
-        <div className={styles.title}>No Monthly Commitments, Pure Flexibility</div>
-        <div className={styles.description}>
+        <h2 className={styles.title}>No Monthly Commitments, Pure Flexibility</h2>
+        <h4 className={styles.description}>
             At WriteWiseAI, we have streamlined our pricing to ensure you get the
             best value for your IELTS writing needs.
-        </div>
+        </h4>
 
 
         <div className={styles.subDescription}>Use of a VPN might change your regional currency!</div>

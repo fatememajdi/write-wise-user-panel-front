@@ -72,8 +72,6 @@
 
 .question {
     height: fit-content;
-    font-size: 24px;
-    font-weight: 400;
     line-height: 30px;
     letter-spacing: 0.48px;
     color: var(--color-blackText);

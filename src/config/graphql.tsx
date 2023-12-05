@@ -79,6 +79,7 @@ query GetUserEssay($id:String!, $page:Float!, $pageSize:Float!){
 }
 `;
 
+//-------------------------------------------------------------get random topic
 export const GET_RANDOM_WRITING = gql`
 query GetRandomWriting($type:String!,$questionType:String!){
   getRandomWriting(randomWritingInput:{type:$type,questionType:$questionType}){
@@ -235,6 +236,7 @@ query GetPackages($currency:String!,$userToken:String!){
 }
 `;
 
+//-------------------------------------------------------get transactions list
 export const TRANSACTION_HISTORY = gql`
 query TransactionHistory($page:Float!,$pageSize:Float!,$paymentHistory:Boolean!){
   transactionHistory(pagination:{page:$page,pageSize:$pageSize,paymentHistory:$paymentHistory}){
@@ -275,6 +277,7 @@ query RegeneratePaymentLink($id:String!){
 }
 `;
 
+
 export const CREATE_PAYMENT_LINK = gql`
 mutation CreatePaymentLink($id:String!, $currency:String!, $adjustedQuantity:Float!, $promotionCode:String!){
   createPaymentLink(createPaymentLink:{id:$id,currency:$currency,adjustedQuantity:$adjustedQuantity,promotionCode:$promotionCode}){
@@ -283,6 +286,7 @@ mutation CreatePaymentLink($id:String!, $currency:String!, $adjustedQuantity:Flo
 }
 `;
 
+//--------------------------------------------------------check promotion code
 export const VALIDATION_PROMOTION_CODE = gql`
 query validationPromotionCode($id:String!, $currency:String!, $adjustedQuantity:Float!, $promotionCode:String!){
   validationPromotionCode(createPaymentLink:{
@@ -299,6 +303,7 @@ query validationPromotionCode($id:String!, $currency:String!, $adjustedQuantity:
 }`;
 
 
+//--------------------------------------------------------get payment data after transaction
 export const AFTER_PAYMENT = gql`
 query AfterPayment($id:String!){
   afterPayment(getPayment:{id:$id}){
@@ -310,6 +315,7 @@ query AfterPayment($id:String!){
 }
 `;
 
+//--------------------------------------------------------check IP 
 export const IS_FROM_IRAN = gql`
 query{
   isFromIran

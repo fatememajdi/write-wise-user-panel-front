@@ -50,7 +50,7 @@ const FooterLinks = [
 const LandingItems = [
     {
         title: 'Home',
-        route: '#home'
+        route: '#hero-section'
     },
     {
         title: 'Features',
@@ -96,7 +96,7 @@ const Footer: React.FC = () => {
         }
     }, []);
 
-    return <div className={'col-12 ' + styles.footer}>
+    return <footer className={'col-12 ' + styles.footer}>
 
         <div className={styles.leftCard}>
             <div className={styles.logoContainer}>
@@ -137,7 +137,7 @@ const Footer: React.FC = () => {
             </div>
         </div>
 
-    </div>
+    </footer>
 };
 
 export default Footer;

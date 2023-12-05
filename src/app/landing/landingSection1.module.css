@@ -68,9 +68,6 @@
 .rightContainerDescription {
     margin-top: 48px;
     color: var(--color-blackText);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
     line-height: 31.2px;
     text-transform: capitalize;
     max-width: 85%;

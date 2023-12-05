@@ -21,7 +21,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
     }, [])
 
     return <div className={'col-12 ' + styles.landingBackground}>
-        <LandingHeader logedIn={logedIn} landing />
+        <header><LandingHeader logedIn={logedIn} landing /></header>
         {children}
     </div >
 };

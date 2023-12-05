@@ -44,9 +44,23 @@ h1 {
 }
 
 h2 {
-  font-weight: 600;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 800;
+  font-family: var(--font-lato);
+}
+
+h3 {
   font-size: 32px;
-  line-height: 41px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 24px !important;
+  font-style: normal;
+  font-family: var(--font-lato);
+  font-weight: 400 !important;
 }
 
 .selectBack {

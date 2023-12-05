@@ -1,3 +1,11 @@
+.featuresBackground {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    position: relative;
+    padding: 252px 156px 250px 229px;
+    background-color: #F3F3F3 !important;
+}
+
 .section3Container {
     display: flex;
     height: 100%;
@@ -27,9 +35,6 @@
 
 .leftTitle {
     color: var(--color-seccondary);
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 800;
     line-height: 68.4px;
     font-family: var(--font-lato);
     letter-spacing: -0.16px;
@@ -37,9 +42,6 @@
 
 .leftDescription {
     color: var(--color-blackText);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
     line-height: 36px;
     margin-top: 40px;
     font-family: var(--font-lato);
@@ -72,9 +74,6 @@
     background: linear-gradient(91deg, #F9F9F9 1.87%, rgba(255, 255, 255, 0.58) 41.79%, #ECEFF2 95.39%);
     padding: 15px 20px 15px 13px;
     color: var(--color-seccondary);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
     line-height: 31.2px;
 }
 

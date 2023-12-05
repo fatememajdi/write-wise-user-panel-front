@@ -17,7 +17,7 @@ const Section1: React.FC = () => {
     const router = useRouter();
 
     return <LandingBackground>
-        <section className={'col-12 ' + styles.section1Container} id="home">
+        <section className={'col-12 ' + styles.section1Container} id="hero-section">
 
             <div className={'col-lg-9 col-md-9 col-12 ' + styles.rightContainer}>
                 <h1 className={styles.rightContainerTitle} >
@@ -37,7 +37,7 @@ const Section1: React.FC = () => {
 
                 </h1>
 
-                <div className={styles.rightContainerDescription}>
+                <h4 className={styles.rightContainerDescription}>
                     <span>
                         Unlock the full potential of your IELTS writing Skills with our state-of-the-art AI technology. Experience a comprehensive journey to success.
                     </span>
@@ -51,7 +51,7 @@ const Section1: React.FC = () => {
                         Start Now
                     </button>
 
-                </div>
+                </h4>
 
             </div>
 

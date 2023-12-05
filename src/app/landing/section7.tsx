@@ -17,12 +17,12 @@ import { IoIosArrowForward } from 'react-icons/io';
 const questions = [
     {
         id: 0,
-        question: <div className={styles.itemCard}>How does the <span>WriteWiseAI</span> platform work?</div>,
+        question: <div className={styles.itemCard}>How does the <span>W</span>rite<span>W</span>ise<span>AI</span> platform work?</div>,
         answer: 'WriteWiseAI is an AI-powered platform designed to help IELTS test-takers improve their writing skills. Users can submit essays for rating, receive personalized feedback, and track your progress. Simply sign up, log in, write or upload your essay, and have it rated to receive your score and individualized insights and resommendations.'
     },
     {
         id: 1,
-        question: <div className={styles.itemCard}>How does <span>WriteWiseAI</span> score and analyze essays?</div>,
+        question: <div className={styles.itemCard}>How does <span>W</span>rite<span>W</span>ise<span>AI</span> score and analyze essays?</div>,
         answer: 'WriteWiseAI uses advanced artificial intelligence algorithms to accurately score and analyze essays based on the specific criteria of IELTS writing exams. The AI evaluates Task Achievement/Response, Cohesion and Coherence, Lexical Resource, and Grammatical Range and Accuracy. Then it provides your score, and personalized feedback and recommendations to help you improve your writing skills.'
     },
     {
@@ -32,12 +32,12 @@ const questions = [
     },
     {
         id: 3,
-        question: <div className={styles.itemCard}>Can I use <span>WriteWiseAI</span> for both General and Academic IELTS writing tasks?</div>,
+        question: <div className={styles.itemCard}>Can I use <span>W</span>rite<span>W</span>ise<span>AI</span> for both General and Academic IELTS writing tasks?</div>,
         answer: 'Absolutely! WriteWiseAI supports Task 1 General, Task 1 Academic, and Task 2 essay types, allowing you to practice and improve your writing skills for any IELTS test format.'
     },
     {
         id: 4,
-        question: <div className={styles.itemCard}>How do I pay for <span>WriteWiseAI</span> services?</div>,
+        question: <div className={styles.itemCard}>How do I pay for <span>W</span>rite<span>W</span>ise<span>AI</span> services?</div>,
         answer: ' To use our Pay-as-you-Go system, after signing up and logging in, navigate to the "Wallet" section in your user panel. Then, select a payment model , and complete the payment process. You can then use your wallet to access rating, analysis and personalized feedback and recommendations.'
     },
     {
@@ -53,7 +53,7 @@ const Section7: React.FC = () => {
     const router = useRouter();
     const [selectedItem, ChangeSelectedItem] = React.useState<number>(null);
 
-    return (<section className={styles.section7}>
+    return (<section className={styles.section7} id="FQA">
         <AnimatePresence>
             <div className={styles.section7Container}>
                 <div className={'col-lg-6 col-md-6 col-12 ' + styles.itemsContainer}>
@@ -98,7 +98,7 @@ const QuestionCard: React.FC<_props> = ({ QA, selectedItem, ChangeSelectedItem }
 
     return <div className={styles.itemContainer}>
         <div className={styles.QuestionCard}>
-            {QA.question}
+            <h4> {QA.question}</h4>
             {
                 selectedItem === QA.id ?
                     <div

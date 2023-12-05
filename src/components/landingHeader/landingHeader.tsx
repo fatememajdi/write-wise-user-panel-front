@@ -28,7 +28,7 @@ import { Package } from "../../../types/package";
 const headerItems = [
     {
         title: 'Home',
-        route: '#home'
+        route: '#hero-section'
     },
     {
         title: 'How it works',
