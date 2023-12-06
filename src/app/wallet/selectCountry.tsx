@@ -27,10 +27,16 @@ const SelectCountry: React.FC<_props> = ({ ChangeModalStep }) => {
     const [filter, setFilter] = React.useState<string>('');
 
     async function searchCountry(text: string) {
-        setMoreCountries(true);
-        await setCountries([]);
-        setFilter(text);
-        GetCountries(text);
+        if (text.length > 1) {
+            setFilter(text);
+            GetCountries(text);
+        }
+        else if (text.length === 0) {
+            await setCountries([]);
+            setMoreCountries(true);
+            GetCountries('');
+            setFilter('');
+        }
     }
 
     async function GetCountries(Filter?: string) {
@@ -38,16 +44,13 @@ const SelectCountry: React.FC<_props> = ({ ChangeModalStep }) => {
             query: SEARCH_COUNTRIES,
             fetchPolicy: "no-cache",
             variables: {
-                page: countries.length + 1,
-                pageSize: 1,
-                value: Filter ? Filter : filter
+                page: 1,
+                pageSize: 250,
+                value: Filter ? Filter : ''
             }
         }).then((res) => {
-            if (res.data.searchCountry.countries.length !== 0) {
-                setCountries([...countries, res.data.searchCountry.countries]);
-            } else {
-                setMoreCountries(false)
-            }
+            setCountries(res.data.searchCountry.countries);
+            setMoreCountries(false);
         }).catch((err) => {
             toast.error(err.message);
         })
@@ -63,7 +66,6 @@ const SelectCountry: React.FC<_props> = ({ ChangeModalStep }) => {
             }
         }).then((res) => {
             ChangeModalStep();
-            setLoading(false);
         }).catch((err) => {
             toast.error(err.message);
             setLoading(false);

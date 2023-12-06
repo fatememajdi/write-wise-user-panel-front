@@ -227,6 +227,7 @@
 .modalCard {
     min-width: 1700px;
     width: 100% !important;
+    min-height: 500px !important;
     border-radius: 8px !important;
 }
 

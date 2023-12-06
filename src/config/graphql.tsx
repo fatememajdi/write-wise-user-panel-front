@@ -220,8 +220,8 @@ query{
 `;
 
 export const GET_PACKAGES = gql`
-query GetPackages($currency:String!,$userToken:String!){
-  getPackages(filter:{currency:$currency,userToken:$userToken}){
+query GetPackages($userToken:String!){
+  getPackages(filter:{userToken:$userToken}){
     id,
     name,
     discountPercent,

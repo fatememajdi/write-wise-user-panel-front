@@ -21,7 +21,7 @@ import { IoIosArrowRoundBack } from 'react-icons/io';
 //------------------------------------------components
 import { StopLoader } from "@/components/Untitled";
 import {
-    CREATE_PAYMENT_LINK, GET_CURRENCIES, GET_PACKAGES, GET_PROFILE, RECEIPT_LINK,
+    CREATE_PAYMENT_LINK, GET_PACKAGES, GET_PROFILE, RECEIPT_LINK,
     REGENERATE_PAYMENT_LINK, TRANSACTION_HISTORY
 } from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
@@ -52,8 +52,7 @@ const Page: React.FC = () => {
             query: GET_PACKAGES,
             fetchPolicy: "no-cache",
             variables: {
-                currency: '',
-                userToken: user ? `Bearer ${JSON.parse(user)}` : '',
+                userToken: user ? `${JSON.parse(user)}` : '',
             }
         }).then((res) => {
             setPackages(res.data.getPackages);
@@ -135,14 +134,15 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
     const [paymentCategory, setPaymentCategory] = React.useState<boolean>(true);
     const [profile, setprofile] = React.useState<UserProfile>();
     const showModal = () => setIsModalOpen(true);
-    const handleCancel = () => { setIsModalOpen(false); Back(); }
+    const handleCancel = () => { setIsModalOpen(false); goTo(0); }
     const Back = () => back();
-    const { step, back, next, currentStepIndex } = useMultiStepForm(profile?.country.id === '' ? [
+    const { step, back, next, currentStepIndex, goTo } = useMultiStepForm(profile?.country.id === '' ? [
         <SelectCountry key={0} ChangeModalStep={ChangeModalStep} />,
         <ModalFirstStep key={1} handleCancel={handleCancel}
             loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
         <ModalSecondStep key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
-    ] : [<ModalFirstStep key={1} handleCancel={handleCancel}
+    ] : [<SelectCountry key={0} ChangeModalStep={ChangeModalStep} />,
+    <ModalFirstStep key={1} handleCancel={handleCancel}
         loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
     <ModalSecondStep key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]);
 
@@ -322,7 +322,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
                 closeIcon={null}
                 open={isModalOpen}
                 onCancel={handleCancel}
-                width={currentStepIndex === 0 && profile?.country.id === '' ? 690 : isMac ? 1300 : isMac2 ? 1500 : 1700}
+                width={currentStepIndex === 0 ? 690 : isMac ? 1300 : isMac2 ? 1500 : 1700}
                 className={styles.modalContainer}
 
             >

@@ -31,6 +31,7 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
     return <AnimatePresence>
         <div className={styles.select}>
             <input
+                onClick={() => setShowMenu(true)}
                 type="text"
                 onChange={(e) => {
                     setSelectedItem(null);
@@ -61,10 +62,10 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
                     key={0}
                 >
                     {
-                        data.map((item, index) => <div onClick={() => { selectItem(item[0]); setSelectedItem(item[0]); setShowMenu(false) }}
+                        data.map((item, index) => <div onClick={() => { selectItem(item); setSelectedItem(item); setShowMenu(false) }}
                             className={styles.menuItem} key={index}>
                             <Image
-                                src={item[0].flag}
+                                src={item.flag}
                                 alt="country flag"
                                 height='20'
                                 width='40'
@@ -72,7 +73,7 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
                                 priority
                                 className={styles.flagImage}
                             />
-                            {item[0].commonName}</div>)
+                            {item.commonName}</div>)
                     }
                 </InfiniteScroll>
             </motion.div>
