@@ -27,12 +27,12 @@ import {
 const Loading = dynamic(() => import("@/components/loading/loading"));
 const ModalFirstStep = dynamic(() => import("./firstStep"));
 const ModalSecondStep = dynamic(() => import("./secondStep"));
+const SelectCountry = dynamic(() => import("./selectCountry"));
 const TableCol = dynamic(() => import("@/components/walletTableCol/walletTableCol"));
 const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"));
 import { useMultiStepForm } from "@/components/multiStepForm/useMultiStepForm";
 
 //---------------------------------------------------types
-import { Currency } from "../../../types/currency";
 import { Package } from "../../../types/package";
 import { UserProfile } from "../../../types/profile";
 import { Transaction } from "../../../types/transaction";
@@ -41,39 +41,25 @@ const Page: React.FC = () => {
 
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const [packages, setPackages] = React.useState<Package[]>([]);
-    const [currencies, setCurrencies] = React.useState<Currency[]>([]);
     const [pageLoading, setPageLoading] = React.useState<boolean>(true);
-    const [currencyCode, changeCurrencyCode] = React.useState<string>('');
     const [selectedPackage, setSelectedPackage] = React.useState<Package>();
     const [loading, setLoading] = React.useState<boolean>(true);
 
-    async function GetCurrencies() {
-        await client.query({
-            query: GET_CURRENCIES,
-            fetchPolicy: "no-cache",
-        }).then((res) => {
-            setCurrencies(res.data.getCurrencies);
-            GetPackage(res.data.getCurrencies[0].code);
-        }).catch((err) => {
-            toast.error(err.message);
-        })
-    };
-
-    async function GetPackage(code: string) {
+    async function GetPackage() {
         let user = await localStorage.getItem('user');
         setLoading(true);
         await client.query({
             query: GET_PACKAGES,
             fetchPolicy: "no-cache",
             variables: {
-                currency: code.toLowerCase(),
+                currency: '',
                 userToken: user ? `Bearer ${JSON.parse(user)}` : '',
             }
         }).then((res) => {
             setPackages(res.data.getPackages);
             setLoading(false);
         }).catch((err) => {
-            toast.error(err.message);
+            console.log(err);
         })
     };
 
@@ -104,11 +90,10 @@ const Page: React.FC = () => {
     };
     const { step, back, next } = useMultiStepForm([
         <Wallet key={0} loading={loading} GetPackage={GetPackage} packages={packages} selectedPackage={selectedPackage} Next={Next}
-            currencies={currencies} GetCurrencies={GetCurrencies} CreatePaymentLink={CreatePaymentLink} setSelectedPackage={setSelectedPackage}
-            pageLoading={pageLoading} setPageLoading={setPageLoading} currencyCode={currencyCode} changeCurrencyCode={changeCurrencyCode}
+            CreatePaymentLink={CreatePaymentLink} setSelectedPackage={setSelectedPackage}
+            pageLoading={pageLoading} setPageLoading={setPageLoading}
         />,
-        <ModalFirstStep key={1} currencies={currencies} currencyCode={currencyCode}
-            changeCurrencyCode={changeCurrencyCode} GetPackage={GetPackage} handleCancel={Back}
+        <ModalFirstStep key={1} handleCancel={Back}
             loading={loading} packages={packages} changeModalStep={Next} />,
         <ModalSecondStep key={2} handleCancel={Back} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
 
@@ -118,8 +103,8 @@ const Page: React.FC = () => {
     return isMobile ?
         <>{step}</>
         : <Wallet key={0} loading={loading} GetPackage={GetPackage} packages={packages} selectedPackage={selectedPackage} Next={Next}
-            currencies={currencies} GetCurrencies={GetCurrencies} CreatePaymentLink={CreatePaymentLink} setSelectedPackage={setSelectedPackage}
-            pageLoading={pageLoading} setPageLoading={setPageLoading} currencyCode={currencyCode} changeCurrencyCode={changeCurrencyCode}
+            CreatePaymentLink={CreatePaymentLink} setSelectedPackage={setSelectedPackage}
+            pageLoading={pageLoading} setPageLoading={setPageLoading}
         />
 
 };
@@ -130,20 +115,15 @@ type _walletProps = {
     packages: Package[],
     GetPackage: any,
     loading: boolean,
-    currencies: Currency[],
-    GetCurrencies: any,
     CreatePaymentLink: any,
     pageLoading: boolean,
     setPageLoading: any,
-    currencyCode: string,
-    changeCurrencyCode: any,
     selectedPackage: Package,
     setSelectedPackage: any,
     Next: any
 };
 
-const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeCurrencyCode, selectedPackage, setSelectedPackage,
-    currencies, GetCurrencies, CreatePaymentLink, pageLoading, setPageLoading, currencyCode, Next }) => {
+const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selectedPackage, setSelectedPackage, CreatePaymentLink, pageLoading, setPageLoading, Next }) => {
 
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
     const isMac2 = useMediaQuery({ query: "(max-width: 1680px)" });
@@ -158,12 +138,14 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => { setIsModalOpen(false); Back(); }
     const Back = () => back();
-    const { step, back, next } = useMultiStepForm([
-        <ModalFirstStep key={0} currencies={currencies} currencyCode={currencyCode}
-            changeCurrencyCode={changeCurrencyCode} GetPackage={GetPackage} handleCancel={handleCancel}
+    const { step, back, next, currentStepIndex } = useMultiStepForm(profile?.country.id === '' ? [
+        <SelectCountry key={0} ChangeModalStep={ChangeModalStep} />,
+        <ModalFirstStep key={1} handleCancel={handleCancel}
             loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
-        <ModalSecondStep key={1} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
-    ]);
+        <ModalSecondStep key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
+    ] : [<ModalFirstStep key={1} handleCancel={handleCancel}
+        loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
+    <ModalSecondStep key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]);
 
     const router = useRouter();
 
@@ -174,6 +156,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
         }).then(async (res) => {
             setprofile(res.data.getUserProfile);
             setPageLoading(false);
+            GetPackage(res.data.getUserProfile.country.id)
         }).catch((err) => {
             console.log("get user profile error : ", err);
             setPageLoading(false);
@@ -244,9 +227,21 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
         });
     };
 
-    async function ChangeModalStep(pack: Package) {
-        await setSelectedPackage(pack);
-        next();
+    async function ChangeModalStep(pack?: Package) {
+        if (pack) {
+            try {
+                await setSelectedPackage(pack);
+            } finally {
+                next()
+            };
+
+        } else {
+            try {
+                await GetPackage();
+            } finally {
+                next()
+            };
+        }
     };
 
     async function SelectTab(status: boolean) {
@@ -259,7 +254,6 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
         StopLoader();
         GetProfile();
         GetTransactionsHistory(true);
-        GetCurrencies();
     }, []);
 
     return pageLoading ? <Loading />
@@ -329,7 +323,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, changeC
                 closeIcon={null}
                 open={isModalOpen}
                 onCancel={handleCancel}
-                width={isMac ? 1300 : isMac2 ? 1500 : 1700}
+                width={currentStepIndex === 0 && profile?.country.id === '' ? 690 : isMac ? 1300 : isMac2 ? 1500 : 1700}
                 className={styles.modalContainer}
 
             >

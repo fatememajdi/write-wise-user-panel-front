@@ -104,7 +104,7 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
                     Start your journey with us.
                     <span>{pack.showingPrice}</span>
                 </div>
-                <div className={styles.countercontainer}>
+                {/* <div className={styles.countercontainer}>
                     {
                         pack.adjustableQuantity &&
                         <button
@@ -126,7 +126,7 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
                         </button>
                     }
 
-                </div>
+                </div> */}
                 <div className={'col-12 ' + styles.buyPackageRightCardSubTitle}>
                     Subtotal
                     <span>{pack.showingPrice}</span>

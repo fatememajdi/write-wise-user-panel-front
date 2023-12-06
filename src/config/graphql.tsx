@@ -158,7 +158,13 @@ query{
     age,
     gender,
     profile,
-    token
+    token,
+    country{
+      commonName,
+      id,
+      officialName,
+      flag
+    }
   }
 }
 `;
@@ -319,5 +325,27 @@ query AfterPayment($id:String!){
 export const IS_FROM_IRAN = gql`
 query{
   isFromIran
+}
+`;
+
+//--------------------------------------------------------get list of countries
+export const SEARCH_COUNTRIES = gql`
+query SearchContries($page:Float!,$pageSize:Float!,$value:String!){
+  searchCountry(search:{page:$page,pageSize:$pageSize,value:$value}){
+    countries{
+      id,
+      commonName,
+      officialName,
+      flag
+    }
+  }
+}
+`;
+
+export const SELECT_CURRENCY = gql`
+mutation SelectCurrency($id:String!){
+  selectCurrency(selectCurrency:{countryId:$id}){
+    email
+  }
 }
 `;

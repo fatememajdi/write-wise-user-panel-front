@@ -1,3 +1,10 @@
+export type Country = {
+    commonName: string,
+    id: string,
+    officialName: string,
+    flag: string
+}
+
 export type UserProfile = {
     firstName?: string,
     lastName?: string,
@@ -5,5 +12,6 @@ export type UserProfile = {
     age?: string,
     gender?: string,
     profile?: string,
-    token?: number
+    token?: number,
+    country: Country
 }
