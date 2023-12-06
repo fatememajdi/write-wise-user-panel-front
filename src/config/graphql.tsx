@@ -285,8 +285,8 @@ query RegeneratePaymentLink($id:String!){
 
 
 export const CREATE_PAYMENT_LINK = gql`
-mutation CreatePaymentLink($id:String!, $currency:String!, $adjustedQuantity:Float!, $promotionCode:String!){
-  createPaymentLink(createPaymentLink:{id:$id,currency:$currency,adjustedQuantity:$adjustedQuantity,promotionCode:$promotionCode}){
+mutation CreatePaymentLink($id:String!, $adjustedQuantity:Float!, $promotionCode:String!){
+  createPaymentLink(createPaymentLink:{id:$id,adjustedQuantity:$adjustedQuantity,promotionCode:$promotionCode}){
     link
   }
 }
@@ -294,10 +294,9 @@ mutation CreatePaymentLink($id:String!, $currency:String!, $adjustedQuantity:Flo
 
 //--------------------------------------------------------check promotion code
 export const VALIDATION_PROMOTION_CODE = gql`
-query validationPromotionCode($id:String!, $currency:String!, $adjustedQuantity:Float!, $promotionCode:String!){
+query validationPromotionCode($id:String!, $adjustedQuantity:Float!, $promotionCode:String!){
   validationPromotionCode(createPaymentLink:{
     id:$id,
-    currency:$currency,
     adjustedQuantity:$adjustedQuantity,
     promotionCode:$promotionCode
   }){

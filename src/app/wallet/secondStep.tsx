@@ -52,7 +52,6 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
             fetchPolicy: "no-cache",
             variables: {
                 id: pack.id,
-                currency: pack.currency.toLowerCase(),
                 adjustedQuantity: pack.adjustableQuantity ? counter : 1,
                 promotionCode: promotionCode
             }

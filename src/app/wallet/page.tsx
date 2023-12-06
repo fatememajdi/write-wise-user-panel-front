@@ -70,7 +70,6 @@ const Page: React.FC = () => {
             fetchPolicy: "no-cache",
             variables: {
                 id: id,
-                currency: currency,
                 adjustedQuantity: quantity,
                 promotionCode: promotionCode
             }
