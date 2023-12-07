@@ -119,7 +119,7 @@ const VerificationCode: React.FC = () => {
                         className={'col-12 ' + styles.loginForm}
                         onSubmit={handleSubmit}>
 
-                        <h3 className={styles.title}>Sign Up/Log in</h3>
+                        <h5 className={styles.title}>Sign Up/Log in</h5>
 
                         <div className={styles.subtitle}>An email containing a code has been sent to:<br /><span>{email}</span></div>
 
