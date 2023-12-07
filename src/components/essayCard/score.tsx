@@ -57,6 +57,6 @@ const ScoreCard: React.FC<{ title: string, score?: number }> = ({ title, score }
     };
 
     return <div className={styles.writingScoreItemCard}>
-        {title}:<span>{score}</span>
+        {title}:<span>&nbsp;{score}</span>
     </div>
 };
