@@ -24,18 +24,15 @@ const SelectCountry: React.FC<_props> = ({ ChangeModalStep }) => {
     const [selectedItem, setSelectedItem] = React.useState<Country>();
     const [moreCountries, setMoreCountries] = React.useState<boolean>(true);
     const [loading, setLoading] = React.useState<boolean>(true);
-    const [filter, setFilter] = React.useState<string>('');
 
     async function searchCountry(text: string) {
         if (text.length > 1) {
-            setFilter(text);
             GetCountries(text);
         }
         else if (text.length === 0) {
             await setCountries([]);
             setMoreCountries(true);
             GetCountries('');
-            setFilter('');
         }
     }
 
@@ -57,19 +54,23 @@ const SelectCountry: React.FC<_props> = ({ ChangeModalStep }) => {
     };
 
     async function SelectCountry() {
-        setLoading(true);
-        await client.mutate({
-            mutation: SELECT_CURRENCY,
-            fetchPolicy: "no-cache",
-            variables: {
-                id: selectedItem.id
-            }
-        }).then((res) => {
-            ChangeModalStep();
-        }).catch((err) => {
-            toast.error(err.message);
-            setLoading(false);
-        })
+        if (!selectedItem) {
+            toast.error('Please select your country!');
+        } else {
+            setLoading(true);
+            await client.mutate({
+                mutation: SELECT_CURRENCY,
+                fetchPolicy: "no-cache",
+                variables: {
+                    id: selectedItem.id
+                }
+            }).then((res) => {
+                ChangeModalStep();
+            }).catch((err) => {
+                toast.error(err.message);
+                setLoading(false);
+            })
+        }
     }
 
     React.useEffect(() => {
@@ -86,7 +87,6 @@ const SelectCountry: React.FC<_props> = ({ ChangeModalStep }) => {
                 <p>Please select your country for personalized pricing</p>
                 <InfiniteScrollSelect title="Select country" data={countries} moreData={moreCountries} GetData={GetCountries} changeFilter={searchCountry} selectItem={setSelectedItem} />
                 <button
-                    disabled={!selectedItem}
                     onClick={() => SelectCountry()}
                     className={styles.selectCountryButton}
                     aria-label="select country button"

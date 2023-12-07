@@ -1,57 +1,52 @@
 .signInPageContainer {
     display: flex;
-    flex-direction: row;
-    min-height: 100vh;
-    max-height: 100vh !important;
+    flex-direction: column;
+    height: 100vh;
     overflow: hidden;
     overflow-y: hidden;
     overflow-x: hidden;
-}
-
-.signInLeftContainer {
-    min-height: 100vh;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    background-image: url('/signIn/background.svg');
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
     align-items: center;
     justify-content: center;
-    padding-top: 90px;
-}
-
-.rightBackground {
-    height: 100%;
-    width: 100%;
-}
-
-.signInrightContainer {
-    min-height: 100vh;
-    height: 100% !important;
-    background-color: var(--color-seccondary);
     position: relative;
 }
 
-
 .logo {
-    height: 16px;
-    width: 151px;
+    width: 183px !important;
+    height: 24px !important;
+    position: absolute;
+    top: 66px;
+    left: 70px;
 }
 
-.title {
-    margin-top: 118px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 40px;
-    line-height: 12px;
-    color: var(--color-seccondary);
-    margin-bottom: 114px;
-}
-
-.stepContainer {
+.loginForm {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: fit-content;
-    flex: 1;
+}
+
+.title {
+    font-style: normal;
+    line-height: 12px;
+    color: var(--color-seccondary);
+    margin-bottom: 82px;
+}
+
+.subtitle {
+    color: var(--color-black);
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    margin-bottom: 38px;
+    font-weight: 300;
+}
+
+.subtitle span {
+    font-weight: 700;
 }
 
 .signInOptionsbutton {
@@ -63,18 +58,35 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
-    padding: 10px;
+    padding: 0px;
     width: 360px;
+    height: 44px;
     justify-content: center;
     border-radius: 8px;
     margin-top: 15px;
     cursor: pointer;
 }
 
+
+.submitEmailButton {
+    margin-top: 32px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 12px;
+    color: var(--color-whiteText);
+    background-color: var(--color-seccondary) !important;
+    width: 360px;
+    height: 54px;
+    padding: 0px !important;
+    border-radius: 8px !important;
+    margin-bottom: 32px;
+    align-items: center;
+    justify-content: center;
+}
+
 .googleSingInCard {
-    border-color: Gray/300;
-    border-width: 1px;
-    border-style: solid;
+    border: 1px solid var(--gray-300, #D0D5DD) !important;
     color: #344054;
 }
 
@@ -117,14 +129,13 @@
 }
 
 .footerText {
-    margin-top: auto !important;
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
     line-height: 22px;
     text-align: center;
     color: var(--color-seccondary);
-    margin-bottom: 26px;
+    margin-top: 48px;
 }
 
 .footerText a {
@@ -138,105 +149,84 @@
 }
 
 .emailInput input {
-    height: 69px !important;
+    height: 64px !important;
     border-width: 1px !important;
     border-color: var(--color-primary) !important;
     border-style: solid !important;
     border: solid 1px var(--color-primary) !important;
+    background-color: transparent !important;
+}
+
+.inputCard {
+    height: fit-content;
+    position: relative;
+    max-width: 360px;
 }
 
 .inputEmailTitle {
     font-style: normal;
     font-weight: 300;
     font-size: 24px;
+    z-index: 2;
+    position: absolute;
+    left: 17px;
+    top: -15px;
+    background-color: #F3F3F3;
+    padding: 0px 2px;
+
 }
 
-.submitEmailButton {
-    margin-top: 45px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 12px;
-    color: var(--color-whiteText);
-    background-color: var(--color-seccondary) !important;
-    width: 360px;
-    padding: 20px 0px;
-    border-radius: 15px !important;
-    margin-bottom: 35px;
-    align-items: center;
-    justify-content: center;
-}
-
-.step2ButtonContaier {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    width: 360px;
-}
-
-.nameInput {
-    width: 451px;
-    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
-    margin-bottom: 39px;
-}
-
-.nameInput input {
-    height: 71px !important;
-}
-
-.ageAndGenderContainer {
+.progressBar {
+    height: 8px;
+    width: 100% !important;
+    background-color: rgba(46, 64, 87, 0.40);
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    z-index: 10 !important;
+    position: relative;
+    margin-bottom: 32px;
 }
 
-.datePicker {
-    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
-    margin-top: 10px !important;
-    border-radius: 10px !important;
-    border: 1px solid #2E4057 !important;
-    width: 204px !important;
-    height: 71px !important;
-}
-
-.datePicker:focus {
-    border: none !important;
-}
-
-.select {
-    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
-    margin-top: 10px !important;
-    border-radius: 10px !important;
-    border: 1px solid #2E4057 !important;
-    width: 210px !important;
-    height: 71px !important;
-}
-
-.step4ButtonContainer {
+.buttonsCard {
     display: flex;
-    flex-direction: column;
-    width: 360px;
-    flex: 1;
-    margin-top: 30px;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 12px;
+    max-width: 360px;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.skipButton {
-    font-style: normal;
-    font-weight: 700;
+.buttonsCard button {
+    margin: 0px !important;
+    height: 48px;
+    width: fit-content;
+    padding: 0px;
+    text-align: center;
     font-size: 24px;
-    line-height: 12px;
-    color: var(--color-seccondary);
-    border: solid 1px var(--color-seccondary);
-    background-color: var(--color-background);
-    width: 360px;
-    padding: 20px 0px;
-    border-radius: 15px !important;
+    background-color: var(--color-seccondary);
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-whiteText);
+    padding: 0px 12px;
 }
 
-.pagination {
-    margin-top: 40px;
+.prossessBar {
+    height: 8px !important;
+    background-color: #2E4057;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
+
 
 @media(max-width: 1680px) {
 
@@ -331,16 +321,6 @@
         margin-top: 0px;
         position: relative;
         top: -6px;
-    }
-
-    .stepContainer {
-        justify-content: flex-start;
-        margin-top: 56px;
-        padding: 0px 52px;
-        border-radius: 8px;
-        border: 1px solid #FFF;
-        background: linear-gradient(133deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.32) 100%);
-        box-shadow: -5px 8px 23px -5px rgba(0, 0, 0, 0.14);
     }
 
     .emailButton {

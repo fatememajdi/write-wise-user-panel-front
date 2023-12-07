@@ -100,6 +100,8 @@ export default function ClientComponent({
                                     success: {
                                         style: {
                                             background: 'green',
+                                            color: '#FFF',
+                                            fontSize: 20
                                         },
                                     },
                                     error: {

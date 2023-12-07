@@ -135,7 +135,8 @@ mutation AddNewEssay($id:String! , $body: String! ,$durationMillisecond:Float!){
   addNewEssay(addEssay:{id:$id ,body:$body ,durationMillisecond:$durationMillisecond}){
     id,
     essay,
-    date
+    date,
+    shortId
   }
 }
 `;

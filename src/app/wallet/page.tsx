@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useMediaQuery } from 'react-responsive';
 import InfiniteScroll from 'react-infinite-scroller';
 import toast from "react-hot-toast";
+import { AnimatePresence, motion } from "framer-motion";
 
 //------------------------------------------styles 
 import styles from './wallet.module.css';
@@ -227,6 +228,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
     };
 
     async function ChangeModalStep(pack?: Package) {
+        setIsModalOpen(false);
         if (pack) {
             try {
                 await setSelectedPackage(pack);
@@ -241,6 +243,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
                 next()
             };
         }
+        setIsModalOpen(true);
     };
 
     async function SelectTab(status: boolean) {
@@ -316,18 +319,10 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
                             RegeneratePaymentLink={RegeneratePaymentLink} />
                 }
             </div>
-            <Modal
-                style={{ top: isMac ? 70 : 200 }}
-                footer={null}
-                closeIcon={null}
-                open={isModalOpen}
-                onCancel={handleCancel}
-                width={currentStepIndex === 0 ? 690 : isMac ? 1300 : isMac2 ? 1500 : 1700}
-                className={styles.modalContainer}
 
-            >
+            <SpringModal isOpen={isModalOpen} setIsOpen={handleCancel}>
                 {step}
-            </Modal>
+            </SpringModal>
 
         </div>
 };
@@ -404,4 +399,30 @@ const AssessmentHistoryTable: React.FC<_props> = ({ tableLoading, GetTransaction
             }
         </tr>
     </table>
+};
+
+
+const SpringModal: React.FC<{ isOpen: boolean, setIsOpen: any, children: React.ReactNode }> = ({ isOpen, setIsOpen, children }) => {
+    return (
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setIsOpen(false)}
+                    className="bg-slate-900/20 backdrop-blur p-8 fixed inset-0 z-50 grid place-items-center overflow-y-scroll cursor-pointer"
+                >
+                    <motion.div
+                        initial={{ scale: 0, rotate: "12.5deg" }}
+                        animate={{ scale: 1, rotate: "0deg" }}
+                        exit={{ scale: 0, rotate: "0deg" }}
+                        onClick={(e) => e.stopPropagation()}
+                        className={styles.springModal}>
+                        {children}
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
 };

@@ -194,15 +194,15 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 await setEssaies([{
                     id: res.data.addNewEssay.id,
                     essay: res.data.addNewEssay.essay,
-                    date: res.data.addNewEssay.date
-
+                    date: res.data.addNewEssay.date,
+                    shortId: res.data.addNewEssay.shortId
                 }, ...essaies]);
                 changeEssayLoading(false);
                 await GetScores([{
                     id: res.data.addNewEssay.id,
                     essay: res.data.addNewEssay.essay,
-                    date: res.data.addNewEssay.date
-
+                    date: res.data.addNewEssay.date,
+                    shortId: res.data.addNewEssay.shortId
                 }, ...essaies]);
                 changeCcurrentId(id);
                 setAddEssayLoading(false);
