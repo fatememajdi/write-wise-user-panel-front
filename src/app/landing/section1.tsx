@@ -37,7 +37,7 @@ const Section1: React.FC = () => {
 
                 </h1>
 
-                <h4 className={styles.rightContainerDescription}>
+                <h6 className={styles.rightContainerDescription}>
                     <span>
                         Unlock the full potential of your IELTS writing Skills with our state-of-the-art AI technology. Experience a comprehensive journey to success.
                     </span>
@@ -51,7 +51,7 @@ const Section1: React.FC = () => {
                         Start Now
                     </button>
 
-                </h4>
+                </h6>
 
             </div>
 

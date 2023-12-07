@@ -50,7 +50,7 @@
     margin-top: auto;
 }
 
-.taskCardTitle h5 {
+.shortNameText {
     color: #FFF;
     font-size: 18px;
     font-style: normal;
@@ -60,9 +60,10 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: normal;
 }
 
-.taskCardTitle h5:hover {
+.shortNameText:hover {
     text-decoration: underline !important;
     /* font-weight: 400; */
 }

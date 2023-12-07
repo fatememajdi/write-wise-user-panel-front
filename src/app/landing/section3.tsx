@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 //-------------------------------------------styles
 import styles from './landingSection3.module.css';
+import '../../styles/global.css';
 
 //-------------------------------------------components
 import { StartLoader } from "@/components/Untitled";
@@ -26,9 +27,9 @@ const Section3: React.FC = () => {
                     <h2 className={styles.leftTitle}>
                         Unlock IELTS Writing Mastery with WriteWiseAI's Pioneering Features
                     </h2>
-                    <h4 className={styles.leftDescription}>
+                    <h6 className={styles.leftDescription}>
                         Experience a seamless fusion of advanced technology and intuitive design, tailored to elevate every aspect of your IELTS preparation journey, and ensure top-tier IELTS writing results.
-                    </h4>
+                    </h6>
 
                     <button
                         aria-label="read more button"
@@ -59,8 +60,8 @@ const FeaturesItemCard: React.FC<{ title: string, icon: any, description?: strin
         <div className={styles.featuresItemIcon}>
             {icon}
         </div>
-        <h3 className={styles.featuresItemTitle}>
+        <h5 className={styles.featuresItemTitle}>
             {title}
-        </h3>
+        </h5>
         <div className={styles.featuresItemDescription}>{description && description}</div>
     </div>;

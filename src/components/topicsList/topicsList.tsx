@@ -157,7 +157,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                             SetTempEssay();
                                         }}
                                         className={styles.taskCardTitle}>
-                                        <h5>{item.shortName}</h5>
+                                        <div className={styles.shortNameText}>{item.shortName}</div>
                                         <span>
                                             {item.shortId}
                                         </span>

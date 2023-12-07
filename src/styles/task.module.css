@@ -180,7 +180,7 @@
 }
 
 .generateButton {
-    background-color: #2E4057;
+    background-color: var(--color-seccondary) !important;
     border: solid 2px #2E4057;
     width: 170px;
     height: 40px;

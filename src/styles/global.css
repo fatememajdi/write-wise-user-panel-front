@@ -37,28 +37,28 @@ html {
 }
 
 h1 {
-  font-size: 82px;
-  font-weight: 800;
-  line-height: 96.2px;
-  letter-spacing: -0.41px;
+  font-size: 82px !important;
+  font-weight: 800 !important;
+  line-height: 96.2px !important;
+  letter-spacing: -0.41px !important;
 }
 
 h2 {
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 800;
-  font-family: var(--font-lato);
+  font-size: 48px !important;
+  font-style: normal !important;
+  font-weight: 800 !important;
+  font-family: var(--font-lato) !important;
 }
 
-h3 {
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 600;
+h5 {
+  font-size: 32px !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
 }
 
-h4 {
+h6 {
   font-size: 24px !important;
-  font-style: normal;
+  font-style: normal !important;
   font-family: var(--font-lato);
   font-weight: 400 !important;
 }

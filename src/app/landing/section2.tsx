@@ -4,6 +4,7 @@ import { Carousel } from 'react-responsive-carousel';
 
 //-------------------------------styles
 import styles from './landingSection2.module.css';
+import '../../styles/global.css';
 
 //--------------------------------data 
 import steps from '../../../public/data/Steps.json';
@@ -16,9 +17,9 @@ const Section2: React.FC = () => {
                 How it works
             </h2>
 
-            <h4 className={styles.description}>
+            <h6 className={styles.description}>
                 Start a transformative journey to refine your IELTS writing skills. <span>W</span>rite<span>W</span>ise<span>AI</span> offers a seamless experience, ensuring your essays align with IELTS standards.
-                Use our intuitive platform to receive AI-powered rating, analysis, and personalized actionable insights and recommendations.  </h4>
+                Use our intuitive platform to receive AI-powered rating, analysis, and personalized actionable insights and recommendations.  </h6>
         </div>
 
         <div className={'col-12 ' + styles.carouselCard}>

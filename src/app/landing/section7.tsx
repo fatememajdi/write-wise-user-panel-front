@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 //--------------------------styles
 import styles from './landingSection7.module.css';
+import '../../styles/global.css';
 
 //------------------------------------------components
 import { StartLoader } from "@/components/Untitled";
@@ -98,7 +99,7 @@ const QuestionCard: React.FC<_props> = ({ QA, selectedItem, ChangeSelectedItem }
 
     return <div className={styles.itemContainer}>
         <div className={styles.QuestionCard}>
-            <h4> {QA.question}</h4>
+            <h6> {QA.question}</h6>
             {
                 selectedItem === QA.id ?
                     <div

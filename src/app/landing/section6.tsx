@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import styles from './landingSection6.module.css';
 import '../../styles/section6Select.css';
 import '../../styles/customMuiStyles.css';
+import '../../styles/global.css';
 
 //---------------------------------------------------types
 import { Package } from "../../../types/package";
@@ -52,10 +53,10 @@ const Section6: React.FC = () => {
 
     return <section className={styles.section6} id="pricing">
         <h2 className={styles.title}>No Monthly Commitments, Pure Flexibility</h2>
-        <h4 className={styles.description}>
+        <h6 className={styles.description}>
             At WriteWiseAI, we have streamlined our pricing to ensure you get the
             best value for your IELTS writing needs.
-        </h4>
+        </h6>
 
 
         <div className={styles.subDescription}>Use of a VPN might change your regional currency!</div>

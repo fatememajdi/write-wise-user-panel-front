@@ -7,6 +7,7 @@ import Image from "next/image";
 
 //------------------------------------------------styles
 import styles from './landingSection4.module.css';
+import '../../styles/global.css';
 
 //------------------------------------------------icons
 import { MdKeyboardArrowRight, MdOutlineKeyboardArrowDown } from 'react-icons/md';
@@ -57,9 +58,9 @@ const Section4: React.FC = () => {
         }} className={styles.section4Container}>
         <h2 className={styles.title}>Progressive IELTS Learning with WriteWiseAI</h2>
         <div className={styles.Divider} />
-        <h4 className={styles.description}>
+        <h6 className={styles.description}>
             Empower your IELTS preparation by tracking and visualizing your writing improvements.
-        </h4>
+        </h6>
 
         {/* <button className={styles.button}>
             Boost My IELTS Preparation Now!
