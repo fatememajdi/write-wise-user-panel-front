@@ -65,9 +65,9 @@ const QuestionCard: React.FC<_props> = ({ question, answer }) => {
         <div className={'col-lg-6 col-md-6 col-12 ' + styles.questionCard}>
             <div className={styles.questionMainCard}>
                 <div className={styles.questionContent}>
-                    <h4 className={styles.question}>
+                    <h6 className={styles.question}>
                         {question}
-                    </h4>
+                    </h6>
                     {
                         showAnswer ?
                             <AiOutlineMinus className={styles.plusIcon} onClick={() => changeShowAnswer(!showAnswer)} />

@@ -62,9 +62,9 @@ const Features: React.FC = () => {
                             </motion.div>)
                     }
                 </div>
-                <h4 className={styles.rightCard}>
+                <h6 className={styles.rightCard}>
                     {selectedItem !== -1 && featuresItems[selectedItem].description}
-                </h4>
+                </h6>
             </AnimatePresence>
         </div>
         <Footer />
