@@ -41,7 +41,6 @@ export function CountWords(text: string, Words: number) {
     </div>;
 };
 
-
 export function CheckCountWords(text: string, Words: number) {
     var splits = text.split(/(\s+)/);
     var splits = splits.filter(item => item != 'a' && item != 'A' && item != 'an' && item != 'An' && item != 'the' && item != 'The');
@@ -49,4 +48,8 @@ export function CheckCountWords(text: string, Words: number) {
     var count: any = words.length as number;
 
     return count <= Words;
+};
+
+export function CapitalStart(text: string) {
+    return text.charAt(0).toUpperCase() + text.slice(1)
 };

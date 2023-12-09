@@ -267,9 +267,9 @@ const Page: React.FC = () => {
                 title="Log out" dialog="Are you sure you want to log out?" deleteButton='Log out' />
 
         </div>
-        <DashboardPopOver
+        {/* <DashboardPopOver
             page='/profile' anchorEl={anchorEl}
-            handlePopOverClose={handlePopOverClose} LogOut={LogOut} />
+            handlePopOverClose={handlePopOverClose} LogOut={LogOut} /> */}
     </div>
 };
 

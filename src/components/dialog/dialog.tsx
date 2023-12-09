@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+// import DialogTitle from '@mui/material/DialogTitle';
 import { TransitionProps } from "@mui/material/transitions/transition";
 import Slide from "@mui/material/Slide";
 
@@ -34,13 +34,15 @@ const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, ti
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
     >
-        <DialogTitle
-            style={{ backgroundColor: '#626E7E', color: '#F3F3F3' }}>{title}</DialogTitle>
+        {/* <DialogTitle
+            style={{ backgroundColor: '#626E7E', color: '#F3F3F3' }}><div style={{ fontSize: 22 }}>{title}</div></DialogTitle> */}
+
         <DialogContent
             style={{ backgroundColor: '#626E7E' }}>
             <DialogContentText
                 style={{ color: '#F3F3F3' }}
                 id="alert-dialog-slide-description">
+                <div style={{ fontSize: 22, marginBottom: 10 }}>{title}</div>
                 {dialog}
             </DialogContentText>
         </DialogContent>

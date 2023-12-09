@@ -20,7 +20,8 @@ interface _props {
     anchorEl: HTMLButtonElement | null,
     handlePopOverClose: any,
     LogOut: any,
-    page?: string
+    page?: string,
+    showProfile: any
 }
 
 const menuItems = [
@@ -41,7 +42,7 @@ const menuItems = [
     }
 ];
 
-const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogOut, page }) => {
+const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogOut, page, showProfile }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const router = useRouter();
     const Open = Boolean(anchorEl);
@@ -76,8 +77,13 @@ const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogO
                     menuItems.filter(item => item.route !== page).map((item, index) =>
                         <a
                             onClick={() => {
-                                router.push(item.route);
-                                StartLoader();
+                                if (item.title === 'Profile') {
+                                    handlePopOverClose();
+                                    showProfile(true);
+                                } else {
+                                    router.push(item.route);
+                                    StartLoader();
+                                }
                             }}
                             key={index} className={styles.menuItemCard}>
                             <item.icon />

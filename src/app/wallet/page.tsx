@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React from "react";
-import { Modal } from 'antd';
 import Image from "next/image";
 import client from '@/config/applloAuthorizedClient';
 import dynamic from 'next/dynamic';
@@ -10,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { useMediaQuery } from 'react-responsive';
 import InfiniteScroll from 'react-infinite-scroller';
 import toast from "react-hot-toast";
-import { AnimatePresence, motion } from "framer-motion";
 
 //------------------------------------------styles 
 import styles from './wallet.module.css';
@@ -26,11 +24,12 @@ import {
     REGENERATE_PAYMENT_LINK, TRANSACTION_HISTORY
 } from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
-const ModalFirstStep = dynamic(() => import("./firstStep"));
-const ModalSecondStep = dynamic(() => import("./secondStep"));
+const PackagesList = dynamic(() => import("./packagesList"));
+const PackageCard = dynamic(() => import("./packageCard"));
 const SelectCountry = dynamic(() => import("./selectCountry"));
 const TableCol = dynamic(() => import("@/components/walletTableCol/walletTableCol"));
 const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"));
+const Modal = dynamic(() => import("@/components/modal/modal"));
 import { useMultiStepForm } from "@/components/multiStepForm/useMultiStepForm";
 
 //---------------------------------------------------types
@@ -92,9 +91,9 @@ const Page: React.FC = () => {
             CreatePaymentLink={CreatePaymentLink} setSelectedPackage={setSelectedPackage}
             pageLoading={pageLoading} setPageLoading={setPageLoading}
         />,
-        <ModalFirstStep key={1} handleCancel={Back}
+        <PackagesList key={1} handleCancel={Back}
             loading={loading} packages={packages} changeModalStep={Next} />,
-        <ModalSecondStep key={2} handleCancel={Back} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
+        <PackageCard key={2} handleCancel={Back} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
 
     ]);
 
@@ -139,13 +138,13 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
     const Back = () => back();
     const { step, back, next, currentStepIndex, goTo } = useMultiStepForm(profile?.country.id === '' ? [
         <SelectCountry key={0} ChangeModalStep={ChangeModalStep} />,
-        <ModalFirstStep key={1} handleCancel={handleCancel}
+        <PackagesList key={1} handleCancel={handleCancel}
             loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
-        <ModalSecondStep key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
+        <PackageCard key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
     ] : [<SelectCountry key={0} ChangeModalStep={ChangeModalStep} />,
-    <ModalFirstStep key={1} handleCancel={handleCancel}
+    <PackagesList key={1} handleCancel={handleCancel}
         loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
-    <ModalSecondStep key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]);
+    <PackageCard key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]);
 
     const router = useRouter();
 
@@ -168,8 +167,8 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
             query: TRANSACTION_HISTORY,
             fetchPolicy: "no-cache",
             variables: {
-                page: paymentCategory ? transactions.length + 1 : assessment.length + 1,
-                pageSize: paymentCategory ? transactions.length === 0 ? 5 : 1 : assessment.length === 0 ? 5 : 1,
+                page: paymentCategory ? transactions.length / 10 + 1 : assessment.length / 10 + 1,
+                pageSize: 10,
                 paymentHistory: status
             }
         }).then(async (res) => {
@@ -178,6 +177,8 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
                     await setTransactions([...transactions, ...res.data.transactionHistory.transactions]);
                 else
                     await setAssessments([...assessment, ...res.data.transactionHistory.transactions]);
+                if (res.data.transactionHistory.transactions.length % 10 !== 0)
+                    setMoreTransaction(false);
             } else {
                 setMoreTransaction(false);
             }
@@ -320,9 +321,9 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
                 }
             </div>
 
-            <SpringModal isOpen={isModalOpen} setIsOpen={handleCancel}>
+            <Modal isOpen={isModalOpen} setIsOpen={handleCancel}>
                 {step}
-            </SpringModal>
+            </Modal>
 
         </div>
 };
@@ -401,28 +402,3 @@ const AssessmentHistoryTable: React.FC<_props> = ({ tableLoading, GetTransaction
     </table>
 };
 
-
-const SpringModal: React.FC<{ isOpen: boolean, setIsOpen: any, children: React.ReactNode }> = ({ isOpen, setIsOpen, children }) => {
-    return (
-        <AnimatePresence>
-            {isOpen && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onClick={() => setIsOpen(false)}
-                    className="bg-slate-900/20 backdrop-blur p-8 fixed inset-0 z-50 grid place-items-center overflow-y-scroll cursor-pointer"
-                >
-                    <motion.div
-                        initial={{ scale: 0, rotate: "12.5deg" }}
-                        animate={{ scale: 1, rotate: "0deg" }}
-                        exit={{ scale: 0, rotate: "0deg" }}
-                        onClick={(e) => e.stopPropagation()}
-                        className={styles.springModal}>
-                        {children}
-                    </motion.div>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    );
-};

@@ -28,10 +28,15 @@ type _props = {
 const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data, changeFilter, selectItem }) => {
     const [selectedItem, setSelectedItem] = React.useState<Country>();
     const [showMenu, setShowMenu] = React.useState<boolean>(false);
+    const [showList, setShowList] = React.useState<boolean>(false);
+
     return <AnimatePresence>
         <div className={styles.select}>
             <input
-                onClick={() => setShowMenu(true)}
+                onClick={() => {
+                    setShowList(true);
+                    setShowMenu(true)
+                }}
                 type="text"
                 onChange={(e) => {
                     setSelectedItem(null);
@@ -46,37 +51,46 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
                 animate={showMenu ? { transform: 'rotate(180deg)' } : {}}
                 transition={{ type: "spring", duration: 0.5 }}
             >
-                <TiArrowSortedDown className={styles.arrowIcon} onClick={() => setShowMenu(!showMenu)} />
-            </motion.div>
-            <motion.div
-                animate={{ height: showMenu ? 150 : 0 }}
-                transition={{ type: "spring", duration: 0.5 }}
-                className={styles.selectItemsCard}
-            >
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={() => GetData()}
-                    hasMore={moreData}
-                    loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} />}
-                    useWindow={false}
-                    key={0}
-                >
-                    {
-                        data.map((item, index) => <div onClick={() => { selectItem(item); setSelectedItem(item); setShowMenu(false) }}
-                            className={styles.menuItem} key={index}>
-                            <Image
-                                src={item.flag}
-                                alt="country flag"
-                                height='20'
-                                width='40'
-                                loading="eager"
-                                priority
-                                className={styles.flagImage}
-                            />
-                            {item.commonName}</div>)
+                <TiArrowSortedDown className={styles.arrowIcon} onClick={() => {
+                    setShowMenu(!showMenu);
+                    if (!showList) {
+                        setShowList(true);
                     }
-                </InfiniteScroll>
+                }} />
             </motion.div>
+
+            {
+                showList &&
+                <motion.div
+                    animate={{ height: showMenu ? 150 : 0, opacity: showMenu ? 1 : 0 }}
+                    transition={{ type: "spring", duration: 0.5 }}
+                    className={styles.selectItemsCard}
+                >
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={() => GetData()}
+                        hasMore={moreData}
+                        loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} />}
+                        useWindow={false}
+                        key={0}
+                    >
+                        {
+                            data.map((item, index) => <div onClick={() => { selectItem(item); setSelectedItem(item); setShowMenu(false) }}
+                                className={styles.menuItem} key={index}>
+                                <Image
+                                    src={item.flag}
+                                    alt="country flag"
+                                    height='20'
+                                    width='40'
+                                    loading="eager"
+                                    priority
+                                    className={styles.flagImage}
+                                />
+                                {item.commonName}</div>)
+                        }
+                    </InfiniteScroll>
+                </motion.div>
+            }
         </div>
 
     </AnimatePresence>

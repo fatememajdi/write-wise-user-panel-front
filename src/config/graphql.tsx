@@ -3,7 +3,8 @@ import gql from "graphql-tag";
 export const EMAIL_SIGN_IN = gql`
 mutation EmailLogIn($email:String!){
     emailLogin(loginWithEmail:{email:$email}){
-      code
+      code,
+      email
     }
   }
 `;

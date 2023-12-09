@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React, { lazy } from "react";
 import Image from "next/image";
@@ -35,6 +36,7 @@ const VerificationCode: React.FC = () => {
     const [loading, changeLoadig] = React.useState<boolean>(false);
     const [emailSignIn] = useMutation(EMAIL_SIGN_IN);
     const [resendCode, changeResendCode] = React.useState<boolean>(false);
+    const [seconds, changeSeconds] = React.useState<number>(60);
 
     let email;
     if (typeof document !== 'undefined')
@@ -58,6 +60,7 @@ const VerificationCode: React.FC = () => {
     };
 
     const handleEmailSignIn = async () => {
+        changeSeconds(60);
         changeLoadig(true);
         await emailSignIn({
             variables: {
@@ -70,6 +73,7 @@ const VerificationCode: React.FC = () => {
             setTimeout(() => {
                 changeResendCode(true);
             }, 34000);
+            changeSeconds(60);
         }
         ).catch(async (err) => {
             toast.error(err.message);
@@ -80,8 +84,15 @@ const VerificationCode: React.FC = () => {
     React.useEffect(() => {
         setTimeout(() => {
             changeResendCode(true);
-        }, 34000);
+        }, 60000);
+
     }, []);
+
+    React.useEffect(() => {
+        if (seconds > 0) {
+            setTimeout(() => changeSeconds(seconds - 1), 1000);
+        }
+    });
 
     if (loading)
         return <Loading />
@@ -124,7 +135,7 @@ const VerificationCode: React.FC = () => {
                         <div className={styles.subtitle}>An email containing a code has been sent to:<br /><span>{email}</span></div>
 
                         <div className={'col-12 ' + styles.inputCard}>
-                            <div className={styles.inputEmailTitle}>Code 34s</div>
+                            <div className={styles.inputEmailTitle}>Code {seconds}s</div>
                             <OtpInput
                                 valueLength={6}
                                 onChange={(e) => setFieldValue('code', e)}
@@ -158,7 +169,7 @@ const VerificationCode: React.FC = () => {
                                 onClick={() => { handleEmailSignIn() }}
                                 aria-label="login button"
                                 className={styles.resendButton} type="button">
-                                <TbRefresh style={{ marginRight: 5 }} /> Resendcode
+                                <TbRefresh style={{ marginRight: 5 }} /> Resend Code
                             </button>
                         </div>
 
@@ -181,7 +192,7 @@ const showAnimation = {
     show: {
         width: 0,
         transition: {
-            duration: 34,
+            duration: 60,
         }
     }
 };
@@ -190,7 +201,7 @@ const ProgressBar: React.FC = () => {
         <div className={styles.progressBar}>
             <motion.div
                 animate={{ width: 0 }}
-                transition={{ duration: 34 }}
+                transition={{ duration: 60 }}
                 variants={showAnimation}
                 initial='hidden'
                 exit='hidden'

@@ -18,14 +18,14 @@ const PackageCard = dynamic(() => import("@/components/packageCard/packageCard")
 //---------------------------------------------------types
 import { Package } from "../../../types/package";
 
-type _modalFirstStepProps = {
+type _PackagesListProps = {
     handleCancel: any,
     loading: boolean,
     packages: Package[],
     changeModalStep: any
 };
 
-const ModalFirstStep: React.FC<_modalFirstStepProps> = ({  handleCancel, loading, packages, changeModalStep }) => {
+const PackagesList: React.FC<_PackagesListProps> = ({ handleCancel, loading, packages, changeModalStep }) => {
 
     const isMac = typeof window !== 'undefined' ? navigator.platform.toUpperCase().indexOf("MAC") >= 0 : false;
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
@@ -55,4 +55,4 @@ const ModalFirstStep: React.FC<_modalFirstStepProps> = ({  handleCancel, loading
     </div>
 };
 
-export default ModalFirstStep;
+export default PackagesList;

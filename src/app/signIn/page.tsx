@@ -57,7 +57,6 @@ const Page: React.FC = () => {
         // toast.error('Please read our Terms of Service and Privacy Policy');
         // } else {
         changeLoading(true);
-        localStorage.setItem('email', values.email);
         await emailSignIn({
             variables: {
                 email: values.email,
@@ -67,6 +66,8 @@ const Page: React.FC = () => {
             setTimeout(() => {
                 changeLoading(false);
             }, 9000);
+            localStorage.setItem('email', res.data.emailLogin.email);
+
         }
         ).catch(async (err) => {
             toast.error(err.message);

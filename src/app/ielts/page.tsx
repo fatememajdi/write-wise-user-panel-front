@@ -26,6 +26,8 @@ const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/das
 const ChooseType = dynamic(() => import("./essay/chooseType/chooseType"));
 const Task = dynamic(() => import("./essay/task/task"));
 const TopicsList = dynamic(() => import("@/components/topicsList/topicsList"));
+const Modal = dynamic(() => import("@/components/modal/modal"));
+const ProfileCard = dynamic(() => import("@/components/profileCard/profileCard"));
 import { StopLoader } from "@/components/Untitled";
 
 //----------------------------------------------------icons
@@ -38,6 +40,7 @@ import { FiMoreVertical } from 'react-icons/fi';
 //---------------------------------------------------types
 import { Essay } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
+import { UserProfile } from "../../../types/profile";
 
 type topic = {
     id: string,
@@ -70,11 +73,12 @@ const Page: React.FC = () => {
         }
     });
     const [pageLoading, setLoading] = React.useState<boolean>(true);
-    const [userName, setuserName] = React.useState<string>();
+    const [profile, setProfile] = React.useState<UserProfile>();
     const [essay, setEssay] = React.useState<string>('');
     const [isOpen, setIsOpen] = React.useState<boolean>(!isMobile);
     const [MoreEssaies, changeMoreEssaies] = React.useState<boolean>(true);
     const [MoreTopics, changeMoreTopics] = React.useState<boolean>(true);
+    const [showProfileModal, changeShowProfileModal] = React.useState<boolean>(false);
     const [topicsLoading, changeTopicsLoading] = React.useState<boolean>(true);
     const [topics, changeTopics] = React.useState<Topic[]>([]);
     const [topicsType, setTopicsType] = React.useState('general_task_1');
@@ -175,13 +179,15 @@ const Page: React.FC = () => {
             query: GET_USER_ESSAY,
             variables: {
                 id: id,
-                page: essaies.length + 1,
-                pageSize: 1
+                page: essaies.length / 10 + 1,
+                pageSize: 10
             },
             fetchPolicy: "no-cache"
         }).then(async (res) => {
             if (res.data.getUserEssay.essaies.length != 0) {
                 await setEssaies([...essaies, ...res.data.getUserEssay.essaies]);
+                if (res.data.getUserEssay.essaies.length % 10 !== 0)
+                    changeMoreEssaies(false);
             } else {
                 changeMoreEssaies(false);
             }
@@ -196,13 +202,15 @@ const Page: React.FC = () => {
             query: GET_USER_TOPICS,
             variables: {
                 type: type ? type : topicsType,
-                page: topics.length + 1,
-                pageSize: topics.length === 0 ? 6 : 1
+                page: topics.length / 10 + 1,
+                pageSize: 10
             },
             fetchPolicy: "no-cache"
         }).then(async (res) => {
             if (res.data.getUserTopics.userTopics.length != 0) {
                 await changeTopics([...topics, ...res.data.getUserTopics.userTopics]);
+                if (res.data.getUserTopics.userTopics.length % 10 !== 0)
+                    changeMoreTopics(false);
             } else {
                 changeMoreTopics(false);
             }
@@ -220,11 +228,14 @@ const Page: React.FC = () => {
             variables: {
                 type: type,
                 page: 1,
-                pageSize: 6
+                pageSize: 10
             },
             fetchPolicy: "no-cache"
         }).then(async (res) => {
             await changeTopics(res.data.getUserTopics.userTopics);
+            if (res.data.getUserTopics.userTopics.length % 10 !== 0)
+                changeMoreTopics(false);
+
         }).catch((err) => {
             toast.error(err.message);
         });
@@ -249,7 +260,7 @@ const Page: React.FC = () => {
             query: GET_PROFILE,
             fetchPolicy: "no-cache"
         }).then(async (res) => {
-            setuserName(res.data.getUserProfile.firstName + ' ' + res.data.getUserProfile.lastName);
+            setProfile(res.data.getUserProfile);
         }).catch((err) => {
             toast.error(err.message);
         });
@@ -277,7 +288,6 @@ const Page: React.FC = () => {
                         essay.essayInsights = data.data;
                         newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
                         await setEssaies(newEssay);
-                        router.refresh();
                     }
                     break;
                 }
@@ -463,13 +473,14 @@ const Page: React.FC = () => {
                     variables: {
                         type: topicsType,
                         page: 1,
-                        pageSize: 6
+                        pageSize: 10
                     },
                     fetchPolicy: "no-cache"
                 }).then(async (res) => {
                     if (res.data.getUserTopics.userTopics.length != 0) {
                         await changeTopics(res.data.getUserTopics.userTopics);
-                        changeMoreTopics(true);
+                        if (res.data.getUserTopics.userTopics.length % 10 !== 0)
+                            changeMoreTopics(false);
                     } else {
                         changeMoreTopics(false);
                     }
@@ -610,7 +621,7 @@ const Page: React.FC = () => {
                                         <FiMoreVertical className={styles.moreIcon} />
                                     </button>
                                     <div className={styles.drawerFooterText}>
-                                        Welcome  {userName ? userName : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}
+                                        Welcome  {profile ? profile.firstName + ' ' + profile.lastName : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}
                                     </div>
                                 </motion.div>
                             </motion.div>
@@ -731,9 +742,14 @@ const Page: React.FC = () => {
 
             </main >
 
-            <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose} LogOut={LogOut} />
+            <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose}
+                LogOut={LogOut} showProfile={changeShowProfileModal} />
 
-        </div >
+            <Modal isOpen={showProfileModal} setIsOpen={changeShowProfileModal} key={0}>
+                <ProfileCard profile={profile} closeProfile={changeShowProfileModal} />
+            </Modal>
+
+        </div>
 };
 
 export default Page;

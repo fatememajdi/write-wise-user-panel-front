@@ -20,7 +20,7 @@ import { VALIDATION_PROMOTION_CODE } from "@/config/graphql";
 //---------------------------------------------------types
 import { Package } from "../../../types/package";
 
-type _modalSecondStepProps = {
+type _PackageCardProps = {
     handleCancel: any,
     pack: Package,
     CreatePaymentLink: any
@@ -33,7 +33,7 @@ type Promotion = {
     discountAmount: string
 };
 
-const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, CreatePaymentLink }) => {
+const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePaymentLink }) => {
 
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const [counter, changeCounter] = React.useState<number>(1);
@@ -196,4 +196,4 @@ const ModalSecondStep: React.FC<_modalSecondStepProps> = ({ handleCancel, pack, 
     </div>
 };
 
-export default ModalSecondStep;
+export default PackageCard;

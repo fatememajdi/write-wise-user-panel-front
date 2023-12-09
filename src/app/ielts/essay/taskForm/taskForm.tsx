@@ -358,10 +358,10 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                             ]} selectedItem={0} className={styles.topSelect} />
 
                             <div className={styles.wriritngTitle}>
-                                {type === 'general_task_1' ? 'GT Task 1 Topic' : type === 'general_task_2' ? 'GT Task 2 Topic' : ' AC Task 1'}
-                                {type !== 'general_task_1' ? topic && topic.subType !== undefined && topic.subType !== '' ? `(${topic.subType})`
+                                {type === 'general_task_1' ? 'GT Task 1 Topic' : type === 'general_task_2' ? 'Task 2 Topic' : ' AC Task 1'}
+                                {/* {type !== 'general_task_1' ? topic && topic.subType !== undefined && topic.subType !== '' ? `(${topic.subType})`
                                     : generatedTopic && generatedTopic.subType !== undefined && generatedTopic.subType !== '' ? `(${generatedTopic.subType})`
-                                        : values.subType !== undefined && values.subType !== '' && `(${values.subType})` : ''}
+                                        : values.subType !== undefined && values.subType !== '' && `(${values.subType})` : ''} */}
                             </div>
 
                             <div className={styles.writingSecondTitle}>

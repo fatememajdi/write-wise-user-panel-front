@@ -20,6 +20,7 @@
     font-weight: bold;
     line-height: 1;
     background-color: transparent;
+    z-index: 3 !important;
 }
 
 .otpGroup input:focus {
