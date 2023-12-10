@@ -84,7 +84,7 @@ const SelectCountry: React.FC<_props> = ({ ChangeModalStep }) => {
         <div className={'col-12 ' + styles.selectCountryCard}><Loading style={{ height: 40, minHeight: 0, margin: 'auto' }} /></div></div>
         : <div className={'col-12 ' + styles.selectCountryContainer}>
             <div className={'col-12 ' + styles.selectCountryCard}>
-                <p>Please select your country for personalized pricing</p>
+                <div className={styles.selectCountryTitle}>Please select your country for personalized pricing</div>
                 <InfiniteScrollSelect title="Select country" data={countries} moreData={moreCountries} GetData={GetCountries} changeFilter={searchCountry} selectItem={setSelectedItem} />
                 <button
                     onClick={() => SelectCountry()}

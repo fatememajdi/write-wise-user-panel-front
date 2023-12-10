@@ -42,8 +42,8 @@ const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, ti
             <DialogContentText
                 style={{ color: '#F3F3F3' }}
                 id="alert-dialog-slide-description">
-                <div style={{ fontSize: 22, marginBottom: 10 }}>{title}</div>
-                {dialog}
+                <div style={{ fontSize: 22, marginBottom: 10, color: '#F3F3F3' }}>{title}</div>
+                <div style={{color:'#F3F3F3'}}>{dialog}</div>
             </DialogContentText>
         </DialogContent>
         <DialogActions

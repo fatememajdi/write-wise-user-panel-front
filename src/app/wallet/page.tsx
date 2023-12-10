@@ -62,7 +62,7 @@ const Page: React.FC = () => {
         })
     };
 
-    async function CreatePaymentLink(quantity: number, id: string, currency: string, promotionCode: string) {
+    async function CreatePaymentLink(quantity: number, id: string, promotionCode: string) {
         setPageLoading(true);
         await client.mutate({
             mutation: CREATE_PAYMENT_LINK,
@@ -275,7 +275,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
                 <div className={styles.tokenCardMainContainer}>
                     <Image
                         className={styles.logo}
-                        src="/whiteLogo.svg"
+                        src="/logoIcon2.svg"
                         alt="Logo"
                         width="0"
                         height="0"

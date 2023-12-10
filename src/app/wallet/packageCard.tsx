@@ -10,7 +10,7 @@ import ReactLoading from 'react-loading';
 import styles from './wallet.module.css';
 
 //------------------------------------------icons
-import { BiSolidRightArrow, BiSolidLeftArrow, BiSolidCheckCircle } from 'react-icons/bi';
+import { BiSolidCheckCircle } from 'react-icons/bi';
 import { TbCurrencyIranianRial } from 'react-icons/tb';
 import { AiOutlineClose, AiFillCloseCircle } from 'react-icons/ai';
 
@@ -187,7 +187,7 @@ const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePa
                     disabled={loading || typing}
                     onClick={() => {
                         handleCancel();
-                        CreatePaymentLink(pack.adjustableQuantity ? counter : 1, pack.id, pack.currency.toLowerCase(), pack.discountName !== '' ? pack.currencyName : promotionCode);
+                        CreatePaymentLink(pack.adjustableQuantity ? counter : 1, pack.id, promotionCode);
                     }}
                     className={styles.checkoutButton}>Checkout</button>
             </div>

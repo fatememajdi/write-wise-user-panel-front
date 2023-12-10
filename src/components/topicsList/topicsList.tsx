@@ -112,7 +112,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                 <div
                                     onClick={() => HandleSelect({ id: temp.topic.id, body: temp.topic.body, type: temp.topic.type, visuals: temp.visuals }, temp.essay)}
                                     className={styles.taskCardTitle}>
-                                    <h5>{temp.topic.body}</h5>
+                                    <div className={styles.shortNameText}>{temp.topic.body}</div>
                                     {/* <span>
                                         {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}
                                     </span> */}

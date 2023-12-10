@@ -168,6 +168,7 @@ const Page: React.FC = () => {
             changeMoreEssaies(true);
             changeTopic(null);
             goTo(0);
+            toast.success('Topic deleted.');
         }).catch((err) => {
             toast.error(err.message);
         });

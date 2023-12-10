@@ -226,6 +226,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
         }).then(async (res) => {
             changeDeleteLoading(false);
             setEssaies(essaies.filter(item => item.id !== id));
+            toast.success('Essay deleted.');
         }).catch(async (err) => {
             toast.error(err.message);
             changeDeleteLoading(false);
@@ -358,7 +359,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                             ]} selectedItem={0} className={styles.topSelect} />
 
                             <div className={styles.wriritngTitle}>
-                                {type === 'general_task_1' ? 'GT Task 1 Topic' : type === 'general_task_2' ? 'Task 2 Topic' : ' AC Task 1'}
+                                {type === 'general_task_1' ? 'IELTS GT Task 1' : type === 'general_task_2' ? 'IELTS Task 2' : 'IELTS AC Task 1'}
                                 {/* {type !== 'general_task_1' ? topic && topic.subType !== undefined && topic.subType !== '' ? `(${topic.subType})`
                                     : generatedTopic && generatedTopic.subType !== undefined && generatedTopic.subType !== '' ? `(${generatedTopic.subType})`
                                         : values.subType !== undefined && values.subType !== '' && `(${values.subType})` : ''} */}
@@ -367,8 +368,13 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                             <div className={styles.writingSecondTitle}>
                                 You should spend about {type === 'general_task_2' ? 40 : 20} minutes on this task.
                             </div>
+                            {
+                                type !== 'academic_task_1' &&
+                                <div className={styles.writingInputTitle}>
+                                    {'Write about the following topic:'}
+                                </div>
+                            }
 
-                            <div className={styles.writingInputTitle}>Write about the following topic:</div>
                             {
                                 topic && essay === '' ?
                                     < div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
@@ -390,9 +396,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                             <Input
                                                                 disable={type === 'academic_task_1'}
                                                                 style={{ width: '70%' }}
-                                                                className={type === 'general_task_1' ? styles.topicInputsecond + ' ' + styles.topicInput
-                                                                    : type === 'general_task_2' ? styles.topicInputfirst + ' ' + styles.topicInput
-                                                                        : styles.topicInputthird + ' ' + styles.topicInput}
+                                                                className={styles.topicInput}
                                                                 onChange={(e: any) => {
                                                                     changeEndTyping(false);
                                                                     setChangeInput(false);
@@ -400,7 +404,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                     handleChange(e);
                                                                     ChangeTempTopic(values.body, e.target.value);
                                                                 }}
-                                                                placeHolder="Please generate a topic!"
+                                                                placeHolder={type === "academic_task_1" ? "Generate a topic..." : "Type/paste your topic here, or generate a topic."}
                                                                 secondError
                                                                 textarea
                                                                 textarea_name='topic'
@@ -478,6 +482,25 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                     }
 
                                                 </div>}
+
+                            <div className={styles.writingInputTitle}>
+                                {
+                                    type === 'academic_task_1' ?
+                                        'Summarise the information by selecting and reporting the main features, and make comparisons where relevant.' :
+                                        type === 'general_task_2' &&
+                                        'Give reasons for your answer and include any relevant examples from your own knowledge or experience.'
+                                }
+                            </div>
+
+                            <div className={styles.writingInputTitle}>Write at least {type === 'general_task_2' ? 250 : 150} words.
+                                {
+                                    changeInput && type !== 'academic_task_1' &&
+                                    <div className={styles.wordsCount}>
+                                        {CountWords(values.body, type === 'general_task_2' ? 250 : 150)}
+                                    </div>
+                                }
+                            </div>
+
                             <AnimatePresence>
                                 {
                                     type === 'academic_task_1' &&
@@ -539,15 +562,12 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 }
                             </AnimatePresence>
 
-
-                            <div className={styles.writingInputTitle}>Write at least {type === 'general_task_2' ? 250 : 150} words.
-                                {
-                                    changeInput &&
-                                    <div className={styles.wordsCount}>
-                                        {CountWords(values.body, type === 'general_task_2' ? 250 : 150)}
-                                    </div>
-                                }
-                            </div>
+                            {
+                                type === 'academic_task_1' &&
+                                <div style={{ marginLeft: 'auto', width: 'fit-content', paddingRight: 45 }} className={styles.wordsCount}>
+                                    {CountWords(values.body, 150)}
+                                </div>
+                            }
 
                             <div className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
                                 <Input
@@ -565,7 +585,9 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                             toast.error('only english letters!');
                                         }
                                     }}
-                                    placeHolder={type === 'general_task_1' ? 'Dear...' : 'Type your response here...'}
+                                    placeHolder={type === 'general_task_1' ? 'Type or paste your letter/email here...'
+                                        : type === 'general_task_2' ? 'Type your essay here...'
+                                            : 'Type/paste your report here...'}
                                     secondError
                                     textarea
                                     textarea_name='body'

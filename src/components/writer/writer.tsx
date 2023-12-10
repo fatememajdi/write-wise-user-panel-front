@@ -15,7 +15,7 @@ type _props = {
 
 const Writer: React.FC<_props> = ({ type, topic, changeEndTyping }) => {
     return <div
-        style={{ height: type === 'general_task_1' ? 250 : type === 'general_task_2' ? 200 : 115 }}
+        style={{ height: 209 }}
         className={styles.generatedWritingCard}>
 
         <Typewriter

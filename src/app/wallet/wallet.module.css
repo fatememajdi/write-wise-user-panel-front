@@ -18,8 +18,8 @@
 }
 
 .logo {
-    width: 314px;
-    height: 34px;
+    width: 414px;
+    height: 44px;
     margin-top: 36px;
 }
 
@@ -249,7 +249,7 @@
     padding: 53px 60px;
 }
 
-.selectCountryCard p {
+.selectCountryTitle {
     color: var(--color-whiteText);
     font-family: var(--color-lato);
     font-size: 24.354px;
@@ -567,6 +567,7 @@
     align-items: center;
     justify-content: center;
 }
+
 /* 
 @media(max-width: 1680px) {
     .tokenCard {
