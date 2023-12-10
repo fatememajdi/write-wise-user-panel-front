@@ -12,6 +12,7 @@ import '../../styles/global.css';
 //------------------------------------------------componnets
 const LandingBackground = dynamic(() => import("@/components/backgrounds/landingBackground/landingBackground"));
 import { StartLoader } from "@/components/Untitled";
+import Script from "next/script";
 
 const Section1: React.FC = () => {
     const router = useRouter();

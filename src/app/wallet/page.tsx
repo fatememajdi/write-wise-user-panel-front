@@ -172,6 +172,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
                 paymentHistory: status
             }
         }).then(async (res) => {
+            console.log(res);
             if (res.data.transactionHistory.transactions != 0) {
                 if (status)
                     await setTransactions([...transactions, ...res.data.transactionHistory.transactions]);

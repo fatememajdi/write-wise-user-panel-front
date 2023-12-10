@@ -7,6 +7,7 @@ import { StartLoader, StopLoader } from "@/components/Untitled";
 
 //-------------------------------------------styles
 import styles from '../styles/landing.module.css';
+import Script from 'next/script';
 
 //-------------------------------------------components
 const Section1 = dynamic(() => import('./landing/section1'));
@@ -54,6 +55,7 @@ const Home: React.FC = () => {
     :
     <Suspense fallback={<Loading />}>
       <div className={'col-12 ' + styles.landingContainer}>
+       
         <Section1 />
         <Section2 />
         <Section3 />

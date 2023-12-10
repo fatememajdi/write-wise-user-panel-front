@@ -196,8 +196,10 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     {
                         logedIn ?
                             <a
+                                href="javascript:void(Tawk_API.hideWidget())"
                                 onClick={() => {
-                                    router.push('/ielts');
+                                    router.replace('/ielts');
+                                    router.refresh();
                                     StartLoader();
                                 }}
                                 className={styles.headerItem}>Dashboard</a>

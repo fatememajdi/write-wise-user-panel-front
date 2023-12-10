@@ -542,17 +542,20 @@ const Page: React.FC = () => {
                                 animate='show'
                                 exit='hidden'
                                 className={styles.dashboardLeftCard}>
-                                <Image
-                                    onClick={() => router.push('/')}
-                                    className={styles.logo}
-                                    src="/logo3.svg"
-                                    alt="Logo"
-                                    width={isMac ? 108 : 175}
-                                    height={isMac ? 23 : 17}
-                                    loading="eager"
-                                    priority
-                                />
+                                <a
+                                    href="javascript:void(Tawk_API.showWidget())">
 
+                                    <Image
+                                        onClick={() => router.push('/')}
+                                        className={styles.logo}
+                                        src="/logo3.svg"
+                                        alt="Logo"
+                                        width={isMac ? 108 : 175}
+                                        height={isMac ? 23 : 17}
+                                        loading="eager"
+                                        priority
+                                    />
+                                </a>
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -750,7 +753,7 @@ const Page: React.FC = () => {
                 <ProfileCard profile={profile} closeProfile={changeShowProfileModal} />
             </Modal>
 
-        </div>
+        </div >
 };
 
 export default Page;

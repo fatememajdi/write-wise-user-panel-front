@@ -263,7 +263,8 @@ query TransactionHistory($page:Float!,$pageSize:Float!,$paymentHistory:Boolean!)
       paymentStatus,
       paidDate,
       essayShortId,
-      essayShortName
+      essayShortName,
+      paymentMethod
     }
   }
 }

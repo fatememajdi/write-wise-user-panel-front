@@ -15,6 +15,7 @@ import { Lato, Roboto, Inter } from "next/font/google";
 import CookieConsent from '@/components/cookies/cookies';
 import { IS_FROM_IRAN } from '@/config/graphql';
 import { Toaster } from 'react-hot-toast';
+import { usePathname } from 'next/navigation';
 
 const lato = Lato({
     subsets: ["latin"],
@@ -44,6 +45,8 @@ export default function ClientComponent({
 }) {
 
     const [fromIran, setFromIran] = React.useState<boolean>(false);
+
+    const pathname = usePathname();
 
     async function CheckCountry() {
         await client.query({
@@ -114,22 +117,9 @@ export default function ClientComponent({
                                 }}
                                 position='top-center' />
 
-                            <Script id="tawk" strategy="lazyOnload">
-                                {`
-               var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-               (function(){
-               var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-               s1.async=true;
-               s1.src='https://embed.tawk.to/651990a910c0b257248765ee/1hbmfd0ck';
-               s1.charset='UTF-8';
-               s1.setAttribute('crossorigin','*');
-               s0.parentNode.insertBefore(s1,s0);
-               })();
-              `}
-                            </Script>
                             {
                                 fromIran ?
-                                    <Script type="text/javascript">
+                                    <Script id='iran-chatBot' type="text/javascript">
                                         {
                                             `["keydown","touchmove","touchstart","mouseover"].forEach(function(v){window.addEventListener(v, function () { if (!window.isGoftinoAdded) { window.isGoftinoAdded = 1;
                                              var i = "7aFKEK", d = document, g = d.createElement("script"), s = "https://www.goftino.com/widget/" + i, l = localStorage.getItem("goftino_" + i);
@@ -137,7 +127,23 @@ export default function ClientComponent({
                                                d.getElementsByTagName("head")[0].appendChild(g); } })});`}
                                     </Script>
                                     :
-                                    <div id='tawk' />
+                                    <>
+                                        <Script id="tawk" strategy="lazyOnload">
+                                            {`
+               var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+               (function(){
+                if(${pathname !== '/ielts'}){
+               var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+               s1.async=true;
+               s1.src='https://embed.tawk.to/651990a910c0b257248765ee/1hbmfd0ck';
+               s1.charset='UTF-8';
+               s1.setAttribute('crossorigin','*');
+               s0.parentNode.insertBefore(s1,s0);
+               }})();
+              `}
+                                        </Script>
+                                        <div id='tawk' />
+                                    </>
                             }
                         </body>
 
@@ -145,6 +151,6 @@ export default function ClientComponent({
                     <CookieConsent />
                 </html>
             </ApolloProvider>
-        </SessionProvider>
+        </SessionProvider >
     )
 }
