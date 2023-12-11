@@ -52,7 +52,6 @@ const variants = {
     }),
     reset: {
         rotate: 0,
-        color: '#2E4057'
     }
 };
 
