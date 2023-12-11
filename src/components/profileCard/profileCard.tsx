@@ -1,4 +1,5 @@
 import React from "react";
+import { Switch } from 'antd';
 import Image from "next/image";
 
 //---------------------------------------------styles
@@ -22,6 +23,20 @@ type _props = {
 
 
 const ProfileCard: React.FC<_props> = ({ profile, closeProfile }) => {
+    const [developer, setDeveloper] = React.useState<boolean>(true);
+    const onChangeSwitch = (checked: boolean) => {
+        setDeveloper(checked);
+        localStorage.setItem('devMode', JSON.stringify(checked));
+    };
+
+    React.useEffect(() => {
+        let dev = localStorage.getItem('devMode');
+        if (dev)
+            setDeveloper(JSON.parse(dev));
+        else
+            setDeveloper(true);
+    }, []);
+
     return <table className={styles.profileCard}>
         <tr><span><FaUser className={styles.profileItemsIcon} /> Name</span>{CapitalStart(profile.firstName) + ' ' + CapitalStart(profile.lastName)}</tr>
         <tr><span><MdCake className={styles.profileItemsIcon} />Age</span>{profile.age + ' years old'}</tr>
@@ -57,6 +72,8 @@ const ProfileCard: React.FC<_props> = ({ profile, closeProfile }) => {
                 <IoIosArrowRoundBack className={styles.arrowLeftIcon} />  Ok
             </button>
         </tr>
+        <div style={{ marginTop: 20, padding: 10, backgroundColor: 'rgb(206, 208, 215)', borderRadius: 6, width: 'fit-content' }}>
+            {'developer '} <Switch style={{ width: 20 }} onChange={onChangeSwitch} checked={developer} /></div>
     </table>
 };
 

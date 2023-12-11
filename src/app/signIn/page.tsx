@@ -10,6 +10,8 @@ import toast from "react-hot-toast";
 import { signIn } from 'next-auth/react';
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import ReactLoading from "react-loading";
+import { motion, useAnimation } from "framer-motion";
 
 //---------------------------------------------------styles
 import styles from './signIn.module.css';
@@ -21,9 +23,6 @@ import { GrApple } from 'react-icons/gr';
 
 //---------------------------------------------------components
 const Input = dynamic(() => import("@/components/input/input"));
-const Pagination = React.lazy(
-    () => import("@/components/pagination/pagination").then(module => ({ default: module.Pagination }))
-);
 import { EMAIL_SIGN_IN } from '../../config/graphql';
 import Loading from "@/components/loading/loading";
 import { StopLoader } from "@/components/Untitled";
@@ -37,12 +36,32 @@ const EmailValidationSchema = Yup.object().shape({
         .required('Username is required!'),
 });
 
+const getRandomDelay = () => -(Math.random() * 0.7 + 0.05);
+
+const randomDuration = () => Math.random() * 0.07 + 0.23;
+
+const variants = {
+    start: (i) => ({
+        rotate: i % 2 === 0 ? [-1, 1.3, 0] : [1, -1.4, 0],
+        transition: {
+            delay: getRandomDelay(),
+            repeat: Infinity,
+            duration: randomDuration()
+        },
+        color: 'red'
+    }),
+    reset: {
+        rotate: 0,
+        color: '#2E4057'
+    }
+};
 
 const Page: React.FC = () => {
 
+    const controls = useAnimation();
     const router = useRouter();
     const [emailSignIn] = useMutation(EMAIL_SIGN_IN);
-    const [loading, changeLoading] = React.useState<boolean>(true);
+    const [loading, changeLoading] = React.useState<boolean>(false);
     const [checkTerms, setcheckTerm] = React.useState<boolean>(false);
 
     React.useEffect(() => {
@@ -53,27 +72,31 @@ const Page: React.FC = () => {
     }, []);
 
     const handleEmailSignIn = async (values: any) => {
-        // if (!checkTerms) {
-        // toast.error('Please read our Terms of Service and Privacy Policy');
-        // } else {
-        changeLoading(true);
-        await emailSignIn({
-            variables: {
-                email: values.email,
-            },
-        }).then(async (res) => {
-            await router.push('/signIn/verificationCode');
+        if (!checkTerms) {
+            controls.start("start");
             setTimeout(() => {
-                changeLoading(false);
-            }, 9000);
-            localStorage.setItem('email', res.data.emailLogin.email);
+                controls.stop();
+                controls.set("reset");
+            }, 2000);
+        } else {
+            changeLoading(true);
+            await emailSignIn({
+                variables: {
+                    email: values.email,
+                },
+            }).then(async (res) => {
+                await router.push('/signIn/verificationCode');
+                setTimeout(() => {
+                    changeLoading(false);
+                }, 9000);
+                localStorage.setItem('email', res.data.emailLogin.email);
 
+            }
+            ).catch(async (err) => {
+                toast.error(err.message);
+                changeLoading(false);
+            });
         }
-        ).catch(async (err) => {
-            toast.error(err.message);
-            changeLoading(false);
-        });
-        // }
     };
 
     const handeClickGoogle = async () => {
@@ -94,10 +117,7 @@ const Page: React.FC = () => {
             console.log('google login sign in response : ', signInResponse);
     }
 
-
-    if (loading)
-        return <Loading />
-    else return (
+    return (
         <div className={'col-12 ' + styles.signInPageContainer}>
 
             <Image
@@ -145,7 +165,12 @@ const Page: React.FC = () => {
                         <button
                             aria-label="login button"
                             className={styles.submitEmailButton} type="submit">
-                            Log in
+                            {
+                                loading ?
+                                    <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} />
+                                    :
+                                    'Log in'
+                            }
                         </button>
 
                         {/* <Pagination lenght={2} currentPage={1} color="#2E4057" /> */}
@@ -169,14 +194,18 @@ const Page: React.FC = () => {
                             <GrApple className={styles.signInOptionsIcon} />Sign in with Apple
                         </a>
 
-                        <div className={styles.footerText}>
-                            <Checkbox style={{ height: 24, width: 24 }} onChange={(e) => setcheckTerm(e.target.checked)}>
-                            </Checkbox>
+                        <motion.div
+                            variants={variants}
+                            animate={controls}
+                        >
+                            <div className={styles.footerText}>
+                                <Checkbox style={{ height: 24, width: 24 }} onChange={(e) => setcheckTerm(e.target.checked)}>
+                                </Checkbox>
 
-                            By login, you agree to our <Link href="/termsOfService">Terms of<br /> Service</Link>
-                            and <Link href="/privacyPolicy">Privacy Policy .</Link>
-                        </div>
-
+                                By login, you agree to our <Link href="/termsOfService">Terms of<br /> Service</Link>
+                                and <Link href="/privacyPolicy">Privacy Policy .</Link>
+                            </div>
+                        </motion.div>
                     </form>
                 )}
             </Formik>

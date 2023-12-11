@@ -83,7 +83,6 @@ const Page: React.FC = () => {
     const [topics, changeTopics] = React.useState<Topic[]>([]);
     const [topicsType, setTopicsType] = React.useState('general_task_1');
     const [type, setType] = React.useState('');
-    const [developer, setDeveloper] = React.useState<boolean>(true);
     const [essaies, setEssaies] = React.useState<Essay[]>([]);
     const router = useRouter();
     const [essayTopic, changeTopic] = React.useState<topic | null>();
@@ -268,13 +267,13 @@ const Page: React.FC = () => {
     };
 
     async function GetScores(essaies: Essay[], essay?: Essay) {
-
+        let dev = await localStorage.getItem('devMode');
         let newEssay: Essay[] = essaies;
         client.mutate({
             mutation: SCORE_ESSAY,
             variables: {
                 id: essay ? essay.id : newEssay[0].id,
-                test: developer
+                test: dev ? JSON.parse(dev) : true
             }
         }).then(async (res) => {
         }).catch((err) => {
@@ -434,11 +433,6 @@ const Page: React.FC = () => {
             }
             GetProfile();
         };
-        let dev = localStorage.getItem('devMode');
-        if (dev)
-            setDeveloper(JSON.parse(dev));
-        else
-            setDeveloper(true);
     }, []);
 
     const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {

@@ -2,8 +2,6 @@ import React from "react";
 import Popover from '@mui/material/Popover';
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { signOut } from 'next-auth/react';
-import { useSession } from "next-auth/react";
 
 //--------------------------------styles
 import styles from './dashboardPopOver.module.css';
@@ -14,6 +12,8 @@ import { RxExit } from 'react-icons/rx';
 
 //--------------------------------components
 import { StartLoader } from "@/components/Untitled";
+import client from "@/config/applloClient";
+import { IS_FROM_IRAN } from "@/config/graphql";
 const DialogComponent = dynamic(() => import("../../components/dialog/dialog"), { ssr: false });
 
 interface _props {
@@ -34,11 +34,6 @@ const menuItems = [
         title: 'Wallet',
         icon: Wallet,
         route: '/wallet'
-    },
-    {
-        title: 'Support',
-        icon: Support,
-        route: ''
     }
 ];
 
@@ -47,6 +42,18 @@ const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogO
     const router = useRouter();
     const Open = Boolean(anchorEl);
     const id = Open ? 'simple-popover' : undefined;
+    const [fromIran, setFromIran] = React.useState<boolean>(false);
+
+    async function CheckCountry() {
+        await client.query({
+            query: IS_FROM_IRAN,
+            fetchPolicy: "no-cache"
+        }).then(async (res) => {
+            setFromIran(res.data.isFromIran);
+        }).catch((err) => {
+            console.log("get county error : ", err);
+        });
+    };
 
     function handleClose() {
         setOpen(false);
@@ -55,7 +62,12 @@ const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogO
     async function handleDelete() {
         setOpen(false);
         await LogOut();
-    }
+    };
+
+
+    React.useEffect(() => {
+        CheckCountry();
+    }, []);
 
     return <>
         <Popover
@@ -91,6 +103,10 @@ const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogO
                         </a>
                     )
                 }
+                <a href={fromIran ? 'https://www.goftino.com/c/7aFKEK' : 'https://tawk.to/chat/651990a910c0b257248765ee/1hbmfd0ck'} key={3} className={styles.menuItemCard}>
+                    <Support />
+                    <span>Support</span>
+                </a>
                 <button
                     onClick={() => setOpen(true)}
                     className={styles.logOutButton}

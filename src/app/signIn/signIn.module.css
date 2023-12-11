@@ -134,7 +134,7 @@
     font-size: 14px;
     line-height: 22px;
     text-align: center;
-    color: var(--color-seccondary);
+    color: inherit;
     margin-top: 48px;
 }
 
@@ -214,6 +214,10 @@
     justify-content: center;
     color: var(--color-whiteText);
     padding: 0px 12px;
+}
+
+.resendButton {
+    min-width: 198px;
 }
 
 .prossessBar {

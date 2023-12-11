@@ -264,7 +264,8 @@ query TransactionHistory($page:Float!,$pageSize:Float!,$paymentHistory:Boolean!)
       paidDate,
       essayShortId,
       essayShortName,
-      paymentMethod
+      paymentMethod,
+      taskType
     }
   }
 }
