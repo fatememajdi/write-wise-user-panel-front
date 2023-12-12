@@ -149,7 +149,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     };
 
     //-------------------------------------------------------------------add new essay
-    async function AddNewEssay(Topic: string, body: string) {
+    async function AddNewEssay(Topic: string, body: string, resetForm: any) {
         // changeEssayLoading(true);
         // changeLoading(true);
         setChangeInput(false);
@@ -163,15 +163,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
         await changeLoading(false);
 
         if (id != null) {
-            changeTabBarLoc(true);
-            setTimeout(() => {
-                changeEndAnimation(true);
-            }, 1000);
-            setTimeout(() => {
-                DivRef2.scrollIntoView({ behavior: "smooth" });
-            }, 1400);
             await setAddEssayLoading(true);
-
             await client.mutate({
                 mutation: ADD_ESSAY,
                 variables: {
@@ -180,6 +172,14 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                     durationMillisecond: Date.now() - essayTime
                 }
             }).then(async (res) => {
+                changeTabBarLoc(true);
+                setTimeout(() => {
+                    changeEndAnimation(true);
+                }, 1000);
+                setTimeout(() => {
+                    DivRef2.scrollIntoView({ behavior: "smooth" });
+                }, 1400);
+
                 let lastTemp = await localStorage.getItem(type === 'general_task_1' ? 'lastTempEssay' : type === 'general_task_2' ? 'lastTempEssay2' : 'lastTempEssay3');
                 let t = await localStorage.getItem('tempsEssayList');
                 let tempsLiset: SelectedTopicTempEssay[] = [];
@@ -208,7 +208,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 }, ...essaies]);
                 changeCcurrentId(id);
                 setAddEssayLoading(false);
-
+                resetForm();
             }).catch(async (err) => {
                 toast.error(err.message);
                 changeLoading(false);
@@ -321,11 +321,14 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     }, []);
 
     React.useEffect(() => {
-        if (imagePixels !== 1)
+        if (imagePixels > 1) {
             setTimeout(() => {
-                changeImagePixels(imagePixels - 2);
+                changeImagePixels(imagePixels - 5);
             }, 1000);
-
+            console.log(imagePixels)
+        } else {
+            return;
+        }
     });
 
     const nameregex = /^[ A-Za-z ][ A-Za-z0-9  `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n]*$/;
@@ -345,8 +348,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
         enableReinitialize
         validationSchema={EssayValidationSchema}
         onSubmit={async (values, { resetForm }) => {
-            await AddNewEssay(values.topic, values.body);
-            resetForm();
+            await AddNewEssay(values.topic, values.body, resetForm);
+            // resetForm();
         }}>{({
             values,
             errors,
@@ -409,7 +412,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                             :
                                                             <Input
                                                                 disable={type === 'academic_task_1'}
-                                                                style={{ width: '70%' }}
+                                                                style={{ width: '70%', marginTop: 0 }}
                                                                 className={styles.topicInput}
                                                                 onChange={(e: any) => {
                                                                     changeEndTyping(false);
@@ -435,7 +438,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                         />
 
                                                         <button
-                                                            aria-label="edit tipic"
+                                                            aria-label="generate tipic"
                                                             onClick={async () => {
                                                                 changeGeneratedTopic(null);
                                                                 setChangeInput(false);
@@ -444,7 +447,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                 changeGenerateWriting(true);
                                                                 await GenerateTopic(setFieldValue, values.body, values.subType);
                                                             }}
-                                                            type="button" className={styles.generateButton}>
+                                                            type="button"
+                                                            className={styles.generateButton}>
                                                             <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
                                                             {
                                                                 generatedTopic ? 'Regenereate' :
