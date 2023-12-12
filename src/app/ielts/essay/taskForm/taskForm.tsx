@@ -325,7 +325,6 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             setTimeout(() => {
                 changeImagePixels(imagePixels - 5);
             }, 1000);
-            console.log(imagePixels)
         } else {
             return;
         }
