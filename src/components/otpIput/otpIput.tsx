@@ -13,9 +13,10 @@ export interface Props {
     style?: any,
     input_name?: string,
     input_error?: any,
+    disable?: boolean
 }
 
-export default function OtpInput({ value, valueLength, onChange, input_name, input_error }: Props) {
+export default function OtpInput({ value, valueLength, onChange, input_name, input_error, disable }: Props) {
 
     const valueItems = useMemo(() => {
         const valueArray = value.split('')
@@ -128,6 +129,7 @@ export default function OtpInput({ value, valueLength, onChange, input_name, inp
             <div className={input_error ? styles.formSectionInputError + ' ' + styles.otpGroup : styles.otpGroup}>
                 {valueItems.map((digit, idx) => (
                     <input
+                        disabled={disable}
                         onChange={(e) => { inputOnChange(e, idx) }}
                         key={idx}
                         type='text'

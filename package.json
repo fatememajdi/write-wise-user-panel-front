@@ -53,6 +53,7 @@
     "react-infinite-scroller": "^1.2.6",
     "react-loading": "^2.0.3",
     "react-multi-carousel": "^2.8.4",
+    "react-pixelify": "^0.2.2",
     "react-responsive": "^9.0.2",
     "react-responsive-carousel": "^3.2.23",
     "socket.io-client": "^4.7.2",

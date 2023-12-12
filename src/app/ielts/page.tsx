@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import client from '@/config/applloAuthorizedClient';
 import { AnimatePresence, motion } from 'framer-motion';
 import ReactLoading from 'react-loading';
 import { signOut } from 'next-auth/react';
@@ -20,7 +19,6 @@ import styles from './ielts.module.css';
 
 //-----------------------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-import { DELETE_TOPIC, GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY } from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
 const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/dashboardPopOver"));
 const ChooseType = dynamic(() => import("./essay/chooseType/chooseType"));
@@ -41,6 +39,8 @@ import { FiMoreVertical } from 'react-icons/fi';
 import { Essay } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
 import { UserProfile } from "../../../types/profile";
+import { GetEsseies, GetScore, GetTopics, GetUserProfile } from "@/hooks/fetchData";
+import { DeleteTopics } from "@/hooks/actions";
 
 type topic = {
     id: string,
@@ -153,92 +153,56 @@ const Page: React.FC = () => {
             setIsOpen(false);
     };
 
-    async function DeleteTopic(id: string) {
-        await client.mutate({
-            mutation: DELETE_TOPIC,
-            variables: {
-                id: id
-            }
-        }).then(async (res) => {
-            await changeTopics(topics.filter(item => item.id !== id));
-            changeTabBarLoc(false);
-            changeEndAnimation(false);
-            setEssaies([]);
-            changeMoreEssaies(true);
-            changeTopic(null);
-            goTo(0);
-            toast.success('Topic deleted.');
-        }).catch((err) => {
-            toast.error(err.message);
-        });
-    };
+    async function UpdateTopicsList(id: string) {
+        await changeTopics(topics.filter(item => item.id !== id));
+        changeTabBarLoc(false);
+        changeEndAnimation(false);
+        setEssaies([]);
+        changeMoreEssaies(true);
+        changeTopic(null);
+        goTo(0);
+        toast.success('Topic deleted.');
+    }
+
+    async function DeleteTopic(id: string) { await DeleteTopics(id, UpdateTopicsList); };
 
     //----------------------------------------------------------------get user essaies
     async function GetUserEssaies(id: string) {
-        await client.query({
-            query: GET_USER_ESSAY,
-            variables: {
-                id: id,
-                page: essaies.length / 10 + 1,
-                pageSize: 10
-            },
-            fetchPolicy: "no-cache"
-        }).then(async (res) => {
-            if (res.data.getUserEssay.essaies.length != 0) {
-                await setEssaies([...essaies, ...res.data.getUserEssay.essaies]);
-                if (res.data.getUserEssay.essaies.length % 10 !== 0)
-                    changeMoreEssaies(false);
-            } else {
-                changeMoreEssaies(false);
-            }
-        }).catch((err) => {
-            // toast.error(err.message);
-        });
+        let Essaies: Essay[] = await GetEsseies(id, essaies.length);
+        if (Essaies.length > 0)
+            await setEssaies([...essaies, ...Essaies]);
+        else
+            changeMoreEssaies(false);
+        if (Essaies.length % 10 !== 0)
+            changeMoreEssaies(false);
     };
 
     //----------------------------------------------------------------get topics list
     async function GetTopicsList(type?: string) {
-        await client.query({
-            query: GET_USER_TOPICS,
-            variables: {
-                type: type ? type : topicsType,
-                page: topics.length / 10 + 1,
-                pageSize: 10
-            },
-            fetchPolicy: "no-cache"
-        }).then(async (res) => {
-            if (res.data.getUserTopics.userTopics.length != 0) {
-                await changeTopics([...topics, ...res.data.getUserTopics.userTopics]);
-                if (res.data.getUserTopics.userTopics.length % 10 !== 0)
-                    changeMoreTopics(false);
-            } else {
-                changeMoreTopics(false);
-            }
-        }).catch((err) => {
-            toast.error(err.message);
-        });
+        let Topics: Topic[] = await GetTopics(type ? type : topicsType, topics.length);
+        if (Topics.length > 0)
+            await changeTopics([...topics, ...Topics]);
+        else
+            changeMoreTopics(false);
+        if (Topics.length % 10 !== 0)
+            changeMoreTopics(false);
     };
+
+    async function GetFirstPageOfTopics(type: string) {
+        let Topics: Topic[] = await GetTopics(type, 0);
+        if (Topics.length > 0)
+            await changeTopics(Topics);
+        else
+            changeMoreTopics(false);
+        if (Topics.length % 10 !== 0)
+            changeMoreTopics(false);
+    }
 
     async function SelectType(type: string) {
         changeTopicsLoading(true);
         await setTopicsType(type);
         changeMoreTopics(true);
-        await client.query({
-            query: GET_USER_TOPICS,
-            variables: {
-                type: type,
-                page: 1,
-                pageSize: 10
-            },
-            fetchPolicy: "no-cache"
-        }).then(async (res) => {
-            await changeTopics(res.data.getUserTopics.userTopics);
-            if (res.data.getUserTopics.userTopics.length % 10 !== 0)
-                changeMoreTopics(false);
-
-        }).catch((err) => {
-            toast.error(err.message);
-        });
+        await GetFirstPageOfTopics(type);
         changeTopicsLoading(false);
     };
 
@@ -255,30 +219,12 @@ const Page: React.FC = () => {
             setIsOpen(false);
     };
 
-    async function GetProfile() {
-        await client.query({
-            query: GET_PROFILE,
-            fetchPolicy: "no-cache"
-        }).then(async (res) => {
-            setProfile(res.data.getUserProfile);
-        }).catch((err) => {
-            toast.error(err.message);
-        });
-    };
+    async function GetProfile() { setProfile(await GetUserProfile()) };
 
     async function GetScores(essaies: Essay[], essay?: Essay) {
         let dev = await localStorage.getItem('devMode');
         let newEssay: Essay[] = essaies;
-        client.mutate({
-            mutation: SCORE_ESSAY,
-            variables: {
-                id: essay ? essay.id : newEssay[0].id,
-                test: dev ? JSON.parse(dev) : true
-            }
-        }).then(async (res) => {
-        }).catch((err) => {
-            toast.error(err.message);
-        })
+        await GetScore(essay ? essay.id : newEssay[0].id, dev ? JSON.parse(dev) : true)
 
         socket.on("newMessage", async (data) => {
             let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
@@ -463,25 +409,7 @@ const Page: React.FC = () => {
             }
             else {
                 changeTopicsLoading(true);
-                await client.query({
-                    query: GET_USER_TOPICS,
-                    variables: {
-                        type: topicsType,
-                        page: 1,
-                        pageSize: 10
-                    },
-                    fetchPolicy: "no-cache"
-                }).then(async (res) => {
-                    if (res.data.getUserTopics.userTopics.length != 0) {
-                        await changeTopics(res.data.getUserTopics.userTopics);
-                        if (res.data.getUserTopics.userTopics.length % 10 !== 0)
-                            changeMoreTopics(false);
-                    } else {
-                        changeMoreTopics(false);
-                    }
-                }).catch((err) => {
-                    toast.error(err.message);
-                });
+                await GetFirstPageOfTopics(topicsType);
                 changeTopicsLoading(false);
             };
         } finally {

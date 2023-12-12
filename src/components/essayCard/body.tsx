@@ -23,6 +23,7 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
                 <LuAlarmClock className={styles.clockIcon} />
                 {essay.durationMillisecond && Math.round(essay.durationMillisecond / 60000) + ' minutes'}
                 <span>{new Intl.DateTimeFormat('en-US').format((new Date(essay?.date)))}</span>
+                <span>{new Date(essay?.date).getHours() + ':' + new Date(essay?.date).getMinutes()}</span>
                 <span>{essay.shortId}</span>
             </div>
             <div className={styles.writingEssayTopic}>

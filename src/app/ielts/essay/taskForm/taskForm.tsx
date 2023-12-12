@@ -1,14 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { lazy } from "react";
+import React from "react";
+import dynamic from "next/dynamic";
 import { Formik } from 'formik';
 import client from '@/config/applloAuthorizedClient';
 import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Image from "next/image";
-import { useMediaQuery } from 'react-responsive';
 import ReactLoading from 'react-loading';
-import { AnimatePresence, motion } from 'framer-motion';
 import toast from "react-hot-toast";
+import * as Yup from 'yup';
+import { Pixelify } from "react-pixelify";
+
 
 //--------------------------------------styles
 import styles from '../../../../styles/task.module.css';
@@ -20,13 +22,13 @@ import {
 } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
-const Input = lazy(() => import('@/components/input/input'));
-const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
+const Input = dynamic(() => import('@/components/input/input'));
+const SelectComponents = dynamic(() => import('@/components/customSelect/customSelect'));
 import { CheckCountWords, CountWords } from "@/components/Untitled";
-const Text = lazy(() => import("@/components/text/text"));
-const SubTypeSelect = lazy(() => import("@/components/subTypeSelect/subTypeSelect"));
-const Writer = lazy(() => import("@/components/writer/writer"));
-const EssayProcessBar = lazy(() => import("@/components/essayProcessBar/essayProcessBar"));
+const Text = dynamic(() => import("@/components/text/text"));
+const SubTypeSelect = dynamic(() => import("@/components/subTypeSelect/subTypeSelect"));
+const Writer = dynamic(() => import("@/components/writer/writer"));
+const EssayProcessBar = dynamic(() => import("@/components/essayProcessBar/essayProcessBar"));
 
 //--------------------------------------icons
 import { Reload } from "@/../public";
@@ -79,7 +81,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
     const [showImage, changeShowImage] = React.useState<boolean>(false);
     const [modalImage, changeModalImage] = React.useState<string>();
-    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+    const [imagePixels, changeImagePixels] = React.useState<number>(1);
 
     const handleCancelImageModal = () => changeShowImage(false);
 
@@ -99,7 +101,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 questionType: subType
             }
         }).then(async (res) => {
-            console.log(res);
+            changeImagePixels(15);
             await changeGeneratedTopic({
                 id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body,
                 type: res.data.getRandomWriting.type, subType: res.data.getRandomWriting.questionType,
@@ -318,7 +320,21 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
         ChackTopic();
     }, []);
 
+    React.useEffect(() => {
+        if (imagePixels !== 1)
+            setTimeout(() => {
+                changeImagePixels(imagePixels - 2);
+            }, 1000);
+
+    });
+
     const nameregex = /^[ A-Za-z ][ A-Za-z0-9  `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n]*$/;
+
+    const EssayValidationSchema = Yup.object().shape({
+        body: Yup
+            .string()
+            .required('Body is required!'),
+    });
 
     return <Formik
         initialValues={{
@@ -327,6 +343,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             subType: ''
         }}
         enableReinitialize
+        validationSchema={EssayValidationSchema}
         onSubmit={async (values, { resetForm }) => {
             await AddNewEssay(values.topic, values.body);
             resetForm();
@@ -360,9 +377,6 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
                             <div className={styles.wriritngTitle}>
                                 {type === 'general_task_1' ? 'IELTS GT Task 1' : type === 'general_task_2' ? 'IELTS Task 2' : 'IELTS AC Task 1'}
-                                {/* {type !== 'general_task_1' ? topic && topic.subType !== undefined && topic.subType !== '' ? `(${topic.subType})`
-                                    : generatedTopic && generatedTopic.subType !== undefined && generatedTopic.subType !== '' ? `(${generatedTopic.subType})`
-                                        : values.subType !== undefined && values.subType !== '' && `(${values.subType})` : ''} */}
                             </div>
 
                             <div className={styles.writingSecondTitle}>
@@ -501,66 +515,46 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 }
                             </div>
 
-                            <AnimatePresence>
-                                {
-                                    type === 'academic_task_1' &&
-                                    <div className={styles.imagesContainer + ' col-12'}>
+                            {
+                                type === 'academic_task_1' &&
+                                <div className={styles.imagesContainer + ' col-12'}>
 
-                                        {
-                                            topic && topic.visuals && topic.visuals?.length > 0 ?
-                                                topic.visuals.map((item, index) =>
+                                    {
+                                        topic && topic.visuals && topic.visuals?.length > 0 ?
+                                            topic.visuals.map((item, index) =>
+                                                <div
+                                                    key={index}
+                                                    onClick={() => handleSelectImage(item.url)}
+                                                    className={styles.imageCard}>
+
+                                                    <Pixelify
+                                                        src={item.url}
+                                                        pixelSize={imagePixels}
+                                                        height={428}
+                                                        width={600}
+                                                    />
+
+                                                </div>)
+                                            : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
+                                                generatedTopic.visuals.map((item, index) =>
                                                     <div
                                                         key={index}
                                                         onClick={() => handleSelectImage(item.url)}
                                                         className={styles.imageCard}>
-                                                        <motion.div
-                                                            initial={{ filter: "blur(10px)" }}
-                                                            animate={{
-                                                                filter: "blur(0px)",
-                                                                transition: { type: "spring", duration: 10 }
-                                                            }}
-                                                        >
-                                                            <Image
-                                                                src={item.url}
-                                                                alt="academic task chart"
-                                                                height='428'
-                                                                width='600'
-                                                                loading="eager"
-                                                                priority
-                                                            />
-                                                        </motion.div>
+
+                                                        <Pixelify
+                                                            src={item.url}
+                                                            pixelSize={imagePixels}
+                                                            height={428}
+                                                            width={600}
+                                                        />
                                                     </div>)
-                                                : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
-                                                    generatedTopic.visuals.map((item, index) =>
-                                                        <div
-                                                            key={index}
-                                                            onClick={() => handleSelectImage(item.url)}
-                                                            className={styles.imageCard}>
-                                                            <motion.div
-                                                                initial={{ filter: "blur(10px)" }}
-                                                                animate={{
-                                                                    filter: "blur(0px)",
-                                                                    transition: { type: "spring", duration: 10 }
-                                                                }}
-                                                            >
-                                                                <Image
-                                                                    key={index}
-                                                                    src={item.url}
-                                                                    alt="academic task chart"
-                                                                    height='428'
-                                                                    width='600'
-                                                                    loading="eager"
-                                                                    priority
-                                                                />
-                                                            </motion.div>
-                                                        </div>)
-                                                    : <div className={styles.emptyImageCard}>
-                                                        <IoMdImage fontSize={70} />
-                                                    </div>
-                                        }
-                                    </div>
-                                }
-                            </AnimatePresence>
+                                                : <div className={styles.emptyImageCard}>
+                                                    <IoMdImage fontSize={70} />
+                                                </div>
+                                    }
+                                </div>
+                            }
 
                             {
                                 type === 'academic_task_1' &&
@@ -571,6 +565,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
                             <div className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
                                 <Input
+                                    style={errors.body ? { borderColoe: 'red' } : {}}
                                     disable={!endTyping || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249)}
                                     className={styles.topicInput + ' ' + styles.essayInput}
                                     onChange={(e: any) => {
@@ -593,9 +588,9 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                     textarea_name='body'
                                     textarea_value={values.body}
                                     textarea_error={errors.body && touched.body && errors.body}
-                                />
-
-                                <EssayProcessBar type={type} changeInput={changeInput} loading={addEssayLoading} />
+                                >
+                                    <EssayProcessBar type={type} changeInput={changeInput} loading={addEssayLoading} error={errors.body ? true : false} />
+                                </Input>
 
                             </div>
 

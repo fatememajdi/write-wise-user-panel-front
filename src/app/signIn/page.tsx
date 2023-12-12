@@ -152,6 +152,7 @@ const Page: React.FC = () => {
                         <div className={'col-12 ' + styles.inputCard}>
                             <div className={styles.inputEmailTitle}>Email</div>
                             <Input
+                                disable={loading}
                                 className={styles.emailInput}
                                 onChange={handleChange}
                                 input
@@ -201,8 +202,8 @@ const Page: React.FC = () => {
                                 <Checkbox style={{ height: 24, width: 24 }} onChange={(e) => setcheckTerm(e.target.checked)}>
                                 </Checkbox>
 
-                                By login, you agree to our <Link href="/termsOfService">Terms of<br /> Service</Link>
-                                and <Link href="/privacyPolicy">Privacy Policy .</Link>
+                                By login, you agree to our <Link href="/termsOfService">Terms of<br /> Service </Link>
+                                and <Link href="/privacyPolicy">Privacy Policy.</Link>
                             </div>
                         </motion.div>
                     </form>

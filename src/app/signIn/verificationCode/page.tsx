@@ -134,6 +134,7 @@ const VerificationCode: React.FC = () => {
                     <div className={'col-12 ' + styles.inputCard}>
                         <div className={styles.inputEmailTitle}>Code {seconds !== 0 && `${seconds}s`} </div>
                         <OtpInput
+                            disable={loading}
                             valueLength={6}
                             onChange={(e) => setFieldValue('code', e)}
                             input_name='code'
@@ -148,7 +149,8 @@ const VerificationCode: React.FC = () => {
 
 
                     <button
-                        style={{ marginBottom: 0 }}
+                        disabled={values.code.length < 6}
+                        style={values.code.length < 6 ? { opacity: 0.5, marginBottom: 0 } : { opacity: 1, marginBottom: 0 }}
                         aria-label="login button"
                         className={styles.submitEmailButton} type="submit">
                         {

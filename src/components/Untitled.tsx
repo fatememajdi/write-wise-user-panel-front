@@ -32,14 +32,8 @@ export function CountWords(text: string, Words: number) {
 
     return <div style={{ fontSize: 20, fontWeight: 500, color: count < Words ? '#DA282E' : Words === 250 && count > 300 ? '#DA282E' : Words === 150 && count > 220 ? '#DA282E' : '#28B81B' }}>
         {'Word count: ' + count}
-        {/* {
-            message ?
-                count < 100 ? ' words error' : count < 150 ? ' words warning' : count < 200 ? ' words success' : ' words error'
-                :
-                ' words'
-        } */}
         <br />
-        <span>(Excluding articles)</span>
+        <span style={{ color: '#2E4057', fontSize: 16 }}>(Excluding articles)</span>
     </div>;
 };
 

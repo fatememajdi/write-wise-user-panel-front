@@ -3,7 +3,7 @@ import ReactLoading from 'react-loading';
 import { AnimatePresence, motion } from 'framer-motion';
 
 //--------------------------------styles 
-import styles from '../../styles/task.module.css';
+import styles from './essayProcessBar.module.css';
 
 //--------------------------------componnets
 const Timer = lazy(() => import("@/components/timer/timer"));
@@ -11,10 +11,11 @@ const Timer = lazy(() => import("@/components/timer/timer"));
 type _props = {
     changeInput: boolean,
     type: string,
-    loading: boolean
+    loading: boolean,
+    error: boolean
 };
 
-const EssayProcessBar: React.FC<_props> = ({ changeInput, type, loading }) => {
+const EssayProcessBar: React.FC<_props> = ({ changeInput, type, loading, error }) => {
     const showAnimation = {
         hidden: {
             width: '100%',
@@ -31,7 +32,7 @@ const EssayProcessBar: React.FC<_props> = ({ changeInput, type, loading }) => {
     };
 
     return <AnimatePresence>
-        <div className={styles.scoreButtonContainer}>
+        <div style={error ? { backgroundColor: '#DA282E', background: '#DA282E' } : {}} className={styles.scoreButtonContainer}>
             {
                 changeInput &&
                 <div className={styles.timer}>
@@ -45,6 +46,7 @@ const EssayProcessBar: React.FC<_props> = ({ changeInput, type, loading }) => {
                     </div>
                     :
                     <button
+                        style={error ? { color: '#DA282E', borderColor: '#DA282E' } : {}}
                         type="submit"
                         className={styles.scoreButton}>
                         <div>
@@ -58,6 +60,7 @@ const EssayProcessBar: React.FC<_props> = ({ changeInput, type, loading }) => {
                 variants={showAnimation}
                 initial='hidden'
                 exit='hidden'
+                style={error ? { backgroundColor: '#DA282E' } : {}}
                 className={styles.prossessBar}></motion.div>
         </div>
     </AnimatePresence>
