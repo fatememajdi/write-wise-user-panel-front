@@ -94,7 +94,7 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
                             style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
                         {!item.active && <Lock className={styles.lockIcon} />}
                         {
-                            index === 1 && !essay.overallBandScore ? essay.scoreJobStatus !== JOBSTATUS[4] ?
+                            index === 1 && !essay.overallBandScore || essay.overallBandScore <= 0 ? essay.scoreJobStatus !== JOBSTATUS[4] ?
                                 <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
                                 : essay.scoreJobStatus === JOBSTATUS[4] ?
                                     <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>

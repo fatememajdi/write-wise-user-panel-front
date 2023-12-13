@@ -24,8 +24,30 @@ interface props {
     children?: React.ReactNode
 };
 
-const Input: React.FC<props> = ({ ...props }) =>
-    <div
+const Input: React.FC<props> = ({ ...props }) => {
+
+    function onPaste(event) {
+        var brRegex = /\r?\n/g;
+        let paste = (event.clipboardData || window.Clipboard).getData('text/plain');
+        let divText = paste.split(brRegex)
+
+        const selection = window.getSelection();
+        if (!selection.rangeCount)
+            return false;
+
+        let div = document.createElement('textarea');
+        divText.forEach(text => {
+            div.appendChild(document.createTextNode(text));
+            div.appendChild(document.createElement("br"));
+        });
+
+        selection.deleteFromDocument();
+        selection.getRangeAt(0).insertNode(div);
+
+        event.preventDefault();
+    }
+
+    return <div
         className={styles.formSectionContainer + ' ' + props.className}
         style={{ ...props.style, alignItems: props.textarea ? 'flex-start' : 'center' }}
     >
@@ -63,6 +85,7 @@ const Input: React.FC<props> = ({ ...props }) =>
                 : styles.formSectionInput + ' ' + props.className}>
 
                 <textarea
+                    // onPaste={(event) => onPaste(event)}
                     spellCheck={false}
                     disabled={props.disable}
                     placeholder={props.placeHolder}
@@ -79,5 +102,5 @@ const Input: React.FC<props> = ({ ...props }) =>
             </div>
         }
     </div>
-
+}
 export default Input;
