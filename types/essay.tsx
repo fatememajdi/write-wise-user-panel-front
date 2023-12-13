@@ -14,7 +14,11 @@ export type Essay = {
     durationMillisecond?: number,
     essayRecommendations?: any,
     essayInsights?: any,
-    shortId?:string
+    shortId?: string,
+    scoreJobStatus: any,
+    recommendationJobStatus: any,
+    insightJobStatus: any,
+    topicId: string
 };
 
 export type tempEssay = {
@@ -34,4 +38,12 @@ export type tempEssay = {
 export type SelectedTopicTempEssay = {
     essay: string;
     id: string
+};
+
+export enum JOBSTATUS {
+    FINISH,
+    PRE_QUEUED,
+    POST_QUEUED,
+    PROCESSING,
+    FAIL
 };

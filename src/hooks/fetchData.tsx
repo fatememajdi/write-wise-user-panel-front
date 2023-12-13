@@ -7,7 +7,7 @@ import { UserProfile } from "../../types/profile";
 import toast from "react-hot-toast";
 
 export async function GetEsseies(id: string, page: number) {
-    let essaies: Essay[] = []
+    let essaies: Essay[] = [];
     await client.query({
         query: GET_USER_ESSAY,
         variables: {

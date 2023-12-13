@@ -21,7 +21,7 @@ import { HiExclamationCircle } from 'react-icons/hi';
 import styles from './essayCard.module.css';
 
 //----------------------------------------------types
-import { Essay } from "../../../types/essay";
+import { Essay, JOBSTATUS } from "../../../types/essay";
 
 type _props = {
     essay: Essay,
@@ -73,15 +73,12 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
     const [open, setOpen] = React.useState<boolean>(false);
     const { step, goTo, currentStepIndex } = useMultiStepForm(
         [
-            <EssayScore key={0} essay={essay} goTo={analysisStep} GetScores={Retry} />,
+            <EssayScore key={0} essay={essay} GetScores={Retry} />,
             <EssayBody key={1} essay={essay} setFieldValue={setFieldValue} handleDelete={handleDelete} divRef={divRef} setOpen={setOpen} topic={topic} OnEditEssay={OnEditEssay} />,
             <EssayAnalysis key={2} essay={essay} GetScores={Retry} />,
-            <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} GetScores={Retry} essay={essay} goTo={GoTo} />,
-            <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} GetScores={Retry} />
+            <ScoreInsightsCard key={4} Insight={essay.essayInsights as string} GetScores={Retry} essay={essay} />,
+            <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} GetScores={Retry} essay={essay} />
         ]);
-
-    function analysisStep() { goTo(2) };
-    function GoTo(index: number) { goTo(index) };
 
     return <div className={styles.writingDataCard}>
         <div className={styles.writingDataTabBarCard}>
@@ -97,27 +94,24 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
                             style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
                         {!item.active && <Lock className={styles.lockIcon} />}
                         {
-                            index === 1 ? essay.overallBandScore === undefined ?
+                            index === 1 && !essay.overallBandScore ? essay.scoreJobStatus !== JOBSTATUS[4] ?
                                 <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                : essay.taskAchievementScore <= 0 || essay.coherenceAndCohesionScore <= 0
-                                    || essay.lexicalResourceScore <= 0 || essay.grammaticalRangeAndAccuracyScore <= 0 ?
+                                : essay.scoreJobStatus === JOBSTATUS[4] ?
                                     <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
 
-                                : index === 2 ? essay.taskAchievementSummery === undefined || essay.coherenceAndCohesionSummery === undefined ||
-                                    essay.grammaticalRangeAndAccuracySummery === undefined || essay.lexicalResourceSummery === undefined ?
-                                    <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} /> :
-                                    essay.taskAchievementSummery === '' || essay.coherenceAndCohesionSummery === '' ||
-                                        essay.grammaticalRangeAndAccuracySummery === '' || essay.lexicalResourceSummery === '' ?
+                                : index === 2 && !essay.taskAchievementSummery ? essay.scoreJobStatus !== JOBSTATUS[4] ?
+                                    <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
+                                    : essay.scoreJobStatus === JOBSTATUS[4] ?
                                         <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
 
-                                    : index === 3 ? essay.essayInsights === undefined ?
+                                    : index === 3 && !essay.essayInsights ? essay.insightJobStatus !== JOBSTATUS[4] ?
                                         <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                        : essay.essayInsights === '' ?
+                                        : essay.insightJobStatus === JOBSTATUS[4] ?
                                             <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
 
-                                        : index === 4 ? essay.essayRecommendations === undefined ?
+                                        : index === 4 && !essay.essayRecommendations ? essay.recommendationJobStatus !== JOBSTATUS[4] ?
                                             <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                            : essay.essayRecommendations === '' ?
+                                            : essay.recommendationJobStatus === JOBSTATUS[4] ?
                                                 <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
                                             : <></>
                         }

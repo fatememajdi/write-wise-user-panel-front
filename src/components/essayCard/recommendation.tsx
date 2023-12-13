@@ -9,8 +9,11 @@ const RetryCard = dynamic(() => import("./retryCard"));
 import styles from './essayCard.module.css';
 import './recommendation.css';
 
+//---------------------------------------------types
+import { Essay, JOBSTATUS } from "../../../types/essay";
 
-const ScoreRecommendationCard: React.FC<{ recommendation: string, GetScores: any }> = ({ recommendation, GetScores }) => {
+
+const ScoreRecommendationCard: React.FC<{ recommendation: string, essay: Essay, GetScores: any }> = ({ recommendation, GetScores, essay }) => {
     const [htmlString, setHtmlString] = React.useState(recommendation);
 
     const createMarkup = () => {
@@ -19,11 +22,10 @@ const ScoreRecommendationCard: React.FC<{ recommendation: string, GetScores: any
 
     return (<div style={recommendation === '' ? { padding: 0 } : {}} className={styles.writingScoreCard}>
         {
-            recommendation === '' ?
+            recommendation === '' || !recommendation ? essay.recommendationJobStatus === JOBSTATUS[4] ?
                 <RetryCard GetScores={GetScores} />
-                : recommendation === undefined ?
-                    <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
-                    : <div dangerouslySetInnerHTML={createMarkup()} />
+                : <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#2E4057'} height={100} width={100} /></div>
+                : <div dangerouslySetInnerHTML={createMarkup()} />
         }
     </div>
     );

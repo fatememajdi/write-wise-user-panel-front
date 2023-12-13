@@ -74,7 +74,11 @@ query GetUserEssay($id:String!, $page:Float!, $pageSize:Float!){
       durationMillisecond,
       essayRecommendations,
       essayInsights,
-      shortId
+      shortId,
+      topicId,
+      scoreJobStatus,
+      recommendationJobStatus,
+      insightJobStatus,
     }
   }
 }
@@ -137,7 +141,11 @@ mutation AddNewEssay($id:String! , $body: String! ,$durationMillisecond:Float!){
     id,
     essay,
     date,
-    shortId
+    shortId,
+    topicId,
+    scoreJobStatus,
+    recommendationJobStatus,
+    insightJobStatus,
   }
 }
 `;

@@ -162,7 +162,7 @@ const Page: React.FC = () => {
         changeTopic(null);
         goTo(0);
         toast.success('Topic deleted.');
-    }
+    };
 
     async function DeleteTopic(id: string) { await DeleteTopics(id, UpdateTopicsList); };
 
@@ -196,7 +196,7 @@ const Page: React.FC = () => {
             changeMoreTopics(false);
         if (Topics.length % 10 !== 0)
             changeMoreTopics(false);
-    }
+    };
 
     async function SelectType(type: string) {
         changeTopicsLoading(true);
@@ -226,109 +226,6 @@ const Page: React.FC = () => {
         let newEssay: Essay[] = essaies;
         await GetScore(essay ? essay.id : newEssay[0].id, dev ? JSON.parse(dev) : true)
 
-        socket.on("newMessage", async (data) => {
-            let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
-            switch (data.part) {
-                case 'Insight': {
-                    if (essay && !essay?.essayInsights) {
-                        essay.essayInsights = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        await setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Recommendation': {
-                    if (essay && !essay?.essayRecommendations) {
-                        essay.essayRecommendations = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Grammatical': {
-                    if (essay && !essay?.grammaticalRangeAndAccuracyScore) {
-                        essay.grammaticalRangeAndAccuracyScore = data.data as number;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Grammatical Summary': {
-                    if (essay && !essay?.grammaticalRangeAndAccuracySummery) {
-                        essay.grammaticalRangeAndAccuracySummery = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Coherence': {
-                    if (essay && !essay?.coherenceAndCohesionScore) {
-                        essay.coherenceAndCohesionScore = data.data as number;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Coherence Summary': {
-                    if (essay && !essay?.coherenceAndCohesionSummery) {
-                        essay.coherenceAndCohesionSummery = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Lexical': {
-                    if (essay && !essay?.lexicalResourceScore) {
-                        essay.lexicalResourceScore = data.data as number;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Lexical Summary': {
-                    if (essay && !essay?.lexicalResourceSummery) {
-                        essay.lexicalResourceSummery = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Task Achievement': {
-                    if (essay && !essay?.taskAchievementScore) {
-                        essay.taskAchievementScore = data.data as number;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Task Achievement Summary': {
-                    if (essay && !essay?.taskAchievementSummery) {
-                        essay.taskAchievementSummery = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'overalScore': {
-                    if (essay && !essay?.overallBandScore) {
-                        essay.overallBandScore = data.data as number;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-
-            }
-            if (essay) {
-                newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                await setEssaies(newEssay);
-                router.refresh();
-                return;
-            }
-            router.refresh();
-            return;
-        });
-
     };
 
     //-------------------------------------------------------connect to socket
@@ -351,6 +248,116 @@ const Page: React.FC = () => {
         }
     };
 
+    const CheckForScores = () => {
+        let newEssay: Essay[] = essaies;
+        if (socket) {
+            socket.on("newMessage", async (data) => {
+                let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
+                switch (data.part) {
+                    case 'Insight': {
+                        if (essay && !essay?.essayInsights) {
+                            essay.essayInsights = data.data;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            await setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Recommendation': {
+                        if (essay && !essay?.essayRecommendations) {
+                            essay.essayRecommendations = data.data;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Grammatical': {
+                        if (essay && !essay?.grammaticalRangeAndAccuracyScore) {
+                            essay.grammaticalRangeAndAccuracyScore = data.data as number;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Grammatical Summary': {
+                        if (essay && !essay?.grammaticalRangeAndAccuracySummery) {
+                            essay.grammaticalRangeAndAccuracySummery = data.data;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Coherence': {
+                        if (essay && !essay?.coherenceAndCohesionScore) {
+                            essay.coherenceAndCohesionScore = data.data as number;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Coherence Summary': {
+                        if (essay && !essay?.coherenceAndCohesionSummery) {
+                            essay.coherenceAndCohesionSummery = data.data;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Lexical': {
+                        if (essay && !essay?.lexicalResourceScore) {
+                            essay.lexicalResourceScore = data.data as number;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Lexical Summary': {
+                        if (essay && !essay?.lexicalResourceSummery) {
+                            essay.lexicalResourceSummery = data.data;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Task Achievement': {
+                        if (essay && !essay?.taskAchievementScore) {
+                            essay.taskAchievementScore = data.data as number;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Task Achievement Summary': {
+                        if (essay && !essay?.taskAchievementSummery) {
+                            essay.taskAchievementSummery = data.data;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'overalScore': {
+                        if (essay && !essay?.overallBandScore || essay?.overallBandScore <= 0) {
+                            essay.overallBandScore = data.data as number;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            let newTopics: Topic[] = topics;
+                            newTopics[topics.findIndex(item => item.id === essay.topicId)].overallBandScore = data.data;
+                            changeTopics(newTopics);
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+
+                }
+                if (essay) {
+                    newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                    await setEssaies(newEssay);
+                    router.refresh();
+                    return;
+                }
+                return;
+            });
+        }
+    };
+
     //------------------------------------------------------------------check user loged in
     // eslint-disable-next-line react-hooks/exhaustive-deps
     React.useEffect(() => {
@@ -367,6 +374,8 @@ const Page: React.FC = () => {
         } else {
             setLoading(false);
         };
+
+        CheckForScores();
     });
 
     React.useEffect(() => {

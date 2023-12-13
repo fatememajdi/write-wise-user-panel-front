@@ -24,7 +24,7 @@ export function SplitText(text: string): Promise<string> {
     return newText3;
 };
 
-export function CountWords(text: string, Words: number) {
+export function CountWords(text: string, Words?: number) {
     var splits = text.split(/(\s+)/);
     var splits = splits.filter(item => item != 'a' && item != 'A' && item != 'an' && item != 'An' && item != 'the' && item != 'The');
     var words = splits.filter((x) => x.trim().length > 0);

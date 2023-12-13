@@ -3,7 +3,6 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { Formik } from 'formik';
 import client from '@/config/applloAuthorizedClient';
-import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Image from "next/image";
 import ReactLoading from 'react-loading';
@@ -26,6 +25,7 @@ const Input = dynamic(() => import('@/components/input/input'));
 const SelectComponents = dynamic(() => import('@/components/customSelect/customSelect'));
 import { CheckCountWords, CountWords } from "@/components/Untitled";
 const Text = dynamic(() => import("@/components/text/text"));
+const Modal = dynamic(() => import("@/components/modal/modal"));
 const SubTypeSelect = dynamic(() => import("@/components/subTypeSelect/subTypeSelect"));
 const Writer = dynamic(() => import("@/components/writer/writer"));
 const EssayProcessBar = dynamic(() => import("@/components/essayProcessBar/essayProcessBar"));
@@ -117,6 +117,12 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
         });
     };
 
+    React.useEffect(() => {
+        if (imagePixels > 0) {
+            setTimeout(() => changeImagePixels(imagePixels - 5), 1000);
+        }
+    });
+
     //------------------------------------------------------------------select essay topic
     async function SelectTopic(topic: string): Promise<string | null> {
         setTopicLoading(true);
@@ -197,15 +203,26 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                     id: res.data.addNewEssay.id,
                     essay: res.data.addNewEssay.essay,
                     date: res.data.addNewEssay.date,
-                    shortId: res.data.addNewEssay.shortId
+                    shortId: res.data.addNewEssay.shortId,
+                    scoreJobStatus: res.data.addNewEssay.scoreJobStatus,
+                    recommendationJobStatus: res.data.addNewEssay.recommendationJobStatus,
+                    insightJobStatus: res.data.addNewEssay.insightJobStatus,
+                    topicId: res.data.addNewEssay.topicId
                 }, ...essaies]);
                 changeEssayLoading(false);
-                await GetScores([{
-                    id: res.data.addNewEssay.id,
-                    essay: res.data.addNewEssay.essay,
-                    date: res.data.addNewEssay.date,
-                    shortId: res.data.addNewEssay.shortId
-                }, ...essaies]);
+
+                setTimeout(async () => {
+                    await GetScores([{
+                        id: res.data.addNewEssay.id,
+                        essay: res.data.addNewEssay.essay,
+                        date: res.data.addNewEssay.date,
+                        shortId: res.data.addNewEssay.shortId,
+                        scoreJobStatus: res.data.addNewEssay.scoreJobStatus,
+                        recommendationJobStatus: res.data.addNewEssay.recommendationJobStatus,
+                        insightJobStatus: res.data.addNewEssay.insightJobStatus,
+                        topicId: res.data.addNewEssay.topicId
+                    }, ...essaies]);
+                }, 3000);
                 changeCcurrentId(id);
                 setAddEssayLoading(false);
                 resetForm();
@@ -319,16 +336,6 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     React.useEffect(() => {
         ChackTopic();
     }, []);
-
-    React.useEffect(() => {
-        if (imagePixels > 1) {
-            setTimeout(() => {
-                changeImagePixels(imagePixels - 5);
-            }, 1000);
-        } else {
-            return;
-        }
-    });
 
     const nameregex = /^[ A-Za-z ][ A-Za-z0-9  `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n]*$/;
 
@@ -600,18 +607,16 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
                         </div>
                 }
-                <div
-                    id="scrollDiv"
-                >
+                <div id="scrollDiv">
                     {
                         deleteLoading ?
-                            <Loading style={{ height: 50, minHeight: 0 }} />
+                            <Loading style={{ height: 100, minHeight: 0 }} />
                             : endAnimation &&
                             <InfiniteScroll
                                 pageStart={0}
                                 loadMore={() => GetUserEssaies(currentId)}
                                 hasMore={MoreEssaies}
-                                loader={<Loading style={{ height: 50, minHeight: 0 }} />}
+                                loader={<Loading style={{ height: 100, minHeight: 0 }} />}
                                 useWindow={false}
                                 key={0}
                             >
@@ -625,10 +630,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
                 {
                     type === 'academic_task_1' &&
-                    <Modal
-                        bodyStyle={{ width: 700 }}
-                        style={{ width: 700 }}
-                        footer={null} closeIcon={null} title={null} open={showImage} onCancel={handleCancelImageModal}>
+                    <Modal isOpen={showImage} setIsOpen={handleCancelImageModal} key={0}>
                         <div>
                             <Image
                                 src={modalImage}
@@ -637,9 +639,9 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 width='700'
                                 loading="eager"
                                 priority
-                            /></div>
+                            />
+                        </div>
                     </Modal>
-
                 }
 
             </form >

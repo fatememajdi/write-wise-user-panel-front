@@ -9,27 +9,25 @@ const RetryCard = dynamic(() => import("./retryCard"));
 import styles from './essayCard.module.css';
 
 //----------------------------------------------types
-import { Essay } from "../../../types/essay";
+import { Essay, JOBSTATUS } from "../../../types/essay";
 
 
 const EssayAnalysis: React.FC<{ essay: Essay, GetScores: any }> = ({ essay, GetScores }) => {
-    const [reloadStatus, setReloadStatus] = React.useState<boolean>(essay.taskAchievementSummery === '' || essay.coherenceAndCohesionSummery === ''
-        || essay.lexicalResourceSummery === '' || essay.grammaticalRangeAndAccuracySummery === ''
-    )
-    return <div style={reloadStatus ? { padding: 0 } : {}} className={styles.writingScoreCard}>
+    return <div style={!essay.taskAchievementSummery || essay.taskAchievementSummery === '' && essay.scoreJobStatus === JOBSTATUS[4] ? { padding: 0 } : {}}
+        className={styles.writingScoreCard}>
         {
-            essay.taskAchievementSummery === undefined ?
-                <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#D9D9D9'} height={100} width={100} /></div>
-                : reloadStatus ?
-                    <RetryCard GetScores={GetScores} />
-                    : <div className={styles.writingScoresContainer}>
-                        <div>
-                            <ScoreSummeryCard key={0} title="Task Achievement" summery={essay?.taskAchievementSummery} />
-                            <ScoreSummeryCard key={1} title="Coherence & Cohesion" summery={essay?.coherenceAndCohesionSummery} />
-                            <ScoreSummeryCard key={2} title="Lexical resource" summery={essay?.lexicalResourceSummery} />
-                            <ScoreSummeryCard key={3} title="Grammatical Range and accuracy" summery={essay?.grammaticalRangeAndAccuracySummery} />
-                        </div>
+            !essay.taskAchievementSummery || essay.taskAchievementSummery === '' ? essay.scoreJobStatus !== JOBSTATUS[4] ?
+                <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#2E4057'} height={100} width={100} /></div>
+                :
+                <RetryCard GetScores={GetScores} />
+                : <div className={styles.writingScoresContainer}>
+                    <div>
+                        <ScoreSummeryCard key={0} title="Task Achievement" summery={essay?.taskAchievementSummery} />
+                        <ScoreSummeryCard key={1} title="Coherence & Cohesion" summery={essay?.coherenceAndCohesionSummery} />
+                        <ScoreSummeryCard key={2} title="Lexical resource" summery={essay?.lexicalResourceSummery} />
+                        <ScoreSummeryCard key={3} title="Grammatical Range and accuracy" summery={essay?.grammaticalRangeAndAccuracySummery} />
                     </div>
+                </div>
 
         }
     </div>

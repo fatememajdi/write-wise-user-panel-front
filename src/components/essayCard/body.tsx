@@ -14,6 +14,7 @@ import styles from './essayCard.module.css';
 
 //----------------------------------------------types
 import { Essay } from "../../../types/essay";
+import { CountWords } from "../Untitled";
 
 const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any, divRef?: any, setOpen: any, topic: string, OnEditEssay: any }>
     = ({ essay, setFieldValue, divRef, setOpen, topic, OnEditEssay }) => {
@@ -33,6 +34,7 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
             <div className={styles.writingEssayText}>
                 <Text text={essay?.essay} />
             </div>
+            {CountWords(essay?.essay)}
             <div className={styles.essayButtonContainer}>
                 <button
                     onClick={() => setOpen(true)}
