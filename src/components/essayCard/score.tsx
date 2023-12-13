@@ -14,7 +14,6 @@ import { Essay, JOBSTATUS } from "../../../types/essay";
 
 
 const EssayScore: React.FC<{ essay: Essay, GetScores: any }> = ({ essay, GetScores }) => {
-
     return <div style={!essay.overallBandScore || essay.overallBandScore <= 0 && essay.scoreJobStatus === JOBSTATUS[4] ? { padding: 0 } : {}}
         className={styles.writingScoreCard}>
         {

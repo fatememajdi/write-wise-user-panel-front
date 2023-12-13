@@ -34,7 +34,9 @@ const EssayBody: React.FC<{ essay: Essay, setFieldValue: any, handleDelete: any,
             <div className={styles.writingEssayText}>
                 <Text text={essay?.essay} />
             </div>
-            {CountWords(essay?.essay)}
+            <div style={{ marginTop: 50 }}>
+                {CountWords(essay?.essay)}
+            </div>
             <div className={styles.essayButtonContainer}>
                 <button
                     onClick={() => setOpen(true)}
