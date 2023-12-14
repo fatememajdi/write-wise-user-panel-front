@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React from "react";
 import Popover from '@mui/material/Popover';
 import dynamic from "next/dynamic";
@@ -103,7 +104,7 @@ const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogO
                         </a>
                     )
                 }
-                <a href={fromIran ? 'https://www.goftino.com/c/7aFKEK' : 'https://tawk.to/chat/651990a910c0b257248765ee/1hbmfd0ck'} key={3} className={styles.menuItemCard}>
+                <a target="_blank" href={fromIran ? 'https://www.goftino.com/c/7aFKEK' : 'https://tawk.to/chat/651990a910c0b257248765ee/1hbmfd0ck'} key={3} className={styles.menuItemCard}>
                     <Support />
                     <span>Support</span>
                 </a>

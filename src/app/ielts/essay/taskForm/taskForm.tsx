@@ -438,7 +438,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                     <div className={styles.topicButtonsContainer}>
 
                                                         <SubTypeSelect
-                                                            defaultValue={values.subType}
+                                                            defaultValue={values.subType !== '' ? values.subType : generatedTopic ? generatedTopic.subType : ''}
                                                             setFieldValue={setFieldValue}
                                                             type={type}
                                                         />

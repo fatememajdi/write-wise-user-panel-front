@@ -10,7 +10,8 @@ import styles from './essayCard.module.css';
 import './recommendation.css';
 
 //---------------------------------------------types
-import { Essay, JOBSTATUS } from "../../../types/essay";
+import { Essay } from "../../../types/essay";
+import { CheckStatus } from "../Untitled";
 
 
 const ScoreRecommendationCard: React.FC<{ recommendation: string, essay: Essay, GetScores: any }> = ({ recommendation, GetScores, essay }) => {
@@ -20,12 +21,13 @@ const ScoreRecommendationCard: React.FC<{ recommendation: string, essay: Essay, 
         return { __html: htmlString };
     };
 
-    return (<div style={recommendation === '' ? { padding: 0 } : {}} className={styles.writingScoreCard}>
+    return (<div style={recommendation === '' || !recommendation ? { padding: 0 } : {}} className={styles.writingScoreCard}>
         {
-            recommendation === '' || !recommendation ? essay.recommendationJobStatus === JOBSTATUS[4] ?
+            CheckStatus(essay.recommendationJobStatus, 'fail') ?
                 <RetryCard GetScores={GetScores} />
-                : <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#2E4057'} height={100} width={100} /></div>
-                : <div dangerouslySetInnerHTML={createMarkup()} />
+                : CheckStatus(essay.recommendationJobStatus, 'loading') ?
+                    <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#2E4057'} height={100} width={100} /></div>
+                    : <div dangerouslySetInnerHTML={createMarkup()} />
         }
     </div>
     );

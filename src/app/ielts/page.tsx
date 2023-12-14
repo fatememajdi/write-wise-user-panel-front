@@ -12,6 +12,7 @@ import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 import { Socket, io } from 'socket.io-client';
 import { DefaultEventsMap } from "@socket.io/component-emitter";
+import client from "@/config/applloAuthorizedClient";
 import toast from "react-hot-toast";
 
 //-----------------------------------------------------styles
@@ -25,6 +26,7 @@ const ChooseType = dynamic(() => import("./essay/chooseType/chooseType"));
 const Task = dynamic(() => import("./essay/task/task"));
 const TopicsList = dynamic(() => import("@/components/topicsList/topicsList"));
 const Modal = dynamic(() => import("@/components/modal/modal"));
+import { SCORE_ESSAY } from "@/config/graphql";
 const ProfileCard = dynamic(() => import("@/components/profileCard/profileCard"));
 import { StopLoader } from "@/components/Untitled";
 
@@ -36,7 +38,7 @@ import { TfiMenu } from 'react-icons/tfi';
 import { FiMoreVertical } from 'react-icons/fi';
 
 //---------------------------------------------------types
-import { Essay } from "../../../types/essay";
+import { Essay, JOBSTATUS } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
 import { UserProfile } from "../../../types/profile";
 import { GetEsseies, GetScore, GetTopics, GetUserProfile } from "@/hooks/fetchData";
@@ -224,8 +226,34 @@ const Page: React.FC = () => {
     async function GetScores(essaies: Essay[], essay?: Essay) {
         let dev = await localStorage.getItem('devMode');
         let newEssay: Essay[] = essaies;
-        await GetScore(essay ? essay.id : newEssay[0].id, dev ? JSON.parse(dev) : true)
-
+        client.mutate({
+            mutation: SCORE_ESSAY,
+            variables: {
+                id: essay ? essay.id : newEssay[0].id,
+                test: dev ? JSON.parse(dev) : true
+            }
+        }).then(async (res) => {
+            console.log(res);
+            try {
+                if (res.data.scoreEssay.recommendation === true)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).recommendationJobStatus = JOBSTATUS[3];
+                else if (!newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).essayRecommendations)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).recommendationJobStatus = JOBSTATUS[4];
+                if (res.data.scoreEssay.insight === true)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).insightJobStatus = JOBSTATUS[3];
+                else if (!newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).essayInsights)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).insightJobStatus = JOBSTATUS[4];
+                if (res.data.scoreEssay.score === true)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).scoreJobStatus = JOBSTATUS[3];
+                else if (!newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).overallBandScore)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).scoreJobStatus = JOBSTATUS[4];
+            } finally {
+                setEssaies(newEssay);
+                router.refresh();
+            }
+        }).catch((err) => {
+            toast.error(err.message);
+        })
     };
 
     //-------------------------------------------------------connect to socket
@@ -256,17 +284,29 @@ const Page: React.FC = () => {
                 switch (data.part) {
                     case 'Insight': {
                         if (essay && !essay?.essayInsights) {
-                            essay.essayInsights = data.data;
+                            if (data.data === '') {
+                                essay.insightJobStatus = JOBSTATUS[4];
+                            } else {
+                                essay.essayInsights = data.data;
+                                essay.insightJobStatus = JOBSTATUS[0];
+                            }
                             newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
                             await setEssaies(newEssay);
+                            router.refresh();
                         }
                         break;
                     }
                     case 'Recommendation': {
                         if (essay && !essay?.essayRecommendations) {
-                            essay.essayRecommendations = data.data;
+                            if (data.data === '') {
+                                essay.recommendationJobStatus = JOBSTATUS[4];
+                            } else {
+                                essay.essayRecommendations = data.data;
+                                essay.recommendationJobStatus = JOBSTATUS[0];
+                            }
                             newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
                             setEssaies(newEssay);
+                            router.refresh();
                         }
                         break;
                     }
@@ -336,12 +376,19 @@ const Page: React.FC = () => {
                     }
                     case 'overalScore': {
                         if (essay && !essay?.overallBandScore || essay?.overallBandScore <= 0) {
-                            essay.overallBandScore = data.data as number;
+                            if (data.data === '') {
+                                essay.scoreJobStatus = JOBSTATUS[4];
+                            } else {
+                                essay.overallBandScore = data.data as number;
+                                essay.scoreJobStatus = JOBSTATUS[0];
+                                let newTopics: Topic[] = topics;
+                                newTopics[topics.findIndex(item => item.id === essay.topicId)].overallBandScore = data.data;
+                                changeTopics(newTopics);
+                            }
                             newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                            let newTopics: Topic[] = topics;
-                            newTopics[topics.findIndex(item => item.id === essay.topicId)].overallBandScore = data.data;
-                            changeTopics(newTopics);
                             setEssaies(newEssay);
+                            router.refresh();
+
                         }
                         break;
                     }

@@ -22,6 +22,7 @@ import styles from './essayCard.module.css';
 
 //----------------------------------------------types
 import { Essay, JOBSTATUS } from "../../../types/essay";
+import { CheckStatus } from "../Untitled";
 
 type _props = {
     essay: Essay,
@@ -94,24 +95,24 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
                             style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
                         {!item.active && <Lock className={styles.lockIcon} />}
                         {
-                            index === 1 && !essay.overallBandScore || index === 1 && essay.overallBandScore <= 0 ? essay.scoreJobStatus !== JOBSTATUS[4] ?
+                            index === 1 ? CheckStatus(essay.scoreJobStatus, 'loading') ?
                                 <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                : essay.scoreJobStatus === JOBSTATUS[4] ?
+                                : CheckStatus(essay.scoreJobStatus, 'fail') ?
                                     <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
 
-                                : index === 2 && !essay.taskAchievementSummery ? essay.scoreJobStatus !== JOBSTATUS[4] ?
+                                : index === 2 ? CheckStatus(essay.scoreJobStatus, 'loading') ?
                                     <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                    : essay.scoreJobStatus === JOBSTATUS[4] ?
+                                    : CheckStatus(essay.scoreJobStatus, 'fail') ?
                                         <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
 
-                                    : index === 3 && !essay.essayInsights ? essay.insightJobStatus !== JOBSTATUS[4] ?
+                                    : index === 3 ? CheckStatus(essay.insightJobStatus, 'loading') ?
                                         <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                        : essay.insightJobStatus === JOBSTATUS[4] ?
+                                        : CheckStatus(essay.insightJobStatus, 'fail') ?
                                             <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
 
-                                        : index === 4 && !essay.essayRecommendations ? essay.recommendationJobStatus !== JOBSTATUS[4] ?
+                                        : index === 4 ? CheckStatus(essay.recommendationJobStatus, 'loading') ?
                                             <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                            : essay.recommendationJobStatus === JOBSTATUS[4] ?
+                                            : CheckStatus(essay.recommendationJobStatus, 'fail') ?
                                                 <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
                                             : <></>
                         }

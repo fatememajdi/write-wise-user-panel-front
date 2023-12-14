@@ -98,8 +98,8 @@ query GetRandomWriting($type:String!,$questionType:String!){
 `;
 
 export const GET_RANDOM_WRITING_AC_TASK = gql`
-query GetRandomWriting($type:String!){
-  getRandomWriting(randomWritingInput:{type:$type,questionType:""}){
+query GetRandomWriting($type:String!,$questionType:String!){
+  getRandomWriting(randomWritingInput:{type:$type,questionType:$questionType}){
     id,
     topic,
     body,
@@ -154,7 +154,9 @@ mutation AddNewEssay($id:String! , $body: String! ,$durationMillisecond:Float!){
 export const SCORE_ESSAY = gql`
 mutation ScoreEssay($id:String!,$test:Boolean!){
   scoreEssay(scoreEssay:{test:$test,id:$id}){
-    recommendation
+    recommendation,
+    insight,
+    score
   }
 }
 `;

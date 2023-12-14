@@ -1,5 +1,6 @@
 'use client';
 import NProgress from 'nprogress';
+import { JOBSTATUS } from '../../types/essay';
 
 
 export function StartLoader() { NProgress.start(); };
@@ -48,4 +49,17 @@ export function CheckCountWords(text: string, Words: number) {
 
 export function CapitalStart(text: string) {
     return text.charAt(0).toUpperCase() + text.slice(1)
+};
+
+export function CheckStatus(status: any, type: string) {
+    if (type === 'loading')
+        if (status === JOBSTATUS[1] || status === JOBSTATUS[2] || status === JOBSTATUS[3])
+            return true;
+        else
+            return false
+    else
+        if (status === JOBSTATUS[4])
+            return true;
+        else
+            return false
 };

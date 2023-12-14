@@ -284,11 +284,12 @@
 .select {
     border-radius: 8px !important;
     border: 1px solid #2E4057 !important;
-    width: 170px !important;
+    min-width: 170px;
     height: 42px !important;
     background-color: #2E4057;
     margin-left: auto;
     margin-top: 25px;
+    width: fit-content !important;
 }
 
 .topicButtonsContainer {

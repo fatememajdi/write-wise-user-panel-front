@@ -3,10 +3,11 @@ import ReactLoading from 'react-loading';
 import dynamic from 'next/dynamic';
 
 //---------------------------------------------components
+import { CheckStatus } from "../Untitled";
 const RetryCard = dynamic(() => import("./retryCard"));
 
 //----------------------------------------------types
-import { Essay, JOBSTATUS } from "../../../types/essay";
+import { Essay } from "../../../types/essay";
 
 //----------------------------------------------styles
 import styles from './essayCard.module.css';
@@ -19,12 +20,12 @@ const ScoreInsightsCard: React.FC<{ Insight: string, GetScores: any, essay: Essa
         return { __html: htmlString };
     };
 
-    return (<div style={Insight === '' ? { padding: 0 } : {}} className={styles.writingScoreCard}>
+    return (<div style={Insight === '' || !Insight ? { padding: 0 } : {}} className={styles.writingScoreCard}>
         {
-            Insight === '' || !Insight ? essay.insightJobStatus === JOBSTATUS[4] ?
+            CheckStatus(essay.insightJobStatus, 'fail') ?
                 <RetryCard GetScores={GetScores} essay={essay} />
-                : <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#2E4057'} height={100} width={100} /></div>
-                : <div dangerouslySetInnerHTML={createMarkup()} />
+                : CheckStatus(essay.insightJobStatus, 'loading') ? <div style={{ margin: 'auto' }}><ReactLoading type={'bubbles'} color={'#2E4057'} height={100} width={100} /></div>
+                    : <div dangerouslySetInnerHTML={createMarkup()} />
         }
     </div >
     );

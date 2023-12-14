@@ -36,8 +36,10 @@ const RetryCard: React.FC<{ GetScores: any, essay?: Essay }> = ({ GetScores, ess
             type="button"
             onClick={async () => {
                 await setReload(true);
+                setTimeout(() => {
+                    setReload(false);
+                }, 1500);
                 await GetScores();
-
             }}
         >
             Retry

@@ -1,5 +1,5 @@
 'use client';
-import React, { lazy } from "react";
+import React from "react";
 import Image from "next/image";
 import { Divider } from 'antd';
 import { Formik } from 'formik';
@@ -24,7 +24,6 @@ import { GrApple } from 'react-icons/gr';
 //---------------------------------------------------components
 const Input = dynamic(() => import("@/components/input/input"));
 import { EMAIL_SIGN_IN } from '../../config/graphql';
-import Loading from "@/components/loading/loading";
 import { StopLoader } from "@/components/Untitled";
 import { Checkbox } from 'antd';
 
