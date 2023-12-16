@@ -552,8 +552,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                         {
                                             topic && topic.visuals && topic.visuals?.length > 0 ?
                                                 topic.visuals.map((item, index) =>
-
                                                     <motion.div
+                                                        key={index}
                                                         onClick={() => setIsBig(!isBig)}
                                                         animate={isBig ? { width: 1200, height: 800 } : { width: 600, height: 400 }}
                                                         transition={{ type: 'spring', duration: 2 }}
@@ -571,21 +571,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                 )
                                                 : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
                                                     generatedTopic.visuals.map((item, index) =>
-                                                        // <div
-                                                        //     key={index}
-                                                        //     onClick={() => { handleSelectImage(item.url); changeWalletError(false); }}
-                                                        //     className={styles.imageCard}>
-
-                                                        //     <Image
-                                                        //         src={item.url}
-                                                        //         alt="academic task topic image"
-                                                        //         height='428'
-                                                        //         width='600'
-                                                        //         loading="eager"
-                                                        //         priority
-                                                        //     />
-                                                        // </div>
                                                         <motion.div
+                                                            key={index}
                                                             onClick={() => setIsBig(!isBig)}
                                                             animate={isBig ? { width: 1000, height: 979 } : { width: 600, height: 428 }}
                                                             transition={{ type: 'spring', duration: 2 }}
@@ -689,7 +676,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                     loading="eager"
                                     priority
                                 />
-                                <span>Sorry, you don't have enough tokens for this </span>
+                                <span>{'Sorry, you don\'t have enough tokens for this '}</span>
                                 <div className={styles.waaletErrorButtonsCard}>
                                     <button
                                         onClick={() => { router.push('/wallet') }}
