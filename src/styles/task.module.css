@@ -314,6 +314,11 @@
     flex-wrap: wrap;
 }
 
+.imagesContainer img {
+    min-height: 100%;
+    min-width: 100%;
+}
+
 .emptyImageCard {
     width: 66%;
     height: 360px;
@@ -359,6 +364,67 @@
     font-size: 43px !important;
 }
 
+.WalletErrorCard {
+    width: 810px;
+    height: fit-content;
+    background-color: var(--color-gray);
+    border-radius: 14px;
+    padding: 64px 64px 38px 86px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.WalletErrorCard span {
+    color: var(--color-whiteText);
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 32px;
+    font-weight: 500;
+    margin-top: 64px;
+}
+
+.waaletErrorButtonsCard {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin-left: auto;
+    margin-top: 103px;
+}
+
+.waaletErrorButtonsCard button {
+    height: 50px;
+    padding: auto !important;
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: normal;
+    align-items: center;
+    justify-content: center;
+}
+
+.addTokenBtn {
+    background-color: var(--color-whiteText);
+    color: var(--color-primay);
+    width: 190px;
+}
+
+.okBtn {
+    padding-left: auto !important;
+    color: var(--color-whiteText);
+    margin-left: 10px;
+}
+
+.errorForm {
+    color: #DA282E;
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24.5px;
+    margin-top: 14px;
+}
 
 @media(max-width: 1440px) {
     .writingContainer {

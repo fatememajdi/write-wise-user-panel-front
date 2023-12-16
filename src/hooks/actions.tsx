@@ -1,5 +1,5 @@
 'use client';
-import client from "@/config/applloAuthorizedClient";
+import client from "@/config/applloClient";
 import { DELETE_TOPIC, SELECT_TOPIC } from "@/config/graphql";
 import toast from "react-hot-toast";
 

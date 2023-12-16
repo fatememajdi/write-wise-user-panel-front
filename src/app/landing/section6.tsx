@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 import React from "react";
-import client from '@/config/applloAuthorizedClient';
+import client from '@/config/applloClient';
 import dynamic from 'next/dynamic';
 import ReactLoading from 'react-loading';
 import { Carousel } from 'react-responsive-carousel';

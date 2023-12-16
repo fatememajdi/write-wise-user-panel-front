@@ -53,6 +53,7 @@ const VerificationCode: React.FC = () => {
         }).then(async (data) => {
             localStorage.setItem("user", JSON.stringify(data.data.verifyEmail.token));
             await router.push('/ielts');
+            localStorage.removeItem('email');
         }
         ).catch(async (err) => {
             toast.error(err.message);

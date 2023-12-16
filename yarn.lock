@@ -4962,11 +4962,6 @@ react-multi-carousel@^2.8.4:
   resolved "https://registry.npmjs.org/react-multi-carousel/-/react-multi-carousel-2.8.4.tgz"
   integrity sha512-7Is5Wr+m2ebkR+oq2Su2tjUdBwpVtB2O6Tjb74KDNfxWe/FrsTQwezTJTk/r9cKCrRp9Li308v822/5bZm7XKg==
 
-react-pixelify@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/react-pixelify/-/react-pixelify-0.2.2.tgz#734338f58c0c8b23e5ecebfe862c38c8d40b5bff"
-  integrity sha512-a33NPPvy9pwdcTivgQIVSqoVy17mamUReqyTiWydTVfp6GS5mjZ94B92X5hNeHywwoaYp+VA7VWbJs/T76L4kg==
-
 react-responsive-carousel@^3.2.23:
   version "3.2.23"
   resolved "https://registry.npmjs.org/react-responsive-carousel/-/react-responsive-carousel-3.2.23.tgz"

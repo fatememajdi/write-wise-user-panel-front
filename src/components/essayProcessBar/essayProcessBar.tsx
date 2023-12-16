@@ -12,10 +12,11 @@ type _props = {
     changeInput: boolean,
     type: string,
     loading: boolean,
-    error: boolean
+    error: boolean,
+    disable: boolean
 };
 
-const EssayProcessBar: React.FC<_props> = ({ changeInput, type, loading, error }) => {
+const EssayProcessBar: React.FC<_props> = ({ changeInput, type, loading, error, disable }) => {
     const showAnimation = {
         hidden: {
             width: '100%',
@@ -32,7 +33,7 @@ const EssayProcessBar: React.FC<_props> = ({ changeInput, type, loading, error }
     };
 
     return <AnimatePresence>
-        <div style={error ? { backgroundColor: '#DA282E', background: '#DA282E' } : {}} className={styles.scoreButtonContainer}>
+        <div style={error ? { backgroundColor: '#DA282E', background: '#DA282E', opacity: disable ? 0.5 : 1 } : { opacity: disable ? 0.5 : 1 }} className={styles.scoreButtonContainer}>
             {
                 changeInput &&
                 <div className={styles.timer}>
@@ -46,6 +47,7 @@ const EssayProcessBar: React.FC<_props> = ({ changeInput, type, loading, error }
                     </div>
                     :
                     <button
+                        disabled={disable}
                         style={error ? { color: '#DA282E', borderColor: '#DA282E' } : {}}
                         type="submit"
                         className={styles.scoreButton}>

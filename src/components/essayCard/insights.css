@@ -1,4 +1,13 @@
-h3 {
+.insight {
+    color: var(--color-blackText);
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+}
+
+.insight h3 {
     color: var(--color-orange) !important;
     font-family: var(--font-lato) !important;
     font-size: 24px !important;
@@ -8,7 +17,7 @@ h3 {
     margin: 32px 0px 12px 0px !important;
 }
 
-h4 {
+.insight h4 {
     color: var(--color-blackText) !important;
     font-family: var(--font-lato) !important;
     font-size: 20px !important;
@@ -18,7 +27,7 @@ h4 {
     margin-bottom: 8px !important;
 }
 
-p {
+.insight p {
     color: var(--color-blackText) !important;
     font-family: var(--font-lato) !important;
     font-size: 20px !important;
@@ -27,15 +36,15 @@ p {
     line-height: 26px !important;
 }
 
-u {
+.insight u {
     font-weight: 600 !important;
 }
 
-ul {
+.insight ul {
     margin-left: 30px !important;
 }
 
-li {
+.insight li {
     margin-left: 57px !important;
     list-style-type: disc !important;
     display: list-item !important;

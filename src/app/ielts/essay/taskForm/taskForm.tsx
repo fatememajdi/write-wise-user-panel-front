@@ -2,13 +2,16 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { Formik } from 'formik';
-import client from '@/config/applloAuthorizedClient';
+import client from '@/config/applloClient';
 import InfiniteScroll from 'react-infinite-scroller';
 import Image from "next/image";
 import ReactLoading from 'react-loading';
 import toast from "react-hot-toast";
 import * as Yup from 'yup';
-import { Pixelify } from "react-pixelify";
+// import { Pixelify } from "react-pixelify";
+import { useMutation } from "@apollo/client";
+import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 
 
 //--------------------------------------styles
@@ -17,7 +20,7 @@ import '../../../../styles/customMuiStyles.css';
 
 //--------------------------------------components
 import {
-    ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_WRITING, GET_RANDOM_WRITING_AC_TASK, SELECT_TOPIC
+    ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_WRITING, SELECT_TOPIC
 } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
@@ -80,11 +83,18 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
     const [showImage, changeShowImage] = React.useState<boolean>(false);
+    const [walletError, changeWalletError] = React.useState<boolean>(false);
+    const [isBig, setIsBig] = React.useState<boolean>(false);
     const [modalImage, changeModalImage] = React.useState<string>();
-    const [imagePixels, changeImagePixels] = React.useState<number>(1);
+    // const [imagePixels, changeImagePixels] = React.useState<number>(1);
+    const router = useRouter();
+
+    //-----------------------------------------------------------------graphQl functions
+    const [selectTopic, { error }] = useMutation(SELECT_TOPIC);
+    const [addNewEssay] = useMutation(ADD_ESSAY);
+    const [deleteEssay] = useMutation(DELETE_ESSAY);
 
     const handleCancelImageModal = () => changeShowImage(false);
-
     async function handleSelectImage(url: string) {
         await changeModalImage(url);
         changeShowImage(true);
@@ -93,15 +103,17 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
         changeGenerateWritingTopicLoading(true);
+
         await client.query({
-            query: type === 'academic_task_1' ? GET_RANDOM_WRITING_AC_TASK : GET_RANDOM_WRITING,
+            query: GET_RANDOM_WRITING,
             fetchPolicy: "no-cache",
             variables: {
                 type: type,
                 questionType: subType
             }
         }).then(async (res) => {
-            changeImagePixels(15);
+            // changeImagePixels(15);
+            console.log(res.data.getRandomWriting.visuals);
             await changeGeneratedTopic({
                 id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body,
                 type: res.data.getRandomWriting.type, subType: res.data.getRandomWriting.questionType,
@@ -117,18 +129,17 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
         });
     };
 
-    React.useEffect(() => {
-        if (imagePixels > 0) {
-            setTimeout(() => changeImagePixels(imagePixels - 5), 1000);
-        }
-    });
+    // React.useEffect(() => {
+    //     if (imagePixels > 0) {
+    //         setTimeout(() => changeImagePixels(imagePixels - 5), 1000);
+    //     }
+    // });
 
     //------------------------------------------------------------------select essay topic
     async function SelectTopic(topic: string): Promise<string | null> {
         setTopicLoading(true);
         let id: any;
-        await client.mutate({
-            mutation: SELECT_TOPIC,
+        await selectTopic({
             variables: {
                 type: type,
                 id: !editedGeneratedTopic && generatedTopic?.body === topic || generatedTopic?.body === topic ? generatedTopic?.id : null,
@@ -145,10 +156,16 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             });
             setAddEssayLoading(true);
             DivRef3.scrollIntoView({ behavior: "smooth" });
-        }).catch(async (err) => {
-            toast.error(err.message);
-            changeLoading(false);
-            id = null;
+        }).catch((err: typeof error) => {
+            if (err.graphQLErrors[0].status === 402) {
+                changeWalletError(true);
+                changeShowImage(true);
+                id = null;
+            } else {
+                toast.error(err.graphQLErrors[0].message);
+                changeLoading(false);
+                id = null;
+            }
         });
         setTopicLoading(false);
         return id;
@@ -170,8 +187,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
         if (id != null) {
             await setAddEssayLoading(true);
-            await client.mutate({
-                mutation: ADD_ESSAY,
+            await addNewEssay({
                 variables: {
                     id: id as string,
                     body: body,
@@ -226,8 +242,13 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 changeCcurrentId(id);
                 setAddEssayLoading(false);
                 resetForm();
-            }).catch(async (err) => {
-                toast.error(err.message);
+            }).catch((err: typeof error) => {
+                if (err.graphQLErrors[0].status === 402) {
+                    changeWalletError(true);
+                    changeShowImage(true);
+                } else {
+                    toast.error(err.graphQLErrors[0].message);
+                }
                 changeLoading(false);
                 setAddEssayLoading(false);
             })
@@ -237,8 +258,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     //-------------------------------------------------------------------delete essay
     async function DeleteEssay(id: string) {
         changeDeleteLoading(true);
-        await client.mutate({
-            mutation: DELETE_ESSAY,
+        await deleteEssay({
             variables: {
                 id: id
             }
@@ -524,50 +544,72 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                     </div>
                                 }
                             </div>
+                            <AnimatePresence>
+                                {
+                                    type === 'academic_task_1' &&
+                                    <div className={styles.imagesContainer + ' col-12'}>
 
-                            {
-                                type === 'academic_task_1' &&
-                                <div className={styles.imagesContainer + ' col-12'}>
+                                        {
+                                            topic && topic.visuals && topic.visuals?.length > 0 ?
+                                                topic.visuals.map((item, index) =>
 
-                                    {
-                                        topic && topic.visuals && topic.visuals?.length > 0 ?
-                                            topic.visuals.map((item, index) =>
-                                                <div
-                                                    key={index}
-                                                    onClick={() => handleSelectImage(item.url)}
-                                                    className={styles.imageCard}>
-
-                                                    <Pixelify
-                                                        src={item.url}
-                                                        pixelSize={imagePixels}
-                                                        height={428}
-                                                        width={600}
-                                                    />
-
-                                                </div>)
-                                            : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
-                                                generatedTopic.visuals.map((item, index) =>
-                                                    <div
-                                                        key={index}
-                                                        onClick={() => handleSelectImage(item.url)}
-                                                        className={styles.imageCard}>
-
-                                                        <Pixelify
+                                                    <motion.div
+                                                        onClick={() => setIsBig(!isBig)}
+                                                        animate={isBig ? { width: 1200, height: 800 } : { width: 600, height: 400 }}
+                                                        transition={{ type: 'spring', duration: 2 }}
+                                                    >
+                                                        <Image
                                                             src={item.url}
-                                                            pixelSize={imagePixels}
-                                                            height={428}
-                                                            width={600}
+                                                            alt="academic task topic image"
+                                                            width="0"
+                                                            height="0"
+                                                            sizes="100vw"
+                                                            loading="eager"
+                                                            priority
                                                         />
-                                                    </div>)
-                                                : <div className={styles.emptyImageCard}>
-                                                    <IoMdImage fontSize={70} />
-                                                </div>
-                                    }
-                                </div>
-                            }
+                                                    </motion.div>
+                                                )
+                                                : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
+                                                    generatedTopic.visuals.map((item, index) =>
+                                                        // <div
+                                                        //     key={index}
+                                                        //     onClick={() => { handleSelectImage(item.url); changeWalletError(false); }}
+                                                        //     className={styles.imageCard}>
 
+                                                        //     <Image
+                                                        //         src={item.url}
+                                                        //         alt="academic task topic image"
+                                                        //         height='428'
+                                                        //         width='600'
+                                                        //         loading="eager"
+                                                        //         priority
+                                                        //     />
+                                                        // </div>
+                                                        <motion.div
+                                                            onClick={() => setIsBig(!isBig)}
+                                                            animate={isBig ? { width: 1000, height: 979 } : { width: 600, height: 428 }}
+                                                            transition={{ type: 'spring', duration: 2 }}
+                                                        >
+                                                            <Image
+                                                                src={item.url}
+                                                                alt="academic task topic image"
+                                                                width="0"
+                                                                height="0"
+                                                                sizes="100vw"
+                                                                loading="eager"
+                                                                priority
+                                                            />
+                                                        </motion.div>
+                                                    )
+                                                    : <div className={styles.emptyImageCard}>
+                                                        <IoMdImage fontSize={70} />
+                                                    </div>
+                                        }
+                                    </div>
+                                }
+                            </AnimatePresence>
                             {
-                                type === 'academic_task_1' &&
+                                changeInput && type === 'academic_task_1' &&
                                 <div style={{ marginLeft: 'auto', width: 'fit-content', paddingRight: 45 }} className={styles.wordsCount}>
                                     {CountWords(values.body, 150)}
                                 </div>
@@ -576,7 +618,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                             <div className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
                                 <Input
                                     style={errors.body ? { borderColoe: 'red' } : {}}
-                                    disable={!endTyping || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249)}
+                                    disable={!endTyping}
                                     className={styles.topicInput + ' ' + styles.essayInput}
                                     onChange={(e: any) => {
                                         if (nameregex.test(e.target.value) || e.nativeEvent.data === null || e.nativeEvent.inputType == 'insertLineBreak') {
@@ -599,7 +641,13 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                     textarea_value={values.body}
                                     textarea_error={errors.body && touched.body && errors.body}
                                 >
-                                    <EssayProcessBar type={type} changeInput={changeInput} loading={addEssayLoading} error={errors.body ? true : false} />
+                                    <EssayProcessBar type={type} changeInput={changeInput} loading={addEssayLoading}
+                                        disable={!endTyping || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249)}
+                                        error={errors.body || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249) ? true : false} />
+                                    {
+                                        !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249) &&
+                                        <div className={styles.errorForm}>Text is too long!</div>
+                                    }
                                 </Input>
 
                             </div>
@@ -628,21 +676,46 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                     }
                 </div>
 
-                {
-                    type === 'academic_task_1' &&
-                    <Modal isOpen={showImage} setIsOpen={handleCancelImageModal} key={0}>
-                        <div>
-                            <Image
-                                src={modalImage}
-                                alt="academic task chart"
-                                height='679'
-                                width='700'
-                                loading="eager"
-                                priority
-                            />
-                        </div>
-                    </Modal>
-                }
+
+                <Modal isOpen={showImage} setIsOpen={handleCancelImageModal} key={0}>
+                    {
+                        walletError ?
+                            <div className={styles.WalletErrorCard}>
+                                <Image
+                                    src='/dashboard/tokenError.svg'
+                                    alt="no token error image"
+                                    height='194'
+                                    width='192'
+                                    loading="eager"
+                                    priority
+                                />
+                                <span>Sorry, you don't have enough tokens for this </span>
+                                <div className={styles.waaletErrorButtonsCard}>
+                                    <button
+                                        onClick={() => { router.push('/wallet') }}
+                                        aria-label="add token button"
+                                        className={styles.addTokenBtn}>Wallet</button>
+                                    <button
+                                        onClick={() => changeShowImage(false)}
+                                        aria-label="close wallet modal button"
+                                        className={styles.okBtn}>Okay</button>
+                                </div>
+
+                            </div>
+                            :
+                            <div>
+                                <Image
+                                    src={modalImage}
+                                    alt="academic task chart"
+                                    height='979'
+                                    width='1000'
+                                    loading="eager"
+                                    priority
+                                />
+                            </div>
+
+                    }
+                </Modal>
 
             </form >
         )}

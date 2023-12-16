@@ -40,7 +40,7 @@ const PackageCard: React.FC<_props> = ({ pack, loading, style }) => {
             loading ?
                 <ReactLoading className={styles.loading} type={'bubbles'} color={'#172E4A'} height={50} width={50} />
                 :
-                <div style={pack.isPopup ? { backgroundColor: '#AB141D' } : {}} className={styles.packageCard}>
+                <div style={pack.isPopup ? { backgroundColor: '#AB141D', paddingBottom: 27 } : {}} className={styles.packageCard}>
                     <div className={styles.packageCardTitle}>{pack.title}</div>
                     <div className={styles.packagePrice}>
                         {
@@ -78,7 +78,7 @@ const PackageCard: React.FC<_props> = ({ pack, loading, style }) => {
                     <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Scoring</div>
                     <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Analysis</div>
                     <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Insights</div>
-                    <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />recommendations</div>
+                    <div className={styles.optionsCard}><FiCheck style={{ marginRight: 7 }} />Recommendations</div>
                     <div className={styles.taskNumberCard}>{pack.description}</div>
                     <div className={styles.subDescription}>{pack.subDescription}</div>
                 </div>

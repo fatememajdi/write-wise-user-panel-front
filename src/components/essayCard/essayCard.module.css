@@ -254,9 +254,9 @@
 
 .writingScoreSummeryItemCard {
     color: var(--color-orange) ;
-    font-size: 20px;
+    font-size: 24px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 700;
     line-height: normal;
     margin-bottom: 20px;
     display: flex;
@@ -266,9 +266,9 @@
 }
 
 .writingScoreSummeryItemCard span {
-    font-size: 18px;
-    padding-left: 10px !important;
-    margin-top: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 12px;
     color: var(--color-blackText);
 }
 

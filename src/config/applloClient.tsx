@@ -10,20 +10,24 @@ const httpLink = createHttpLink({
     uri: "https://devapi.wwai.ai/graphql",
 });
 
-// const autLink = setContext(async (_, { header }) => {
+const autLink = setContext(async (_, { header }) => {
+    const user = await localStorage.getItem("user");
 
-//     return {
-//         headers: {
-//             ...header,
-//             "Authorization": user ? `Bearer ${JSON.parse(user)}` : ''
-//         }
-//     }
-// });
+    if (user)
+        return {
+            headers: {
+                ...header,
+                'Content-Type': 'application/json',
+                "Authorization": user ? `Bearer ${JSON.parse(user)}` : '',
+            }
+        }
+    else return {};
+});
 
 
 const client = new ApolloClient({
-    link: httpLink,
-    cache: new InMemoryCache()
+    link: autLink.concat(httpLink),
+    cache: new InMemoryCache(),
 })
 
 

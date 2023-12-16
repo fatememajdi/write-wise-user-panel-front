@@ -29,7 +29,7 @@ const Section2: React.FC = () => {
                 interval={6000}
                 showStatus={false}
                 showArrows={false}
-                showIndicators={false}
+                showIndicators={true}
                 infiniteLoop
                 thumbWidth={100}
                 className={'col-12 ' + styles.section2carousel}>

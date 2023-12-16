@@ -92,7 +92,12 @@ query GetRandomWriting($type:String!,$questionType:String!){
     topic,
     body,
     tone,
-    questionType
+    questionType,
+    visuals{
+      id,
+      url,
+      image
+    }
   }
 }
 `;

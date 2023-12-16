@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   description: 'Ielts Writing Ai',
   viewport: 'viewport-fit=cover,width=device-width, initial-scale=1, maximum-scale=1',
   icons: {
-    icon: '/logoIcon.svg'
+    icon: '/logoIcon3.svg'
   }
 }
 

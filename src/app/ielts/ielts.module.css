@@ -54,6 +54,19 @@
     cursor: pointer;
 }
 
+.newEssayButton:hover {
+    background-color: var(--color-primary) !important;
+}
+
+.arrowLeftButton:hover {
+    background-color: var(--color-primary) !important;
+}
+
+.taskTabButton:hover {
+    background-color: var(--color-primary) !important;
+}
+
+
 .arrowLeftButton {
     height: 52px !important;
     width: 55px;
@@ -576,9 +589,10 @@
 }
 
 @media(max-width: 500px) {
-    .dashboardLeftCard{
+    .dashboardLeftCard {
         height: 100vh;
     }
+
     .dashboardContentContainer {
         flex-direction: column;
         padding-right: 0px;

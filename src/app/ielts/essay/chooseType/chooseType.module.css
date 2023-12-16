@@ -40,8 +40,8 @@
     padding: 0px !important;
 }
 
-.typeCard :hover {
-    background-color: var(--color-blue) !important;
+.typeCard:hover {
+    background-color: var(--color-primary) !important;
 }
 
 @media(max-width: 1680px) {

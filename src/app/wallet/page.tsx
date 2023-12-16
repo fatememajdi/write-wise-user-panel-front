@@ -3,7 +3,7 @@
 'use client';
 import React from "react";
 import Image from "next/image";
-import client from '@/config/applloAuthorizedClient';
+import client from '@/config/applloClient';
 import dynamic from 'next/dynamic';
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from 'react-responsive';

@@ -1,5 +1,5 @@
 'use client';
-import client from "@/config/applloAuthorizedClient";
+import client from "@/config/applloClient";
 import { GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY } from "@/config/graphql";
 import { Essay } from "../../types/essay";
 import { Topic } from "../../types/topic";

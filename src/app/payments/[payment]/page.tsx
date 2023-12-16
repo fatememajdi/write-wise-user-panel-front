@@ -2,7 +2,7 @@
 'use client';
 import React from "react";
 import dynamic from 'next/dynamic';
-import client from '@/config/applloAuthorizedClient';
+import client from '@/config/applloClient';
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import toast from "react-hot-toast";

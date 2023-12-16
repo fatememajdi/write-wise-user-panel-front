@@ -31,11 +31,9 @@ const AcademicTask1 = [
     { title: 'Random', value: '' },
     { title: 'Bar Chart', value: 'Bar Chart' },
     { title: 'Line Graph', value: 'Line Graph' },
-    { title: 'Table', value: 'Table' },
     { title: 'Pie Chart', value: 'Pie Chart' },
-    { title: 'Process Diagram', value: 'Process Diagram' },
-    { title: 'Map', value: 'Map' },
-    { title: 'Multiple Graphs', value: 'Multiple Graphs' }
+    { title: 'Table', value: 'Table' },
+    { title: 'Diagram', value: 'Diagram' },
 ];
 
 const SubTypeSelect: React.FC<_props> = ({ defaultValue, setFieldValue, type }) => {

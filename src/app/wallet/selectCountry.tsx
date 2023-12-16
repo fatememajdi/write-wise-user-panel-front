@@ -10,7 +10,7 @@ import { Country } from "../../../types/profile";
 
 //------------------------------------------------components
 const InfiniteScrollSelect = dynamic(() => import("@/components/infiniteScrollSelect/infiniteScrollSelect"));
-import client from "@/config/applloAuthorizedClient";
+import client from "@/config/applloClient";
 import { SEARCH_COUNTRIES, SELECT_CURRENCY } from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
 

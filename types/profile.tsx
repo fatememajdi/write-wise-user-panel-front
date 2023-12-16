@@ -9,7 +9,7 @@ export type UserProfile = {
     firstName?: string,
     lastName?: string,
     email?: string,
-    age?: string,
+    age?: number,
     gender?: string,
     profile?: string,
     token?: number,

@@ -7,7 +7,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSession } from "next-auth/react";
 import { Modal } from 'antd';
-import client from '@/config/applloAuthorizedClient';
+import client from '@/config/applloClient';
 import { useMediaQuery } from 'react-responsive';
 import { Drawer } from 'antd';
 

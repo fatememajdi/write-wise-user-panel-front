@@ -12,7 +12,7 @@ import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 import { Socket, io } from 'socket.io-client';
 import { DefaultEventsMap } from "@socket.io/component-emitter";
-import client from "@/config/applloAuthorizedClient";
+import client from "@/config/applloClient";
 import toast from "react-hot-toast";
 
 //-----------------------------------------------------styles
@@ -524,7 +524,7 @@ const Page: React.FC = () => {
                                     href="javascript:void(Tawk_API.showWidget())">
 
                                     <Image
-                                        onClick={() => router.push('/')}
+                                        onClick={() => router.replace('/')}
                                         className={styles.logo}
                                         src="/logo3.svg"
                                         alt="Logo"

@@ -38,9 +38,11 @@ const ProfileCard: React.FC<_props> = ({ profile, closeProfile }) => {
     }, []);
 
     return <table className={styles.profileCard}>
-        <tr><span><FaUser className={styles.profileItemsIcon} /> Name</span>{CapitalStart(profile.firstName) + ' ' + CapitalStart(profile.lastName)}</tr>
-        <tr><span><MdCake className={styles.profileItemsIcon} />Age</span>{profile.age + ' years old'}</tr>
-        <tr><span><MdFace className={styles.profileItemsIcon} />Gender</span>{CapitalStart(profile.gender)}</tr>
+        <tr><span><FaUser className={styles.profileItemsIcon} /> Name</span>{profile.firstName === '' && profile.lastName === '' ? 'Please enter your age'
+            : CapitalStart(profile.firstName) + ' ' + CapitalStart(profile.lastName)}</tr>
+        <tr><span><MdCake className={styles.profileItemsIcon} />Age</span>{profile.age === -1 ? 'Please enter your age' : profile.age + ' years old'}</tr>
+        <tr><span><MdFace className={styles.profileItemsIcon} />Gender</span>{profile.gender === '' ? 'Please select your gender'
+            : CapitalStart(profile.gender)}</tr>
         <tr><span> <Image
             className={styles.locationIcon}
             src="/icons/location.svg"
@@ -50,7 +52,7 @@ const ProfileCard: React.FC<_props> = ({ profile, closeProfile }) => {
             sizes="100vw"
             priority
             loading="eager"
-        /> Country</span>{profile.country.commonName}</tr>
+        /> Country</span>{profile.country.commonName === '' ? 'Please select your country' : profile.country.commonName}</tr>
         <tr><span><MdAlternateEmail className={styles.profileItemsIcon} />Email</span>{profile.email}</tr>
         <tr>
             <button

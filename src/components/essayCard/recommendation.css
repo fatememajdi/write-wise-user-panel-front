@@ -1,4 +1,13 @@
-h3 {
+.recommendation {
+    color: var(--color-blackText);
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+}
+
+.recommendation h3 {
     color: var(--color-orange) !important;
     font-family: var(--font-lato) !important;
     font-size: 24px !important;
@@ -9,7 +18,7 @@ h3 {
     margin-top: 32px !important;
 }
 
-h4 {
+.recommendation h4 {
     color: var(--color-blackText) !important;
     font-family: var(--font-lato) !important;
     font-size: 20px !important;
@@ -20,7 +29,7 @@ h4 {
     margin-top: 25px !important;
 }
 
-p {
+.recommendation p {
     color: var(--color-blackText) !important;
     font-family: var(--font-lato) !important;
     font-size: 20px !important;
@@ -29,15 +38,15 @@ p {
     line-height: 26px !important;
 }
 
-u {
+.recommendation u {
     font-weight: 600 !important;
 }
 
-ul {
+.recommendation ul {
     margin-left: 30px !important;
 }
 
-li {
+.recommendation li {
     margin-left: 57px !important;
     list-style-type: disc !important;
     display: list-item !important;

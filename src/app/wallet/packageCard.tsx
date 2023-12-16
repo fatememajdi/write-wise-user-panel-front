@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React from "react";
-import client from '@/config/applloAuthorizedClient';
+import client from '@/config/applloClient';
 import { useMediaQuery } from 'react-responsive';
 import ReactLoading from 'react-loading';
 
@@ -36,7 +36,6 @@ type Promotion = {
 const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePaymentLink }) => {
 
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-    const [counter, changeCounter] = React.useState<number>(1);
     const [promotionCode, changePromotionCode] = React.useState<string>('');
     const [validpromotionCode, changeValidPromotionCode] = React.useState<boolean>(false);
     const [typing, changeTyping] = React.useState<boolean>(false);
@@ -46,13 +45,12 @@ const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePa
 
     async function validationPromotionCode() {
         setLoading(true);
-        console.log(promotionCode);
         await client.query({
             query: VALIDATION_PROMOTION_CODE,
             fetchPolicy: "no-cache",
             variables: {
                 id: pack.id,
-                adjustedQuantity: pack.adjustableQuantity ? counter : 1,
+                adjustedQuantity: 1,
                 promotionCode: promotionCode
             }
         }).then((res) => {
@@ -70,7 +68,7 @@ const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePa
             changeTyping(false);
             setLoading(false);
         })
-    }
+    };
 
     return <div className={'col-12 ' + styles.modalCard}>
         <AiOutlineClose
@@ -187,7 +185,7 @@ const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePa
                     disabled={loading || typing}
                     onClick={() => {
                         handleCancel();
-                        CreatePaymentLink(pack.adjustableQuantity ? counter : 1, pack.id, promotionCode);
+                        CreatePaymentLink(1, pack.id, promotionCode);
                     }}
                     className={styles.checkoutButton}>Checkout</button>
             </div>
