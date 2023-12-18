@@ -7,12 +7,14 @@ import Link from "next/link";
 import styles from './cookies.module.css';
 
 const CookieConsent = (props) => {
-    const [showConsent, setShowConsent] = React.useState(true);
+    const [showConsent, setShowConsent] = React.useState(false);
     React.useEffect(() => {
-        // console.log(getCookie("localConsent"))
-        // setShowConsent(hasCookie("localConsent"));
+        let cookie = localStorage.getItem('cookies');
+        if (cookie)
+            setShowConsent(JSON.parse(cookie));
     }, []);
     const acceptCookie = () => {
+        localStorage.setItem('cookies', 'true');
         setShowConsent(true);
         setCookie("localConsent", "true", {});
     };
