@@ -41,7 +41,7 @@ import { FiMoreVertical } from 'react-icons/fi';
 import { Essay, JOBSTATUS } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
 import { UserProfile } from "../../../types/profile";
-import { GetEsseies, GetScore, GetTopics, GetUserProfile } from "@/hooks/fetchData";
+import { GetEsseies, GetTopics, GetUserProfile } from "@/hooks/fetchData";
 import { DeleteTopics } from "@/hooks/actions";
 
 type topic = {
@@ -728,7 +728,7 @@ const Page: React.FC = () => {
                 LogOut={LogOut} showProfile={changeShowProfileModal} />
 
             <Modal isOpen={showProfileModal} setIsOpen={changeShowProfileModal} key={0}>
-                <ProfileCard profile={profile} closeProfile={changeShowProfileModal} />
+                <ProfileCard profile={profile} closeProfile={changeShowProfileModal} setProfile={setProfile}/>
             </Modal>
 
         </div >

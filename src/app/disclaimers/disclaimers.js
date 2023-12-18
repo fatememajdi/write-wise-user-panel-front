@@ -1,5 +1,5 @@
 import fs from "fs";
-const filename = "/wwai.ai Privacy Policy.pdf";
+const filename = "/wwai.ai-Disclaimers.pdf";
 
 export default async function api(req, res) {
     res.setHeader("Content-Type", "text/html; charset=utf-8");

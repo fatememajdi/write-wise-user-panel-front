@@ -43,7 +43,7 @@ const FooterLinks = [
     },
     {
         title: 'Disclaimers',
-        route: ''
+        route: '/disclaimers'
     }
 ];
 

@@ -8,6 +8,7 @@
     color: var(--color-blackText);
     font-style: normal;
     font-family: var(--font-lato);
+    min-height: 540px;
 }
 
 .profileCard tr {
@@ -74,4 +75,48 @@
 
 .arrowLeftIcon {
     font-size: 40px;
+}
+
+.profileFieldinput {
+    background: linear-gradient(to right, rgba(46, 64, 87, 0.64), #F3F3F3) border-box !important;
+    border-radius: 8px;
+    width: fit-content;
+    /* margin-left: 35px; */
+    border: 1px solid transparent;
+}
+
+.profileFieldinput input {
+    width: 340px !important;
+    height: 62px !important;
+    flex-shrink: 0;
+    border-radius: 8px !important;
+    background: var(--color-background) !important;
+    border: none !important;
+    box-shadow: 3px 2px 11px -2px rgba(0, 0, 0, 0.10) !important;
+    margin-left: 0px !important;
+    color: var(--color-blackText) !important;
+    font-family: var(--font-lato) !important;
+    font-size: 24px !important;
+    font-style: normal;
+    font-weight: 700 !important;
+    line-height: 12px !important;
+    letter-spacing: -0.12px !important;
+}
+
+.profileFieldinput input::placeholder {
+    opacity: 0.5 !important;
+}
+
+.profileFieldinput input:focus {
+    background-color: var(--color-background) !important;
+    border: none !important;
+}
+
+.saveButton {
+    width: 88px;
+    height: 42px;
+    padding: 0px !important;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px var(--color-seccondary);
 }

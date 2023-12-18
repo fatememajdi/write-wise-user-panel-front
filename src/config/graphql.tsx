@@ -193,7 +193,15 @@ mutation UpdateUser($firstName:String, $age:Float, $lastName:String, $gender:Str
     lastName,
     email,
     age,
-    gender
+    gender,
+    profile,
+    token,
+    country{
+      commonName,
+      id,
+      officialName,
+      flag
+    }
   }
 }
 `;

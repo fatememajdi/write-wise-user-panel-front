@@ -31,9 +31,10 @@ const nextConfig = {
   //   ]
   // },
   rewrites: async () => [
-    { source: '/privacyPolicy', destination: '/test.html' },
+    { source: '/privacyPolicy', destination: '/wwai.ai Privacy Policy.pdf' },
     { source: '/cookies', destination: '/cookie.html' },
     { source: '/termsOfService', destination: '/wwai.ai-Terms and Conditions of Use.pdf' },
+    { source: '/disclaimers', destination: '/wwai.ai-Disclaimers.pdf' },
   ],
   images: {
     minimumCacheTTL: 60,
