@@ -49,10 +49,10 @@ const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, ti
         <DialogActions
             style={{ backgroundColor: '#626E7E' }}>
             <Button
-                style={{ color: '#252525' }}
+                style={{ color: '#FFF' }}
                 onClick={handleClose}>Cancle</Button>
             <Button
-                style={{ color: '#252525' }}
+                style={{ color: '#FFF' }}
                 onClick={handleDelete}>{deleteButton ? deleteButton : 'Delete'}</Button>
         </DialogActions>
     </Dialog>

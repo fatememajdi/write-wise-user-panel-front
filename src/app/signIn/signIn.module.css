@@ -150,10 +150,6 @@
 
 .emailInput input {
     height: 64px !important;
-    border-width: 1px !important;
-    border-color: var(--color-primary) !important;
-    border-style: solid !important;
-    border: solid 1px var(--color-primary) !important;
     background-color: transparent !important;
 }
 
@@ -161,6 +157,15 @@
     height: fit-content;
     position: relative;
     max-width: 360px;
+    border: solid 1px var(--color-primary) !important;
+    border-radius: 8px;
+}
+
+.verificationInputCard {
+    height: fit-content;
+    position: relative;
+    max-width: 360px;
+    border-radius: 8px;
 }
 
 .inputEmailTitle {

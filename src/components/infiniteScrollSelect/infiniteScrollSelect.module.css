@@ -9,7 +9,7 @@
     flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
-    padding: 0px 20px;
+    padding: 0px 20px !important;
     color: var(--color-whiteText);
     font-family: var(--font-lato);
     font-size: 24.354px;
@@ -47,6 +47,7 @@
     width: 100%;
     left: 0px;
     right: 0px;
+    box-shadow: -5px 15px 22px -5px rgba(0, 0, 0, 0.19);
 }
 
 .selectItemsCard::-webkit-scrollbar {
@@ -72,7 +73,7 @@
 }
 
 .menuItem:hover {
-    background-color: var(--color-seccondary) !important;
+    background-color: var(--color-darkGray) !important;
 }
 
 .flagImage{

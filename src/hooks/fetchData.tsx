@@ -1,9 +1,9 @@
 'use client';
 import client from "@/config/applloClient";
-import { GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY } from "@/config/graphql";
+import { GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY, SEARCH_COUNTRIES } from "@/config/graphql";
 import { Essay } from "../../types/essay";
 import { Topic } from "../../types/topic";
-import { UserProfile } from "../../types/profile";
+import { Country, UserProfile } from "../../types/profile";
 import toast from "react-hot-toast";
 
 export async function GetEsseies(id: string, page: number) {
@@ -62,4 +62,23 @@ export async function GetScore(id: string, test: boolean) {
     }).catch((err) => {
         toast.error(err.message);
     })
+};
+
+export async function GetCountries(Filter: string) {
+    let countries: Country[] = [];
+
+    await client.query({
+        query: SEARCH_COUNTRIES,
+        fetchPolicy: "no-cache",
+        variables: {
+            page: 1,
+            pageSize: 250,
+            value: Filter
+        }
+    }).then((res) => {
+        countries = res.data.searchCountry.countries;
+    }).catch((err) => {
+        toast.error(err.message);
+    });
+    return countries;
 }

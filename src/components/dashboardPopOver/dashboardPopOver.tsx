@@ -65,7 +65,6 @@ const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogO
         await LogOut();
     };
 
-
     React.useEffect(() => {
         CheckCountry();
     }, []);

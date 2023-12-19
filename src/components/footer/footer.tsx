@@ -11,6 +11,7 @@ import styles from './footer.module.css';
 //----------------------------------------------------------------icons
 import { IoLogoFacebook, IoLogoLinkedin } from 'react-icons/io';
 import { AiFillInstagram } from 'react-icons/ai';
+import { FaRegCopyright } from 'react-icons/fa';
 
 //----------------------------------------------------------------social media items
 const SocialMediaItems = [
@@ -121,7 +122,7 @@ const Footer: React.FC = () => {
                 }
             </div>
 
-            <div className={styles.name}>(C) WriteWiseAI 2023</div>
+            <div className={styles.name}><FaRegCopyright fontSize={25} style={{ marginRight: 7 }} /> WriteWiseAI 2023</div>
 
         </div>
 

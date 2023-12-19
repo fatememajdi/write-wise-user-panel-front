@@ -22,17 +22,19 @@ type _props = {
     moreData: boolean,
     data: Country[],
     changeFilter: any,
-    selectItem: any
+    selectItem: any,
+    lightTheme?: boolean
 }
 
-const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data, changeFilter, selectItem }) => {
+const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data, changeFilter, selectItem, lightTheme }) => {
     const [selectedItem, setSelectedItem] = React.useState<Country>();
     const [showMenu, setShowMenu] = React.useState<boolean>(false);
     const [showList, setShowList] = React.useState<boolean>(false);
 
     return <AnimatePresence>
-        <div className={styles.select}>
+        <div style={lightTheme ? { backgroundColor: '#FFF', height: 62, width: 350 } : {}} className={styles.select}>
             <input
+                style={lightTheme ? { color: '#172E4A' } : {}}
                 onClick={() => {
                     setShowList(true);
                     setShowMenu(true)
@@ -51,7 +53,7 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
                 animate={showMenu ? { transform: 'rotate(180deg)' } : {}}
                 transition={{ type: "spring", duration: 0.5 }}
             >
-                <TiArrowSortedDown className={styles.arrowIcon} onClick={() => {
+                <TiArrowSortedDown style={lightTheme ? { color: '#172E4A' } : {}} className={styles.arrowIcon} onClick={() => {
                     setShowMenu(!showMenu);
                     if (!showList) {
                         setShowList(true);
@@ -64,13 +66,14 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
                 <motion.div
                     animate={{ height: showMenu ? 150 : 0, opacity: showMenu ? 1 : 0 }}
                     transition={{ type: "spring", duration: 0.5 }}
+                    style={lightTheme ? { top: 60, backgroundColor: '#FFF', color: '#172E4A' } : {}}
                     className={styles.selectItemsCard}
                 >
                     <InfiniteScroll
                         pageStart={0}
                         loadMore={() => GetData()}
                         hasMore={moreData}
-                        loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} />}
+                        loader={<Loading style={{ height: 60, minHeight: 0, marginTop: 5 }} />}
                         useWindow={false}
                         key={0}
                     >

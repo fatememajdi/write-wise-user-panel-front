@@ -80,18 +80,25 @@
 .profileFieldinput {
     background: linear-gradient(to right, rgba(46, 64, 87, 0.64), #F3F3F3) border-box !important;
     border-radius: 8px;
-    width: fit-content;
+    width: fit-content !important;
     /* margin-left: 35px; */
-    border: 1px solid transparent;
+    border: 1px solid transparent !important;
+}
+
+.selectFieldinput {
+    width: 350px !important;
+    height: 62px !important;
+    background: linear-gradient(to right, rgba(46, 64, 87, 0.64), #F3F3F3) border-box !important;
+    border-radius: 8px;
+    border: 1px solid transparent !important;
 }
 
 .profileFieldinput input {
-    width: 340px !important;
+    width: 350px !important;
     height: 62px !important;
     flex-shrink: 0;
     border-radius: 8px !important;
     background: var(--color-background) !important;
-    border: none !important;
     box-shadow: 3px 2px 11px -2px rgba(0, 0, 0, 0.10) !important;
     margin-left: 0px !important;
     color: var(--color-blackText) !important;
@@ -101,6 +108,7 @@
     font-weight: 700 !important;
     line-height: 12px !important;
     letter-spacing: -0.12px !important;
+    border: none !important;
 }
 
 .profileFieldinput input::placeholder {
@@ -119,4 +127,68 @@
     align-items: center;
     justify-content: center;
     border: solid 1px var(--color-seccondary);
+}
+
+.genderSelect {
+    height: 62px;
+    width: 350px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 9.742px;
+    border: 1.218px solid var(--color-primary);
+    background: var(--color-background);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 5px 0px 20px !important;
+    color: var(--color-primary);
+    font-family: var(--font-lato);
+    font-size: 24.354px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    position: relative;
+}
+
+.genderSelect span {
+    margin-right: auto;
+    width: 100% !important;
+    height: 100%;
+    font-family: var(--font-lato);
+    font-size: 24.354px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.arrowIcon {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.genderSelectItemsCard {
+    max-height: 200px;
+    background-color: var(--color-background);
+    z-index: 2;
+    border-radius: 10px;
+    position: absolute;
+    top: 65px;
+    width: 100%;
+    left: 0px;
+    right: 0px;
+    box-shadow: -5px 15px 22px -5px rgba(0, 0, 0, 0.19);
+}
+
+.menuItem {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.menuItem:hover {
+    background-color: var(--color-darkGray) !important;
+    color: var(--color-whiteText) !important;
 }

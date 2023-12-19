@@ -375,3 +375,11 @@ mutation SelectCurrency($id:String!){
   }
 }
 `;
+
+export const DELETE_ACCOUNT=gql`
+mutation{
+  deleteUserAccount{
+    token
+  }
+}
+`;

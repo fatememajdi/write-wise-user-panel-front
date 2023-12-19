@@ -175,17 +175,19 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                                 priority
                             />
                             :
-                            <Image
-                                className={styles.headerLogo}
-                                src={"/logoWithIcon.svg"}
-                                alt="Logo"
-                                width="0"
-                                height="0"
-                                sizes="100vw"
-                                loading="eager"
-                                priority
-                            />
-
+                            <Link style={{ cursor: 'pointer' }} onClick={() => { if (pathname === '/') handleScroll; }}
+                                href={pathname === '/' ? '#hero-section' : '/#hero-section'}>
+                                <Image
+                                    className={styles.headerLogo}
+                                    src={"/logoWithIcon.svg"}
+                                    alt="Logo"
+                                    width="0"
+                                    height="0"
+                                    sizes="100vw"
+                                    loading="eager"
+                                    priority
+                                />
+                            </Link>
                     }
                     {
                         headerItems.map(

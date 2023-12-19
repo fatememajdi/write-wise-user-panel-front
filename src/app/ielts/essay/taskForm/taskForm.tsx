@@ -19,9 +19,7 @@ import styles from '../../../../styles/task.module.css';
 import '../../../../styles/customMuiStyles.css';
 
 //--------------------------------------components
-import {
-    ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_WRITING, SELECT_TOPIC
-} from "@/config/graphql";
+import { ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_WRITING, SELECT_TOPIC } from "@/config/graphql";
 import Loading from "@/components/loading/loading";
 import EssayCard from "@/components/essayCard/essayCard";
 const Input = dynamic(() => import('@/components/input/input'));
@@ -86,7 +84,6 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [walletError, changeWalletError] = React.useState<boolean>(false);
     const [isBig, setIsBig] = React.useState<boolean>(false);
     const [modalImage, changeModalImage] = React.useState<string>();
-    // const [imagePixels, changeImagePixels] = React.useState<number>(1);
     const router = useRouter();
 
     //-----------------------------------------------------------------graphQl functions
@@ -95,10 +92,10 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [deleteEssay] = useMutation(DELETE_ESSAY);
 
     const handleCancelImageModal = () => changeShowImage(false);
-    async function handleSelectImage(url: string) {
-        await changeModalImage(url);
-        changeShowImage(true);
-    };
+    // async function handleSelectImage(url: string) {
+    //     await changeModalImage(url);
+    //     changeShowImage(true);
+    // };
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
@@ -363,6 +360,8 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
         body: Yup
             .string()
             .required('Body is required!'),
+        topic: Yup
+            .string(),
     });
 
     return <Formik
@@ -555,7 +554,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                     <motion.div
                                                         key={index}
                                                         onClick={() => setIsBig(!isBig)}
-                                                        animate={isBig ? { width: 1200, height: 800 } : { width: 600, height: 400 }}
+                                                        animate={isBig ? { width: 1200, height: 'fit-content' } : { width: 600, height: 'fit-content' }}
                                                         transition={{ type: 'spring', duration: 2 }}
                                                     >
                                                         <Image
@@ -574,7 +573,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                         <motion.div
                                                             key={index}
                                                             onClick={() => setIsBig(!isBig)}
-                                                            animate={isBig ? { width: 1000, height: 979 } : { width: 600, height: 428 }}
+                                                            animate={isBig ? { width: 1000, height: 'fit-content' } : { width: 600, height: 'fit-content' }}
                                                             transition={{ type: 'spring', duration: 2 }}
                                                         >
                                                             <Image
@@ -630,7 +629,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 >
                                     <EssayProcessBar type={type} changeInput={changeInput} loading={addEssayLoading}
                                         disable={!endTyping || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249)}
-                                        error={errors.body || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249) ? true : false} />
+                                        error={errors.body && touched.body || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249) ? true : false} />
                                     {
                                         !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249) &&
                                         <div className={styles.errorForm}>Text is too long!</div>

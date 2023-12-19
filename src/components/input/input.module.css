@@ -29,9 +29,9 @@
     font-weight: 275px !important;
     transition: 0s border;
     height: 46px;
-    background-color: transparent !important;
+    background-color: transparent;
     color: var(--color-blackText) !important;
-    border: solid 1px var(--color-primary) !important;
+    border: none !important;
     padding: 0px 10px;
     border-radius: 10px;
 }
@@ -57,9 +57,9 @@
 
 .formSectionInput input:focus {
     outline: none !important;
-    border: solid 1px var(--color-darkGray) !important;
+    border: none !important;
     transition: .4s;
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
 .formSectionInput textarea {
@@ -76,7 +76,7 @@
 
 .formSectionInput textarea:focus {
     outline: none !important;
-    border: solid 1px var(--color-darkGray) ;
+    border: solid 1px var(--color-darkGray);
     transition: .4s;
 }
 

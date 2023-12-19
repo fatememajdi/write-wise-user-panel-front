@@ -132,7 +132,7 @@ const VerificationCode: React.FC = () => {
 
                     <div className={styles.subtitle}>An email containing a code has been sent to:<br /><span>{email}</span></div>
 
-                    <div className={'col-12 ' + styles.inputCard}>
+                    <div className={'col-12 ' + styles.verificationInputCard}>
                         <div className={styles.inputEmailTitle}>Code {seconds !== 0 && `${seconds}s`} </div>
                         <OtpInput
                             disable={loading}

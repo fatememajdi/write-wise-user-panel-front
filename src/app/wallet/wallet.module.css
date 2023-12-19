@@ -74,7 +74,7 @@
 }
 
 .firstTitle {
-    margin-top: 48px;
+    margin-top: 26px;
     text-align: center;
     font-family: var(--font-lato);
     font-size: 20px;
@@ -116,7 +116,7 @@
 }
 
 .tokenCard {
-    height: 29%;
+    height: 35%;
     width: 100%;
     flex-shrink: 0;
     background: linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%);
@@ -166,7 +166,7 @@
     border-radius: 8px;
     backdrop-filter: blur(17px);
     /* height: 88vh; */
-    height: 71%;
+    height: 65%;
     flex-shrink: 0;
     width: max-content;
     display: flex;
@@ -567,193 +567,6 @@
     align-items: center;
     justify-content: center;
 }
-
-/* 
-@media(max-width: 1680px) {
-    .tokenCard {
-        padding: 0px 80px;
-        font-size: 36px;
-        font-weight: 600;
-    }
-
-    .tokenCard span {
-        font-size: 16px;
-    }
-
-    .addTokenButton {
-        width: 130px;
-        height: 40px;
-        font-size: 16px;
-        font-weight: 400;
-    }
-
-    .plusIcon {
-        font-size: 20px;
-        margin-right: 5px;
-    }
-
-    .mainContainer {
-        padding: 64px 50px 0px 80px;
-    }
-
-    .tableContent::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .tableContent::-webkit-scrollbar-thumb {
-        width: 8px;
-    }
-
-    .tabaleTitleCard {
-        font-size: 18px;
-        font-weight: 400;
-    }
-
-    .modalCard {
-        min-width: 1300px;
-    }
-
-    .buyPackageLeftCardTitle {
-        width: 248px;
-        padding: 0px 30px 0px 10px;
-        height: 306px;
-        font-size: 32px;
-        font-weight: 600;
-    }
-
-    .buyPackageLeftCardTitle span {
-        font-size: 18px;
-        font-weight: 300;
-    }
-
-    .buyPackageRightCardTitle,
-    .buyPackageRightCardSubTitle {
-        font-size: 20px;
-    }
-
-    .totalDueCard span {
-        font-size: 28px;
-    }
-
-    .checkoutButton {
-        width: 132px;
-        height: 40px;
-        font-size: 20px;
-        font-weight: 500;
-    }
-
-    .applyCodeButton {
-        font-size: 18px;
-    }
-
-    .leftNavBardCard {
-        width: 80px;
-    }
-
-    .select {
-        min-width: 222.678px;
-        width: fit-content;
-        height: 31.384px;
-    }
-
-
-    .selectItem {
-        font-size: 13px !important;
-    }
-}
-
-@media(max-width: 1440px) {
-    .tokenCard {
-        padding: 0px 80px;
-        font-size: 36px;
-        font-weight: 600;
-    }
-
-    .tokenCard span {
-        font-size: 16px;
-    }
-
-    .addTokenButton {
-        width: 130px;
-        height: 40px;
-        font-size: 16px;
-        font-weight: 400;
-    }
-
-    .plusIcon {
-        font-size: 20px;
-        margin-right: 5px;
-    }
-
-    .mainContainer {
-        padding: 64px 50px 0px 80px;
-    }
-
-    .tableContent::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .tableContent::-webkit-scrollbar-thumb {
-        width: 8px;
-    }
-
-    .tabaleTitleCard {
-        font-size: 18px;
-        font-weight: 400;
-    }
-
-    .modalCard {
-        min-width: 1300px;
-    }
-
-    .buyPackageLeftCardTitle {
-        width: 248px;
-        padding: 0px 30px 0px 10px;
-        height: 306px;
-        font-size: 32px;
-        font-weight: 600;
-    }
-
-    .buyPackageLeftCardTitle span {
-        font-size: 18px;
-        font-weight: 300;
-    }
-
-    .buyPackageRightCardTitle,
-    .buyPackageRightCardSubTitle {
-        font-size: 20px;
-    }
-
-    .totalDueCard span {
-        font-size: 28px;
-    }
-
-    .checkoutButton {
-        width: 132px;
-        height: 40px;
-        font-size: 20px;
-        font-weight: 500;
-    }
-
-    .applyCodeButton {
-        font-size: 18px;
-    }
-
-    .leftNavBardCard {
-        width: 80px;
-    }
-
-    .select {
-        min-width: 222.678px;
-        width: fit-content;
-        height: 31.384px;
-    }
-
-
-    .selectItem {
-        font-size: 13px !important;
-    }
-} */
 
 @media(max-width: 500px) {
 
