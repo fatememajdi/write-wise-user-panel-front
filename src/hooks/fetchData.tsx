@@ -1,10 +1,11 @@
 'use client';
 import client from "@/config/applloClient";
-import { GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY, SEARCH_COUNTRIES } from "@/config/graphql";
+import { GET_CURRENCIES, GET_PACKAGES, GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY, SEARCH_COUNTRIES } from "@/config/graphql";
 import { Essay } from "../../types/essay";
 import { Topic } from "../../types/topic";
 import { Country, UserProfile } from "../../types/profile";
 import toast from "react-hot-toast";
+import { Package } from "../../types/package";
 
 export async function GetEsseies(id: string, page: number) {
     let essaies: Essay[] = [];
@@ -81,4 +82,25 @@ export async function GetCountries(Filter: string) {
         toast.error(err.message);
     });
     return countries;
+}
+
+export async function GetPackages(token?: string) {
+    let packages: Package[] = [];
+    await client.query({
+        query: GET_CURRENCIES,
+        fetchPolicy: "no-cache",
+    }).then(async (res) => {
+        await client.query({
+            query: GET_PACKAGES,
+            fetchPolicy: "no-cache",
+            variables: {
+                currency: res.data.getCurrencies[0].code.toLowerCase(),
+                userToken: token ? token : ''
+            }
+        }).then((res) => {
+            packages = res.data.getPackages;
+        })
+    });
+
+    return packages;
 }

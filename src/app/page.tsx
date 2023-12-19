@@ -55,7 +55,7 @@ const Home: React.FC = () => {
     :
     <Suspense fallback={<Loading />}>
       <div className={'col-12 ' + styles.landingContainer}>
-       
+
         <Section1 />
         <Section2 />
         <Section3 />

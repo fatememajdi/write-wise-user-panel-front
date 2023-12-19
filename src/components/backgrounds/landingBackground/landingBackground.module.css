@@ -59,9 +59,7 @@
     }
 
     .landingBackground {
-        background: #F4DEDF;
-        background: linear-gradient(90deg, #F4DEDF, #DBE8F2) !important;
         min-height: fit-content;
-        background-image: none;
+        background-image: url('/landing/section1-mobile-background.svg');
     }
 }

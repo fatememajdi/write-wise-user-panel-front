@@ -27,7 +27,7 @@ const ScoreInsightsCard: React.FC<{ Insight: string, GetScores: any, essay: Essa
             setHtmlString(Insight);
             router.refresh();
         }
-    });
+    },[Insight]);
 
     return (<div style={Insight === '' || !Insight ? { padding: 0 } : {}} className={styles.writingScoreCard}>
         {

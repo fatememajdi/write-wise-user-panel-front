@@ -26,13 +26,6 @@
     width: 100%;
 }
 
-.secondTitle {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 167.02%;
-    color: var(--color-whiteText);
-}
-
 .description {
     line-height: 130.52%;
     color: var(--color-whiteText);
@@ -89,37 +82,6 @@
     text-align: left;
 }
 
-.arrowContainer {
-    height: 65px;
-    width: 65px;
-    border-radius: 100%;
-    border-radius: 65.448px;
-    background: linear-gradient(141deg, #B5C0CE 0%, rgba(234, 234, 234, 0.20) 83.58%);
-    filter: blur(0px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 7px;
-}
-
-.arrowIcon {
-    display: flex;
-}
-
-.mobileArrowIcon {
-    display: none;
-    font-size: 30px;
-    color: var(--color-primary);
-}
-
-.boldLetter {
-    font-weight: 400 !important;
-}
-
-.arrowCard {
-    z-index: 3;
-}
-
 .carouselCard {
     border-top: 2px solid rgba(255, 255, 255, 0.79);
     border-bottom: 2px solid rgba(255, 255, 255, 0.79);
@@ -148,97 +110,35 @@
         font-size: 24px;
     }
 
-    .secondTitle {
-        font-size: 16px;
-        margin-top: 20px;
-    }
-
     .description {
         font-size: 16px;
     }
 
     .section2Container {
         padding: 180px 0px 40px 0px;
-    }
-}
-
-@media(max-width: 1440px) {
-
-    .arrowContainer {
-        height: 50px !important;
-        width: 50px !important;
-    }
-
-    .stepCardDescription {
-        font-size: 16px;
-    }
-
-    .stepCardtitle {
-        font-size: 16px;
-    }
-
-    .stepCardSecondtitle {
-        font-size: 24px;
-    }
-
-    .title {
-        font-size: 24px;
-    }
-
-    .secondTitle {
-        font-size: 16px;
-        margin-top: 20px;
-    }
-
-    .description {
-        font-size: 16px;
-    }
-
-    .section2Container {
-        padding: 180px 0px 40px 0px;
-    }
-}
-
-@media(max-width: 992px) {
-    .section2Container {
-        padding: 170px 70px 0px 70px;
-    }
-
-    .title {
-        font-size: 43px;
-    }
-
-    .stepCard {
-        padding: 19px 90px 40px 40px;
     }
 }
 
 @media(max-width: 500px) {
     .section2Container {
-        padding: 60px 10px 40px 10px;
+        padding: 20px 0px 100px 0px;
         min-height: fit-content !important;
     }
 
     .title {
-        font-size: 24px;
         margin-right: 30px;
         margin-left: 30px;
-    }
-
-    .secondTitle {
-        font-size: 13px;
-        font-weight: 400;
-        margin-top: 15px;
-        margin-right: 30px;
-        margin-left: 30px;
+        text-align: left;
     }
 
     .description {
-        font-size: 13px;
-        font-weight: 300;
-        margin-top: 5px;
+        margin-top: 0px;
         margin-right: 30px;
         margin-left: 30px;
+    }
+
+    .description span {
+        font-weight: 500;
     }
 
     .section2carousel {
@@ -246,50 +146,31 @@
     }
 
     .stepCard {
-        background: radial-gradient(312.20% 143.76% at -0.18% 2.78%, rgba(255, 255, 255, 0.75) 0%, rgba(251, 251, 251, 0.84) 16.35%, rgba(247, 247, 247, 0.79) 33.09%, rgba(246, 246, 246, 0.73) 44.92%, rgba(243, 243, 243, 0.80) 60.94%, rgba(246, 246, 246, 0.79) 81.34%, rgba(255, 255, 255, 0.68) 100%);
-        box-shadow: 0px 4px 4px 0px rgba(0, 82, 147, 0.30);
-        border-radius: 8px;
-        padding: 20px 20px 10px 20px;
-        min-width: 258px;
+        padding: 20px 30px 10px 30px;
         margin-bottom: 30px;
-        margin-right: 35px;
-        margin-left: 35px;
-        min-height: 306px;
-        justify-content: flex-start;
+        min-height: 246px;
+        justify-content: flex-start !important;
     }
 
     .stepCardSecondtitle {
         font-size: 20px;
-        color: var(--color-primary);
-        line-height: 119.023%;
-        font-weight: 700;
+        color: var(--color-whiteText);
+        font-size: 19.061px;
+        font-weight: 600;
+        line-height: 23.826px;
+        margin-top: 9px;
     }
 
     .stepCardDescription {
-        font-size: 13px;
-        margin-top: 27px;
-        line-height: 136.023%;
+        margin-top: 18px;
     }
 
     .stepCardtitle {
-        font-size: 14px !important;
+        font-size: 13px !important;
+        font-weight: 400;
     }
 
-    .arrowContainer {
-        height: 30px !important;
-        width: 30px !important;
-        padding-top: 0px;
-    }
-
-    .arrowIcon {
-        display: none;
-    }
-
-    .mobileArrowIcon {
-        display: flex;
-    }
-
-    .arrowCard {
-        padding: 0px !important;
+    .textContainer{
+        margin-bottom: 60px;
     }
 }

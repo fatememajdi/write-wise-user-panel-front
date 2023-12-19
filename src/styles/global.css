@@ -112,6 +112,30 @@ button:hover {
 
 }
 
-@media (min-width: 1680px) {}
+@media (max-width: 500px) {
+  h1 {
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    line-height: 29.8px !important;
+    letter-spacing: -0.12px !important;
+  }
 
-@media (min-width: 1440px) {}
+  h6 {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 20px !important;
+  }
+
+  h2 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    line-height: 60px !important;
+  }
+
+  h4 {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    line-height: 21.443px !important;
+  }
+
+}

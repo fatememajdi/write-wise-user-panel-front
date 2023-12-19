@@ -8,17 +8,7 @@
     font-family: var(--font-lato);
 }
 
-.leftContainer {
-    padding-right: 112px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    position: relative;
-}
-
-.rightContainer {
+.content {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -28,14 +18,7 @@
     margin-right: auto;
 }
 
-.leftContainerBackground {
-    position: absolute;
-    width: 1001px;
-    height: 1065px;
-    display: none;
-}
-
-.rightContainerTitle {
+.title {
     color: var(--color-primary);
     display: flex;
     flex-wrap: wrap;
@@ -61,52 +44,17 @@
     }
 }
 
-.rightContainerTitle span {
+.title span {
     white-space: nowrap;
 }
 
-.rightContainerDescription {
+.description {
     margin-top: 48px;
     color: var(--color-blackText);
     line-height: 31.2px;
     text-transform: capitalize;
     max-width: 85%;
-    
-}
 
-.rightContainerDescription span {
-    display: flex;
-    padding-right: 211px;
-}
-
-.leftImageCard {
-    position: relative;
-    height: fit-content !important;
-    width: fit-content !important;
-}
-
-.robot {
-    width: 616px;
-    height: 476px
-}
-
-.human {
-    position: absolute;
-    width: 338px;
-    height: 488px;
-    right: -3% !important;
-    top: -3% !important;
-}
-
-.leftLogo {
-    color: var(--color-whiteText);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 12px;
-    position: absolute;
-    top: 17%;
-    left: 35%;
 }
 
 .startButton {
@@ -124,61 +72,20 @@
 }
 
 @media(max-width: 1680px) {
-    .rightContainerDescription span {
-        padding-right: 50px;
-    }
 
     .section1Container {
         padding: 170px 0px 50px 0px;
     }
 
-    .robot {
-        width: 587px;
-        height: 470px
-    }
-
-    .leftContainerBackground {
-        right: 0px;
-        top: -500px;
-    }
-
-    .human {
-        position: absolute;
-        width: 302px;
-        height: 435px;
-        right: -7% !important;
-    }
-
-    .leftLogo {
-        font-size: 20px;
-        top: 22%;
-    }
-
-
-    .rightContainer {
+    .content {
         padding-left: 116px;
     }
 
-    .rightContainerTitle {
+    .title {
         font-size: 64px;
         font-weight: 800;
         line-height: 68.4px;
         letter-spacing: -0.32px;
-    }
-
-    .rightContainerDescription {
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 26px;
-    }
-
-    .rightContainerDescriptionItem {
-        font-size: 16px;
-        line-height: 20.8px;
-    }
-
-    .rightContainerDescriptionItemIcon {
-        margin-top: 0px;
     }
 
     .startButton {
@@ -190,199 +97,35 @@
         line-height: 40px;
         align-items: center;
         justify-content: center;
-    }
-
-}
-
-@media(max-width: 1440px) {
-    .rightContainerDescription span {
-        padding-right: 50px;
-    }
-
-    .section1Container {
-        padding: 170px 0px 50px 0px;
-    }
-
-    .robot {
-        width: 587px;
-        height: 470px
-    }
-
-    .leftContainerBackground {
-        right: 0px;
-        top: -500px;
-    }
-
-    .human {
-        position: absolute;
-        width: 302px;
-        height: 435px;
-        right: -7% !important;
-    }
-
-    .leftLogo {
-        font-size: 20px;
-        top: 22%;
-    }
-
-
-    .rightContainer {
-        padding-left: 116px;
-    }
-
-    .rightContainerTitle {
-        font-size: 64px;
-        font-weight: 800;
-        line-height: 68.4px;
-        letter-spacing: -0.32px;
-    }
-
-    .rightContainerDescription {
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 26px;
-    }
-
-    .rightContainerDescriptionItem {
-        font-size: 16px;
-        line-height: 20.8px;
-    }
-
-    .rightContainerDescriptionItemIcon {
-        margin-top: 0px;
-    }
-
-    .startButton {
-        width: 139px;
-        padding: 0px !important;
-        height: 56px;
-        font-size: 20px;
-        font-weight: 900;
-        line-height: 40px;
-        align-items: center;
-        justify-content: center;
-    }
-
-}
-
-@media(max-width: 992px) {
-    .leftContainerCircle {
-        height: 280px;
-        width: 280px;
-    }
-
-    .rightContainerTitle {
-        font-size: 38px;
-    }
-
-    .rightContainerDescription {
-        font-size: 20px;
-        margin-top: 40px;
-    }
-
-    .rightContainerDescription span {
-        font-size: 21px;
-    }
-
-    .leftContainer {
-        padding-right: 90px;
-    }
-
-    .rightContainerButton {
-        font-size: 22px;
     }
 
 }
 
 @media(max-width: 500px) {
-
-    .rightContainerDescription span {
-        padding-right: 0px;
-    }
-
-    .leftLogo {
-        font-size: 10px;
-    }
-
-    .leftContainerBackground {
-        z-index: unset;
-        display: flex;
-        top: -300px;
-        right: 0px;
-    }
-
-    .leftContainer {
-        align-items: center;
-        justify-content: center;
-        padding-bottom: 40px;
-        padding-left: 0px;
-        padding-right: 0px;
-        height: fit-content;
-        padding-top: 14px;
-    }
-
-    .robot {
-        width: 253px;
-        height: 196px;
-        z-index: 2;
-    }
-
-    .human {
-        width: 151px !important;
-        height: 219px !important;
-        z-index: 2;
-        top: -10% !important;
-    }
-
     .section1Container {
         flex-direction: column-reverse;
         padding: 100px 0px 50px 0px;
         min-height: fit-content;
     }
 
-    .rightContainer {
+    .content {
         height: fit-content;
-        padding: 0px 20px 0px 50px;
+        padding: 0px 20px 0px 30px;
+        margin-top: 350px;
     }
 
-    .rightContainerTitle {
-        font-size: 24px;
-        font-weight: 800;
-        line-height: 26.4px;
-        letter-spacing: -0.12px;
-    }
-
-    .rightContainerDescription {
-        font-size: 13px;
-        font-weight: 300;
-        line-height: 20px;
-    }
-
-    .rightContainerDescriptionItem {
-        font-size: 13px;
-        font-weight: 300;
-        line-height: 20px;
-    }
-
-    .rightContainerDescription span {
-        font-weight: 500;
-        font-size: 14px !important;
-    }
-
-    .boldLetter {
-        font-weight: 600 !important;
-    }
-
-    .rightContainerDescriptionItemIcon {
-        font-size: small !important;
+    .description {
+        margin-top: 16px;
     }
 
     .startButton {
-        width: 100px;
-        height: 42px;
+        width: 92px;
+        height: 43px;
         font-size: 13px;
-        font-weight: 900;
-        line-height: 40px;
+        font-weight: 700;
+        line-height: 4px;
+        margin-top: 32px;
+        border-radius: 4px !important;
     }
 
 }

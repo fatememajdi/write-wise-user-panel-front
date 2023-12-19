@@ -1,5 +1,6 @@
 'use client';
 import React from "react";
+import { useMediaQuery } from 'react-responsive';
 import { Carousel } from 'react-responsive-carousel';
 
 //-------------------------------styles
@@ -10,6 +11,7 @@ import '../../styles/global.css';
 import steps from '../../../public/data/Steps.json';
 
 const Section2: React.FC = () => {
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     return <section className={styles.section2Container} id="how-it-works">
         <div className={styles.textContainer}>
@@ -23,31 +25,51 @@ const Section2: React.FC = () => {
         </div>
 
         <div className={'col-12 ' + styles.carouselCard}>
-            <Carousel
-                showThumbs={false}
-                autoPlay
-                interval={6000}
-                showStatus={false}
-                showArrows={false}
-                showIndicators={true}
-                infiniteLoop
-                thumbWidth={100}
-                className={'col-12 ' + styles.section2carousel}>
-                <div style={{ display: 'flex', flexDirection: 'row', height: 380 }} key={0}>
-                    {
-                        steps.slice(0, 3).map((item, index) => <StepCard Step={item} key={index} />)
-                    }
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'row', height: 380 }} key={1}>
-                    {
-                        steps.slice(3).map((item, index) => <StepCard Step={item} key={index} />)
-                    }
-                </div>
-            </Carousel>
+            {
+                isMobile ?
+                    <Carousel
+                        showThumbs={false}
+                        autoPlay
+                        interval={6000}
+                        showStatus={false}
+                        showArrows={false}
+                        showIndicators={true}
+                        infiniteLoop
+                        thumbWidth={100}
+                        className={'col-12 ' + styles.section2carousel}>
+                        {
+                            steps.map((item, index) => <StepCard Step={item} key={index} />)
+                        }
+
+                    </Carousel>
+                    :
+                    <Carousel
+                        showThumbs={false}
+                        autoPlay
+                        interval={6000}
+                        showStatus={false}
+                        showArrows={false}
+                        showIndicators={true}
+                        infiniteLoop
+                        thumbWidth={100}
+                        className={'col-12 ' + styles.section2carousel}>
+
+                        <div style={{ display: 'flex', flexDirection: 'row', height: 380 }} key={0}>
+                            {
+                                steps.slice(0, 3).map((item, index) => <StepCard Step={item} key={index} />)
+                            }
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'row', height: 380 }} key={1}>
+                            {
+                                steps.slice(3).map((item, index) => <StepCard Step={item} key={index} />)
+                            }
+                        </div>
+
+                    </Carousel>
+            }
         </div>
     </section >
 };
-
 export default Section2;
 
 

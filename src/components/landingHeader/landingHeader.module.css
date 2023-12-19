@@ -293,18 +293,6 @@
 
 }
 
-@media(max-width: 992px) {
-    .headerCard {
-        padding: 0px 50px;
-    }
-
-    .headerItem {
-        margin-right: 20px;
-    }
-
-
-}
-
 @media(max-width: 500px) {
 
     .headerCard {
@@ -312,17 +300,13 @@
     }
 
     .headerContainer {
-        background-color: var(--color-seccondary);
-        height: 45px;
+        background-color: var(--color-seccondary) !important;
+        height: 45px !important;
         display: flex;
         align-items: center;
         flex-direction: row;
         justify-content: space-between;
         padding: 0px 15px;
-    }
-
-    .responsiveChatButton {
-        display: flex;
     }
 
     .responsiveMenuIcon {

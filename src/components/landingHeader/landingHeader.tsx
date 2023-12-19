@@ -5,9 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
-import { useSession } from "next-auth/react";
 import { Modal } from 'antd';
-import client from '@/config/applloClient';
 import { useMediaQuery } from 'react-responsive';
 import { Drawer } from 'antd';
 
@@ -15,7 +13,6 @@ import { Drawer } from 'antd';
 import styles from './landingHeader.module.css';
 
 //-------------------------------------------components
-import { GET_CURRENCIES, GET_PACKAGES } from "@/config/graphql";
 import { StartLoader } from "../Untitled";
 
 //-------------------------------------------icons
@@ -24,6 +21,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 //-------------------------------------------type
 import { Package } from "../../../types/package";
+import { GetPackages } from "@/hooks/fetchData";
 
 const headerItems = [
     {
@@ -58,12 +56,6 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => setIsModalOpen(false);
-
-    const { data: session, status } = useSession({
-        required: true, onUnauthenticated() {
-            return;
-        }
-    });
     const pathname = usePathname();
     const router = useRouter();
 
@@ -77,21 +69,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
     };
 
     async function GetPackage() {
-        await client.query({
-            query: GET_CURRENCIES,
-            fetchPolicy: "no-cache",
-        }).then(async (res) => {
-            await client.query({
-                query: GET_PACKAGES,
-                fetchPolicy: "no-cache",
-                variables: {
-                    currency: res.data.getCurrencies[0].code.toLowerCase(),
-                    userToken: ''
-                }
-            }).then((res) => {
-                setPackages(res.data.getPackages);
-            })
-        });
+        setPackages(await GetPackages());
     };
 
     const SetShowDrawer = () => {
@@ -140,7 +118,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
     return (<AnimatePresence>
         <motion.nav
-            animate={topHeader ? 'open' : 'closed'}
+            animate={!isMobile && topHeader ? 'open' : 'closed'}
             variants={variants}
             className={'col-12 ' + styles.headerContainer}>
             {/* ---------------------------------------------------------------------mobile header */}
@@ -152,10 +130,10 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
             <Image
                 className={styles.responsiveLogo}
-                src="/logo3.svg"
+                src="/logoIcon2.svg"
                 alt="Logo"
-                width={81}
-                height={17}
+                width={85}
+                height={18}
                 priority
                 loading="eager"
             />
