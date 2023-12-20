@@ -12,7 +12,6 @@ import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 import { Socket, io } from 'socket.io-client';
 import { DefaultEventsMap } from "@socket.io/component-emitter";
-import client from "@/config/applloClient";
 import toast from "react-hot-toast";
 
 //-----------------------------------------------------styles
@@ -43,6 +42,7 @@ import { Topic } from "../../../types/topic";
 import { UserProfile } from "../../../types/profile";
 import { GetEsseies, GetTopics, GetUserProfile } from "@/hooks/fetchData";
 import { DeleteTopics } from "@/hooks/actions";
+import { useMutation } from "@apollo/client";
 
 type topic = {
     id: string,
@@ -97,6 +97,7 @@ const Page: React.FC = () => {
             essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type} essay={essay}
             changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
     ]);
+    const [scoreEssay] = useMutation(SCORE_ESSAY);
 
     const tabBarItems = [
         {
@@ -139,8 +140,6 @@ const Page: React.FC = () => {
         changeEndAnimation(true);
         setEssaies([]);
         changeTopic(topic);
-        // changeMoreEssaies(true);
-
         if (essay) {
             setEssay(essay);
             changeMoreEssaies(false);
@@ -226,8 +225,7 @@ const Page: React.FC = () => {
     async function GetScores(essaies: Essay[], essay?: Essay) {
         let dev = await localStorage.getItem('devMode');
         let newEssay: Essay[] = essaies;
-        client.mutate({
-            mutation: SCORE_ESSAY,
+        await scoreEssay({
             variables: {
                 id: essay ? essay.id : newEssay[0].id,
                 test: dev ? JSON.parse(dev) : true
@@ -728,7 +726,7 @@ const Page: React.FC = () => {
                 LogOut={LogOut} showProfile={changeShowProfileModal} />
 
             <Modal isOpen={showProfileModal} setIsOpen={changeShowProfileModal} key={0}>
-                <ProfileCard profile={profile} closeProfile={changeShowProfileModal} setProfile={setProfile}/>
+                <ProfileCard profile={profile} closeProfile={changeShowProfileModal} setProfile={setProfile} />
             </Modal>
 
         </div >

@@ -25,7 +25,7 @@ const Section3: React.FC = () => {
 
                 <div className={'col-lg-7 col-md-6 col-12 ' + styles.leftContainer}>
                     <h2 className={styles.leftTitle}>
-                        Unlock IELTS Writing Mastery with WriteWiseAI's Pioneering Features
+                        Unlock IELTS Writing Mastery with <span>WriteWiseAI's</span> Pioneering Features
                     </h2>
                     <h6 className={styles.leftDescription}>
                         Experience a seamless fusion of advanced technology and intuitive design, tailored to elevate every aspect of your IELTS preparation journey, and ensure top-tier IELTS writing results.
@@ -48,6 +48,16 @@ const Section3: React.FC = () => {
                     <FeaturesItemCard icon={isMobile ? <UserMobile /> : <User />} title="Personalized Feedback and Recommendations" />
                     <FeaturesItemCard icon={isMobile ? <RiseMobile /> : <Rise />} title="In-Depth Progress Tracking" />
                 </div>
+
+                <button
+                    aria-label="read more button"
+                    onClick={() => {
+                        router.push('/features');
+                        StartLoader();
+                    }}
+                    className={styles.mobileFeaturesButton}>
+                    Read More  <IoIosArrowForward style={{ marginTop: 5 }} />
+                </button>
             </div>
         </section>
     )

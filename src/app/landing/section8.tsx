@@ -1,14 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 import React from "react";
-import { useRouter } from 'next/navigation';
 
 //-------------------------------------------styles
 import styles from './landingSection8.module.css';
 import '../../styles/global.css';
 
 const Section8: React.FC = () => {
-    const router = useRouter();
 
     return <section className={styles.section8Container} id="">
         <div className={styles.section8Card}>

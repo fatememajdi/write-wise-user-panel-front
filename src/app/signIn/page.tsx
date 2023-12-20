@@ -5,11 +5,10 @@ import { Divider } from 'antd';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
-import { useMutation } from "@apollo/react-hooks";
-import toast from "react-hot-toast";
 import { signIn } from 'next-auth/react';
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { Checkbox } from 'antd';
 import ReactLoading from "react-loading";
 import { motion, useAnimation } from "framer-motion";
 
@@ -23,9 +22,8 @@ import { GrApple } from 'react-icons/gr';
 
 //---------------------------------------------------components
 const Input = dynamic(() => import("@/components/input/input"));
-import { EMAIL_SIGN_IN } from '../../config/graphql';
 import { StopLoader } from "@/components/Untitled";
-import { Checkbox } from 'antd';
+import { EmaiSignIn } from "@/hooks/actions";
 
 //---------------------------------------------------------------validation
 const EmailValidationSchema = Yup.object().shape({
@@ -58,15 +56,11 @@ const Page: React.FC = () => {
 
     const controls = useAnimation();
     const router = useRouter();
-    const [emailSignIn] = useMutation(EMAIL_SIGN_IN);
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [checkTerms, setcheckTerm] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         StopLoader();
-        setTimeout(() => {
-            changeLoading(false);
-        }, 2000);
     }, []);
 
     const handleEmailSignIn = async (values: any) => {
@@ -78,22 +72,12 @@ const Page: React.FC = () => {
             }, 2000);
         } else {
             changeLoading(true);
-            await emailSignIn({
-                variables: {
-                    email: values.email,
-                },
-            }).then(async (res) => {
+            let res: string = await EmaiSignIn(values.email);
+            if (res) {
                 await router.push('/signIn/verificationCode');
-                setTimeout(() => {
-                    changeLoading(false);
-                }, 9000);
-                localStorage.setItem('email', res.data.emailLogin.email);
+                localStorage.setItem('email', res);
 
             }
-            ).catch(async (err) => {
-                toast.error(err.message);
-                changeLoading(false);
-            });
         }
     };
 

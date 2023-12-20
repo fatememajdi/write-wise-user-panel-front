@@ -52,29 +52,10 @@
     }
 }
 
-@media(max-width: 1440px) {
-    .section8Container {
-        padding: 80px 130px;
-        display: flex;
-        align-items: center;
-    }
-
-    .cardTitle {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 18.122px;
-    }
-
-    .cardDescription {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 19.416px;
-    }
-}
 
 @media(max-width: 500px) {
     .section8Container {
-        padding: 70px 20px !important;
+        padding: 50px 33px 50px 53px!important;
         min-height: fit-content;
     }
 
@@ -91,5 +72,6 @@
         font-size: 13px;
         line-height: 19.5px;
         letter-spacing: 0.26px;
+        margin-top: 32px;
     }
 }

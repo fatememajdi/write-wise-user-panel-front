@@ -27,7 +27,7 @@ const ScoreRecommendationCard: React.FC<{ recommendation: string, essay: Essay, 
             setHtmlString(recommendation);
             router.refresh();
         }
-    });
+    }, [recommendation]);
 
     return (<div style={recommendation === '' || !recommendation ? { padding: 0 } : {}} className={styles.writingScoreCard}>
         {

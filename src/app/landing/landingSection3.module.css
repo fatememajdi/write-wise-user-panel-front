@@ -86,6 +86,19 @@
     padding-right: 20px;
 }
 
+.mobileFeaturesButton {
+    display: none;
+    color: var(--color-red);
+    font-style: normal;
+    font-weight: 900;
+    line-height: 16.17px;
+    font-size: 13px;
+    align-items: center;
+    padding: 0px !important;
+    font-family: var(--font-lato);
+    margin-top: 34px;
+}
+
 @media(max-width: 1680px) {
     .leftContainer {
         padding-left: 117px;
@@ -125,50 +138,19 @@
     }
 }
 
-@media(max-width: 1440px) {
-    .leftContainer {
-        padding-right: 50px;
-        padding-left: 117px;
-    }
-
-    .leftTitle {
-        font-size: 24px;
-    }
-
-    .leftDescription {
-        font-size: 16px;
-        line-height: 22.169px;
-    }
-
-    .featuresItemTitle {
-        font-size: 16px;
-    }
-
-    .featuresItemCard {
-        margin-bottom: 45px;
-    }
-
-    .rightContainer {
-        padding-left: 60px;
-    }
-
-    .featuresItemTitle {
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 133.023%;
-    }
-
-    .featuresButton {
-        font-size: 16px;
-        font-weight: 700;
-    }
-}
-
 @media(max-width: 500px) {
 
+
+    .mobileFeaturesButton {
+        display: flex;
+    }
+
+    .featuresBackground {
+        padding: 48px 44px 66px 44px;
+    }
+
     .featuresButton {
-        font-size: 13px;
-        font-weight: 900;
+        display: none;
     }
 
     .section3Container {
@@ -177,7 +159,7 @@
 
     .rightContainer {
         padding: 0px;
-        margin-top: 40px;
+        margin-top: 24px;
         padding-left: 0px !important;
     }
 
@@ -190,21 +172,32 @@
     }
 
     .leftTitle {
-        font-size: 24px;
+        line-height: 19px !important;
+        font-size: 16px !important;
+        font-weight: 800 !important;
+    }
+
+    .leftTitle span {
+        font-weight: 900px !important;
     }
 
     .leftDescription {
-        font-size: 13px;
-        line-height: 26px;
+        margin-top: 8px;
     }
 
     .featuresItemCard {
         width: 100%;
+        margin-bottom: 29px;
     }
 
     .featuresItemTitle {
-        font-size: 13px;
+        font-size: 14.841px !important;
+        font-weight: 600 !important;
+        line-height: 133.023%;
         padding: 15px 10px 15px 13px;
+        border-radius: 3.71px;
+        border: 0.464px solid #FFF;
+        background: linear-gradient(91deg, #F3F3F3 1.17%, rgba(252, 252, 252, 0.56) 43.1%, #ECF0F4 96.61%);
     }
 
 }

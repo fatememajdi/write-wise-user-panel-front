@@ -1,11 +1,12 @@
 'use client';
 import client from "@/config/applloClient";
-import { GET_CURRENCIES, GET_PACKAGES, GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY, SEARCH_COUNTRIES } from "@/config/graphql";
+import { GET_CURRENCIES, GET_PACKAGES, GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY, SEARCH_COUNTRIES, TRANSACTION_HISTORY } from "@/config/graphql";
 import { Essay } from "../../types/essay";
 import { Topic } from "../../types/topic";
 import { Country, UserProfile } from "../../types/profile";
 import toast from "react-hot-toast";
 import { Package } from "../../types/package";
+import { Transaction } from "../../types/transaction";
 
 export async function GetEsseies(id: string, page: number) {
     let essaies: Essay[] = [];
@@ -82,7 +83,7 @@ export async function GetCountries(Filter: string) {
         toast.error(err.message);
     });
     return countries;
-}
+};
 
 export async function GetPackages(token?: string) {
     let packages: Package[] = [];
@@ -103,4 +104,23 @@ export async function GetPackages(token?: string) {
     });
 
     return packages;
+};
+
+export async function TransactionHistoy(page: number, status: boolean) {
+    let transactions: Transaction[] = [];
+    await client.query({
+        query: TRANSACTION_HISTORY,
+        fetchPolicy: "no-cache",
+        variables: {
+            page: page,
+            pageSize: 10,
+            paymentHistory: status
+        }
+    }).then(async (res) => {
+        transactions = res.data.transactionHistory.transactions;
+    }).catch((err) => {
+        console.log("get transaction history error : ", err);
+    });
+
+    return transactions;
 }

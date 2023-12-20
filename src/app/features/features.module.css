@@ -67,8 +67,50 @@
     max-width: 40%;
 }
 
+.mobileDescription{
+    overflow: hidden;
+    display: none;
+    margin-top: 25px;
+}
+
 @media(max-width: 1680px) {}
 
-@media(max-width: 1440px) {}
+@media(max-width: 500px) {
+    .rightCard {
+        display: none;
+    }
 
-@media(max-width: 500px) {}
+    .leftCard {
+        max-width: 100%;
+        padding: 0px;
+    }
+
+    .mainContainer {
+        padding: 80px 25px 100px 31px;
+
+    }
+
+    .titleCard {
+        font-size: 16.134px;
+        font-weight: 600;
+        line-height: 133.023%;
+        margin-top: 8px;
+    }
+
+    .activeTitleCard {
+        font-size: 16.134px !important;
+        font-weight: 600;
+        line-height: 133.023%;
+    }
+
+    .titleIcon,
+    .activeTitleIcon {
+        height: 27px;
+        width: 27px;
+    }
+
+    .mobileDescription{
+        display: flex;
+    }
+
+}

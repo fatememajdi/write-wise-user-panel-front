@@ -126,41 +126,12 @@
 
 }
 
-@media(max-width: 1440px) {
-    .section7Container {
-        padding: 150px 85px;
-    }
-
-    .itemCard {
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    .itemContainer {
-        padding: 30px 0px;
-    }
-
-    .QuestionIcon {
-        font-size: 24px;
-    }
-
-    .answerCard {
-        font-size: 16px;
-    }
-
-    .readMoreButton {
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    .arrowIcon {
-        font-size: 18px;
-        margin-top: 5px;
-    }
-
-}
-
 @media(max-width: 500px) {
+
+    .section7 {
+        background: #F4DEDF;
+        background: linear-gradient(90deg, #F4DEDF, #DBE8F2)
+    }
 
     .arrowIcon {
         font-size: 16px;
@@ -168,7 +139,8 @@
 
     .readMoreButton {
         font-size: 13px;
-        align-self: center;
+        font-weight: 900;
+        line-height: 16.17px;
     }
 
     .QuestionIcon {
@@ -183,6 +155,7 @@
 
     .itemContainer {
         padding: 20px 0px;
+        min-height: fit-content;
     }
 
     .itemCard {

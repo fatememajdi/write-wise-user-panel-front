@@ -72,7 +72,7 @@
 
 .question {
     height: fit-content;
-    line-height: 30px;
+    line-height: 20px;
     letter-spacing: 0.48px;
     color: var(--color-blackText);
     margin-right: 45px;
@@ -97,7 +97,7 @@
 
 .answer {
     border-radius: 5px;
-    margin: 21px 22px 32px 0px;
+    margin: 0px 22px 32px 0px;
     color: var(--color-black);
     font-size: 24px;
     font-weight: 300;
@@ -130,37 +130,20 @@
     }
 }
 
-@media(max-width: 1440px) {
-    .topContainer {
-        height: 387px;
-    }
-
-    .title {
-        font-size: 46px;
-    }
-
-    .question {
-        font-size: 16px;
-    }
-
-    .answer {
-        font-size: 16px;
-    }
-
-    .plusIcon {
-        min-height: 25px !important;
-        min-width: 25px !important;
-        font-size: 25px !important;
-    }
-}
-
 @media(max-width: 500px) {
     .topContainer {
-        height: 40vh;
+        height: 150px;
+    }
+
+    .chatIcon {
+        display: none;
     }
 
     .title {
-        font-size: 34px;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 40px;
+        margin-bottom: 50px;
     }
 
     .mainContainer {

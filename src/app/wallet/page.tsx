@@ -3,12 +3,10 @@
 'use client';
 import React from "react";
 import Image from "next/image";
-import client from '@/config/applloClient';
 import dynamic from 'next/dynamic';
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from 'react-responsive';
 import InfiniteScroll from 'react-infinite-scroller';
-import toast from "react-hot-toast";
 
 //------------------------------------------styles 
 import styles from './wallet.module.css';
@@ -19,10 +17,6 @@ import { IoIosArrowRoundBack } from 'react-icons/io';
 
 //------------------------------------------components
 import { StopLoader } from "@/components/Untitled";
-import {
-    CREATE_PAYMENT_LINK, GET_PACKAGES, GET_PROFILE, RECEIPT_LINK,
-    REGENERATE_PAYMENT_LINK, TRANSACTION_HISTORY
-} from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
 const PackagesList = dynamic(() => import("./packagesList"));
 const PackageCard = dynamic(() => import("./packageCard"));
@@ -31,6 +25,8 @@ const TableCol = dynamic(() => import("@/components/walletTableCol/walletTableCo
 const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"));
 const Modal = dynamic(() => import("@/components/modal/modal"));
 import { useMultiStepForm } from "@/components/multiStepForm/useMultiStepForm";
+import { GetPackages, GetUserProfile, TransactionHistoy } from "@/hooks/fetchData";
+import { PaymentLink, Reciept, RegenaratePayment } from "@/hooks/actions";
 
 //---------------------------------------------------types
 import { Package } from "../../../types/package";
@@ -48,37 +44,16 @@ const Page: React.FC = () => {
     async function GetPackage() {
         let user = await localStorage.getItem('user');
         setLoading(true);
-        await client.query({
-            query: GET_PACKAGES,
-            fetchPolicy: "no-cache",
-            variables: {
-                userToken: user ? `${JSON.parse(user)}` : '',
-            }
-        }).then((res) => {
-            setPackages(res.data.getPackages);
-            setLoading(false);
-        }).catch((err) => {
-            console.log(err);
-        })
+        setPackages(await GetPackages(user ? `${JSON.parse(user)}` : ''));
+        setLoading(false);
     };
 
     async function CreatePaymentLink(quantity: number, id: string, promotionCode: string) {
         setPageLoading(true);
-        await client.mutate({
-            mutation: CREATE_PAYMENT_LINK,
-            fetchPolicy: "no-cache",
-            variables: {
-                id: id,
-                adjustedQuantity: quantity,
-                promotionCode: promotionCode
-            }
-        }).then(async (res) => {
-            window.location = res.data.createPaymentLink.link;
-            // setPageLoading(false);
-        }).catch((err) => {
-            toast.error(err.message);
-            setPageLoading(false);
-        });
+        let link: any = await PaymentLink(quantity, id, promotionCode);
+        if (link)
+            window.location = link;
+        setPageLoading(false);
     };
 
     const Back = () => { back() };
@@ -96,7 +71,6 @@ const Page: React.FC = () => {
         <PackageCard key={2} handleCancel={Back} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
 
     ]);
-
 
     return isMobile ?
         <>{step}</>
@@ -122,9 +96,6 @@ type _walletProps = {
 };
 
 const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selectedPackage, setSelectedPackage, CreatePaymentLink, pageLoading, setPageLoading, Next }) => {
-
-    const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
-    const isMac2 = useMediaQuery({ query: "(max-width: 1680px)" });
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
@@ -135,8 +106,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
     const [profile, setprofile] = React.useState<UserProfile>();
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => { setIsModalOpen(false); goTo(0); }
-    const Back = () => back();
-    const { step, back, next, currentStepIndex, goTo } = useMultiStepForm(profile?.country.id === '' ? [
+    const { step, next, goTo } = useMultiStepForm(profile?.country.id === '' ? [
         <SelectCountry key={0} ChangeModalStep={ChangeModalStep} />,
         <PackagesList key={1} handleCancel={handleCancel}
             loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
@@ -149,84 +119,47 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
     const router = useRouter();
 
     async function GetProfile() {
-        await client.query({
-            query: GET_PROFILE,
-            fetchPolicy: "no-cache"
-        }).then(async (res) => {
-            setprofile(res.data.getUserProfile);
-            setPageLoading(false);
-            GetPackage(res.data.getUserProfile.country.id)
-        }).catch((err) => {
-            console.log("get user profile error : ", err);
-            setPageLoading(false);
-        });
+        let user: UserProfile = await GetUserProfile();
+        if (user) {
+            setprofile(user);
+            GetPackage();
+        }
+        setPageLoading(false);
     };
 
     async function GetTransactionsHistory(status: boolean) {
-        await client.query({
-            query: TRANSACTION_HISTORY,
-            fetchPolicy: "no-cache",
-            variables: {
-                page: paymentCategory ? transactions.length / 10 + 1 : assessment.length / 10 + 1,
-                pageSize: 10,
-                paymentHistory: status
-            }
-        }).then(async (res) => {
-            console.log(res);
-            if (res.data.transactionHistory.transactions != 0) {
-                if (status)
-                    await setTransactions([...transactions, ...res.data.transactionHistory.transactions]);
-                else
-                    await setAssessments([...assessment, ...res.data.transactionHistory.transactions]);
-                if (res.data.transactionHistory.transactions.length % 10 !== 0)
-                    setMoreTransaction(false);
-            } else {
+        let transaction: Transaction[] = await TransactionHistoy(paymentCategory ? transactions.length / 10 + 1 : assessment.length / 10 + 1, status);
+        if (transaction.length !== 0) {
+            if (status)
+                await setTransactions([...transactions, ...transaction]);
+            else
+                await setAssessments([...assessment, ...transaction]);
+            if (transaction.length % 10 !== 0)
                 setMoreTransaction(false);
-            }
-            setTableLoading(false);
-        }).catch((err) => {
-            console.log("get transaction history error : ", err);
-            setTableLoading(false);
-        });
+        } else
+            setMoreTransaction(false);
+
+        setTableLoading(false);
     };
 
     async function RecieptLink(id: string) {
         setTableLoading(true);
-        await client.query({
-            query: RECEIPT_LINK,
-            fetchPolicy: "no-cache",
-            variables: {
-                id: id
-            }
-        }).then(async (res) => {
-            window.location = res.data.receiptLink.link;
-            setTableLoading(false);
+        let link: any = await Reciept(id);
+        if (link)
+            window.location = link;
+        setTableLoading(false);
 
-        }).catch((err) => {
-            console.log("get transaction reciept error : ", err);
-            setTableLoading(false);
-
-        });
     };
 
     async function RegeneratePaymentLink(id: string) {
         setTableLoading(true);
-        await client.query({
-            query: REGENERATE_PAYMENT_LINK,
-            fetchPolicy: "no-cache",
-            variables: {
-                id: id
-            }
-        }).then(async (res) => {
-            setTableLoading(false);
-            window.location = res.data.regeneratePaymentLink.link;
+        let link: any = await RegenaratePayment(id);
+        if (link) {
+            window.location = link;
             setTransactions([]);
             GetTransactionsHistory(paymentCategory);
-        }).catch((err) => {
-            console.log("regenerate payment link error : ", err);
-            setTableLoading(false);
-
-        });
+        }
+        setTableLoading(false);
     };
 
     async function ChangeModalStep(pack?: Package) {

@@ -2,7 +2,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { Formik } from 'formik';
-import client from '@/config/applloClient';
 import InfiniteScroll from 'react-infinite-scroller';
 import Image from "next/image";
 import ReactLoading from 'react-loading';
@@ -13,22 +12,22 @@ import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 
-
 //--------------------------------------styles
 import styles from '../../../../styles/task.module.css';
 import '../../../../styles/customMuiStyles.css';
 
 //--------------------------------------components
-import { ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_WRITING, SELECT_TOPIC } from "@/config/graphql";
-import Loading from "@/components/loading/loading";
+import { ADD_ESSAY, SELECT_TOPIC } from "@/config/graphql";
 import EssayCard from "@/components/essayCard/essayCard";
 const Input = dynamic(() => import('@/components/input/input'));
+const Loading = dynamic(() => import('@/components/loading/loading'));
 const SelectComponents = dynamic(() => import('@/components/customSelect/customSelect'));
 import { CheckCountWords, CountWords } from "@/components/Untitled";
 const Text = dynamic(() => import("@/components/text/text"));
 const Modal = dynamic(() => import("@/components/modal/modal"));
 const SubTypeSelect = dynamic(() => import("@/components/subTypeSelect/subTypeSelect"));
 const Writer = dynamic(() => import("@/components/writer/writer"));
+import { DeleteEssaies, GenerateNewTopic } from "@/hooks/actions";
 const EssayProcessBar = dynamic(() => import("@/components/essayProcessBar/essayProcessBar"));
 
 //--------------------------------------icons
@@ -81,56 +80,31 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
     const [showImage, changeShowImage] = React.useState<boolean>(false);
-    const [walletError, changeWalletError] = React.useState<boolean>(false);
     const [isBig, setIsBig] = React.useState<boolean>(false);
-    const [modalImage, changeModalImage] = React.useState<string>();
     const router = useRouter();
 
     //-----------------------------------------------------------------graphQl functions
     const [selectTopic, { error }] = useMutation(SELECT_TOPIC);
     const [addNewEssay] = useMutation(ADD_ESSAY);
-    const [deleteEssay] = useMutation(DELETE_ESSAY);
 
     const handleCancelImageModal = () => changeShowImage(false);
-    // async function handleSelectImage(url: string) {
-    //     await changeModalImage(url);
-    //     changeShowImage(true);
-    // };
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
         changeGenerateWritingTopicLoading(true);
-
-        await client.query({
-            query: GET_RANDOM_WRITING,
-            fetchPolicy: "no-cache",
-            variables: {
-                type: type,
-                questionType: subType
-            }
-        }).then(async (res) => {
-            // changeImagePixels(15);
-            console.log(res.data.getRandomWriting.visuals);
-            await changeGeneratedTopic({
-                id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body,
-                type: res.data.getRandomWriting.type, subType: res.data.getRandomWriting.questionType,
-                visuals: res.data.getRandomWriting.visuals
+        let res = await GenerateNewTopic(type, subType);
+        if (res) {
+            changeGeneratedTopic({
+                id: res.id, body: res.body,
+                type: res.type, subType: res.questionType,
+                visuals: res.visuals
             });
-            setFieldValue('topic', res.data.getRandomWriting.body);
-            setFieldValue('subType', res.data.getRandomWriting.questionType);
-            ChangeTempTopic(essay, res.data.getRandomWriting.body, res.data.getRandomWriting.id);
-            changeGenerateWritingTopicLoading(false);
-        }).catch(async (err) => {
-            toast.error(err.message);
-            changeGenerateWritingTopicLoading(false);
-        });
+            setFieldValue('topic', res.body);
+            setFieldValue('subType', res.questionType);
+            ChangeTempTopic(essay, res.body, res.id);
+        }
+        changeGenerateWritingTopicLoading(false);
     };
-
-    // React.useEffect(() => {
-    //     if (imagePixels > 0) {
-    //         setTimeout(() => changeImagePixels(imagePixels - 5), 1000);
-    //     }
-    // });
 
     //------------------------------------------------------------------select essay topic
     async function SelectTopic(topic: string): Promise<string | null> {
@@ -155,7 +129,6 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             DivRef3.scrollIntoView({ behavior: "smooth" });
         }).catch((err: typeof error) => {
             if (err.graphQLErrors[0].status === 402) {
-                changeWalletError(true);
                 changeShowImage(true);
                 id = null;
             } else {
@@ -170,8 +143,6 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
     //-------------------------------------------------------------------add new essay
     async function AddNewEssay(Topic: string, body: string, resetForm: any) {
-        // changeEssayLoading(true);
-        // changeLoading(true);
         setChangeInput(false);
         let id: any;
 
@@ -212,36 +183,16 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                     await localStorage.removeItem(type === 'general_task_1' ? 'tempEssay' : type === 'general_task_2' ? 'tempEssay2' : 'tempEssay3');
                 };
 
-                await setEssaies([{
-                    id: res.data.addNewEssay.id,
-                    essay: res.data.addNewEssay.essay,
-                    date: res.data.addNewEssay.date,
-                    shortId: res.data.addNewEssay.shortId,
-                    scoreJobStatus: res.data.addNewEssay.scoreJobStatus,
-                    recommendationJobStatus: res.data.addNewEssay.recommendationJobStatus,
-                    insightJobStatus: res.data.addNewEssay.insightJobStatus,
-                    topicId: res.data.addNewEssay.topicId
-                }, ...essaies]);
+                await setEssaies([res.data.addNewEssay, ...essaies]);
                 changeEssayLoading(false);
-
                 setTimeout(async () => {
-                    await GetScores([{
-                        id: res.data.addNewEssay.id,
-                        essay: res.data.addNewEssay.essay,
-                        date: res.data.addNewEssay.date,
-                        shortId: res.data.addNewEssay.shortId,
-                        scoreJobStatus: res.data.addNewEssay.scoreJobStatus,
-                        recommendationJobStatus: res.data.addNewEssay.recommendationJobStatus,
-                        insightJobStatus: res.data.addNewEssay.insightJobStatus,
-                        topicId: res.data.addNewEssay.topicId
-                    }, ...essaies]);
+                    await GetScores([res.data.addNewEssay, ...essaies]);
                 }, 3000);
                 changeCcurrentId(id);
                 setAddEssayLoading(false);
                 resetForm();
             }).catch((err: typeof error) => {
                 if (err.graphQLErrors[0].status === 402) {
-                    changeWalletError(true);
                     changeShowImage(true);
                 } else {
                     toast.error(err.graphQLErrors[0].message);
@@ -255,18 +206,10 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     //-------------------------------------------------------------------delete essay
     async function DeleteEssay(id: string) {
         changeDeleteLoading(true);
-        await deleteEssay({
-            variables: {
-                id: id
-            }
-        }).then(async (res) => {
-            changeDeleteLoading(false);
+        if (await DeleteEssaies(id)) {
             setEssaies(essaies.filter(item => item.id !== id));
-            toast.success('Essay deleted.');
-        }).catch(async (err) => {
-            toast.error(err.message);
-            changeDeleteLoading(false);
-        });
+        }
+        changeDeleteLoading(false);
     };
 
     //-------------------------------------------------------------------temp
@@ -348,6 +291,28 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     async function OnEditEssay() {
         setChangeInput(true);
         changeEssayTime(Date.now());
+    };
+
+    function handleGenerateTopic() {
+        changeGeneratedTopic(null);
+        setChangeInput(false);
+        changeEndTyping(false);
+        changeEditedGeneratedTopic(false);
+        changeGenerateWriting(true);
+    };
+
+    function handleEditTopic() {
+        changeEditedGeneratedTopic(true);
+        changeEndTyping(false);
+        changeGenerateWriting(false);
+        setChangeInput(false);
+        changeGeneratedTopic(null);
+    };
+
+    function handleChangeTopicInput() {
+        changeEndTyping(false);
+        setChangeInput(false);
+        setTyped(true);
     };
 
     React.useEffect(() => {
@@ -440,11 +405,10 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                 style={{ width: '70%', marginTop: 0 }}
                                                                 className={styles.topicInput}
                                                                 onChange={(e: any) => {
-                                                                    changeEndTyping(false);
-                                                                    setChangeInput(false);
-                                                                    setTyped(true);
+                                                                    handleChangeTopicInput();
                                                                     handleChange(e);
                                                                     ChangeTempTopic(values.body, e.target.value);
+
                                                                 }}
                                                                 placeHolder={type === "academic_task_1" ? "Generate a topic..." : "Type/paste your topic here, or generate a topic."}
                                                                 secondError
@@ -465,11 +429,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                         <button
                                                             aria-label="generate tipic"
                                                             onClick={async () => {
-                                                                changeGeneratedTopic(null);
-                                                                setChangeInput(false);
-                                                                changeEndTyping(false);
-                                                                changeEditedGeneratedTopic(false);
-                                                                changeGenerateWriting(true);
+                                                                handleGenerateTopic();
                                                                 await GenerateTopic(setFieldValue, values.body, values.subType);
                                                             }}
                                                             type="button"
@@ -488,11 +448,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                             aria-label="edit topic"
                                                             type="button"
                                                             onClick={() => {
-                                                                changeEditedGeneratedTopic(true);
-                                                                changeEndTyping(false);
-                                                                changeGenerateWriting(false);
-                                                                setChangeInput(false);
-                                                                changeGeneratedTopic(null);
+                                                                handleEditTopic();
                                                                 setFieldValue('topic', '');
                                                             }}
                                                             className={styles.editButton}>
@@ -655,8 +611,10 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 key={0}
                             >
                                 {
-                                    essaies.map((essay) => <EssayCard type={type} key={essay.id} essay={essay} setFieldValue={setFieldValue} GetScores={GetScores} OnEditEssay={OnEditEssay}
-                                        divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
+                                    essaies.map((essay) =>
+                                        <EssayCard type={type} key={essay.id} essay={essay} setFieldValue={setFieldValue} GetScores={GetScores} OnEditEssay={OnEditEssay}
+                                            divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies}
+                                            topic={topic ? topic.body : values.topic} />)
                                 }
                             </InfiniteScroll>
                     }
@@ -664,43 +622,28 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
 
 
                 <Modal isOpen={showImage} setIsOpen={handleCancelImageModal} key={0}>
-                    {
-                        walletError ?
-                            <div className={styles.WalletErrorCard}>
-                                <Image
-                                    src='/dashboard/tokenError.svg'
-                                    alt="no token error image"
-                                    height='194'
-                                    width='192'
-                                    loading="eager"
-                                    priority
-                                />
-                                <span>{'Sorry, you don\'t have enough tokens for this '}</span>
-                                <div className={styles.waaletErrorButtonsCard}>
-                                    <button
-                                        onClick={() => { router.push('/wallet') }}
-                                        aria-label="add token button"
-                                        className={styles.addTokenBtn}>Wallet</button>
-                                    <button
-                                        onClick={() => changeShowImage(false)}
-                                        aria-label="close wallet modal button"
-                                        className={styles.okBtn}>Okay</button>
-                                </div>
+                    <div className={styles.WalletErrorCard}>
+                        <Image
+                            src='/dashboard/tokenError.svg'
+                            alt="no token error image"
+                            height='194'
+                            width='192'
+                            loading="eager"
+                            priority
+                        />
+                        <span>{'Sorry, you don\'t have enough tokens for this '}</span>
+                        <div className={styles.waaletErrorButtonsCard}>
+                            <button
+                                onClick={() => { router.push('/wallet') }}
+                                aria-label="add token button"
+                                className={styles.addTokenBtn}>Wallet</button>
+                            <button
+                                onClick={() => changeShowImage(false)}
+                                aria-label="close wallet modal button"
+                                className={styles.okBtn}>Okay</button>
+                        </div>
 
-                            </div>
-                            :
-                            <div>
-                                <Image
-                                    src={modalImage}
-                                    alt="academic task chart"
-                                    height='979'
-                                    width='1000'
-                                    loading="eager"
-                                    priority
-                                />
-                            </div>
-
-                    }
+                    </div>
                 </Modal>
 
             </form >

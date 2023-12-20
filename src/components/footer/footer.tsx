@@ -100,21 +100,16 @@ const Footer: React.FC = () => {
     return <footer className={'col-12 ' + styles.footer}>
 
         <div className={styles.leftCard}>
-            <div className={styles.logoContainer}>
-                <div className={styles.logoCard}>
-                    <Image
-                        className={styles.logo}
-                        src={"/logoIcon.svg"}
-                        alt="Logo"
-                        width="0"
-                        height="0"
-                        sizes="100vw"
-                        loading="eager"
-                        priority
-                    />
-                </div>
-                <span>WriteWiseAI</span>
-            </div>
+            <Image
+                className={styles.logo}
+                src={"/logoIcon2.svg"}
+                alt="Logo"
+                width="0"
+                height="0"
+                sizes="100vw"
+                loading="eager"
+                priority
+            />
 
             <div className={styles.linksContainer}>
                 {
@@ -136,6 +131,7 @@ const Footer: React.FC = () => {
                     SocialMediaItems.map((item, index) => <a key={index} href={item.link}>{item.icon}</a>)
                 }
             </div>
+            <div className={styles.mobileName}><FaRegCopyright className={styles.copyrightIcon}/> WriteWiseAI 2023</div>
         </div>
 
     </footer>

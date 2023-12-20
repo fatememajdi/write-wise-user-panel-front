@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import React, { lazy } from "react";
+import React from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { useMutation } from "@apollo/react-hooks";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import ReactLoading from "react-loading";
@@ -14,13 +14,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import styles from '../signIn.module.css';
 
 //---------------------------------------------------components
-const OtpInput = lazy(() => import("@/components/otpIput/otpIput"));
-import { EMAIL_SIGN_IN, VERIFICATION_CODE } from '../../../config/graphql';
-import Loading from "@/components/loading/loading";
+const OtpInput = dynamic(() => import("@/components/otpIput/otpIput"));
 
 //---------------------------------------------------icons
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import { TbRefresh } from 'react-icons/tb';
+import { EmaiSignIn, VerifyCode } from "@/hooks/actions";
 
 //---------------------------------------------------------------validation
 const VerificationCodeValidationSchema = Yup.object().shape({
@@ -32,10 +31,8 @@ const VerificationCodeValidationSchema = Yup.object().shape({
 const VerificationCode: React.FC = () => {
 
     const router = useRouter();
-    const [verificationCode] = useMutation(VERIFICATION_CODE);
     const [loading, changeLoadig] = React.useState<boolean>(false);
     const [resendLoading, changeResendLoadig] = React.useState<boolean>(false);
-    const [emailSignIn] = useMutation(EMAIL_SIGN_IN);
     const [resendCode, changeResendCode] = React.useState<boolean>(false);
     const [seconds, changeSeconds] = React.useState<number>(60);
 
@@ -45,41 +42,26 @@ const VerificationCode: React.FC = () => {
 
     const handleSignIn = async (values: any) => {
         changeLoadig(true);
-        await verificationCode({
-            variables: {
-                email: email,
-                code: values.code
-            },
-        }).then(async (data) => {
-            localStorage.setItem("user", JSON.stringify(data.data.verifyEmail.token));
+        let token: string = await VerifyCode(email, values.code);
+        if (token) {
+            localStorage.setItem("user", JSON.stringify(token));
             await router.push('/ielts');
             localStorage.removeItem('email');
-        }
-        ).catch(async (err) => {
-            toast.error(err.message);
+        } else
             changeLoadig(false);
-        });
     };
 
     const handleEmailSignIn = async () => {
         changeResendLoadig(true);
-        await emailSignIn({
-            variables: {
-                email: email,
-            },
-        }).then(async (res) => {
-            changeResendLoadig(false);
+        if (await EmaiSignIn(email)) {
             changeResendCode(false);
             toast.success('An email containing a code has been sent to your email.');
             setTimeout(() => {
                 changeResendCode(true);
             }, 60000);
             changeSeconds(60);
-        }
-        ).catch(async (err) => {
-            toast.error(err.message);
-            changeResendLoadig(false);
-        });
+        };
+        changeResendLoadig(false);
     };
 
     React.useEffect(() => {

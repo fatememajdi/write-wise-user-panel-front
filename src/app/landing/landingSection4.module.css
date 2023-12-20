@@ -270,67 +270,6 @@
 
 }
 
-@media(max-width: 1440px) {
-    .title {
-        margin-left: 102px;
-        font-size: 24px;
-        line-height: 38.765px;
-    }
-
-    .description {
-        margin-left: 102px;
-        font-size: 16px;
-        margin-top: 30px;
-        max-width: 400px;
-        line-height: 19.54px;
-    }
-
-    .Divider {
-        display: block;
-        margin-left: 102px;
-        width: 439px !important;
-    }
-
-    .stepTitle {
-        font-size: 20px;
-    }
-
-    .step1 {
-        width: 220px;
-    }
-
-    .step2 {
-        width: 220px;
-    }
-
-    .step3 {
-        width: 220px;
-    }
-
-    .step4 {
-        width: 220px;
-    }
-
-    .step5 {
-        width: 220px;
-    }
-
-    .step6 {
-        width: 220px;
-    }
-
-    .step2TopCard {
-        width: 220px;
-        font-size: 13px;
-    }
-
-    .step1TopCard {
-        font-size: 13px;
-        width: 220px;
-    }
-
-}
-
 @media(max-width: 500px) {
 
     .flagIcon {
@@ -353,8 +292,7 @@
 
     .title {
         margin-left: 0px;
-        font-size: 20px;
-        line-height: 26px;
+        line-height: 26px !important;
     }
 
     .Divider {
@@ -370,6 +308,7 @@
         line-height: 19.5px;
         margin-bottom: 0px;
         max-width: 100%;
+        margin-right: 50px !important;
     }
 
     .bottomContainer {

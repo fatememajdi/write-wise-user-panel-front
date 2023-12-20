@@ -24,5 +24,6 @@ export type topic = {
         id: string,
         url: string,
         image: string
-    }[]
+    }[],
+    questionType?:string
 };

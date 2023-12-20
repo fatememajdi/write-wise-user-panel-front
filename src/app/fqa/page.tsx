@@ -78,7 +78,7 @@ const QuestionCard: React.FC<_props> = ({ question, answer }) => {
                 </div>
 
                 <motion.div
-                    animate={{ height: showAnswer ? 'fit-content' : 0, opacity: showAnswer ? 1 : 0 }}
+                    animate={showAnswer ? { height: 'fit-content', opacity: 1, marginTop: 20 } : { height: 0, opacity: 0 }}
                     transition={{ type: "spring", duration: 1 }}
                     className={styles.answer}>
                     {answer}
