@@ -311,6 +311,10 @@
 
     .responsiveMenuIcon {
         display: flex;
+        position: absolute;
+        top: auto;
+        bottom: auto;
+        left: 15px;
     }
 
     .responsiveLogo {

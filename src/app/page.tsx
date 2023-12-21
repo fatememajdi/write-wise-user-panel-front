@@ -7,14 +7,13 @@ import { StartLoader, StopLoader } from "@/components/Untitled";
 
 //-------------------------------------------styles
 import styles from '../styles/landing.module.css';
-import Script from 'next/script';
 
 //-------------------------------------------components
 const Section1 = dynamic(() => import('./landing/section1'));
 const Section2 = dynamic(() => import("./landing/section2"));
 const Section3 = dynamic(() => import("./landing/section3"));
 const Section4 = dynamic(() => import("./landing/section4"));
-const Section5 = dynamic(() => import("./landing/section5"));
+// const Section5 = dynamic(() => import("./landing/section5"));
 const Section6 = dynamic(() => import("./landing/section6"));
 const Section7 = dynamic(() => import("./landing/section7"));
 const Section8 = dynamic(() => import("./landing/section8"));

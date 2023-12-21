@@ -149,7 +149,7 @@ const VerificationCode: React.FC = () => {
                             onClick={() => router.back()}
                             aria-label="login button"
                             className={styles.backButton} type="button">
-                            <IoIosArrowRoundBack fontSize={45} /> Back
+                            <IoIosArrowRoundBack className={styles.backIcon} /> Back
                         </button>
                         <button
                             disabled={!resendCode}
@@ -175,20 +175,6 @@ const VerificationCode: React.FC = () => {
 
 export default VerificationCode;
 
-const showAnimation = {
-    hidden: {
-        width: '100%',
-        transition: {
-            duration: 0.5,
-        }
-    },
-    show: {
-        width: 0,
-        transition: {
-            duration: 60,
-        }
-    }
-};
 const ProgressBar: React.FC<{ timer: number }> = ({ timer }) => {
     return <AnimatePresence>
         <div className={styles.progressBar}>

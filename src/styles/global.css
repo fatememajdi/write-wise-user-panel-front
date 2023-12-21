@@ -138,4 +138,10 @@ button:hover {
     line-height: 21.443px !important;
   }
 
+  h5 {
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    line-height: 8.152px !important;
+  }
+
 }

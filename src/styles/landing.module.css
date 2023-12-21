@@ -50,6 +50,12 @@
 
 @media(max-width: 500px) {
     .startButton {
-        display: none;
+        width: 130px;
+        font-size: 16px;
+        height: 44px;
+        font-weight: 800;
+        bottom: 40px;
+        left: 30% !important;
+        right: 30% !important;
     }
 }

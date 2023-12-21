@@ -7,7 +7,7 @@ import Link from "next/link";
 import styles from './cookies.module.css';
 
 const CookieConsent = (props) => {
-    const [showConsent, setShowConsent] = React.useState(false);
+    const [showConsent, setShowConsent] = React.useState(true);
     React.useEffect(() => {
         let cookie = localStorage.getItem('cookies');
         if (cookie)

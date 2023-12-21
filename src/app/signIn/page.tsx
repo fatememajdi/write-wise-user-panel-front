@@ -132,7 +132,7 @@ const Page: React.FC = () => {
                         className={'col-12 ' + styles.loginForm}
                         onSubmit={handleSubmit}>
                         <h5 className={styles.title}>Sign Up/Log in</h5>
-                        <div className={'col-12 ' + styles.inputCard}>
+                        <div className={errors.email && touched.email && errors.email ? 'col-12 ' + styles.errorInputCard : 'col-12 ' + styles.inputCard}>
                             <div className={styles.inputEmailTitle}>Email</div>
                             <Input
                                 disable={loading}

@@ -193,7 +193,7 @@
     .featuresItemTitle {
         font-size: 14.841px !important;
         font-weight: 600 !important;
-        line-height: 133.023%;
+        line-height: 133.023% !important;
         padding: 15px 10px 15px 13px;
         border-radius: 3.71px;
         border: 0.464px solid #FFF;

@@ -60,7 +60,7 @@ const Input: React.FC<props> = ({ ...props }) => {
         {/* ---------------------------------------------------------input forms */}
         {props.input &&
             <>
-                <div className={props.input_error ? styles.formSectionInput + ' ' + styles.formSectionInputError + ' ' + props.className
+                <div className={props.input_error ? styles.formSectionInputError + ' ' + props.className
                     : styles.formSectionInput + ' ' + props.className}>
                     <input
                         disabled={props.disable}

@@ -130,7 +130,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
             <Image
                 className={styles.responsiveLogo}
-                src="/logoIcon2.svg"
+                src="/mobileLogo.svg"
                 alt="Logo"
                 width={85}
                 height={18}
@@ -194,7 +194,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
             {
                 showPopup && !disablePopup &&
                 <motion.div
-                    animate={{ height: showPopup ? isMac ? 49 : isMobile ? 54 : 54 : 0 }}
+                    animate={{ height: showPopup ? isMac ? 49 : isMobile ? 34 : 54 : 0 }}
                     transition={{ type: "spring", duration: 1 }}
                     className={styles.popup}>
                     <div className={styles.popupTitle}>Limited Time Offer!</div>
