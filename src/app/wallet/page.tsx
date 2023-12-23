@@ -92,7 +92,7 @@ type _walletProps = {
     setPageLoading: any,
     selectedPackage: Package,
     setSelectedPackage: any,
-    Next: any
+    Next: any,
 };
 
 const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selectedPackage, setSelectedPackage, CreatePaymentLink, pageLoading, setPageLoading, Next }) => {
@@ -196,11 +196,6 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
     return pageLoading ? <Loading />
         : <div className={'col-12 ' + styles.walletContainer}>
 
-            {
-                isMobile &&
-                <LandingHeader logedIn />
-            }
-
             <div className={styles.tokenCard}>
                 <button
                     aria-label="back button"
@@ -256,7 +251,12 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
             </div>
 
             <Modal isOpen={isModalOpen} setIsOpen={handleCancel}>
-                {step}
+                {
+                    // profile?.country.id === '' && 
+                    isMobile ?
+                        <SelectCountry key={0} ChangeModalStep={ChangeModalStep} />
+                        : step
+                }
             </Modal>
 
         </div>
@@ -335,4 +335,3 @@ const AssessmentHistoryTable: React.FC<_props> = ({ tableLoading, GetTransaction
         </tr>
     </table>
 };
-

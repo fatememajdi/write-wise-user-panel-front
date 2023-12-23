@@ -472,6 +472,12 @@ const Page: React.FC = () => {
 
     };
 
+    function ShowProfile() {
+        if (isMobile)
+            setIsOpen(false);
+        changeShowProfileModal(true);
+    }
+
     const showAnimation = {
         hidden: {
             width: 0,
@@ -647,8 +653,8 @@ const Page: React.FC = () => {
             </motion.div >
 
             <main style={{ flex: 1, height: '100vh', overflow: 'hidden' }}
-                className={isOpen && isMobile ? styles.mask : ''}
-            >
+                className={isOpen && isMobile ? styles.mask : ''}>
+
                 {/* //-------------------------------------------------------------dashboard content */}
                 {
                     isMobile &&
@@ -723,7 +729,7 @@ const Page: React.FC = () => {
             </main >
 
             <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose}
-                LogOut={LogOut} showProfile={changeShowProfileModal} />
+                LogOut={LogOut} showProfile={ShowProfile} />
 
             <Modal isOpen={showProfileModal} setIsOpen={changeShowProfileModal} key={0}>
                 <ProfileCard profile={profile} closeProfile={changeShowProfileModal} setProfile={setProfile} />

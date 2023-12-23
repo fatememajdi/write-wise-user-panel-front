@@ -18,8 +18,9 @@
     align-items: center;
     font-size: 24px;
     letter-spacing: -0.12px;
-    line-height: 12px;
     font-weight: 700;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
 }
 
 .profileCard span {
@@ -82,14 +83,6 @@
     border-radius: 8px;
     width: fit-content !important;
     /* margin-left: 35px; */
-    border: 1px solid transparent !important;
-}
-
-.selectFieldinput {
-    width: 350px !important;
-    height: 62px !important;
-    background: linear-gradient(to right, rgba(46, 64, 87, 0.64), #F3F3F3) border-box !important;
-    border-radius: 8px;
     border: 1px solid transparent !important;
 }
 
@@ -191,4 +184,127 @@
 .menuItem:hover {
     background-color: var(--color-darkGray) !important;
     color: var(--color-whiteText) !important;
+}
+
+
+@media(max-width: 500px) {
+    .emailText {
+        display: flex;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+    }
+
+    .emailText span {
+        margin-bottom: 10px;
+    }
+
+    .profileCard {
+        width: 85%;
+        position: relative;
+        padding: 87px 40px 20px 22px;
+
+    }
+
+    .profileCard tr {
+        padding: 21px 0px;
+        font-size: 16.183px;
+        font-weight: 700;
+        line-height: 8.092px;
+        letter-spacing: -0.081px;
+
+    }
+
+    .profileCard tr span {
+        font-weight: 400;
+    }
+
+    .profileCard span {
+        width: 130px !important;
+    }
+
+    .profileItemsIcon {
+        font-size: 18px;
+        margin-right: 10px;
+    }
+
+    .locationIcon {
+        margin-right: 10px;
+        width: 13px;
+        height: 19px;
+    }
+
+    .okButton {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        font-size: 16.183px;
+        font-weight: 600;
+        padding: 0px 8px !important;
+        border-radius: 5px !important;
+    }
+
+    .arrowLeftIcon {
+        font-size: 30px;
+    }
+
+    .deleteAcButton,
+    .editButton {
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 18.88px;
+        margin-right: 0px;
+        padding: 22px 20px 0px 0px !important;
+    }
+
+    .editButton {
+        text-decoration: underline;
+    }
+
+    .profileFieldinput {
+        width: 164px !important;
+        height: 35px !important;
+    }
+
+    .profileFieldinput input {
+        width: 164px !important;
+        height: 35px !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        line-height: 6.706px !important;
+        letter-spacing: -0.08px !important;
+    }
+
+    .genderSelect {
+        width: 164px !important;
+        height: 35px !important;
+        border-radius: 4px !important;
+    }
+
+    .genderSelect span {
+        font-size: 16px !important;
+        font-weight: 700 !important;
+    }
+
+    .arrowIcon {
+        font-size: 25px;
+    }
+
+    .genderSelectItemsCard {
+        top: 35px;
+    }
+
+    .menuItem {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .saveButton {
+        width: 59.164px;
+        height: 28.237px;
+        border-radius: 5px !important;
+        font-size: 16.136px;
+        font-weight: 500;
+    }
+
 }

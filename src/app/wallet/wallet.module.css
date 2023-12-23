@@ -1,22 +1,3 @@
-.wallet {
-    /* height: 140vh !important; */
-    height: 100% !important;
-    overflow: hidden !important;
-    overflow-x: hidden !important;
-    display: flex;
-    flex-direction: row;
-}
-
-.leftNavBardCard {
-    height: 100%;
-    width: 103px;
-    background-color: var(--color-seccondary);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-}
-
 .logo {
     width: 414px;
     height: 44px;
@@ -30,7 +11,6 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    margin-top: auto;
 }
 
 .tabsContainer {
@@ -95,7 +75,6 @@
     height: 100vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
-    background-image: url('/dashboard/wallet-background.svg');
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -215,12 +194,6 @@
     border-radius: 33px;
 }
 
-.modalCard {
-    min-width: 1700px;
-    width: 100% !important;
-    min-height: 500px !important;
-    border-radius: 8px !important;
-}
 
 .modalCard {
     background-color: var(--color-primary);
@@ -550,10 +523,6 @@
     font-size: 24px;
 }
 
-.responsiveLogo {
-    display: none;
-}
-
 .selectCountryButton {
     background-color: var(--color-background);
     width: 228.93px;
@@ -570,8 +539,9 @@
 
 @media(max-width: 500px) {
 
-    .wallet {
-        padding-top: 45px;
+    .walletContainer {
+        display: block;
+        overflow-y: hidden;
     }
 
     .inputCard input {
@@ -710,8 +680,8 @@
     .modalCard {
         min-width: 0px;
         padding: 48px 36px 48px 26px;
-        min-height: none;
-        height: fit-content;
+        min-height: 100vh;
+        height: 100% !important;
     }
 
     .closeModalButton {
@@ -720,17 +690,6 @@
 
     .packagesContainer {
         flex-direction: column;
-    }
-
-    .wallet {
-        flex-direction: column;
-    }
-
-    .leftNavBardCard {
-        width: 100%;
-        height: 45px;
-        flex-direction: row-reverse;
-        align-items: center;
     }
 
     .menuButton {
@@ -744,44 +703,90 @@
     .tokenCard {
         background: linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%);
         filter: drop-shadow(3px 8px 60px rgba(0, 82, 147, 0.23));
-        height: 20vh;
-        padding-left: 40px;
-        padding-right: 20px;
-        font-size: 24px;
-        font-weight: 600;
+        box-shadow: none !important;
+        min-height: 20vh;
+        height: fit-content;
+        padding: 12px 37px 20px 34px !important;
+        position: relative;
+        flex-direction: column;
     }
 
-    .tokenCard span {
-        margin-left: 0px;
-        margin-top: 10px;
-        font-size: 16px;
-        font-weight: 300;
+    .tokenCardMainContainer {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .logo {
+        position: absolute;
+        width: 100px;
+        height: 22px;
+        top: 12px;
+        right: 37px;
+        margin-top: 0px;
+    }
+
+    .backButton {
+        margin: 0px auto 0px 0px;
+        font-size: 10.338px;
+        font-weight: 600;
+        width: 56px;
+        height: 20.677px;
+    }
+
+    .backIcon {
+        font-size: 25px;
+    }
+
+    .firstTitle {
+        margin-top: 36px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .tokens {
+        margin-top: 16px !important;
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 16px;
+    }
+
+    .assessments {
+        margin-top: 16px !important;
+        font-size: 13px;
+        font-weight: 400;
     }
 
     .addTokenButton {
-        margin-right: auto;
-        margin-left: 0px;
-        margin-top: 16px;
-        width: 78px;
+        margin: 0px 0px 0px auto;
+        width: 96px;
         height: 20.893px !important;
-        font-size: 9.286px;
-        font-weight: 500;
-        padding: 0px;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 0px !important;
         min-height: 20.893px !important;
         border-radius: 3px !important;
     }
 
     .plusIcon {
-        font-size: 13px;
+        margin-right: 5px;
+        font-size: 10px;
     }
 
-    .responsiveLogo {
-        display: flex;
-        margin-right: auto;
+    .tabsContainer {
+        padding: 0px;
+        margin-bottom: 0px;
+    }
+
+    .tabsContainer div {
+        padding: 12px 0px;
+        font-size: 13px;
+        font-weight: 700;
+        border-bottom-width: 3px;
     }
 
     .mainContainer {
-        padding: 21px 10px 0px 17px;
+        padding: 0px;
+        flex: 1;
     }
 
     .tabaleTitleCard {
@@ -789,19 +794,30 @@
     }
 
     .tableContent {
-        padding: 0px 14px 0px 0px;
+        padding: 0px 20px 0px 16px;
+        max-height: 70vh !important;
+        overflow-x: hidden;
+        flex: 1;
     }
 
-    .tableContent::-webkit-scrollbar {
-        width: 6px;
+    .transactionTable {}
+
+    .transactionTable ::-webkit-scrollbar {
+        width: 4px !important;
+        background-color: transparent !important;
+        border-radius: 33px;
     }
 
-    .tableContent::-webkit-scrollbar-thumb {
-        width: 6px;
+    .transactionTable ::-webkit-scrollbar-thumb {
+        width: 4px !important;
+        background-color: var(--color-gray);
+        border-radius: 33px;
     }
 
-    .transactionTable {
-        height: 70vh;
-    }
+}
 
+@media(max-height: 750px) {
+    .tableContent {
+        max-height: 64vh !important;
+    }
 }

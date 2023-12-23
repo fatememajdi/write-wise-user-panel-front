@@ -82,7 +82,7 @@ const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any
     return <table className={styles.profileCard}>
         {
             loading ?
-                <Loading style={{ minHeight: 0 }}/>
+                <Loading style={{ minHeight: 0 }} />
                 :
                 <>
                     <tr><span><FaUser className={styles.profileItemsIcon} /> Name</span>{profile.firstName === '' && profile.lastName === '' ? 'Please enter your age'
@@ -100,7 +100,7 @@ const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any
                         priority
                         loading="eager"
                     /> Country</span>{profile.country.commonName === '' ? 'Please select your country' : profile.country.commonName}</tr>
-                    <tr><span><MdAlternateEmail className={styles.profileItemsIcon} />Email</span>{profile.email}</tr>
+                    <tr className={styles.emailText}><span><MdAlternateEmail className={styles.profileItemsIcon} />Email</span>{profile.email}</tr>
                     <tr>
                         <button
                             type="button"
@@ -271,7 +271,7 @@ const EditProfile: React.FC<{ profile: UserProfile, back: any, setProfile: any }
                                 }
                             </tr>
 
-                            <tr><span><MdAlternateEmail className={styles.profileItemsIcon} />Email</span>{profile.email}</tr>
+                            <tr className={styles.emailText}><span><MdAlternateEmail className={styles.profileItemsIcon} />Email</span>{profile.email}</tr>
 
                             <tr>
 
@@ -332,7 +332,7 @@ const GenederSelect: React.FC<{ value: string, handleSelect: any }> = ({ value, 
                 >
 
                     {
-                        Genders.map((item, index) => <div onClick={() => handleSelect(item.value)} className={styles.menuItem} key={index}>{item.label}</div>)
+                        Genders.map((item, index) => <div onClick={() => { handleSelect(item.value); setShowMenu(!showMenu); }} className={styles.menuItem} key={index}>{item.label}</div>)
                     }
 
                 </motion.div>
