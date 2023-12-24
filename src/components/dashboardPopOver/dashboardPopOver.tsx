@@ -8,8 +8,10 @@ import { useRouter } from "next/navigation";
 import styles from './dashboardPopOver.module.css';
 
 //--------------------------------icons
-import { User, Wallet, Support } from '../../../public/dashboard';
 import { RxExit } from 'react-icons/rx';
+import { FaCircleUser } from "react-icons/fa6";
+import { IoMdWallet } from "react-icons/io";
+import { MdOutlineSupportAgent } from "react-icons/md";
 
 //--------------------------------components
 import { StartLoader } from "@/components/Untitled";
@@ -28,12 +30,12 @@ interface _props {
 const menuItems = [
     {
         title: 'Profile',
-        icon: User,
+        icon: FaCircleUser,
         route: '/profile'
     },
     {
         title: 'Wallet',
-        icon: Wallet,
+        icon: IoMdWallet,
         route: '/wallet'
     }
 ];
@@ -98,13 +100,13 @@ const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogO
                                 }
                             }}
                             key={index} className={styles.menuItemCard}>
-                            <item.icon />
+                            <item.icon className={styles.exitIcon} />
                             <span> {item.title}</span>
                         </a>
                     )
                 }
                 <a target="_blank" href={fromIran ? 'https://www.goftino.com/c/7aFKEK' : 'https://tawk.to/chat/651990a910c0b257248765ee/1hbmfd0ck'} key={3} className={styles.menuItemCard}>
-                    <Support />
+                    <MdOutlineSupportAgent className={styles.exitIcon} />
                     <span>Support</span>
                 </a>
                 <button

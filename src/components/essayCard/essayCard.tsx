@@ -125,8 +125,8 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
             { title: 'Score', active: true, lock: false },
             { title: 'Essay', active: true, lock: false },
             { title: 'Analysis', active: true, lock: false },
-            { title: 'Recommendations', active: true, lock: false },
-            { title: 'Insights', active: true, lock: false }
+            { title: 'Insights', active: true, lock: false },
+            { title: 'Recommendations', active: true, lock: false }
         ]}
             selectedItem={currentStepIndex} className={styles.writingCardSelect} onChange={goTo} />
 

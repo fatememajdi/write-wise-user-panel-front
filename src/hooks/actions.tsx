@@ -8,6 +8,7 @@ import {
 } from "@/config/graphql";
 import toast from "react-hot-toast";
 import { topic } from "../../types/topic";
+import { UserProfile } from "../../types/profile";
 
 export async function DeleteTopics(id: string, UpdateTopicsList: any) {
     await client.mutate({
@@ -23,19 +24,19 @@ export async function DeleteTopics(id: string, UpdateTopicsList: any) {
 };
 
 export async function SelectCurrency(id: string) {
-    let res: boolean = false;
+    let profile: UserProfile = null;
     await client.mutate({
         mutation: SELECT_CURRENCY,
         fetchPolicy: "no-cache",
         variables: {
             id: id
         }
-    }).then(() => {
-        res = true;
+    }).then((res) => {
+        profile = res.data.selectCurrency;
     }).catch((err) => {
         toast.error(err.message);
     });
-    return res;
+    return profile;
 };
 
 export async function GenerateNewTopic(type: string, subType: string) {

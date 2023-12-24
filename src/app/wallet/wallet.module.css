@@ -544,6 +544,11 @@
         overflow-y: hidden;
     }
 
+    .rialIcon{
+        top: -10px;
+        right: -25px;
+    }
+
     .inputCard input {
         width: 148px;
         height: 28px;
@@ -648,6 +653,7 @@
         font-weight: 800;
         text-align: center;
         margin-bottom: 39px;
+       padding: 0px 10px;
     }
 
     .buyPackLeftCardTitleText {
@@ -800,8 +806,6 @@
         flex: 1;
     }
 
-    .transactionTable {}
-
     .transactionTable ::-webkit-scrollbar {
         width: 4px !important;
         background-color: transparent !important;
@@ -812,6 +816,32 @@
         width: 4px !important;
         background-color: var(--color-gray);
         border-radius: 33px;
+    }
+
+    .selectCountryContainer {
+        width: 90% !important;
+        min-height: fit-content !important;
+    }
+
+    .selectCountryTitle {
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .selectCountryButton {
+        width: 145.908px;
+        height: 31.044px;
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 25px;
+    }
+
+    .selectCountryCard{
+        padding: 35px 37px !important;
+        height: fit-content !important;
+        min-height: 221px !important;
     }
 
 }

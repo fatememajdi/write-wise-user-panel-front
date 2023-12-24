@@ -15,6 +15,7 @@ import { Lato, Roboto, Inter } from "next/font/google";
 import CookieConsent from '@/components/cookies/cookies';
 import { IS_FROM_IRAN } from '@/config/graphql';
 import { Toaster } from 'react-hot-toast';
+import { useMediaQuery } from 'react-responsive';
 import { usePathname } from 'next/navigation';
 
 const lato = Lato({
@@ -45,7 +46,7 @@ export default function ClientComponent({
 }) {
 
     const [fromIran, setFromIran] = React.useState<boolean>(false);
-
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const pathname = usePathname();
 
     async function CheckCountry() {
@@ -104,14 +105,14 @@ export default function ClientComponent({
                                         style: {
                                             background: 'green',
                                             color: '#FFF',
-                                            fontSize: 20
+                                            fontSize: isMobile ? 13 : 20
                                         },
                                     },
                                     error: {
                                         style: {
                                             background: '#DA282E',
                                             color: '#FFF',
-                                            fontSize: 20
+                                            fontSize: isMobile ? 13 : 20
                                         },
                                     },
                                 }}

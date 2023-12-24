@@ -1,0 +1,23 @@
+.wordCount {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.wordCount span {
+    font-size: 16px;
+}
+
+@media(max-width: 500px) {
+    .wordCount {
+        font-size: 13px;
+        width: 100% !important;
+    }
+
+    .wordCount span {
+        font-size: 9px !important;
+    }
+
+    .wordCount br{
+        line-height: 2px !important;
+    }
+}

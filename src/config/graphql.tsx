@@ -371,7 +371,19 @@ query SearchContries($page:Float!,$pageSize:Float!,$value:String!){
 export const SELECT_CURRENCY = gql`
 mutation SelectCurrency($id:String!){
   selectCurrency(selectCurrency:{countryId:$id}){
-    email
+    firstName,
+    lastName,
+    email,
+    age,
+    gender,
+    profile,
+    token,
+    country{
+      commonName,
+      id,
+      officialName,
+      flag
+    }
   }
 }
 `;

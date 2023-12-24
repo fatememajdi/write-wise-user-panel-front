@@ -112,6 +112,18 @@ button:hover {
 
 }
 
+textarea::-webkit-scrollbar {
+  width: 6px !important;
+  background-color: transparent !important;
+  border-radius: 33px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  width: 6px !important;
+  background-color: #172E4A !important;
+  border-radius: 33px;
+}
+
 @media (max-width: 500px) {
   h1 {
     font-size: 24px !important;
@@ -142,6 +154,23 @@ button:hover {
     font-size: 22px !important;
     font-weight: 600 !important;
     line-height: 8.152px !important;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    width: 4px !important;
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 4px !important;
+  }
+
+  textarea::-webkit-scrollbar-thumb {
+    width: 4px !important;
   }
 
 }

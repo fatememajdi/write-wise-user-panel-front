@@ -248,6 +248,10 @@
     font-size: 45px;
 }
 
+.backButton {
+    width: 130px !important;
+}
+
 
 @media(max-width: 500px) {
     .signInPageContainer {

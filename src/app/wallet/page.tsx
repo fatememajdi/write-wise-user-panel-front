@@ -22,7 +22,6 @@ const PackagesList = dynamic(() => import("./packagesList"));
 const PackageCard = dynamic(() => import("./packageCard"));
 const SelectCountry = dynamic(() => import("./selectCountry"));
 const TableCol = dynamic(() => import("@/components/walletTableCol/walletTableCol"));
-const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"));
 const Modal = dynamic(() => import("@/components/modal/modal"));
 import { useMultiStepForm } from "@/components/multiStepForm/useMultiStepForm";
 import { GetPackages, GetUserProfile, TransactionHistoy } from "@/hooks/fetchData";
@@ -107,14 +106,15 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => { setIsModalOpen(false); goTo(0); }
     const { step, next, goTo } = useMultiStepForm(profile?.country.id === '' ? [
-        <SelectCountry key={0} ChangeModalStep={ChangeModalStep} />,
+        <SelectCountry key={0} ChangeModalStep={ChangeModalStep} setprofile={setprofile} />,
         <PackagesList key={1} handleCancel={handleCancel}
             loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
-        <PackageCard key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />
-    ] : [<SelectCountry key={0} ChangeModalStep={ChangeModalStep} />,
-    <PackagesList key={1} handleCancel={handleCancel}
-        loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
-    <PackageCard key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]);
+        <PackageCard key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]
+        : [
+            <SelectCountry key={0} ChangeModalStep={ChangeModalStep} setprofile={setprofile} />,
+            <PackagesList key={1} handleCancel={handleCancel}
+                loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
+            <PackageCard key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]);
 
     const router = useRouter();
 
@@ -168,14 +168,20 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
             try {
                 await setSelectedPackage(pack);
             } finally {
-                next()
+                if (isMobile)
+                    Next();
+                else
+                    next();
             };
 
         } else {
             try {
                 await GetPackage();
             } finally {
-                next()
+                if (isMobile)
+                    Next();
+                else
+                    next();
             };
         }
         setIsModalOpen(true);
@@ -221,7 +227,7 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
                 </div>
                 <button
                     aria-label="add token button"
-                    onClick={() => { if (isMobile) Next(); else showModal(); }}
+                    onClick={() => { if (profile?.country.id !== '' && isMobile) Next(); else showModal(); }}
                     className={styles.addTokenButton}>
                     <PiPlusBold className={styles.plusIcon} />Add tokens
                 </button>
@@ -252,9 +258,8 @@ const Wallet: React.FC<_walletProps> = ({ packages, GetPackage, loading, selecte
 
             <Modal isOpen={isModalOpen} setIsOpen={handleCancel}>
                 {
-                    // profile?.country.id === '' && 
-                    isMobile ?
-                        <SelectCountry key={0} ChangeModalStep={ChangeModalStep} />
+                    profile?.country.id === '' && isMobile ?
+                        <SelectCountry key={0} ChangeModalStep={ChangeModalStep} setprofile={setprofile} />
                         : step
                 }
             </Modal>

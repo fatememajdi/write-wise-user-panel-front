@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import styles from './wallet.module.css';
 
 //------------------------------------------------types
-import { Country } from "../../../types/profile";
+import { Country, UserProfile } from "../../../types/profile";
 
 //------------------------------------------------components
 const InfiniteScrollSelect = dynamic(() => import("@/components/infiniteScrollSelect/infiniteScrollSelect"));
@@ -15,10 +15,11 @@ import { SelectCurrency } from "@/hooks/actions";
 const Loading = dynamic(() => import("@/components/loading/loading"));
 
 type _props = {
-    ChangeModalStep: any
+    ChangeModalStep: any,
+    setprofile: any
 };
 
-const SelectCountry: React.FC<_props> = ({ ChangeModalStep }) => {
+const SelectCountry: React.FC<_props> = ({ ChangeModalStep, setprofile }) => {
 
     const [countries, setCountries] = React.useState<Country[]>([]);
     const [selectedItem, setSelectedItem] = React.useState<Country>();
@@ -46,7 +47,9 @@ const SelectCountry: React.FC<_props> = ({ ChangeModalStep }) => {
             toast.error('Please select your country!');
         } else {
             setLoading(true);
-            if (await SelectCurrency(selectedItem.id)) {
+            let profile: UserProfile = await SelectCurrency(selectedItem.id);
+            if (profile) {
+                setprofile(profile);
                 ChangeModalStep();
             } else {
                 setLoading(false);

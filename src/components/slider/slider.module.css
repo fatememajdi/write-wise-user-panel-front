@@ -37,4 +37,20 @@
     display: flex;
 }
 
-@media(max-width: 480px) {}
+@media(max-width: 500px) {
+    .sliderCard {
+        height: 155px;
+        width: 155px;
+    }
+
+    .sliderProgress {
+        height: 140px !important;
+        width: 140px !important;
+        font-size: 36px;
+    }
+
+    .sliderProgress span {
+        height: 70px;
+        width: 70px;
+    }
+}

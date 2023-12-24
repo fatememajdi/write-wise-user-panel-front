@@ -46,13 +46,21 @@
     margin-right: 18px;
 }
 
-.menuItemCard span {
-    margin-left: 18px;
-}
-
 @media(max-width: 500px) {
     .menuItemCard {
         font-size: 16px;
-        padding: 17px 15px;
+        padding: 10px 15px;
+        min-width: 170px !important;
+    }
+
+    .logOutButton {
+        font-size: 16px;
+        padding: 10px 15px;
+        min-width: 170px !important;
+    }
+
+    .exitIcon{
+        font-size: 20px;
+        margin-right: 12px;
     }
 }

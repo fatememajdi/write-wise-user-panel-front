@@ -83,7 +83,7 @@
     background-color: transparent !important;
     color: var(--color-blackText) !important;
     border: solid 1px var(--color-seccondary);
-    padding: 10px !important;
+    padding: 20px !important;
     resize: none;
     line-height: 180% !important;
 }
@@ -118,6 +118,7 @@
     line-height: 24.5px;
     margin-top: 14px;
 }
+
 
 @media(max-width: 1620px) {
     .formSectionInput textarea {

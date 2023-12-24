@@ -652,7 +652,7 @@ const Page: React.FC = () => {
                 </AnimatePresence>
             </motion.div >
 
-            <main style={{ flex: 1, height: '100vh', overflow: 'hidden' }}
+            <main style={{ flex: 1, height: '100vh', overflow: 'hidden', display: 'block' }}
                 className={isOpen && isMobile ? styles.mask : ''}>
 
                 {/* //-------------------------------------------------------------dashboard content */}

@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 // import { Pixelify } from "react-pixelify";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
+import { useMediaQuery } from 'react-responsive';
 import { AnimatePresence, motion } from "framer-motion";
 
 //--------------------------------------styles
@@ -81,6 +82,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
     const [showImage, changeShowImage] = React.useState<boolean>(false);
     const [isBig, setIsBig] = React.useState<boolean>(false);
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const router = useRouter();
 
     //-----------------------------------------------------------------graphQl functions
@@ -470,7 +472,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                             <div>
                                                                 {
                                                                     topicLoading ?
-                                                                        <ReactLoading type={'spin'} color={'#2E4057'} height={28} width={28} />
+                                                                        <ReactLoading type={'spin'} color={'#2E4057'} height={isMobile ? 20 : 28} width={isMobile ? 20 : 28} />
                                                                         : generatedTopic ?
                                                                             <MdCheck className={styles.editIconResponsive} color="#d5d7db" style={{ fontSize: 40 }} />
                                                                             :
