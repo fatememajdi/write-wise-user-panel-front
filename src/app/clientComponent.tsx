@@ -88,7 +88,7 @@ export default function ClientComponent({
                             content="Unlock your IELTS writing potential with WriteWiseAI,  four-step process to get accurate essay ratings, personalized feedback,
                 and valuable recommendations"></meta>
                         {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" /> */}
-                        <link rel="icon" href="/logoIcon.svg" />
+                        <link rel="icon" href="/logoIcon.svg" as='icon' />
                     </Head>
 
                     <LocalizationProvider dateAdapter={AdapterMoment}>

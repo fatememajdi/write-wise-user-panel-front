@@ -18,6 +18,8 @@
 .logo {
     margin: 32px auto;
     cursor: pointer;
+    height: auto;
+    width: auto;
 }
 
 .tabsContainer {
@@ -391,7 +393,7 @@
     mask-image: linear-gradient(to bottom, transparent 5%, black 100%);
 }
 
-.sideBard{
+.sideBard {
     display: block;
     position: fixed;
 }

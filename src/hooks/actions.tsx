@@ -133,8 +133,6 @@ export async function Reciept(id: string) {
         }
     }).then(async (res) => {
         link = res.data.receiptLink.link;
-    }).catch((err) => {
-        console.log("get transaction reciept error : ", err);
     });
 
     return link;

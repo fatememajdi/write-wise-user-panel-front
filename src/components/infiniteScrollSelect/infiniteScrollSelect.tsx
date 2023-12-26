@@ -30,6 +30,7 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
     const [selectedItem, setSelectedItem] = React.useState<Country>();
     const [showMenu, setShowMenu] = React.useState<boolean>(false);
     const [showList, setShowList] = React.useState<boolean>(false);
+    const [value, setValue] = React.useState<string>('');
 
     return <AnimatePresence>
         <div style={lightTheme ? { backgroundColor: '#FFF', height: 62, width: 350 } : {}} className={styles.select}>
@@ -43,11 +44,12 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
                 onChange={(e) => {
                     setSelectedItem(null);
                     changeFilter(e.target.value);
+                    setValue(e.target.value);
                     if (!showMenu) {
                         setShowMenu(true);
                     }
                 }}
-                value={selectedItem?.commonName}
+                value={selectedItem ? selectedItem.commonName : value}
                 placeholder={selectedItem ? selectedItem.commonName : title}></input>
             <motion.div
                 animate={showMenu ? { transform: 'rotate(180deg)' } : {}}
@@ -73,9 +75,9 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
                         pageStart={0}
                         loadMore={() => GetData()}
                         hasMore={moreData}
-                        loader={<Loading style={{ height: 60, minHeight: 0, marginTop: 5 }} />}
+                        loader={<Loading style={{ height: 60, minHeight: 0, marginTop: 5 }} key={1} />}
                         useWindow={false}
-                        key={0}
+                        key={10}
                     >
                         {
                             data.map((item, index) => <div onClick={() => { selectItem(item); setSelectedItem(item); setShowMenu(false) }}
@@ -83,8 +85,9 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
                                 <Image
                                     src={item.flag}
                                     alt="country flag"
-                                    height='20'
-                                    width='40'
+                                    width="0"
+                                    height="0"
+                                    sizes="100vw"
                                     loading="eager"
                                     priority
                                     className={styles.flagImage}
@@ -96,7 +99,7 @@ const InfiniteScrollSelect: React.FC<_props> = ({ title, GetData, moreData, data
             }
         </div>
 
-    </AnimatePresence>
+    </AnimatePresence >
 };
 
 export default InfiniteScrollSelect

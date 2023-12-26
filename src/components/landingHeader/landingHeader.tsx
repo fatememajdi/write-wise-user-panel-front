@@ -92,24 +92,28 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
         }
     }, []);
 
-    if (typeof document !== 'undefined')
-        window.addEventListener("scroll", function () {
-            if (document.documentElement.scrollTop <= 10) {
-                if (!topHeader && landing)
-                    changeTopHeader(true);
-            } else {
-                if (topHeader && landing)
-                    changeTopHeader(false);
-            }
-        });
+    React.useEffect(() => {
+        if (typeof document !== 'undefined')
+            window.addEventListener("scroll", function () {
+                if (document.documentElement.scrollTop <= 10) {
+                    if (!topHeader && landing)
+                        changeTopHeader(true);
+                } else {
+                    if (topHeader && landing)
+                        changeTopHeader(false);
+                }
+            });
 
-    if (typeof document != 'undefined')
-        window.addEventListener("scroll", function (e: any) {
-            if (!showPopup && document.documentElement.scrollTop >= 200)
-                changeShowPopup(true);
-            else if (showPopup && document.documentElement.scrollTop <= 200)
-                changeShowPopup(false);
-        });
+        if (typeof document != 'undefined')
+            window.addEventListener("scroll", function (e: any) {
+                if (!showPopup && document.documentElement.scrollTop >= 200)
+                    changeShowPopup(true);
+                else if (showPopup && document.documentElement.scrollTop <= 200)
+                    changeShowPopup(false);
+            });
+    });
+
+
 
     const variants = {
         open: { backgroundColor: 'transparent', boxShadow: 'none', height: isMac ? 100 : 130 },
@@ -176,7 +180,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     {
                         logedIn ?
                             <a
-                                href="javascript:void(Tawk_API.hideWidget())"
+                                // href="javascript:void(Tawk_API.hideWidget())"
                                 onClick={() => {
                                     router.push('/ielts');
                                     StartLoader();

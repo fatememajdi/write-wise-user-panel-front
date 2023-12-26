@@ -69,7 +69,7 @@
 
 .mobileDescription{
     overflow: hidden;
-    display: none;
+    display: none !important;
     margin-top: 25px;
 }
 
@@ -110,7 +110,7 @@
     }
 
     .mobileDescription{
-        display: flex;
+        display: flex !important;
     }
 
 }

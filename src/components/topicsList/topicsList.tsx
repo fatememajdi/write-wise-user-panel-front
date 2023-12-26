@@ -100,7 +100,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                         pageStart={0}
                         loadMore={() => GetTopicsList()}
                         hasMore={MoreTopics}
-                        loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} />}
+                        loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} key={1}/>}
                         useWindow={false}
                         key={0}
                     >

@@ -21,7 +21,7 @@ const Section1: React.FC = () => {
 
             <div className={'col-lg-9 col-md-9 col-12 ' + styles.content}>
                 <h1 className={styles.title} >
-                    <h1> Achieve IELTS Writing Excellence with</h1>
+                    <p> Achieve IELTS Writing Excellence with</p>
                     <span> AI-Driven &nbsp;</span>
                     <div className={styles.animationText}>
                         <Typewriter

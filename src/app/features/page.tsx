@@ -74,7 +74,7 @@ const Features: React.FC = () => {
                     }
 
                 </div>
-                <h6 className={styles.rightCard}>
+                <h6 key={selectedItem} className={styles.rightCard}>
                     {selectedItem !== -1 && featuresItems[selectedItem].description}
                 </h6>
             </AnimatePresence>

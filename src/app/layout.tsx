@@ -1,7 +1,6 @@
 import React from 'react';
 import { Session } from "next-auth";
 import "@/styles/tailwind.css";
-import Head from 'next/head';
 import type { Metadata } from 'next'
 
 //--------------------------------------------------------css

@@ -510,10 +510,11 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                             topic && topic.visuals && topic.visuals?.length > 0 ?
                                                 topic.visuals.map((item, index) =>
                                                     <motion.div
+                                                        style={{ opacity: 0 }}
                                                         key={index}
                                                         onClick={() => setIsBig(!isBig)}
-                                                        animate={isBig ? { width: 1200, height: 'fit-content' } : { width: 600, height: 'fit-content' }}
-                                                        transition={{ type: 'spring', duration: 2 }}
+                                                        animate={isBig ? { width: 1200, height: 'fit-content', opacity: 1 } : { width: 600, height: 'fit-content', opacity: 1 }}
+                                                        transition={{ type: 'spring', duration: 1 }}
                                                     >
                                                         <Image
                                                             src={item.url}
@@ -529,10 +530,11 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                 : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
                                                     generatedTopic.visuals.map((item, index) =>
                                                         <motion.div
+                                                            style={{ opacity: 0 }}
                                                             key={index}
                                                             onClick={() => setIsBig(!isBig)}
-                                                            animate={isBig ? { width: 1000, height: 'fit-content' } : { width: 600, height: 'fit-content' }}
-                                                            transition={{ type: 'spring', duration: 2 }}
+                                                            animate={isBig ? { width: 1000, height: 'fit-content', opacity: 1 } : { width: 600, height: 'fit-content', opacity: 1 }}
+                                                            transition={{ type: 'spring', duration: 1 }}
                                                         >
                                                             <Image
                                                                 src={item.url}
@@ -608,7 +610,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 pageStart={0}
                                 loadMore={() => GetUserEssaies(currentId)}
                                 hasMore={MoreEssaies}
-                                loader={<Loading style={{ height: 100, minHeight: 0 }} />}
+                                loader={<Loading style={{ height: 100, minHeight: 0 }} key={1} />}
                                 useWindow={false}
                                 key={0}
                             >

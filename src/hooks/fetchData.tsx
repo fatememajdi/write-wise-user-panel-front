@@ -118,8 +118,6 @@ export async function TransactionHistoy(page: number, status: boolean) {
         }
     }).then(async (res) => {
         transactions = res.data.transactionHistory.transactions;
-    }).catch((err) => {
-        console.log("get transaction history error : ", err);
     });
 
     return transactions;

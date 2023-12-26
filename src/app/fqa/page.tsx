@@ -32,7 +32,7 @@ const Page: React.FC = () => {
                     Frequently Asked Questions</div>
 
             </div>
-            <div className={'col-12 ' + styles.mainContainer}>
+            <div className={'col-12 ' + styles.mainContainer} key={Math.random()} >
                 <div className={styles.left}>
                     {
                         questions.slice(0, questions.length / 2).map((item, index) => <QuestionCard key={index} question={item.question} answer={item.answer} />)

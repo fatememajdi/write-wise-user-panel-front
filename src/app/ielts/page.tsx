@@ -125,16 +125,13 @@ const Page: React.FC = () => {
     async function ChangeType(type: string) {
         if (!socket)
             await socketInitializer();
-        else
-            console.log(socket.id);
         setType(type);
         if (topicsType !== type)
             SelectType(type);
         goTo(1);
     };
 
-    async function SelectTopic(topic?: topic, essay?: string) {
-
+    async function SelectTopic(topic: topic, essay?: string) {
         ChangeType(topic.type);
         changeTabBarLoc(true);
         changeEndAnimation(true);
@@ -169,13 +166,15 @@ const Page: React.FC = () => {
 
     //----------------------------------------------------------------get user essaies
     async function GetUserEssaies(id: string) {
-        let Essaies: Essay[] = await GetEsseies(id, essaies.length);
-        if (Essaies.length > 0)
-            await setEssaies([...essaies, ...Essaies]);
-        else
-            changeMoreEssaies(false);
-        if (Essaies.length % 10 !== 0)
-            changeMoreEssaies(false);
+        if (id !== null) {
+            let Essaies: Essay[] = await GetEsseies(id, essaies.length);
+            if (Essaies.length > 0)
+                await setEssaies([...essaies, ...Essaies]);
+            else
+                changeMoreEssaies(false);
+            if (Essaies.length % 10 !== 0)
+                changeMoreEssaies(false);
+        }
     };
 
     //----------------------------------------------------------------get topics list
@@ -231,7 +230,6 @@ const Page: React.FC = () => {
                 test: dev ? JSON.parse(dev) : true
             }
         }).then(async (res) => {
-            console.log(res);
             try {
                 if (res.data.scoreEssay.recommendation === true)
                     newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).recommendationJobStatus = JOBSTATUS[3];
@@ -525,7 +523,8 @@ const Page: React.FC = () => {
                                 exit='hidden'
                                 className={styles.dashboardLeftCard}>
                                 <a
-                                    href="javascript:void(Tawk_API.showWidget())">
+                                //href="javascript:void(Tawk_API.showWidget())"
+                                >
 
                                     <Image
                                         onClick={() => router.replace('/')}

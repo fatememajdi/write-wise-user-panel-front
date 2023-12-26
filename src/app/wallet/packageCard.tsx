@@ -54,14 +54,12 @@ const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePa
                 promotionCode: promotionCode
             }
         }).then((res) => {
-            console.log(res.data.validationPromotionCode);
             changePromotion(res.data.validationPromotionCode);
             changeValidPromotionCode(true);
             changeSendPromotionCode(true);
             setLoading(false);
             changeTyping(false);
         }).catch(async (err) => {
-            console.log('validation promotion code error : ', err);
             await changePromotion(null);
             changeValidPromotionCode(false);
             changeSendPromotionCode(true);
@@ -133,7 +131,7 @@ const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePa
                     <div className={styles.applyCodeContainer}>
                         <div className={styles.inputCard}>
                             <input
-                                className={sendPromotionCode && !validpromotionCode && styles.errorForm}
+                                className={sendPromotionCode && !validpromotionCode ? styles.errorForm : ''}
                                 type="text"
                                 onChange={(e) => {
                                     changeTyping(true);
@@ -182,7 +180,7 @@ const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePa
                     <span>{promotion ? promotion.amountAfterDiscount : pack.showingPriceWithDiscount}</span>
                 </div>
                 <button
-                    disabled={loading || typing}
+                    disabled={loading || promotionCode.length > 0 && typing}
                     onClick={() => {
                         handleCancel();
                         CreatePaymentLink(1, pack.id, promotionCode);
