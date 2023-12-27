@@ -14,6 +14,6 @@ export type Package = {
     adjustableQuantity: boolean,
     discountName: string,
     showingDiscountAmount: string,
-    isPopup: boolean
-
+    isPopup: boolean,
+    flagUrl: string
 }

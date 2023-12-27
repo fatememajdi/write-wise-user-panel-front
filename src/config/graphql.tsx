@@ -262,7 +262,8 @@ query GetPackages($userToken:String!){
     adjustableQuantity,
     discountName,
     showingDiscountAmount,
-    isPopup
+    isPopup,
+    flagUrl
   }
 }
 `;
@@ -388,7 +389,7 @@ mutation SelectCurrency($id:String!){
 }
 `;
 
-export const DELETE_ACCOUNT=gql`
+export const DELETE_ACCOUNT = gql`
 mutation{
   deleteUserAccount{
     token

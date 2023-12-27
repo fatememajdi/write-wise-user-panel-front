@@ -25,6 +25,10 @@
     font-weight: 400;
     line-height: 38.5px;
     margin-top: 43px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .mainContainer {
@@ -70,6 +74,12 @@
     display: none;
 }
 
+.flagImage{
+    height: 20px;
+    width: 40px;
+    margin-left: 5px;
+}
+
 @media(max-width: 1680px) {
     .section6 {
         padding: 110px 82px 70px 90px;
@@ -97,6 +107,11 @@
     .section6 {
         padding: 77px 10px 39px 10px;
         min-height: fit-content;
+    }
+
+    .flagImage{
+        width: 30px;
+        height: 15px;
     }
 
     .title {

@@ -12,6 +12,7 @@ import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from 'react-responsive';
 import { AnimatePresence, motion } from "framer-motion";
+import { Popover } from 'antd';
 
 //--------------------------------------styles
 import styles from '../../../../styles/task.module.css';
@@ -469,7 +470,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                             }}
                                                             style={generatedTopic ? { backgroundColor: '#2E4057' } : { backgroundColor: '#d5d7db' }}
                                                             className={styles.checkButton}>
-                                                            <div>
+                                                            <Popover placement="topLeft" content={'Please check your topic'} open={!endTyping}>
                                                                 {
                                                                     topicLoading ?
                                                                         <ReactLoading type={'spin'} color={'#2E4057'} height={isMobile ? 20 : 28} width={isMobile ? 20 : 28} />
@@ -478,7 +479,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                                                             :
                                                                             <MdCheck className={styles.editIconResponsive} color="#2E4057" style={{ fontSize: 40 }} />
                                                                 }
-                                                            </div>
+                                                            </Popover>
                                                         </button>
                                                     }
 
@@ -561,7 +562,9 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 </div>
                             }
 
-                            <div className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
+                            <div
+                                onClick={() => console.log('hi')}
+                                className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
                                 <Input
                                     style={errors.body ? { borderColoe: 'red' } : {}}
                                     disable={!endTyping}

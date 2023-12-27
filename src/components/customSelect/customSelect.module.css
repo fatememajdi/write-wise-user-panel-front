@@ -24,14 +24,15 @@
 
 .selectItemsContainer {
     background-color: #132740;
-    border-radius: 8px;
-    width: 98%;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 100%;
     color: #F3F3F3;
     position: absolute;
     top: 40px;
-    right: 1%;
+    right: 0px;
     z-index: 2;
-    left: 1%;
+    left: 0px;
 }
 
 .selectItemCard {

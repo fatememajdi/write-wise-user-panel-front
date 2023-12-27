@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import ReactLoading from 'react-loading';
 import { Carousel } from 'react-responsive-carousel';
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 //---------------------------------------------------styles
 import styles from './landingSection6.module.css';
@@ -59,7 +60,19 @@ const Section6: React.FC = () => {
         </h6>
 
 
-        <div className={styles.subDescription}>Use of a VPN might change your regional currency!</div>
+        <div className={styles.subDescription}>Use of a VPN might change your regional currency!{
+            packages.length > 0 && packages[0].flagUrl &&
+            <Image
+                src={packages[0].flagUrl}
+                alt="country flag"
+                width="0"
+                height="0"
+                sizes="100vw"
+                loading="eager"
+                priority
+                className={styles.flagImage}
+            />
+        }</div>
 
         <Carousel
             showThumbs={false}

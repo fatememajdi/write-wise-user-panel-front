@@ -143,6 +143,7 @@ export default function Wallew({ packages, GetPackage, loading, selectedPackage,
     };
 
     React.useEffect(() => {
+        StopLoader();
         GetProfile();
         GetTransactionsHistory(true);
     }, []);

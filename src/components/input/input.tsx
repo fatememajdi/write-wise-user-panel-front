@@ -21,31 +21,10 @@ interface props {
     textarea_error?: any,
     secondError?: boolean,
     disable?: boolean,
-    children?: React.ReactNode
+    children?: React.ReactNode,
 };
 
 const Input: React.FC<props> = ({ ...props }) => {
-
-    function onPaste(event) {
-        var brRegex = /\r?\n/g;
-        let paste = (event.clipboardData || window.Clipboard).getData('text/plain');
-        let divText = paste.split(brRegex)
-
-        const selection = window.getSelection();
-        if (!selection.rangeCount)
-            return false;
-
-        let div = document.createElement('textarea');
-        divText.forEach(text => {
-            div.appendChild(document.createTextNode(text));
-            div.appendChild(document.createElement("br"));
-        });
-
-        selection.deleteFromDocument();
-        selection.getRangeAt(0).insertNode(div);
-
-        event.preventDefault();
-    }
 
     return <div
         className={styles.formSectionContainer + ' ' + props.className}
@@ -92,6 +71,7 @@ const Input: React.FC<props> = ({ ...props }) => {
                     name={props.textarea_name}
                     onChange={props.onChange}
                     value={props.textarea_value}
+
                 />
                 {props.children &&
                     props.children

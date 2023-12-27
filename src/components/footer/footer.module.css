@@ -7,6 +7,7 @@
     justify-content: space-between;
     padding: 0px 190px;
     font-style: normal;
+    position: relative;
     color: #F3F3F3;
 }
 
@@ -99,11 +100,11 @@
     font-size: 30px !important;
 }
 
-.mobileName{
+.mobileName {
     display: none;
 }
 
-.copyrightIcon{
+.copyrightIcon {
     font-size: 25px;
     margin-right: 7px;
 }
@@ -115,6 +116,7 @@
         height: 184px;
         padding: 0px 17px;
         overflow: hidden;
+        z-index: 501 !important;
     }
 
     .logo {
@@ -162,11 +164,11 @@
         min-width: 20px !important;
     }
 
-    .name{
+    .name {
         display: none;
     }
 
-    .mobileName{
+    .mobileName {
         margin-top: 8px;
         font-size: 10px;
         font-style: normal;
@@ -181,7 +183,7 @@
         bottom: 23px;
     }
 
-    .copyrightIcon{
+    .copyrightIcon {
         font-size: 12px;
     }
 

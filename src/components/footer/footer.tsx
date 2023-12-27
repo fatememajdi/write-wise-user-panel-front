@@ -94,7 +94,7 @@ const Footer: React.FC = () => {
                     router.push(hash);
                 }
             }
-        }
+        };
     }, []);
 
     return <footer className={'col-12 ' + styles.footer}>
@@ -131,7 +131,7 @@ const Footer: React.FC = () => {
                     SocialMediaItems.map((item, index) => <a key={index} href={item.link}>{item.icon}</a>)
                 }
             </div>
-            <div className={styles.mobileName}><FaRegCopyright className={styles.copyrightIcon}/> WriteWiseAI 2023</div>
+            <div className={styles.mobileName}><FaRegCopyright className={styles.copyrightIcon} /> WriteWiseAI 2023</div>
         </div>
 
     </footer>

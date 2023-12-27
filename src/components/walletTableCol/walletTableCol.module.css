@@ -94,14 +94,15 @@
 
     .mobileColBoldText th {
         font-size: 13px;
-        margin-right: 10px !important;
-        font-weight: 400;
+        padding-right: 8px !important;
+        font-weight: 500;
     }
 
     .mobileColMediumText th {
-        font-size: 8px;
+        font-size: 10px;
         font-weight: 400;
-        margin-right: 8px !important;
+        padding-right: 8px !important;
+        white-space: nowrap;
     }
 
     .mobileColMediumText {

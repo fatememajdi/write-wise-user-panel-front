@@ -36,7 +36,7 @@ const VerificationCode: React.FC = () => {
     const [resendCode, changeResendCode] = React.useState<boolean>(false);
     const [seconds, changeSeconds] = React.useState<number>(60);
 
-    let email;
+    let email: string = '';
     if (typeof document !== 'undefined')
         email = localStorage.getItem('email');
 
@@ -45,7 +45,7 @@ const VerificationCode: React.FC = () => {
         let token: string = await VerifyCode(email, values.code);
         if (token) {
             localStorage.setItem("user", JSON.stringify(token));
-            await router.replace('/ielts');
+            router.replace('/ielts');
             localStorage.removeItem('email');
         } else
             changeLoadig(false);
