@@ -41,7 +41,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'devapi.wwai.ai',
+        hostname: 'api.wwai.ai',
         port: '',
         // pathname: '/account123/**',
       },
