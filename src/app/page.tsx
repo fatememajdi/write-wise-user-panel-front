@@ -1,23 +1,23 @@
 'use client';
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
-import { StartLoader } from "@/components/Untitled";
+import { StartLoader, StopLoader } from "@/components/Untitled";
 
 //-------------------------------------------styles
 import styles from '../styles/landing.module.css';
 
 //-------------------------------------------components
-const Section1 = lazy(() => import('./landing/section1'));
-const Section2 = lazy(() => import("./landing/section2"));
-const Section3 = lazy(() => import("./landing/section3"));
-const Section4 = lazy(() => import("./landing/section4"));
-const Section5 = lazy(() => import("./landing/section5"));
-const Section6 = lazy(() => import("./landing/section6"));
-const Section7 = lazy(() => import("./landing/section7"));
-const Section8 = lazy(() => import("./landing/section8"));
-const Footer = lazy(() => import("@/components/footer/footer"));
+const Section1 = dynamic(() => import('./landing/section1'));
+const Section2 = dynamic(() => import("./landing/section2"));
+const Section3 = dynamic(() => import("./landing/section3"));
+const Section4 = dynamic(() => import("./landing/section4"));
+// const Section5 = dynamic(() => import("./landing/section5"));
+const Section6 = dynamic(() => import("./landing/section6"));
+const Section7 = dynamic(() => import("./landing/section7"));
+const Section8 = dynamic(() => import("./landing/section8"));
+const Footer = dynamic(() => import("@/components/footer/footer"));
 const Loading = dynamic(() => import("@/components/loading/loading"));
 
 const Home: React.FC = () => {
@@ -30,6 +30,7 @@ const Home: React.FC = () => {
 
   //------------------------------------------------------------------check user loged in
   React.useEffect(() => {
+    StopLoader();
     if (!localStorage.getItem('user')) {
       if (status != "loading") {
         if (status === 'authenticated') {
@@ -40,17 +41,27 @@ const Home: React.FC = () => {
   });
 
   const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  return (
+  React.useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
+  return isLoading ?
+    <Loading />
+    :
     <Suspense fallback={<Loading />}>
       <div className={'col-12 ' + styles.landingContainer}>
+
         <Section1 />
         <Section2 />
         <Section3 />
-        <Section4 />
-        <Section5 />
         <Section6 />
+        {/* <Section5 /> */}
         <Section7 />
+        <Section4 />
         <Section8 />
         <Footer />
         <button
@@ -59,11 +70,10 @@ const Home: React.FC = () => {
             router.push('/signIn');
           }}
           className={styles.startButton}>
-          start now
+          Start Now
         </button>
       </div>
     </Suspense>
-  );
 };
 
 export default Home;

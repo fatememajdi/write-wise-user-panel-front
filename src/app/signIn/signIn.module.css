@@ -1,104 +1,52 @@
 .signInPageContainer {
     display: flex;
-    flex-direction: row;
-    min-height: 100vh;
-    max-height: 100vh !important;
+    flex-direction: column;
+    height: 100vh;
     overflow: hidden;
     overflow-y: hidden;
     overflow-x: hidden;
-}
-
-.signInLeftContainer {
-    min-height: 100vh;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    background-image: url('/signIn/background.svg');
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
     align-items: center;
     justify-content: center;
-    padding-top: 90px;
-}
-
-.signInrightContainer {
-    min-height: 100vh;
-    height: 100% !important;
-    background-color: var(--color-seccondary);
     position: relative;
 }
 
-.circle1 {
-    background-color: var(--color-primary);
-    height: 243px;
-    width: 243px;
-    border-radius: 100%;
-    position: absolute;
-    top: 181px;
-    right: 57px;
-}
-
-.circle2 {
-    position: absolute;
-    width: 376px;
-    height: 376px;
-    right: 208px;
-    border-radius: 100%;
-    background-color: var(--color-background);
-    top: 251px;
-    z-index: 1;
-}
-
-.circle3 {
-    background-color: var(--color-primary);
-    width: 376px;
-    height: 376px;
-    border-radius: 100%;
-    position: absolute;
-    top: 297px;
-    right: 179px;
-    z-index: 0;
-}
-
-.circle4 {
-    position: absolute;
-    width: 207px;
-    height: 207px;
-    right: 57px;
-    border-radius: 100%;
-    background-color: var(--color-background);
-    top: 610px;
-}
-
-.circle5 {
-    background-color: var(--color-primary);
-    width: 243px;
-    height: 243px;
-    border-radius: 100%;
-    position: absolute;
-    top: -121px;
-    right: 379px;
-    z-index: 0;
-}
-
 .logo {
-    height: 16px;
-    width: 151px;
+    width: 183px !important;
+    height: 24px !important;
+    position: absolute;
+    top: 66px;
+    left: 70px;
 }
 
-.title {
-    margin-top: 118px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 40px;
-    line-height: 12px;
-    color: var(--color-seccondary);
-    margin-bottom: 114px;
-}
-
-.stepContainer {
+.loginForm {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: fit-content;
-    flex: 1;
+}
+
+.title {
+    font-style: normal;
+    line-height: 12px;
+    color: var(--color-seccondary);
+    margin-bottom: 82px;
+}
+
+.subtitle {
+    color: var(--color-black);
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    margin-bottom: 38px;
+    font-weight: 300;
+}
+
+.subtitle span {
+    font-weight: 700;
 }
 
 .signInOptionsbutton {
@@ -110,19 +58,37 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
-    padding: 10px;
+    padding: 0px;
     width: 360px;
+    height: 44px;
     justify-content: center;
     border-radius: 8px;
     margin-top: 15px;
     cursor: pointer;
 }
 
+
+.submitEmailButton {
+    margin-top: 32px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 12px;
+    color: var(--color-whiteText);
+    background-color: var(--color-seccondary) !important;
+    width: 360px;
+    height: 54px;
+    padding: 0px !important;
+    border-radius: 8px !important;
+    margin-bottom: 32px;
+    align-items: center;
+    justify-content: center;
+}
+
 .googleSingInCard {
-    border-color: Gray/300;
-    border-width: 1px;
-    border-style: solid;
+    border: 1px solid var(--gray-300, #D0D5DD) !important;
     color: #344054;
+    background-color: var(--color-background);
 }
 
 .faceBookSingInCard {
@@ -164,14 +130,13 @@
 }
 
 .footerText {
-    margin-top: auto !important;
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
     line-height: 22px;
     text-align: center;
-    color: var(--color-seccondary);
-    margin-bottom: 26px;
+    color: inherit;
+    margin-top: 48px;
 }
 
 .footerText a {
@@ -185,342 +150,198 @@
 }
 
 .emailInput input {
-    height: 69px !important;
-    border-width: 1px !important;
-    border-color: var(--color-primary) !important;
-    border-style: solid !important;
+    height: 64px !important;
+    background-color: transparent !important;
+}
+
+.inputCard {
+    height: fit-content;
+    position: relative;
+    max-width: 360px;
     border: solid 1px var(--color-primary) !important;
+    border-radius: 8px;
+}
+
+.errorInputCard {
+    height: fit-content;
+    position: relative;
+    max-width: 360px;
+    border: none !important;
+}
+
+.verificationInputCard {
+    height: fit-content;
+    position: relative;
+    max-width: 360px;
+    border-radius: 8px;
 }
 
 .inputEmailTitle {
     font-style: normal;
     font-weight: 300;
     font-size: 24px;
+    z-index: 2;
+    position: absolute;
+    left: 17px;
+    top: -15px;
+    background-color: #F3F3F3;
+    padding: 0px 2px;
+
 }
 
-.submitEmailButton {
-    margin-top: 45px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 12px;
-    color: var(--color-whiteText);
-    background-color: var(--color-seccondary);
-    width: 360px;
-    padding: 20px 0px;
-    border-radius: 15px !important;
-    margin-bottom: 35px;
-    align-items: center;
-    justify-content: center;
-}
-
-.step2ButtonContaier {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    width: 360px;
-}
-
-.nameInput {
-    width: 451px;
-    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
-    margin-bottom: 39px;
-}
-
-.nameInput input {
-    height: 71px !important;
-}
-
-.ageAndGenderContainer {
+.progressBar {
+    height: 8px;
+    width: 100% !important;
+    background-color: rgba(46, 64, 87, 0.40);
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    z-index: 10 !important;
+    position: relative;
+    margin-bottom: 32px;
 }
 
-.datePicker {
-    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
-    margin-top: 10px !important;
-    border-radius: 10px !important;
-    border: 1px solid #2E4057 !important;
-    width: 204px !important;
-    height: 71px !important;
-}
-
-.datePicker:focus {
-    border: none !important;
-}
-
-.select {
-    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
-    margin-top: 10px !important;
-    border-radius: 10px !important;
-    border: 1px solid #2E4057 !important;
-    width: 210px !important;
-    height: 71px !important;
-}
-
-.step4ButtonContainer {
+.buttonsCard {
     display: flex;
-    flex-direction: column;
-    width: 360px;
-    flex: 1;
-    margin-top: 30px;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 12px;
+    max-width: 360px;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.skipButton {
-    font-style: normal;
-    font-weight: 700;
+.buttonsCard button {
+    margin: 0px !important;
+    height: 48px;
+    width: fit-content;
+    padding: 0px;
+    text-align: center;
     font-size: 24px;
-    line-height: 12px;
-    color: var(--color-seccondary);
-    border: solid 1px var(--color-seccondary);
-    background-color: var(--color-background);
-    width: 360px;
-    padding: 20px 0px;
-    border-radius: 15px !important;
+    background-color: var(--color-seccondary);
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-whiteText);
+    padding: 0px 12px;
 }
 
-.pagination {
-    margin-top: 40px;
+.resendButton {
+    min-width: 198px;
 }
 
-@media(max-width: 1680px) {
-    .circle1 {
-        height: 223px;
-        width: 223px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle4 {
-        height: 187px;
-        width: 187px;
-    }
-
-    .circle5 {
-        height: 223px;
-        width: 223px;
-        top: -111px;
-    }
-
-    .title {
-        margin-top: 70px;
-        margin-bottom: 80px;
-    }
-
-    .select {
-        width: 190px;
-    }
-
-    .datePicker {
-        width: 190px;
-    }
+.prossessBar {
+    height: 8px !important;
+    background-color: #2E4057;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
-@media(max-width: 1440px) {
-    .circle1 {
-        height: 223px;
-        width: 223px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle4 {
-        height: 187px;
-        width: 187px;
-    }
-
-    .circle5 {
-        height: 223px;
-        width: 223px;
-        top: -111px;
-    }
-
-    .title {
-        margin-top: 70px;
-        margin-bottom: 80px;
-    }
-
-    .select {
-        width: 190px;
-    }
-
-    .datePicker {
-        width: 190px;
-    }
+.backIcon {
+    font-size: 45px;
 }
 
-@media(max-width: 992px) {
-    .circle1 {
-        height: 223px;
-        width: 223px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle4 {
-        height: 187px;
-        width: 187px;
-    }
-
-    .circle5 {
-        height: 223px;
-        width: 223px;
-        top: -111px;
-    }
-
-    .title {
-        margin-top: 70px;
-        margin-bottom: 80px;
-    }
-
-    .select {
-        width: 190px;
-    }
-
-    .datePicker {
-        width: 190px;
-    }
+.backButton {
+    width: 130px;
+    padding: 0px 10px !important;
 }
 
-@media(max-height: 900px) {
-    .circle1 {
-        height: 223px;
-        width: 223px;
-    }
 
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle2 {
-        height: 356px;
-        width: 356px;
-    }
-
-    .circle4 {
-        height: 187px;
-        width: 187px;
-    }
-
-    .circle5 {
-        height: 223px;
-        width: 223px;
-        top: -111px;
-    }
-
-    .title {
-        margin-top: 70px;
-        margin-bottom: 80px;
-    }
-
-    .select {
-        width: 190px;
-    }
-
-    .datePicker {
-        width: 190px;
-    }
-}
-
-@media(max-width: 480px) {
-    .signInrightContainer {
-        display: none;
-    }
-
-    .signInLeftContainer {
-        padding: 57px 23px 65px 23px;
+@media(max-width: 500px) {
+    .signInPageContainer {
+        background-image: url('/signIn/mobile-background.svg');
         height: fit-content;
+        min-height: 100vh;
     }
 
-    .signInOptionsbutton {
-        width: 210px;
-        font-size: 12px !important;
-        justify-content: flex-start;
-        padding-left: 13px;
-        line-height: 24px;
-        height: 38px;
-    }
-
-    .title {
-        font-size: 24px;
-        margin-top: 0px;
-        position: relative;
-        top: -6px;
-    }
-
-    .stepContainer {
-        justify-content: flex-start;
-        margin-top: 56px;
-        padding: 0px 52px;
-        border-radius: 8px;
-        border: 1px solid #FFF;
-        background: linear-gradient(133deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.32) 100%);
-        box-shadow: -5px 8px 23px -5px rgba(0, 0, 0, 0.14);
-    }
-
-    .emailButton {
-        font-size: 12px;
-        line-height: 12px;
-        height: 38px;
-    }
-
-    .submitEmailButton {
-        font-size: 12px;
-        line-height: 12px;
-        height: 38px;
-        width: 210px;
-        margin-top: 14px;
-        border-radius: 8px !important;
-        margin-bottom: 0px;
-    }
-
-    .footerText {
-        font-size: 10px;
+    .logo {
+        right: auto;
+        left: auto;
+        width: 122px !important;
+        height: 16px !important;
     }
 
     .emailInput {
-        width: 210px;
+        width: 247px !important;
+        height: 44px !important;
     }
 
     .emailInput input {
-        height: 38px !important;
-        border-color: Gray/300 !important;
-        border: solid 1px Gray/300 !important;
-        border-radius: 8px !important;
+        width: 247px !important;
+        height: 44px !important;
+    }
+
+    .inputCard {
+        width: 247px;
+    }
+
+    .submitEmailButton {
+        width: 247px !important;
+        height: 37px !important;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 8.152px;
     }
 
     .inputEmailTitle {
-        font-size: 12px;
+        font-size: 16.304px;
+        font-weight: 300;
+        line-height: 8.152px;
+        top: -5px;
     }
 
-    .pagination {
-        display: none !important;
+    .signInOptionsbutton {
+        width: 247px;
+        height: 30px;
+        font-size: 11.001px;
+        font-weight: 600;
+        line-height: 16.502px;
     }
+
+    .signInOptionsIcon {
+        font-size: 18px;
+    }
+
+    .footerText {
+        font-size: 9.626px;
+        font-weight: 300;
+        line-height: 15.127px;
+    }
+
+    .buttonsCard {
+        width: 247px;
+        max-width: 247px;
+    }
+
+    .buttonsCard button {
+        height: 33px;
+        font-size: 16.578px;
+        font-weight: 600;
+    }
+
+    .resendButton {
+        min-width: 138px;
+    }
+
+    .backIcon {
+        font-size: 25px;
+    }
+
+    .backButton {
+        width: 89px ;
+    }
+
+    .subtitle {
+        width: 247px;
+        font-size: 13px;
+        font-weight: 300;
+    }
+
 }

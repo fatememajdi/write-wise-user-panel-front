@@ -2,46 +2,45 @@
 'use client';
 import React from "react";
 import { useRouter } from 'next/navigation';
-import Image from "next/image";
+import dynamic from 'next/dynamic';
+import Typewriter from 'typewriter-effect';
 
 //------------------------------------------------styles
 import styles from './landingSection1.module.css';
 import '../../styles/global.css';
 
-//------------------------------------------------icons
-import { VscCircleFilled } from 'react-icons/vsc';
-
 //------------------------------------------------componnets
-import LandingBackground from "@/components/backgrounds/landingBackground/landingBackground";
+const LandingBackground = dynamic(() => import("@/components/backgrounds/landingBackground/landingBackground"));
 import { StartLoader } from "@/components/Untitled";
 
 const Section1: React.FC = () => {
     const router = useRouter();
 
     return <LandingBackground>
-        <section className={'col-12 ' + styles.section1Container} id="home">
+        <section className={'col-12 ' + styles.section1Container} id="hero-section">
 
-            <div className={'col-lg-6 col-md-6 col-12 ' + styles.rightContainer}>
-                <div className={styles.rightContainerTitle}>
-                    Boost Your IELTS Writing <br />with AI-Powered Precision
-                </div>
+            <div className={'col-lg-9 col-md-9 col-12 ' + styles.content}>
+                <h1 className={styles.title} >
+                    <p> Achieve IELTS Writing Excellence with</p>
+                    <span> AI-Driven &nbsp;</span>
+                    <div className={styles.animationText}>
+                        <Typewriter
+                            options={{
+                                strings: ['Rating', 'Analysis', 'Progress Tracking'],
+                                autoStart: true,
+                                loop: true,
+                                cursorClassName: styles.cursorStyle
+                            }}
 
-
-                <div className={styles.rightContainerDescription}>
-                    <span>Discover <span className={styles.boldLetter}>W</span>rite<span className={styles.boldLetter}>W</span>ise<span className={styles.boldLetter}>AI</span>'s Technology:
-                    </span> Delivering instant IELTS <br />scoring with results mirroring an inter-rater difference of <br />0.5 with Humans
-
-                    <div
-                        style={{ marginTop: 14 }}
-                        className={styles.rightContainerDescriptionItem}>
-                        <VscCircleFilled className={styles.rightContainerDescriptionItemIcon} />
-                        Claim your AI-powered IELTS writing analysis
-                    </div>
-                    <div className={styles.rightContainerDescriptionItem}>
-                        <div> <VscCircleFilled className={styles.rightContainerDescriptionItemIcon} /></div>
-                        Benefit from personalised IELTS feedback tailored to elevate your skills.
+                        />
                     </div>
 
+                </h1>
+
+                <h6 className={styles.description}>
+                    <span>
+                        Unlock the full potential of your IELTS writing Skills with our state-of-the-art AI technology. Experience a comprehensive journey to success.
+                    </span>
                     <button
                         onClick={() => {
                             StartLoader();
@@ -52,46 +51,9 @@ const Section1: React.FC = () => {
                         Start Now
                     </button>
 
-                </div>
+                </h6>
 
             </div>
-
-            <div className={'col-lg-6 col-md-6 col-12 ' + styles.leftContainer}>
-                <Image
-                    className={'selectBack ' + styles.leftContainerBackground}
-                    src="/landing/section1-background.svg"
-                    alt="section background"
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                    loading="eager"
-                    priority
-                />
-                <div className={styles.leftImageCard}>
-                    <Image
-                        className={'selectBack ' + styles.robot}
-                        src="/landing/robot.svg"
-                        alt="robot"
-                        width="0"
-                        height="0"
-                        sizes="100vw"
-                        loading="eager"
-                        priority
-                    />
-                    <Image
-                        className={'selectBack ' + styles.human}
-                        src="/landing/human.svg"
-                        alt="human"
-                        width="0"
-                        height="0"
-                        sizes="100vw"
-                        loading="eager"
-                        priority
-                    />
-                    <div className={styles.leftLogo}>WriteWiseAI</div>
-                </div>
-            </div>
-
         </section>
     </LandingBackground>
 };

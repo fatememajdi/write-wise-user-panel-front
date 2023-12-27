@@ -5,41 +5,38 @@
     justify-content: space-between;
     flex: 1;
     z-index: 10;
-    padding: 0px 97px 0px 97px;
-    height: 122px;
+    padding: 0px 97px 0px 203px;
+    height: 110px;
     position: relative;
+    font-family: var(--font-lato);
+
 }
 
 .header {
     position: fixed;
     top: 0px;
-    height: 125px;
+    height: 100%;
     z-index: 100 !important;
 }
 
 .headerContainer {
     position: fixed;
     top: 0px;
-    height: 122px;
     z-index: 100 !important;
-    background-color: #F3F3F3;
     align-items: center;
+    width: 100% !important;
+    max-width: 1920px !important;
 }
 
 .blackShadow {
-    box-shadow: 0px 4px 18px 0px rgba(0, 0, 0, 0.25);
-}
-
-.lightShadow {
-    /* box-shadow: -1px 13px 0px 3px rgba(243, 243, 243, 0.17);
-    -webkit-box-shadow: -1px 13px 0px 3px rgba(243, 243, 243, 0.17); */
+    box-shadow: 38px 4px 14.6px 0px rgba(0, 0, 0, 0.25);
 }
 
 .headerItem {
     color: var(--color-seccondary);
     text-decoration: none;
     line-height: 28px;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 400;
     font-style: normal;
     margin-right: 40px;
@@ -50,7 +47,7 @@
     display: flex;
     flex-direction: row;
     width: fit-content;
-    height: 142px;
+    height: 100%;
     align-items: center;
 }
 
@@ -61,8 +58,8 @@
 
 .headerLogo {
     margin-right: 38px;
-    width: 185px;
-    height: 15px;
+    width: 183px;
+    height: 24px;
 }
 
 .responsiveMenuIcon {
@@ -119,37 +116,142 @@
     cursor: pointer;
 }
 
+.modalContainer {
+    background-color: var(--color-background);
+    padding: 0px;
+}
+
+.modalCard {
+    height: 100%;
+    width: 772px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 34px 20px 10px 20px;
+}
+
+.bannerTitle {
+    color: var(--color-primary);
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 52.8px;
+    margin-top: 80px;
+    text-align: center;
+}
+
+.bannerDescription {
+    color: var(--color-blackText);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 31.2px;
+    margin-top: 30px;
+    text-align: center;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.bannerButton {
+    color: var(--color-whiteText);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    padding: 16px 28px;
+    background-color: var(--color-red);
+    margin-top: 50px;
+}
+
+.banner {}
+
+.drawer {
+    background-color: var(--color-seccondary) !important;
+    color: #F3F3F3;
+}
+
+.drawer p {
+    color: var(--color-whiteText);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    padding: 10px 10px 10px 25px;
+    margin-top: 15px;
+    width: 100%;
+}
+
 @media(max-width: 1680px) {
+    .bannerButton {
+        padding: 8px 18px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .bannerTitle {
+        font-size: 32px;
+        font-weight: 600;
+        line-height: normal;
+        margin-top: 70px;
+    }
+
+    .bannerDescription {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .modalCard {
+        width: 500px;
+    }
+
     .headerCard {
-        height: 100px;
-        padding: 0px 50px;
+        padding: 0px 144px;
     }
 
     .headerItem {
         margin-right: 25px;
-        font-size: 13px;
+        font-size: 20px;
         font-weight: 400;
-        line-height: 18px;
+        line-height: 21.044px;
     }
 
-    .headerContainer {
-        height: 100px;
-    }
-
-
-    .headerItemsContainer {
-        height: 100px;
-    }
+    /* .headerContainer {
+        height: 106px;
+    } */
 
     .headerLogo {
-        /* height: 8px;
-        width: 98px; */
-        margin-right: 10px;
+        margin-right: 64px;
+        width: 65px;
+        height: 52px;
     }
 
 }
 
 @media(max-width: 1440px) {
+
+    .bannerButton {
+        padding: 8px 18px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .bannerTitle {
+        font-size: 32px;
+        font-weight: 600;
+        line-height: normal;
+        margin-top: 70px;
+    }
+
+    .bannerDescription {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .modalCard {
+        width: 500px;
+    }
+
     .popupTitle {
         font-size: 16px;
         font-weight: 500;
@@ -169,55 +271,37 @@
     }
 
     .headerCard {
-        height: 100px;
-        padding: 0px 50px;
+        padding: 0px 144px;
     }
 
     .headerItem {
         margin-right: 25px;
-        font-size: 13px;
+        font-size: 20px;
         font-weight: 400;
-        line-height: 18px;
+        line-height: 21.044px;
     }
 
-    .headerContainer {
-        height: 100px;
-    }
-
-
-    .headerItemsContainer {
-        height: 100px;
-    }
+    /* .headerContainer {
+        height: 106px;
+    } */
 
     .headerLogo {
-        /* height: 8px;
-        width: 98px; */
-        margin-right: 10px;
+        width: 65px;
+        height: 52px;
+        margin-right: 64px;
     }
 
 }
 
-@media(max-width: 992px) {
-    .headerCard {
-        padding: 0px 50px;
-    }
-
-    .headerItem {
-        margin-right: 20px;
-    }
-
-
-}
-
-@media(max-width: 480px) {
+@media(max-width: 500px) {
 
     .headerCard {
         display: none;
     }
 
     .headerContainer {
-        background-color: var(--color-seccondary);
-        height: 45px;
+        background-color: var(--color-seccondary) !important;
+        height: 45px !important;
         display: flex;
         align-items: center;
         flex-direction: row;
@@ -225,12 +309,12 @@
         padding: 0px 15px;
     }
 
-    .responsiveChatButton {
-        display: flex;
-    }
-
     .responsiveMenuIcon {
         display: flex;
+        position: absolute;
+        top: auto;
+        bottom: auto;
+        left: 15px;
     }
 
     .responsiveLogo {
@@ -238,4 +322,51 @@
         margin: 0px auto;
     }
 
+    .popup {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: -45px;
+    }
+
+    .popupTitle {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 52.8px;
+    }
+
+    .popupButton {
+        width: 95px;
+        height: 21.983px;
+        font-size: 14.132px !important;
+        font-weight: 400;
+        line-height: 31.405px;
+    }
+
+    .popupCloseButton {
+        font-size: 20px;
+    }
+
+    .modalCard {
+        width: 100%;
+    }
+
+    .bannerButton {
+        padding: 0px 14px !important;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .bannerTitle {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: normal;
+        margin-top: 50px;
+    }
+
+    .bannerDescription {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: normal;
+    }
 }

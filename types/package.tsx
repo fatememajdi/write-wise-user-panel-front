@@ -10,5 +10,10 @@ export type Package = {
     amountWithDiscount: number,
     showingPrice: string,
     showingPriceWithDiscount: string,
-    currency: string
+    currency: string,
+    adjustableQuantity: boolean,
+    discountName: string,
+    showingDiscountAmount: string,
+    isPopup: boolean,
+    flagUrl: string
 }

@@ -1,46 +1,112 @@
+.logo {
+    width: 414px;
+    height: 44px;
+    margin-top: 36px;
+}
+
+.tokens {
+    margin-top: 30px !important;
+    text-align: center;
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.tabsContainer {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding: 0px 65px;
+    margin-bottom: 64px;
+}
+
+.tabsContainer div {
+    flex: 1;
+    border-bottom: solid 5px var(--color-seccondary);
+    text-align: center;
+    height: 100%;
+    padding: 33px 0px;
+    cursor: pointer;
+    color: var(--color-seccondary);
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.assessments {
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 29px !important;
+}
+
+.tokenCardMainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.firstTitle {
+    margin-top: 26px;
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.menuButton {
+    margin-top: auto;
+    font-size: 40px;
+    color: var(--color-whiteText);
+    margin-bottom: 30px;
+    padding: 0px;
+}
+
 .walletContainer {
-    height: 100vh !important;
+    height: 100vh;
     overflow: hidden !important;
     overflow-x: hidden !important;
-    background-image: url('/dashboard/wallet-background.svg');
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0px 0px 20px 0px;
-    background: #F3F3F3;
-
+    background: var(--color-background);
+    flex: 1;
 }
 
 .title {
-    color: #FFF;
+    color: var(--color-whiteText);
     text-align: center;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     margin-bottom: 24px;
+    margin-top: auto;
 }
 
 .tokenCard {
-    height: 40vh;
+    height: 35%;
     width: 100%;
     flex-shrink: 0;
     background: linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%);
     filter: drop-shadow(3px 8px 60px rgba(0, 82, 147, 0.23));
     box-shadow: 3px 8px 60px -5px rgba(0, 82, 147, 0.23);
-    color: #F3F3F3;
-    text-align: center;
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    padding-top: 38px;
+    color: var(--color-whiteText);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    padding-left: 180px;
-    padding-top: 150px;
-    padding-right: 180px;
+    padding-left: 261px;
+    padding-right: 200px;
 }
 
 .tokenCard span {
@@ -54,10 +120,11 @@
 
 .addTokenButton {
     border-radius: 8px;
-    background: #F3F3F3;
+    background: var(--color-background);
     width: 168px;
-    height: 45px;
-    color: #172E4A;
+    height: 45px !important;
+    min-height: 45px !important;
+    color: var(--color-primary);
     text-align: center;
     font-size: 20px;
     font-style: normal;
@@ -77,7 +144,8 @@
 .transactionTable {
     border-radius: 8px;
     backdrop-filter: blur(17px);
-    height: 48vh;
+    /* height: 88vh; */
+    height: 65%;
     flex-shrink: 0;
     width: max-content;
     display: flex;
@@ -91,9 +159,8 @@
 
 .tabaleTitleCard {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    color: #252525;
+    color: var(--color-gray);
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -102,8 +169,8 @@
     text-align: center;
 }
 
-.tabaleTitleCard span {
-    /* padding-left: 8%; */
+.tabaleTitleCard th {
+    flex: 1;
 }
 
 .tableContent {
@@ -112,109 +179,71 @@
     flex: 1;
     text-align: center;
     padding: 0px 65px;
+    max-height: 340px;
 }
 
-.transactionCard {
+.tableContentRow {
+    width: 100% !important;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 80px !important;
+    flex: 1;
+    min-width: 100% !important;
+    flex-direction: column;
+}
+
+.tableContentRow table{
     width: 100%;
-    border-radius: 8px;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-bottom: 14px;
-}
-
-.positiveTransactionCard {
-    background: radial-gradient(239.71% 140.05% at 0.9% 2.98%, rgba(46, 64, 87, 0.72) 0%, rgba(46, 64, 87, 0.80) 35.37%, rgba(46, 64, 87, 0.91) 66.98%, rgba(46, 64, 87, 0.94) 85.73%, #2E4057 97.98%);
-    stroke-width: 2px;
-    stroke: rgba(250, 255, 252, 0.00);
-    backdrop-filter: blur(21px);
-    color: #F3F3F3;
-}
-
-.negativeTransactionCard {
-    border: 2px solid rgba(114, 123, 139, 0.00);
-    background: radial-gradient(231% 135.8% at 0.9% 2.98%, rgba(145, 154, 165, 0.40) 0%, rgba(255, 255, 255, 0.00) 100%);
-    backdrop-filter: blur(21px);
-    color: #252525;
-}
-
-.transactionCard span {
-    /* padding-left: 8%; */
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
 }
 
 .tableContent::-webkit-scrollbar {
-    /* display: none; */
     width: 12px;
-    background-color: #F3F3F3;
+    background-color: var(--color-background);
     border-radius: 33px;
 }
 
 .tableContent::-webkit-scrollbar-thumb {
     width: 12px;
-    background-color: #12263E;
+    background-color: var(--color-navyBlue);
     border-radius: 33px;
 }
 
-.plusCard {
-    height: 30px;
-    width: 30px;
-    border-radius: 100%;
-    margin-right: 18px;
-    color: #2E4057;
-    padding: auto;
-    background-color: #F3F3F3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.minusCard {
-    height: 30px;
-    width: 30px;
-    border-radius: 100%;
-    margin-right: 18px;
-    color: #F3F3F3;
-    padding: auto;
-    background-color: #2E4057;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modalCard {
-    min-width: 1700px;
-    width: 100% !important;
-    border-radius: 8px !important;
-}
-
-.modalContainer {
-    background-color: var(--color-primary) !important;
-    filter: drop-shadow(-18px 20px 66px rgba(0, 0, 0, 0.17));
-    padding: 0px !important;
-    position: relative;
-}
 
 .modalCard {
     background-color: var(--color-primary);
     filter: drop-shadow(-18px 20px 66px rgba(0, 0, 0, 0.17));
-    position: absolute;
     width: 100%;
     height: fit-content;
     min-height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
     border-radius: 0px !important;
     padding: 34px 28px 33px 40px;
+    min-width: 1429px;
+}
+
+.selectCountryContainer {
+    background-color: var(--color-primary);
+    filter: drop-shadow(-18px 20px 66px rgba(0, 0, 0, 0.17));
+    width: 690px !important;
+    height: fit-content;
+    min-height: 100%;
+    border-radius: 0px !important;
+}
+
+.selectCountryCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 350px;
+    padding: 53px 60px;
+}
+
+.selectCountryTitle {
+    color: var(--color-whiteText);
+    font-family: var(--color-lato);
+    font-size: 24.354px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 58px;
 }
 
 .modalTopContainer {
@@ -225,15 +254,16 @@
 }
 
 .select {
-    width: 298px;
+    min-width: 298px;
+    width: fit-content;
     height: 42px;
     border-radius: 8px;
-    border: 1px solid #626E7E;
-    background: #2E4057;
+    border: 1px solid var(--color-gray);
+    background: var(--color-seccondary);
 }
 
 .selectItem {
-    color: #F3F3F3 !important;
+    color: var(--color-whiteText) !important;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -241,9 +271,10 @@
 }
 
 .closeModalButton {
-    font-size: 55px;
-    color: #626E7E !important;
+    font-size: 45px;
+    color: var(--color-gray) !important;
     cursor: pointer;
+    margin-left: auto;
 }
 
 .packagesContainer {
@@ -253,6 +284,584 @@
     align-items: center;
     justify-content: space-around;
 }
-.loading{
+
+.loading {
     margin: auto;
+}
+
+.buyPackageCard {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.buyPackageLeftCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buyPackageLeftCardTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 298px;
+    height: 336px;
+    background: rgba(243, 243, 243, 0.03);
+    filter: drop-shadow(-11px 4px 25px rgba(0, 0, 0, 0.20));
+    color: var(--color-whiteText);
+    text-align: center;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding: 0px 70px 0px 40px;
+    border-radius: 4px;
+    box-shadow: -8px 2px 14px -4px rgba(0, 0, 0, 0.54);
+    -webkit-box-shadow: -8px 2px 14px -4px rgba(0, 0, 0, 0.54);
+    -moz-box-shadow: -8px 2px 14px -4px rgba(0, 0, 0, 0.54);
+}
+
+.buyPackageLeftCardTitle span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26px;
+    margin-top: 7px;
+}
+
+.buyPackageRightCard {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 133px 50px 0px;
+}
+
+.buyPackageRightCardTitle,
+.buyPackageRightCardSubTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-whiteText);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px;
+    padding-right: 45px;
+}
+
+.countercontainer {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 48px;
+}
+
+.arrowIcon {
+    color: var(--color-whiteText);
+    font-size: 20px;
+}
+
+.countCard {
+    border-radius: 6px;
+    border: 1px solid #F3F3F3;
+    background: #626E7E;
+    min-width: 100px;
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-whiteText);
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 9.5px;
+    margin: 0px 16px;
+}
+
+.buyPackageRightCardSubTitle {
+    margin-top: 33px;
+    border-top: solid 1px var(--color-gray);
+    font-weight: 300;
+    padding-top: 24px;
+}
+
+.applyCodeContainer {
+    display: flex;
+    flex-direction: row;
+    padding-right: 44px;
+    margin-top: 40px;
+    align-items: center;
+}
+
+.applyCodeButton {
+    width: 129px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border: 1px solid var(--card-f, #2E4057);
+    background: var(--card-f, #2E4057);
+    padding: 0px;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-whiteText);
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 24px;
+}
+
+.applyCodeContainer input {
+    width: 269px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border: 1px solid #F3F3F3;
+    background: #626E7E;
+    color: var(--color-whiteText) !important;
+    text-align: left;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 9.5px;
+    padding-left: 3px;
+
+}
+
+.backButton {
+    background-color: var(--color-seccondary);
+    margin: 34px auto 0px 0px;
+    padding: 0px !important;
+    width: 130px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-lato);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.backIcon {
+    font-size: 40px;
+}
+
+.applyCodeContainer input ::placeholder {
+    color: var(--color-whiteText) !important;
+    text-align: center !important;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 9.5px;
+}
+
+.totalDueCard {
+    padding-top: 24px !important;
+}
+
+.totalDueCard span {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.checkoutButton {
+    width: 172px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #F3F3F3;
+    background: var(--color-background);
+    padding: 0px !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-blackText);
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: 50px;
+    margin-right: auto;
+}
+
+.applyCodeContainer span {
+    color: var(--color-whiteText);
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: auto;
+}
+
+.inputCard {
+    position: relative;
+}
+
+.checkCodeIcon {
+    font-size: 25px;
+    color: var(--color-whiteText);
+    position: absolute;
+    top: 9px;
+    right: 4px;
+}
+
+.inputError {
+    color: var(--color-whiteText);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 27.3px;
+    margin-top: 16px;
+}
+
+.errorForm {
+    border: solid 1px var(--color-red) !important;
+}
+
+.buyPackLeftCardTitleText {
+    position: relative;
+    padding-right: 30px;
+}
+
+.rialIcon {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 24px;
+}
+
+.selectCountryButton {
+    background-color: var(--color-background);
+    width: 228.93px;
+    height: 48.708px;
+    border-radius: 10px;
+    color: var(--color-primary);
+    font-size: 24.354px;
+    font-weight: 700;
+    margin-top: 58px;
+    padding: 0px !important;
+    align-items: center;
+    justify-content: center;
+}
+
+@media(max-width: 500px) {
+
+    .walletContainer {
+        display: block;
+        overflow-y: hidden;
+    }
+
+    .rialIcon {
+        top: -10px;
+        right: -25px;
+    }
+
+    .inputCard input {
+        width: 148px;
+        height: 28px;
+        flex-shrink: 0;
+        font-size: 10px;
+        font-weight: 400;
+        border-radius: 3px;
+        line-height: 7.198px;
+    }
+
+    .inputCard input::placeholder {
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 7.198px;
+    }
+
+    .applyCodeContainer span {
+        display: none;
+    }
+
+    .checkCodeIcon {
+        font-size: 20px;
+        top: 4px;
+        right: 8px;
+    }
+
+    .applyCodeButton {
+        width: 85.815px;
+        height: 27.94px;
+        font-size: 10px;
+        font-weight: 400;
+        border-radius: 3px !important;
+    }
+
+    .applyCodeContainer {
+        width: fit-content;
+        align-self: center;
+        padding-right: 0px;
+    }
+
+    .checkoutButton {
+        width: 78px;
+        height: 24px;
+        font-size: 10px;
+        font-weight: 600;
+        border-radius: 3px !important;
+    }
+
+    .buyPackageRightCardSubTitle {
+        padding-right: 0px;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 26px;
+        margin-top: 26px;
+    }
+
+    .buyPackageRightCardSubTitle span {
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .arrowIcon {
+        font-size: 14px;
+    }
+
+    .buyPackageRightCardTitle {
+        padding-right: 0px;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 26px;
+    }
+
+    .buyPackageRightCardTitle span {
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .countercontainer {
+        margin-right: auto !important;
+        margin-left: 0px;
+        width: fit-content;
+        margin-top: 19px;
+    }
+
+    .countCard {
+        width: 48px !important;
+        height: 28px;
+        font-size: 12px;
+        font-weight: 400;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .buyPackageRightCard {
+        padding: 0px 0px 50px 0px;
+    }
+
+    .buyPackageLeftCardTitle {
+        width: 172px;
+        height: 149px;
+        font-size: 16px;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 39px;
+        padding: 0px 10px;
+    }
+
+    .buyPackLeftCardTitleText {
+        padding-right: 0px;
+    }
+
+    .buyPackageLeftCardTitle span {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20.8px;
+    }
+
+    .buyPackageCard {
+        flex-direction: column;
+    }
+
+    .select {
+        min-width: 224px;
+        width: fit-content;
+        height: 31px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .selectItem {
+        font-size: 13px;
+        height: 25px !important;
+    }
+
+    .modalCard {
+        min-width: 0px;
+        padding: 48px 36px 48px 26px;
+        min-height: 100vh;
+        height: 100% !important;
+    }
+
+    .closeModalButton {
+        font-size: 30px;
+    }
+
+    .packagesContainer {
+        flex-direction: column;
+    }
+
+    .menuButton {
+        margin-right: auto;
+        margin-left: 15px;
+        font-size: 25px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+
+    .tokenCard {
+        background: linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%);
+        filter: drop-shadow(3px 8px 60px rgba(0, 82, 147, 0.23));
+        box-shadow: none !important;
+        min-height: 20vh;
+        height: fit-content;
+        padding: 12px 37px 20px 34px !important;
+        position: relative;
+        flex-direction: column;
+    }
+
+    .tokenCardMainContainer {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .logo {
+        position: absolute;
+        width: 100px;
+        height: 22px;
+        top: 12px;
+        right: 37px;
+        margin-top: 0px;
+    }
+
+    .backButton {
+        margin: 0px auto 0px 0px;
+        font-size: 10.338px;
+        font-weight: 600;
+        width: 56px;
+        height: 20.677px;
+    }
+
+    .backIcon {
+        font-size: 25px;
+    }
+
+    .firstTitle {
+        margin-top: 36px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .tokens {
+        margin-top: 16px !important;
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 16px;
+    }
+
+    .assessments {
+        margin-top: 16px !important;
+        font-size: 13px;
+        font-weight: 400;
+    }
+
+    .addTokenButton {
+        margin: 0px 0px 0px auto;
+        width: 96px;
+        height: 20.893px !important;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 0px !important;
+        min-height: 20.893px !important;
+        border-radius: 3px !important;
+    }
+
+    .plusIcon {
+        margin-right: 5px;
+        font-size: 10px;
+    }
+
+    .tabsContainer {
+        padding: 0px;
+        margin-bottom: 0px;
+    }
+
+    .tabsContainer div {
+        padding: 12px 0px;
+        font-size: 13px;
+        font-weight: 700;
+        border-bottom-width: 3px;
+    }
+
+    .mainContainer {
+        padding: 0px;
+        flex: 1;
+    }
+
+    .tabaleTitleCard {
+        display: none;
+    }
+
+    .tableContent {
+        padding: 0px 20px 0px 16px;
+        max-height: 70vh !important;
+        overflow-x: hidden;
+        flex: 1;
+    }
+
+    .transactionTable ::-webkit-scrollbar {
+        width: 4px !important;
+        background-color: transparent !important;
+        border-radius: 33px;
+    }
+
+    .transactionTable ::-webkit-scrollbar-thumb {
+        width: 4px !important;
+        background-color: var(--color-gray);
+        border-radius: 33px;
+    }
+
+    .selectCountryContainer {
+        width: 90% !important;
+        min-height: fit-content !important;
+    }
+
+    .selectCountryTitle {
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .selectCountryButton {
+        width: 145.908px;
+        height: 31.044px;
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 25px;
+    }
+
+    .selectCountryCard {
+        padding: 35px 37px !important;
+        height: fit-content !important;
+        min-height: 221px !important;
+    }
+
+}
+
+@media(max-height: 750px) {
+    .tableContent {
+        max-height: 64vh !important;
+    }
 }

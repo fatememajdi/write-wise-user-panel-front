@@ -1,9 +1,21 @@
+.featuresBackground {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    position: relative;
+    padding: 252px 156px 250px 229px;
+    background-color: #F3F3F3 !important;
+}
+
 .section3Container {
     display: flex;
     height: 100%;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+.section3Container button:hover {
+    box-shadow: none !important;
 }
 
 .rightContainer {
@@ -18,37 +30,34 @@
     display: flex;
     flex-direction: column;
     height: fit-content;
-    padding-left: 150px;
+    padding-right: 60px;
 }
 
 .leftTitle {
     color: var(--color-seccondary);
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 138.023%;
+    line-height: 68.4px;
+    font-family: var(--font-lato);
     letter-spacing: -0.16px;
 }
 
 .leftDescription {
     color: var(--color-blackText);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
     line-height: 36px;
     margin-top: 40px;
+    font-family: var(--font-lato);
 }
 
 .featuresButton {
     color: var(--color-red);
     font-style: normal;
-    font-weight: 700;
+    font-weight: 900;
     line-height: 40px;
     font-size: 24px;
     display: flex;
     align-items: center;
     padding: 0px !important;
-    margin-top: 24px;
+    font-family: var(--font-lato);
+    margin-top: 54px;
 }
 
 .featuresItemCard {
@@ -61,15 +70,11 @@
 
 .featuresItemTitle {
     border-radius: 8px;
-    border: 1px solid #FFF;
+    border: 1px solid var(--color-whiteText);
     background: linear-gradient(91deg, #F9F9F9 1.87%, rgba(255, 255, 255, 0.58) 41.79%, #ECEFF2 95.39%);
     padding: 15px 20px 15px 13px;
     color: var(--color-seccondary);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
     line-height: 31.2px;
-    /* 130% */
 }
 
 .featuresItemIcon {
@@ -81,9 +86,23 @@
     padding-right: 20px;
 }
 
+.mobileFeaturesButton {
+    display: none;
+    color: var(--color-red);
+    font-style: normal;
+    font-weight: 900;
+    line-height: 16.17px;
+    font-size: 13px;
+    align-items: center;
+    padding: 0px !important;
+    font-family: var(--font-lato);
+    margin-top: 34px;
+}
+
 @media(max-width: 1680px) {
     .leftContainer {
         padding-left: 117px;
+        padding-right: 50px;
     }
 
     .leftTitle {
@@ -119,51 +138,19 @@
     }
 }
 
-@media(max-width: 1440px) {
-    .leftContainer {
-        padding-left: 117px;
+@media(max-width: 500px) {
+
+
+    .mobileFeaturesButton {
+        display: flex;
     }
 
-    .leftTitle {
-        font-size: 24px;
-    }
-
-    .leftDescription {
-        font-size: 16px;
-        line-height: 22.169px;
-    }
-
-    .featuresItemTitle {
-        font-size: 16px;
-    }
-
-    .featuresItemCard {
-        margin-bottom: 45px;
-    }
-
-    .rightContainer {
-        padding-left: 60px;
-    }
-
-    .featuresItemTitle {
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 133.023%;
+    .featuresBackground {
+        padding: 48px 44px 66px 44px;
     }
 
     .featuresButton {
-        font-size: 16px;
-        font-weight: 700;
-    }
-}
-
-@media(max-width: 992px) {}
-
-@media(max-width: 480px) {
-
-    .featuresButton {
-        font-size: 13px;
-        font-weight: 900;
+        display: none;
     }
 
     .section3Container {
@@ -172,34 +159,45 @@
 
     .rightContainer {
         padding: 0px;
-        margin-top: 40px;
+        margin-top: 24px;
         padding-left: 0px !important;
     }
 
-    .featuresItemIcon{
+    .featuresItemIcon {
         min-width: 60px;
     }
 
     .leftContainer {
-        padding: 0px;
+        padding: 0px !important;
     }
 
     .leftTitle {
-        font-size: 24px;
+        line-height: 19px !important;
+        font-size: 16px !important;
+        font-weight: 800 !important;
+    }
+
+    .leftTitle span {
+        font-weight: 900px !important;
     }
 
     .leftDescription {
-        font-size: 13px;
-        line-height: 26px;
+        margin-top: 8px;
     }
 
     .featuresItemCard {
-        width: 100%; 
+        width: 100%;
+        margin-bottom: 29px;
     }
 
     .featuresItemTitle {
-        font-size: 13px;
+        font-size: 14.841px !important;
+        font-weight: 600 !important;
+        line-height: 133.023% !important;
         padding: 15px 10px 15px 13px;
+        border-radius: 3.71px;
+        border: 0.464px solid #FFF;
+        background: linear-gradient(91deg, #F3F3F3 1.17%, rgba(252, 252, 252, 0.56) 43.1%, #ECF0F4 96.61%);
     }
 
 }

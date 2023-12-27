@@ -1,51 +1,41 @@
 .section6 {
-    min-height: 100vh;
     background: linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%);
-    padding: 180px 180px 70px 100px;
+    padding: 120px 160px 132px 130px;
     display: flex;
     flex-direction: column;
 }
 
 .title {
-    color: #F3F3F3;
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 700;
+    color: var(--color-whiteText);
     line-height: 62.4px;
 }
 
 .description {
-    color: #FFF;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
+    color: var(--color-whiteText);
     line-height: 130%;
-    margin-top: 18px;
+    margin-top: 32px;
+    max-width: 850px;
+}
+
+.subDescription {
+    color: var(--color-whiteText);
+    text-align: center;
+    font-size: 20px;
+    font-family: var(--font-lato);
+    font-weight: 400;
+    line-height: 38.5px;
+    margin-top: 43px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .mainContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-top: 32px;
-}
-
-.select {
-    width: 298px;
-    height: 42px;
-    display: flex;
-    margin-left: auto;
-    border-radius: 8px;
-    border: 1px solid #626E7E;
-    margin-top: 60px;
-}
-
-.selectItem {
-    color: #F3F3F3;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    margin-top: 23px;
 }
 
 .loading {
@@ -72,7 +62,7 @@
 .mobileArrowIcon {
     display: flex;
     font-size: 30px;
-    color: #172E4A;
+    color: var(--color-primary);
 }
 
 .mobileCarousel {
@@ -84,40 +74,15 @@
     display: none;
 }
 
-@media(max-width: 1680px) {
-    .section6 {
-        padding: 150px 82px 70px 90px;
-    }
-
-    .title {
-        font-size: 32px;
-        font-weight: 700;
-        line-height: 76.806px;
-        margin-left: 80px;
-    }
-
-    .description {
-        margin-top: 16px;
-        font-size: 20px;
-        font-weight: 400;
-        margin-left: 80px;
-        line-height: 26px;
-    }
-
-    .select {
-        width: 222.678px;
-        height: 31.384px;
-    }
-
-
-    .selectItem {
-        font-size: 16px;
-    }
+.flagImage{
+    height: 20px;
+    width: 40px;
+    margin-left: 5px;
 }
 
-@media(max-width: 1440px) {
+@media(max-width: 1680px) {
     .section6 {
-        padding: 150px 82px 70px 90px;
+        padding: 110px 82px 70px 90px;
     }
 
     .title {
@@ -132,16 +97,8 @@
         font-size: 20px;
         font-weight: 400;
         margin-left: 80px;
+        max-width: 700px;
         line-height: 26px;
-    }
-
-    .select {
-        width: 222.678px;
-        height: 31.384px;
-    }
-
-    .selectItem {
-        font-size: 16px;
     }
 
 }
@@ -152,12 +109,15 @@
         min-height: fit-content;
     }
 
+    .flagImage{
+        width: 30px;
+        height: 15px;
+    }
+
     .title {
-        color: #F3F3F3;
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 20.8px;
         margin-left: 43px;
+        line-height: 24.3px !important;
+        margin-right: 60px; 
     }
 
     .description {
@@ -165,16 +125,11 @@
         font-weight: 400;
         line-height: 130%;
         margin-left: 43px;
-        margin-top: 32px;
+        margin-top: 27px;
+        max-width: 100%;
     }
 
-    .select {
-        margin-top: 40px;
-        margin-right: 43px;
-        width: 200px;
-    }
-
-    .selectItem {
+    .subDescription{
         font-size: 13px;
     }
 

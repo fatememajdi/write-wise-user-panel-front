@@ -12,38 +12,38 @@ type _props = {
 };
 
 const GeneralTask1 = [
-    { title: 'Random', value: 'Random' },
+    { title: 'Random', value: '' },
     { title: 'Informal', value: 'Informal' },
     { title: 'Semi-formal', value: 'Semi-formal' },
     { title: 'Formal', value: 'Formal' }
 ];
 
 const Task2 = [
-    { title: 'Random', value: 'Random' },
+    { title: 'Random', value: '' },
     { title: 'Opinion', value: 'Opinion' },
     { title: 'Discussion', value: 'Discussion' },
-    { title: 'Advantage/disadvantage', value: 'Advantage/disadvantage' },
-    { title: 'Two-part/mixed', value: 'Two-part/mixed' },
     { title: 'Problem solution', value: 'Problem solution' },
-    { title: 'Double question', value: 'Double question' }
+    { title: 'Advantage/disadvantage', value: 'Advantage/disadvantage' },
+    { title: 'Two-part/mixed', value: 'Mixed' }
 ];
 
 const AcademicTask1 = [
-    { title: 'Random', value: 'Random' },
+    { title: 'Random', value: '' },
     { title: 'Bar Chart', value: 'Bar Chart' },
     { title: 'Line Graph', value: 'Line Graph' },
-    { title: 'Table', value: 'Table' },
     { title: 'Pie Chart', value: 'Pie Chart' },
-    { title: 'Process Diagram', value: 'Process Diagram' },
-    { title: 'Map', value: 'Map' },
-    { title: 'Multiple Graphs', value: 'Multiple Graphs' }
+    { title: 'Table', value: 'Table' },
+    { title: 'Diagram', value: 'Diagram' },
 ];
 
 const SubTypeSelect: React.FC<_props> = ({ defaultValue, setFieldValue, type }) => {
     return <Select
         renderValue={(selected) => {
             if (selected.length === 0) {
-                return <em>Sub-type</em>;
+                if (defaultValue)
+                    return <em>{defaultValue}</em>;
+                else
+                    return <em>Sub-type</em>;
             }
 
             return selected;

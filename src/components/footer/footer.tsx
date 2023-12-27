@@ -1,19 +1,22 @@
 'use client';
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 //----------------------------------------------------------------styles 
 import styles from './footer.module.css';
 
 //----------------------------------------------------------------icons
-import { BiLogoLinkedinSquare } from 'react-icons/bi';
-import { IoLogoFacebook } from 'react-icons/io';
+import { IoLogoFacebook, IoLogoLinkedin } from 'react-icons/io';
 import { AiFillInstagram } from 'react-icons/ai';
+import { FaRegCopyright } from 'react-icons/fa';
 
 //----------------------------------------------------------------social media items
-const socialMediaItems = [
+const SocialMediaItems = [
     {
-        icon: <BiLogoLinkedinSquare />,
+        icon: <IoLogoLinkedin />,
         link: 'https://www.linkedin.com'
     },
     {
@@ -26,20 +29,112 @@ const socialMediaItems = [
     }
 ];
 
-const Footer: React.FC = () => <div className={'col-lg-12 ' + styles.footerContainer}>
-    <div className={styles.logo}>WriteWiseAI</div>
-    <div className={styles.firstLineItems}>
-        <Link className={styles.link} href={'/'}>Terms of Service</Link>
-        <Link className={styles.link} href={'/'}>about us</Link>
-    </div>
+const FooterLinks = [
+    {
+        title: 'Terms of Service',
+        route: '/termsOfService'
+    },
+    {
+        title: 'Privacy Policy ',
+        route: '/privacyPolicy'
+    },
+    {
+        title: 'Cookie Policy',
+        route: '/cookies'
+    },
+    {
+        title: 'Disclaimers',
+        route: '/disclaimers'
+    }
+];
 
-    <div className={styles.secondLineItems}>
-        <Link className={styles.link} href={'/'}>Privacy Policy</Link>
-        {
-            socialMediaItems.map((item, index) => <a className={styles.socialIcon} href={item.link} key={index}>{item.icon}</a>)
-        }
-    </div>
+const LandingItems = [
+    {
+        title: 'Home',
+        route: '#hero-section'
+    },
+    {
+        title: 'Features',
+        route: '#features'
+    },
+    {
+        title: 'How it works',
+        route: '#how-it-works'
+    },
+    {
+        title: 'Pricing',
+        route: '#pricing'
+    },
+    {
+        title: 'Signup',
+        route: '/singIn'
+    }
+];
 
-</div>;
+const Footer: React.FC = () => {
+
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        e.preventDefault();
+        const targetId = e.currentTarget.href.replace(/.*\#/, "");
+        const elem = document.getElementById(targetId);
+        elem?.scrollIntoView({
+            behavior: "smooth",
+        });
+    };
+
+    const pathname = usePathname();
+    const router = useRouter();
+
+
+    React.useEffect(() => {
+        if (typeof document != 'undefined') {
+            if (window.location.hash) {
+                let hash = window.location.hash;
+                if (hash.length) {
+                    router.push(hash);
+                }
+            }
+        };
+    }, []);
+
+    return <footer className={'col-12 ' + styles.footer}>
+
+        <div className={styles.leftCard}>
+            <Image
+                className={styles.logo}
+                src={"/logoIcon2.svg"}
+                alt="Logo"
+                width="0"
+                height="0"
+                sizes="100vw"
+                loading="eager"
+                priority
+            />
+
+            <div className={styles.linksContainer}>
+                {
+                    FooterLinks.map((item, index) => <Link key={index} href={item.route}>{item.title}</Link>)
+                }
+            </div>
+
+            <div className={styles.name}><FaRegCopyright fontSize={25} style={{ marginRight: 7 }} /> WriteWiseAI 2023</div>
+
+        </div>
+
+        <div className={styles.rightCard}>
+            {
+                LandingItems.map((item, index) => <Link onClick={() => { if (pathname === '/') handleScroll; else router.push('/' + item.route); handleScroll }}
+                    key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>)
+            }
+            <div className={styles.socialMediaContainer}>
+                {
+                    SocialMediaItems.map((item, index) => <a key={index} href={item.link}>{item.icon}</a>)
+                }
+            </div>
+            <div className={styles.mobileName}><FaRegCopyright className={styles.copyrightIcon} /> WriteWiseAI 2023</div>
+        </div>
+
+    </footer>
+};
 
 export default Footer;

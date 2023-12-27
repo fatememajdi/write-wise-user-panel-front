@@ -1,34 +1,41 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { lazy } from "react";
+import React from "react";
+import dynamic from "next/dynamic";
 import { Formik } from 'formik';
-import client from '@/config/applloAuthorizedClient';
-import { Modal } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import Image from "next/image";
-import { AnimatePresence, motion } from 'framer-motion';
+import ReactLoading from 'react-loading';
+import toast from "react-hot-toast";
+import * as Yup from 'yup';
+// import { Pixelify } from "react-pixelify";
+import { useMutation } from "@apollo/client";
+import { useRouter } from "next/navigation";
+import { useMediaQuery } from 'react-responsive';
+import { AnimatePresence, motion } from "framer-motion";
+import { Popover } from 'antd';
 
 //--------------------------------------styles
 import styles from '../../../../styles/task.module.css';
 import '../../../../styles/customMuiStyles.css';
 
 //--------------------------------------components
-import {
-    ADD_ESSAY, DELETE_ESSAY, GET_RANDOM_WRITING, GET_RANDOM_WRITING_AC_TASK, SELECT_TOPIC
-} from "@/config/graphql";
-import Loading from "@/components/loading/loading";
+import { ADD_ESSAY, SELECT_TOPIC } from "@/config/graphql";
 import EssayCard from "@/components/essayCard/essayCard";
-const Input = lazy(() => import('@/components/input/input'));
-const SelectComponents = lazy(() => import('@/components/customSelect/customSelect'));
-import { CountWords } from "@/components/Untitled";
-const Text = lazy(() => import("@/components/text/text"));
-const SubTypeSelect = lazy(() => import("@/components/subTypeSelect/subTypeSelect"));
-const Writer = lazy(() => import("@/components/writer/writer"));
-const EssayProcessBar = lazy(() => import("@/components/essayProcessBar/essayProcessBar"));
+const Input = dynamic(() => import('@/components/input/input'));
+const Loading = dynamic(() => import('@/components/loading/loading'));
+const SelectComponents = dynamic(() => import('@/components/customSelect/customSelect'));
+import { CheckCountWords, CountWords } from "@/components/Untitled";
+const Text = dynamic(() => import("@/components/text/text"));
+const Modal = dynamic(() => import("@/components/modal/modal"));
+const SubTypeSelect = dynamic(() => import("@/components/subTypeSelect/subTypeSelect"));
+const Writer = dynamic(() => import("@/components/writer/writer"));
+import { DeleteEssaies, GenerateNewTopic } from "@/hooks/actions";
+const EssayProcessBar = dynamic(() => import("@/components/essayProcessBar/essayProcessBar"));
 
 //--------------------------------------icons
 import { Reload } from "@/../public";
 import { IoMdImage } from 'react-icons/io';
-import { MdEdit } from 'react-icons/md';
+import { MdEdit, MdCheck } from 'react-icons/md';
 
 //--------------------------------------types
 import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../types/essay';
@@ -55,11 +62,17 @@ type _props = {
 const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
     essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
     let DivRef2: any;
-    if (typeof document !== 'undefined')
+    let DivRef3: any;
+    if (typeof document !== 'undefined') {
         DivRef2 = document.getElementById('scrollDiv');
+        DivRef3 = document.getElementById('essayScrollDiv');
+    }
     const [generateWriting, changeGenerateWriting] = React.useState<boolean>(false);
     const [essayTime, changeEssayTime] = React.useState<number>(0);
     const [changeInput, setChangeInput] = React.useState<boolean>(false);
+    const [topicLoading, setTopicLoading] = React.useState<boolean>(false);
+    const [addEssayLoading, setAddEssayLoading] = React.useState<boolean>(false);
+    const [typed, setTyped] = React.useState<boolean>(false);
     const [endTyping, changeEndTyping] = React.useState<boolean>(topic ? true : false);
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [essayLoading, changeEssayLoading] = React.useState<boolean>(false);
@@ -67,56 +80,40 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [editedGeneratedTopic, changeEditedGeneratedTopic] = React.useState<boolean>(false);
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
-    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-    const [modalContent, changeModalContent] = React.useState<string>('Tr again!');
-    const [modalTitle, changeModalTitle] = React.useState<string>('Add essay error');
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
     const [showImage, changeShowImage] = React.useState<boolean>(false);
-    const [modalImage, changeModalImage] = React.useState<string>();
+    const [isBig, setIsBig] = React.useState<boolean>(false);
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+    const router = useRouter();
 
-    const showModal = () => setIsModalOpen(true);
-    const handleCancel = () => setIsModalOpen(false);
+    //-----------------------------------------------------------------graphQl functions
+    const [selectTopic, { error }] = useMutation(SELECT_TOPIC);
+    const [addNewEssay] = useMutation(ADD_ESSAY);
+
     const handleCancelImageModal = () => changeShowImage(false);
-
-    async function handleSelectImage(url: string) {
-        await changeModalImage(url);
-        changeShowImage(true);
-    };
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
         changeGenerateWritingTopicLoading(true);
-        await client.query({
-            query: type === 'academic_task_1' ? GET_RANDOM_WRITING_AC_TASK : GET_RANDOM_WRITING,
-            fetchPolicy: "no-cache",
-            variables: {
-                type: type,
-                questionType: subType
-            }
-        }).then(async (res) => {
-            console.log(res);
-            await changeGeneratedTopic({
-                id: res.data.getRandomWriting.id, body: res.data.getRandomWriting.body,
-                type: res.data.getRandomWriting.type, subType: res.data.getRandomWriting.questionType,
-                visuals: res.data.getRandomWriting.visuals
+        let res = await GenerateNewTopic(type, subType);
+        if (res) {
+            changeGeneratedTopic({
+                id: res.id, body: res.body,
+                type: res.type, subType: res.questionType,
+                visuals: res.visuals
             });
-            setFieldValue('topic', res.data.getRandomWriting.body);
-            setFieldValue('subType', res.data.getRandomWriting.questionType);
-            ChangeTempTopic(essay, res.data.getRandomWriting.body, res.data.getRandomWriting.id);
-            changeGenerateWritingTopicLoading(false);
-        }).catch(async (err) => {
-            await changeModalTitle('Generate topic error');
-            await changeModalContent(JSON.stringify(err.message));
-            changeGenerateWritingTopicLoading(false);
-            showModal();
-        });
+            setFieldValue('topic', res.body);
+            setFieldValue('subType', res.questionType);
+            ChangeTempTopic(essay, res.body, res.id);
+        }
+        changeGenerateWritingTopicLoading(false);
     };
 
     //------------------------------------------------------------------select essay topic
     async function SelectTopic(topic: string): Promise<string | null> {
+        setTopicLoading(true);
         let id: any;
-        await client.mutate({
-            mutation: SELECT_TOPIC,
+        await selectTopic({
             variables: {
                 type: type,
                 id: !editedGeneratedTopic && generatedTopic?.body === topic || generatedTopic?.body === topic ? generatedTopic?.id : null,
@@ -131,20 +128,24 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 body: res.data.selectTopic.topic,
                 type: res.data.selectTopic.type
             });
-        }).catch(async (err) => {
-            await changeModalTitle('Select topic error');
-            await changeModalContent(JSON.stringify(err.message));
-            changeLoading(false);
-            showModal();
-            id = null;
+            setAddEssayLoading(true);
+            DivRef3.scrollIntoView({ behavior: "smooth" });
+        }).catch((err: typeof error) => {
+            if (err.graphQLErrors[0].status === 402) {
+                changeShowImage(true);
+                id = null;
+            } else {
+                toast.error(err.graphQLErrors[0].message);
+                changeLoading(false);
+                id = null;
+            }
         });
+        setTopicLoading(false);
         return id;
     };
 
     //-------------------------------------------------------------------add new essay
-    async function AddNewEssay(Topic: string, body: string) {
-        changeEssayLoading(true);
-        changeLoading(true);
+    async function AddNewEssay(Topic: string, body: string, resetForm: any) {
         setChangeInput(false);
         let id: any;
 
@@ -156,22 +157,22 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
         await changeLoading(false);
 
         if (id != null) {
-            changeTabBarLoc(true);
-            setTimeout(() => {
-                changeEndAnimation(true);
-            }, 1000);
-            setTimeout(() => {
-                DivRef2.scrollIntoView({ behavior: "smooth" });
-            }, 1400);
-
-            await client.mutate({
-                mutation: ADD_ESSAY,
+            await setAddEssayLoading(true);
+            await addNewEssay({
                 variables: {
                     id: id as string,
                     body: body,
                     durationMillisecond: Date.now() - essayTime
                 }
             }).then(async (res) => {
+                changeTabBarLoc(true);
+                setTimeout(() => {
+                    changeEndAnimation(true);
+                }, 1000);
+                setTimeout(() => {
+                    DivRef2.scrollIntoView({ behavior: "smooth" });
+                }, 1400);
+
                 let lastTemp = await localStorage.getItem(type === 'general_task_1' ? 'lastTempEssay' : type === 'general_task_2' ? 'lastTempEssay2' : 'lastTempEssay3');
                 let t = await localStorage.getItem('tempsEssayList');
                 let tempsLiset: SelectedTopicTempEssay[] = [];
@@ -185,27 +186,22 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                     await localStorage.removeItem(type === 'general_task_1' ? 'tempEssay' : type === 'general_task_2' ? 'tempEssay2' : 'tempEssay3');
                 };
 
-                await setEssaies([{
-                    id: res.data.addNewEssay.id,
-                    essay: res.data.addNewEssay.essay,
-                    date: res.data.addNewEssay.date
-
-                }, ...essaies]);
+                await setEssaies([res.data.addNewEssay, ...essaies]);
                 changeEssayLoading(false);
-                await GetScores([{
-                    id: res.data.addNewEssay.id,
-                    essay: res.data.addNewEssay.essay,
-                    date: res.data.addNewEssay.date
-
-                }, ...essaies]);
+                setTimeout(async () => {
+                    await GetScores([res.data.addNewEssay, ...essaies]);
+                }, 3000);
                 changeCcurrentId(id);
-
-            }).catch(async (err) => {
-                await changeModalTitle('Add essay error');
-                console.log('add essay error : ', err);
-                await changeModalContent(JSON.stringify(err.message));
+                setAddEssayLoading(false);
+                resetForm();
+            }).catch((err: typeof error) => {
+                if (err.graphQLErrors[0].status === 402) {
+                    changeShowImage(true);
+                } else {
+                    toast.error(err.graphQLErrors[0].message);
+                }
                 changeLoading(false);
-                showModal();
+                setAddEssayLoading(false);
             })
         };
     };
@@ -213,20 +209,10 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     //-------------------------------------------------------------------delete essay
     async function DeleteEssay(id: string) {
         changeDeleteLoading(true);
-        await client.mutate({
-            mutation: DELETE_ESSAY,
-            variables: {
-                id: id
-            }
-        }).then(async (res) => {
-            changeDeleteLoading(false);
+        if (await DeleteEssaies(id)) {
             setEssaies(essaies.filter(item => item.id !== id));
-        }).catch(async (err) => {
-            await changeModalTitle('Delete essay error');
-            await changeModalContent(JSON.stringify(err.message));
-            changeDeleteLoading(false);
-            showModal();
-        });
+        }
+        changeDeleteLoading(false);
     };
 
     //-------------------------------------------------------------------temp
@@ -305,11 +291,46 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
         }
     };
 
+    async function OnEditEssay() {
+        setChangeInput(true);
+        changeEssayTime(Date.now());
+    };
+
+    function handleGenerateTopic() {
+        changeGeneratedTopic(null);
+        setChangeInput(false);
+        changeEndTyping(false);
+        changeEditedGeneratedTopic(false);
+        changeGenerateWriting(true);
+    };
+
+    function handleEditTopic() {
+        changeEditedGeneratedTopic(true);
+        changeEndTyping(false);
+        changeGenerateWriting(false);
+        setChangeInput(false);
+        changeGeneratedTopic(null);
+    };
+
+    function handleChangeTopicInput() {
+        changeEndTyping(false);
+        setChangeInput(false);
+        setTyped(true);
+    };
+
     React.useEffect(() => {
         ChackTopic();
     }, []);
 
     const nameregex = /^[ A-Za-z ][ A-Za-z0-9  `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n]*$/;
+
+    const EssayValidationSchema = Yup.object().shape({
+        body: Yup
+            .string()
+            .required('Body is required!'),
+        topic: Yup
+            .string(),
+    });
 
     return <Formik
         initialValues={{
@@ -317,11 +338,11 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
             body: essay ? essay : '',
             subType: ''
         }}
-        // validationSchema={EssayValidationSchema}
         enableReinitialize
+        validationSchema={EssayValidationSchema}
         onSubmit={async (values, { resetForm }) => {
-            await AddNewEssay(values.topic, values.body);
-            resetForm();
+            await AddNewEssay(values.topic, values.body, resetForm);
+            // resetForm();
         }}>{({
             values,
             errors,
@@ -351,17 +372,19 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                             ]} selectedItem={0} className={styles.topSelect} />
 
                             <div className={styles.wriritngTitle}>
-                                {type === 'general_task_1' ? 'Gen Task 1 Topic' : type === 'general_task_2' ? 'Gen Task 2 Topic' : ' Ac Task 1'}
-                                {topic && topic.subType ? `(${topic.subType})`
-                                    : generatedTopic ? `(${generatedTopic.subType})`
-                                        : values.subType && `(${values.subType})`}
+                                {type === 'general_task_1' ? 'IELTS GT Task 1' : type === 'general_task_2' ? 'IELTS Task 2' : 'IELTS AC Task 1'}
                             </div>
 
                             <div className={styles.writingSecondTitle}>
                                 You should spend about {type === 'general_task_2' ? 40 : 20} minutes on this task.
                             </div>
+                            {
+                                type !== 'academic_task_1' &&
+                                <div className={styles.writingInputTitle}>
+                                    {'Write about the following topic:'}
+                                </div>
+                            }
 
-                            <div className={styles.writingInputTitle}>Write about the following topic:</div>
                             {
                                 topic && essay === '' ?
                                     < div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
@@ -369,170 +392,181 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                         < div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
                                         : currentId != null ?
                                             <div className={styles.selectedTopcCard}><Text text={values.topic} /></div>
-                                            : generateWritingTopicLoading && type !== 'academic_task_1' ?
+                                            : generateWritingTopicLoading ?
                                                 <Loading style={{ height: 250, minHeight: 0 }} />
-                                                : type === 'academic_task_1' ?
-                                                    <div className={styles.academicTaskTopic}>
-                                                        {
-                                                            generateWriting && !generateWritingTopicLoading &&
+                                                : <div className={styles.topicInputContainer}>
+                                                    {
+                                                        generateWriting && !editedGeneratedTopic ?
                                                             <Writer
                                                                 changeEndTyping={changeEndTyping}
                                                                 type={type}
                                                                 topic={values.topic}
                                                             />
-                                                        }
-                                                        <AnimatePresence>
-                                                            <motion.div
-                                                                animate={{ left: generateWriting ? '70%' : 0 }}
-                                                                transition={{ type: "spring", duration: 3 }}
-                                                                className={styles.academicTaskbuttonContainer}>
-                                                                <SubTypeSelect
-                                                                    defaultValue={values.subType}
-                                                                    setFieldValue={setFieldValue}
-                                                                    type={type}
-                                                                />
+                                                            :
+                                                            <Input
+                                                                disable={type === 'academic_task_1'}
+                                                                style={{ width: '70%', marginTop: 0 }}
+                                                                className={styles.topicInput}
+                                                                onChange={(e: any) => {
+                                                                    handleChangeTopicInput();
+                                                                    handleChange(e);
+                                                                    ChangeTempTopic(values.body, e.target.value);
 
-                                                                <button
-                                                                    aria-label="edit tipic"
-                                                                    onClick={async () => {
-                                                                        setChangeInput(false);
-                                                                        changeEndTyping(false);
-                                                                        changeEditedGeneratedTopic(false);
-                                                                        changeGenerateWriting(true);
-                                                                        await GenerateTopic(setFieldValue, values.body, values.subType);
-                                                                    }}
-                                                                    type="button" className={styles.generateButton}>
-                                                                    <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
-                                                                    {
-                                                                        generatedTopic ? 'Regenereate' :
-                                                                            'Generate'
-                                                                    }
-                                                                </button>
-                                                            </motion.div>
-                                                        </AnimatePresence>
-                                                    </div>
-                                                    : <div className={styles.topicInputContainer}>
-                                                        {
-                                                            generateWriting && !editedGeneratedTopic ?
-                                                                <Writer
-                                                                    changeEndTyping={changeEndTyping}
-                                                                    type={type}
-                                                                    topic={values.topic}
-                                                                />
-                                                                :
-                                                                <Input
-                                                                    style={{ width: '70%' }}
-                                                                    className={type === 'general_task_1' ? styles.topicInputsecond + ' ' + styles.topicInput
-                                                                        : type === 'general_task_2' ? styles.topicInputfirst + ' ' + styles.topicInput
-                                                                            : styles.topicInputthird + ' ' + styles.topicInput}
-                                                                    onChange={(e: any) => {
-                                                                        changeEndTyping(true);
-                                                                        handleChange(e);
-                                                                        ChangeTempTopic(values.body, e.target.value);
-                                                                    }}
-                                                                    placeHolder="Type your topic here..."
-                                                                    secondError
-                                                                    textarea
-                                                                    textarea_name='topic'
-                                                                    textarea_value={values.topic}
-                                                                    textarea_error={errors.topic && touched.topic && errors.topic}
-                                                                />
-                                                        }
-                                                        <div className={styles.topicButtonsContainer}>
-
-                                                            <SubTypeSelect
-                                                                defaultValue={values.subType}
-                                                                setFieldValue={setFieldValue}
-                                                                type={type}
+                                                                }}
+                                                                placeHolder={type === "academic_task_1" ? "Generate a topic..." : "Type/paste your topic here, or generate a topic."}
+                                                                secondError
+                                                                textarea
+                                                                textarea_name='topic'
+                                                                textarea_value={values.topic}
+                                                                textarea_error={errors.topic && touched.topic && errors.topic}
                                                             />
+                                                    }
+                                                    <div className={styles.topicButtonsContainer}>
 
-                                                            <button
-                                                                aria-label="edit tipic"
-                                                                onClick={async () => {
-                                                                    setChangeInput(false);
-                                                                    changeEndTyping(false);
-                                                                    changeEditedGeneratedTopic(false);
-                                                                    changeGenerateWriting(true);
-                                                                    await GenerateTopic(setFieldValue, values.body, values.subType);
-                                                                }}
-                                                                type="button" className={styles.generateButton}>
-                                                                <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
-                                                                {
-                                                                    generatedTopic ? 'Regenereate' :
-                                                                        'Generate'
-                                                                }
-                                                            </button>
-                                                        </div>
-
-                                                        {
-                                                            generateWriting &&
-                                                            <button
-                                                                aria-label="edit topic"
-                                                                type="button"
-                                                                onClick={() => {
-                                                                    changeEditedGeneratedTopic(true);
-                                                                    setFieldValue('topic', '');
-                                                                }}
-                                                                className={styles.editButton}>
-                                                                <div><MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} /></div>
-                                                            </button>
-                                                        }
-
-                                                    </div>}
-                            {
-                                type === 'academic_task_1' &&
-                                <div className={styles.imagesContainer + ' col-12'}>
-
-                                    {
-                                        topic && topic.visuals && topic.visuals?.length > 0 ?
-                                            topic.visuals.map((item, index) =>
-                                                <div
-                                                    key={index}
-                                                    onClick={() => handleSelectImage(item.url)}
-                                                    className={styles.imageCard}>
-                                                    <Image
-                                                        src={item.url}
-                                                        alt="academic task chart"
-                                                        height='428'
-                                                        width='600'
-                                                        loading="eager"
-                                                        priority
-                                                    />
-                                                </div>)
-                                            : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
-                                                generatedTopic.visuals.map((item, index) =>
-                                                    <div
-                                                        key={index}
-                                                        onClick={() => handleSelectImage(item.url)}
-                                                        className={styles.imageCard}>
-                                                        <Image
-                                                            key={index}
-                                                            src={item.url}
-                                                            alt="academic task chart"
-                                                            height='428'
-                                                            width='600'
-                                                            loading="eager"
-                                                            priority
+                                                        <SubTypeSelect
+                                                            defaultValue={values.subType !== '' ? values.subType : generatedTopic ? generatedTopic.subType : ''}
+                                                            setFieldValue={setFieldValue}
+                                                            type={type}
                                                         />
-                                                    </div>)
-                                                : <div className={styles.emptyImageCard}>
-                                                    <IoMdImage fontSize={70} />
-                                                </div>
-                                    }
-                                </div>
-                            }
+
+                                                        <button
+                                                            aria-label="generate tipic"
+                                                            onClick={async () => {
+                                                                handleGenerateTopic();
+                                                                await GenerateTopic(setFieldValue, values.body, values.subType);
+                                                            }}
+                                                            type="button"
+                                                            className={styles.generateButton}>
+                                                            <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
+                                                            {
+                                                                generatedTopic ? 'Regenereate' :
+                                                                    'Generate'
+                                                            }
+                                                        </button>
+                                                    </div>
+
+                                                    {type !== 'academic_task_1' &&
+                                                        generateWriting ?
+                                                        <button
+                                                            aria-label="edit topic"
+                                                            type="button"
+                                                            onClick={() => {
+                                                                handleEditTopic();
+                                                                setFieldValue('topic', '');
+                                                            }}
+                                                            className={styles.editButton}>
+                                                            <div>
+                                                                {
+                                                                    topicLoading ?
+                                                                        <ReactLoading type={'spin'} color={'#2E4057'} height={28} width={28} /> :
+                                                                        <MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} />}</div>
+                                                        </button>
+                                                        : typed &&
+                                                        <button
+                                                            aria-label="edit topic"
+                                                            type="button"
+                                                            onClick={async () => {
+                                                                changeCcurrentId(await SelectTopic(values.topic));
+                                                            }}
+                                                            style={generatedTopic ? { backgroundColor: '#2E4057' } : { backgroundColor: '#d5d7db' }}
+                                                            className={styles.checkButton}>
+                                                            <Popover placement="topLeft" content={'Please check your topic'} open={!endTyping}>
+                                                                {
+                                                                    topicLoading ?
+                                                                        <ReactLoading type={'spin'} color={'#2E4057'} height={isMobile ? 20 : 28} width={isMobile ? 20 : 28} />
+                                                                        : generatedTopic ?
+                                                                            <MdCheck className={styles.editIconResponsive} color="#d5d7db" style={{ fontSize: 40 }} />
+                                                                            :
+                                                                            <MdCheck className={styles.editIconResponsive} color="#2E4057" style={{ fontSize: 40 }} />
+                                                                }
+                                                            </Popover>
+                                                        </button>
+                                                    }
+
+                                                </div>}
+
+                            <div className={styles.writingInputTitle}>
+                                {
+                                    type === 'academic_task_1' ?
+                                        'Summarise the information by selecting and reporting the main features, and make comparisons where relevant.' :
+                                        type === 'general_task_2' &&
+                                        'Give reasons for your answer and include any relevant examples from your own knowledge or experience.'
+                                }
+                            </div>
 
                             <div className={styles.writingInputTitle}>Write at least {type === 'general_task_2' ? 250 : 150} words.
                                 {
-                                    changeInput &&
+                                    changeInput && type !== 'academic_task_1' &&
                                     <div className={styles.wordsCount}>
                                         {CountWords(values.body, type === 'general_task_2' ? 250 : 150)}
                                     </div>
                                 }
                             </div>
+                            <AnimatePresence>
+                                {
+                                    type === 'academic_task_1' &&
+                                    <div className={styles.imagesContainer + ' col-12'}>
 
-                            <div className={styles.bodyInputContainer}>
+                                        {
+                                            topic && topic.visuals && topic.visuals?.length > 0 ?
+                                                topic.visuals.map((item, index) =>
+                                                    <motion.div
+                                                        style={{ opacity: 0 }}
+                                                        key={index}
+                                                        onClick={() => setIsBig(!isBig)}
+                                                        animate={isBig ? { width: 1200, height: 'fit-content', opacity: 1 } : { width: 600, height: 'fit-content', opacity: 1 }}
+                                                        transition={{ type: 'spring', duration: 1 }}
+                                                    >
+                                                        <Image
+                                                            src={item.url}
+                                                            alt="academic task topic image"
+                                                            width="0"
+                                                            height="0"
+                                                            sizes="100vw"
+                                                            loading="eager"
+                                                            priority
+                                                        />
+                                                    </motion.div>
+                                                )
+                                                : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
+                                                    generatedTopic.visuals.map((item, index) =>
+                                                        <motion.div
+                                                            style={{ opacity: 0 }}
+                                                            key={index}
+                                                            onClick={() => setIsBig(!isBig)}
+                                                            animate={isBig ? { width: 1000, height: 'fit-content', opacity: 1 } : { width: 600, height: 'fit-content', opacity: 1 }}
+                                                            transition={{ type: 'spring', duration: 1 }}
+                                                        >
+                                                            <Image
+                                                                src={item.url}
+                                                                alt="academic task topic image"
+                                                                width="0"
+                                                                height="0"
+                                                                sizes="100vw"
+                                                                loading="eager"
+                                                                priority
+                                                            />
+                                                        </motion.div>
+                                                    )
+                                                    : <div className={styles.emptyImageCard}>
+                                                        <IoMdImage fontSize={70} />
+                                                    </div>
+                                        }
+                                    </div>
+                                }
+                            </AnimatePresence>
+                            {
+                                changeInput && type === 'academic_task_1' &&
+                                <div style={{ marginLeft: 'auto', width: 'fit-content', paddingRight: 45 }} className={styles.wordsCount}>
+                                    {CountWords(values.body, 150)}
+                                </div>
+                            }
+
+                            <div
+                                onClick={() => console.log('hi')}
+                                className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
                                 <Input
+                                    style={errors.body ? { borderColoe: 'red' } : {}}
                                     disable={!endTyping}
                                     className={styles.topicInput + ' ' + styles.essayInput}
                                     onChange={(e: any) => {
@@ -544,73 +578,82 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                             handleChange(e);
                                             CreateTempEssay(e.target.value, values.topic);
                                         } else {
-                                            changeModalTitle('language error');
-                                            changeModalContent('only english letters');
-                                            showModal();
+                                            toast.error('only english letters!');
                                         }
                                     }}
-                                    placeHolder={'Dear...'}
+                                    placeHolder={type === 'general_task_1' ? 'Type or paste your letter/email here...'
+                                        : type === 'general_task_2' ? 'Type your essay here...'
+                                            : 'Type/paste your report here...'}
                                     secondError
                                     textarea
                                     textarea_name='body'
                                     textarea_value={values.body}
                                     textarea_error={errors.body && touched.body && errors.body}
-                                />
-                                <EssayProcessBar type={type} changeInput={changeInput} />
+                                >
+                                    <EssayProcessBar type={type} changeInput={changeInput} loading={addEssayLoading}
+                                        disable={!endTyping || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249)}
+                                        error={errors.body && touched.body || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249) ? true : false} />
+                                    {
+                                        !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249) &&
+                                        <div className={styles.errorForm}>Text is too long!</div>
+                                    }
+                                </Input>
+
                             </div>
 
 
                         </div>
                 }
-                <div
-                    id="scrollDiv"
-                >
+                <div id="scrollDiv">
                     {
                         deleteLoading ?
-                            <Loading style={{ height: 50, minHeight: 0 }} />
+                            <Loading style={{ height: 100, minHeight: 0 }} />
                             : endAnimation &&
                             <InfiniteScroll
                                 pageStart={0}
                                 loadMore={() => GetUserEssaies(currentId)}
                                 hasMore={MoreEssaies}
-                                loader={<Loading style={{ height: 50, minHeight: 0 }} />}
+                                loader={<Loading style={{ height: 100, minHeight: 0 }} key={1} />}
                                 useWindow={false}
                                 key={0}
                             >
                                 {
-                                    essaies.map((essay) => <EssayCard key={essay.id} essay={essay} setFieldValue={setFieldValue}
-                                        divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies} topic={topic ? topic.body : values.topic} />)
+                                    essaies.map((essay) =>
+                                        <EssayCard type={type} key={essay.id} essay={essay} setFieldValue={setFieldValue} GetScores={GetScores} OnEditEssay={OnEditEssay}
+                                            divRef={divRef} handleDelete={DeleteEssay} loading={essayLoading} setEssaies={setEssaies} essaies={essaies}
+                                            topic={topic ? topic.body : values.topic} />)
                                 }
                             </InfiniteScroll>
                     }
                 </div>
 
-                <Modal
-                    footer={null}
-                    title={modalTitle} open={isModalOpen} onCancel={handleCancel}>
-                    <div className={styles.modalCard}> {modalContent}</div>
+
+                <Modal isOpen={showImage} setIsOpen={handleCancelImageModal} key={0}>
+                    <div className={styles.WalletErrorCard}>
+                        <Image
+                            src='/dashboard/tokenError.svg'
+                            alt="no token error image"
+                            height='194'
+                            width='192'
+                            loading="eager"
+                            priority
+                        />
+                        <span>{'Sorry, you don\'t have enough tokens for this '}</span>
+                        <div className={styles.waaletErrorButtonsCard}>
+                            <button
+                                onClick={() => { router.push('/wallet') }}
+                                aria-label="add token button"
+                                className={styles.addTokenBtn}>Wallet</button>
+                            <button
+                                onClick={() => changeShowImage(false)}
+                                aria-label="close wallet modal button"
+                                className={styles.okBtn}>Okay</button>
+                        </div>
+
+                    </div>
                 </Modal>
 
-                {
-                    type === 'academic_task_1' &&
-                    <Modal
-                        bodyStyle={{ width: 700 }}
-                        style={{ width: 700 }}
-                        footer={null} closeIcon={null} title={null} open={showImage} onCancel={handleCancelImageModal}>
-                        <div>
-                            <Image
-                                src={modalImage}
-                                alt="academic task chart"
-                                height='679'
-                                width='700'
-                                loading="eager"
-                                priority
-                            /></div>
-                    </Modal>
-
-                }
-
-            </form>
+            </form >
         )}
     </Formik >;
 };

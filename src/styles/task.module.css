@@ -3,53 +3,44 @@
     flex: 1;
     flex-direction: column;
     padding: 0px 95px 100px 90px;
-    min-height: 90vh;
-    /* background-color: var(--color-background); */
+    font-family: var(--font-lato);
+    font-style: normal;
 }
 
 .wriritngTitle {
-    color: #252525;
+    color: var(--color-blackText);
     text-align: left;
     font-size: 20px;
-    font-style: normal;
     font-weight: 500;
     line-height: normal;
-    margin-left: 60px;
+    margin-left: 45px;
     display: flex;
-    /* flex-direction: row;
-    align-items: center;
-    justify-content: space-between; */
-    /* height: 75px; */
 }
 
 .writingSecondTitle {
-    color: #252525;
+    color: var(--color-blackText);
     font-size: 20px;
-    font-style: normal;
     font-weight: 300;
     line-height: normal;
-    margin-left: 56px;
-    margin-top: 18px;
+    margin-left: 45px;
+    margin-top: 17px;
 }
 
 .writingInputTitle {
-    margin-top: 29px;
-    color: #252525;
+    margin-top: 8px;
+    color: var(--color-blackText);
     text-align: left;
     font-size: 20px;
-    font-style: normal;
     font-weight: 300;
-    margin-left: 60px;
-    line-height: normal;
+    margin-left: 45px;
+    line-height: 26px;
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
     justify-content: space-between;
     padding-right: 40px;
 }
 
 .selectedTopcCard {
-    /* border: solid 1px #132740; */
     border-radius: 8px !important;
     margin: 15px 40px 0px 45px;
     padding: 15px 52px 10px 18px !important;
@@ -63,19 +54,6 @@
     line-height: 180% !important;
 }
 
-.selectedTopcCard::-webkit-scrollbar {
-    /* display: none; */
-    width: 8px;
-    background-color: #D9D9D9;
-    border-radius: 33px;
-}
-
-.selectedTopcCard::-webkit-scrollbar-thumb {
-    width: 8px;
-    background-color: #12263E;
-    border-radius: 33px;
-}
-
 .topicInputContainer {
     display: flex;
     flex-direction: row;
@@ -86,47 +64,27 @@
 .topicInput {
     margin-top: 26px;
     border-radius: 8px !important;
-    /* border: solid 1px #132740; */
     overflow: hidden !important;
-}
-
-.topicInputfirst textarea {
-    min-height: 200px !important;
-}
-
-.topicInputsecond textarea {
-    min-height: 250px !important;
-}
-
-.topicInputthird textarea {
-    min-height: 115px !important;
 }
 
 .topicInput textarea {
     border-radius: 8px !important;
     background-color: transparent !important;
-    color: #252525 !important;
+    color: var(--color-blackText) !important;
     font-size: 20px !important;
     font-style: normal;
     font-weight: 400;
     padding: 15px 52px 55px 18px !important;
+    min-height: 209px !important;
 }
 
-.topicInput textarea::-webkit-scrollbar {
-    /* display: none; */
-    width: 8px;
-    background-color: #D9D9D9;
-    border-radius: 33px;
-}
-
-.topicInput textarea::-webkit-scrollbar-thumb {
-    width: 8px;
-    background-color: #12263E;
-    border-radius: 33px;
+.topicButtonsContainer button:hover {
+    box-shadow: none !important;
+    box-shadow: #F3F3F3 !important;
 }
 
 .topicInput textarea::placeholder {
-    color: #132740 !important;
+    color: #999a9c !important;
     font-size: 20px !important;
     font-weight: 400px !important;
 }
@@ -138,53 +96,10 @@
     margin: 0px 40px 0px 45px;
 }
 
-.scoreButtonContainer {
-    height: 64px;
-    width: 100% !important;
-    background: radial-gradient(340109.26% 915.21% at 0.48% 11.1%, #626E7E 0%, #425368 51.3%, #172E4A 78.43%);
-    filter: drop-shadow(0px 4px 22px rgba(0, 0, 0, 0.08));
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    z-index: 10 !important;
-}
 
-.scoreButton {
-    border: solid 2px #132740;
-    padding: 0px;
-    width: 150px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #252525;
-    text-align: left;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    z-index: 2;
-    background-color: var(--color-background) !important;
-    box-shadow: none !important;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.prossessBar {
-    height: 64px !important;
-    background-color: #2E4057;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    bottom: 0px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
 
 .generateButton {
-    background-color: #2E4057;
+    background-color: var(--color-seccondary) !important;
     border: solid 2px #2E4057;
     width: 170px;
     height: 40px;
@@ -204,11 +119,29 @@
 }
 
 .editButton {
-    height: 70px;
-    width: 70px;
+    height: fit-content;
+    width: fit-content;
     position: absolute;
     bottom: 10px;
     right: 32%;
+    padding: 0px !important;
+    border-radius: 100% !important;
+}
+
+.editButton:hover {
+    box-shadow: none !important;
+}
+
+.checkButton {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    bottom: 10px;
+    right: 32%;
+    border-radius: 100% !important;
+    padding: 0px !important;
+    align-items: center;
+    justify-content: center;
 }
 
 .writingForm {
@@ -247,7 +180,6 @@
     font-size: 24px;
     font-weight: 400;
     ;
-
 }
 
 .generatedWritingCard {
@@ -271,19 +203,6 @@
     width: fit-content !important;
 }
 
-.generatedWritingCard::-webkit-scrollbar {
-    /* display: none; */
-    width: 8px;
-    background-color: #D9D9D9;
-    border-radius: 33px;
-}
-
-.generatedWritingCard::-webkit-scrollbar-thumb {
-    width: 8px;
-    background-color: #12263E;
-    border-radius: 33px;
-}
-
 .cursor {
     display: none;
 }
@@ -296,6 +215,7 @@
 .essayInput textarea {
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
+    height: 300px !important;
 }
 
 
@@ -304,9 +224,14 @@
     border-bottom-right-radius: 0px !important;
 }
 
-.timer {
-    margin-left: 10px;
-    z-index: 2;
+.inputError {
+    color: #DA282E;
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24.5px;
+    margin-top: 14px;
 }
 
 .writerClassname {
@@ -320,11 +245,12 @@
 .select {
     border-radius: 8px !important;
     border: 1px solid #2E4057 !important;
-    width: 170px !important;
+    min-width: 170px;
     height: 42px !important;
     background-color: #2E4057;
     margin-left: auto;
     margin-top: 25px;
+    width: fit-content !important;
 }
 
 .topicButtonsContainer {
@@ -344,9 +270,17 @@
 .imagesContainer {
     display: flex;
     margin-left: 45px;
-    margin-top: 10px;
+    margin-top: 48px;
     margin-bottom: 50px;
     flex-wrap: wrap;
+}
+
+.imagesContainer img {
+    /* min-height: 100%; */
+    width: 100%;
+    height: auto;
+    /* min-width: 600px !important; */
+    cursor: pointer;
 }
 
 .emptyImageCard {
@@ -363,7 +297,12 @@
     /* width: 66%;
     height: fit-content; */
     margin-right: 24px;
+    image-rendering: pixelated !important;
     cursor: pointer;
+}
+
+.imageCard img {
+    image-rendering: pixelated !important;
 }
 
 .academicTaskTopic {
@@ -385,7 +324,73 @@
     height: fit-content;
 }
 
-@media(max-width: 1440px) {
+.editIconResponsive:hover {
+    font-size: 43px !important;
+}
+
+.WalletErrorCard {
+    width: 810px;
+    height: fit-content;
+    background-color: var(--color-gray);
+    border-radius: 14px;
+    padding: 64px 64px 38px 86px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.WalletErrorCard span {
+    color: var(--color-whiteText);
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 32px;
+    font-weight: 500;
+    margin-top: 64px;
+}
+
+.waaletErrorButtonsCard {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin-left: auto;
+    margin-top: 103px;
+}
+
+.waaletErrorButtonsCard button {
+    height: 50px;
+    padding: auto !important;
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: normal;
+    align-items: center;
+    justify-content: center;
+}
+
+.addTokenBtn {
+    background-color: var(--color-whiteText);
+    color: var(--color-primay);
+    width: 190px;
+}
+
+.okBtn {
+    padding-left: auto !important;
+    color: var(--color-whiteText);
+    margin-left: 10px;
+}
+
+.errorForm {
+    color: #DA282E;
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24.5px;
+    margin-top: 14px;
+}
+
+@media(max-width: 1680px) {
     .writingContainer {
         padding: 0px 27px 100px 22px;
     }
@@ -417,15 +422,13 @@
     .generateButton {
         font-size: 14px !important;
     }
-
-    .scoreButton {
-        font-size: 16px !important;
-        width: 100px;
-        height: 31px;
-    }
 }
 
 @media(max-width: 500px) {
+    .academicTaskbuttonContainer {
+        margin-top: 26px;
+    }
+
     .writingContainer {
         padding: 0px 22px 50px 22px;
     }
@@ -440,15 +443,9 @@
 
     .imagesContainer {
         margin-left: 0px;
+        margin-top: 20px;
     }
 
-    .wordsCount {
-        font-size: 13px !important;
-    }
-
-    .writingInputTitle {
-        flex-direction: column;
-    }
 
     .wriritngTitle {
         margin-left: 0px;
@@ -461,13 +458,21 @@
         margin-left: 0px;
     }
 
+    .checkButton {
+        right: 8px;
+        height: 30px;
+        width: 30px;
+    }
+
     .writingInputTitle {
         font-size: 16px;
         margin-left: 0px;
+        padding-right: 0px;
     }
 
     .topicInputContainer {
         margin: 0px;
+        flex-direction: column-reverse;
     }
 
     .academicTaskTopic {
@@ -475,11 +480,8 @@
     }
 
     .wordsCount {
-        margin-left: 0px;
-    }
-
-    .timer {
-        margin-left: 10px;
+        margin-left: auto !important;
+        margin-top: 0px;
     }
 
     .selectedTopcCard {
@@ -505,16 +507,19 @@
     }
 
     .topicButtonsContainer {
-        position: absolute;
-        bottom: 20px;
-        right: 60px;
+        margin-bottom: 18px;
         flex-direction: row;
     }
 
     .select {
         height: 25px !important;
-        width: 100px !important;
+        min-width: 86px !important;
         margin-top: 20px;
+    }
+
+    .selectMenuItem {
+        height: 27px !important;
+        padding: 0px 8px !important;
     }
 
     .reloadIconResponsive {
@@ -539,27 +544,20 @@
 
     .topicInput {
         width: 100% !important;
+        margin-top: 0px;
     }
 
     .topicInput textarea {
         font-size: 13px !important;
     }
 
-    .topicInput textarea::-webkit-scrollbar {
-        /* display: none; */
-        width: 6px;
-        background-color: var(--color-background);
-        border-radius: 33px;
-    }
-
-    .topicInput textarea::-webkit-scrollbar-thumb {
-        width: 6px;
-        background-color: #626E7E;
-        border-radius: 33px;
-    }
-
     .topicInput textarea::placeholder {
         font-size: 13px !important;
+    }
+
+    .essayInput {
+        margin-top: 7px;
+        margin-bottom: 17px;
     }
 
     .bodyInputContainer {
@@ -570,36 +568,6 @@
         height: fit-content;
         padding-bottom: 50px;
     }
-
-    .scoreButton {
-        margin-left: auto;
-        margin-right: 10px;
-    }
-
-    .scoreButton div {
-        color: var(--color-darkText);
-        text-align: center;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-        border-radius: 8px;
-        border: 1px solid #F3F3F3;
-        height: 26px;
-        width: 90px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .scoreButtonContainer {
-        height: 38px !important;
-    }
-
-    .prossessBar {
-        height: 38px !important;
-    }
-
 
     .writingScoreText {
         font-size: 15px;

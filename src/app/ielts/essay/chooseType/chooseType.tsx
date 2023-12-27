@@ -9,11 +9,11 @@ interface chooseTypeProps {
 
 const types = [
     {
-        label: 'Gen Task 1',
+        label: 'GT Task 1',
         value: 'general_task_1'
     },
     {
-        label: 'Ac Task 1',
+        label: 'AC Task 1',
         value: 'academic_task_1'
     },
     {
@@ -26,7 +26,7 @@ const ChooseType: React.FC<chooseTypeProps> = ({ changeType }) => {
 
     return <div className={'col-12 ' + styles.chooseTypeContainer}>
         <div className={styles.chooseTypeTitle}>
-            Choose your essay type:
+            Choose your writing task type:
         </div>
         <div className={styles.typesContainer}>
             {types.map((item, index) =>

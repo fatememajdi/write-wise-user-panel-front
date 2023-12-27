@@ -13,7 +13,12 @@ export type Essay = {
     overallBandScore?: number,
     durationMillisecond?: number,
     essayRecommendations?: any,
-    essayInsights?: any
+    essayInsights?: any,
+    shortId?: string,
+    scoreJobStatus: any,
+    recommendationJobStatus: any,
+    insightJobStatus: any,
+    topicId: string
 };
 
 export type tempEssay = {
@@ -33,4 +38,12 @@ export type tempEssay = {
 export type SelectedTopicTempEssay = {
     essay: string;
     id: string
+};
+
+export enum JOBSTATUS {
+    FINISH,
+    PRE_QUEUED,
+    POST_QUEUED,
+    PROCESSING,
+    FAIL
 };

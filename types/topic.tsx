@@ -1,5 +1,6 @@
 export type Topic = {
     id?: string,
+    shortId?: string,
     type?: string,
     topic?: string,
     shortName?: string,
@@ -23,5 +24,6 @@ export type topic = {
         id: string,
         url: string,
         image: string
-    }[]
+    }[],
+    questionType?:string
 };

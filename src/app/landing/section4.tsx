@@ -7,9 +7,10 @@ import Image from "next/image";
 
 //------------------------------------------------styles
 import styles from './landingSection4.module.css';
+import '../../styles/global.css';
 
 //------------------------------------------------icons
-import { MdOutlineFlag, MdKeyboardArrowRight, MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { MdKeyboardArrowRight, MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { Steps } from "../../../public";
 
 const steps = [
@@ -50,16 +51,16 @@ const Section4: React.FC = () => {
         // }, 1500);
     };
 
-    return <div
+    return <section
         onWheel={() => {
             if (selectedItem === 0 && !isMobile)
                 changeSelectedItem(1);
         }} className={styles.section4Container}>
-        <div className={styles.title}>Progressive IELTS Learning with WriteWiseAI</div>
+        <h2 className={styles.title}>Progressive IELTS Learning with WriteWiseAI</h2>
         <div className={styles.Divider} />
-        <div className={styles.description}>
-            Empower your IELTS preparation by tracking and<br /> visualizing your writing improvements.
-        </div>
+        <h6 className={styles.description}>
+            Empower your IELTS preparation by tracking and visualizing your writing improvements.
+        </h6>
 
         {/* <button className={styles.button}>
             Boost My IELTS Preparation Now!
@@ -226,7 +227,7 @@ const Section4: React.FC = () => {
                 </motion.div>
             </div>
         </AnimatePresence>
-    </div>
+    </section>
 };
 
 export default Section4;

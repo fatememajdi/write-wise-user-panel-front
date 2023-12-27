@@ -3,7 +3,8 @@ import gql from "graphql-tag";
 export const EMAIL_SIGN_IN = gql`
 mutation EmailLogIn($email:String!){
     emailLogin(loginWithEmail:{email:$email}){
-      code
+      code,
+      email
     }
   }
 `;
@@ -39,6 +40,7 @@ query GetUserTopics($type:String!, $page:Float!, $pageSize:Float!){
       id,
       type,
       shortName,
+      shortId,
       topic,
       overallBandScore,
       createdAt,
@@ -71,12 +73,18 @@ query GetUserEssay($id:String!, $page:Float!, $pageSize:Float!){
       overallBandScore,
       durationMillisecond,
       essayRecommendations,
-      essayInsights
+      essayInsights,
+      shortId,
+      topicId,
+      scoreJobStatus,
+      recommendationJobStatus,
+      insightJobStatus,
     }
   }
 }
 `;
 
+//-------------------------------------------------------------get random topic
 export const GET_RANDOM_WRITING = gql`
 query GetRandomWriting($type:String!,$questionType:String!){
   getRandomWriting(randomWritingInput:{type:$type,questionType:$questionType}){
@@ -84,14 +92,19 @@ query GetRandomWriting($type:String!,$questionType:String!){
     topic,
     body,
     tone,
-    questionType
+    questionType,
+    visuals{
+      id,
+      url,
+      image
+    }
   }
 }
 `;
 
 export const GET_RANDOM_WRITING_AC_TASK = gql`
-query GetRandomWriting($type:String!){
-  getRandomWriting(randomWritingInput:{type:$type,questionType:""}){
+query GetRandomWriting($type:String!,$questionType:String!){
+  getRandomWriting(randomWritingInput:{type:$type,questionType:$questionType}){
     id,
     topic,
     body,
@@ -113,6 +126,7 @@ mutation SelectTopic($type:String! , $body:String, $id:String){
     id,
     type,
     shortName,
+    shortId,
     topic,
     overallBandScore,
     createdAt,
@@ -131,16 +145,23 @@ mutation AddNewEssay($id:String! , $body: String! ,$durationMillisecond:Float!){
   addNewEssay(addEssay:{id:$id ,body:$body ,durationMillisecond:$durationMillisecond}){
     id,
     essay,
-    date
+    date,
+    shortId,
+    topicId,
+    scoreJobStatus,
+    recommendationJobStatus,
+    insightJobStatus,
   }
 }
 `;
 
 
 export const SCORE_ESSAY = gql`
-mutation ScoreEssay($id:String!){
-  scoreEssay(scoreEssay:{test:true,id:$id}){
-    recommendation
+mutation ScoreEssay($id:String!,$test:Boolean!){
+  scoreEssay(scoreEssay:{test:$test,id:$id}){
+    recommendation,
+    insight,
+    score
   }
 }
 `;
@@ -153,7 +174,14 @@ query{
     email,
     age,
     gender,
-    profile
+    profile,
+    token,
+    country{
+      commonName,
+      id,
+      officialName,
+      flag
+    }
   }
 }
 `;
@@ -165,7 +193,15 @@ mutation UpdateUser($firstName:String, $age:Float, $lastName:String, $gender:Str
     lastName,
     email,
     age,
-    gender
+    gender,
+    profile,
+    token,
+    country{
+      commonName,
+      id,
+      officialName,
+      flag
+    }
   }
 }
 `;
@@ -209,8 +245,8 @@ query{
 `;
 
 export const GET_PACKAGES = gql`
-query GetPackages($currency:String!){
-  getPackages(filter:{currency:$currency}){
+query GetPackages($userToken:String!){
+  getPackages(filter:{userToken:$userToken}){
     id,
     name,
     discountPercent,
@@ -222,7 +258,141 @@ query GetPackages($currency:String!){
     amountWithDiscount,
     showingPrice,
     showingPriceWithDiscount,
+    currency,
+    adjustableQuantity,
+    discountName,
+    showingDiscountAmount,
+    isPopup,
+    flagUrl
+  }
+}
+`;
+
+//-------------------------------------------------------get transactions list
+export const TRANSACTION_HISTORY = gql`
+query TransactionHistory($page:Float!,$pageSize:Float!,$paymentHistory:Boolean!){
+  transactionHistory(pagination:{page:$page,pageSize:$pageSize,paymentHistory:$paymentHistory}){
+    transactions{
+      id,
+      shortId, 
+      invoiceNumber,
+      paymentServiceType,
+      originalAmount,
+      discountPercent,
+      amountAfterDiscount,
+      amountPaidShow,
+      tax,
+      tokenNumber,
+      currency,
+      paymentStatus,
+      paidDate,
+      essayShortId,
+      essayShortName,
+      paymentMethod,
+      taskType
+    }
+  }
+}
+`;
+
+export const RECEIPT_LINK = gql`
+query ReceiptLink($id:String!){
+  receiptLink(getPayment:{id:$id}){
+    link
+  }
+}
+`;
+
+export const REGENERATE_PAYMENT_LINK = gql`
+query RegeneratePaymentLink($id:String!){
+  regeneratePaymentLink(getPayment:{id:$id}){
+    link
+  }
+}
+`;
+
+
+export const CREATE_PAYMENT_LINK = gql`
+mutation CreatePaymentLink($id:String!, $adjustedQuantity:Float!, $promotionCode:String!){
+  createPaymentLink(createPaymentLink:{id:$id,adjustedQuantity:$adjustedQuantity,promotionCode:$promotionCode}){
+    link
+  }
+}
+`;
+
+//--------------------------------------------------------check promotion code
+export const VALIDATION_PROMOTION_CODE = gql`
+query validationPromotionCode($id:String!, $adjustedQuantity:Float!, $promotionCode:String!){
+  validationPromotionCode(createPaymentLink:{
+    id:$id,
+    adjustedQuantity:$adjustedQuantity,
+    promotionCode:$promotionCode
+  }){
+    name,
+    percentOff,
+    amountAfterDiscount,
+    discountAmount
+  }
+}`;
+
+
+//--------------------------------------------------------get payment data after transaction
+export const AFTER_PAYMENT = gql`
+query AfterPayment($id:String!){
+  afterPayment(getPayment:{id:$id}){
+    amountPaidShow,
+    tokenNumber,
+    id, 
     currency
+  }
+}
+`;
+
+//--------------------------------------------------------check IP 
+export const IS_FROM_IRAN = gql`
+query{
+  isFromIran
+}
+`;
+
+//--------------------------------------------------------get list of countries
+export const SEARCH_COUNTRIES = gql`
+query SearchContries($page:Float!,$pageSize:Float!,$value:String!){
+  searchCountry(search:{page:$page,pageSize:$pageSize,value:$value}){
+    countries{
+      id,
+      commonName,
+      officialName,
+      flag
+    }
+  }
+}
+`;
+
+export const SELECT_CURRENCY = gql`
+mutation SelectCurrency($id:String!){
+  selectCurrency(selectCurrency:{countryId:$id}){
+    firstName,
+    lastName,
+    email,
+    age,
+    gender,
+    profile,
+    token,
+    country{
+      commonName,
+      id,
+      officialName,
+      flag
+    }
+  }
+}
+`;
+
+export const DELETE_ACCOUNT = gql`
+mutation{
+  deleteUserAccount{
+    token
   }
 }
 `;

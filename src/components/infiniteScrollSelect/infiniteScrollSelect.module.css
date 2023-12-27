@@ -1,0 +1,118 @@
+.select {
+    display: flex;
+    flex-direction: row;
+    border-radius: 9.742px;
+    border: 1.218px solid var(--color-primary);
+    background: var(--color-seccondary);
+    width: 362.878px;
+    height: 51.144px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px !important;
+    color: var(--color-whiteText);
+    font-family: var(--font-lato);
+    font-size: 24.354px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    position: relative;
+}
+
+.select input {
+    background-color: transparent !important;
+    border: none !important;
+    height: 100%;
+}
+
+.select input:focus {
+    outline: none !important;
+    border: none !important;
+    transition: .4s;
+}
+
+
+.arrowIcon {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.selectItemsCard {
+    overflow-y: scroll;
+    max-height: 200px;
+    background-color: var(--color-gray);
+    border-radius: 10px;
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    left: 0px;
+    right: 0px;
+    box-shadow: -5px 15px 22px -5px rgba(0, 0, 0, 0.19);
+}
+
+.selectItemsCard::-webkit-scrollbar {
+    width: 8px;
+    background-color: var(--color-gray);
+    border-radius: 33px;
+}
+
+.selectItemsCard::-webkit-scrollbar-thumb {
+    width: 8px;
+    background-color: var(--color-primary);
+    border-radius: 33px;
+}
+
+.menuItem {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.menuItem:hover {
+    background-color: var(--color-darkGray) !important;
+}
+
+.flagImage {
+    height: 20px !important;
+    width: 40px !important;
+    margin-right: 10px;
+}
+
+@media(max-width: 500px) {
+
+    .select {
+        width: 232.286px;
+        height: 32.571px;
+    }
+
+    .selectItemsCard{
+        top: 33px;
+    }
+
+    .select input {
+        width: 175px !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+    }
+
+    .menuItem {
+        font-size: 16px;
+        font-weight: 700;
+        padding: 10px 10px;
+    }
+
+    .flagImage {
+        height: 15px !important;
+        width: 30px !important;
+        margin-right: 10px;
+    }
+
+    .arrowIcon{
+        font-size: 25px;
+    }
+
+}

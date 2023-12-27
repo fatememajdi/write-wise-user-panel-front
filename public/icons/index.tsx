@@ -35,5 +35,5 @@ export {
     ArrowLeft,
     Camera,
     Edit,
-    Chat2,
+    Chat2
 }

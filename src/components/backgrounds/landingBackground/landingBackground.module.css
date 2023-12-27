@@ -1,9 +1,12 @@
 .landingBackground {
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    /* height: fit-content !important; */
     overflow: hidden !important;
     overflow-x: hidden !important;
     position: relative;
     background-image: url('/landing/section1-desktop-background.svg');
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
     z-index: 501;
 }
 
@@ -56,9 +59,7 @@
     }
 
     .landingBackground {
-        background: #F4DEDF;
-        background: linear-gradient(90deg, #F4DEDF, #DBE8F2) !important;
         min-height: fit-content;
-        background-image: none;
+        background-image: url('/landing/section1-mobile-background.svg');
     }
 }

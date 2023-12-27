@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+// import DialogTitle from '@mui/material/DialogTitle';
 import { TransitionProps } from "@mui/material/transitions/transition";
 import Slide from "@mui/material/Slide";
 
@@ -34,23 +34,25 @@ const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, ti
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
     >
-        <DialogTitle
-            style={{ backgroundColor: '#626E7E', color: '#F3F3F3' }}>{title}</DialogTitle>
+        {/* <DialogTitle
+            style={{ backgroundColor: '#626E7E', color: '#F3F3F3' }}><div style={{ fontSize: 22 }}>{title}</div></DialogTitle> */}
+
         <DialogContent
             style={{ backgroundColor: '#626E7E' }}>
             <DialogContentText
                 style={{ color: '#F3F3F3' }}
                 id="alert-dialog-slide-description">
-                {dialog}
+                <span style={{ fontSize: 22, marginBottom: 10, color: '#F3F3F3' }}>{title}</span>
+                <span style={{ color: '#F3F3F3' }}>{dialog}</span>
             </DialogContentText>
         </DialogContent>
         <DialogActions
             style={{ backgroundColor: '#626E7E' }}>
             <Button
-                style={{ color: '#252525' }}
+                style={{ color: '#FFF' }}
                 onClick={handleClose}>Cancle</Button>
             <Button
-                style={{ color: '#252525' }}
+                style={{ color: '#FFF' }}
                 onClick={handleDelete}>{deleteButton ? deleteButton : 'Delete'}</Button>
         </DialogActions>
     </Dialog>

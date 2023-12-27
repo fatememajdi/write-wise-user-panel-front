@@ -23,13 +23,13 @@
 .taskCard {
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
-    padding: 16px 14px 20px 14px;
+    padding: 7px 14px 7px 14px;
     cursor: pointer;
     border-radius: 8px;
     margin: 0px 0px 12px 8px !important;
     background: linear-gradient(111deg, #6B7787 0%, #132740 100%);
+    height: 75px;
 }
 
 .taskCardTitle {
@@ -41,9 +41,16 @@
     display: flex;
     flex-direction: column;
     line-height: 12px;
+    height: 100% !important;
+    flex: 1;
 }
 
-.taskCardTitle h5 {
+.taskCardTitle span {
+    display: flex;
+    margin-top: auto;
+}
+
+.shortNameText {
     color: #FFF;
     font-size: 18px;
     font-style: normal;
@@ -53,9 +60,10 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: normal;
 }
 
-.taskCardTitle h5:hover {
+.shortNameText:hover {
     text-decoration: underline !important;
     /* font-weight: 400; */
 }
@@ -76,8 +84,23 @@
     font-weight: 500;
     line-height: 12px;
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.taskCardScore div {
+    display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+}
+
+.taskCardScore span {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 12px;
 }
 
 .deleteIcon {
@@ -92,34 +115,7 @@
 
 @media(max-width: 1620px) {
     .taskCard {
-        padding: 16px 14px 20px 10px;
-    }
-
-    .taskCardTitle {
-        font-size: 14px;
-    }
-
-    .taskCardTitle span {
-        font-size: 12px !important;
-    }
-
-    .taskCardScore {
-        font-size: 16px;
-    }
-
-    .deleteIcon {
-        font-size: 20px;
-        margin-left: 5px;
-    }
-
-    .deleteIcon:hover {
-        font-size: 22px !important;
-    }
-}
-
-@media(max-width: 1440px) {
-    .taskCard {
-        padding: 16px 14px 20px 10px;
+        padding: 7px 14px 7px 10px;
     }
 
     .taskCardTitle {
@@ -165,6 +161,11 @@
 
     .taskCardTitle span {
         font-size: 11px;
+        font-weight: 300;
+    }
+
+    .taskCard span {
+        font-size: 11px !important;
         font-weight: 300;
     }
 

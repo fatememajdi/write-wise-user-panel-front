@@ -1,9 +1,7 @@
 .section4Container {
     background: linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%);
-    min-height: 100vh !important;
-    width: 100vw;
     overflow-x: hidden;
-    padding: 250px 0px 0px 0px;
+    padding: 150px 0px 0px 0px;
     display: flex;
     flex-direction: column;
     height: fit-content;
@@ -11,35 +9,30 @@
 }
 
 .title {
-    color: #EAEFF6;
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 500;
+    color: var(--color-whiteText);
     line-height: 61.5px;
-    margin-left: 280px;
+    margin-left: 234px;
 }
 
 .description {
-    color: #F3F3F3;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
+    color: var(--color-whiteText);
     line-height: 31px;
-    margin-left: 280px;
+    margin-left: 234px;
     margin-top: 48px;
     margin-bottom: 90px;
+    max-width: 500px;
 }
 
 .button {
     width: 415px;
     height: 71px;
     border-radius: 8px;
-    border: 0.5px solid #F3F3F3;
+    border: 0.5px solid var(--color-whiteText);
     background: #626E7E;
     align-items: center;
     justify-content: center;
     margin-left: 280px;
-    color: #EAEFF6;
+    color: var(--color-whiteText);
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -68,7 +61,7 @@
     position: absolute;
     top: -63px;
     right: 100px;
-    color: #F3F3F3 !important;
+    color: var(--color-whiteText) !important;
 }
 
 .step2 {
@@ -79,15 +72,14 @@
 }
 
 .step2TopCard {
-    border-top: solid 1px #F3F3F3;
+    border-top: solid 1px var(--color-whiteText);
     height: 7vh;
-    border-left: solid 1px #F3F3F3;
-    color: #FFF;
+    border-left: solid 1px var(--color-whiteText);
+    color: var(--color-whiteText);
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: 30px;
-    /* padding: 10px; */
     max-width: 340px !important;
     width: 340px;
     margin-left: auto;
@@ -95,9 +87,9 @@
 }
 
 .step1TopCard {
-    border-top: solid 1px #F3F3F3;
+    border-top: solid 1px var(--color-whiteText);
     height: 7vh;
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -109,13 +101,12 @@
 }
 
 .activeStepCard {
-    border-right: solid 1px #F3F3F3;
+    border-right: solid 1px var(--color-whiteText);
     position: absolute;
     top: 0;
     right: 0;
     z-index: 0;
 }
-
 
 .step3 {
     width: 340px;
@@ -139,11 +130,11 @@
     position: relative;
     flex: 1 !important;
     min-height: 22vh !important;
-    border-top: solid 1px #F3F3F3;
+    border-top: solid 1px var(--color-whiteText);
 }
 
 .stepTitle {
-    color: #F3F3F3;
+    color: var(--color-whiteText);
     font-size: 32px;
     font-style: normal;
     font-weight: 400;
@@ -195,7 +186,7 @@
 }
 
 .responsiveStepDescription {
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
@@ -214,7 +205,7 @@
 
 .flagIcon {
     position: absolute;
-    top: -105px ;
+    top: -105px;
     right: 60px;
 }
 
@@ -229,66 +220,7 @@
         margin-left: 102px;
         font-size: 16px;
         margin-top: 30px;
-        line-height: 19.54px;
-    }
-
-    .Divider {
-        display: block;
-        margin-left: 102px;
-        width: 439px !important;
-    }
-
-    .stepTitle {
-        font-size: 20px;
-    }
-
-    .step1 {
-        width: 220px;
-    }
-
-    .step2 {
-        width: 220px;
-    }
-
-    .step3 {
-        width: 220px;
-    }
-
-    .step4 {
-        width: 220px;
-    }
-
-    .step5 {
-        width: 220px;
-    }
-
-    .step6 {
-        width: 220px;
-    }
-
-    .step2TopCard {
-        width: 220px;
-        font-size: 13px;
-    }
-
-    .step1TopCard {
-        font-size: 13px;
-        width: 220px;
-    }
-
-}
-
-@media(max-width: 1440px) {
-    .title {
-        margin-left: 102px;
-        font-size: 24px;
-        line-height: 38.765px;
-    }
-
-    .description {
-        margin-left: 102px;
-        font-size: 16px;
-        margin-top: 30px;
+        max-width: 400px;
         line-height: 19.54px;
     }
 
@@ -360,8 +292,7 @@
 
     .title {
         margin-left: 0px;
-        font-size: 20px;
-        line-height: 26px;
+        line-height: 26px !important;
     }
 
     .Divider {
@@ -376,6 +307,8 @@
         font-size: 13px;
         line-height: 19.5px;
         margin-bottom: 0px;
+        max-width: 100%;
+        margin-right: 50px !important;
     }
 
     .bottomContainer {

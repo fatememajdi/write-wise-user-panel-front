@@ -20,11 +20,13 @@ interface props {
     textarea_value?: string,
     textarea_error?: any,
     secondError?: boolean,
-    disable?: boolean
+    disable?: boolean,
+    children?: React.ReactNode,
 };
 
-const Input: React.FC<props> = ({ ...props }) =>
-    <div
+const Input: React.FC<props> = ({ ...props }) => {
+
+    return <div
         className={styles.formSectionContainer + ' ' + props.className}
         style={{ ...props.style, alignItems: props.textarea ? 'flex-start' : 'center' }}
     >
@@ -37,7 +39,7 @@ const Input: React.FC<props> = ({ ...props }) =>
         {/* ---------------------------------------------------------input forms */}
         {props.input &&
             <>
-                <div className={props.input_error ? styles.formSectionInput + ' ' + styles.formSectionInputError + ' ' + props.className
+                <div className={props.input_error ? styles.formSectionInputError + ' ' + props.className
                     : styles.formSectionInput + ' ' + props.className}>
                     <input
                         disabled={props.disable}
@@ -58,23 +60,27 @@ const Input: React.FC<props> = ({ ...props }) =>
         {/* -----------------------------------------------------------textarea forms */}
         {
             props.textarea &&
-            <div className={props.textarea_error ? styles.formSectionInput + ' ' + styles.formSectionInputError
-                : styles.formSectionInput}>
+            <div className={props.textarea_error ? styles.formSectionInput + ' ' + styles.formSectionInputError + ' ' + props.className
+                : styles.formSectionInput + ' ' + props.className}>
 
                 <textarea
+                    // onPaste={(event) => onPaste(event)}
                     spellCheck={false}
                     disabled={props.disable}
                     placeholder={props.placeHolder}
                     name={props.textarea_name}
                     onChange={props.onChange}
                     value={props.textarea_value}
-                />
 
+                />
+                {props.children &&
+                    props.children
+                }
                 {props.textarea_error &&
                     <div className={props.secondError ? styles.secondErrorForm : styles.errorForm}>{props.textarea_error}</div>
                 }
             </div>
         }
-    </div >
-
+    </div>
+}
 export default Input;

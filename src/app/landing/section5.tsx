@@ -10,6 +10,7 @@ const Section5Background = dynamic(() => import('@/components/backgrounds/sectio
 
 //------------------------------------------styles
 import styles from './landingSection5.module.css';
+import '../../styles/global.css';
 
 //------------------------------------------icons
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
@@ -56,13 +57,13 @@ const Section5: React.FC = () => {
 
     return <Section5Background>
         <div onWheel={(e) => lockScroll(e.deltaY)} className={'col-12 ' + styles.section5}>
-            <div className={styles.title}>
+            <h2 className={styles.title}>
                 <span className={styles.text1}>Experience </span>
                 <span className={styles.text2}>WiseSensei</span>
                 <br />
                 <span className={styles.text3}>Your Path to IELTS Writing Mastery</span>
-            </div>
-            <div className={styles.description}>Experience a transformative IELTS preparation <br />journey tailored for every stage of your essay writing.</div>
+            </h2>
+            <h6 className={styles.description}>Experience a transformative IELTS preparation <br />journey tailored for every stage of your essay writing.</h6>
 
 
             <Carousel

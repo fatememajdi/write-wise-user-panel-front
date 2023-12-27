@@ -12,11 +12,19 @@ declare module "next-auth" {
       error: string
     } & DefaultSession["user"]
   };
+
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     error: string
     & DefaultSession["jwt"]
+  }
+}
+
+declare module "graphql" {
+
+  interface GraphQLError {
+    status: number
   }
 }

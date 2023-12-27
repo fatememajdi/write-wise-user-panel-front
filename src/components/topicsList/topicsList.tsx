@@ -100,7 +100,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                         pageStart={0}
                         loadMore={() => GetTopicsList()}
                         hasMore={MoreTopics}
-                        loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} />}
+                        loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} key={1}/>}
                         useWindow={false}
                         key={0}
                     >
@@ -112,32 +112,34 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                 <div
                                     onClick={() => HandleSelect({ id: temp.topic.id, body: temp.topic.body, type: temp.topic.type, visuals: temp.visuals }, temp.essay)}
                                     className={styles.taskCardTitle}>
-                                    <h5>{temp.topic.body}</h5>
+                                    <div className={styles.shortNameText}>{temp.topic.body}</div>
                                     {/* <span>
                                         {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}
                                     </span> */}
                                 </div>
                                 <div className={styles.taskCardScore}>
-                                    <span style={{ fontSize: 26 }}>
-                                        ?
-                                    </span>
-                                    <AiOutlineDelete className={styles.deleteIcon}
-                                        onClick={() => {
-                                            if (type === 'general_task_1') {
-                                                localStorage.removeItem('tempEssay');
-                                                localStorage.removeItem('lastTempEssay');
-                                                setTemp(null);
-                                            } else if (type === 'academic_task_1') {
-                                                localStorage.removeItem('tempEssay3');
-                                                localStorage.removeItem('lastTempEssay3');
-                                                setTemp(null);
-                                            } else {
-                                                localStorage.removeItem('tempEssay2');
-                                                localStorage.removeItem('lastTempEssay2');
-                                                setTemp(null);
-                                            }
-                                        }}
-                                    />
+                                    <div>
+                                        <span style={{ fontSize: 26 }}>
+                                            ?
+                                        </span>
+                                        <AiOutlineDelete className={styles.deleteIcon}
+                                            onClick={() => {
+                                                if (type === 'general_task_1') {
+                                                    localStorage.removeItem('tempEssay');
+                                                    localStorage.removeItem('lastTempEssay');
+                                                    setTemp(null);
+                                                } else if (type === 'academic_task_1') {
+                                                    localStorage.removeItem('tempEssay3');
+                                                    localStorage.removeItem('lastTempEssay3');
+                                                    setTemp(null);
+                                                } else {
+                                                    localStorage.removeItem('tempEssay2');
+                                                    localStorage.removeItem('lastTempEssay2');
+                                                    setTemp(null);
+                                                }
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         }
@@ -155,18 +157,23 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                             SetTempEssay();
                                         }}
                                         className={styles.taskCardTitle}>
-                                        <h5>{item.shortName}</h5>
+                                        <div className={styles.shortNameText}>{item.shortName}</div>
                                         <span>
-                                            {new Intl.DateTimeFormat('en-US', { month: "long" }).format((new Date(item.createdAt))) + ' ' + new Date(item.createdAt).getDate()}
+                                            {item.shortId}
                                         </span>
                                     </div>
                                     <div className={styles.taskCardScore}>
-                                        {item.overallBandScore}
-                                        <AiOutlineDelete className={styles.deleteIcon}
-                                            onClick={() => {
-                                                setOpen(true);
-                                                changeSelectedId(item.id);
-                                            }} />
+                                        <div>
+                                            {item.overallBandScore}
+                                            <AiOutlineDelete className={styles.deleteIcon}
+                                                onClick={() => {
+                                                    setOpen(true);
+                                                    changeSelectedId(item.id);
+                                                }} />
+                                        </div>
+                                        <span>
+                                            {new Intl.DateTimeFormat('en-US').format((new Date(item.createdAt)))}
+                                        </span>
                                     </div>
                                 </div>
 

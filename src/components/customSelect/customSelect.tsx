@@ -1,4 +1,5 @@
 'use client';
+import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 
 //------------------------------------------------------styles
@@ -7,6 +8,8 @@ import './animation.css';
 
 //------------------------------------------------------icons
 import { IoMdArrowDropdown, IoMdLock } from 'react-icons/io';
+import { TiArrowSortedDown } from 'react-icons/ti';
+
 
 interface value {
     title: string
@@ -24,23 +27,35 @@ interface _props {
 const SelectComponent: React.FC<_props> = ({ values, selectedItem, className, onChange }) => {
 
     const [open, setOpen] = React.useState<boolean>(false);
-    function myFunction() {
-        document.getElementById("list-roll-down")?.classList.toggle("is-active");
-    }
 
-    return <div className={'col-12 ' + styles.selectContainer + ' ' + className}>
-        <div
-            className={'col-12 ' + styles.selectTitle}
-            onClick={() => setOpen(!open)}
-        >{values[selectedItem].title} <IoMdArrowDropdown style={{ fontSize: 30 }} /></div>
-        {open &&
+    return <AnimatePresence>
+        <div className={'col-12 ' + styles.selectContainer + ' ' + className}>
             <div
-                // id="list-roll-down"
+                className={'col-12 ' + styles.selectTitle}
+                onClick={() => setOpen(!open)}
+            >{values[selectedItem].title}
+
+                <motion.div
+                    animate={open ? { transform: 'rotate(180deg)' } : {}}
+                    transition={{ type: "spring", duration: 0.5 }}
+                >
+                    <TiArrowSortedDown fontSize={25}
+                        onClick={() => setOpen(!open)} />
+                </motion.div>
+
+            </div>
+
+            {/* {open && */}
+            <motion.div
+                style={{ opacity: 0 }}
+                animate={{ height: open ? 'fit-content' : 0, opacity: open ? 1 : 0 }}
+                transition={{ type: "spring", duration: 0.5 }}
                 className={styles.selectItemsContainer}
             >
                 {values.map((item, index) => {
                     if (selectedItem != index)
                         return <div
+                            key={index}
                             onClick={() => {
                                 if (item.active)
                                     onChange(index)
@@ -53,9 +68,10 @@ const SelectComponent: React.FC<_props> = ({ values, selectedItem, className, on
                             }
                         </div>
                 })}
-            </div>
-        }
-    </div >
+            </motion.div>
+            {/* } */}
+        </div>
+    </AnimatePresence>
 };
 
 export default SelectComponent;

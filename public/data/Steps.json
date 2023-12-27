@@ -1,0 +1,27 @@
+[
+    {
+        "step": "Step 1",
+        "title": "Sign Up and claim your offer!",
+        "description": "Kickstart your IELTS success by signing up for a WriteWiseAI account. Once registered, top up your wallet to start your journey."
+    },
+    {
+        "step": "Step 2",
+        "title": "Choose Task Type",
+        "description": "In your dashboard, choose your IELTS writing task type. Pick between GT Task 1, AC Task 1, or Task 2 writing types."
+    },
+    {
+        "step": "Step 3",
+        "title": "Choose a Topic",
+        "description": "Type in your own topic or ask the system to generate a topic for you. You can choose your writing task subtype or leave it on Random and then click on ‘Generate’ button. You need to validate your topic first if you type it in."
+    },
+    {
+        "step": "Step 4",
+        "title": "Start Writing",
+        "description": "Start writing your task or paste your previously written task in the space provided and when finished, click on the ‘Score’ button."
+    },
+    {
+        "step": "Step 5",
+        "title": "Get your Score,Analysis,and Recommendations",
+        "description": "After submission, let our expert system analyze your essay. Receive in-depth, AI-powered analysis, feedback, and tailored recommendations that spotlight areas for improvement. With WriteWiseAI, every critique becomes a stepping stone towards IELTS excellence."
+    }
+]

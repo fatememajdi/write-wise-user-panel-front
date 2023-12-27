@@ -29,48 +29,68 @@
     font-weight: 275px !important;
     transition: 0s border;
     height: 46px;
-    background-color: var(--color-background);
+    background-color: transparent;
     color: var(--color-blackText) !important;
-    border: solid 1px var(--color-primary) !important;
+    border: none !important;
     padding: 0px 10px;
     border-radius: 10px;
 }
 
-.formSectionInputError {}
-
 .formSectionInputError input {
+    font-size: 18px !important;
+    font-weight: 275px !important;
+    height: 46px;
+    background-color: transparent;
+    color: var(--color-blackText) !important;
+    padding: 0px 10px;
+    border: solid 1px #DA282E !important;
+    border-radius: 10px;
+}
+
+.formSectionInputError {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-width: 0px;
+}
+
+.formSectionInputError input:focus {
+    transition: .4s;
+    outline: none !important;
     border: solid 1px #DA282E !important;
 }
+
 
 .formSectionInputError textarea {
-    border: solid 1px #DA282E !important;
+    border-color: #DA282E !important;
 }
 
+.formSectionInputError textarea:focus {
+    border-color: #DA282E !important;
+}
 
 .formSectionInput input:focus {
     outline: none !important;
-    /* border: none !important;
-    border: 0px !important; */
-    border: solid 1px var(--color-darkGray) !important;
+    border: none !important;
     transition: .4s;
+    background-color: transparent;
 }
 
 .formSectionInput textarea {
-    border: none !important;
     font-size: 20px !important;
     transition: 0s border;
     min-height: 250px;
-    background-color: var(--color-background) !important;
+    background-color: transparent !important;
     color: var(--color-blackText) !important;
-    border: solid 1px var(--color-seccondary) !important;
-    padding: 10px !important;
+    border: solid 1px var(--color-seccondary);
+    padding: 20px !important;
     resize: none;
     line-height: 180% !important;
 }
 
 .formSectionInput textarea:focus {
     outline: none !important;
-    border: solid 1px var(--color-darkGray) !important;
+    border: solid 1px var(--color-darkGray);
     transition: .4s;
 }
 
@@ -90,11 +110,15 @@
 }
 
 .secondErrorForm {
-    margin-top: 5px;
-    text-align: left;
-    color: #DA282E !important;
-    font-size: 15px;
+    color: #DA282E;
+    font-family: var(--font-lato);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24.5px;
+    margin-top: 14px;
 }
+
 
 @media(max-width: 1620px) {
     .formSectionInput textarea {

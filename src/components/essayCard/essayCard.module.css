@@ -58,7 +58,7 @@
 }
 
 .writingEssayCard {
-    background-color: #626E7E;
+    background-color: transparent;
     z-index: 1;
     display: flex;
     flex: 1;
@@ -82,7 +82,7 @@
 .writingTimeCard {
     display: flex;
     flex-direction: row;
-    color: #F3F3F3;
+    color: var(--color-blackText);
     font-size: 20px;
     font-style: normal;
     font-weight: 300;
@@ -102,7 +102,7 @@
 .writingEssayCard::-webkit-scrollbar {
     /* display: none; */
     width: 8px;
-    background-color: #FFF;
+    background-color: transparent !important;
     border-radius: 33px;
 }
 
@@ -114,7 +114,7 @@
 
 
 .writingScoreDate {
-    color: var(--color-whiteText);
+    color: var(--color-blackText);
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
@@ -122,7 +122,7 @@
 }
 
 .writingEssayTopic {
-    color: var(--color-whiteText);
+    color: var(--color-blackText);
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -131,7 +131,7 @@
 
 .writingEssayText {
     margin-top: 25px;
-    color: var(--color-whiteText);
+    color: var(--color-blackText);
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
@@ -180,15 +180,15 @@
 }
 
 .writingScoreCard {
-    background-color: #626E7E;
+    background-color: transparent;
     z-index: 1;
     display: flex;
-    color: var(--color-whiteText) !important;
+    color: var(--color-blackText) !important;
     flex: 1;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     border-top: none !important;
-    padding: 29px 42px 19px 32px;
+    padding: 29px 100px 19px 129px;
     width: 100%;
     margin-bottom: 20px;
     flex-direction: column;
@@ -218,7 +218,7 @@
 .writingScoreCard::-webkit-scrollbar {
     /* display: none; */
     width: 8px;
-    background-color: #FFF;
+    background-color: transparent !important;
     border-radius: 33px;
 }
 
@@ -237,8 +237,8 @@
 }
 
 .writingScoreItemCard {
-    color: var(--color-whiteText) !important;
-    font-size: 20px;
+    color: var(--color-blackText) !important;
+    font-size: 24px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -248,11 +248,15 @@
     align-items: center;
 }
 
+.writingScoreItemCard span{
+    font-weight: 700;
+}
+
 .writingScoreSummeryItemCard {
-    color: var(--color-whiteText) !important;
-    font-size: 20px;
+    color: var(--color-orange) ;
+    font-size: 24px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 700;
     line-height: normal;
     margin-bottom: 20px;
     display: flex;
@@ -262,29 +266,49 @@
 }
 
 .writingScoreSummeryItemCard span {
-    font-size: 18px;
-    padding-left: 10px !important;
-    margin-top: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 12px;
+    color: var(--color-blackText);
 }
 
-.analusisButtonContainer {
+.titleLoading {
     display: flex;
-    align-self: flex-end;
-    margin-top: auto;
+    margin-left: 8px;
 }
 
-.analusisButton {
-    height: 48px;
-    width: 180px;
+.retryContainer {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--color-whiteText);
     text-align: center;
     font-size: 24px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: normal;
-    border: solid 1px var(--color-whiteText);
+    background-color: #763646;
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.retryContainer button {
+    width: 180px;
+    height: 48px;
+    border-radius: 8px;
+    border: 2px solid #F3F3F3;
+    background: #F3F3F3;
+    padding: 0px !important;
+    color: #763646;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    margin-top: 64px;
+    align-items: center;
+    justify-content: center;
 }
 
 @media(max-width: 1680px) {
@@ -352,26 +376,6 @@
 
 @media(max-width: 500px) {
 
-    .analusisButton {
-        width: 108px;
-        height: 28px;
-        border-color: var(--color-seccondary);
-        color: #F3F3F3;
-        font-size: 15px;
-    }
-
-    .analusisButtonContainer {
-        width: 100%;
-        border-top: solid 1px var(--color-seccondary);
-        position: absolute;
-        right: 0px;
-        left: 0px;
-        bottom: 0px;
-        height: 53px;
-        align-items: center;
-        justify-content: center;
-    }
-
     .sliderContainer {
         margin-bottom: 63px;
         align-self: center;
@@ -410,7 +414,7 @@
     .writingEssayCard {
         padding: 25px 18px 88px 26px;
         border: solid 2px var(--color-seccondary);
-        background-color: #626E7E;
+        background-color: transparent;
         border-radius: 8px;
         border-top-right-radius: 0px;
         border-top-left-radius: 0px;
@@ -420,11 +424,10 @@
     }
 
     .writingScoreDate {
-        color: var(--color-whiteText);
+        color: var(--color-blackText);
     }
 
     .writingEssayText {
-        color: #F3F3F3;
         font-size: 15px;
         font-style: normal;
         font-weight: 500;
@@ -432,7 +435,6 @@
     }
 
     .writingEssayTopic {
-        color: #F3F3F3;
         font-size: 15px;
         font-style: normal;
         font-weight: 500;
@@ -485,7 +487,7 @@
     .writingScoreCard {
         padding: 15px 16px 88px 16px;
         border: solid 2px var(--color-seccondary);
-        background-color: #626E7E;
+        background-color: transparent;
         border-radius: 8px;
         margin-top: 0px;
         height: fit-content;
@@ -500,12 +502,25 @@
     }
 
     .writingScoreSummeryItemCard {
-        color: #F3F3F3;
         font-size: 14px;
     }
 
     .writingScoreSummeryItemCard span {
         font-size: 13px !important;
+    }
+
+    .writingTimeCard{
+        flex-wrap: wrap;
+        font-size: 13px;
+    }
+
+    .writingTimeCard span{
+        margin-left: 10px;
+    }
+
+    .clockIcon{
+        font-size: 15px;
+        margin-right: 5px;
     }
 
 }

@@ -1,30 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 'use client';
-import React, { lazy } from "react";
+import React from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import client from '@/config/applloAuthorizedClient';
 import { AnimatePresence, motion } from 'framer-motion';
 import ReactLoading from 'react-loading';
 import { signOut } from 'next-auth/react';
 import { useMediaQuery } from 'react-responsive';
 import { Socket, io } from 'socket.io-client';
 import { DefaultEventsMap } from "@socket.io/component-emitter";
+import toast from "react-hot-toast";
 
 //-----------------------------------------------------styles
-import styles from './dashboard.module.css';
+import styles from './ielts.module.css';
 
 //-----------------------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-import { DELETE_TOPIC, GET_PROFILE, GET_USER_ESSAY, GET_USER_TOPICS, SCORE_ESSAY } from "@/config/graphql";
 const Loading = dynamic(() => import("@/components/loading/loading"));
 const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/dashboardPopOver"));
-const ChooseType = lazy(() => import("./essay/chooseType/chooseType"));
-const Task = lazy(() => import("./essay/task/task"));
-const TopicsList = lazy(() => import("@/components/topicsList/topicsList"));
+const ChooseType = dynamic(() => import("./essay/chooseType/chooseType"));
+const Task = dynamic(() => import("./essay/task/task"));
+const TopicsList = dynamic(() => import("@/components/topicsList/topicsList"));
+const Modal = dynamic(() => import("@/components/modal/modal"));
+import { SCORE_ESSAY } from "@/config/graphql";
+const ProfileCard = dynamic(() => import("@/components/profileCard/profileCard"));
 import { StopLoader } from "@/components/Untitled";
 
 //----------------------------------------------------icons
@@ -35,31 +37,12 @@ import { TfiMenu } from 'react-icons/tfi';
 import { FiMoreVertical } from 'react-icons/fi';
 
 //---------------------------------------------------types
-import { Essay } from "../../../types/essay";
+import { Essay, JOBSTATUS } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
-
-const tabBarItems = [
-    {
-        title: 'Essay',
-        active: true
-    },
-    {
-        title: 'Score',
-        active: true
-    },
-    {
-        title: 'Analysis',
-        active: true
-    },
-    {
-        title: 'Insights',
-        active: true
-    },
-    {
-        title: 'Recommendations',
-        active: true
-    },
-];
+import { UserProfile } from "../../../types/profile";
+import { GetEsseies, GetTopics, GetUserProfile } from "@/hooks/fetchData";
+import { DeleteTopics } from "@/hooks/actions";
+import { useMutation } from "@apollo/client";
 
 type topic = {
     id: string,
@@ -73,7 +56,7 @@ type topic = {
     }[]
 };
 
-const IeltsDashboard: React.FC = () => {
+const Page: React.FC = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
     const targetRef = React.useRef();
@@ -92,11 +75,12 @@ const IeltsDashboard: React.FC = () => {
         }
     });
     const [pageLoading, setLoading] = React.useState<boolean>(true);
-    const [userName, setuserName] = React.useState<string>();
+    const [profile, setProfile] = React.useState<UserProfile>();
     const [essay, setEssay] = React.useState<string>('');
     const [isOpen, setIsOpen] = React.useState<boolean>(!isMobile);
     const [MoreEssaies, changeMoreEssaies] = React.useState<boolean>(true);
     const [MoreTopics, changeMoreTopics] = React.useState<boolean>(true);
+    const [showProfileModal, changeShowProfileModal] = React.useState<boolean>(false);
     const [topicsLoading, changeTopicsLoading] = React.useState<boolean>(true);
     const [topics, changeTopics] = React.useState<Topic[]>([]);
     const [topicsType, setTopicsType] = React.useState('general_task_1');
@@ -105,7 +89,7 @@ const IeltsDashboard: React.FC = () => {
     const router = useRouter();
     const [essayTopic, changeTopic] = React.useState<topic | null>();
     const [socket, setSocket] = React.useState<Socket<DefaultEventsMap, DefaultEventsMap>>(null);
-    const { step, goTo } = useMultiStepForm([
+    const { step, goTo, currentStepIndex } = useMultiStepForm([
         <ChooseType changeType={ChangeType} />,
         <Task
             targetRef={targetRef} GetScores={GetScores}
@@ -113,29 +97,46 @@ const IeltsDashboard: React.FC = () => {
             essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type} essay={essay}
             changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
     ]);
+    const [scoreEssay] = useMutation(SCORE_ESSAY);
+
+    const tabBarItems = [
+        {
+            title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay',
+            active: true
+        },
+        {
+            title: 'Score',
+            active: true
+        },
+        {
+            title: 'Analysis',
+            active: true
+        },
+        {
+            title: 'Insights',
+            active: true
+        },
+        {
+            title: 'Recommendations',
+            active: true
+        },
+    ];
 
     async function ChangeType(type: string) {
         if (!socket)
             await socketInitializer();
-        else
-            console.log(socket.id);
         setType(type);
         if (topicsType !== type)
             SelectType(type);
         goTo(1);
     };
 
-    async function SelectTopic(topic?: topic, essay?: string) {
-        if (!socket)
-            await socketInitializer();
-
+    async function SelectTopic(topic: topic, essay?: string) {
         ChangeType(topic.type);
         changeTabBarLoc(true);
         changeEndAnimation(true);
         setEssaies([]);
         changeTopic(topic);
-        // changeMoreEssaies(true);
-
         if (essay) {
             setEssay(essay);
             changeMoreEssaies(false);
@@ -150,86 +151,58 @@ const IeltsDashboard: React.FC = () => {
             setIsOpen(false);
     };
 
-    async function DeleteTopic(id: string) {
-        await client.mutate({
-            mutation: DELETE_TOPIC,
-            variables: {
-                id: id
-            }
-        }).then(async (res) => {
-            await changeTopics(topics.filter(item => item.id !== id));
-            changeTabBarLoc(false);
-            changeEndAnimation(false);
-            setEssaies([]);
-            changeMoreEssaies(true);
-            changeTopic(null);
-            goTo(0);
-        }).catch((err) => {
-            console.log("delete topic error : ", err);
-        });
+    async function UpdateTopicsList(id: string) {
+        await changeTopics(topics.filter(item => item.id !== id));
+        changeTabBarLoc(false);
+        changeEndAnimation(false);
+        setEssaies([]);
+        changeMoreEssaies(true);
+        changeTopic(null);
+        goTo(0);
+        toast.success('Topic deleted.');
     };
+
+    async function DeleteTopic(id: string) { await DeleteTopics(id, UpdateTopicsList); };
 
     //----------------------------------------------------------------get user essaies
     async function GetUserEssaies(id: string) {
-        await client.query({
-            query: GET_USER_ESSAY,
-            variables: {
-                id: id,
-                page: essaies.length + 1,
-                pageSize: 1
-            },
-            fetchPolicy: "no-cache"
-        }).then(async (res) => {
-            if (res.data.getUserEssay.essaies.length != 0) {
-                await setEssaies([...essaies, ...res.data.getUserEssay.essaies]);
-                // changeEssayPage(essayPage + 1);
-            } else {
+        if (id !== null) {
+            let Essaies: Essay[] = await GetEsseies(id, essaies.length);
+            if (Essaies.length > 0)
+                await setEssaies([...essaies, ...Essaies]);
+            else
                 changeMoreEssaies(false);
-            }
-        }).catch((err) => {
-            // console.log('get users essay error : ', err)
-        });
+            if (Essaies.length % 10 !== 0)
+                changeMoreEssaies(false);
+        }
     };
 
     //----------------------------------------------------------------get topics list
     async function GetTopicsList(type?: string) {
-        await client.query({
-            query: GET_USER_TOPICS,
-            variables: {
-                type: type ? type : topicsType,
-                page: topics.length + 1,
-                pageSize: topics.length === 0 ? 6 : 1
-            },
-            fetchPolicy: "no-cache"
-        }).then(async (res) => {
-            if (res.data.getUserTopics.userTopics.length != 0) {
-                await changeTopics([...topics, ...res.data.getUserTopics.userTopics]);
-            } else {
-                changeMoreTopics(false);
-            }
-        }).catch((err) => {
-            console.log("get user topics error : ", err);
-        });
+        let Topics: Topic[] = await GetTopics(type ? type : topicsType, topics.length);
+        if (Topics.length > 0)
+            await changeTopics([...topics, ...Topics]);
+        else
+            changeMoreTopics(false);
+        if (Topics.length % 10 !== 0)
+            changeMoreTopics(false);
+    };
+
+    async function GetFirstPageOfTopics(type: string) {
+        let Topics: Topic[] = await GetTopics(type, 0);
+        if (Topics.length > 0)
+            await changeTopics(Topics);
+        else
+            changeMoreTopics(false);
+        if (Topics.length % 10 !== 0)
+            changeMoreTopics(false);
     };
 
     async function SelectType(type: string) {
-        // setType(type);
         changeTopicsLoading(true);
         await setTopicsType(type);
         changeMoreTopics(true);
-        await client.query({
-            query: GET_USER_TOPICS,
-            variables: {
-                type: type,
-                page: 1,
-                pageSize: 6
-            },
-            fetchPolicy: "no-cache"
-        }).then(async (res) => {
-            await changeTopics(res.data.getUserTopics.userTopics);
-        }).catch((err) => {
-            console.log("get user topics error : ", err);
-        });
+        await GetFirstPageOfTopics(type);
         changeTopicsLoading(false);
     };
 
@@ -246,129 +219,36 @@ const IeltsDashboard: React.FC = () => {
             setIsOpen(false);
     };
 
-    async function GetProfile() {
-        await client.query({
-            query: GET_PROFILE,
-            fetchPolicy: "no-cache"
-        }).then(async (res) => {
-            setuserName(res.data.getUserProfile.firstName + ' ' + res.data.getUserProfile.lastName);
-        }).catch((err) => {
-            console.log("get user profile error : ", err);
-        });
-    };
+    async function GetProfile() { setProfile(await GetUserProfile()) };
 
-    async function GetScores(essaies: Essay[]) {
-
+    async function GetScores(essaies: Essay[], essay?: Essay) {
         let newEssay: Essay[] = essaies;
-        client.mutate({
-            mutation: SCORE_ESSAY,
+        await scoreEssay({
             variables: {
-                id: newEssay[0].id
+                id: essay ? essay.id : newEssay[0].id,
+                test: false
             }
         }).then(async (res) => {
-            console.log(res);
-        });
-
-        socket.on("newMessage", (data) => {
-            let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
-            switch (data.part) {
-                case 'Insight': {
-                    if (essay && !essay?.essayInsights) {
-                        essay.essayInsights = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Recommendation': {
-                    if (essay && !essay?.essayRecommendations) {
-                        essay.essayRecommendations = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Grammatical': {
-                    if (essay && !essay?.grammaticalRangeAndAccuracyScore) {
-                        essay.grammaticalRangeAndAccuracyScore = data.data as number;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Grammatical Summary': {
-                    if (essay && !essay?.grammaticalRangeAndAccuracySummery) {
-                        essay.grammaticalRangeAndAccuracySummery = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Coherence': {
-                    if (essay && !essay?.coherenceAndCohesionScore) {
-                        essay.coherenceAndCohesionScore = data.data as number;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Coherence Summary': {
-                    if (essay && !essay?.coherenceAndCohesionSummery) {
-                        essay.coherenceAndCohesionSummery = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Lexical': {
-                    if (essay && !essay?.lexicalResourceScore) {
-                        essay.lexicalResourceScore = data.data as number;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Lexical Summary': {
-                    if (essay && !essay?.lexicalResourceSummery) {
-                        essay.lexicalResourceSummery = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Task Achievement': {
-                    if (essay && !essay?.taskAchievementScore) {
-                        essay.taskAchievementScore = data.data as number;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'Task Achievement Summary': {
-                    if (essay && !essay?.taskAchievementSummery) {
-                        essay.taskAchievementSummery = data.data;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-                case 'overalScore': {
-                    if (essay && !essay?.overallBandScore) {
-                        essay.overallBandScore = data.data as number;
-                        newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
-                        setEssaies(newEssay);
-                    }
-                    break;
-                }
-
-            }
-            if (essay) {
-                newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+            try {
+                if (res.data.scoreEssay.recommendation === true)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).recommendationJobStatus = JOBSTATUS[3];
+                else if (!newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).essayRecommendations)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).recommendationJobStatus = JOBSTATUS[4];
+                if (res.data.scoreEssay.insight === true)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).insightJobStatus = JOBSTATUS[3];
+                else if (!newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).essayInsights)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).insightJobStatus = JOBSTATUS[4];
+                if (res.data.scoreEssay.score === true)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).scoreJobStatus = JOBSTATUS[3];
+                else if (!newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).overallBandScore)
+                    newEssay.find(item => item.id === (essay ? essay.id : newEssay[0].id)).scoreJobStatus = JOBSTATUS[4];
+            } finally {
                 setEssaies(newEssay);
+                router.refresh();
             }
-            router.refresh();
-        });
-
+        }).catch((err) => {
+            toast.error(err.message);
+        })
     };
 
     //-------------------------------------------------------connect to socket
@@ -391,6 +271,135 @@ const IeltsDashboard: React.FC = () => {
         }
     };
 
+    const CheckForScores = () => {
+        let newEssay: Essay[] = essaies;
+        if (socket) {
+            socket.on("newMessage", async (data) => {
+                let essay: Essay | undefined = essaies.find(item => item.id === data.essayId);
+                switch (data.part) {
+                    case 'Insight': {
+                        if (essay && !essay?.essayInsights) {
+                            if (data.data === '') {
+                                essay.insightJobStatus = JOBSTATUS[4];
+                            } else {
+                                essay.essayInsights = data.data;
+                                essay.insightJobStatus = JOBSTATUS[0];
+                            }
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            await setEssaies(newEssay);
+                            router.refresh();
+                        }
+                        break;
+                    }
+                    case 'Recommendation': {
+                        if (essay && !essay?.essayRecommendations) {
+                            if (data.data === '') {
+                                essay.recommendationJobStatus = JOBSTATUS[4];
+                            } else {
+                                essay.essayRecommendations = data.data;
+                                essay.recommendationJobStatus = JOBSTATUS[0];
+                            }
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                            router.refresh();
+                        }
+                        break;
+                    }
+                    case 'Grammatical': {
+                        if (essay && !essay?.grammaticalRangeAndAccuracyScore) {
+                            essay.grammaticalRangeAndAccuracyScore = data.data as number;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Grammatical Summary': {
+                        if (essay && !essay?.grammaticalRangeAndAccuracySummery) {
+                            essay.grammaticalRangeAndAccuracySummery = data.data;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Coherence': {
+                        if (essay && !essay?.coherenceAndCohesionScore) {
+                            essay.coherenceAndCohesionScore = data.data as number;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Coherence Summary': {
+                        if (essay && !essay?.coherenceAndCohesionSummery) {
+                            essay.coherenceAndCohesionSummery = data.data;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Lexical': {
+                        if (essay && !essay?.lexicalResourceScore) {
+                            essay.lexicalResourceScore = data.data as number;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Lexical Summary': {
+                        if (essay && !essay?.lexicalResourceSummery) {
+                            essay.lexicalResourceSummery = data.data;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Task Achievement': {
+                        if (essay && !essay?.taskAchievementScore) {
+                            essay.taskAchievementScore = data.data as number;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'Task Achievement Summary': {
+                        if (essay && !essay?.taskAchievementSummery) {
+                            essay.taskAchievementSummery = data.data;
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                        }
+                        break;
+                    }
+                    case 'overalScore': {
+                        if (essay && !essay?.overallBandScore || essay?.overallBandScore <= 0) {
+                            if (data.data === '') {
+                                essay.scoreJobStatus = JOBSTATUS[4];
+                            } else {
+                                essay.overallBandScore = data.data as number;
+                                essay.scoreJobStatus = JOBSTATUS[0];
+                                let newTopics: Topic[] = topics;
+                                newTopics[topics.findIndex(item => item.id === essay.topicId)].overallBandScore = data.data;
+                                changeTopics(newTopics);
+                            }
+                            newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                            setEssaies(newEssay);
+                            router.refresh();
+
+                        }
+                        break;
+                    }
+
+                }
+                if (essay) {
+                    newEssay[essaies.findIndex(item => item.id === data.essayId)] = essay;
+                    await setEssaies(newEssay);
+                    router.refresh();
+                    return;
+                }
+                return;
+            });
+        }
+    };
+
     //------------------------------------------------------------------check user loged in
     // eslint-disable-next-line react-hooks/exhaustive-deps
     React.useEffect(() => {
@@ -407,6 +416,8 @@ const IeltsDashboard: React.FC = () => {
         } else {
             setLoading(false);
         };
+
+        CheckForScores();
     });
 
     React.useEffect(() => {
@@ -434,7 +445,7 @@ const IeltsDashboard: React.FC = () => {
         localStorage.clear();
         if (status === 'authenticated')
             signOut();
-    }
+    };
 
     async function handleNewTopic(topic: Topic) {
         try {
@@ -449,24 +460,7 @@ const IeltsDashboard: React.FC = () => {
             }
             else {
                 changeTopicsLoading(true);
-                await client.query({
-                    query: GET_USER_TOPICS,
-                    variables: {
-                        type: topicsType,
-                        page: 1,
-                        pageSize: 6
-                    },
-                    fetchPolicy: "no-cache"
-                }).then(async (res) => {
-                    if (res.data.getUserTopics.userTopics.length != 0) {
-                        await changeTopics(res.data.getUserTopics.userTopics);
-                        changeMoreTopics(true);
-                    } else {
-                        changeMoreTopics(false);
-                    }
-                }).catch((err) => {
-                    console.log("get user topics error : ", err);
-                });
+                await GetFirstPageOfTopics(topicsType);
                 changeTopicsLoading(false);
             };
         } finally {
@@ -474,6 +468,12 @@ const IeltsDashboard: React.FC = () => {
         }
 
     };
+
+    function ShowProfile() {
+        if (isMobile)
+            setIsOpen(false);
+        changeShowProfileModal(true);
+    }
 
     const showAnimation = {
         hidden: {
@@ -521,17 +521,21 @@ const IeltsDashboard: React.FC = () => {
                                 animate='show'
                                 exit='hidden'
                                 className={styles.dashboardLeftCard}>
-                                <Image
-                                    onClick={() => router.push('/')}
-                                    className={styles.logo}
-                                    src="/logo3.svg"
-                                    alt="Logo"
-                                    width={isMac ? 108 : 175}
-                                    height={isMac ? 23 : 17}
-                                    loading="eager"
-                                    priority
-                                />
+                                <a
+                                //href="javascript:void(Tawk_API.showWidget())"
+                                >
 
+                                    <Image
+                                        onClick={() => router.replace('/')}
+                                        className={styles.logo}
+                                        src="/logo3.svg"
+                                        alt="Logo"
+                                        width={isMac ? 108 : 175}
+                                        height={isMac ? 23 : 17}
+                                        loading="eager"
+                                        priority
+                                    />
+                                </a>
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -541,7 +545,7 @@ const IeltsDashboard: React.FC = () => {
                                     <div className={'col-12 ' + styles.newEssayContainer}>
                                         <button
                                             onClick={async () => NewEssay()}
-                                            className={styles.newEssayButton}><AiOutlinePlus className={styles.plusIcon} />New essay
+                                            className={styles.newEssayButton}><AiOutlinePlus className={styles.plusIcon} />New IELTS Writing
                                         </button>
                                         <button
                                             aria-label="close drawer button"
@@ -555,13 +559,13 @@ const IeltsDashboard: React.FC = () => {
                                             aria-label="general task1 button"
                                             onClick={() => SelectType('general_task_1')}
                                             className={topicsType === 'general_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
-                                            Gen Task 1</button>
+                                            GT Task 1</button>
 
                                         <button
                                             aria-label="academic task1 button"
                                             onClick={() => SelectType('academic_task_1')}
                                             className={topicsType === 'academic_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
-                                            Ac Task 1</button>
+                                            AC Task 1</button>
 
                                         <button
                                             aria-label="task2 button"
@@ -601,7 +605,7 @@ const IeltsDashboard: React.FC = () => {
                                         <FiMoreVertical className={styles.moreIcon} />
                                     </button>
                                     <div className={styles.drawerFooterText}>
-                                        Welcome  {userName ? userName : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}
+                                        Welcome  {profile ? profile.firstName + ' ' + profile.lastName : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}
                                     </div>
                                 </motion.div>
                             </motion.div>
@@ -646,9 +650,9 @@ const IeltsDashboard: React.FC = () => {
                 </AnimatePresence>
             </motion.div >
 
-            <main style={{ flex: 1, height: '100vh', overflow: 'hidden' }}
-                className={isOpen && isMobile ? styles.mask : ''}
-            >
+            <main style={{ flex: 1, height: '100vh', overflow: 'hidden', display: 'block' }}
+                className={isOpen && isMobile ? styles.mask : ''}>
+
                 {/* //-------------------------------------------------------------dashboard content */}
                 {
                     isMobile &&
@@ -688,7 +692,7 @@ const IeltsDashboard: React.FC = () => {
                         className={styles.dashboardContentRightContainer}>
 
                         {
-                            !endAnimation &&
+                            !endAnimation && currentStepIndex !== 0 &&
                             <motion.div
                                 className={styles.topTabBarContainer}
                                 animate={{ y: tabBarLoc ? type === 'general_task_1' ? 814 : type === 'academic_task_1' ? 1319 : 714 : 0 }}
@@ -722,9 +726,14 @@ const IeltsDashboard: React.FC = () => {
 
             </main >
 
-            <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose} LogOut={LogOut} />
+            <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose}
+                LogOut={LogOut} showProfile={ShowProfile} />
+
+            <Modal isOpen={showProfileModal} setIsOpen={changeShowProfileModal} key={0}>
+                <ProfileCard profile={profile} closeProfile={changeShowProfileModal} setProfile={setProfile} />
+            </Modal>
 
         </div >
 };
 
-export default IeltsDashboard;
+export default Page;
