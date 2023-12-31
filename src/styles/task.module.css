@@ -259,6 +259,7 @@
     align-items: center;
     width: fit-content;
     height: fit-content;
+    margin-left: 20px;
 }
 
 .selectMenuItem {
@@ -509,6 +510,7 @@
     .topicButtonsContainer {
         margin-bottom: 18px;
         flex-direction: row;
+        margin-left: 0px;
     }
 
     .select {

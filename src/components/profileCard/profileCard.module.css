@@ -156,6 +156,7 @@
 .arrowIcon {
     font-size: 30px;
     cursor: pointer;
+    margin-right: 16px;
 }
 
 .genderSelectItemsCard {
@@ -201,8 +202,9 @@
 
     .profileCard {
         width: 85%;
+        margin: auto !important;
         position: relative;
-        padding: 87px 40px 20px 22px;
+        padding: 87px 10px 20px 22px;
 
     }
 
@@ -210,7 +212,7 @@
         padding: 21px 0px;
         font-size: 16.183px;
         font-weight: 700;
-        line-height: 8.092px;
+        line-height: normal;
         letter-spacing: -0.081px;
 
     }
@@ -220,7 +222,8 @@
     }
 
     .profileCard span {
-        width: 130px !important;
+        width: 100px !important;
+        max-width: 100px !important;
     }
 
     .profileItemsIcon {
@@ -279,6 +282,8 @@
         width: 164px !important;
         height: 35px !important;
         border-radius: 4px !important;
+        padding: 0px 5px 0px 10px !important;
+        white-space: nowrap;
     }
 
     .genderSelect span {
@@ -288,6 +293,7 @@
 
     .arrowIcon {
         font-size: 25px;
+        margin-right: 0px;
     }
 
     .genderSelectItemsCard {

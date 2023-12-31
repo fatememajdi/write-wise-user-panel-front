@@ -52,7 +52,7 @@ export default ProfileCard;
 const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any }> = ({ profile, closeProfile, next }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const [deleteAccount, { loading }] = useMutation(DELETE_ACCOUNT);
-   
+
 
     const router = useRouter();
     function handleClose() {
@@ -72,7 +72,7 @@ const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any
                 <Loading style={{ minHeight: 0 }} />
                 :
                 <>
-                    <tr><span><FaUser className={styles.profileItemsIcon} /> Name</span>{profile.firstName === '' && profile.lastName === '' ? 'Please enter your age'
+                    <tr><span><FaUser className={styles.profileItemsIcon} /> Name</span>{profile.firstName === '' && profile.lastName === '' ? 'Please enter your name'
                         : CapitalStart(profile.firstName) + ' ' + CapitalStart(profile.lastName)}</tr>
                     <tr><span><MdCake className={styles.profileItemsIcon} />Age</span>{profile.age === -1 ? 'Please enter your age' : profile.age + ' years old'}</tr>
                     <tr><span><MdFace className={styles.profileItemsIcon} />Gender</span>{profile.gender === '' ? 'Please select your gender'
@@ -294,7 +294,7 @@ const GenederSelect: React.FC<{ value: string, handleSelect: any }> = ({ value, 
 
     return <AnimatePresence>
         <div className={styles.genderSelect}>
-            <span style={value === '' ? { opacity: 0.5 } : { opacity: 1 }}>{value === '' ? 'Select Gender' : Genders.find(item => item.value === value).label}</span>
+            <span style={value === '' ? { opacity: 0.5 } : { opacity: 1 }}>{value === '' ? 'Select gender' : Genders.find(item => item.value === value).label}</span>
             <motion.div
                 animate={showMenu ? { transform: 'rotate(180deg)' } : {}}
                 transition={{ type: "spring", duration: 0.5 }}
@@ -307,20 +307,18 @@ const GenederSelect: React.FC<{ value: string, handleSelect: any }> = ({ value, 
                 }} />
             </motion.div>
 
-            {
-                showList &&
-                <motion.div
-                    animate={{ height: showMenu ? 'fit-content' : 0, opacity: showMenu ? 1 : 0 }}
-                    transition={{ type: "spring", duration: 0.5 }}
-                    className={styles.genderSelectItemsCard}
-                >
+            <motion.div
+                style={{ display: 'none' }}
+                animate={{ height: showMenu ? 'fit-content' : 0, display: showMenu ? 'block' : 'none' }}
+                transition={{ type: "spring", duration: 0.5 }}
+                className={styles.genderSelectItemsCard}
+            >
 
-                    {
-                        Genders.map((item, index) => <div onClick={() => { handleSelect(item.value); setShowMenu(!showMenu); }} className={styles.menuItem} key={index}>{item.label}</div>)
-                    }
+                {
+                    Genders.map((item, index) => <div onClick={() => { if (showMenu) { handleSelect(item.value); setShowMenu(!showMenu); } }} className={styles.menuItem} key={index}>{item.label}</div>)
+                }
 
-                </motion.div>
-            }
+            </motion.div>
         </div>
     </AnimatePresence>
 };

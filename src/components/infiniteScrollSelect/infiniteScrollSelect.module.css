@@ -85,16 +85,18 @@
 @media(max-width: 500px) {
 
     .select {
-        width: 232.286px;
-        height: 32.571px;
+        width: 164px !important;
+        height: 35px !important;
+        border-radius: 4px;
+        padding: 0px 10px !important;
     }
 
-    .selectItemsCard{
+    .selectItemsCard {
         top: 33px;
     }
 
     .select input {
-        width: 175px !important;
+        width: 115px !important;
         font-size: 16px !important;
         font-weight: 700 !important;
     }
@@ -111,7 +113,7 @@
         margin-right: 10px;
     }
 
-    .arrowIcon{
+    .arrowIcon {
         font-size: 25px;
     }
 

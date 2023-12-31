@@ -40,7 +40,7 @@ const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, ti
         <DialogContent
             style={{ backgroundColor: '#626E7E' }}>
             <DialogContentText
-                style={{ color: '#F3F3F3' }}
+                style={{ color: '#F3F3F3', display: 'flex', flexDirection: 'column' }}
                 id="alert-dialog-slide-description">
                 <span style={{ fontSize: 22, marginBottom: 10, color: '#F3F3F3' }}>{title}</span>
                 <span style={{ color: '#F3F3F3' }}>{dialog}</span>

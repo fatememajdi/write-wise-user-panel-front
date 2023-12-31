@@ -122,7 +122,7 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
         </div>
 
         <SelectComponents values={[
-            { title: 'Score', active: true, lock: false },
+            { title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay', active: true, lock: false },
             { title: 'Essay', active: true, lock: false },
             { title: 'Analysis', active: true, lock: false },
             { title: 'Insights', active: true, lock: false },

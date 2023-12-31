@@ -90,7 +90,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
     const [selectTopic, { error }] = useMutation(SELECT_TOPIC);
     const [addNewEssay] = useMutation(ADD_ESSAY);
 
-    const handleCancelImageModal = () => changeShowImage(false);
+    const handleCancelImageModal = (state?: boolean) => changeShowImage(false);
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
@@ -364,7 +364,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                             style={{ height: 'fit-content', minHeight: type === 'general_task_1' ? 764 : type === 'general_task_2' ? 600 : 1255 }}
                             className={styles.writingForm}>
                             <SelectComponents values={[
-                                { title: 'Essay', active: false, lock: false },
+                                { title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay', active: false, lock: false },
                                 { title: 'Score', active: false, lock: false },
                                 { title: 'Analysis', active: false, lock: true },
                                 { title: 'Recommendations', active: false, lock: true },
@@ -641,11 +641,13 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                         <span>{'Sorry, you don\'t have enough tokens for this '}</span>
                         <div className={styles.waaletErrorButtonsCard}>
                             <button
+                                type="button"
                                 onClick={() => { router.push('/wallet') }}
                                 aria-label="add token button"
                                 className={styles.addTokenBtn}>Wallet</button>
                             <button
-                                onClick={() => changeShowImage(false)}
+                                type="button"
+                                onClick={() => handleCancelImageModal()}
                                 aria-label="close wallet modal button"
                                 className={styles.okBtn}>Okay</button>
                         </div>
