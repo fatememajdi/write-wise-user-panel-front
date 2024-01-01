@@ -182,27 +182,6 @@
     ;
 }
 
-.generatedWritingCard {
-    border: solid 1px #132740;
-    display: flex;
-    width: 70%;
-    border-radius: 8px;
-    padding: 15px 52px 55px 18px !important;
-    overflow-y: auto;
-    color: #252525 !important;
-    font-size: 20px !important;
-    font-style: normal;
-    font-weight: 400;
-    margin-top: 26px;
-    line-height: normal;
-    padding-bottom: 55px !important;
-}
-
-.academicGeneratedWritingCard {
-    max-width: 70% !important;
-    width: fit-content !important;
-}
-
 .cursor {
     display: none;
 }
@@ -232,14 +211,6 @@
     font-weight: 500;
     line-height: 24.5px;
     margin-top: 14px;
-}
-
-.writerClassname {
-    line-height: 180% !important;
-}
-
-.writerClassname br {
-    line-height: 180% !important;
 }
 
 .select {
@@ -329,58 +300,6 @@
     font-size: 43px !important;
 }
 
-.WalletErrorCard {
-    width: 810px;
-    height: fit-content;
-    background-color: var(--color-gray);
-    border-radius: 14px;
-    padding: 64px 64px 38px 86px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.WalletErrorCard span {
-    color: var(--color-whiteText);
-    text-align: center;
-    font-family: var(--font-lato);
-    font-size: 32px;
-    font-weight: 500;
-    margin-top: 64px;
-}
-
-.waaletErrorButtonsCard {
-    display: flex;
-    flex-direction: row;
-    width: fit-content;
-    margin-left: auto;
-    margin-top: 103px;
-}
-
-.waaletErrorButtonsCard button {
-    height: 50px;
-    padding: auto !important;
-    text-align: center;
-    font-family: var(--font-lato);
-    font-size: 24px;
-    font-weight: 400;
-    line-height: normal;
-    align-items: center;
-    justify-content: center;
-}
-
-.addTokenBtn {
-    background-color: var(--color-whiteText);
-    color: var(--color-primay);
-    width: 190px;
-}
-
-.okBtn {
-    padding-left: auto !important;
-    color: var(--color-whiteText);
-    margin-left: 10px;
-}
-
 .errorForm {
     color: #DA282E;
     font-family: var(--font-lato);
@@ -406,10 +325,6 @@
 
     .writingInputTitle {
         font-size: 16px;
-    }
-
-    .generatedWritingCard {
-        font-size: 16px !important;
     }
 
     .selectedTopcCard {
@@ -449,14 +364,14 @@
 
 
     .wriritngTitle {
-        margin-left: 0px;
+        margin-left: 8px;
         font-size: 16px;
         margin-top: 20px;
     }
 
     .writingSecondTitle {
         font-size: 16px;
-        margin-left: 0px;
+        margin-left: 8px;
     }
 
     .checkButton {
@@ -467,7 +382,7 @@
 
     .writingInputTitle {
         font-size: 16px;
-        margin-left: 0px;
+        margin-left: 8px;
         padding-right: 0px;
     }
 
@@ -492,25 +407,18 @@
         font-size: 16px !important;
     }
 
-    .generatedWritingCard {
-        font-size: 13px !important;
-        font-weight: 400;
-        padding: 15px 32px 55px 18px;
-        width: 100%;
-    }
-
     .generateButton {
         height: 25px;
         width: 100px;
         font-size: 13px;
         align-items: center;
         justify-content: center;
+        margin-left: 9px;
     }
 
     .topicButtonsContainer {
-        margin-bottom: 18px;
         flex-direction: row;
-        margin-left: 0px;
+        margin-left: 8px;
     }
 
     .select {
@@ -546,7 +454,7 @@
 
     .topicInput {
         width: 100% !important;
-        margin-top: 0px;
+        margin-top: 16px;
     }
 
     .topicInput textarea {

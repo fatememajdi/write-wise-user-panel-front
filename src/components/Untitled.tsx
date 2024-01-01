@@ -35,8 +35,7 @@ export function CountWords(text: string, Words?: number) {
 
     return <div className={styles.wordCount} style={{ color: Words ? count < Words ? '#DA282E' : Words === 250 && count > 300 ? '#DA282E' : Words === 150 && count > 220 ? '#DA282E' : '#28B81B' : '#2E4057' }}>
         {'Word count: ' + count}
-        <br />
-        <span style={{ color: '#2E4057', fontSize: 'inherit' }}>(Excluding articles)</span>
+        <div style={{ color: '#2E4057' }}>(Excluding articles)</div>
     </div>;
 };
 

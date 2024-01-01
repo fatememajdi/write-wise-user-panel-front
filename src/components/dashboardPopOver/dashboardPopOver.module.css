@@ -1,11 +1,22 @@
 .popOverCard {
     display: flex;
     flex-direction: column;
-    background-color: #12263E;
-    padding-bottom: 16px;
-    /* width: 380px; */
-    /* position: relative;
-    left: 0; */
+    background-color: var(--color-navyBlue);
+    padding-top: 4px;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+.popOver {
+    height: 0px;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+    right: 0px;
+    left: 0px;
+    bottom: 74px;
+    max-height: fit-content;
 }
 
 
@@ -13,40 +24,59 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: #FFF;
+    color: var(--color-whiteText);
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
     line-height: 28px;
-    padding: 15px 14px;
-    min-width: 230px;
+    padding: 16px 14px 16px 40px;
     text-decoration: none !important;
     cursor: pointer;
 }
 
+.menuItemCard:hover {
+    background-color: var(--color-primary);
+}
+
 .logOutButton {
-    display: flex;
     flex-direction: row;
-    align-items: center;
-    color: #FFF;
+    justify-content: left !important;
+    color: var(--color-whiteText);
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
     line-height: 28px;
-    padding: 20px 14px;
-    min-width: 220px;
+    padding: 16px 14px 16px 40px;
     text-decoration: none !important;
     cursor: pointer;
     border-top: solid 1px #626E7E;
     border-radius: 0px !important;
 }
 
+.logOutButton:hover {
+    background-color: var(--color-primary);
+}
+
+
 .exitIcon {
     font-size: 25px;
     margin-right: 18px;
 }
 
+@media(max-width: 1680px) {
+
+    .popOver {
+        bottom: 50px;
+    }
+}
+
 @media(max-width: 500px) {
+
+    .popOver {
+        bottom: 42px;
+        width: 0px;
+    }
+
     .menuItemCard {
         font-size: 16px;
         padding: 10px 15px;
@@ -59,7 +89,7 @@
         min-width: 170px !important;
     }
 
-    .exitIcon{
+    .exitIcon {
         font-size: 20px;
         margin-right: 12px;
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import Typewriter from 'typewriter-effect';
 
 //--------------------------------styles
-import styles from '../../styles/task.module.css';
+import styles from './writer.module.css';
 
 //--------------------------------components
 import { SplitText } from '../Untitled';
@@ -11,9 +11,9 @@ type _props = {
     type: string,
     topic: string,
     changeEndTyping: any
-}
+};
 
-const Writer: React.FC<_props> = ({ type, topic, changeEndTyping }) => {
+export default function Writer({ type, topic, changeEndTyping }: _props) {
     return <div
         style={{ height: 209 }}
         className={styles.generatedWritingCard}>
@@ -44,5 +44,3 @@ const Writer: React.FC<_props> = ({ type, topic, changeEndTyping }) => {
 
     </div>
 };
-
-export default Writer;

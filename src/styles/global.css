@@ -71,9 +71,10 @@ h6 {
 
 button {
   border-radius: 8px !important;
-  padding: 16px 28px;
   font-family: var(--font-lato);
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 body {

@@ -56,14 +56,14 @@ type topic = {
     }[]
 };
 
-const Page: React.FC = () => {
+export default function Page() {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
     const targetRef = React.useRef();
     let divRef: any;
     if (typeof document !== 'undefined')
         divRef = document.getElementById('scrollableDiv');
-    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+    const [anchorEl, setAnchorEl] = React.useState<boolean>(false);
     const [endAnimation, changeEndAnimation] = React.useState<boolean>(false);
     const [tabBarLoc, changeTabBarLoc] = React.useState<boolean>(false);
     const { data: session, status } = useSession({
@@ -433,11 +433,11 @@ const Page: React.FC = () => {
     }, []);
 
     const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
+        setAnchorEl(true);
     };
 
     const handlePopOverClose = () => {
-        setAnchorEl(null);
+        setAnchorEl(false);
     };
 
     async function LogOut() {
@@ -520,6 +520,7 @@ const Page: React.FC = () => {
                                 initial='hidden'
                                 animate='show'
                                 exit='hidden'
+                                transition={{ type: 'spring' }}
                                 className={styles.dashboardLeftCard}>
                                 <a
                                 //href="javascript:void(Tawk_API.showWidget())"
@@ -540,7 +541,7 @@ const Page: React.FC = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    transition={{ duration: 1 }}
+                                    transition={{ duration: 1, type: 'spring' }}
                                     className={'col-12 ' + styles.tabsContainer}>
                                     <div className={'col-12 ' + styles.newEssayContainer}>
                                         <button
@@ -579,7 +580,7 @@ const Page: React.FC = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    transition={{ duration: 1.5 }}
+                                    transition={{ duration: 1.5, type: 'spring' }}
                                     className={'col-12 ' + styles.drawerContent}>
                                     {topicsLoading ?
                                         <Loading style={{ height: '100%', minHeight: 0 }} />
@@ -590,6 +591,9 @@ const Page: React.FC = () => {
                                         />
                                     }
                                 </motion.div>
+
+                                <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose}
+                                    LogOut={LogOut} showProfile={ShowProfile} />
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -597,9 +601,9 @@ const Page: React.FC = () => {
                                     transition={{ duration: 1 }}
                                     className={'col-12 ' + styles.drawerFooterContainer}>
                                     <button
-                                        style={{ backgroundColor: anchorEl === null ? '#2E4057' : '#132740' }}
+                                        style={{ backgroundColor: anchorEl === false ? '#2E4057' : '#132740' }}
                                         aria-label="menu button"
-                                        onClick={handlePopOverOpen}
+                                        onClick={() => setAnchorEl(!anchorEl)}
                                         className={styles.menuButton}>
                                         <TfiMenu className={styles.menuIcon} />
                                         <FiMoreVertical className={styles.moreIcon} />
@@ -635,14 +639,14 @@ const Page: React.FC = () => {
                                     </button>
                                 </div>
 
-                                <div className={'col-12 ' + styles.leftTabBarButton}>
+                                {/* <div className={'col-12 ' + styles.leftTabBarButton}>
                                     <button
                                         aria-label="menu button"
-                                        onClick={handlePopOverOpen}
+                                        onClick={() => { setIsOpen(true); setAnchorEl(true) }}
                                         className={isOpen ? styles.menuButton : styles.menuButtonOpen}>
                                         <TfiMenu className={styles.menuIcon} />
                                     </button>
-                                </div>
+                                </div> */}
                             </motion.div>
                     }
 
@@ -726,14 +730,9 @@ const Page: React.FC = () => {
 
             </main >
 
-            <DashboardPopOver anchorEl={anchorEl} handlePopOverClose={handlePopOverClose}
-                LogOut={LogOut} showProfile={ShowProfile} />
-
             <Modal isOpen={showProfileModal} setIsOpen={changeShowProfileModal} key={0}>
                 <ProfileCard profile={profile} closeProfile={changeShowProfileModal} setProfile={setProfile} />
             </Modal>
 
         </div >
 };
-
-export default Page;

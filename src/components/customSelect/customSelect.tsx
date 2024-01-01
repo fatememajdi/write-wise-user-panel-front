@@ -7,30 +7,29 @@ import styles from './customSelect.module.css';
 import './animation.css';
 
 //------------------------------------------------------icons
-import { IoMdArrowDropdown, IoMdLock } from 'react-icons/io';
 import { TiArrowSortedDown } from 'react-icons/ti';
 
 
 interface value {
     title: string
     active: boolean
-    lock: boolean
-}
+};
 
 interface _props {
     values: value[]
     selectedItem: number
     className?: string
     onChange?: any
-}
+};
 
-const SelectComponent: React.FC<_props> = ({ values, selectedItem, className, onChange }) => {
+export default function SelectComponent({ values, selectedItem, className, onChange }: _props) {
 
     const [open, setOpen] = React.useState<boolean>(false);
 
     return <AnimatePresence>
         <div className={'col-12 ' + styles.selectContainer + ' ' + className}>
             <div
+                style={open ? { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 } : {}}
                 className={'col-12 ' + styles.selectTitle}
                 onClick={() => setOpen(!open)}
             >{values[selectedItem].title}
@@ -45,7 +44,6 @@ const SelectComponent: React.FC<_props> = ({ values, selectedItem, className, on
 
             </div>
 
-            {/* {open && */}
             <motion.div
                 style={{ opacity: 0 }}
                 animate={{ height: open ? 'fit-content' : 0, opacity: open ? 1 : 0 }}
@@ -63,15 +61,9 @@ const SelectComponent: React.FC<_props> = ({ values, selectedItem, className, on
                             }}
                             style={!item.active ? { opacity: 0.5 } : {}} className={styles.selectItemCard}>
                             {item.title}
-                            {
-                                item.lock && <span><IoMdLock fontSize={18} /></span>
-                            }
                         </div>
                 })}
             </motion.div>
-            {/* } */}
         </div>
     </AnimatePresence>
 };
-
-export default SelectComponent;

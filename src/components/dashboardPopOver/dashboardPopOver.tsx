@@ -2,6 +2,7 @@
 import React from "react";
 import Popover from '@mui/material/Popover';
 import dynamic from "next/dynamic";
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from "next/navigation";
 
 //--------------------------------styles
@@ -20,12 +21,12 @@ import { IS_FROM_IRAN } from "@/config/graphql";
 const DialogComponent = dynamic(() => import("../../components/dialog/dialog"), { ssr: false });
 
 interface _props {
-    anchorEl: HTMLButtonElement | null,
+    anchorEl: boolean,
     handlePopOverClose: any,
     LogOut: any,
     page?: string,
     showProfile: any
-}
+};
 
 const menuItems = [
     {
@@ -40,11 +41,9 @@ const menuItems = [
     }
 ];
 
-const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogOut, page, showProfile }) => {
+export default function DashboardPopOver({ anchorEl, handlePopOverClose, LogOut, page, showProfile }: _props) {
     const [open, setOpen] = React.useState<boolean>(false);
     const router = useRouter();
-    const Open = Boolean(anchorEl);
-    const id = Open ? 'simple-popover' : undefined;
     const [fromIran, setFromIran] = React.useState<boolean>(false);
 
     async function CheckCountry() {
@@ -71,7 +70,53 @@ const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogO
         CheckCountry();
     }, []);
 
-    return <>
+    return <AnimatePresence>
+
+        <motion.div
+            className={styles.popOver}
+            animate={anchorEl ? { height: 'fit-content', width: '100%' } : { height: 0 }}
+            transition={{ duration: 0.5, type: 'spring' }}
+        >
+            <div className={styles.popOverCard}>
+                {
+                    menuItems.filter(item => item.route !== page).map((item, index) =>
+                        <a
+                            onClick={() => {
+                                if (item.title === 'Profile') {
+                                    handlePopOverClose();
+                                    showProfile(true);
+                                } else {
+                                    router.push(item.route);
+                                    StartLoader();
+                                }
+                            }}
+                            key={index} className={styles.menuItemCard}>
+                            <item.icon className={styles.exitIcon} />
+                            <span> {item.title}</span>
+                        </a>
+                    )
+                }
+                <a target="_blank" href={fromIran ? 'https://www.goftino.com/c/7aFKEK' : 'https://tawk.to/chat/651990a910c0b257248765ee/1hbmfd0ck'} key={3} className={styles.menuItemCard}>
+                    <MdOutlineSupportAgent className={styles.exitIcon} />
+                    <span>Support</span>
+                </a>
+                <button
+                    onClick={() => setOpen(true)}
+                    className={styles.logOutButton}
+                    aria-label="logout button"
+                >
+                    <RxExit className={styles.exitIcon} /> Log out
+                </button>
+            </div>
+        </motion.div>
+
+        <DialogComponent open={open} handleClose={handleClose} handleDelete={handleDelete}
+            title="Log out" dialog="Are you sure you want to log out?" deleteButton='Log out' />
+
+    </AnimatePresence>
+};
+
+{/* <>
         <Popover
             id={id}
             open={Open}
@@ -121,7 +166,4 @@ const DashboardPopOver: React.FC<_props> = ({ anchorEl, handlePopOverClose, LogO
 
         <DialogComponent open={open} handleClose={handleClose} handleDelete={handleDelete}
             title="Log out" dialog="Are you sure you want to log out?" deleteButton='Log out' />
-    </>
-};
-
-export default DashboardPopOver;
+    </> */}

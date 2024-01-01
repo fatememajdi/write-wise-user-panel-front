@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    position: relative;
 }
 
 .logo {
@@ -116,9 +117,6 @@
     border-bottom-right-radius: 0px !important;
     width: 32%;
     height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .taskTabButton:hover {
@@ -429,12 +427,12 @@
 
     .activeTaskTabButton {
         font-size: 12px;
-        height: 38px !important;
+        height: 38px;
     }
 
     .taskTabButton {
         font-size: 12px;
-        height: 38px !important;
+        height: 38px;
     }
 
     .taskTabButton:hover {
@@ -454,7 +452,7 @@
     }
 
     .newEssayContainer {
-        padding: 15px 0px !important;
+        padding: 15px 0px;
     }
 
     .newEssayButton {
@@ -520,6 +518,10 @@
         display: none;
     }
 
+    .drawerContent{
+        padding-top: 8px;
+    }
+
     .topResponsiveTabBar {
         display: flex;
     }
@@ -559,34 +561,38 @@
     }
 
     .arrowLeftButton {
-        background-color: var(--color-whiteText);
         height: 45px !important;
         width: 45px !important;
         padding: 0px;
     }
 
-    .arrowIcon {
-        color: var(--color-seccondary);
+    .newEssayButton {
+        font-size: 16px;
+        font-weight: 700;
+        height: 40px;
+        flex-direction: row-reverse;
     }
 
-    .newEssayButton {
-        background-color: var(--color-blue);
-        font-size: 16px;
-        height: 40px;
+    .tabsContainer {
+        padding: 0px 0px;
     }
 
     .taskTabButton {
-        height: 30px;
+        height: 28px;
+        width: 80px;
         font-size: 13px;
     }
 
     .activeTaskTabButton {
-        height: 30px;
+        height: 28px;
+        width: 80px;
         font-size: 13px;
     }
 
     .newEssayContainer {
-        padding: 10px 0px 10px 0px;
+        padding: 10px 5px 7px 5px;
+        border-bottom: solid 1px var(--color-gray);
+        margin-bottom: 7px;
     }
 
 
@@ -595,7 +601,6 @@
     }
 
     .menuButton {
-        background-color: transparent;
         width: 40px;
     }
 

@@ -26,7 +26,7 @@ const Loading = dynamic(() => import('@/components/loading/loading'));
 const SelectComponents = dynamic(() => import('@/components/customSelect/customSelect'));
 import { CheckCountWords, CountWords } from "@/components/Untitled";
 const Text = dynamic(() => import("@/components/text/text"));
-const Modal = dynamic(() => import("@/components/modal/modal"));
+const TokenErrorCard = dynamic(() => import("@/components/tokenErrorCard/tokenErrorCard"));
 const SubTypeSelect = dynamic(() => import("@/components/subTypeSelect/subTypeSelect"));
 const Writer = dynamic(() => import("@/components/writer/writer"));
 import { DeleteEssaies, GenerateNewTopic } from "@/hooks/actions";
@@ -38,29 +38,14 @@ import { IoMdImage } from 'react-icons/io';
 import { MdEdit, MdCheck } from 'react-icons/md';
 
 //--------------------------------------types
-import { Essay, tempEssay, SelectedTopicTempEssay } from '../../../../../types/essay';
+import { tempEssay, SelectedTopicTempEssay } from '../../../../../types/essay';
 import { topic } from "../../../../../types/topic";
+import { TaskProps } from "../../../../../types/task";
 
-type _props = {
-    changeTabBarLoc: any
-    changeEndAnimation: any,
-    endAnimation: boolean,
-    topic?: topic,
-    essaies: Essay[],
-    GetUserEssaies: any,
-    MoreEssaies: boolean,
-    changeMoreEssaies: any,
-    setEssaies: any,
-    handleNewTopic: any,
-    divRef?: any,
-    type: string,
-    targetRef: any,
-    essay?: string,
-    GetScores: any
-};
-
-const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
-    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
+export default function TaskForm({
+    changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
+    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef
+}: TaskProps) {
     let DivRef2: any;
     let DivRef3: any;
     if (typeof document !== 'undefined') {
@@ -364,11 +349,11 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                             style={{ height: 'fit-content', minHeight: type === 'general_task_1' ? 764 : type === 'general_task_2' ? 600 : 1255 }}
                             className={styles.writingForm}>
                             <SelectComponents values={[
-                                { title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay', active: false, lock: false },
-                                { title: 'Score', active: false, lock: false },
-                                { title: 'Analysis', active: false, lock: true },
-                                { title: 'Recommendations', active: false, lock: true },
-                                { title: 'WWAI Tutor', active: false, lock: true }
+                                { title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay', active: false },
+                                { title: 'Score', active: false },
+                                { title: 'Analysis', active: false },
+                                { title: 'Recommendations', active: false },
+                                { title: 'WWAI Tutor', active: false }
                             ]} selectedItem={0} className={styles.topSelect} />
 
                             <div className={styles.wriritngTitle}>
@@ -494,7 +479,7 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                                 }
                             </div>
 
-                            <div className={styles.writingInputTitle}>Write at least {type === 'general_task_2' ? 250 : 150} words.
+                            <div style={{ lineHeight: 'unset' }} className={styles.writingInputTitle}>Write at least {type === 'general_task_2' ? 250 : 150} words.
                                 {
                                     changeInput && type !== 'academic_task_1' &&
                                     <div className={styles.wordsCount}>
@@ -628,36 +613,9 @@ const TaskForm: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAn
                 </div>
 
 
-                <Modal isOpen={showImage} setIsOpen={handleCancelImageModal} key={0}>
-                    <div className={styles.WalletErrorCard}>
-                        <Image
-                            src='/dashboard/tokenError.svg'
-                            alt="no token error image"
-                            height='194'
-                            width='192'
-                            loading="eager"
-                            priority
-                        />
-                        <span>{'Sorry, you don\'t have enough tokens for this '}</span>
-                        <div className={styles.waaletErrorButtonsCard}>
-                            <button
-                                type="button"
-                                onClick={() => { router.push('/wallet') }}
-                                aria-label="add token button"
-                                className={styles.addTokenBtn}>Wallet</button>
-                            <button
-                                type="button"
-                                onClick={() => handleCancelImageModal()}
-                                aria-label="close wallet modal button"
-                                className={styles.okBtn}>Okay</button>
-                        </div>
-
-                    </div>
-                </Modal>
+                <TokenErrorCard showImage={showImage} handleCancelImageModal={handleCancelImageModal} />
 
             </form >
         )}
     </Formik >;
 };
-
-export default TaskForm;

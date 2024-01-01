@@ -28,7 +28,7 @@ type _props = {
     selectedTopic?: Topic
 };
 
-const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, MoreTopics, HandleDelete, type, selectedTopic }) => {
+export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTopics, HandleDelete, type, selectedTopic }: _props) {
     const [open, setOpen] = React.useState<boolean>(false);
     const [temp, setTemp] = React.useState<tempEssay | null>();
     const [tempsList, setTempsList] = React.useState<SelectedTopicTempEssay[]>([]);
@@ -100,7 +100,7 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                         pageStart={0}
                         loadMore={() => GetTopicsList()}
                         hasMore={MoreTopics}
-                        loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} key={1}/>}
+                        loader={<Loading style={{ height: 40, minHeight: 0, marginTop: 5 }} key={1} />}
                         useWindow={false}
                         key={0}
                     >
@@ -119,9 +119,9 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
                                 </div>
                                 <div className={styles.taskCardScore}>
                                     <div>
-                                        <span style={{ fontSize: 26 }}>
+                                        <div className={styles.tempScore} style={{ fontSize: 26 }}>
                                             ?
-                                        </span>
+                                        </div>
                                         <AiOutlineDelete className={styles.deleteIcon}
                                             onClick={() => {
                                                 if (type === 'general_task_1') {
@@ -186,5 +186,3 @@ const TopicsList: React.FC<_props> = ({ Topics, HandleSelect, GetTopicsList, Mor
             title="Delete Topic" dialog="Permanently delete the topic?" />
     </div >
 };
-
-export default TopicsList;

@@ -1,0 +1,82 @@
+.WalletErrorCard {
+    width: 810px;
+    height: fit-content;
+    background-color: var(--color-gray);
+    border-radius: 14px;
+    padding: 64px 64px 38px 86px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.WalletErrorCard span {
+    color: var(--color-whiteText);
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 32px;
+    font-weight: 500;
+    margin-top: 64px;
+}
+
+.waaletErrorButtonsCard {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin-left: auto;
+    margin-top: 103px;
+}
+
+.waaletErrorButtonsCard button {
+    height: 50px;
+    padding: auto !important;
+    text-align: center;
+    font-family: var(--font-lato);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: normal;
+    align-items: center;
+    justify-content: center;
+}
+
+.addTokenBtn {
+    background-color: var(--color-whiteText);
+    color: var(--color-primay);
+    width: 190px;
+}
+
+.okBtn {
+    padding-left: auto !important;
+    padding: 0px 15px;
+    color: var(--color-whiteText);
+    margin-left: 10px;
+}
+
+
+@media(max-width: 500px) {
+    .WalletErrorCard {
+        width: 90%;
+        padding: 40px 15px 30px 15px;
+    }
+
+    .WalletErrorCard span{
+        font-size: 20px;
+    }
+
+    .waaletErrorButtonsCard{
+        margin-top: 50px;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .waaletErrorButtonsCard button{
+        font-size: 18px;
+        width: 50% !important;
+        height: 40px;
+    }
+
+    .WalletErrorCard img{
+        width: 144px;
+        height: 142px;
+    }
+
+}

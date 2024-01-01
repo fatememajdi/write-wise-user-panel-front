@@ -3,9 +3,9 @@ import React from 'react';
 //------------------------------------------styles
 import styles from './chooseType.module.css';
 
-interface chooseTypeProps {
+type chooseTypeProps = {
     changeType: any
-}
+};
 
 const types = [
     {
@@ -20,9 +20,9 @@ const types = [
         label: 'Task 2',
         value: 'general_task_2'
     },
-]
+];
 
-const ChooseType: React.FC<chooseTypeProps> = ({ changeType }) => {
+export default function Page({ changeType }: chooseTypeProps) {
 
     return <div className={'col-12 ' + styles.chooseTypeContainer}>
         <div className={styles.chooseTypeTitle}>
@@ -37,7 +37,5 @@ const ChooseType: React.FC<chooseTypeProps> = ({ changeType }) => {
                     key={index}>{item.label}</button>
             )}
         </div>
-    </div>;
+    </div>
 };
-
-export default ChooseType;

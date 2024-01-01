@@ -1,38 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { lazy } from "react";
+import React from "react";
+import dynamic from "next/dynamic";
 
 //--------------------------------------components
-const TaskForm = lazy(() => import("../taskForm/taskForm"));
+const TaskForm = dynamic(() => import("../taskForm/taskForm"));
 
 //--------------------------------------types
-import { Essay } from '../../../../../types/essay';
+import { TaskProps } from "../../../../../types/task";
 
-type topic = {
-    id: string,
-    body: string,
-    type: string
-}
-
-type _props = {
-    changeTabBarLoc: any
-    changeEndAnimation: any,
-    endAnimation: boolean,
-    topic?: topic,
-    essaies: Essay[],
-    GetUserEssaies: any,
-    MoreEssaies: boolean,
-    changeMoreEssaies: any,
-    setEssaies: any,
-    handleNewTopic: any,
-    divRef?: any,
-    type: string,
-    targetRef: any,
-    essay?: string,
-    GetScores: any
-}
-
-const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
-    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }) => {
+export default function Task({ changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
+    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef }: TaskProps) {
     return <>
         {
             topic ?
@@ -47,5 +24,3 @@ const Task: React.FC<_props> = ({ changeTabBarLoc, changeEndAnimation, endAnimat
         }
     </>
 };
-
-export default Task;
