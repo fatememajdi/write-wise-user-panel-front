@@ -214,6 +214,7 @@ export default function Page() {
         changeEndAnimation(false);
         changeTopic(null);
         setEssay('');
+        setAnchorEl(false);
         goTo(0);
         if (isMobile)
             setIsOpen(false);
@@ -432,13 +433,7 @@ export default function Page() {
         };
     }, []);
 
-    const handlePopOverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(true);
-    };
-
-    const handlePopOverClose = () => {
-        setAnchorEl(false);
-    };
+    const handlePopOverClose = () => { setAnchorEl(false); };
 
     async function LogOut() {
         setLoading(true);
@@ -473,7 +468,7 @@ export default function Page() {
         if (isMobile)
             setIsOpen(false);
         changeShowProfileModal(true);
-    }
+    };
 
     const showAnimation = {
         hidden: {
@@ -550,7 +545,7 @@ export default function Page() {
                                         </button>
                                         <button
                                             aria-label="close drawer button"
-                                            onClick={() => setIsOpen(false)}
+                                            onClick={() => { setIsOpen(false); setAnchorEl(false) }}
                                             className={styles.arrowLeftButton}><div><IoIosArrowBack className={styles.arrowIcon} /></div></button>
                                     </div>
 
