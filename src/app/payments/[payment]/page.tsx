@@ -104,7 +104,7 @@ const SuccessCard: React.FC<{ payment: paymentData, RecieptLink: any }> = ({ pay
             <span>{payment.tokenNumber} Tokens </span></div>
         <div className={styles.successButtonContainer}>
             <button
-                onClick={() => router.push('/wallet')}
+                onClick={() => { router.replace('/wallet'); router.refresh() }}
                 aria-label="back button"
             >back</button>
             <button
@@ -135,7 +135,7 @@ const FaildCard: React.FC<{ payment: paymentData }> = ({ payment }) => {
             <span>{payment.tokenNumber} Tokens </span></div>
         <div className={styles.buttonContainer}>
             <button
-                onClick={() => router.push('/wallet')}
+                onClick={() => { router.replace('/wallet'); router.refresh() }}
                 aria-label="back button"
             >back</button>
         </div>
