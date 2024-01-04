@@ -1,27 +1,5 @@
 .section1Container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 299px 0px 259px 0px;
-    font-style: normal;
     font-family: var(--font-lato);
-}
-
-.content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding-left: 175px;
-    margin-right: auto;
-}
-
-.title {
-    color: var(--color-primary);
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .animationText {
@@ -30,7 +8,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-feature-settings: 'ss04' on, 'ss03' on, 'ss02' on, 'ss01' on, 'salt' on;
-    color: var(--color-primary);
 }
 
 .cursorStyle {
@@ -44,32 +21,11 @@
     }
 }
 
-.title span {
-    white-space: nowrap;
-}
-
 .description {
-    margin-top: 48px;
-    color: var(--color-blackText);
-    line-height: 31.2px;
-    text-transform: capitalize;
     max-width: 85%;
-
 }
 
-.startButton {
-    color: var(--color-whiteText);
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 40px;
-    border-radius: 8px;
-    border: 1px solid var(--color-red);
-    background-color: var(--color-red) !important;
-    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-    padding: 16px 28px;
-    margin-top: 80px;
-}
+
 
 @media(max-width: 1680px) {
 
@@ -78,7 +34,7 @@
     }
 
     .content {
-        padding-left: 116px;
+        padding-left: 116px !important;
     }
 
     .title {
@@ -103,28 +59,24 @@
 
 @media(max-width: 500px) {
     .section1Container {
-        flex-direction: column-reverse;
-        padding: 100px 0px 50px 0px;
+        padding: 100px 0px 50px 0px !important;
         min-height: fit-content;
     }
 
     .content {
-        height: fit-content;
-        padding: 0px 20px 0px 30px;
-        margin-top: 350px;
+        padding: 0px 20px 0px 30px !important;
+        margin-top: 350px !important;
     }
 
     .description {
-        margin-top: 16px;
+        margin-top: 16px !important;
     }
 
     .startButton {
-        width: 92px;
-        height: 43px;
-        font-size: 13px;
-        font-weight: 700;
-        line-height: 4px;
-        margin-top: 32px;
+        width: 92px !important;
+        height: 43px !important;
+        font-size: 13px !important;
+        line-height: 4px !important;
         border-radius: 4px !important;
     }
 

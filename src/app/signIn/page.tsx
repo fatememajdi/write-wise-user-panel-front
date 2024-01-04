@@ -158,7 +158,7 @@ const Page: React.FC = () => {
 
                         {/* <Pagination lenght={2} currentPage={1} color="#2E4057" /> */}
 
-                        <Divider style={{ marginTop: 32, fontSize: 20, fontWeight: 300 }} plain>or</Divider>
+                        {/* <Divider style={{ marginTop: 32, fontSize: 20, fontWeight: 300 }} plain>or</Divider>
 
                         <a
                             // onClick={handeClickGoogle}
@@ -175,7 +175,7 @@ const Page: React.FC = () => {
                             // onClick={handeClickApple}
                             className={styles.signInOptionsbutton + ' ' + styles.appleSingInCard}>
                             <GrApple className={styles.signInOptionsIcon} />Sign in with Apple
-                        </a>
+                        </a> */}
 
                         <motion.div
                             variants={variants}

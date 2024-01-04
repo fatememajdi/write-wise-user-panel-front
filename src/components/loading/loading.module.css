@@ -1,9 +1,0 @@
-.loading {
-    display: flex;
-    padding: auto !important;
-    min-height: 100vh;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: auto !important;
-    width: fit-content;
-}

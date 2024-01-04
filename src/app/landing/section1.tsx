@@ -17,13 +17,13 @@ const Section1: React.FC = () => {
     const router = useRouter();
 
     return <LandingBackground>
-        <section className={'col-12 ' + styles.section1Container} id="hero-section">
+        <section className={'col-12 flex flex-row not-italic px-0 pt-[299px] pb-[259px] sm:flex-col-reverse justify-center items-center ' + styles.section1Container} id="hero-section">
 
-            <div className={'col-lg-9 col-md-9 col-12 ' + styles.content}>
-                <h1 className={styles.title} >
+            <div className={'col-lg-9 col-md-9 col-12 flex flex-column items-start justify-center pl-[175px] mr-auto my-0 h-full sm:h-fit ' + styles.content}>
+                <h1 className='flex flex-wrap text-[#172E4A] '>
                     <p> Achieve IELTS Writing Excellence with</p>
-                    <span> AI-Driven &nbsp;</span>
-                    <div className={styles.animationText}>
+                    <span className="whitespace-nowrap "> AI-Driven &nbsp;</span>
+                    <div className={'text-[#172E4A] '+styles.animationText}>
                         <Typewriter
                             options={{
                                 strings: ['Rating', 'Analysis', 'Progress Tracking'],
@@ -37,7 +37,7 @@ const Section1: React.FC = () => {
 
                 </h1>
 
-                <h6 className={styles.description}>
+                <h6 className={'mt-[48px] text-[#252525] capitalize leading-[31.2px] '+styles.description}>
                     <span>
                         Unlock the full potential of your IELTS writing Skills with our state-of-the-art AI technology. Experience a comprehensive journey to success.
                     </span>
@@ -46,7 +46,7 @@ const Section1: React.FC = () => {
                             StartLoader();
                             router.push('/signIn');
                         }}
-                        className={styles.startButton}
+                        className={'text-[#FFF] not-italic bg-[#AB141D] py-[16px] px-[28px] mt-[80px] text-[24px] font-semibold leading-[40px] rounded-[8px] border border-[#AB141D] border-solid shadow-[0px 1px 2px 0px rgba(16, 24, 40, 0.05)] sm:font-bold '+styles.startButton}
                     >
                         Start Now
                     </button>
