@@ -1,4 +1,4 @@
-.token.tag,
+/* .token.tag,
 .token.class-name,
 .token.selector,
 .token.selector .class,
@@ -31,7 +31,7 @@
 .token.punctuation,
 .token.property {
   @apply text-slate-500;
-}
+} */
 
 .token.atapply .token:not(.rule):not(.important) {
   color: inherit;
@@ -45,7 +45,7 @@
   color: inherit;
 }
 
-.token.comment {
+/* .token.comment {
   @apply text-gray-500;
 }
 
@@ -72,4 +72,4 @@
 
 .refractor-marker {
   @apply bg-sky-300/10;
-}
+} */

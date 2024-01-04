@@ -116,24 +116,25 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
 
     const variants = {
-        open: { backgroundColor: 'transparent', boxShadow: 'none', height: isMac ? 100 : 130 },
-        closed: { backgroundColor: '#FFF', boxShadow: "0px 4px 14.6px 0px rgba(0, 0, 0, 0.25)", height: isMac ? 106 : 112 },
+        open: { backgroundColor: isMobile ? '#2E4057' : 'transparent', boxShadow: 'none', height: isMobile ? 45 : isMac ? 100 : 130 },
+        closed: { backgroundColor: isMobile ? '#2E4057' : '#FFF', boxShadow: "0px 4px 14.6px 0px rgba(0, 0, 0, 0.25)", height: isMobile ? 45 : isMac ? 106 : 112 },
     }
 
     return (<AnimatePresence>
         <motion.nav
             animate={!isMobile && topHeader ? 'open' : 'closed'}
             variants={variants}
-            className={'col-12 ' + styles.headerContainer}>
+            className={'col-12 fixed top-0 z-[100] items-center w-full max-w-[1920px] sm:flex-row sm:justify-between sm:flex sm:py-0 sm:px-14 sm:h-[45px] sm:bg-seccondaryColor ' + styles.headerContainer}>
+
             {/* ---------------------------------------------------------------------mobile header */}
             <div
                 onClick={() => SetShowDrawer()}
-                className={styles.responsiveMenuIcon}>
-                <MdOutlineMenu />
+                className="hidden sm:flex sm:absolute sm:top-auto sm:bottom-auto sm:left-[15px]">
+                <MdOutlineMenu className="text-[30px]" color="#FFF" />
             </div>
 
             <Image
-                className={styles.responsiveLogo}
+                className="hidden sm:flex sm:my-0 sm:mx-auto"
                 src="/mobileLogo.svg"
                 alt="Logo"
                 width={85}
@@ -142,12 +143,12 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                 loading="eager"
             />
 
-            <div className={'col-12 ' + styles.headerCard}>
-                <div className={styles.headerItemsContainer}>
+            <div className={'col-12 flex h-[110px] flex-row items-center justify-between flex-1 z-10 pr-[97px] pl-[203px] relative sm:hidden ' + styles.headerCard}>
+                <div className="flex flex-row w-fit h-full items-center"  >
                     {
                         isMac ?
                             <Image
-                                className={styles.headerLogo}
+                                className="mr-[38px] w-[183px] h-[24px]"
                                 src={"/logoIcon.svg"}
                                 alt="Logo"
                                 width="0"
@@ -160,7 +161,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                             <Link style={{ cursor: 'pointer' }} onClick={() => { if (pathname === '/') handleScroll; }}
                                 href={pathname === '/' ? '#hero-section' : '/#hero-section'}>
                                 <Image
-                                    className={styles.headerLogo}
+                                    className="mr-[38px] w-[183px] h-[24px]"
                                     src={"/logoWithIcon.svg"}
                                     alt="Logo"
                                     width="0"
@@ -173,7 +174,8 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     }
                     {
                         headerItems.map(
-                            (item, index) => <Link className={styles.headerItem} onClick={() => { if (pathname === '/') handleScroll; }}
+                            (item, index) => <Link className="text-seccondaryColor no-underline leading-[28px] text-[24px] font-normal mr-[40px] cursor-pointer"
+                                onClick={() => { if (pathname === '/') handleScroll; }}
                                 key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>
                         )
                     }
@@ -185,12 +187,14 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                                     router.push('/ielts');
                                     StartLoader();
                                 }}
-                                className={styles.headerItem}>Dashboard</a>
+                                className='className="text-seccondaryColor no-underline leading-[28px] text-[24px] font-normal mr-[40px] cursor-pointer"'>
+                                Dashboard</a>
                             :
                             <div onClick={() => {
                                 router.push('/signIn');
                                 StartLoader();
-                            }} className={styles.headerItem}>Signup</div>
+                            }} className='className="text-seccondaryColor no-underline leading-[28px] text-[24px] font-normal mr-[40px] cursor-pointer"'>
+                                Signup</div>
                     }
 
                 </div>
@@ -200,16 +204,17 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                 <motion.div
                     animate={{ height: showPopup ? isMac ? 49 : isMobile ? 34 : 54 : 0 }}
                     transition={{ type: "spring", duration: 1 }}
-                    className={styles.popup}>
-                    <div className={styles.popupTitle}>Limited Time Offer!</div>
+                    className='bg-red overflow-hidden flex flex-row items-center justify-center pr-[18px] mt-0 sm:absolute sm:left-0 sm:right-0 sm:bottom-[-45px]'>
+                    <div className='text-whiteText text-[18px] font-medium leading-[52.8px] ml-auto sm:text-[13px]'>
+                        Limited Time Offer!</div>
                     <button
                         onClick={showModal}
-                        className={styles.popupButton}>
+                        className="w-[121px] h-[28px] items-center justify-center rounded-[4px] bg-background text-red text-[18px] font-normal leading-[40px] ml-[52px] sm:w-[95px] sm:h-[22px] sm:text-[14px] sm:font-normal sm:leading-[31.4px]" >
                         Start Now
                     </button>
 
                     <AiOutlineClose
-                        className={styles.popupCloseButton}
+                        className="sm:text-[20px] ml-auto text-whiteText text-[27px] cursor-pointer"
                         onClick={() => {
                             changeShowPopup(false);
                             setDisablePopup(true);
@@ -225,12 +230,12 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                 open={isModalOpen}
                 onCancel={handleCancel}
                 width={isMac ? 500 : isMobile ? '100%' : 772}
-                className={styles.modalContainer}
+                className="bg-background p-0"
             >
 
-                <div className={styles.modalCard}>
+                <div
+                    className="h-full w-[772px] flex flex-col items-center justify-center p-[34px 20px 10px 20px] sm:w-full">
                     <Image
-                        className={styles.banner}
                         src="/landing/banner.svg"
                         alt="banner"
                         width={isMac ? 278 : isMobile ? 178 : 478}
@@ -238,15 +243,15 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                         priority
                         loading="eager"
                     />
-                    <div className={styles.bannerTitle}>
+                    <div className="text-primaryColor text-[48px] font-bold leading-[52.8px] mt-[80px] text-center sm:text-[24px] sm:font-semibold sm:leading-normal sm:mt-[50px]">
                         Claim Your First Essay Assessment for Just {packages?.find(item => item.isPopup === true)?.showingPriceWithDiscount}
                     </div>
-                    <div className={styles.bannerDescription}>
+                    <div className="text-blackText text-[24px] font-bold leading-[31.2px] mt-[30px] text-center mx-[30px] sm:text-[16px] sm:font-semibold sm:leading-normal">
                         Unlock AI-driven personalized feedback, insights, and expert recommendations.
                     </div>
                     <button
                         onClick={() => router.push('/signIn')}
-                        className={styles.bannerButton}>
+                        className="text-whiteText text-[24px] font-bold leading-[40px] py-[40px] px-[28px] mr-[50px] bg-red sm:py-0 sm:px-[14px] sm:font-semibold">
                         Start Now
                     </button>
                 </div>
@@ -262,7 +267,8 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                 className={styles.drawer}
             >
                 {
-                    headerItems.map((item, index) => <p key={index} style={selectedDrawerItem === index ? { backgroundColor: '#172E4A' } : {}}>
+                    headerItems.map((item, index) => <p className="text-whiteText twxt-[20px] font-normal leading-[28px] mt-[15px] w-full"
+                        key={index} style={selectedDrawerItem === index ? { backgroundColor: '#172E4A' } : {}}>
                         {landing ?
                             <Link href={item.route} onClick={() => {
                                 handleScroll;
@@ -283,6 +289,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     logedIn ?
                         <>
                             <p
+                                className="text-whiteText twxt-[20px] font-normal leading-[28px] mt-[15px] w-full"
                                 style={pathname === '/ielts' ? { backgroundColor: '#172E4A' } : {}}
                                 onClick={() => {
                                     router.push('/ielts');
@@ -290,8 +297,9 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                                     StartLoader();
                                     onCloseDrawer();
                                 }}
-                                className={styles.headerItem}>Dashboard</p>
+                            >Dashboard</p>
                             <p
+                                className="text-whiteText twxt-[20px] font-normal leading-[28px] mt-[15px] w-full"
                                 style={pathname === '/profile' ? { backgroundColor: '#172E4A' } : {}}
                                 onClick={() => {
                                     router.push('/profile');
@@ -299,8 +307,9 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                                     StartLoader();
                                     onCloseDrawer();
                                 }}
-                                className={styles.headerItem}>Profile</p>
+                            >Profile</p>
                             <p
+                                className="text-whiteText twxt-[20px] font-normal leading-[28px] mt-[15px] w-full"
                                 style={pathname === '/wallet' ? { backgroundColor: '#172E4A' } : {}}
                                 onClick={() => {
                                     router.push('/wallet');
@@ -308,16 +317,18 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                                     StartLoader();
                                     onCloseDrawer();
                                 }}
-                                className={styles.headerItem}>Wallet</p>
+                            >Wallet</p>
                         </>
                         :
                         <p
+                            className="text-whiteText twxt-[20px] font-normal leading-[28px] mt-[15px] w-full"
                             style={selectedDrawerItem === 7 ? { backgroundColor: '#172E4A' } : {}}
                             onClick={() => {
                                 router.push('/signIn');
                                 setSelectedDrawerItem(6);
                                 StartLoader();
-                            }} className={styles.headerItem}>Signup</p>
+                            }}
+                        >Signup</p>
                 }
 
             </Drawer>

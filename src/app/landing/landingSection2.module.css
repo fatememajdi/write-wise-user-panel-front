@@ -1,41 +1,5 @@
-.section2Container {
-    overflow: hidden !important;
-    overflow-x: hidden !important;
-    padding: 150px 0px 120px 0px;
-    width: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-style: normal;
-    background: linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%);
-}
-
-.textContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 80px;
-}
-
 .title {
-    color: var(--color-whiteText);
     font-feature-settings: 'ss04' on, 'ss03' on, 'ss02' on, 'ss01' on, 'salt' on;
-    line-height: 60px;
-    text-align: center;
-    width: 100%;
-}
-
-.description {
-    line-height: 130.52%;
-    color: var(--color-whiteText);
-    letter-spacing: 0.005em;
-    margin-top: 24px;
-    max-width: 1050px;
-}
-
-.description span {
-    font-weight: 800;
 }
 
 .section2carousel {
@@ -87,59 +51,7 @@
     border-bottom: 2px solid rgba(255, 255, 255, 0.79);
 }
 
-@media(max-width: 1680px) {
-
-    .arrowContainer {
-        height: 50px !important;
-        width: 50px !important;
-    }
-
-    .stepCardDescription {
-        font-size: 16px;
-    }
-
-    .stepCardtitle {
-        font-size: 16px;
-    }
-
-    .stepCardSecondtitle {
-        font-size: 24px;
-    }
-
-    .title {
-        font-size: 24px;
-    }
-
-    .description {
-        font-size: 16px;
-    }
-
-    .section2Container {
-        padding: 180px 0px 40px 0px;
-    }
-}
-
 @media(max-width: 500px) {
-    .section2Container {
-        padding: 20px 0px 100px 0px;
-        min-height: fit-content !important;
-    }
-
-    .title {
-        margin-right: 30px;
-        margin-left: 30px;
-        text-align: left;
-    }
-
-    .description {
-        margin-top: 0px;
-        margin-right: 30px;
-        margin-left: 30px;
-    }
-
-    .description span {
-        font-weight: 500;
-    }
 
     .section2carousel {
         margin-top: 60px;
@@ -170,7 +82,4 @@
         font-weight: 400;
     }
 
-    .textContainer{
-        margin-bottom: 60px;
-    }
 }

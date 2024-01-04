@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic';
 import React from "react";
 
 //-------------------------------------------styles
-import styles from './landingBackground.module.css';
 import '../../../styles/global.css';
 
 //-------------------------------------------components
@@ -20,7 +19,7 @@ const LandingBackground: React.FC<{ children: React.ReactNode }> = ({ children }
             changeLogedIn(false);
     }, [])
 
-    return <div className={'col-12 ' + styles.landingBackground}>
+    return <div className='col-12 bg-hero-pattern bg-cover bg-no-repeat relative z-[501] overflow-hidden min-h-fit sm:bg-mobile-hero-pattern '>
         <header><LandingHeader logedIn={logedIn} landing /></header>
         {children}
     </div >
