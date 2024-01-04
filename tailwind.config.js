@@ -24,7 +24,10 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'mobile-hero-pattern': "url('/landing/section1-mobile-background.svg')",
         'hero-pattern': "url('/landing/section1-desktop-background.svg')",
-        'section2-gradiant': 'linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%)'
+        'section2-gradiant': 'linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%)',
+        'features-card': 'linear-gradient(91deg, #F9F9F9 1.87%, rgba(255, 255, 255, 0.58) 41.79%, #ECEFF2 95.39%)',
+        'section4-gradiant': 'linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%)',
+        'divider-gradiant': 'linear-gradient(90deg, #D4DCE7 3.15%, rgba(104, 122, 146, 0.30) 104.87%)'
       },
     },
   },
