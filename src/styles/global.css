@@ -142,7 +142,7 @@ textarea::-webkit-scrollbar-thumb {
   h2 {
     font-size: 20px !important;
     font-weight: 700 !important;
-    line-height: 60px !important;
+    line-height: 60px;
   }
 
   h4 {

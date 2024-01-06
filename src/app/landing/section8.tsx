@@ -3,19 +3,18 @@
 import React from "react";
 
 //-------------------------------------------styles
-import styles from './landingSection8.module.css';
 import '../../styles/global.css';
 
 const Section8: React.FC = () => {
 
-    return <section className={styles.section8Container} id="">
-        <div className={styles.section8Card}>
+    return <section className="overflow-hidden pt-[150px] pr-[380px] pb-[248px] pl-[380px] bg-background sm:py-[50px] sm:pr-[33px] sm:pl-[53px] sm:min-h-fit " id="">
+        <div className="bg-background relative sm:py-[70px] sm:px-[40px] ">
 
-            <h2 className={styles.cardTitle}>
-                Join <span>W</span>rite<span>W</span>ise<span>AI</span> now!
+            <h2 className="text-seccondaryColor leading-[28px] sm:text-[24px] sm:leading-[28px] ">
+                Join <span className="text-red">W</span>rite<span className="text-red">W</span>ise<span className="text-red">AI</span> now!
             </h2>
 
-            <h6 className={styles.cardDescription}>
+            <h6 className="text-blackText leading-[36px] text-left mt-[64px] sm:text-[13px] sm:leading-[19.5px] sm:mt-[32px] ">
                 Don't let IELTS writing hold you back from achieving your dreams. Join WriteWiseAI now and
                 unlock a world of opportunity with our innovative, AI-powered platform. Elevate your writing skills,
                 gain personalized insights, and conquer your IELTS test with confidence. Start your journey to IELTS

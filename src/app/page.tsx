@@ -9,16 +9,16 @@ import { StartLoader, StopLoader } from "@/components/Untitled";
 import styles from '../styles/landing.module.css';
 
 //-------------------------------------------components
-const Section1 = dynamic(() => import('./landing/section1'));
-const Section2 = dynamic(() => import("./landing/section2"));
-const Section3 = dynamic(() => import("./landing/section3"));
-const Section4 = dynamic(() => import("./landing/section4"));
+const Section1 = dynamic(() => import('./landing/section1'), { ssr: false });
+const Section2 = dynamic(() => import("./landing/section2"), { ssr: false });
+const Section3 = dynamic(() => import("./landing/section3"), { ssr: false });
+const Section4 = dynamic(() => import("./landing/section4"), { ssr: false });
 // const Section5 = dynamic(() => import("./landing/section5"));
-const Section6 = dynamic(() => import("./landing/section6"));
-const Section7 = dynamic(() => import("./landing/section7"));
-const Section8 = dynamic(() => import("./landing/section8"));
-const Footer = dynamic(() => import("@/components/footer/footer"));
-const Loading = dynamic(() => import("@/components/loading/loading"));
+const Section6 = dynamic(() => import("./landing/section6"), { ssr: false });
+const Section7 = dynamic(() => import("./landing/section7"), { ssr: false });
+const Section8 = dynamic(() => import("./landing/section8"), { ssr: false });
+const Footer = dynamic(() => import("@/components/footer/footer"), { ssr: false });
+const Loading = dynamic(() => import("@/components/loading/loading"), { ssr: false });
 
 const Home: React.FC = () => {
 
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
   });
 
   const router = useRouter();
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -55,15 +55,15 @@ const Home: React.FC = () => {
     <Suspense fallback={<Loading />}>
       <div className={'col-12 ' + styles.landingContainer}>
 
-        <Section1 />
-        <Section2 />
-        <Section3 />
-        <Section6 />
+        <Suspense fallback={<Loading />}><Section1 /></Suspense>
+        <Suspense fallback={<Loading />}><Section2 /></Suspense>
+        <Suspense fallback={<Loading />}><Section3 /></Suspense>
+        <Suspense fallback={<Loading />}><Section6 /></Suspense>
+        <Suspense fallback={<Loading />}><Section7 /></Suspense>
+        <Suspense fallback={<Loading />}><Section4 /></Suspense>
+        <Suspense fallback={<Loading />}><Section8 /></Suspense>
+        <Suspense fallback={<Loading />}><Footer /></Suspense>
         {/* <Section5 /> */}
-        <Section7 />
-        <Section4 />
-        <Section8 />
-        <Footer />
         <button
           onClick={() => {
             StartLoader();

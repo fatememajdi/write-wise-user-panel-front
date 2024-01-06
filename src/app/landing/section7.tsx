@@ -54,10 +54,10 @@ const Section7: React.FC = () => {
     const router = useRouter();
     const [selectedItem, ChangeSelectedItem] = React.useState<number>(null);
 
-    return (<section className={styles.section7} id="FQA">
+    return (<section className="overflow-hidden bg-background sm:bg-section7-gradiant " id="FQA">
         <AnimatePresence>
-            <div className={styles.section7Container}>
-                <div className={'col-lg-6 col-md-6 col-12 ' + styles.itemsContainer}>
+            <div className="flex flex-1 lg:flex-row items-start pt-[240px] px-[290px] pb-[303px] sm:min-h-fit sm:py-[40px] sm:px-[30px] sm:flex-col-reverse ">
+                <div className='col-lg-6 col-md-6 col-12 flex flex-col '>
                     {
                         questions.slice(0, 3).map((item, index) => <QuestionCard selectedItem={selectedItem} QA={item} key={index} ChangeSelectedItem={ChangeSelectedItem} />)
                     }
@@ -66,14 +66,14 @@ const Section7: React.FC = () => {
                             router.push('/fqa');
                             StartLoader();
                         }}
-                        className={styles.readMoreButton}>
-                        Read More <IoIosArrowForward className={styles.arrowIcon} />
+                        className="text-seccondaryColor w-fit text-[24px] font-black leading-[24px] mt-[50px] p-0 items-center sm:text-[13px] sm:font-black sm:leading-[16.17px] hover:shadow-none ">
+                        Read More <IoIosArrowForward className="text-[26px] mt-[5px] sm:text-[16px] " />
                     </button>
                 </div>
 
                 <div
                     style={{ marginLeft: isMobile ? 0 : 30 }}
-                    className={'col-lg-6 col-md-6 col-12 ' + styles.itemsContainer}>
+                    className='col-lg-6 col-md-6 col-12 flex flex-col '>
                     {
                         questions.slice(3, 6).map((item, index) => <QuestionCard selectedItem={selectedItem} QA={item} key={index} ChangeSelectedItem={ChangeSelectedItem} />)
                     }
@@ -97,27 +97,27 @@ type _props = {
 
 const QuestionCard: React.FC<_props> = ({ QA, selectedItem, ChangeSelectedItem }) => {
 
-    return <div className={styles.itemContainer}>
-        <div className={styles.QuestionCard}>
+    return <div className="max-w-[622px] min-h-[197px] py-[50px] px-0 flex flex-col h-fit border-b-[1px] border-b-blackText sm:py-[20px] sm:min-h-fit sm:last-of-type:border-b-[1px] last-of-type:border-0 ">
+        <div className="w-full flex flex-row items-center justify-between ">
             <h6> {QA.question}</h6>
             {
                 selectedItem === QA.id ?
                     <div
-                        className={styles.icon}
+                        className="cursor-pointer ml-30px "
                         onClick={() => ChangeSelectedItem(-1)}>
-                        <AiOutlineMinus className={styles.QuestionIcon} /></div>
+                        <AiOutlineMinus className="text-[40px] sm:text-[20px] " /></div>
                     :
                     <div
-                        className={styles.icon}
+                        className="cursor-pointer ml-30px "
                         onClick={() => ChangeSelectedItem(QA.id)}>
-                        <AiOutlinePlus className={styles.QuestionIcon} /></div>
+                        <AiOutlinePlus className="text-[40px] sm:text-[20px] " /></div>
             }
         </div>
 
         <motion.div
             animate={{ height: selectedItem === QA.id ? 'fit-content' : 0, opacity: selectedItem === QA.id ? 1 : 0 }}
             transition={{ type: "spring", duration: 1 }}
-            className={styles.answerCard}
+            className="text-blackText text-[24px] font-light leading-[31.2px] mt-[16px] overflow-hidden sm:text-[13px] sm:font-normal sm:leading-[20px] "
         >
             {
                 selectedItem === QA.id && QA.answer

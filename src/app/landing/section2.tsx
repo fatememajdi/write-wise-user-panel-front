@@ -83,6 +83,6 @@ interface _props {
 
 const StepCard: React.FC<_props> = ({ Step }) => <div className='pt-[30px] pr-[108px] pb-[40px] pl-[63px] flex flex-col text-whiteText mb-[60px] min-h-[380px] justify-start w-full items-start sm:pt-[20px] sm:pr-[30px] sm:pb-[10px] sm:pl-[30px] sm:mb-[30px] sm:min-h-[246px] sm:justify-start'>
     <div className='font-light text-[20px] text-justify leading-[40px] sm:text-[13px] sm:font-normal'>{Step.step}</div>
-    <div className='font-bold text-[32px] leading-[40px] text-left text-whiteText sm:text-[20px] sm:font-semibold sm:mt-[9px] sm:leading-[9px]'>{Step.title}</div>
+    <div className='font-bold text-[32px] leading-[40px] text-left text-whiteText sm:text-[20px] sm:font-semibold sm:mt-[9px] sm:leading-[20px]'>{Step.title}</div>
     <h4 className='leading-[36px] mt-[26px] sm:mt-[18px] text-left'>{Step.description}</h4>
 </div>

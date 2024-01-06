@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
-import React from "react";
+import React, { Suspense } from "react";
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Typewriter from 'typewriter-effect';
@@ -10,13 +10,25 @@ import styles from './landingSection1.module.css';
 import '../../styles/global.css';
 
 //------------------------------------------------componnets
-const LandingBackground = dynamic(() => import("@/components/backgrounds/landingBackground/landingBackground"));
 import { StartLoader } from "@/components/Untitled";
+const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"), { ssr: false });
+const Loading = dynamic(() => import("@/components/loading/loading"), { ssr: false });
 
 export default function Section1() {
     const router = useRouter();
 
-    return <LandingBackground>
+    const [logedIn, changeLogedIn] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        const item = localStorage.getItem('user');
+        if (item)
+            changeLogedIn(true);
+        else
+            changeLogedIn(false);
+    }, []);
+
+    return <div className='col-12 bg-hero-pattern bg-cover bg-no-repeat relative z-[501] overflow-hidden min-h-fit sm:bg-mobile-hero-pattern '>
+        <header><Suspense fallback={<Loading />}><LandingHeader logedIn={logedIn} landing /></Suspense></header>
         <section className={'col-12 flex flex-row not-italic px-0 pt-[299px] pb-[259px] sm:flex-col-reverse justify-center items-center sm:pt-[100px] sm:pb-[50px] sm:min-h-fit ' + styles.section1Container} id="hero-section">
 
             <div className={'col-lg-9 col-md-9 col-12 flex flex-column items-start justify-center pl-[175px] mr-auto h-full sm:h-fit sm:pr-[20px] sm:pl-[30px] sm:mt-[350px] ' + styles.content}>
@@ -55,5 +67,5 @@ export default function Section1() {
 
             </div>
         </section>
-    </LandingBackground>
+    </div>
 };
