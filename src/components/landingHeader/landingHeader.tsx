@@ -187,13 +187,13 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                                     router.push('/ielts');
                                     StartLoader();
                                 }}
-                                className='className="text-seccondaryColor no-underline leading-[28px] text-[24px] font-normal mr-[40px] cursor-pointer"'>
+                                className='text-seccondaryColor no-underline leading-[28px] text-[24px] font-normal mr-[40px] cursor-pointer'>
                                 Dashboard</a>
                             :
                             <div onClick={() => {
                                 router.push('/signIn');
                                 StartLoader();
-                            }} className='className="text-seccondaryColor no-underline leading-[28px] text-[24px] font-normal mr-[40px] cursor-pointer"'>
+                            }} className='text-seccondaryColor no-underline leading-[28px] text-[24px] font-normal mr-[40px] cursor-pointer'>
                                 Signup</div>
                     }
 
