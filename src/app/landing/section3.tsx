@@ -14,7 +14,7 @@ import { StartLoader } from "@/components/Untitled";
 import { Stars, Rise, User, UserMobile, StarsMobile, RiseMobile } from "../../../public/icons";
 import { IoIosArrowForward } from 'react-icons/io';
 
-const Section3: React.FC = () => {
+export default function Section3() {
     const router = useRouter();
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
@@ -62,9 +62,7 @@ const Section3: React.FC = () => {
     )
 };
 
-export default Section3;
-
-const FeaturesItemCard: React.FC<{ title: string, icon: any}> = ({ title, icon }) =>
+const FeaturesItemCard: React.FC<{ title: string, icon: any }> = ({ title, icon }) =>
     <div className='w-[550px] flex flex-row mb-[65px] items-center sm:w-full sm:mb-[29px]'>
         <div className='min-w-[133px] w-fit flex flex-row justify-end pr-[20px] sm:min-w-[60px]'>
             {icon}

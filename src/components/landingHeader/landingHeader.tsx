@@ -300,16 +300,6 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                             >Dashboard</p>
                             <p
                                 className="text-whiteText twxt-[20px] font-normal leading-[28px] mt-[15px] w-full"
-                                style={pathname === '/profile' ? { backgroundColor: '#172E4A' } : {}}
-                                onClick={() => {
-                                    router.push('/profile');
-                                    setSelectedDrawerItem(5);
-                                    StartLoader();
-                                    onCloseDrawer();
-                                }}
-                            >Profile</p>
-                            <p
-                                className="text-whiteText twxt-[20px] font-normal leading-[28px] mt-[15px] w-full"
                                 style={pathname === '/wallet' ? { backgroundColor: '#172E4A' } : {}}
                                 onClick={() => {
                                     router.push('/wallet');

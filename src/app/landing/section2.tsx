@@ -9,7 +9,7 @@ import '../../styles/global.css';
 //--------------------------------data 
 import steps from '../../../public/data/Steps.json';
 
-const Section2: React.FC = () => {
+export default function Section2() {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     return <section className="overflow-hidden pt-[150px] pb-[120px] w-full relative flex flex-col items-center bg-section2-gradiant sm:min-h-fit sm:pt-[20px] sm:pb-[100px]"
@@ -70,8 +70,6 @@ const Section2: React.FC = () => {
         </div>
     </section >
 };
-export default Section2;
-
 
 interface _props {
     Step: {

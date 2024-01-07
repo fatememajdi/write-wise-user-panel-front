@@ -19,15 +19,28 @@ import styles from './ielts.module.css';
 
 //-----------------------------------------------------components
 import { useMultiStepForm } from '@/components/multiStepForm/useMultiStepForm';
-const Loading = dynamic(() => import("@/components/loading/loading"));
+const Loading = dynamic(() => import("@/components/loading/loading"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-screen">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
 const DashboardPopOver = dynamic(() => import("@/components/dashboardPopOver/dashboardPopOver"));
-const ChooseType = dynamic(() => import("./essay/chooseType/chooseType"));
-const Task = dynamic(() => import("./essay/task/task"));
-const TopicsList = dynamic(() => import("@/components/topicsList/topicsList"));
+const ChooseType = dynamic(() => import("./essay/chooseType/chooseType"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-full">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
+const Task = dynamic(() => import("./essay/task/task"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-full">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
+const TopicsList = dynamic(() => import("@/components/topicsList/topicsList"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-full">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
 const Modal = dynamic(() => import("@/components/modal/modal"));
 import { SCORE_ESSAY } from "@/config/graphql";
 const ProfileCard = dynamic(() => import("@/components/profileCard/profileCard"));
 import { StopLoader } from "@/components/Untitled";
+const TokenErrorCard = dynamic(() => import("@/components/tokenErrorCard/tokenErrorCard"));
 
 //----------------------------------------------------icons
 import { Lock } from '../../../public/dashboard';
@@ -55,6 +68,12 @@ type topic = {
         image: string
     }[]
 };
+
+const Tabs = [
+    { label: 'GT Task 1', value: 'general_task_1' },
+    { label: 'AC Task 1', value: 'academic_task_1' },
+    { label: 'Task 2', value: 'general_task_2' },
+];
 
 export default function Page() {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
@@ -89,14 +108,18 @@ export default function Page() {
     const router = useRouter();
     const [essayTopic, changeTopic] = React.useState<topic | null>();
     const [socket, setSocket] = React.useState<Socket<DefaultEventsMap, DefaultEventsMap>>(null);
+    const [showImage, changeShowImage] = React.useState<boolean>(false);
+    const handleShowImageModal = () => changeShowImage(true);
+    const handleCancelImageModal = (state?: boolean) => changeShowImage(false);
     const { step, goTo, currentStepIndex } = useMultiStepForm([
         <ChooseType changeType={ChangeType} />,
         <Task
             targetRef={targetRef} GetScores={GetScores}
             setEssaies={setEssaies} MoreEssaies={MoreEssaies} changeMoreEssaies={changeMoreEssaies} handleNewTopic={handleNewTopic}
             essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type} essay={essay}
-            changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} />
+            changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} handleShowError={handleShowImageModal} />
     ]);
+
     const [scoreEssay] = useMutation(SCORE_ESSAY);
 
     const tabBarItems = [
@@ -490,7 +513,7 @@ export default function Page() {
     if (pageLoading)
         return <Loading />
     else
-        return <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
+        return <div className="flex flex-row relative ">
             <motion.div animate={{
                 width: isOpen && isMac ? '268px'
                     : isOpen && isMobile ? '270px'
@@ -503,7 +526,7 @@ export default function Page() {
                 },
                 position: isMobile ? 'absolute' : 'inherit',
                 zIndex: 10
-            }} className={styles.sideBard}>
+            }} className='block fixed '>
 
                 {/* //--------------------------------------------------------------drawer content */}
                 <AnimatePresence>
@@ -516,14 +539,14 @@ export default function Page() {
                                 animate='show'
                                 exit='hidden'
                                 transition={{ type: 'spring' }}
-                                className={styles.dashboardLeftCard}>
+                                className='bg-seccondaryColor flex flex-col h-screen relative sm:h-screen '>
                                 <a
                                 //href="javascript:void(Tawk_API.showWidget())"
                                 >
 
                                     <Image
                                         onClick={() => router.replace('/')}
-                                        className={styles.logo}
+                                        className='my-[32px] mx-auto cursor-pointer h-auto w-auto mac:my-[17px] mac:mx-auto sm:hidden '
                                         src="/logo3.svg"
                                         alt="Logo"
                                         width={isMac ? 108 : 175}
@@ -537,38 +560,31 @@ export default function Page() {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 1, type: 'spring' }}
-                                    className={'col-12 ' + styles.tabsContainer}>
-                                    <div className={'col-12 ' + styles.newEssayContainer}>
+                                    className='col-12 flex flex-col border-t-[1px] border-t-grayColor border-b-[1px] border-b-grayColor py-0 px-[5px] sm:p-0 '>
+                                    <div className='col-12 flex flex-row items-center justify-between pt-[20px] pb-[18px] mac:py-[15px] mac:px-0 sm:pt-[10px] sm:pr-[5px] sm:pb-[7px] sm:pl-[5px] sm:border-b-[1px] sm:border-b-grayColor sm:mb-[7px] '>
                                         <button
                                             onClick={async () => NewEssay()}
-                                            className={styles.newEssayButton}><AiOutlinePlus className={styles.plusIcon} />New IELTS Writing
+                                            className='bg-grayColor flex lg:mac:flex-row items-center text-whiteText text-[24px] font-normal leading-[28px] mr-[8px] ml-[13px] flex-1 h-[52px] rounded-[8px] py-[16px] px-[10px] cursor-pointer hover:bg-primaryColor mac:text-[16px] mac:p-0 mac:mr-[8px] mac:py-0 mac:ml-0 mac:h-[48px] sm:text-[14px] sm:font-bold sm:h-[40px] sm:flex-row-reverse sm:px-0 sm:ml-[7px] '>
+                                            <AiOutlinePlus className='ml-[16px] text-whiteText text-[30px] font-bold mr-[13px] mac:text-[25px] mac:mr-[5px] ' />
+                                            {'New IELTS Writing'}
                                         </button>
                                         <button
                                             aria-label="close drawer button"
                                             onClick={() => { setIsOpen(false); setAnchorEl(false) }}
-                                            className={styles.arrowLeftButton}><div><IoIosArrowBack className={styles.arrowIcon} /></div></button>
+                                            className='hover:bg-primaryColor h-[52px] w-[55px] bg-grayColor mac:h-[48px] mac:w-[40px] sm:w-[45px] sm:h-[45px] '>
+                                            <div><IoIosArrowBack className='text-whiteText text-[30px] font-bold ' /></div>
+                                        </button>
                                     </div>
 
-                                    <div className={'col-12 ' + styles.taskTabsContainer}>
-
-                                        <button
-                                            aria-label="general task1 button"
-                                            onClick={() => SelectType('general_task_1')}
-                                            className={topicsType === 'general_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
-                                            GT Task 1</button>
-
-                                        <button
-                                            aria-label="academic task1 button"
-                                            onClick={() => SelectType('academic_task_1')}
-                                            className={topicsType === 'academic_task_1' ? styles.activeTaskTabButton : styles.taskTabButton} >
-                                            AC Task 1</button>
-
-                                        <button
-                                            aria-label="task2 button"
-                                            onClick={() => SelectType('general_task_2')}
-                                            className={topicsType === 'general_task_2' ? styles.activeTaskTabButton : styles.taskTabButton} >
-                                            Task 2</button>
-
+                                    <div className='col-12 flex flex-row justify-between h-fit mt-[10px] items-end mac:mt-0 sm:px-[7px] ' >
+                                        {
+                                            Tabs.map((tab, index) => <button
+                                                key={index}
+                                                aria-label="task type button"
+                                                onClick={() => SelectType(tab.value)}
+                                                className={" text-whiteText text-center text-[18px] font-medium leading-normal p-0 rounded-t-[8px] w-[32%] rounded-b-[0px] hover:shadow-none hover:bg-primaryColor mac:text-[12px] sm:text-[13px] sm:w-[80px] " + (topicsType === tab.value ? 'bg-primaryColor lg:h-[42px] mac:h-[38px] sm:h-[28px] ' : 'bg-grayColor lg:h-[40px] mac:h-[38px] sm:h-[28px] ')}>
+                                                {tab.label}</button>)
+                                        }
                                     </div>
                                 </motion.div>
                                 <motion.div
@@ -576,7 +592,7 @@ export default function Page() {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 1.5, type: 'spring' }}
-                                    className={'col-12 ' + styles.drawerContent}>
+                                    className='col-12 flex flex-1 overflow-hidden sm:pt-[8px] '>
                                     {topicsLoading ?
                                         <Loading style={{ height: '100%', minHeight: 0 }} />
                                         :
@@ -594,17 +610,22 @@ export default function Page() {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 1 }}
-                                    className={'col-12 ' + styles.drawerFooterContainer}>
+                                    className='col-12 border-t-[1px] border-t-grayColor flex flex-row self-end h-[74px] pt-[2px] mac:h-[50px] sm:h-[42px] '>
                                     <button
                                         style={{ backgroundColor: anchorEl === false ? '#2E4057' : '#132740' }}
                                         aria-label="menu button"
                                         onClick={() => setAnchorEl(!anchorEl)}
-                                        className={styles.menuButton}>
-                                        <TfiMenu className={styles.menuIcon} />
-                                        <FiMoreVertical className={styles.moreIcon} />
+                                        className='h-full rounded-0 border-r-grayColor border-r-[1px] w-[80px] flex items-center justify-center mac:w-[60px] sm:w-[40px] '>
+                                        {
+                                            isMobile ?
+                                                <FiMoreVertical className='text-whiteText text-[25px] ' />
+                                                :
+                                                <TfiMenu className='text-whiteText text-[30px] mac:text-[25px] ' />
+                                        }
                                     </button>
-                                    <div className={styles.drawerFooterText}>
-                                        Welcome  {profile ? profile.firstName + ' ' + profile.lastName : <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}
+                                    <div className='h-full flex items-center pl-[20px] text-whiteText text-[20px] font-light leading-[12px] mac:text-[14px] sm:text-[13px] '>
+                                        Welcome  {profile ? profile.firstName + ' ' + profile.lastName :
+                                            <ReactLoading type={'bubbles'} color={'#929391'} height={50} width={50} />}
                                     </div>
                                 </motion.div>
                             </motion.div>
@@ -614,9 +635,9 @@ export default function Page() {
                                 initial='hidden'
                                 animate='show'
                                 exit='hidden'
-                                className={styles.leftTabBar}>
+                                className='bg-seccondaryColor w-[80px] h-screen flex flex-col items-center '>
                                 <Image
-                                    className={styles.briefLogo}
+                                    className='h-[69px] w-[19px] my-[12px] mx-0 sm:hidden '
                                     src="/dashboard/W W AI.svg"
                                     alt="Logo"
                                     loading="eager"
@@ -625,12 +646,14 @@ export default function Page() {
                                     priority
                                 />
 
-                                <div className={styles.openDrawerButtonCard}>
+                                <div className='border-t-[1px] border-t-grayColor w-full py-[12px] px-[13px] flex items-center justify-center sm:hidden '>
                                     <button
                                         aria-label="open drawer button"
                                         onClick={() => setIsOpen(true)}
-                                        className={styles.openDrawerButton}>
-                                        <div><IoIosArrowForward className={styles.arrowIcon} /></div>
+                                        className='bg-grayColor rounded-[8px] h-[52px] w-[55px] flex items-center justify-center mac:p-[10px] '>
+                                        <div>
+                                            <IoIosArrowForward className='text-whiteText text-[30px] font-bold ' />
+                                        </div>
                                     </button>
                                 </div>
 
@@ -649,24 +672,23 @@ export default function Page() {
                 </AnimatePresence>
             </motion.div >
 
-            <main style={{ flex: 1, height: '100vh', overflow: 'hidden', display: 'block' }}
-                className={isOpen && isMobile ? styles.mask : ''}>
+            <main className={' flex-1 h-screen overflow-hidden block ' + (isOpen && isMobile ? styles.mask : '')}>
 
                 {/* //-------------------------------------------------------------dashboard content */}
                 {
                     isMobile &&
                     <div
-                        className={styles.topResponsiveTabBar}>
+                        className='flex flex-row items-center justify-between bg-seccondaryColor w-full h-[45px] '>
 
                         <button
                             aria-label="menu button"
                             onClick={() => setIsOpen(true)}
-                            className={styles.responsiveMenuButton}>
-                            <TfiMenu className={styles.responsiveMenuIcon} />
+                            className='py-0 px-[10px] '>
+                            <TfiMenu className='text-whiteText text-[25px] ' />
                         </button>
 
                         <Image
-                            className={styles.responsiveLogo}
+                            className='h-[17px] w-[175px] '
                             src="/logo3.svg"
                             alt="Logo"
                             loading="eager"
@@ -678,36 +700,36 @@ export default function Page() {
                         <button
                             aria-label="new essay button"
                             onClick={async () => NewEssay()}
-                            className={styles.responsivePlusButton}>
-                            <AiOutlinePlus className={styles.responsivePlusIcon} />
+                            className='p-0 h-[35px] w-[35px] items-center justify-center mr-[5px] bg-grayColor '>
+                            <AiOutlinePlus className=' text-whiteText text-[24px] ' />
                         </button>
 
                     </div>
                 }
-                <div className={styles.dashboardContentContainer}>
+                <div className='flex flex-1 h-screen lg:flex-row mac:flex-row overflow-y-hidden pr-[10px] sm:flex-col sm:pr-0 '>
                     <div
                         id="scrollableDiv"
-                        style={tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 }}
-                        className={styles.dashboardContentRightContainer}>
+                        style={!isMobile ? tabBarLoc ? { paddingTop: 40 } : { paddingTop: 150 } : {}}
+                        className='flex lg:flex-col mac:flex-col flex-1 h-full relative overflow-y-auto items-start justify-start sm:pt-0 '>
 
-                        {
+                        {!isMobile &&
                             !endAnimation && currentStepIndex !== 0 &&
                             <motion.div
-                                className={styles.topTabBarContainer}
+                                className='lg:flex mac:flex absolute lg:flex-col mac:flex-col top-[16px] pt-[30px] pr-[95px] pb-0 pl-[90px] h-[100px] w-full overflow-hidden z-[2] mac:pt-[28px] mac:pr-[22px] mac:pb-0 mac:pl-[22px] sm:hidden sm:h-0 '
                                 animate={{ y: tabBarLoc ? type === 'general_task_1' ? 814 : type === 'academic_task_1' ? 1319 : 714 : 0 }}
                                 transition={{ type: "spring", duration: 2 }}
                             >
-                                <div className={styles.topTabBarCard}>
+                                <div className='h-[64px] lg:flex mac:flex bg-seccondaryColor w-full rounded-[8px] overflow-hidden mac:h-[50px] mac:p-0  sm:hidden'>
                                     {
                                         tabBarItems.map((item, index) =>
                                             <div
                                                 style={{ cursor: 'context-menu' }}
-                                                className={0 === index && !tabBarLoc ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard
-                                                    : styles.topTabBarItemCard}
+                                                className={'flex flex-1 items-center justify-center text-whiteText text-center text-[20px] font-medium leading-normal cursor-pointer py-0 px-[40px] rounded-[8px] h-[64px] mac:h-[50px] mac:text-[16px] ' + (0 === index && !tabBarLoc ? 'bg-primaryColor' : '')}
                                                 key={index} >
                                                 <span
+                                                    className={0 === index && !tabBarLoc ? "underline " : ''}
                                                     style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
-                                                {!item.active && <Lock className={styles.lockIcon} />}
+                                                {!item.active && <Lock className='text-whiteText ml-5px' />}
                                             </div>
                                         )
                                     }
@@ -715,7 +737,7 @@ export default function Page() {
                             </motion.div>
                         }
                         <div
-                            className={'col-12 ' + styles.essayContainer}>
+                            className='col-12 flex flex-1 flex-col pb-[100px] sm:pb-0 min-h-full '>
                             {step}
                         </div>
                     </div>
@@ -728,6 +750,8 @@ export default function Page() {
             <Modal isOpen={showProfileModal} setIsOpen={changeShowProfileModal} key={0}>
                 <ProfileCard profile={profile} closeProfile={changeShowProfileModal} setProfile={setProfile} />
             </Modal>
+
+            <TokenErrorCard showImage={showImage} handleCancelImageModal={handleCancelImageModal} />
 
         </div >
 };

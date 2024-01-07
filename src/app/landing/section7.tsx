@@ -48,7 +48,7 @@ const questions = [
     }
 ];
 
-const Section7: React.FC = () => {
+export default function Section7() {
 
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const router = useRouter();
@@ -81,9 +81,7 @@ const Section7: React.FC = () => {
             </div>
         </AnimatePresence>
     </section>)
-}
-
-export default Section7;
+};
 
 type _props = {
     QA: {

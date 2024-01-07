@@ -21,7 +21,7 @@ const steps = [
     { title: 'Insights and Tutoring', description: 'Dive deeper into your IELTS learning with a structured plan designed for optimal essay flow. If you have your own approach in mind, you can still integrate our AI-driven insights to enhance your preparation.' }
 ];
 
-const Section5: React.FC = () => {
+export default function Section5() {
     const [selectedItem, setSelectedItem] = React.useState<number>(0);
     const [watchedItems, changeWatchedItems] = React.useState<boolean>(false);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
@@ -41,7 +41,7 @@ const Section5: React.FC = () => {
                                     setSelectedItem(selectedItem + 1);
                                 if (selectedItem === 2)
                                     changeWatchedItems(true);
-                            }else{
+                            } else {
                                 if (selectedItem > 0)
                                     setSelectedItem(selectedItem - 1);
                                 if (selectedItem === 0)
@@ -153,5 +153,3 @@ const Section5: React.FC = () => {
         </div>
     </Section5Background >
 };
-
-export default Section5;

@@ -19,13 +19,16 @@ import { Package } from "../../../types/package";
 
 //---------------------------------------------------components
 import { GET_PACKAGES } from "@/config/graphql";
-const PackageCard = dynamic(() => import("@/components/packageCard/packageCard"));
+const PackageCard = dynamic(() => import("@/components/packageCard/packageCard"), {
+    ssr: false,
+    loading: () => <div className="text-center min-h-[150px] items-center justify-center flex w-fit "><ReactLoading type='bubbles' color={'#929391'} height={50} width={50} /></div>
+});
 
 //---------------------------------------------------icons
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 
 
-const Section6: React.FC = () => {
+export default function Section6() {
 
     const [packages, setPackages] = React.useState<Package[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
@@ -128,5 +131,3 @@ const Section6: React.FC = () => {
         }
     </section>
 };
-
-export default Section6;

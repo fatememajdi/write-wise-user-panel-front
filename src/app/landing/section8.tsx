@@ -5,7 +5,7 @@ import React from "react";
 //-------------------------------------------styles
 import '../../styles/global.css';
 
-const Section8: React.FC = () => {
+export default function Section8() {
 
     return <section className="overflow-hidden pt-[150px] pr-[380px] pb-[248px] pl-[380px] bg-background sm:py-[50px] sm:pr-[33px] sm:pl-[53px] sm:min-h-fit " id="">
         <div className="bg-background relative sm:py-[70px] sm:px-[40px] ">
@@ -22,6 +22,4 @@ const Section8: React.FC = () => {
             </h6>
         </div>
     </section>
-}
-
-export default Section8;
+};

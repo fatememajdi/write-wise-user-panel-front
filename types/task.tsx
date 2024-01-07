@@ -16,5 +16,6 @@ export type TaskProps = {
     type: string,
     targetRef: any,
     essay?: string,
-    GetScores: any
+    GetScores: any,
+    handleShowError: any
 }

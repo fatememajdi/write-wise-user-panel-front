@@ -16,7 +16,9 @@ module.exports = {
       'grayColor': '#626E7E'
     },
     screens: {
-      'sm': { 'min': '280px', 'max': '700px' }
+      'sm': { 'min': '280px', 'max': '700px' },
+      'mac': { 'min': '1440px', 'max': '1680px' },
+      'lg': { 'min': '1681px' },
     },
     extend: {
       backgroundImage: {

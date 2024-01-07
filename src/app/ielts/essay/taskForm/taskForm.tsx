@@ -26,7 +26,6 @@ const Loading = dynamic(() => import('@/components/loading/loading'));
 const SelectComponents = dynamic(() => import('@/components/customSelect/customSelect'));
 import { CheckCountWords, CountWords } from "@/components/Untitled";
 const Text = dynamic(() => import("@/components/text/text"));
-const TokenErrorCard = dynamic(() => import("@/components/tokenErrorCard/tokenErrorCard"));
 const SubTypeSelect = dynamic(() => import("@/components/subTypeSelect/subTypeSelect"));
 const Writer = dynamic(() => import("@/components/writer/writer"));
 import { DeleteEssaies, GenerateNewTopic } from "@/hooks/actions";
@@ -44,7 +43,7 @@ import { TaskProps } from "../../../../../types/task";
 
 export default function TaskForm({
     changeTabBarLoc, changeEndAnimation, endAnimation, topic, essay, GetScores,
-    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef
+    essaies, GetUserEssaies, MoreEssaies, changeMoreEssaies, setEssaies, handleNewTopic, divRef, type, targetRef, handleShowError
 }: TaskProps) {
     let DivRef2: any;
     let DivRef3: any;
@@ -66,7 +65,6 @@ export default function TaskForm({
     const [generateWritingTopicLoading, changeGenerateWritingTopicLoading] = React.useState<boolean>(false);
     const [generatedTopic, changeGeneratedTopic] = React.useState<topic>();
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
-    const [showImage, changeShowImage] = React.useState<boolean>(false);
     const [isBig, setIsBig] = React.useState<boolean>(false);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const router = useRouter();
@@ -75,7 +73,6 @@ export default function TaskForm({
     const [selectTopic, { error }] = useMutation(SELECT_TOPIC);
     const [addNewEssay] = useMutation(ADD_ESSAY);
 
-    const handleCancelImageModal = (state?: boolean) => changeShowImage(false);
 
     //-----------------------------------------------------------------generate topic
     async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
@@ -116,8 +113,8 @@ export default function TaskForm({
             setAddEssayLoading(true);
             DivRef3.scrollIntoView({ behavior: "smooth" });
         }).catch((err: typeof error) => {
-            if (err.graphQLErrors[0].status === 402) {
-                changeShowImage(true);
+            if (err.graphQLErrors[0].status == 402) {
+                handleShowError();
                 id = null;
             } else {
                 toast.error(err.graphQLErrors[0].message);
@@ -139,13 +136,12 @@ export default function TaskForm({
         } else
             id = await SelectTopic(Topic);
 
-        await changeLoading(false);
 
         if (id != null) {
             await setAddEssayLoading(true);
             await addNewEssay({
                 variables: {
-                    id: id as string,
+                    id: 'f5c1cc26-fdc8-47ac-8ae5-8bbb89bf26e0',
                     body: body,
                     durationMillisecond: Date.now() - essayTime
                 }
@@ -179,15 +175,15 @@ export default function TaskForm({
                 changeCcurrentId(id);
                 setAddEssayLoading(false);
                 resetForm();
-            }).catch((err: typeof error) => {
-                if (err.graphQLErrors[0].status === 402) {
-                    changeShowImage(true);
+            }).catch(async (err: typeof error) => {
+                if (err.graphQLErrors[0].status == 402) {
+                    handleShowError();
                 } else {
                     toast.error(err.graphQLErrors[0].message);
                 }
                 changeLoading(false);
                 setAddEssayLoading(false);
-            })
+            });
         };
     };
 
@@ -548,7 +544,6 @@ export default function TaskForm({
                             }
 
                             <div
-                                onClick={() => console.log('hi')}
                                 className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
                                 <Input
                                     style={errors.body ? { borderColoe: 'red' } : {}}
@@ -611,9 +606,6 @@ export default function TaskForm({
                             </InfiniteScroll>
                     }
                 </div>
-
-
-                <TokenErrorCard showImage={showImage} handleCancelImageModal={handleCancelImageModal} />
 
             </form >
         )}

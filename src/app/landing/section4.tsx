@@ -19,7 +19,7 @@ const steps = [
     { title: 'Motivation Booster', description: 'Visual feedback is a catalyst for motivation. With our progress recording service, celebrate each leap in your IELTS learning journey, setting and achieving higher milestones.' },
 ]
 
-const Section4: React.FC = () => {
+export default function Section4() {
 
     const [selectedItem, changeSelectedItem] = React.useState<number>(0);
     // const [animating, changeAnimating] = React.useState<boolean>(false);
@@ -235,5 +235,3 @@ const Section4: React.FC = () => {
         </AnimatePresence>
     </section>
 };
-
-export default Section4;
