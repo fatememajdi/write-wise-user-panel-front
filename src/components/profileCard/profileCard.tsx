@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client";
 import toast from "react-hot-toast";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { Switch } from 'antd';
 import Image from "next/image";
 
 //---------------------------------------------styles
@@ -52,6 +53,11 @@ export default ProfileCard;
 const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any }> = ({ profile, closeProfile, next }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const [deleteAccount, { loading }] = useMutation(DELETE_ACCOUNT);
+    const [developer, setDeveloper] = React.useState<boolean>(true);
+    const onChangeSwitch = (checked: boolean) => {
+        setDeveloper(checked);
+        localStorage.setItem('devMode', JSON.stringify(checked));
+    };
 
 
     const router = useRouter();
@@ -65,6 +71,14 @@ const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any
         localStorage.setItem('cookies', 'true');
         router.replace('/signIn');
     };
+
+    React.useEffect(() => {
+        let dev = localStorage.getItem('devMode');
+        if (dev)
+            setDeveloper(JSON.parse(dev));
+        else
+            setDeveloper(true);
+    }, []);
 
     return <table className={styles.profileCard}>
         {
@@ -113,6 +127,9 @@ const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any
                             <IoIosArrowRoundBack className={styles.arrowLeftIcon} />  Ok
                         </button>
                     </tr>
+                    <div style={{ marginTop: 20, padding: 10, backgroundColor: 'rgb(206, 208, 215)', borderRadius: 6, width: 'fit-content' }}>
+                        {'developer '} <Switch style={{ width: 20 }} onChange={onChangeSwitch} checked={developer} /></div>
+
                 </>
         }
 

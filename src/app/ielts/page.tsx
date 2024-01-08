@@ -246,11 +246,12 @@ export default function Page() {
     async function GetProfile() { setProfile(await GetUserProfile()) };
 
     async function GetScores(essaies: Essay[], essay?: Essay) {
+        let dev = await localStorage.getItem('devMode');
         let newEssay: Essay[] = essaies;
         await scoreEssay({
             variables: {
                 id: essay ? essay.id : newEssay[0].id,
-                test: false
+                test: dev ? JSON.parse(dev) : true
             }
         }).then(async (res) => {
             try {
@@ -282,7 +283,7 @@ export default function Page() {
             await setSocket(io("https://ielts.api.babyyodas.io/events", {
                 // autoConnect: false,
                 extraHeaders: {
-                    authorization: `Bearer ${JSON.parse(user)}`
+                    authorization: `Bearer ${user as string}`
                 }
             }).connect());
         if (socket) {
@@ -429,8 +430,8 @@ export default function Page() {
     React.useEffect(() => {
         if (!localStorage.getItem('user')) {
             if (status != "loading") {
-                if (status === 'authenticated') {
-                    localStorage.setItem('user', session.user.token);
+                if (status === 'authenticated' && session.user.token !== undefined) {
+                    localStorage.setItem('user', session.user.token as string);
                     setLoading(false);
                 }
                 else {

@@ -3,7 +3,7 @@ import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import AppleProvider from 'next-auth/providers/apple';
 import FacebookProvider from 'next-auth/providers/facebook';
-import client from '@/config/applloClient';
+import { loginClient } from '@/config/applloClient';
 
 //------------------------------------------------------------components
 import AppleClientSecret from './appleClientSecret';
@@ -49,12 +49,12 @@ export const authConfig: NextAuthOptions = {
     },
     callbacks: {
         async redirect({ url, baseUrl }) {
-            return 'http://localhost:3000/dashboard'
+            return 'http://localhost:3000/ielts'
         },
         async jwt({ token, account, }) {
             if (account) {
                 if (account.provider === 'google')
-                    await client.mutate({
+                    await loginClient.mutate({
                         mutation: GOOGLE_SIGN_IN,
                         variables: {
                             token: account.id_token as string
@@ -67,7 +67,7 @@ export const authConfig: NextAuthOptions = {
                         console.log('refresh token error : ', err)
                     });
                 else if (account.provider === 'facebook')
-                    await client.mutate({
+                    await loginClient.mutate({
                         mutation: META_SIGN_IN,
                         variables: {
                             token: account.id_token as string

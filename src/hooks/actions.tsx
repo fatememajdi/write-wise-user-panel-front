@@ -1,5 +1,5 @@
 'use client';
-import client from "@/config/applloClient";
+import client, { loginClient } from "@/config/applloClient";
 import {
     CREATE_PAYMENT_LINK, DELETE_ESSAY, DELETE_TOPIC,
     EMAIL_SIGN_IN, GET_RANDOM_WRITING, RECEIPT_LINK,
@@ -74,7 +74,7 @@ export async function DeleteEssaies(id: string) {
 
 export async function EmaiSignIn(email: string) {
     let mail: string = null;
-    await client.mutate({
+    await loginClient.mutate({
         mutation: EMAIL_SIGN_IN,
         variables: {
             email: email,
@@ -90,7 +90,7 @@ export async function EmaiSignIn(email: string) {
 
 export async function VerifyCode(email: string, code: string) {
     let token: string = null;
-    await client.mutate({
+    await loginClient.mutate({
         mutation: VERIFICATION_CODE,
         variables: {
             email: email,

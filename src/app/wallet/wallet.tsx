@@ -60,6 +60,7 @@ export default function Wallew({ packages, GetPackage, loading, selectedPackage,
             loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
         <PackageCard key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]
         : [
+            <SelectCountry key={0} ChangeModalStep={ChangeModalStep} setprofile={setprofile} />,
             <PackagesList key={1} handleCancel={handleCancel}
                 loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
             <PackageCard key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]);
