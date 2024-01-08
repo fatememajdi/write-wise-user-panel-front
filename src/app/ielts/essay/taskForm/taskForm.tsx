@@ -374,12 +374,16 @@ export default function TaskForm({
                                         <Text text={topic.body} />
                                     </div>
                                     : topic && essay != '' && currentId !== null ?
-                                        < div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
+                                        < div className='rounded-[8px] mt-[15px] mr-[40px] mb-0 ml-[45px] pt-[15px] pr-[52px] pb-[10px] pl-[18px] w-[70%] h-fit overflow-y-auto text-blackText text-[20px] not-italic font-normal leading-[180%] mac:text-[16px] sm:text-[16px] sm:mt-[15px] sm:mr-0 sm:mb-0 sm:ml-0 sm:w-full sm:h-fit '>
+                                            <Text text={topic.body} />
+                                        </div>
                                         : currentId != null ?
-                                            <div className={styles.selectedTopcCard}><Text text={values.topic} /></div>
+                                            <div className='rounded-[8px] mt-[15px] mr-[40px] mb-0 ml-[45px] pt-[15px] pr-[52px] pb-[10px] pl-[18px] w-[70%] h-fit overflow-y-auto text-blackText text-[20px] not-italic font-normal leading-[180%] mac:text-[16px] sm:text-[16px] sm:mt-[15px] sm:mr-0 sm:mb-0 sm:ml-0 sm:w-full sm:h-fit '>
+                                                <Text text={values.topic} />
+                                            </div>
                                             : generateWritingTopicLoading ?
                                                 <Loading style={{ height: 250, minHeight: 0 }} />
-                                                : <div className={styles.topicInputContainer}>
+                                                : <div className='flex lg:flex-row mac:flex-row relative mr-[40px] ml-[45px] sm:m-0 sm:flex-col-reverse '>
                                                     {
                                                         generateWriting && !editedGeneratedTopic ?
                                                             <Writer
@@ -406,7 +410,7 @@ export default function TaskForm({
                                                                 textarea_error={errors.topic && touched.topic && errors.topic}
                                                             />
                                                     }
-                                                    <div className={styles.topicButtonsContainer}>
+                                                    <div className='flex lg:flex-col mac:flex-col items-center w-fit h-fit ml-[20px] sm:flex-row sm:ml-[8px] '>
 
                                                         <SubTypeSelect
                                                             defaultValue={values.subType !== '' ? values.subType : generatedTopic ? generatedTopic.subType : ''}
@@ -421,8 +425,11 @@ export default function TaskForm({
                                                                 await GenerateTopic(setFieldValue, values.body, values.subType);
                                                             }}
                                                             type="button"
-                                                            className={styles.generateButton}>
-                                                            <Reload style={{ marginTop: 8 }} className={styles.reloadIconResponsive} />
+                                                            className='hover:shadow-none bg-seccondaryColor border-[2px] border-seccondaryColor w-[170px] h-[40px] text-whiteText ml-[29px] mt-[19px] py-0 px-[22px] text-center text-[17px] not-italic font-normal leading-normal mac:text-[14px] sm:h-[25px] sm:w-[100px] sm:text-[13px] sm:ml-[9px] '>
+                                                            {
+                                                                !isMobile &&
+                                                                <Reload style={{ marginTop: 8 }}/>
+                                                            }
                                                             {
                                                                 generatedTopic ? 'Regenereate' :
                                                                     'Generate'
@@ -439,12 +446,14 @@ export default function TaskForm({
                                                                 handleEditTopic();
                                                                 setFieldValue('topic', '');
                                                             }}
-                                                            className={styles.editButton}>
+                                                            className='h-fit w-fit absolute bottom-[10px] right-[32%] p-0 rounded-full hover:shadow-none sm:right-[14px] sm:bottom-[16px] sm:bg-background sm:h-[35px] sm:w-[35px] '>
                                                             <div>
                                                                 {
                                                                     topicLoading ?
                                                                         <ReactLoading type={'spin'} color={'#2E4057'} height={28} width={28} /> :
-                                                                        <MdEdit className={styles.editIconResponsive} style={{ fontSize: 40 }} />}</div>
+                                                                        <MdEdit className='lg:hover:text-[43px] mac:hover:text-[43px] text-[40px] sm:text-[25px] ' />
+                                                                }
+                                                            </div>
                                                         </button>
                                                         : typed &&
                                                         <button
@@ -454,15 +463,15 @@ export default function TaskForm({
                                                                 changeCcurrentId(await SelectTopic(values.topic));
                                                             }}
                                                             style={generatedTopic ? { backgroundColor: '#2E4057' } : { backgroundColor: '#d5d7db' }}
-                                                            className={styles.checkButton}>
+                                                            className='h-[50px] w-[50px] absolute bottom-[10px] righ-[32%] rounded-full sm:right-[8px] sm:h-[30px] sm:w-[30px] '>
                                                             <Popover placement="topLeft" content={'Please check your topic'} open={!endTyping}>
                                                                 {
                                                                     topicLoading ?
                                                                         <ReactLoading type={'spin'} color={'#2E4057'} height={isMobile ? 20 : 28} width={isMobile ? 20 : 28} />
                                                                         : generatedTopic ?
-                                                                            <MdCheck className={styles.editIconResponsive} color="#d5d7db" style={{ fontSize: 40 }} />
+                                                                            <MdCheck className='lg:hover:text-[43px] mac:hover:text-[43px] text-[40px] sm:text-[25px] ' color="#d5d7db" />
                                                                             :
-                                                                            <MdCheck className={styles.editIconResponsive} color="#2E4057" style={{ fontSize: 40 }} />
+                                                                            <MdCheck className='lg:hover:text-[43px] mac:hover:text-[43px] text-[40px] sm:text-[25px] ' color="#2E4057" />
                                                                 }
                                                             </Popover>
                                                         </button>
@@ -470,7 +479,7 @@ export default function TaskForm({
 
                                                 </div>}
 
-                            <div className={styles.writingInputTitle}>
+                            <div className='mt-[8px] text-blackText text-left text-[20px] font-light ml-[45px] leading-[26px] flex flex-row justify-between pr-[40px] mac:text-[16px] sm:text-[16px] sm:ml-[8px] sm:pr-0 '>
                                 {
                                     type === 'academic_task_1' ?
                                         'Summarise the information by selecting and reporting the main features, and make comparisons where relevant.' :
@@ -479,10 +488,11 @@ export default function TaskForm({
                                 }
                             </div>
 
-                            <div style={{ lineHeight: 'unset' }} className={styles.writingInputTitle}>Write at least {type === 'general_task_2' ? 250 : 150} words.
+                            <div style={{ lineHeight: 'unset' }} className='mt-[8px] text-blackText text-left text-[20px] font-light ml-[45px] leading-[26px] flex flex-row justify-between pr-[40px] mac:text-[16px] sm:text-[16px] sm:ml-[8px] sm:pr-0 '>
+                                Write at least {type === 'general_task_2' ? 250 : 150} words.
                                 {
                                     changeInput && type !== 'academic_task_1' &&
-                                    <div className={styles.wordsCount}>
+                                    <div className='ml-[45px] mt-[8px] sm:ml-auto sm:mt-0 '>
                                         {CountWords(values.body, type === 'general_task_2' ? 250 : 150)}
                                     </div>
                                 }
@@ -490,7 +500,7 @@ export default function TaskForm({
                             <AnimatePresence>
                                 {
                                     type === 'academic_task_1' &&
-                                    <div className={styles.imagesContainer + ' col-12'}>
+                                    <div className={styles.imagesContainer + ' flex ml-[45px] mt-[48px] mb-[50px] flex-wrap col-12'}>
 
                                         {
                                             topic && topic.visuals && topic.visuals?.length > 0 ?
@@ -533,7 +543,7 @@ export default function TaskForm({
                                                             />
                                                         </motion.div>
                                                     )
-                                                    : <div className={styles.emptyImageCard}>
+                                                    : <div className='w-[66%] h-[360px] flex items-center justify-center rounded-[8px] border-[1px] border-seccondaryColor sm:w-full '>
                                                         <IoMdImage fontSize={70} />
                                                     </div>
                                         }
@@ -542,13 +552,14 @@ export default function TaskForm({
                             </AnimatePresence>
                             {
                                 changeInput && type === 'academic_task_1' &&
-                                <div style={{ marginLeft: 'auto', width: 'fit-content', paddingRight: 45 }} className={styles.wordsCount}>
+                                <div style={{ marginLeft: 'auto', width: 'fit-content', paddingRight: 45 }} className='ml-[45px] mt-[8px] sm:ml-auto sm:mt-0 '>
                                     {CountWords(values.body, 150)}
                                 </div>
                             }
 
                             <div
-                                className={styles.bodyInputContainer} style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
+                                className='flex flex-col h-fit mr-[40px] ml-[45px] sm:m-0 '
+                                style={!endTyping ? { opacity: 0.5 } : {}} id='essayScrollDiv'>
                                 <Input
                                     style={errors.body ? { borderColoe: 'red' } : {}}
                                     disable={!endTyping}
@@ -579,7 +590,9 @@ export default function TaskForm({
                                         error={errors.body && touched.body || !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249) ? true : false} />
                                     {
                                         !CheckCountWords(values.body, type === 'general_task_2' ? 349 : 249) &&
-                                        <div className={styles.errorForm}>Text is too long!</div>
+                                        <div className='text-red text-[20px] not-italic font-medium leading-[24.5px] mt-[14px] '>
+                                            {'Text is too long!'}
+                                        </div>
                                     }
                                 </Input>
 

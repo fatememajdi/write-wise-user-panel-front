@@ -1,4 +1,30 @@
+.writingContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 0px 95px 100px 90px;
+    font-family: var(--font-lato);
+    font-style: normal;
+}
 
+.wriritngTitle {
+    color: var(--color-blackText);
+    text-align: left;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: normal;
+    margin-left: 45px;
+    display: flex;
+}
+
+.writingSecondTitle {
+    color: var(--color-blackText);
+    font-size: 20px;
+    font-weight: 300;
+    line-height: normal;
+    margin-left: 45px;
+    margin-top: 17px;
+}
 
 .writingInputTitle {
     margin-top: 8px;
@@ -12,6 +38,20 @@
     flex-direction: row;
     justify-content: space-between;
     padding-right: 40px;
+}
+
+.selectedTopcCard {
+    border-radius: 8px !important;
+    margin: 15px 40px 0px 45px;
+    padding: 15px 52px 10px 18px !important;
+    width: 70%;
+    height: fit-content;
+    overflow-y: auto;
+    color: #252525 !important;
+    font-size: 20px !important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 180% !important;
 }
 
 .topicInputContainer {
@@ -104,6 +144,11 @@
     justify-content: center;
 }
 
+.writingForm {
+    overflow: hidden;
+    /* height: 680px; */
+}
+
 
 .writingScoreText {
     color: #252525;
@@ -112,6 +157,12 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+
+.topSelect {
+    margin-top: 24px;
+    display: none;
 }
 
 
@@ -260,9 +311,24 @@
 }
 
 @media(max-width: 1680px) {
+    .writingContainer {
+        padding: 0px 27px 100px 22px;
+    }
+
+    .wriritngTitle {
+        font-size: 16px;
+    }
+
+    .writingSecondTitle {
+        font-size: 16px;
+    }
 
     .writingInputTitle {
         font-size: 16px;
+    }
+
+    .selectedTopcCard {
+        font-size: 16px !important;
     }
 
     .topicInput textarea {
@@ -279,6 +345,10 @@
         margin-top: 26px;
     }
 
+    .writingContainer {
+        padding: 0px 22px 50px 22px;
+    }
+
     .emptyImageCard {
         width: 100%;
     }
@@ -290,6 +360,18 @@
     .imagesContainer {
         margin-left: 0px;
         margin-top: 20px;
+    }
+
+
+    .wriritngTitle {
+        margin-left: 8px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .writingSecondTitle {
+        font-size: 16px;
+        margin-left: 8px;
     }
 
     .checkButton {
@@ -316,6 +398,13 @@
     .wordsCount {
         margin-left: auto !important;
         margin-top: 0px;
+    }
+
+    .selectedTopcCard {
+        height: fit-content;
+        margin: 15px 0px 0px 0px !important;
+        width: 100%;
+        font-size: 16px !important;
     }
 
     .generateButton {
@@ -385,6 +474,11 @@
         margin: 0px;
     }
 
+    .writingForm {
+        height: fit-content;
+        padding-bottom: 50px;
+    }
+
     .writingScoreText {
         font-size: 15px;
         color: #F3F3F3;
@@ -392,4 +486,7 @@
         margin-top: 40px;
     }
 
+    .topSelect {
+        display: flex;
+    }
 }
