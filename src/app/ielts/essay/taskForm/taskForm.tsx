@@ -333,7 +333,7 @@ export default function TaskForm({
             handleChange
         }) => (
             <form
-                className={'col-12 ' + styles.writingContainer}
+                className='col-12 flex flex-1 flex-col pr-[95px] pb-[100px] pl-[90px] not-italic mac:pr-[27px] mac:pb-[100px] mac:pl-[22px] sm:pr-[22px] sm:pb-[50px] sm:pl-[22px] '
                 onSubmit={handleSubmit}>
 
                 {
@@ -342,33 +342,37 @@ export default function TaskForm({
                         :
                         <div
                             ref={targetRef}
-                            style={{ height: 'fit-content', minHeight: type === 'general_task_1' ? 764 : type === 'general_task_2' ? 600 : 1255 }}
-                            className={styles.writingForm}>
-                            <SelectComponents values={[
-                                { title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay', active: false },
-                                { title: 'Score', active: false },
-                                { title: 'Analysis', active: false },
-                                { title: 'Recommendations', active: false },
-                                { title: 'WWAI Tutor', active: false }
-                            ]} selectedItem={0} className={styles.topSelect} />
+                            className={' h-fit overflow-hidden sm:pb-[50px] ' + (type === 'general_task_1' ? 'min-h-[764px] ' : type === 'general_task_2' ? 'min-h-[600px] ' : 'min-h-[1255px]')}>
 
-                            <div className={styles.wriritngTitle}>
+                            {
+                                isMobile &&
+                                <SelectComponents values={[
+                                    { title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay', active: false },
+                                    { title: 'Score', active: false },
+                                    { title: 'Analysis', active: false },
+                                    { title: 'Recommendations', active: false },
+                                    { title: 'WWAI Tutor', active: false }
+                                ]} selectedItem={0} className=' mt-[24px] ' />
+                            }
+                            <div className='text-blackText text-left text-[20px] font-medium leading-normal ml-[45px] flex mac:text-[16px] sm:ml-[8px] sm:text-[16px] sm:mt-[20px] '>
                                 {type === 'general_task_1' ? 'IELTS GT Task 1' : type === 'general_task_2' ? 'IELTS Task 2' : 'IELTS AC Task 1'}
                             </div>
 
-                            <div className={styles.writingSecondTitle}>
+                            <div className='text-blackText text-[20px] font-light leading-normal ml-[45px] mt-[17px] mac:text-[16px] sm:text-[16px] sm:ml-[8px] '>
                                 You should spend about {type === 'general_task_2' ? 40 : 20} minutes on this task.
                             </div>
                             {
                                 type !== 'academic_task_1' &&
-                                <div className={styles.writingInputTitle}>
+                                <div className='mt-[8px] text-blackText text-left text-[20px] font-light ml-[45px] leading-[26px] flex flex-row justify-between pr-[40px] mac:text-[16px] sm:text-[16px] sm:ml-[8px] sm:pr-0 '>
                                     {'Write about the following topic:'}
                                 </div>
                             }
 
                             {
                                 topic && essay === '' ?
-                                    < div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
+                                    < div className='rounded-[8px] mt-[15px] mr-[40px] mb-0 ml-[45px] pt-[15px] pr-[52px] pb-[10px] pl-[18px] w-[70%] h-fit overflow-y-auto text-blackText text-[20px] not-italic font-normal leading-[180%] mac:text-[16px] sm:text-[16px] sm:mt-[15px] sm:mr-0 sm:mb-0 sm:ml-0 sm:w-full sm:h-fit '>
+                                        <Text text={topic.body} />
+                                    </div>
                                     : topic && essay != '' && currentId !== null ?
                                         < div className={styles.selectedTopcCard}><Text text={topic.body} /></div>
                                         : currentId != null ?
