@@ -444,16 +444,24 @@ export default function Page() {
         CheckForScores();
     });
 
+    function FirstFetch() {
+        if (MoreTopics) {
+            changeTopicsLoading(true);
+            GetTopicsList();
+            changeTopicsLoading(false);
+        }
+        GetProfile();
+    };
+
     React.useEffect(() => {
         StopLoader();
         if (localStorage.getItem('user')) {
-            if (MoreTopics) {
-                changeTopicsLoading(true);
-                GetTopicsList();
-                changeTopicsLoading(false);
-            }
-            GetProfile();
-        };
+            FirstFetch();
+        } else {
+            setTimeout(() => {
+                FirstFetch();
+            }, 1000);
+        }
     }, []);
 
     const handlePopOverClose = () => { setAnchorEl(false); };

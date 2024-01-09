@@ -1,6 +1,4 @@
 
-
-
 .firstTitle {
     margin-top: 26px;
     text-align: center;
@@ -39,55 +37,6 @@
     margin-left: 30px;
 }
 
-.transactionTable {
-    border-radius: 8px;
-    backdrop-filter: blur(17px);
-    /* height: 88vh; */
-    height: 65%;
-    flex-shrink: 0;
-    width: max-content;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.tabaleTitleCard {
-    display: flex;
-    align-items: center;
-    color: var(--color-gray);
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    padding: 0px 65px 15px 65px;
-    text-align: center;
-}
-
-.tabaleTitleCard th {
-    flex: 1;
-}
-
-.tableContent {
-    overflow-y: auto;
-    width: 100%;
-    flex: 1;
-    text-align: center;
-    padding: 0px 65px;
-    max-height: 340px;
-}
-
-.tableContentRow {
-    width: 100% !important;
-    display: flex;
-    flex: 1;
-    min-width: 100% !important;
-    flex-direction: column;
-}
-
-.tableContentRow table{
-    width: 100%;
-    display: flex;
-}
 
 .tableContent::-webkit-scrollbar {
     width: 12px;
@@ -156,45 +105,10 @@
     margin: auto;
 }
 
-.buyPackageCard {
-    display: flex;
-    flex-direction: row;
-
-}
-
-.buyPackageLeftCard {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .buyPackageLeftCardTitle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 298px;
-    height: 336px;
-    background: rgba(243, 243, 243, 0.03);
-    filter: drop-shadow(-11px 4px 25px rgba(0, 0, 0, 0.20));
-    color: var(--color-whiteText);
-    text-align: center;
-    font-size: 48px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    padding: 0px 70px 0px 40px;
-    border-radius: 4px;
     box-shadow: -8px 2px 14px -4px rgba(0, 0, 0, 0.54);
     -webkit-box-shadow: -8px 2px 14px -4px rgba(0, 0, 0, 0.54);
     -moz-box-shadow: -8px 2px 14px -4px rgba(0, 0, 0, 0.54);
-}
-
-.buyPackageLeftCardTitle span {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 26px;
-    margin-top: 7px;
 }
 
 .buyPackageRightCard {
@@ -374,11 +288,6 @@
     border: solid 1px var(--color-red) !important;
 }
 
-.buyPackLeftCardTitleText {
-    position: relative;
-    padding-right: 30px;
-}
-
 .rialIcon {
     position: absolute;
     right: 0px;
@@ -489,29 +398,6 @@
         padding: 0px 0px 50px 0px;
     }
 
-    .buyPackageLeftCardTitle {
-        width: 172px;
-        height: 149px;
-        font-size: 16px;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 39px;
-        padding: 0px 10px;
-    }
-
-    .buyPackLeftCardTitleText {
-        padding-right: 0px;
-    }
-
-    .buyPackageLeftCardTitle span {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20.8px;
-    }
-
-    .buyPackageCard {
-        flex-direction: column;
-    }
 
     .select {
         min-width: 224px;
@@ -547,17 +433,6 @@
         font-size: 25px;
         margin-bottom: 0px;
         margin-top: 0px;
-    }
-
-    .tabaleTitleCard {
-        display: none;
-    }
-
-    .tableContent {
-        padding: 0px 20px 0px 16px;
-        max-height: 70vh !important;
-        overflow-x: hidden;
-        flex: 1;
     }
 
     .transactionTable ::-webkit-scrollbar {

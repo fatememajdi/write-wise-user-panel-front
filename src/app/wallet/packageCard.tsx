@@ -68,17 +68,17 @@ const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePa
         })
     };
 
-    return <div className={'col-12 ' + styles.modalCard}>
+    return <div className='col-12 bg-primaryColor filter-[drop-shadow(-18px 20px 66px rgba(0, 0, 0, 0.17))] w-full h-fit min-h-full rounded-none py-[34px] pr-[28px] pl-[40px] min-w-[1429px] sm:min-w-0 sm:py-[48px] sm:pr-[36px] sm:pl-[26px] sm:min-h-screen sm:h-full '>
         <AiOutlineClose
             onClick={() => handleCancel()}
             style={{ marginLeft: 'auto' }}
-            className={styles.closeModalButton} />
-        <div className={'col-12 ' + styles.buyPackageCard}>
-            <div className={'col-lg-5 col-md-5 col-12 ' + styles.buyPackageLeftCard}>
-                <div className={styles.buyPackageLeftCardTitle}>
+            className='text-[45px] text-grayColor cursor-pointer ml-auto sm:text-[30px] ' />
+        <div className='col-12 flex lg:flex-row mac:flex-row sm:flex-col '>
+            <div className='col-lg-5 col-md-5 col-12 flex items-center justify-center '>
+                <div className={'flex flex-col items-center justify-center w-[298px] h-[336px] bg-[rgba(243, 243, 243, 0.03)] filter-[drop-shadow(-11px 4px 25px rgba(0, 0, 0, 0.20))] text-whiteText text-center text-[48px] font-bold leading-normal py-0 pr-[70px] pl-[40px] rounded-[4px] sm:w-[172px] sm:h-[149px] sm:text-[16px] sm:font-extrabold sm:text-center sm:mb-[39px] sm:py-0 sm:px-[10px] ' + styles.buyPackageLeftCardTitle}>
                     <div
                         style={pack.showingPrice.length > 9 ? { fontSize: isMobile ? 14 : 34 } : {}}
-                        className={styles.buyPackLeftCardTitleText}>
+                        className='relative pr-[30px] sm:pr-0 '>
                         {
                             pack.currency === 'IRR' ?
                                 pack.showingPrice.slice(0, pack.showingPrice.length - 1)
@@ -90,7 +90,7 @@ const PackageCard: React.FC<_PackageCardProps> = ({ handleCancel, pack, CreatePa
                             <TbCurrencyIranianRial className={styles.rialIcon} />
                         }
                     </div>
-                    <span> Start your journey with us.</span>
+                    <span className=" text-[20px] font-normal leading-[26px] mt-[7px] "> Start your journey with us.</span>
                 </div>
             </div>
 
