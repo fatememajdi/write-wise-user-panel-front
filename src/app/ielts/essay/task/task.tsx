@@ -1,9 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+'use client';
 import React from "react";
 import dynamic from "next/dynamic";
+import ReactLoading from 'react-loading';
 
 //--------------------------------------components
-const TaskForm = dynamic(() => import("../taskForm/taskForm"));
+const TaskForm = dynamic(() => import("../taskForm/taskForm"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-full">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
 
 //--------------------------------------types
 import { TaskProps } from "../../../../../types/task";

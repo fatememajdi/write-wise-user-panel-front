@@ -1,57 +1,5 @@
-.logo {
-    width: 414px;
-    height: 44px;
-    margin-top: 36px;
-}
 
-.tokens {
-    margin-top: 30px !important;
-    text-align: center;
-    font-size: 42px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-}
 
-.tabsContainer {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    padding: 0px 65px;
-    margin-bottom: 64px;
-}
-
-.tabsContainer div {
-    flex: 1;
-    border-bottom: solid 5px var(--color-seccondary);
-    text-align: center;
-    height: 100%;
-    padding: 33px 0px;
-    cursor: pointer;
-    color: var(--color-seccondary);
-    text-align: center;
-    font-family: var(--font-lato);
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-
-.assessments {
-    text-align: center;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-top: 29px !important;
-}
-
-.tokenCardMainContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
 
 .firstTitle {
     margin-top: 26px;
@@ -71,18 +19,6 @@
     padding: 0px;
 }
 
-.walletContainer {
-    height: 100vh;
-    overflow: hidden !important;
-    overflow-x: hidden !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px 0px 20px 0px;
-    background: var(--color-background);
-    flex: 1;
-}
-
 .title {
     color: var(--color-whiteText);
     text-align: center;
@@ -94,21 +30,6 @@
     margin-top: auto;
 }
 
-.tokenCard {
-    height: 35%;
-    width: 100%;
-    flex-shrink: 0;
-    background: linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%);
-    filter: drop-shadow(3px 8px 60px rgba(0, 82, 147, 0.23));
-    box-shadow: 3px 8px 60px -5px rgba(0, 82, 147, 0.23);
-    color: var(--color-whiteText);
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding-left: 261px;
-    padding-right: 200px;
-}
-
 .tokenCard span {
     font-size: 20px;
     font-style: normal;
@@ -116,29 +37,6 @@
     line-height: normal;
     margin-top: 36px;
     margin-left: 30px;
-}
-
-.addTokenButton {
-    border-radius: 8px;
-    background: var(--color-background);
-    width: 168px;
-    height: 45px !important;
-    min-height: 45px !important;
-    color: var(--color-primary);
-    text-align: center;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    padding: 0px;
-    align-items: center;
-    justify-content: center;
-    margin: auto 0px 32px auto;
-}
-
-.plusIcon {
-    font-size: 24px;
-    margin-right: 8px;
 }
 
 .transactionTable {
@@ -151,10 +49,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-}
-
-.mainContainer {
-    padding: 64px 124px 0px 180px;
 }
 
 .tabaleTitleCard {
@@ -217,33 +111,6 @@
     border-radius: 0px !important;
     padding: 34px 28px 33px 40px;
     min-width: 1429px;
-}
-
-.selectCountryContainer {
-    background-color: var(--color-primary);
-    filter: drop-shadow(-18px 20px 66px rgba(0, 0, 0, 0.17));
-    width: 690px !important;
-    height: fit-content;
-    min-height: 100%;
-    border-radius: 0px !important;
-}
-
-.selectCountryCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 350px;
-    padding: 53px 60px;
-}
-
-.selectCountryTitle {
-    color: var(--color-whiteText);
-    font-family: var(--color-lato);
-    font-size: 24.354px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    margin-bottom: 58px;
 }
 
 .modalTopContainer {
@@ -434,24 +301,6 @@
 
 }
 
-.backButton {
-    background-color: var(--color-seccondary);
-    margin: 34px auto 0px 0px;
-    padding: 0px !important;
-    width: 130px;
-    height: 48px;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-lato);
-    font-size: 24px;
-    font-weight: 600;
-    line-height: normal;
-}
-
-.backIcon {
-    font-size: 40px;
-}
-
 .applyCodeContainer input ::placeholder {
     color: var(--color-whiteText) !important;
     text-align: center !important;
@@ -537,27 +386,7 @@
     font-size: 24px;
 }
 
-.selectCountryButton {
-    background-color: var(--color-background);
-    width: 228.93px;
-    height: 48.708px;
-    border-radius: 10px;
-    color: var(--color-primary);
-    font-size: 24.354px;
-    font-weight: 700;
-    margin-top: 58px;
-    padding: 0px !important;
-    align-items: center;
-    justify-content: center;
-}
-
 @media(max-width: 500px) {
-
-    .walletContainer {
-        display: block;
-        overflow-y: hidden;
-    }
-
     .rialIcon {
         top: -10px;
         right: -25px;
@@ -720,95 +549,6 @@
         margin-top: 0px;
     }
 
-    .tokenCard {
-        background: linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%);
-        filter: drop-shadow(3px 8px 60px rgba(0, 82, 147, 0.23));
-        box-shadow: none !important;
-        min-height: 20vh;
-        height: fit-content;
-        padding: 12px 37px 20px 34px !important;
-        position: relative;
-        flex-direction: column;
-    }
-
-    .tokenCardMainContainer {
-        align-items: flex-start;
-        justify-content: flex-start;
-    }
-
-    .logo {
-        position: absolute;
-        width: 100px;
-        height: 22px;
-        top: 12px;
-        right: 37px;
-        margin-top: 0px;
-    }
-
-    .backButton {
-        margin: 0px auto 0px 0px;
-        font-size: 10.338px;
-        font-weight: 600;
-        width: 56px;
-        height: 20.677px;
-    }
-
-    .backIcon {
-        font-size: 25px;
-    }
-
-    .firstTitle {
-        margin-top: 36px;
-        font-size: 13px;
-        font-weight: 500;
-    }
-
-    .tokens {
-        margin-top: 16px !important;
-        font-size: 32px;
-        font-weight: 600;
-        line-height: 16px;
-    }
-
-    .assessments {
-        margin-top: 16px !important;
-        font-size: 13px;
-        font-weight: 400;
-    }
-
-    .addTokenButton {
-        margin: 0px 0px 0px auto;
-        width: 96px;
-        height: 20.893px !important;
-        font-size: 13px;
-        font-weight: 600;
-        padding: 0px !important;
-        min-height: 20.893px !important;
-        border-radius: 3px !important;
-    }
-
-    .plusIcon {
-        margin-right: 5px;
-        font-size: 10px;
-    }
-
-    .tabsContainer {
-        padding: 0px;
-        margin-bottom: 0px;
-    }
-
-    .tabsContainer div {
-        padding: 12px 0px;
-        font-size: 13px;
-        font-weight: 700;
-        border-bottom-width: 3px;
-    }
-
-    .mainContainer {
-        padding: 0px;
-        flex: 1;
-    }
-
     .tabaleTitleCard {
         display: none;
     }
@@ -830,32 +570,6 @@
         width: 4px !important;
         background-color: var(--color-gray);
         border-radius: 33px;
-    }
-
-    .selectCountryContainer {
-        width: 90% !important;
-        min-height: fit-content !important;
-    }
-
-    .selectCountryTitle {
-        font-size: 16px;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 24px;
-    }
-
-    .selectCountryButton {
-        width: 145.908px;
-        height: 31.044px;
-        font-size: 16px;
-        font-weight: 700;
-        margin-top: 25px;
-    }
-
-    .selectCountryCard {
-        padding: 35px 37px !important;
-        height: fit-content !important;
-        min-height: 221px !important;
     }
 
 }
