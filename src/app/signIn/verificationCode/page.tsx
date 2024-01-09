@@ -44,7 +44,7 @@ const VerificationCode: React.FC = () => {
         changeLoadig(true);
         let token: string = await VerifyCode(email, values.code);
         if (token) {
-            localStorage.setItem("user", JSON.stringify(token));
+            localStorage.setItem("user", token as string);
             router.replace('/ielts');
             localStorage.removeItem('email');
         } else

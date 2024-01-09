@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 import * as Yup from 'yup';
 // import { Pixelify } from "react-pixelify";
 import { useMutation } from "@apollo/client";
-import { useRouter } from "next/navigation";
 import { useMediaQuery } from 'react-responsive';
 import { AnimatePresence, motion } from "framer-motion";
 import { Popover } from 'antd';
@@ -88,7 +87,6 @@ export default function TaskForm({
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
     const [isBig, setIsBig] = React.useState<boolean>(false);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-    const router = useRouter();
 
     //-----------------------------------------------------------------graphQl functions
     const [selectTopic, { error }] = useMutation(SELECT_TOPIC);

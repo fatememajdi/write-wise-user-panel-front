@@ -60,6 +60,7 @@ const Page: React.FC = () => {
     const [checkTerms, setcheckTerm] = React.useState<boolean>(false);
 
     React.useEffect(() => {
+        localStorage.clear();
         StopLoader();
     }, []);
 
@@ -156,24 +157,25 @@ const Page: React.FC = () => {
                             }
                         </button>
 
-                        {/* <Divider style={{ marginTop: 32, fontSize: 20, fontWeight: 300 }} plain>or</Divider>
+                        <Divider style={{ marginTop: 32, fontSize: 20, fontWeight: 300 }} plain>or</Divider>
 
                         <a
                             onClick={handeClickGoogle}
                             className={styles.signInOptionsbutton + ' ' + styles.googleSingInCard}>
                             <FcGoogle className={styles.signInOptionsIcon} />Sign in with Google
-                        </a> */}
+                        </a>
+
+                        <a
+                            onClick={handeClickFaceBook}
+                            className={styles.signInOptionsbutton + ' ' + styles.faceBookSingInCard}>
+                            <SiFacebook className={styles.signInOptionsIcon} />Sign in with Facebook
+                        </a>
 
                         {/* <Pagination lenght={2} currentPage={1} color="#2E4057" /> */}
 
                         {/* <Divider style={{ marginTop: 32, fontSize: 20, fontWeight: 300 }} plain>or</Divider>
 
-                        
-                        <a
-                            // onClick={handeClickFaceBook}
-                            className={styles.signInOptionsbutton + ' ' + styles.faceBookSingInCard}>
-                            <SiFacebook className={styles.signInOptionsIcon} />Sign in with Facebook
-                        </a>
+                    
 
                         <a
                             // onClick={handeClickApple}

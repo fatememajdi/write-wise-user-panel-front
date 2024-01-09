@@ -27,7 +27,7 @@ export default function Page() {
     async function GetPackage() {
         let user = await localStorage.getItem('user');
         setLoading(true);
-        setPackages(await GetPackages(user ? `${JSON.parse(user)}` : ''));
+        setPackages(await GetPackages(user ? `${user}` : ''));
         setLoading(false);
     };
 

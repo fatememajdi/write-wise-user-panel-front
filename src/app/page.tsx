@@ -48,7 +48,7 @@ const Home: React.FC = () => {
     if (!localStorage.getItem('user')) {
       if (status != "loading") {
         if (status === 'authenticated') {
-          localStorage.setItem('user', session.user.token);
+          localStorage.setItem('user', session.user.token as string);
         }
       }
     }
