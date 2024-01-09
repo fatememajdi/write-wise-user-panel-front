@@ -9,22 +9,6 @@ import { loginClient } from '@/config/applloClient';
 import AppleClientSecret from './appleClientSecret';
 import { GOOGLE_SIGN_IN, META_SIGN_IN } from '../config/graphql';
 
-
-// async function RefreshAccessToken(token: string) {
-//     client.mutate({
-//         mutation: GOOGLE_SIGN_IN,
-//         variables: {
-//             token: token
-//         }
-//     }).then((res) => {
-//         console.log('sign innnnnnn : ', res.data.googleLogin.token);
-//         return res.data.googleLogin.token as string
-//     }).catch((err) => {
-//         return 'RefreshAccessTokenError'
-//     })
-// }
-
-
 export const authConfig: NextAuthOptions = {
 
     providers: [
@@ -44,12 +28,12 @@ export const authConfig: NextAuthOptions = {
         strategy: 'jwt'
     },
     pages: {
-        signIn: '/dashboard',
+        signIn: '/ielts',
         signOut: '/signIn'
     },
     callbacks: {
         async redirect({ url, baseUrl }) {
-            return 'http://localhost:3000/ielts'
+            return baseUrl+'/ielts'
         },
         async jwt({ token, account, }) {
             if (account) {
