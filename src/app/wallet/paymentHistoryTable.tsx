@@ -37,7 +37,7 @@ export default function PaymentHistoryTable({ tableLoading, GetTransactionsHisto
                 <th className="flex-1">Status</th>
                 <th className="flex-1">Description</th>
             </tr>
-            <tr className={'col-12 overflow-y-auto w-full flex-1 text-center py-0 px-[65px] max-h-[340px] sm:pt-0 sm:pr-[20px] sm:pb-0 sm:pl-[16px] sm:min-h-[66vh] sm:overflow-x-hidden sm:flex-1 ' + styles.tableContent}>
+            <tr className={'col-12 overflow-y-auto w-full flex-1 text-center py-0 px-[65px] max-h-[340px] sm:pt-0 sm:pr-[20px] sm:pb-0 sm:pl-[16px] sm:min-h-[70vh] sm:overflow-x-hidden sm:flex-1 ' + styles.tableContent}>
                 <th className='w-full flex flex-1 min-w-full flex-col '>
                     {
                         tableLoading ?

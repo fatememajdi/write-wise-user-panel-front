@@ -12,7 +12,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 //------------------------------------------components
 const PackageCard = dynamic(() => import("@/components/packageCard/packageCard"), {
     ssr: false,
-    loading: () => <div className="text-center min-h-[150px] items-center justify-center flex w-fit ">
+    loading: () => <div className="text-center min-h-[450px] items-center justify-center flex w-fit ">
         <ReactLoading type='bubbles' color={'#929391'} height={50} width={50} /></div>
 });
 //---------------------------------------------------types
@@ -25,7 +25,7 @@ type _PackagesListProps = {
     changeModalStep: any
 };
 
-const PackagesList: React.FC<_PackagesListProps> = ({ handleCancel, loading, packages, changeModalStep }) => {
+export default function PackagesList({ handleCancel, loading, packages, changeModalStep }: _PackagesListProps) {
 
     // const isMac = typeof window !== 'undefined' ? navigator.platform.toUpperCase().indexOf("MAC") >= 0 : false;
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
@@ -54,5 +54,3 @@ const PackagesList: React.FC<_PackagesListProps> = ({ handleCancel, loading, pac
         </div>
     </div>
 };
-
-export default PackagesList;

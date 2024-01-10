@@ -2,10 +2,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React from 'react';
 
-//------------------------------------------------------styles
-import styles from './customSelect.module.css';
-import './animation.css';
-
 //------------------------------------------------------icons
 import { TiArrowSortedDown } from 'react-icons/ti';
 
@@ -27,10 +23,10 @@ export default function SelectComponent({ values, selectedItem, className, onCha
     const [open, setOpen] = React.useState<boolean>(false);
 
     return <AnimatePresence>
-        <div className={'col-12 ' + styles.selectContainer + ' ' + className}>
+        <div className={'col-12 h-fit relative z-[3] ' + className}>
             <div
                 style={open ? { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 } : {}}
-                className={'col-12 ' + styles.selectTitle}
+                className='col-12 bg-seccondaryColor h-[40px] flex flex-row items-center justify-between rounded-[8px] px-[11px] text-whiteText text-[16px] font-medium leading-normal underline sm:text-[13px] '
                 onClick={() => setOpen(!open)}
             >{values[selectedItem].title}
 
@@ -48,7 +44,7 @@ export default function SelectComponent({ values, selectedItem, className, onCha
                 style={{ opacity: 0 }}
                 animate={{ height: open ? 'fit-content' : 0, opacity: open ? 1 : 0 }}
                 transition={{ type: "spring", duration: 0.5 }}
-                className={styles.selectItemsContainer}
+                className='bg-seccondaryColor rounded-b-[8px] w-full overflow-hidden text-whiteText absolute top-[40px] right-0 left-0 z-[2] '
             >
                 {values.map((item, index) => {
                     if (selectedItem != index)
@@ -59,7 +55,8 @@ export default function SelectComponent({ values, selectedItem, className, onCha
                                     onChange(index)
                                 setOpen(false);
                             }}
-                            style={!item.active ? { opacity: 0.5 } : {}} className={styles.selectItemCard}>
+                            style={!item.active ? { opacity: 0.5 } : {}}
+                            className='p-[11px] text-whiteText text-[13px] font-medium leading-normal border-b-[1px] border-b-grayColor flex flex-row '>
                             {item.title}
                         </div>
                 })}

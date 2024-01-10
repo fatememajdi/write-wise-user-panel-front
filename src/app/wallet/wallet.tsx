@@ -29,9 +29,7 @@ const SelectCountry = dynamic(() => import("./selectCountry"), {
         <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
 });
 const Modal = dynamic(() => import("@/components/modal/modal"), {
-    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center bg-primaryColor min-h-[350px] h-full">
-        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
-});
+    ssr: false});
 const PaymentHistoryTable = dynamic(() => import("./paymentHistoryTable"), {
     ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-full">
         <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
@@ -241,13 +239,15 @@ export default function Wallew({ packages, GetPackage, loading, selectedPackage,
                 }
             </div>
 
-            <Modal isOpen={isModalOpen} setIsOpen={handleCancel}>
-                {
-                    profile?.country.id === '' && isMobile ?
-                        <SelectCountry key={0} ChangeModalStep={ChangeModalStep} setprofile={setprofile} />
-                        : step
-                }
-            </Modal>
+            {
+                isModalOpen &&
+                <Modal isOpen={isModalOpen} setIsOpen={handleCancel}>
+                    {
+                        profile?.country.id === '' && isMobile ?
+                            <SelectCountry key={0} ChangeModalStep={ChangeModalStep} setprofile={setprofile} />
+                            : step
+                    }
+                </Modal>}
 
         </div>
 };

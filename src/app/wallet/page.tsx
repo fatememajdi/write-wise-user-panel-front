@@ -4,11 +4,21 @@
 import React from "react";
 import dynamic from 'next/dynamic';
 import { useMediaQuery } from 'react-responsive';
+import ReactLoading from 'react-loading';
 
 //------------------------------------------components
-const PackagesList = dynamic(() => import("./packagesList"));
-const PackageCard = dynamic(() => import("./packageCard"));
-const Wallet = dynamic(() => import("./wallet"));
+const PackagesList = dynamic(() => import("./packagesList"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-screen">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
+const PackageCard = dynamic(() => import("./packageCard"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-screen">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
+const Wallet = dynamic(() => import("./wallet"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-screen">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
 import { useMultiStepForm } from "@/components/multiStepForm/useMultiStepForm";
 import { GetPackages } from "@/hooks/fetchData";
 import { PaymentLink } from "@/hooks/actions";

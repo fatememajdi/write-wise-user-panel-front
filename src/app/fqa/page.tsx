@@ -5,11 +5,6 @@ import ReactLoading from 'react-loading';
 import { AnimatePresence } from 'framer-motion';
 
 //--------------------------------------------components
-const FqaQuestionsBackground = dynamic(
-    () => import("@/components/backgrounds/fqaBackground/fqaBackground").then(module => ({ default: module.FqaQuestionsBackground })), {
-    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-screen"><ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
-}
-);
 const Footer = dynamic(() => import("@/components/footer/footer"), {
     ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-[200px]"><ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
 });
@@ -27,7 +22,7 @@ const Page: React.FC = () => {
         StopLoader();
     }, []);
 
-    return <FqaQuestionsBackground>
+    return <div className="col-12 bg-fqa-pattern bg-cover bg-no-repeat min-h-screen overflow-hidden relative sm:min-h-fit ">
         <AnimatePresence>
             <div className='col-12 bg-seccondaryColor h-[418px] relative top-0 flex flex-col justify-center items-center pt-[100px] sm:h-[150px] '>
                 <div className='text-whiteText text-center text-[64px] font-bold leading-[40px] flex flex-col items-center sm:text-[20px] sm:mb-[50px] '>
@@ -51,7 +46,7 @@ const Page: React.FC = () => {
             </div>
         </AnimatePresence>
         <Footer />
-    </FqaQuestionsBackground>
+    </div>
 };
 
 export default Page;
