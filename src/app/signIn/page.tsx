@@ -84,11 +84,11 @@ export default function Page() {
         }
     };
 
-    const handeClickGoogle = async () => {
-        const signInResponse = signIn('google');
-        if (signInResponse)
-            console.log('google login sign in response : ', signInResponse);
-    };
+    // const handeClickGoogle = async () => {
+    //     const signInResponse = signIn('google');
+    //     if (signInResponse)
+    //         console.log('google login sign in response : ', signInResponse);
+    // };
 
     // const handeClickApple = async () => {
     //     const signInResponse = await signIn('apple');
@@ -96,11 +96,11 @@ export default function Page() {
     //         console.log('google login sign in response : ', signInResponse);
     // };
 
-    const handeClickFaceBook = async () => {
-        const signInResponse = await signIn('facebook');
-        if (signInResponse)
-            console.log('google login sign in response : ', signInResponse);
-    };
+    // const handeClickFaceBook = async () => {
+    //     const signInResponse = await signIn('facebook');
+    //     if (signInResponse)
+    //         console.log('google login sign in response : ', signInResponse);
+    // };
 
     return (
         <div className='col-12 flex flex-col h-screen overflow-hidden lg:bg-login-pattern mac:bg-login-pattern bg-cover bg-no-repeat items-center justify-center relative sm:bg-login-mobile-pattern sm:h-fit sm:min-h-screen '>
@@ -162,7 +162,7 @@ export default function Page() {
                             }
                         </button>
 
-                        <Divider className="mt-[32px] text-[20px] font-light " plain>or</Divider>
+                        {/* <Divider className="mt-[32px] text-[20px] font-light " plain>or</Divider>
 
                         <a
                             onClick={handeClickGoogle}
@@ -174,7 +174,7 @@ export default function Page() {
                             onClick={handeClickFaceBook}
                             className={'flex flex-row items-center no-underline font-semibold text-[16px] leading-[24px] w-[360px] h-[44px] justify-center mt-[15px] cursor-pointer rounded-[8px] sm:w-[247px] sm:h-[30px] sm:text-[11px] sm:font-semibold sm:leading-[16.5px] border-[1px] border-[#1877F2] bg-[#1877F2] text-whiteText'}>
                             <SiFacebook className='mr-[12px] text-[24px] sm:text-[18px] ' />Sign in with Facebook
-                        </a>
+                        </a> */}
 
                         {/* <Pagination lenght={2} currentPage={1} color="#2E4057" /> */}
 
