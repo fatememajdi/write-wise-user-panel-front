@@ -17,8 +17,9 @@ module.exports = {
       'navyBlue': '#12263E'
     },
     screens: {
-      'sm': { 'min': '280px', 'max': '700px' },
+      'sm': { 'min': '280px', 'max': '600px' },
       'mac': { 'min': '1440px', 'max': '1680px' },
+      'tablet': { 'min': '601px', 'max': '1280px' },
       'lg': { 'min': '1681px' },
     },
     extend: {
