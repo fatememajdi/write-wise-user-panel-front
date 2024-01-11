@@ -5,7 +5,7 @@ import { Divider } from 'antd';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Checkbox } from 'antd';
