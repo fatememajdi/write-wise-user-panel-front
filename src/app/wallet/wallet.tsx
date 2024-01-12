@@ -60,6 +60,7 @@ export default function Wallew({ packages, GetPackage, loading, selectedPackage,
             loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
         <PackageCard key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]
         : [
+            <SelectCountry key={0} ChangeModalStep={ChangeModalStep} setprofile={setprofile} />,
             <PackagesList key={1} handleCancel={handleCancel}
                 loading={loading} packages={packages} changeModalStep={ChangeModalStep} />,
             <PackageCard key={2} handleCancel={handleCancel} pack={selectedPackage} CreatePaymentLink={CreatePaymentLink} />]);
@@ -207,9 +208,10 @@ export default function Wallew({ packages, GetPackage, loading, selectedPackage,
 
             <Modal isOpen={isModalOpen} setIsOpen={handleCancel}>
                 {
-                    profile?.country.id === '' && isMobile ?
-                        <SelectCountry key={0} ChangeModalStep={ChangeModalStep} setprofile={setprofile} />
-                        : step
+                    // profile?.country.id === '' && isMobile ?
+                    //     <SelectCountry key={0} ChangeModalStep={ChangeModalStep} setprofile={setprofile} />
+                    //     : 
+                    step
                 }
             </Modal>
 

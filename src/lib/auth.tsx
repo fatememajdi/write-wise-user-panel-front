@@ -33,7 +33,7 @@ export const authConfig: NextAuthOptions = {
     },
     callbacks: {
         async redirect({ url, baseUrl }) {
-            return baseUrl+'/ielts'
+            return baseUrl + '/ielts'
         },
         async jwt({ token, account, }) {
             if (account) {

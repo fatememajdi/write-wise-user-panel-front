@@ -116,15 +116,15 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
 
     const variants = {
-        open: { backgroundColor: isMobile ? '#2E4057' : 'transparent', boxShadow: 'none', height: isMobile ? 45 : isMac ? 100 : 130 },
-        closed: { backgroundColor: isMobile ? '#2E4057' : '#FFF', boxShadow: "0px 4px 14.6px 0px rgba(0, 0, 0, 0.25)", height: isMobile ? 45 : isMac ? 106 : 112 },
+        open: { backgroundColor: isMobile ? '#2E4057' : 'transparent', boxShadow: 'none', height: isMobile ? 45 : isMac ? 89 : 130 },
+        closed: { backgroundColor: isMobile ? '#2E4057' : '#FFF', boxShadow: "0px 4px 14.6px 0px rgba(0, 0, 0, 0.25)", height: isMobile ? 45 : isMac ? 90 : 112 },
     }
 
     return (<AnimatePresence>
         <motion.nav
             animate={!isMobile && topHeader ? 'open' : 'closed'}
             variants={variants}
-            className={'col-12 fixed top-0 z-[100] items-center w-full max-w-[1920px] sm:flex-row sm:justify-between sm:flex sm:py-0 sm:px-14 sm:h-[45px] sm:bg-seccondaryColor ' + styles.headerContainer}>
+            className={'col-12 fixed top-0 z-[100] items-center w-full max-w-[1920px] mac:max-w-[1680px] sm:flex-row sm:justify-between sm:flex sm:py-0 sm:px-14 sm:h-[45px] sm:bg-seccondaryColor ' + styles.headerContainer}>
 
             {/* ---------------------------------------------------------------------mobile header */}
             <div
@@ -143,38 +143,25 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                 loading="eager"
             />
 
-            <div className={'col-12 flex h-[110px] flex-row items-center justify-between flex-1 z-10 pr-[97px] pl-[203px] relative sm:hidden ' + styles.headerCard}>
+            <div className={'col-12 flex h-[110px] mac:h-[89px] flex-row items-center justify-between flex-1 z-10 pr-[97px] pl-[203px] mac:pr-[71px] mac:pl-[71px] relative sm:hidden ' + styles.headerCard}>
                 <div className="flex flex-row w-fit h-full items-center"  >
-                    {
-                        isMac ?
-                            <Image
-                                className="mr-[38px] w-[183px] h-[24px]"
-                                src={"/logoIcon.svg"}
-                                alt="Logo"
-                                width="0"
-                                height="0"
-                                sizes="100vw"
-                                loading="eager"
-                                priority
-                            />
-                            :
-                            <Link style={{ cursor: 'pointer' }} onClick={() => { if (pathname === '/') handleScroll; }}
-                                href={pathname === '/' ? '#hero-section' : '/#hero-section'}>
-                                <Image
-                                    className="mr-[38px] w-[183px] h-[24px]"
-                                    src={"/logoWithIcon.svg"}
-                                    alt="Logo"
-                                    width="0"
-                                    height="0"
-                                    sizes="100vw"
-                                    loading="eager"
-                                    priority
-                                />
-                            </Link>
-                    }
+
+                    <Link style={{ cursor: 'pointer' }} onClick={() => { if (pathname === '/') handleScroll; }}
+                        href={pathname === '/' ? '#hero-section' : '/#hero-section'}>
+                        <Image
+                            className="mr-[38px] w-[183px] h-[24px]"
+                            src={"/logoWithIcon.svg"}
+                            alt="Logo"
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            loading="eager"
+                            priority
+                        />
+                    </Link>
                     {
                         headerItems.map(
-                            (item, index) => <Link className="text-seccondaryColor no-underline leading-[28px] text-[24px] font-normal mr-[40px] cursor-pointer"
+                            (item, index) => <Link className="text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[20px] font-normal mr-[40px] cursor-pointer"
                                 onClick={() => { if (pathname === '/') handleScroll; }}
                                 key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>
                         )
@@ -187,13 +174,13 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                                     router.push('/ielts');
                                     StartLoader();
                                 }}
-                                className='text-seccondaryColor no-underline leading-[28px] text-[24px] font-normal mr-[40px] cursor-pointer'>
+                                className='text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[20px] font-normal mr-[40px] cursor-pointer'>
                                 Dashboard</a>
                             :
                             <div onClick={() => {
                                 router.push('/signIn');
                                 StartLoader();
-                            }} className='text-seccondaryColor no-underline leading-[28px] text-[24px] font-normal mr-[40px] cursor-pointer'>
+                            }} className='text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[20px] font-normal mr-[40px] cursor-pointer'>
                                 Signup</div>
                     }
 
@@ -205,11 +192,11 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     animate={{ height: showPopup ? isMac ? 49 : isMobile ? 34 : 54 : 0 }}
                     transition={{ type: "spring", duration: 1 }}
                     className='bg-red overflow-hidden flex flex-row items-center justify-center pr-[18px] mt-0 sm:absolute sm:left-0 sm:right-0 sm:bottom-[-45px]'>
-                    <div className='text-whiteText text-[18px] font-medium leading-[52.8px] ml-auto sm:text-[13px]'>
+                    <div className='text-whiteText text-[18px] mac:text-[18px] font-medium leading-[52.8px] ml-auto sm:text-[13px]'>
                         Limited Time Offer!</div>
                     <button
                         onClick={showModal}
-                        className="w-[121px] h-[28px] items-center justify-center rounded-[4px] bg-background text-red text-[18px] font-normal leading-[40px] ml-[52px] sm:w-[95px] sm:h-[22px] sm:text-[14px] sm:font-normal sm:leading-[31.4px]" >
+                        className="w-[121px] h-[28px] items-center justify-center rounded-[4px] bg-background text-red text-[18px] mac:text-[18px] font-normal leading-[40px] ml-[52px] sm:w-[95px] sm:h-[22px] sm:text-[14px] sm:font-normal sm:leading-[31.4px]" >
                         Start Now
                     </button>
 

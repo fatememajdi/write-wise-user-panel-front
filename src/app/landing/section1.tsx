@@ -32,8 +32,8 @@ export default function Section1() {
         <header><LandingHeader logedIn={logedIn} landing /></header>
         <section className={'col-12 flex flex-row not-italic px-0 pt-[299px] pb-[259px] sm:flex-col-reverse justify-center items-center sm:pt-[100px] sm:pb-[50px] sm:min-h-fit ' + styles.section1Container} id="hero-section">
 
-            <div className={'col-lg-9 col-md-9 col-12 flex flex-column items-start justify-center pl-[175px] mr-auto h-full sm:h-fit sm:pr-[20px] sm:pl-[30px] sm:mt-[350px] ' + styles.content}>
-                <h1 className='flex flex-wrap text-primaryColor '>
+            <div className={'col-lg-9 col-md-9 col-12 flex flex-column items-start justify-center pl-[175px] mac:pl-[71px] mr-auto h-full sm:h-fit sm:pr-[20px] sm:pl-[30px] sm:mt-[350px] ' + styles.content}>
+                <h1 className='flex flex-wrap text-primaryColor mac:w-[35%] '>
                     <p> Achieve IELTS Writing Excellence with</p>
                     <span className="whitespace-nowrap "> AI-Driven &nbsp;</span>
                     <div className={'text-primaryColor ' + styles.animationText}>
@@ -50,7 +50,7 @@ export default function Section1() {
 
                 </h1>
 
-                <h6 className={'mt-[48px] text-blackText capitalize leading-[31.2px] sm:mt-[16px] ' + styles.description}>
+                <h6 className={'mt-[48px] text-blackText capitalize leading-[31.2px] sm:mt-[16px] mac:max-w-[45%] ' + styles.description}>
                     <span>
                         Unlock the full potential of your IELTS writing Skills with our state-of-the-art AI technology. Experience a comprehensive journey to success.
                     </span>
@@ -59,7 +59,7 @@ export default function Section1() {
                             StartLoader();
                             router.push('/signIn');
                         }}
-                        className={'text-whiteText not-italic bg-red py-[16px] px-[28px] mt-[80px] text-[24px] font-semibold leading-[40px] rounded-[8px] border border-red border-solid shadow-[0px 1px 2px 0px rgba(16, 24, 40, 0.05)] sm:font-bold sm:text-[13px] sm:leading-4 sm:mt-[32px] sm:p-0 sm:w-[92px] sm:h-[43px] ' + styles.startButton}
+                        className={'text-whiteText not-italic bg-red py-[16px] px-[28px] mac:py-[12px] mac:px-[20px]  mt-[80px] mac:mt-[57px] text-[24px] mac:text-[16px] font-semibold leading-[40px] rounded-[8px] border border-red border-solid shadow-[0px 1px 2px 0px rgba(16, 24, 40, 0.05)] sm:font-bold sm:text-[13px] sm:leading-4 sm:mt-[32px] sm:p-0 sm:w-[92px] sm:h-[43px] ' + styles.startButton}
                     >
                         Start Now
                     </button>

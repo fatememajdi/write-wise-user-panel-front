@@ -82,7 +82,7 @@ body {
   margin: auto !important;
   color: var(--color-blackText);
   zoom: 1 !important;
-  max-width: 1920px !important;
+  /* max-width: 1920px !important; */
   max-height: 1080px !important;
 }
 
@@ -110,7 +110,6 @@ button:hover {
   .container {
     max-width: 1140px;
   }
-
 }
 
 textarea::-webkit-scrollbar {
@@ -174,4 +173,20 @@ textarea::-webkit-scrollbar-thumb {
     width: 4px !important;
   }
 
+}
+
+
+
+@media (max-width: 1680px) {
+  h1 {
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    line-height: 29.8px !important;
+    letter-spacing: -0.12px !important;
+  }
+  h6 {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 20px !important;
+  }
 }
