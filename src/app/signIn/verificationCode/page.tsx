@@ -138,7 +138,7 @@ export default function VerificationCode() {
                         disabled={values.code.length < 6}
                         style={values.code.length < 6 ? { opacity: 0.5, marginBottom: 0 } : { opacity: 1, marginBottom: 0 }}
                         aria-label="login button"
-                        className='mt-[32px] font-bold text-[24px] leading-[12px] text-whiteText bg-seccondaryColor w-[360px] h-[54px] mb-[32px] sm:w-[247px] sm:h-[37px] sm:text-[16px] sm:leading-[8.1px] ' type="submit">
+                        className='mt-[32px] rounded-[8px] font-bold text-[24px] leading-[12px] text-whiteText bg-seccondaryColor w-[360px] h-[54px] mb-[32px] sm:w-[247px] sm:h-[37px] sm:text-[16px] sm:leading-[8.1px] ' type="submit">
                         {
                             loading ?
                                 <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} />
@@ -151,7 +151,7 @@ export default function VerificationCode() {
                         <button
                             onClick={() => router.back()}
                             aria-label="login button"
-                            className='m-0 h-[48px] text-[24px] w-fit sm:w-[89px] text-center bg-seccondaryColor font-semibold items-center justify-center text-whiteText px-[12px] sm:h-[33px] sm:text-[16.6px] ' type="button">
+                            className='m-0 rounded-[8px] h-[48px] text-[24px] w-fit sm:w-[89px] text-center bg-seccondaryColor font-semibold items-center justify-center text-whiteText px-[12px] sm:h-[33px] sm:text-[16.6px] ' type="button">
                             <IoIosArrowRoundBack className='text-[45px] sm:text-[25px]' /> Back
                         </button>
                         <button
@@ -159,7 +159,7 @@ export default function VerificationCode() {
                             style={resendCode ? { opacity: 1 } : { opacity: 0.5 }}
                             onClick={() => { handleEmailSignIn() }}
                             aria-label="login button"
-                            className='m-0 h-[48px] text-[24px] min-w-[198px] sm:min-w-[138px] w-fit text-center bg-seccondaryColor font-semibold items-center justify-center text-whiteText px-[12px] sm:h-[33px] sm:text-[16.6px] ' type="button">
+                            className='m-0 h-[48px] rounded-[8px] text-[24px] min-w-[198px] sm:min-w-[138px] w-fit text-center bg-seccondaryColor font-semibold items-center justify-center text-whiteText px-[12px] sm:h-[33px] sm:text-[16.6px] ' type="button">
                             {
                                 resendLoading ?
                                     <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} />

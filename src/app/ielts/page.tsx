@@ -246,11 +246,12 @@ export default function Page() {
     async function GetProfile() { setProfile(await GetUserProfile()) };
 
     async function GetScores(essaies: Essay[], essay?: Essay) {
+        let dev = await localStorage.getItem('devMode');
         let newEssay: Essay[] = essaies;
         await scoreEssay({
             variables: {
                 id: essay ? essay.id : newEssay[0].id,
-                test: false
+                test: process.env.NEXT_PUBLIC_ENV === 'DEVELOPER' ? dev ? JSON.parse(dev) : true : false
             }
         }).then(async (res) => {
             try {

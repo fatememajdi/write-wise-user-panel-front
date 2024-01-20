@@ -7,7 +7,7 @@ import { setContext } from '@apollo/client/link/context';
 
 
 const httpLink = createHttpLink({
-    uri: "https://api.wwai.ai/graphql",
+    uri: process.env.URI,
 });
 
 const autLink = setContext(async (_, { header }) => {
@@ -39,7 +39,7 @@ const autLink2 = setContext(async (_, { header }) => {
 const loginClient = new ApolloClient({
     link: autLink2.concat(httpLink),
     cache: new InMemoryCache(),
-})
+});
 
 
 
