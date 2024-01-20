@@ -26,6 +26,7 @@ const Input = dynamic(() => import("@/components/input/input"), {
 });
 import { StopLoader } from "@/components/Untitled";
 import { EmaiSignIn } from "@/hooks/actions";
+import toast from "react-hot-toast";
 
 //---------------------------------------------------------------validation
 const EmailValidationSchema = Yup.object().shape({
@@ -93,16 +94,12 @@ export default function Page() {
                 controls.set("reset");
             }, 2000);
         } else {
-            const signInResponse = signIn('google');
-            if (signInResponse)
-                console.log('google login sign in response : ', signInResponse);
+            await signIn('google');
         }
     };
 
     const handeClickApple = async () => {
-        const signInResponse = await signIn('apple');
-        if (signInResponse)
-            console.log('google login sign in response : ', signInResponse);
+        await signIn('apple');
     };
 
     const handeClickFaceBook = async () => {

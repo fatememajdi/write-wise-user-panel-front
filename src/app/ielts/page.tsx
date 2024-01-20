@@ -469,9 +469,9 @@ export default function Page() {
 
     async function LogOut() {
         setLoading(true);
+        router.replace('/signIn');
+        await signOut();
         localStorage.clear();
-        if (status === 'authenticated')
-            signOut();
     };
 
     async function handleNewTopic(topic: Topic) {

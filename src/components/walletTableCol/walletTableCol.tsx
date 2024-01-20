@@ -22,6 +22,7 @@ const TableCol: React.FC<_props> = ({ transaction, RecieptLink, RegeneratePaymen
 
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
+
     return <table className="w-full flex ">
         <tbody style={transaction.paymentStatus === 'fail' ? { borderBottom: 'solid 1px #AB1F23' } : { borderBottom: 'solid 1px rgba(114, 123, 139)' }}
             className={styles.transactionCard}>
@@ -74,7 +75,7 @@ const TableCol: React.FC<_props> = ({ transaction, RecieptLink, RegeneratePaymen
                             <th style={transaction.paymentStatus === 'fail' ? { color: '#AB1F23' } : {}}>{CapitalStart(transaction.paymentStatus)}</th>
 
                             <th>
-                                {transaction.paymentStatus === 'success' ?
+                                {transaction.paymentStatus === 'success' ? transaction.currency !== 'irr' &&
                                     <button onClick={() => RecieptLink(transaction.id)} className={styles.tableItemButton}>Download receipt</button>
                                     : transaction.paymentStatus === 'waiting' ?
                                         <button onClick={() => RegeneratePaymentLink(transaction.id)} className={styles.tableItemButton}>Continue</button>

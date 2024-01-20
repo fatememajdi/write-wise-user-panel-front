@@ -91,7 +91,7 @@ export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTo
         {
             loading ?
                 <Loading style={{ height: '100%', minHeight: 0 }} />
-                : Topics.length === 0 ?
+                : Topics.filter(item => item.type === type).length === 0 ?
                     <>
                         <Empty description={false} style={{ marginTop: '50%' }} />
                     </>
@@ -144,8 +144,7 @@ export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTo
                             </div>
                         }
                         {
-                            Topics.map((item: any, index: any) =>
-                                item.type === type &&
+                            Topics.filter(item => item.type === type).map((item: any, index: any) =>
                                 <div
                                     style={item.id === selectedTopic?.id ? { background: '#172E4A' } : {}}
                                     className={'col-12 ' + styles.taskCard} key={index} >

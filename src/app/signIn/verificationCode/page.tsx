@@ -113,7 +113,9 @@ export default function VerificationCode() {
                     <h5 className='leading-[12px] text-seccondaryColor mb-[82px] '>Sign Up/Log In</h5>
 
                     <div className=' text-blackText text-center text-[20px] mb-[38px] font-light sm:w-[247px] sm:text-[13px] '>An email containing a code has been sent to:<br />
-                        <span className=" font-bold ">{email}</span></div>
+                        <span className=" font-bold ">{email}</span>
+                        <div className=" font-thin text-[18px] mt-[15px] max-w-[360px] ">Please make sure to check your spam folder for authentication code email.</div>
+                    </div>
 
                     <div className='col-12 h-fit relative max-w-[360px] rounded-[8px] '>
                         <div className=' font-light text-[24px] z-[2] absolute left-[17px] top-[-15px] bg-[#F3F3F3] sm:bg-[#F0E9EA] py-0 px-[2px] sm:text-[16.3px] sm:leading-[8.1px] sm:top-[-5px] '>
