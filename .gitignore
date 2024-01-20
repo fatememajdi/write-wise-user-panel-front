@@ -33,3 +33,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# devop tools
+.vscode/
+ecosystem.config.js
+production.config.js
+
