@@ -1,12 +1,9 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React from "react";
-import Popover from '@mui/material/Popover';
+// import Popover from '@mui/material/Popover';
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from "next/navigation";
-
-//--------------------------------styles
-import styles from './dashboardPopOver.module.css';
 
 //--------------------------------icons
 import { RxExit } from 'react-icons/rx';
@@ -73,11 +70,11 @@ export default function DashboardPopOver({ anchorEl, handlePopOverClose, LogOut,
     return <AnimatePresence>
 
         <motion.div
-            className={styles.popOver}
+            className='h-0 lg:w-full mac:w-full overflow-hidden absolute z-10 right-0 left-0 bottom-[74px] max-h-fit mac:bottom-[50px] sm:bottom-[42px] sm:w-0 '
             animate={anchorEl ? { height: 'fit-content', width: '100%' } : { height: 0 }}
             transition={{ duration: 0.5, type: 'spring' }}
         >
-            <div className={styles.popOverCard}>
+            <div className='flex flex-col bg-navyBlue pt-[4px] rounded-t-[8px] '>
                 {
                     menuItems.filter(item => item.route !== page).map((item, index) =>
                         <a
@@ -90,22 +87,24 @@ export default function DashboardPopOver({ anchorEl, handlePopOverClose, LogOut,
                                     StartLoader();
                                 }
                             }}
-                            key={index} className={styles.menuItemCard}>
-                            <item.icon className={styles.exitIcon} />
+                            key={index}
+                            className='flex flex-row items-center text-whiteText text-[18px] font-normal leading-[28px] py-[16px] pr-[14px] pl-[40px] no-underline cursor-pointer hover:bg-primaryColor sm:text-[16px] sm:py-[10px] sm:px-[15px] sm:min-w-[170px] '>
+                            <item.icon className='text-[25px] mr-[18px] sm:text-[20px] sm:mr-[12px] ' />
                             <span> {item.title}</span>
                         </a>
                     )
                 }
-                <a target="_blank" href={fromIran ? 'https://www.goftino.com/c/7aFKEK' : 'https://tawk.to/chat/651990a910c0b257248765ee/1hbmfd0ck'} key={3} className={styles.menuItemCard}>
-                    <MdOutlineSupportAgent className={styles.exitIcon} />
+                <a target="_blank" href={fromIran ? 'https://www.goftino.com/c/7aFKEK' : 'https://tawk.to/chat/651990a910c0b257248765ee/1hbmfd0ck'} key={3}
+                    className='flex flex-row items-center text-whiteText text-[18px] font-normal leading-[28px] py-[16px] pr-[14px] pl-[40px] no-underline cursor-pointer hover:bg-primaryColor sm:text-[16px] sm:py-[10px] sm:px-[15px] sm:min-w-[170px] '>
+                    <MdOutlineSupportAgent className='text-[25px] mr-[18px] sm:text-[20px] sm:mr-[12px] ' />
                     <span>Support</span>
                 </a>
                 <button
                     onClick={() => setOpen(true)}
-                    className={styles.logOutButton}
+                    className='flex-row justify-start text-whiteText text-[20px] font-medium leading-[28px] py-[16px] pr-[14px] pl-[40px] border-t-[1px] border-t-grayColor hover:bg-primaryColor sm:text-[16px] sm:py-[10px] sm:px-[15px] '
                     aria-label="logout button"
                 >
-                    <RxExit className={styles.exitIcon} /> Log out
+                    <RxExit className='text-[25px] mr-[18px] sm:text-[20px] sm:mr-[12px] ' /> Log out
                 </button>
             </div>
         </motion.div>

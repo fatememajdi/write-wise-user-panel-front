@@ -67,14 +67,13 @@ export const authConfig: NextAuthOptions = {
             return token;
         },
         async session({ session, token, user }) {
-            if (token.error)
-                session.error = token.error
-            else
+            if (token.error) {
+                session.error = token.error;
+            } else
                 session.user.token = token.access_token as string;
             return session
         },
         async signIn({ user, account, profile, email, credentials }) {
-
             return true;
         }
     },

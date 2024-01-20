@@ -2,9 +2,6 @@ import React from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-//-----------------------------------------styles
-import styles from '../../styles/task.module.css';
-
 type _props = {
     type: string,
     defaultValue: string,
@@ -53,15 +50,18 @@ const SubTypeSelect: React.FC<_props> = ({ defaultValue, setFieldValue, type }) 
         onChange={(e) => setFieldValue('subType', e.target.value)}
         displayEmpty
         inputProps={{ 'aria-label': 'gender select' }}
-        className={styles.select}
+        className='rounded-[8px] border-[1px] border-seccondaryColor min-w-[170px] h-[42px] bg-seccondaryColor ml-auto mt-[25px] w-fit sm:h-[25px] sm:min-w-[86px] sm:mt-[20px] '
     >
         {
             type === 'general_task_1' ?
-                GeneralTask1.map((item, index) => <MenuItem key={index} className={styles.selectMenuItem} value={item.value}>{item.title}</MenuItem>)
+                GeneralTask1.map((item, index) =>
+                    <MenuItem key={index} className='bg-grayColor text-whiteText m-0 sm:h-[27px] sm:py-0 sm:px-[8px] ' value={item.value}>{item.title}</MenuItem>)
                 : type === 'general_task_2' ?
-                    Task2.map((item, index) => <MenuItem key={index} className={styles.selectMenuItem} value={item.value}>{item.title}</MenuItem>)
+                    Task2.map((item, index) =>
+                        <MenuItem key={index} className='bg-grayColor text-whiteText m-0 sm:h-[27px] sm:py-0 sm:px-[8px] ' value={item.value}>{item.title}</MenuItem>)
                     :
-                    AcademicTask1.map((item, index) => <MenuItem key={index} className={styles.selectMenuItem} value={item.value}>{item.title}</MenuItem>)
+                    AcademicTask1.map((item, index) =>
+                        <MenuItem key={index} className='bg-grayColor text-whiteText m-0 sm:h-[27px] sm:py-0 sm:px-[8px] ' value={item.value}>{item.title}</MenuItem>)
         }
     </Select>
 };

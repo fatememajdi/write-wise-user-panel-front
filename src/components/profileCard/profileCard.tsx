@@ -59,7 +59,6 @@ const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any
         localStorage.setItem('devMode', JSON.stringify(checked));
     };
 
-
     const router = useRouter();
     function handleClose() {
         setOpen(false);
@@ -72,12 +71,26 @@ const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any
         router.replace('/signIn');
     };
 
+
     React.useEffect(() => {
-        let dev = localStorage.getItem('devMode');
-        if (dev)
-            setDeveloper(JSON.parse(dev));
-        else
-            setDeveloper(true);
+        if (process.env.NEXT_PUBLIC_ENV === 'DEVELOPER') {
+            let dev = localStorage.getItem('devMode');
+            if (dev)
+                setDeveloper(JSON.parse(dev));
+            else
+                setDeveloper(true);
+        }
+    }, []);
+
+
+    React.useEffect(() => {
+        if (process.env.NEXT_PUBLIC_ENV === 'DEVELOPER') {
+            let dev = localStorage.getItem('devMode');
+            if (dev)
+                setDeveloper(JSON.parse(dev));
+            else
+                setDeveloper(true);
+        }
     }, []);
 
     return <table className={styles.profileCard}>
@@ -127,9 +140,11 @@ const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any
                             <IoIosArrowRoundBack className={styles.arrowLeftIcon} />  Ok
                         </button>
                     </tr>
-                    <div style={{ marginTop: 20, padding: 10, backgroundColor: 'rgb(206, 208, 215)', borderRadius: 6, width: 'fit-content' }}>
-                        {'developer '} <Switch style={{ width: 20 }} onChange={onChangeSwitch} checked={developer} /></div>
-
+                    {
+                        process.env.NEXT_PUBLIC_ENV === 'DEVELOPER' &&
+                        <div style={{ marginTop: 20, padding: 10, backgroundColor: 'rgb(206, 208, 215)', borderRadius: 6, width: 'fit-content' }}>
+                            {'developer '} <Switch style={{ width: 20 }} onChange={onChangeSwitch} checked={developer} /></div>
+                    }
                 </>
         }
 

@@ -80,6 +80,7 @@ export async function EmaiSignIn(email: string) {
             email: email,
         },
     }).then(async (res) => {
+        console.log(res);
         mail = res.data.emailLogin.email;
     }
     ).catch(async (err) => {

@@ -57,7 +57,8 @@ const nextConfig = {
   //   minimize: true,
   // },
   env: {
-    NEXT_PUBLIC_ENV: 'PRODUCTION',
+    NEXT_PUBLIC_ENV: 'DEVELOPER',
+    URI:'https://devapi.wwai.ai/graphql'
   },
 }
 

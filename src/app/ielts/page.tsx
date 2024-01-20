@@ -251,7 +251,7 @@ export default function Page() {
         await scoreEssay({
             variables: {
                 id: essay ? essay.id : newEssay[0].id,
-                test: dev ? JSON.parse(dev) : true
+                test: process.env.NEXT_PUBLIC_ENV === 'DEVELOPER' ? dev ? JSON.parse(dev) : true : false
             }
         }).then(async (res) => {
             try {
@@ -283,7 +283,7 @@ export default function Page() {
             await setSocket(io("https://ielts.api.babyyodas.io/events", {
                 // autoConnect: false,
                 extraHeaders: {
-                    authorization: `Bearer ${user as string}`
+                    authorization: `Bearer ${user}`
                 }
             }).connect());
         if (socket) {
@@ -469,9 +469,9 @@ export default function Page() {
 
     async function LogOut() {
         setLoading(true);
+        router.replace('/signIn');
+        await signOut();
         localStorage.clear();
-        if (status === 'authenticated')
-            signOut();
     };
 
     async function handleNewTopic(topic: Topic) {

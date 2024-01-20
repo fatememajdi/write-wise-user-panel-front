@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 import * as Yup from 'yup';
 // import { Pixelify } from "react-pixelify";
 import { useMutation } from "@apollo/client";
-import { useRouter } from "next/navigation";
 import { useMediaQuery } from 'react-responsive';
 import { AnimatePresence, motion } from "framer-motion";
 import { Popover } from 'antd';
@@ -20,16 +19,37 @@ import '../../../../styles/customMuiStyles.css';
 
 //--------------------------------------components
 import { ADD_ESSAY, SELECT_TOPIC } from "@/config/graphql";
-import EssayCard from "@/components/essayCard/essayCard";
-const Input = dynamic(() => import('@/components/input/input'));
-const Loading = dynamic(() => import('@/components/loading/loading'));
-const SelectComponents = dynamic(() => import('@/components/customSelect/customSelect'));
+const Input = dynamic(() => import('@/components/input/input'), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-[209px]">
+        <ReactLoading type={'spin'} color={'#929391'} height={30} width={30} /></div>
+});
+const EssayCard = dynamic(() => import('@/components/essayCard/essayCard'), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-[590px]">
+        <ReactLoading type={'spin'} color={'#929391'} height={30} width={30} /></div>
+});
+const Loading = dynamic(() => import('@/components/loading/loading'), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-[209px]">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
+const SelectComponents = dynamic(() => import('@/components/customSelect/customSelect'), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-auto">
+        <ReactLoading className="mt-[24px]" type={'spin'} color={'#929391'} height={20} width={20} /></div>
+});
 import { CheckCountWords, CountWords } from "@/components/Untitled";
-const Text = dynamic(() => import("@/components/text/text"));
-const SubTypeSelect = dynamic(() => import("@/components/subTypeSelect/subTypeSelect"));
-const Writer = dynamic(() => import("@/components/writer/writer"));
+const Text = dynamic(() => import("@/components/text/text"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center mt-[24px] h-auto">
+        <ReactLoading type={'bubbles'} color={'#929391'} height={20} width={20} /></div>
+});
+const SubTypeSelect = dynamic(() => import("@/components/subTypeSelect/subTypeSelect"), {
+    ssr: false, loading: () => <div role="status" className="w-[100px] m-auto flex justify-center self-center items-center h-auto">
+        <ReactLoading type={'spin'} color={'#929391'} height={20} width={20} /></div>
+});
+const Writer = dynamic(() => import("@/components/writer/writer"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-[209px]">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
 import { DeleteEssaies, GenerateNewTopic } from "@/hooks/actions";
-const EssayProcessBar = dynamic(() => import("@/components/essayProcessBar/essayProcessBar"));
+const EssayProcessBar = dynamic(() => import("@/components/essayProcessBar/essayProcessBar"), { ssr: false });
 
 //--------------------------------------icons
 import { Reload } from "@/../public";
@@ -67,7 +87,6 @@ export default function TaskForm({
     const [currentId, changeCcurrentId] = React.useState<string | null>(null);
     const [isBig, setIsBig] = React.useState<boolean>(false);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-    const router = useRouter();
 
     //-----------------------------------------------------------------graphQl functions
     const [selectTopic, { error }] = useMutation(SELECT_TOPIC);
@@ -141,7 +160,7 @@ export default function TaskForm({
             await setAddEssayLoading(true);
             await addNewEssay({
                 variables: {
-                    id: 'f5c1cc26-fdc8-47ac-8ae5-8bbb89bf26e0',
+                    id: id as string,
                     body: body,
                     durationMillisecond: Date.now() - essayTime
                 }
@@ -382,7 +401,7 @@ export default function TaskForm({
                                                 <Text text={values.topic} />
                                             </div>
                                             : generateWritingTopicLoading ?
-                                                <Loading style={{ height: 250, minHeight: 0 }} />
+                                                <Loading style={{ height: 250, minHeight: 209 }} />
                                                 : <div className='flex lg:flex-row mac:flex-row relative mr-[40px] ml-[45px] sm:m-0 sm:flex-col-reverse '>
                                                     {
                                                         generateWriting && !editedGeneratedTopic ?
@@ -395,7 +414,7 @@ export default function TaskForm({
                                                             <Input
                                                                 disable={type === 'academic_task_1'}
                                                                 style={{ width: '70%', marginTop: 0 }}
-                                                                className={styles.topicInput}
+                                                                className={'mt-[26px] rounded-[8px] overflow-hidden sm:w-full sm:mt-[16px] '+styles.topicInput}
                                                                 onChange={(e: any) => {
                                                                     handleChangeTopicInput();
                                                                     handleChange(e);
@@ -428,7 +447,7 @@ export default function TaskForm({
                                                             className='hover:shadow-none bg-seccondaryColor border-[2px] border-seccondaryColor w-[170px] h-[40px] text-whiteText ml-[29px] mt-[19px] py-0 px-[22px] text-center text-[17px] not-italic font-normal leading-normal mac:text-[14px] sm:h-[25px] sm:w-[100px] sm:text-[13px] sm:ml-[9px] '>
                                                             {
                                                                 !isMobile &&
-                                                                <Reload style={{ marginTop: 8 }}/>
+                                                                <Reload style={{ marginTop: 8 }} />
                                                             }
                                                             {
                                                                 generatedTopic ? 'Regenereate' :
@@ -563,7 +582,7 @@ export default function TaskForm({
                                 <Input
                                     style={errors.body ? { borderColoe: 'red' } : {}}
                                     disable={!endTyping}
-                                    className={styles.topicInput + ' ' + styles.essayInput}
+                                    className={styles.topicInput + ' mt-[26px] rounded-b-0 rounded-t-[8px] overflow-hidden sm:w-full sm:mt-[7px] sm:mb-[17px] ' + styles.essayInput}
                                     onChange={(e: any) => {
                                         if (nameregex.test(e.target.value) || e.nativeEvent.data === null || e.nativeEvent.inputType == 'insertLineBreak') {
                                             if (!changeInput) {

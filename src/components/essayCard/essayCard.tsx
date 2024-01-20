@@ -1,5 +1,6 @@
 import React from "react";
 import ReactLoading from 'react-loading';
+import { useMediaQuery } from 'react-responsive';
 import dynamic from 'next/dynamic';
 
 //--------------------------------------components
@@ -21,7 +22,7 @@ import { HiExclamationCircle } from 'react-icons/hi';
 import styles from './essayCard.module.css';
 
 //----------------------------------------------types
-import { Essay, JOBSTATUS } from "../../../types/essay";
+import { Essay } from "../../../types/essay";
 import { CheckStatus } from "../Untitled";
 
 type _props = {
@@ -39,6 +40,7 @@ type _props = {
 };
 
 const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelete, loading, topic, GetScores, essaies, OnEditEssay, type }) => {
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     const tabBarItems = [
         {
@@ -81,54 +83,56 @@ const EssayCard: React.FC<_props> = ({ essay, setFieldValue, divRef, handleDelet
             <ScoreRecommendationCard key={3} recommendation={essay.essayRecommendations as string} GetScores={Retry} essay={essay} />
         ]);
 
-    return <div className={styles.writingDataCard}>
-        <div className={styles.writingDataTabBarCard}>
-            {
-                tabBarItems.map((item, index) =>
-                    <div
-                        onClick={() => goTo(item.index)}
-                        style={!item.active ? { cursor: 'context-menu' } : {}}
-                        className={currentStepIndex === item.index ? styles.activeTopTabBarItemCard + ' ' + styles.topTabBarItemCard
-                            : styles.topTabBarItemCard}
-                        key={index} >
-                        <span
-                            style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
-                        {!item.active && <Lock className={styles.lockIcon} />}
-                        {
-                            index === 1 ? CheckStatus(essay.scoreJobStatus, 'loading') ?
-                                <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                : CheckStatus(essay.scoreJobStatus, 'fail') ?
-                                    <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
-
-                                : index === 2 ? CheckStatus(essay.scoreJobStatus, 'loading') ?
-                                    <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
+    return <div className='h-[596px] flex flex-col rounded-[8px] overflow-hidden mt-[55px] z-[2] sm:bg-background sm:h-fit sm:relative sm:border-none '>
+        {!isMobile ?
+            <div className='bg-seccondaryColor h-[64px] flex flex-row items-center justify-between border-[2px] border-seccondaryColor z-[2] mac:h-[50px] mac:p-0 '>
+                {
+                    tabBarItems.map((item, index) =>
+                        <div
+                            onClick={() => goTo(item.index)}
+                            style={!item.active ? { cursor: 'context-menu' } : {}}
+                            className={'flex flex-1 items-center justify-center text-whiteText text-center text-[20px] font-medium leading-normal cursor-pointer py-0 px-[40px] rounded-[8px] h-[64px] mac:h-[50px] mac:text-[16px] sm:text-[16px] sm:py-0 sm:px-[15px] '
+                                + (currentStepIndex === item.index ? ' bg-navyBlue underline mac:h-full ' : '')}
+                            key={index} >
+                            <span
+                                style={!item.active ? { opacity: 0.5, cursor: 'context-menu' } : {}}>{item.title}</span>
+                            {!item.active && <Lock className='text-whiteText ml-[5px] ' />}
+                            {
+                                index === 1 ? CheckStatus(essay.scoreJobStatus, 'loading') ?
+                                    <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className='flex ml-[8px] ' />
                                     : CheckStatus(essay.scoreJobStatus, 'fail') ?
-                                        <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
+                                        <HiExclamationCircle color="#763646" className="ml-[5px] mt-[5px] text-[25px] " /> : <></>
 
-                                    : index === 3 ? CheckStatus(essay.insightJobStatus, 'loading') ?
-                                        <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                        : CheckStatus(essay.insightJobStatus, 'fail') ?
-                                            <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
+                                    : index === 2 ? CheckStatus(essay.scoreJobStatus, 'loading') ?
+                                        <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className='flex ml-[8px] ' />
+                                        : CheckStatus(essay.scoreJobStatus, 'fail') ?
+                                            <HiExclamationCircle color="#763646" className="ml-[5px] mt-[5px] text-[25px] " /> : <></>
 
-                                        : index === 4 ? CheckStatus(essay.recommendationJobStatus, 'loading') ?
-                                            <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className={styles.titleLoading} />
-                                            : CheckStatus(essay.recommendationJobStatus, 'fail') ?
-                                                <HiExclamationCircle color="#763646" style={{ marginLeft: 5, marginTop: 5, fontSize: 25 }} /> : <></>
-                                            : <></>
-                        }
-                    </div>
-                )
-            }
-        </div>
+                                        : index === 3 ? CheckStatus(essay.insightJobStatus, 'loading') ?
+                                            <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className='flex ml-[8px] ' />
+                                            : CheckStatus(essay.insightJobStatus, 'fail') ?
+                                                <HiExclamationCircle color="#763646" className="ml-[5px] mt-[5px] text-[25px] " /> : <></>
 
-        <SelectComponents values={[
-            { title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay', active: true },
-            { title: 'Essay', active: true },
-            { title: 'Analysis', active: true },
-            { title: 'Insights', active: true },
-            { title: 'Recommendations', active: true }
-        ]}
-            selectedItem={currentStepIndex} className={styles.writingCardSelect} onChange={goTo} />
+                                            : index === 4 ? CheckStatus(essay.recommendationJobStatus, 'loading') ?
+                                                <ReactLoading type={'spin'} color={'#929391'} height={25} width={25} className='flex ml-[8px] ' />
+                                                : CheckStatus(essay.recommendationJobStatus, 'fail') ?
+                                                    <HiExclamationCircle color="#763646" className="ml-[5px] mt-[5px] text-[25px] " /> : <></>
+                                                : <></>
+                            }
+                        </div>
+                    )
+                }
+            </div>
+            :
+            <SelectComponents values={[
+                { title: type === 'academic_task_1' ? 'Report' : type === 'general_task_1' ? 'Letter/Email' : 'Essay', active: true },
+                { title: 'Essay', active: true },
+                { title: 'Analysis', active: true },
+                { title: 'Insights', active: true },
+                { title: 'Recommendations', active: true }
+            ]}
+                selectedItem={currentStepIndex} onChange={goTo} />
+        }
 
         {
             loading === true ?

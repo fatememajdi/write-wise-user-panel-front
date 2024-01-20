@@ -12,7 +12,6 @@ import '../../styles/global.css';
 
 //------------------------------------------------componnets
 import { StartLoader } from "@/components/Untitled";
-const Loading = dynamic(() => import("@/components/loading/loading"), { ssr: false });
 const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"), { ssr: false, loading: () => <div className="text-center min-h-[80px] items-center justify-center flex "><ReactLoading type='bubbles' color={'#929391'} height={50} width={50} /></div> });
 
 export default function Section1() {

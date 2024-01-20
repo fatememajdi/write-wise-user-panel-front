@@ -8,17 +8,14 @@ import DialogContentText from '@mui/material/DialogContentText';
 import { TransitionProps } from "@mui/material/transitions/transition";
 import Slide from "@mui/material/Slide";
 
-//--------------------------------------------------------------------------styles
-import styles from './dialog.module.css';
-
-interface _props {
+type _props = {
     handleClose: any,
     open: boolean,
     handleDelete: any,
     title: string,
     dialog: string,
     deleteButton?: string
-}
+};
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -29,7 +26,7 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, title, dialog, deleteButton }) => {
+export default function DialogComponent({ open, handleClose, handleDelete, title, dialog, deleteButton }: _props) {
     return <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -45,8 +42,8 @@ const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, ti
             <DialogContentText
                 style={{ color: '#F3F3F3', display: 'flex', flexDirection: 'column' }}
                 id="alert-dialog-slide-description">
-                <span className={styles.title}>{title}</span>
-                <span className={styles.description}>{dialog}</span>
+                <span className='flex text-[22px] mb-[10px] text-whiteText sm:text-[16px] '>{title}</span>
+                <span className='text-[16px] text-whiteText sm:text-[13px] '>{dialog}</span>
             </DialogContentText>
         </DialogContent>
         <DialogActions
@@ -60,5 +57,3 @@ const DialogComponent: React.FC<_props> = ({ open, handleClose, handleDelete, ti
         </DialogActions>
     </Dialog>
 };
-
-export default DialogComponent;

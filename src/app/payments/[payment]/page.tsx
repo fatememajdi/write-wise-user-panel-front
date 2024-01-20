@@ -5,14 +5,15 @@ import dynamic from 'next/dynamic';
 import client from '@/config/applloClient';
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import ReactLoading from 'react-loading';
 import toast from "react-hot-toast";
-
-//--------------------------------------------------styles
-import styles from './paymentStatus.module.css';
 
 //--------------------------------------------------components
 import { AFTER_PAYMENT, RECEIPT_LINK } from "@/config/graphql";
-const Loading = dynamic(() => import("@/components/loading/loading"));
+const Loading = dynamic(() => import("@/components/loading/loading"), {
+    ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-screen">
+        <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
+});
 
 interface pageProps {
     params: { payment: any },
@@ -26,10 +27,11 @@ type paymentData = {
     currency: string,
 };
 
-const PaymentStatus: React.FC<pageProps> = ({ params, searchParams }) => {
+export default function PaymentStatus({ params, searchParams }: pageProps) {
 
     const [payment, setPayment] = React.useState<paymentData>();
     const [loading, setLoading] = React.useState<boolean>(true);
+    const router = useRouter();
 
     async function AfterPayment() {
         await client.query({
@@ -72,72 +74,43 @@ const PaymentStatus: React.FC<pageProps> = ({ params, searchParams }) => {
 
     return loading ?
         <Loading />
-        : <div className={'col-12 ' + styles.paymentStatusContainer}>
-            {
-                params.payment === 'success' ?
-                    <SuccessCard payment={payment} RecieptLink={RecieptLink} />
-                    :
-                    <FaildCard payment={payment} />
-            }
+        : <div className='col-12 flex items-center justify-center h-screen '>
+            <div className='flex flex-col m-auto h-full items-center justify-center text-blackText text-center leading-normal '>
+                <Image
+                    className='h-[354px] w-[354px] sm:h-[200px] sm:w-[200px] mac:h-[254px] mac:w-[254px] '
+                    src={params.payment === 'success' ? "/icons/success.svg" : "/icons/faild.svg"}
+                    alt="success"
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                    loading="eager"
+                    priority
+                />
+                <div className='text-[48px] font-bold mt-[66px] mac:text-[32px] mac:font-semibold sm:text-[24px] sm:font-semibold '>{params.payment === 'success' ? 'Successful' : 'Faild'}</div>
+                <div className='text-[24px] font-bold mt-[48px] mac:text-[20px] mac:font-semibold sm:text-[16px] sm:font-semibold '>
+                    {params.payment === 'success' ?
+                        'Your payment has been processed successfully'
+                        : 'Unfortunately your payment was rejected .'
+                    }</div>
+                <div className='text-[24px] font-bold mt-[32px] mac:text-[20px] mac:font-semibold sm:text-[16px] sm:font-semibold '>Amount paid : {payment.amountPaidShow}
+                    <span className=" text-seccondaryColor font-medium ml-[5px] mac:font-normal sm:font-normal ">{payment.tokenNumber} Tokens </span></div>
+                <div className='flex flex-row mt-[82px] '>
+                    <button
+                        className={"w-[200px] h-[48px] text-whiteText text-[24px] font-bold my-0 mx-[10px] mac:w-[150px] sm:w-[100px] mac:h-[38px] sm:h-[31px] mac:text-[20px] sm:text-[16px] mac:font-semibold sm:font-semibold "
+                            + (params.payment === 'success' ? 'bg-seccondaryColor' : 'bg-red')}
+                        onClick={() => { router.replace('/wallet'); router.refresh() }}
+                        aria-label="back button"
+                    >back
+                    </button>
+                    {params.payment === 'success' &&
+                        <button
+                            className="w-[200px] h-[48px] bg-seccondaryColor text-whiteText text-[24px] font-bold my-0 mx-[10px] mac:w-[150px] sm:w-[100px] mac:h-[38px] sm:h-[31px] mac:text-[20px] sm:text-[16px] mac:font-semibold sm:font-semibold "
+                            onClick={() => RecieptLink()}
+                            aria-label="reciept button">
+                            Receipt
+                        </button>
+                    }
+                </div>
+            </div>
         </div>
-};
-
-export default PaymentStatus;
-
-const SuccessCard: React.FC<{ payment: paymentData, RecieptLink: any }> = ({ payment, RecieptLink }) => {
-    const router = useRouter();
-
-    return <div className={styles.statusCard}>
-        <Image
-            className={styles.statusIcon}
-            src="/icons/success.svg"
-            alt="success"
-            width="0"
-            height="0"
-            sizes="100vw"
-            loading="eager"
-            priority
-        />
-        <div className={styles.title}>Successful</div>
-        <div className={styles.description}>Your payment has been processed successfully</div>
-        <div className={styles.amount}>Amount paid : {payment.amountPaidShow}
-            <span>{payment.tokenNumber} Tokens </span></div>
-        <div className={styles.successButtonContainer}>
-            <button
-                onClick={() => { router.replace('/wallet'); router.refresh() }}
-                aria-label="back button"
-            >back</button>
-            <button
-                onClick={() => RecieptLink()}
-                aria-label="reciept button">
-                Receipt</button>
-        </div>
-    </div>
-};
-
-const FaildCard: React.FC<{ payment: paymentData }> = ({ payment }) => {
-    const router = useRouter();
-
-    return <div className={styles.statusCard}>
-        <Image
-            className={styles.statusIcon}
-            src="/icons/faild.svg"
-            alt="faild"
-            width="0"
-            height="0"
-            sizes="100vw"
-            loading="eager"
-            priority
-        />
-        <div className={styles.title}>Faild</div>
-        <div className={styles.description}>Unfortunately your payment was rejected .</div>
-        <div className={styles.amount}>Amount paid : {payment.amountPaidShow}
-            <span>{payment.tokenNumber} Tokens </span></div>
-        <div className={styles.buttonContainer}>
-            <button
-                onClick={() => { router.replace('/wallet'); router.refresh() }}
-                aria-label="back button"
-            >back</button>
-        </div>
-    </div>
 };

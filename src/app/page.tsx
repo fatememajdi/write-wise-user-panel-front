@@ -36,6 +36,7 @@ const Loading = dynamic(() => import("@/components/loading/loading"), { ssr: fal
 
 const Home: React.FC = () => {
 
+  const [showButton, setShowButton] = React.useState<boolean>(false);
   const { data: session, status } = useSession({
     required: true, onUnauthenticated() {
       return
@@ -48,10 +49,18 @@ const Home: React.FC = () => {
     if (!localStorage.getItem('user')) {
       if (status != "loading") {
         if (status === 'authenticated') {
-          localStorage.setItem('user', session.user.token);
+          localStorage.setItem('user', session.user.token as string);
         }
       }
     }
+
+    if (typeof document != 'undefined')
+      window.addEventListener("scroll", function (e: any) {
+        if (!showButton && document.documentElement.scrollTop >= 100)
+          setShowButton(true);
+        else if (showButton && document.documentElement.scrollTop <= 100)
+          setShowButton(false);
+      });
   });
 
   const router = useRouter();
@@ -77,14 +86,16 @@ const Home: React.FC = () => {
       <Suspense fallback={<Loading />}><Section8 /></Suspense>
       <Suspense fallback={<Loading />}><Footer /></Suspense>
       {/* <Section5 /> */}
-      <button
-        onClick={() => {
-          StartLoader();
-          router.push('/signIn');
-        }}
-        className="z-[500] fixed left-[45%] right-[45%] bottom-[80px] rounded-[32px] bg-background flex w-[197px] h-[72px] justify-center items-center text-red text-[24px] font-black leading-[40px] sm:w-[130px] sm:text-[16px] sm:h-[44px] sm:font-extrabold sm:bottom-[40px] sm:left-[30%] sm:right-[30%] ">
-        Start Now
-      </button>
+      {showButton &&
+        <button
+          onClick={() => {
+            StartLoader();
+            router.push('/signIn');
+          }}
+          className="z-[500] shadow-[-5px_15px_22px_-5px_rgba(0,0,0,0.19)] fixed left-[45%] right-[45%] bottom-[80px] rounded-[32px] bg-background flex w-[197px] h-[72px] justify-center items-center text-red text-[24px] font-black leading-[40px] sm:w-[130px] sm:text-[16px] sm:h-[44px] sm:font-extrabold sm:bottom-[40px] sm:left-[30%] sm:right-[30%] ">
+          Start Now
+        </button>
+      }
     </div>
 };
 
