@@ -35,7 +35,7 @@ const PaymentHistoryTable = dynamic(() => import("./paymentHistoryTable"), {
     ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-full">
         <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
 });
-const AssessmentHistoryTable = dynamic(() => import("./paymentHistoryTable"), {
+const AssessmentHistoryTable = dynamic(() => import("./assesmentHistoryTable"), {
     ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-full">
         <ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
 });
