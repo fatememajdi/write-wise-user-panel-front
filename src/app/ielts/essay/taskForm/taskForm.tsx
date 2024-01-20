@@ -160,7 +160,7 @@ export default function TaskForm({
             await setAddEssayLoading(true);
             await addNewEssay({
                 variables: {
-                    id: 'f5c1cc26-fdc8-47ac-8ae5-8bbb89bf26e0',
+                    id: id as string,
                     body: body,
                     durationMillisecond: Date.now() - essayTime
                 }

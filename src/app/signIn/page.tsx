@@ -179,23 +179,22 @@ export default function Page() {
                             }
                         </button>
 
+                        <Divider className="mt-[32px] text-[20px] font-light " plain>or</Divider>
+
+                        <a
+                            onClick={handeClickGoogle}
+                            className={'flex flex-row items-center no-underline font-semibold text-[16px] leading-[24px] w-[360px] h-[44px] justify-center mt-[15px] cursor-pointer rounded-[8px] sm:w-[247px] sm:h-[30px] sm:text-[11px] sm:font-semibold sm:leading-[16.5px] border-[1px] border-[#D0D5DD] bg-background '}>
+                            <FcGoogle className='mr-[12px] text-[24px] sm:text-[18px] ' />Sign in with Google
+                        </a>
+
                         {
                             process.env.NEXT_PUBLIC_ENV === 'DEVELOPER' &&
-                            <>
-                                <Divider className="mt-[32px] text-[20px] font-light " plain>or</Divider>
+                            <a
+                                onClick={handeClickFaceBook}
+                                className={'flex flex-row items-center no-underline font-semibold text-[16px] leading-[24px] w-[360px] h-[44px] justify-center mt-[15px] cursor-pointer rounded-[8px] sm:w-[247px] sm:h-[30px] sm:text-[11px] sm:font-semibold sm:leading-[16.5px] border-[1px] border-[#1877F2] bg-[#1877F2] text-whiteText'}>
+                                <SiFacebook className='mr-[12px] text-[24px] sm:text-[18px] ' />Sign in with Facebook
+                            </a>
 
-                                <a
-                                    onClick={handeClickGoogle}
-                                    className={'flex flex-row items-center no-underline font-semibold text-[16px] leading-[24px] w-[360px] h-[44px] justify-center mt-[15px] cursor-pointer rounded-[8px] sm:w-[247px] sm:h-[30px] sm:text-[11px] sm:font-semibold sm:leading-[16.5px] border-[1px] border-[#D0D5DD] bg-background '}>
-                                    <FcGoogle className='mr-[12px] text-[24px] sm:text-[18px] ' />Sign in with Google
-                                </a>
-
-                                <a
-                                    onClick={handeClickFaceBook}
-                                    className={'flex flex-row items-center no-underline font-semibold text-[16px] leading-[24px] w-[360px] h-[44px] justify-center mt-[15px] cursor-pointer rounded-[8px] sm:w-[247px] sm:h-[30px] sm:text-[11px] sm:font-semibold sm:leading-[16.5px] border-[1px] border-[#1877F2] bg-[#1877F2] text-whiteText'}>
-                                    <SiFacebook className='mr-[12px] text-[24px] sm:text-[18px] ' />Sign in with Facebook
-                                </a>
-                            </>
                         }
 
                         {/* <Pagination lenght={2} currentPage={1} color="#2E4057" /> */}
