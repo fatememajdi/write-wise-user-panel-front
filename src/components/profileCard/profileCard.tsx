@@ -161,13 +161,13 @@ const EditProfile: React.FC<{ profile: UserProfile, back: any, setProfile: any }
     const [moreCountries, setMoreCountries] = React.useState<boolean>(true);
     const [loading, setLoading] = React.useState<boolean>(false);
 
-    async function UpdateUser(name: string, age: string, gender: string) {
+    async function UpdateUser(fname: string, lname: string, age: string, gender: string) {
         await updateProfile({
             variables: {
-                firstName: name,
+                firstName: fname,
                 age: age !== '' ? parseInt(age) : profile.age,
                 gender: gender,
-                lastName: ''
+                lastName: lname
             },
             fetchPolicy: 'no-cache'
         }).then((res) => {
@@ -180,16 +180,16 @@ const EditProfile: React.FC<{ profile: UserProfile, back: any, setProfile: any }
         setLoading(false);
     };
 
-    async function UpdateUserProfile(name: string, age: string, gender: string) {
+    async function UpdateUserProfile(fname: string, lname: string, age: string, gender: string) {
         setLoading(true);
         if (selectedItem) {
             if (await SelectCurrency(selectedItem.id)) {
-                UpdateUser(name, age, gender);
+                UpdateUser(fname, lname, age, gender);
             } else {
                 setLoading(false);
             }
         } else {
-            UpdateUser(name, age, gender);
+            UpdateUser(fname, lname, age, gender);
         }
     };
 
@@ -212,14 +212,15 @@ const EditProfile: React.FC<{ profile: UserProfile, back: any, setProfile: any }
 
     return <Formik
         initialValues={{
-            name: profile.firstName !== '' ? profile.firstName + ' ' + profile.lastName : '',
+            firstname: profile.firstName !== '' ? profile.firstName : '',
+            lastname: profile.lastName !== '' ? profile.lastName : '',
             age: profile.age !== -1 ? profile.age.toString() : '',
             gender: profile.gender,
             country: profile.country.commonName,
         }}
         enableReinitialize
         onSubmit={async (values, { resetForm }) => {
-            UpdateUserProfile(values.name, values.age, values.gender);
+            UpdateUserProfile(values.firstname, values.lastname, values.age, values.gender);
             // resetForm();
         }}>{({
             values,
@@ -233,18 +234,28 @@ const EditProfile: React.FC<{ profile: UserProfile, back: any, setProfile: any }
                 className={styles.profileCard}
                 onSubmit={handleSubmit}>
                 {
-                    loading ? <Loading style={{ minHeight: 0 }} />
+                    loading ? <Loading style={{ minHeight: 540, height: 540 }} />
                         : <table>
-                            <tr><span><FaUser className={styles.profileItemsIcon} /> Name</span>
+                            <tr><span><FaUser className={styles.profileItemsIcon} />First Name</span>
                                 <Input
                                     className={styles.profileFieldinput}
                                     onChange={handleChange}
                                     input
-                                    placeHolder="Name"
-                                    inputtype='name'
-                                    input_name='name'
-                                    input_value={values.name}
-                                    input_error={errors.name && touched.name && errors.name}
+                                    placeHolder="First Name"
+                                    input_name='firstname'
+                                    input_value={values.firstname}
+                                    input_error={errors.firstname && touched.firstname && errors.firstname}
+                                />
+                            </tr>
+                            <tr><span><FaUser className={styles.profileItemsIcon} />Last Name</span>
+                                <Input
+                                    className={styles.profileFieldinput}
+                                    onChange={handleChange}
+                                    input
+                                    placeHolder="Last Name"
+                                    input_name='lastname'
+                                    input_value={values.lastname}
+                                    input_error={errors.lastname && touched.lastname && errors.lastname}
                                 />
                             </tr>
                             <tr>
@@ -254,7 +265,6 @@ const EditProfile: React.FC<{ profile: UserProfile, back: any, setProfile: any }
                                     onChange={handleChange}
                                     input
                                     placeHolder="Age"
-                                    inputtype='age'
                                     input_name='age'
                                     input_value={values.age}
                                     input_error={errors.age && touched.age && errors.age}
