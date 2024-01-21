@@ -99,8 +99,10 @@ const ProfileData: React.FC<{ profile: UserProfile, closeProfile: any, next: any
                 <Loading style={{ minHeight: 0 }} />
                 :
                 <>
-                    <tr><span><FaUser className={styles.profileItemsIcon} /> Name</span>{profile.firstName === '' && profile.lastName === '' ? 'Please enter your name'
-                        : CapitalStart(profile.firstName) + ' ' + CapitalStart(profile.lastName)}</tr>
+                    <tr><span><FaUser className={styles.profileItemsIcon} />First Name</span>{profile.firstName === '' ? 'Please enter your first name'
+                        : CapitalStart(profile.firstName)}</tr>
+                    <tr><span><FaUser className={styles.profileItemsIcon} />Last Name</span>{profile.lastName === '' ? 'Please enter your last name'
+                        : CapitalStart(profile.lastName)}</tr>
                     <tr><span><MdCake className={styles.profileItemsIcon} />Age</span>{profile.age === -1 ? 'Please enter your age' : profile.age + ' years old'}</tr>
                     <tr><span><MdFace className={styles.profileItemsIcon} />Gender</span>{profile.gender === '' ? 'Please select your gender'
                         : CapitalStart(profile.gender)}</tr>

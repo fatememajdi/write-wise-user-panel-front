@@ -76,6 +76,7 @@ export default function TaskForm({
     const [changeInput, setChangeInput] = React.useState<boolean>(false);
     const [topicLoading, setTopicLoading] = React.useState<boolean>(false);
     const [addEssayLoading, setAddEssayLoading] = React.useState<boolean>(false);
+    const [subType, setSubType] = React.useState<string>('');
     const [typed, setTyped] = React.useState<boolean>(false);
     const [endTyping, changeEndTyping] = React.useState<boolean>(topic ? true : false);
     const [loading, changeLoading] = React.useState<boolean>(false);
@@ -94,7 +95,7 @@ export default function TaskForm({
 
 
     //-----------------------------------------------------------------generate topic
-    async function GenerateTopic(setFieldValue: any, essay: string, subType: string) {
+    async function GenerateTopic(setFieldValue: any, essay: string) {
         changeGenerateWritingTopicLoading(true);
         let res = await GenerateNewTopic(type, subType);
         if (res) {
@@ -104,7 +105,6 @@ export default function TaskForm({
                 visuals: res.visuals
             });
             setFieldValue('topic', res.body);
-            setFieldValue('subType', res.questionType);
             ChangeTempTopic(essay, res.body, res.id);
         }
         changeGenerateWritingTopicLoading(false);
@@ -336,7 +336,6 @@ export default function TaskForm({
         initialValues={{
             topic: topic?.id === '' ? topic?.body : generatedTopic ? generatedTopic.body : '',
             body: essay ? essay : '',
-            subType: ''
         }}
         enableReinitialize
         validationSchema={EssayValidationSchema}
@@ -413,8 +412,8 @@ export default function TaskForm({
                                                             :
                                                             <Input
                                                                 disable={type === 'academic_task_1'}
-                                                                style={{ width: '70%', marginTop: 0 }}
-                                                                className={'mt-[26px] rounded-[8px] overflow-hidden sm:w-full sm:mt-[16px] '+styles.topicInput}
+                                                                style={{ width: isMobile ? '100%' : '70%', marginTop: 0 }}
+                                                                className={'mt-[26px] rounded-[8px] overflow-hidden sm:w-full sm:mt-[16px] ' + styles.topicInput}
                                                                 onChange={(e: any) => {
                                                                     handleChangeTopicInput();
                                                                     handleChange(e);
@@ -432,8 +431,8 @@ export default function TaskForm({
                                                     <div className='flex lg:flex-col mac:flex-col items-center w-fit h-fit ml-[20px] sm:flex-row sm:ml-[8px] '>
 
                                                         <SubTypeSelect
-                                                            defaultValue={values.subType !== '' ? values.subType : generatedTopic ? generatedTopic.subType : ''}
-                                                            setFieldValue={setFieldValue}
+                                                            defaultValue={subType !== '' ? subType : ''}
+                                                            setFieldValue={setSubType}
                                                             type={type}
                                                         />
 
@@ -441,7 +440,7 @@ export default function TaskForm({
                                                             aria-label="generate tipic"
                                                             onClick={async () => {
                                                                 handleGenerateTopic();
-                                                                await GenerateTopic(setFieldValue, values.body, values.subType);
+                                                                await GenerateTopic(setFieldValue, values.body);
                                                             }}
                                                             type="button"
                                                             className='hover:shadow-none bg-seccondaryColor border-[2px] border-seccondaryColor w-[170px] h-[40px] text-whiteText ml-[29px] mt-[19px] py-0 px-[22px] text-center text-[17px] not-italic font-normal leading-normal mac:text-[14px] sm:h-[25px] sm:w-[100px] sm:text-[13px] sm:ml-[9px] '>

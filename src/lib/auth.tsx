@@ -30,7 +30,8 @@ export const authConfig: NextAuthOptions = {
     pages: {
         signIn: '/ielts',
         signOut: '/signIn',
-        newUser:'/ielts'
+        newUser: '/ielts',
+        error: '/signIn'
     },
     callbacks: {
         async redirect({ url, baseUrl }) {
@@ -80,7 +81,7 @@ export const authConfig: NextAuthOptions = {
     },
     events: {
         signIn: async ({ user, account, profile }) => {
-            // console.log(account);
+            console.log(account);
         }
     }
 };
