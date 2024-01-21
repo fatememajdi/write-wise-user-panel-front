@@ -29,7 +29,8 @@ export const authConfig: NextAuthOptions = {
     },
     pages: {
         signIn: '/ielts',
-        signOut: '/signIn'
+        signOut: '/signIn',
+        newUser:'/ielts'
     },
     callbacks: {
         async redirect({ url, baseUrl }) {
