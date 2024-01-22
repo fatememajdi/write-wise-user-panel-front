@@ -47,44 +47,22 @@ export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTo
     };
 
     async function SetTempEssay() {
-        if (type === 'general_task_1') {
-            let Temp = await localStorage.getItem('tempEssay');
-            let lastTemp = await localStorage.getItem('lastTempEssay');
-            let TempsList = await localStorage.getItem('tempsEssayList');
-            if (lastTemp)
-                setTemp(JSON.parse(lastTemp));
-            else if (Temp)
-                setTemp(JSON.parse(Temp));
+        const newTemp: tempEssay = { topic: { id: '', body: '', type: type }, essay: '' };
+        let temp: tempEssay[][] = [Array(3).fill(newTemp), Array(3).fill(newTemp)];
+        let tempIndex: number = type === 'general_task_1' ? 0 : type === 'academic_task_1' ? 1 : 2;
+        if (await localStorage.getItem('tempEssay'))
+            temp = JSON.parse(await localStorage.getItem('tempEssay'));
+        let selectedTopicsTempList: SelectedTopicTempEssay[] = JSON.parse(await localStorage.getItem('tempsEssayList')) || [];
 
-            if (TempsList)
-                setTempsList(JSON.parse(TempsList));
-        } else if (type === 'academic_task_1') {
-            let Temp = await localStorage.getItem('tempEssay3');
-            let lastTemp = await localStorage.getItem('lastTempEssay3');
-            let TempsList = await localStorage.getItem('tempsEssayList');
-            if (lastTemp)
-                setTemp(JSON.parse(lastTemp));
-            else if (Temp)
-                setTemp(JSON.parse(Temp));
-
-            if (TempsList)
-                setTempsList(JSON.parse(TempsList));
-        } else {
-            let Temp = await localStorage.getItem('tempEssay2');
-            let lastTemp = await localStorage.getItem('lastTempEssay2');
-            let TempsList = await localStorage.getItem('tempsEssayList');
-            if (lastTemp)
-                setTemp(JSON.parse(lastTemp));
-            else if (Temp)
-                setTemp(JSON.parse(Temp));
-
-            if (TempsList)
-                setTempsList(JSON.parse(TempsList));
-        }
+        if (temp[1][tempIndex].topic.body !== '')
+            setTemp(temp[1][tempIndex]);
+        else if (temp[0][tempIndex].topic.body !== '')
+            setTemp(temp[1][tempIndex]);
+        setTempsList(selectedTopicsTempList);
     };
 
     React.useEffect(() => {
-        SetTempEssay();
+        // SetTempEssay();
     }, []);
 
     return <div className={'col-12 ' + styles.tasksContainer}>
@@ -153,7 +131,7 @@ export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTo
                                             HandleSelect({ id: item.id, body: item.topic, type: item.type, visuals: item.visuals, subType: item.subType },
                                                 tempsList.findIndex(tempItem => tempItem.id === item.id) === -1 ? ''
                                                     : tempsList[tempsList.findIndex(tempItem => tempItem.id === item.id)].essay);
-                                            SetTempEssay();
+                                            // SetTempEssay();
                                         }}
                                         className={styles.taskCardTitle}>
                                         <div className={styles.shortNameText}>{item.shortName}</div>
