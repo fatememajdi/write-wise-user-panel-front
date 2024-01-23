@@ -54,16 +54,20 @@ export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTo
             temp = JSON.parse(await localStorage.getItem('tempEssay'));
         let selectedTopicsTempList: SelectedTopicTempEssay[] = JSON.parse(await localStorage.getItem('tempsEssayList')) || [];
 
-        if (temp[1][tempIndex].topic.body !== '')
-            setTemp(temp[1][tempIndex]);
-        else if (temp[0][tempIndex].topic.body !== '')
-            setTemp(temp[1][tempIndex]);
+        if (temp[1][tempIndex].topic.body !== '') {
+            setTemp({ topic: temp[1][tempIndex].topic, essay: temp[1][tempIndex].essay });
+        }
+        else if (temp[0][tempIndex].topic.body !== '') {
+            setTemp({ topic: temp[0][tempIndex].topic, essay: temp[0][tempIndex].essay });
+        }
         setTempsList(selectedTopicsTempList);
     };
 
     React.useEffect(() => {
-        // SetTempEssay();
+        SetTempEssay();
     }, []);
+
+    console.log(temp);
 
     return <div className={'col-12 ' + styles.tasksContainer}>
         {
@@ -131,7 +135,7 @@ export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTo
                                             HandleSelect({ id: item.id, body: item.topic, type: item.type, visuals: item.visuals, subType: item.subType },
                                                 tempsList.findIndex(tempItem => tempItem.id === item.id) === -1 ? ''
                                                     : tempsList[tempsList.findIndex(tempItem => tempItem.id === item.id)].essay);
-                                            // SetTempEssay();
+                                            SetTempEssay();
                                         }}
                                         className={styles.taskCardTitle}>
                                         <div className={styles.shortNameText}>{item.shortName}</div>

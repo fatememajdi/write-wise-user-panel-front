@@ -38,9 +38,9 @@ const SubTypeSelect: React.FC<_props> = ({ defaultValue, setFieldValue, type }) 
         renderValue={(selected) => {
             if (selected.length === 0) {
                 if (defaultValue)
-                    return <em>{defaultValue}</em>;
+                    return <em className='not-italic'>{defaultValue}</em>;
                 else
-                    return <em>Sub-type</em>;
+                    return <em className='not-italic'>Sub-type</em>;
             }
 
             return selected;

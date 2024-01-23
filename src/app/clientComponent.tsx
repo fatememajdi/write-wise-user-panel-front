@@ -141,6 +141,15 @@ export default function ClientComponent({
                s1.setAttribute('crossorigin','*');
                s0.parentNode.insertBefore(s1,s0);
                }})();
+               Tawk_API.customStyle = {
+                visibility : {
+                    mobile : {
+                        position : 'br',
+                        xOffset : 20,
+                        yOffset : 70
+                    },
+                }
+            };
               `}
                                         </Script>
                                         <div id='tawk' />

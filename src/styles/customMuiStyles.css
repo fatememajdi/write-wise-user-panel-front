@@ -11,6 +11,7 @@
     font-style: normal !important;
     font-weight: 400 !important;
     line-height: normal !important;
+    font-family: var(--font-lato) !important;
 }
 
 .css-bpeome-MuiSvgIcon-root-MuiSelect-icon {
