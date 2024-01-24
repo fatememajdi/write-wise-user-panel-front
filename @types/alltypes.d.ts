@@ -3,3 +3,5 @@ declare module 'react-infinite-scroller';
 declare module 'apollo-upload-client';
 declare module 'nprogress';
 declare module 'typing-effect-reactjs';
+declare module 'next-redux-wrapper';
+declare module 'react-redux';

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Session } from "next-auth";
 import "@/styles/tailwind.css";
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
+import ReduxProvider from "@/redux/provider";
 
 //--------------------------------------------------------css
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -40,9 +41,8 @@ export default function RootLayout({
   return (
     <ClientComponent pageProps={pageProps} >
       <ErrorBoundary fallback='There was an error!'>
-        {children}
+        <ReduxProvider>{children}</ReduxProvider>
       </ErrorBoundary>
     </ClientComponent>
   )
 }
-
