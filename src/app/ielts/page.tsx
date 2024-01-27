@@ -50,7 +50,7 @@ import { TfiMenu } from 'react-icons/tfi';
 import { FiMoreVertical } from 'react-icons/fi';
 
 //---------------------------------------------------types
-import { Essay, JOBSTATUS } from "../../../types/essay";
+import { Essay, JOBSTATUS, SelectedTopicTempEssay, tempEssay } from "../../../types/essay";
 import { Topic } from "../../../types/topic";
 import { UserProfile } from "../../../types/profile";
 import { GetEsseies, GetTopics, GetUserProfile } from "@/hooks/fetchData";
@@ -105,6 +105,8 @@ export default function Page() {
     const [topicsType, setTopicsType] = React.useState('general_task_1');
     const [type, setType] = React.useState('');
     const [essaies, setEssaies] = React.useState<Essay[]>([]);
+    const [temp, setTemp] = React.useState<tempEssay | null>();
+    const [tempEssaiesList, setTempEssaiesList] = React.useState<SelectedTopicTempEssay[]>([]);
     const router = useRouter();
     const [essayTopic, changeTopic] = React.useState<topic | null>();
     const [socket, setSocket] = React.useState<Socket<DefaultEventsMap, DefaultEventsMap>>(null);
@@ -119,7 +121,6 @@ export default function Page() {
             essaies={essaies} GetUserEssaies={GetUserEssaies} changeTabBarLoc={changeTabBarLoc} divRef={divRef} type={type} essay={essay}
             changeEndAnimation={changeEndAnimation} endAnimation={endAnimation} topic={essayTopic != null ? essayTopic : undefined} handleShowError={handleShowImageModal} />
     ]);
-
     const [scoreEssay] = useMutation(SCORE_ESSAY);
 
     const tabBarItems = [
@@ -221,16 +222,37 @@ export default function Page() {
             changeMoreTopics(false);
     };
 
+    async function CheckTempEssay(type: string, topic?: Topic) {
+        let Temp: tempEssay | null = JSON.parse(await localStorage.getItem(type === 'general_task_1' ? 'tempEssay' : type === 'academic_task_1' ? 'tempEssay3' : 'tempEssay2'));
+        let lastTemp: tempEssay | null = JSON.parse(await localStorage.getItem(type === 'general_task_1' ? 'lastTempEssay' : type === 'academic_task_1' ? 'lastTempEssay3' : 'lastTempEssay2'));
+        let TempsList = await localStorage.getItem('tempsEssayList');
+
+        if (lastTemp && lastTemp.topic.body !== topic?.topic && lastTemp.topic.id !== topic?.id) {
+            setTemp(lastTemp);
+            await localStorage.setItem(type === 'general_task_1' ? 'tempEssay' : type === 'academic_task_1' ? 'tempEssay3' : 'tempEssay2', JSON.stringify(lastTemp));
+            await localStorage.removeItem(type === 'general_task_1' ? 'lastTempEssay' : type === 'general_task_2' ? 'lastTempEssay2' : 'lastTempEssay3');
+        } else if (Temp && Temp.topic.body !== topic?.topic && Temp.topic.id !== topic?.id)
+            setTemp(Temp);
+        else
+            setTemp(null);
+
+        if (TempsList)
+            setTempEssaiesList(JSON.parse(TempsList));
+
+    };
+
     async function SelectType(type: string) {
         changeTopicsLoading(true);
         await setTopicsType(type);
         changeMoreTopics(true);
+        await CheckTempEssay(type);
         await GetFirstPageOfTopics(type);
         changeTopicsLoading(false);
     };
 
     async function NewEssay() {
         setEssaies([]);
+        CheckTempEssay(type);
         changeMoreEssaies(false);
         changeTopic(null)
         changeTabBarLoc(false);
@@ -476,6 +498,7 @@ export default function Page() {
 
     async function handleNewTopic(topic: Topic) {
         try {
+            await CheckTempEssay(type, topic);
             if (topic) {
                 await changeTopics([topic, ...topics]);
                 changeTopic({
@@ -605,8 +628,8 @@ export default function Page() {
                                     {topicsLoading ?
                                         <Loading style={{ height: '100%', minHeight: 0 }} />
                                         :
-                                        <TopicsList Topics={topics} HandleSelect={SelectTopic}
-                                            GetTopicsList={GetTopicsList} MoreTopics={MoreTopics}
+                                        <TopicsList Topics={topics} HandleSelect={SelectTopic} temp={temp} tempsList={tempEssaiesList}
+                                            GetTopicsList={GetTopicsList} MoreTopics={MoreTopics} CheckTempEssay={CheckTempEssay}
                                             HandleDelete={DeleteTopic} type={topicsType} selectedTopic={essayTopic ? essayTopic : undefined}
                                         />
                                     }

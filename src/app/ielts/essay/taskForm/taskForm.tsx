@@ -7,7 +7,6 @@ import Image from "next/image";
 import ReactLoading from 'react-loading';
 import toast from "react-hot-toast";
 import * as Yup from 'yup';
-// import { Pixelify } from "react-pixelify";
 import { useMutation } from "@apollo/client";
 import { useMediaQuery } from 'react-responsive';
 import { AnimatePresence, motion } from "framer-motion";
@@ -154,73 +153,58 @@ export default function TaskForm({
             id = currentId;
         } else
             id = await SelectTopic(Topic);
-
-        const newTemp: tempEssay = { topic: { id: '', body: '', type: type }, essay: '' };
-        let temp: tempEssay[][] = [Array(3).fill(newTemp), Array(3).fill(newTemp)];
-        if (await localStorage.getItem('tempEssay'))
-            temp = JSON.parse(await localStorage.getItem('tempEssay'));
-        let selectedTopicsTempList: SelectedTopicTempEssay[] = JSON.parse(await localStorage.getItem('tempsEssayList')) || [];
-        let selectedIndex: number = selectedTopicsTempList.findIndex(item => item.id === currentId);
-        let tempIndex: number = type === 'general_task_1' ? 0 : type === 'academic_task_1' ? 1 : 2;
         if (id != null) {
+            let lastTemp: tempEssay | null = JSON.parse(await localStorage.getItem(type === 'general_task_1' ? 'lastTempEssay' : type === 'general_task_2' ? 'lastTempEssay2' : 'lastTempEssay3'));
+            let tempsLiset: SelectedTopicTempEssay[] = JSON.parse(await localStorage.getItem('tempsEssayList'));
+            let Temp: tempEssay | null = JSON.parse(await localStorage.getItem(type === 'general_task_1' ? 'tempEssay' : type === 'academic_task_1' ? 'tempEssay3' : 'tempEssay2'));
+
             await setAddEssayLoading(true);
-            await addNewEssay({
-                variables: {
-                    id: id as string,
-                    body: body,
-                    durationMillisecond: Date.now() - essayTime
-                }
-            }).then(async (res) => {
-                changeTabBarLoc(true);
-                setTimeout(() => {
-                    changeEndAnimation(true);
-                }, 1000);
-                setTimeout(() => {
-                    DivRef2.scrollIntoView({ behavior: "smooth" });
-                }, 1400);
-
-                resetForm();
-                if (selectedIndex !== -1)
-                    await localStorage.setItem('tempsEssayList',
-                        JSON.stringify(selectedTopicsTempList.filter(item => item.id !== selectedTopicsTempList[selectedIndex].id)));
-                else {
-                    if (temp[1][tempIndex].topic.body === Topic)
-                        temp[1][tempIndex] = newTemp;
-                    else if (temp[0][tempIndex].topic.body === Topic)
-                        temp[0][tempIndex] = newTemp;
-                    else if (temp[1][tempIndex].topic.body !== '') {
-                        temp[0][tempIndex] = temp[1][tempIndex];
-                        temp[1][tempIndex] = newTemp;
+            try {
+                await addNewEssay({
+                    variables: {
+                        id: id as string,
+                        body: body,
+                        durationMillisecond: Date.now() - essayTime
                     }
-                    localStorage.setItem('tempEssay', JSON.stringify(temp));
-                }
+                }).then(async (res) => {
+                    changeTabBarLoc(true);
+                    setTimeout(() => {
+                        changeEndAnimation(true);
+                    }, 1000);
+                    setTimeout(() => {
+                        DivRef2.scrollIntoView({ behavior: "smooth" });
+                    }, 1400);
 
-                await setEssaies([res.data.addNewEssay, ...essaies]);
-                changeEssayLoading(false);
-                setTimeout(async () => {
-                    await GetScores([res.data.addNewEssay, ...essaies]);
-                }, 3000);
-                changeCcurrentId(id);
-                setAddEssayLoading(false);
-            }).catch(async (err: typeof error) => {
-                if (temp[1][tempIndex].topic.body === Topic)
-                    temp[1][tempIndex] = newTemp;
-                else if (temp[0][tempIndex].topic.body === Topic)
-                    temp[0][tempIndex] = newTemp;
-                else if (temp[1][tempIndex].topic.body !== '') {
-                    temp[0][tempIndex] = temp[1][tempIndex];
-                    temp[1][tempIndex] = newTemp;
-                }
-                localStorage.setItem('tempEssay', JSON.stringify(temp));
-                if (err.graphQLErrors[0].status == 402) {
-                    handleShowError();
-                } else {
-                    toast.error(err.graphQLErrors[0].message);
-                }
-                changeLoading(false);
-                setAddEssayLoading(false);
-                throw new Error('err');
-            });
+                    resetForm();
+
+                    if (tempsLiset.findIndex(item => item.id === currentId) != -1) {
+                        await localStorage.setItem('tempsEssayList',
+                            JSON.stringify(tempsLiset.filter(item => item.id !== tempsLiset[tempsLiset.findIndex(item => item.id === currentId)].id)));
+                    }
+                    await setEssaies([res.data.addNewEssay, ...essaies]);
+                    changeEssayLoading(false);
+                    setTimeout(async () => {
+                        await GetScores([res.data.addNewEssay, ...essaies]);
+                    }, 3000);
+                    changeCcurrentId(id);
+                    setAddEssayLoading(false);
+                }).catch(async (err: typeof error) => {
+                    if (err.graphQLErrors[0].status == 402) {
+                        handleShowError();
+                    } else {
+                        toast.error(err.graphQLErrors[0].message);
+                    }
+                    changeLoading(false);
+                    setAddEssayLoading(false);
+                    throw new Error('err');
+                });
+            } finally {
+                if (lastTemp && Topic === lastTemp.topic.body) {
+                    await localStorage.removeItem(type === 'general_task_1' ? 'lastTempEssay' : type === 'general_task_2' ? 'lastTempEssay2' : 'lastTempEssay3');
+                } else if (Temp && Topic === Temp.topic.body) {
+                    await localStorage.removeItem(type === 'general_task_1' ? 'tempEssay' : type === 'general_task_2' ? 'tempEssay2' : 'tempEssay3');
+                };
+            }
         };
     };
 
@@ -235,67 +219,75 @@ export default function TaskForm({
 
     //-------------------------------------------------------------------temp
     async function CreateTempEssay(essay: string, Topic: string, id?: string) {
-        let newTemp: tempEssay = { topic: { id: '', body: '', type: '' }, essay: '' };
-        let temp: tempEssay[][] = [Array(3).fill({ topic: { id: '', body: '', type: '' }, essay: '' }), Array(3).fill({ topic: { id: '', body: '', type: '' }, essay: '' })];
-        if (await localStorage.getItem('tempEssay'))
-            temp = JSON.parse(await localStorage.getItem('tempEssay'));
-        let selectedTopicsTempList: SelectedTopicTempEssay[] = JSON.parse(await localStorage.getItem('tempsEssayList')) || [];
-        let tempIndex: number = type === 'general_task_1' ? 0 : type === 'academic_task_1' ? 1 : 2;
+        let temp: tempEssay = { topic: { id: '', body: '', type: type }, essay: '' };
+        let oldestTemp: tempEssay | null = JSON.parse(await localStorage.getItem(type === 'general_task_1' ? 'tempEssay' : type === 'general_task_2' ? 'tempEssay2' : 'tempEssay3'));
+        let tempsList: SelectedTopicTempEssay[] = JSON.parse(await localStorage.getItem('tempsEssayList'))
+        if (essay !== '') {
+            if (generatedTopic) {
+                temp.topic = { id: id ? id : generatedTopic.id as string, body: Topic, type: type };
+                if (generatedTopic?.visuals && generatedTopic.visuals.length > 0)
+                    temp.visuals = generatedTopic.visuals
+            } else {
+                temp.topic = { id: '', body: Topic, type: type }
+            };
+            temp.essay = essay;
 
-        if (generatedTopic) {
-            newTemp.topic = { id: generatedTopic.id as string, body: Topic, type: type };
-            if (generatedTopic?.visuals && generatedTopic.visuals.length > 0)
-                newTemp.visuals = generatedTopic.visuals;
-        } else {
-            newTemp.topic = { id: id ? id : '', body: Topic, type: type }
+            if (currentId) {
+                if (tempsList.length === 0) {
+                    tempsList.push({ essay: essay, id: currentId });
+                } else {
+                    if (tempsList.findIndex(item => item.id === currentId) === -1) {
+                        tempsList.push({ essay: essay, id: currentId });
+                    } else {
+                        tempsList[tempsList.findIndex(item => item.id === currentId)].essay = essay;
+                    }
+                };
+                localStorage.setItem('tempsEssayList', JSON.stringify(tempsList));
+            } else if (oldestTemp) {
+                if (oldestTemp.topic.body === Topic) {
+                    localStorage.setItem(type === 'general_task_1' ? 'tempEssay' : type === 'general_task_2' ? 'tempEssay2' : 'tempEssay3', JSON.stringify(temp));
+                } else {
+                    localStorage.setItem(type === 'general_task_1' ? 'lastTempEssay' : type === 'general_task_2' ? 'lastTempEssay2' : 'lastTempEssay3', JSON.stringify(temp));
+                }
+            } else {
+                localStorage.setItem(type === 'general_task_1' ? 'tempEssay' : type === 'general_task_2' ? 'tempEssay2' : 'tempEssay3', JSON.stringify(temp));
+            };
         }
-        newTemp.essay = essay;
-
-        if (currentId) {
-            let selectedTopic: number = selectedTopicsTempList.findIndex(item => item.id === currentId);
-            if (selectedTopicsTempList.length === 0 || selectedTopic === -1)
-                selectedTopicsTempList.push({ essay: essay, id: currentId });
-            else
-                selectedTopicsTempList[selectedTopic].essay = essay;
-            localStorage.setItem('tempsEssayList', JSON.stringify(selectedTopicsTempList));
-        }
-
-
-        if (temp[0][tempIndex].topic.body !== '' && temp[0][tempIndex].topic.body !== Topic)
-            temp[1][tempIndex] = newTemp;
-        else {
-            temp[0][tempIndex] = newTemp;
-            temp[1][tempIndex] = { topic: { id: '', body: '', type: type }, essay: '' };
-        }
-
-        localStorage.setItem('tempEssay', JSON.stringify(temp));
     };
 
     async function ChackTopic() {
-        const newTemp: tempEssay = { topic: { id: '', body: '', type: type }, essay: '' };
-        let temp: tempEssay[][] = [Array(3).fill(newTemp), Array(3).fill(newTemp)];
-        let tempIndex: number = type === 'general_task_1' ? 0 : type === 'academic_task_1' ? 1 : 2;
-        let selectedTopicsTempList: SelectedTopicTempEssay[] = JSON.parse(await localStorage.getItem('tempsEssayList')) || [];
-        if (await localStorage.getItem('tempEssay'))
-            temp = JSON.parse(await localStorage.getItem('tempEssay'));
+        let temp: tempEssay | null = JSON.parse(await localStorage.getItem(type === 'general_task_1' ? 'tempEssay' : type === 'general_task_2' ? 'tempEssay2' : 'tempEssay3'));
+        let lastTemp: tempEssay | null = JSON.parse(await localStorage.getItem(type === 'general_task_1' ? 'lastTempEssay' : type === 'general_task_2' ? 'lastTempEssay2' : 'lastTempEssay3'));
+        let t = await localStorage.getItem('tempsEssayList');
+        let tempsLiset: SelectedTopicTempEssay[] = [];
+        if (t)
+            tempsLiset = JSON.parse(t);
 
         if (topic && essay === '') {
-            changeCcurrentId(topic.id);
-            changeMoreEssaies(true);
-            if (temp[1][tempIndex].topic.id === topic.id || temp[0][tempIndex].topic.id === topic.id)
+            if (temp && topic.body === temp.topic.body) {
+                changeGeneratedTopic(temp.topic as topic);
                 changeMoreEssaies(false);
-        } else if (topic && essay !== '') {
-            if (temp[1][tempIndex].topic.id === topic.id) {
-                changeGeneratedTopic(temp[1][tempIndex].topic as topic);
+            } else if (lastTemp && topic.body === lastTemp.topic.body) {
+                changeGeneratedTopic(lastTemp.topic as topic);
                 changeMoreEssaies(false);
-            } else if (temp[0][tempIndex].topic.id === topic.id) {
-                changeGeneratedTopic(temp[0][tempIndex].topic as topic);
-                changeMoreEssaies(false);
-            } else if (selectedTopicsTempList.findIndex(item => item.id === topic.id) != -1) {
+            }
+            else if (topic.id !== '') {
                 changeCcurrentId(topic.id);
                 changeMoreEssaies(true);
             }
-            if (currentId == null) changeMoreEssaies(false);
+        } else if (topic && essay !== '') {
+            if (temp && topic.body === temp.topic.body) {
+                changeGeneratedTopic(temp.topic as topic);
+                changeMoreEssaies(false);
+            } else if (lastTemp && topic.body === lastTemp.topic.body) {
+                changeGeneratedTopic(lastTemp.topic as topic);
+                changeMoreEssaies(false);
+            } else if (tempsLiset.findIndex(item => item.id === topic.id) != -1) {
+                changeCcurrentId(topic.id);
+                changeMoreEssaies(true);
+            } else if (currentId == null) {
+                changeMoreEssaies(false);
+            }
         }
     };
 
@@ -307,6 +299,7 @@ export default function TaskForm({
     function handleGenerateTopic() {
         changeGeneratedTopic(null);
         setChangeInput(false);
+        setIsBig(false);
         changeEndTyping(false);
         changeEditedGeneratedTopic(false);
         changeGenerateWriting(true);
@@ -527,13 +520,13 @@ export default function TaskForm({
                             <AnimatePresence>
                                 {
                                     type === 'academic_task_1' &&
-                                    <div className={styles.imagesContainer + ' flex ml-[45px] mt-[48px] mb-[50px] flex-wrap col-12'}>
+                                    <div className={styles.imagesContainer + ' flex ml-[45px] mt-[48px] mb-[50px] flex-wrap col-12 min-h-[360px]'}>
 
                                         {
                                             topic && topic.visuals && topic.visuals?.length > 0 ?
                                                 topic.visuals.map((item, index) =>
                                                     <motion.div
-                                                        style={{ opacity: 0 }}
+                                                        style={{ opacity: 0, width: 600 }}
                                                         key={index}
                                                         onClick={() => setIsBig(!isBig)}
                                                         animate={isBig ? { width: 1200, height: 'fit-content', opacity: 1 } : { width: 600, height: 'fit-content', opacity: 1 }}
@@ -553,7 +546,7 @@ export default function TaskForm({
                                                 : generatedTopic && generatedTopic.visuals && generatedTopic.visuals?.length > 0 ?
                                                     generatedTopic.visuals.map((item, index) =>
                                                         <motion.div
-                                                            style={{ opacity: 0 }}
+                                                            style={{ opacity: 0, width: 600 }}
                                                             key={index}
                                                             onClick={() => setIsBig(!isBig)}
                                                             animate={isBig ? { width: 1000, height: 'fit-content', opacity: 1 } : { width: 600, height: 'fit-content', opacity: 1 }}

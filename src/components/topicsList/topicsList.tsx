@@ -25,13 +25,15 @@ type _props = {
     MoreTopics: boolean,
     HandleDelete: any,
     type: string,
-    selectedTopic?: Topic
+    selectedTopic?: Topic,
+    temp?: tempEssay,
+    tempsList?: SelectedTopicTempEssay[],
+    CheckTempEssay: any
 };
 
-export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTopics, HandleDelete, type, selectedTopic }: _props) {
+export default function TopicsList({ Topics, HandleSelect, GetTopicsList, CheckTempEssay,
+    MoreTopics, HandleDelete, type, selectedTopic, temp, tempsList }: _props) {
     const [open, setOpen] = React.useState<boolean>(false);
-    const [temp, setTemp] = React.useState<tempEssay | null>();
-    const [tempsList, setTempsList] = React.useState<SelectedTopicTempEssay[]>([]);
     const [loading, setLoading] = React.useState<boolean>(false);
     const [selectedId, changeSelectedId] = React.useState<string>('');
 
@@ -45,25 +47,6 @@ export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTo
         await HandleDelete(selectedId);
         setLoading(false);
     };
-
-    async function SetTempEssay() {
-        const newTemp: tempEssay = { topic: { id: '', body: '', type: type }, essay: '' };
-        let temp: tempEssay[][] = [Array(3).fill(newTemp), Array(3).fill(newTemp)];
-        let tempIndex: number = type === 'general_task_1' ? 0 : type === 'academic_task_1' ? 1 : 2;
-        if (await localStorage.getItem('tempEssay'))
-            temp = JSON.parse(await localStorage.getItem('tempEssay'));
-        let selectedTopicsTempList: SelectedTopicTempEssay[] = JSON.parse(await localStorage.getItem('tempsEssayList')) || [];
-
-        if (temp[1][tempIndex].topic.body !== '')
-            setTemp(temp[1][tempIndex]);
-        else if (temp[0][tempIndex].topic.body !== '')
-            setTemp(temp[1][tempIndex]);
-        setTempsList(selectedTopicsTempList);
-    };
-
-    React.useEffect(() => {
-        // SetTempEssay();
-    }, []);
 
     return <div className={'col-12 ' + styles.tasksContainer}>
         {
@@ -102,19 +85,9 @@ export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTo
                                         </div>
                                         <AiOutlineDelete className={styles.deleteIcon}
                                             onClick={() => {
-                                                if (type === 'general_task_1') {
-                                                    localStorage.removeItem('tempEssay');
-                                                    localStorage.removeItem('lastTempEssay');
-                                                    setTemp(null);
-                                                } else if (type === 'academic_task_1') {
-                                                    localStorage.removeItem('tempEssay3');
-                                                    localStorage.removeItem('lastTempEssay3');
-                                                    setTemp(null);
-                                                } else {
-                                                    localStorage.removeItem('tempEssay2');
-                                                    localStorage.removeItem('lastTempEssay2');
-                                                    setTemp(null);
-                                                }
+                                                localStorage.removeItem(type === 'general_task_1' ? 'tempEssay' : type === 'academic_task_1' ? 'tempEssay3' : 'tempEssay2');
+                                                localStorage.removeItem(type === 'general_task_1' ? 'lastTempEssay' : type === 'academic_task_1' ? 'lastTempEssay3' : 'lastTempEssay2');
+                                                CheckTempEssay(type);
                                             }}
                                         />
                                     </div>
@@ -131,7 +104,7 @@ export default function TopicsList({ Topics, HandleSelect, GetTopicsList, MoreTo
                                             HandleSelect({ id: item.id, body: item.topic, type: item.type, visuals: item.visuals, subType: item.subType },
                                                 tempsList.findIndex(tempItem => tempItem.id === item.id) === -1 ? ''
                                                     : tempsList[tempsList.findIndex(tempItem => tempItem.id === item.id)].essay);
-                                            // SetTempEssay();
+                                            CheckTempEssay(type);
                                         }}
                                         className={styles.taskCardTitle}>
                                         <div className={styles.shortNameText}>{item.shortName}</div>
