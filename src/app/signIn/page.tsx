@@ -5,7 +5,7 @@ import { Divider } from 'antd';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
-import { signIn, signOut } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Checkbox } from 'antd';
@@ -55,17 +55,32 @@ const variants = {
     }
 };
 
-export default function Page() {
+interface pageProps {
+    searchParams: any
+};
+
+export default function Page({ searchParams }: pageProps) {
 
     const controls = useAnimation();
     const router = useRouter();
     const [loading, changeLoading] = React.useState<boolean>(false);
     const [checkTerms, setcheckTerm] = React.useState<boolean>(false);
 
+
+
     React.useEffect(() => {
         localStorage.clear();
         StopLoader();
+        setTimeout(() => {
+            if (searchParams.error)
+                if (window.location.hash === '#_=_') {
+                    toast.error('Facebook login service is not available right now. Please try later, choose another login method, or contact support.')
+                } else {
+                    toast.error('Google login service is not available right now. Please try later, choose another login method, or contact support.');
+                }
+        }, 500);
     }, []);
+
 
     const handleEmailSignIn = async (values: any) => {
         if (!checkTerms) {
@@ -94,7 +109,7 @@ export default function Page() {
                 controls.set("reset");
             }, 2000);
         } else {
-            await signIn('google');
+            await signIn('google', { callbackUrl: '/ielts' });
         }
     };
 
@@ -110,7 +125,7 @@ export default function Page() {
                 controls.set("reset");
             }, 2000);
         } else {
-            const signInResponse = await signIn('facebook');
+            const signInResponse = await signIn('facebook', { callbackUrl: '/ielts' });
             if (signInResponse)
                 console.log('google login sign in response : ', signInResponse);
         }

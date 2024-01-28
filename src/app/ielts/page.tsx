@@ -492,7 +492,7 @@ export default function Page() {
     async function LogOut() {
         setLoading(true);
         router.replace('/signIn');
-        await signOut();
+        await signOut({ callbackUrl: "/signIn" });
         localStorage.clear();
     };
 

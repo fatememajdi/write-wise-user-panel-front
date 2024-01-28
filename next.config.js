@@ -6,6 +6,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 const nextConfig = {
+  reactStrictMode: false,
   // async rewrites() {
   //   return [
   //     {
@@ -58,7 +59,7 @@ const nextConfig = {
   // },
   env: {
     NEXT_PUBLIC_ENV: 'DEVELOPER',
-    URI:'https://devapi.wwai.ai/graphql'
+    URI: 'https://devapi.wwai.ai/graphql'
   },
 }
 

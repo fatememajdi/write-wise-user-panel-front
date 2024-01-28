@@ -28,14 +28,14 @@ export const authConfig: NextAuthOptions = {
         strategy: 'jwt'
     },
     pages: {
-        signIn: '/ielts',
-        signOut: '/signIn',
+        signIn: '/signIn',
+        // signOut: '/signIn?error=dfg',
         newUser: '/ielts',
-        error: '/signIn'
+        error: '/signIn',
     },
     callbacks: {
         async redirect({ url, baseUrl }) {
-            return baseUrl + '/ielts'
+            return url
         },
         async jwt({ token, account, }) {
             if (account) {
@@ -49,22 +49,26 @@ export const authConfig: NextAuthOptions = {
                         token.access_token = res.data.googleLogin.token as string;
                         return token;
                     }).catch((err) => {
-                        token.error = 'RefreshAccessTokenError'
-                        console.log('refresh token error : ', err)
+                        token.error = err.message as string
+                        console.log('refresh token error : ', err);
+                        CredentialsProvider(err.message)
                     });
-                else if (account.provider === 'facebook')
+                else if (account.provider === 'facebook') {
                     await loginClient.mutate({
                         mutation: META_SIGN_IN,
                         variables: {
-                            token: account.id_token as string
+                            token: account.access_token as string
                         }
                     }).then((res) => {
+                        console.log(res.data.metaLogin.token as string)
                         token.access_token = res.data.metaLogin.token as string;
                         return token;
                     }).catch((err) => {
-                        token.error = 'RefreshAccessTokenError'
-                        console.log('refresh token error : ', err)
+                        token.error = err.message as string
+                        console.log('refresh token error : ', err);
+                        CredentialsProvider(err.message)
                     });
+                }
             }
             return token;
         },
@@ -81,11 +85,12 @@ export const authConfig: NextAuthOptions = {
     },
     events: {
         signIn: async ({ user, account, profile }) => {
-            console.log(account);
-        }
+
+            // console.log(account);
+        },
     }
 };
 
-function CredentialsProvider(arg0: { type: string; credentials: {}; authorize: (credentials: any, req: any) => Promise<{ id: any; token: any; } | null>; }): import("next-auth/providers").Provider {
-    throw new Error('Function not implemented.');
+function CredentialsProvider(err: string): import("next-auth/providers").Provider {
+    throw new Error(err);
 }
