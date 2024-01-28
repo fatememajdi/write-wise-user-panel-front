@@ -177,10 +177,6 @@ export default function TaskForm({
 
                     resetForm();
 
-                    if (tempsLiset.findIndex(item => item.id === currentId) != -1) {
-                        await localStorage.setItem('tempsEssayList',
-                            JSON.stringify(tempsLiset.filter(item => item.id !== tempsLiset[tempsLiset.findIndex(item => item.id === currentId)].id)));
-                    }
                     await setEssaies([res.data.addNewEssay, ...essaies]);
                     changeEssayLoading(false);
                     setTimeout(async () => {
@@ -188,6 +184,11 @@ export default function TaskForm({
                     }, 3000);
                     changeCcurrentId(id);
                     setAddEssayLoading(false);
+
+                    if (tempsLiset.findIndex(item => item.id === currentId) != -1) {
+                        await localStorage.setItem('tempsEssayList',
+                            JSON.stringify(tempsLiset.filter(item => item.id !== tempsLiset[tempsLiset.findIndex(item => item.id === currentId)].id)));
+                    }
                 }).catch(async (err: typeof error) => {
                     if (err.graphQLErrors[0].status == 402) {
                         handleShowError();
@@ -233,7 +234,7 @@ export default function TaskForm({
             temp.essay = essay;
 
             if (currentId) {
-                if (tempsList.length === 0) {
+                if (tempsList && tempsList.length === 0) {
                     tempsList.push({ essay: essay, id: currentId });
                 } else {
                     if (tempsList.findIndex(item => item.id === currentId) === -1) {

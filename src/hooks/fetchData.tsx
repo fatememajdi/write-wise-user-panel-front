@@ -7,6 +7,7 @@ import { Country, UserProfile } from "../../types/profile";
 import toast from "react-hot-toast";
 import { Package } from "../../types/package";
 import { Transaction } from "../../types/transaction";
+import { GraphQLError } from "graphql/error";
 
 export async function GetEsseies(id: string, page: number) {
     let essaies: Essay[] = [];
@@ -40,14 +41,19 @@ export async function GetTopics(type: string, page: number) {
     })
     return topics;
 };
+export async function GetUserProfile(LogOut: any) {
 
-export async function GetUserProfile() {
     let profile: UserProfile
     await client.query({
         query: GET_PROFILE,
         fetchPolicy: "no-cache"
     }).then(async (res) => {
         profile = res.data.getUserProfile;
+    }).catch(async (err) => {
+        if (err.graphQLErrors[0].status == 401 || err.graphQLErrors[0].status == 403){
+            LogOut();
+            console.log(err.graphQLErrors[0].status == 401 || err.graphQLErrors[0].status == 403);
+        }
     })
     return profile;
 };

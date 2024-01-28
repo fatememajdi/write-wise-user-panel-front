@@ -265,7 +265,7 @@ export default function Page() {
             setIsOpen(false);
     };
 
-    async function GetProfile() { setProfile(await GetUserProfile()) };
+    async function GetProfile() { setProfile(await GetUserProfile(LogOut)) };
 
     async function GetScores(essaies: Essay[], essay?: Essay) {
         let dev = await localStorage.getItem('devMode');
