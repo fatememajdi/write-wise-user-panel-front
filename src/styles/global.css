@@ -39,8 +39,7 @@ html {
 h1 {
   font-size: 82px !important;
   font-weight: 800 !important;
-  line-height: 96.2px !important;
-  letter-spacing: -0.41px !important;
+  line-height: 78px !important;
 }
 
 h2 {
@@ -135,7 +134,6 @@ textarea::-webkit-scrollbar-thumb {
   h6 {
     font-size: 14px !important;
     font-weight: 400 !important;
-    line-height: 20px !important;
   }
 
   h2 {
@@ -177,16 +175,16 @@ textarea::-webkit-scrollbar-thumb {
 
 
 
-@media (max-width: 1680px) {
+@media screen and (max-width: 1680px) and (min-width: 1400px) {
   h1 {
-    font-size: 24px !important;
+    font-size: 65px !important;
     font-weight: 800 !important;
-    line-height: 29.8px !important;
+    line-height: 61.6px !important;
     letter-spacing: -0.12px !important;
   }
+
   h6 {
     font-size: 16px !important;
     font-weight: 400 !important;
-    line-height: 20px !important;
   }
 }

@@ -29,6 +29,7 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'mobile-hero-pattern': "url('/landing/section1-mobile-background.svg')",
         'hero-pattern': "url('/landing/section1-desktop-background.svg')",
+        'hero-mac-pattern': "url('/landing/section1-mac-background.svg')",
         'fqa-pattern': "url('/fqa/FQA.svg')",
         'login-pattern': 'url("/signIn/background.svg")',
         'section2-gradiant': 'linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%)',
@@ -38,7 +39,7 @@ module.exports = {
         'arrow-icon': 'linear-gradient(141deg, #B5C0CE 0%, rgba(234, 234, 234, 0.20) 83.58%)',
         'section7-gradiant': 'linear-gradient(90deg, #F4DEDF, #DBE8F2)',
         'token-gradiant': 'linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%)',
-        'login-mobile-pattern':'url("/signIn/mobile-background.svg")'
+        'login-mobile-pattern': 'url("/signIn/mobile-background.svg")'
       },
     },
   },

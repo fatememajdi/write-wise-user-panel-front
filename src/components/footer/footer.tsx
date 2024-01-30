@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React from "react";
 import Image from "next/image";
@@ -94,11 +95,11 @@ const Footer: React.FC = () => {
         };
     }, []);
 
-    return <footer className='col-12 h-[267px] bg-seccondaryColor flex flex-row items-center justify-between py-0 px-[190px] relative text-whiteText sm:h-[184px] sm:px-[17px] sm:overflow-hidden sm:z-[501] '>
+    return <footer className='col-12 h-[267px] tablet:h-[230px] bg-seccondaryColor flex flex-row items-center justify-between py-0 px-[190px] tablet:px-[71px] relative text-whiteText sm:h-[184px] sm:px-[17px] sm:overflow-hidden sm:z-[501] tablet:z-[501] '>
 
         <div className="flex flex-col items-start h-full pt-[26px] ">
             <Image
-                className="w-[336px] h-[42px] mr-auto ml-[-80px] sm:w-[95px] sm:h-[18px] sm:ml-[-10px] "
+                className="w-[336px] h-[42px] tablet:w-[140px] tablet:h-[31px] tablet:ml-[-10px] mr-auto ml-[-80px] sm:w-[95px] sm:h-[18px] sm:ml-[-10px] "
                 src={"/logoIcon2.svg"}
                 alt="Logo"
                 width="0"
@@ -108,25 +109,25 @@ const Footer: React.FC = () => {
                 priority
             />
 
-            <div className="flex lg:flex-row items-center text-[20px] font-normal leading-[24px] underline mt-[24px] sm:flex-col sm:mt-[8px] sm:text-[10px] sm:leading-[24px] sm:items-start sm:whitespace-nowrap  ">
+            <div className="flex lg:flex-row tablet:flex-col tablet:items-start items-center text-[20px] tablet:text-[16px] font-normal leading-[24px] underline mt-[24px] tablet:mt-[20px] sm:flex-col sm:mt-[8px] sm:text-[10px] sm:leading-[24px] sm:items-start sm:whitespace-nowrap  ">
                 {
-                    FooterLinks.map((item, index) => <Link className="mr-[32px] opacity-50 hover:opacity-100 "
+                    FooterLinks.map((item, index) => <Link className="mr-[32px] tablet:mr-[20px] tablet:mb-[6px] opacity-50 hover:opacity-100 "
                         key={index} href={item.route}>{item.title}</Link>)
                 }
             </div>
 
-            <div className="mt-[64px] text-[20px] font-normal leading-[24px] opacity-50 flex flex-row items-center sm:hidden ">
+            <div className="mt-[64px] text-[20px] font-normal leading-[24px] opacity-50 flex flex-row items-center sm:hidden tablet:hidden ">
                 <FaRegCopyright fontSize={25} style={{ marginRight: 7 }} className="sm:hidden" /> WriteWiseAI 2023</div>
 
         </div>
 
-        <div className="flex items-start h-full flex-wrap max-w-[333px] min-w-[333px] pt-[58px] text-[20px] font-normal leading-[22.18px] underline pb-[70px] sm:relative sm:pt-[45px] sm:leading-[24px] sm:text-[10px] sm:mt-[8px] ">
+        <div className="flex items-start h-full lg:flex-wrap sm:flex-wrap tablet:flex-col max-w-[333px] min-w-[333px] pt-[58px] tablet:pt-[79px] text-[20px] tablet:text-[16px] font-normal leading-[22.18px] underline pb-[70px] sm:relative sm:pt-[45px] sm:leading-[24px] sm:text-[10px] sm:mt-[8px] ">
             {
-                LandingItems.map((item, index) => <Link className="opacity-50 lg:mb-[24px] min-w-[160px] sm:w-full hover:opacity-100 sm:mb-[0px] "
+                LandingItems.map((item, index) => <Link className="opacity-50 lg:mb-[24px] tablet:mb-[6px] min-w-[160px] sm:w-full hover:opacity-100 sm:mb-[0px] "
                     onClick={() => { if (pathname === '/') handleScroll; else router.push('/' + item.route); handleScroll }}
                     key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>)
             }
-            <div className="w-[160px] flex flex-row mt-[11px] sm:absolute sm:right-[7px] sm:bottom-[40px] ">
+            <div className="w-[160px] tablet:hidden lg:flex sm:flex flex-row mt-[11px] sm:absolute sm:right-[7px] sm:bottom-[40px] ">
                 {
                     SocialMediaItems.map((item, index) => <a className="min-w-[50px] text-[30px] opacity-50 hover:opacity-100 sm:text-[15px] sm:min-w-[20px] " key={index} href={item.link}>{item.icon}</a>)
                 }

@@ -92,7 +92,7 @@ const Home: React.FC = () => {
             StartLoader();
             router.push('/signIn');
           }}
-          className="z-[500] shadow-[-5px_15px_22px_-5px_rgba(0,0,0,0.19)] fixed left-[45%] right-[45%] bottom-[80px] rounded-[32px] bg-background flex w-[197px] h-[72px] justify-center items-center text-red text-[24px] font-black leading-[40px] sm:w-[130px] sm:text-[16px] sm:h-[44px] sm:font-extrabold sm:bottom-[40px] sm:left-[30%] sm:right-[30%] ">
+          className="z-[500] shadow-[-5px_15px_22px_-5px_rgba(0,0,0,0.19)] fixed left-[45%] right-[45%] bottom-[80px] rounded-[32px] bg-background flex w-[175px] h-[72px] justify-center items-center text-red text-[24px] font-bold leading-[40px] sm:w-[130px] sm:text-[16px] sm:h-[44px] sm:font-extrabold sm:bottom-[40px] sm:left-[30%] sm:right-[30%] ">
           Start Now
         </button>
       }

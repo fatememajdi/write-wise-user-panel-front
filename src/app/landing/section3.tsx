@@ -19,14 +19,14 @@ export default function Section3() {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     return (
-        <section className='col-12 overflow-hidden relative py-[250px] pr-[156px] pl-[229px] bg-background sm:px-[48px] sm:pt-[48px] sm:pb-[66px]' id='features'>
+        <section className='col-12 overflow-hidden relative pt-[196px] pb-[330px] pr-[205px] pl-[205px] bg-background sm:px-[48px] sm:pt-[48px] sm:pb-[66px]' id='features'>
             <div className='col-12 flex lg:flex-row items-center justify-center h-full sm:flex-col ' >
 
-                <div className='col-lg-7 col-md-6 col-12 flex flex-col h-fit pr-[60px] sm:p-0' >
-                    <h2 className='text-seccondaryColor leading-[68.4px] sm:leading-[23px] sm:text-[16px] sm:font-extrabold'>
+                <div className='col-lg-7 col-md-6 col-12 flex flex-col h-fit pr-[62px] sm:p-0' >
+                    <h2 className='text-seccondaryColor leading-[60px] sm:leading-[23px] sm:text-[16px] sm:font-extrabold'>
                         Unlock IELTS Writing Mastery with <span className=" font-black">WriteWiseAI's</span> Pioneering Features
                     </h2>
-                    <h6 className='text-blackText leading-[36px] mt-[40px] sm:mt-[8px]'>
+                    <h6 className='text-blackText leading-[36px] sm:leading-[20px] mt-[49px] sm:mt-[8px]'>
                         Experience a seamless fusion of advanced technology and intuitive design, tailored to elevate every aspect of your IELTS preparation journey, and ensure top-tier IELTS writing results.
                     </h6>
 
@@ -42,7 +42,7 @@ export default function Section3() {
 
                 </div>
 
-                <div className='col-lg-5 col-md-6 col-12 flex flex-col h-fit justify-center pl-[100px] hover:shadow-none sm:p-0 sm:mt-[24px] sm:pl-0 ' >
+                <div className='col-lg-5 col-md-6 col-12 flex flex-col h-fit justify-center pl-[20px] hover:shadow-none sm:p-0 sm:mt-[24px] sm:pl-0 ' >
                     <FeaturesItemCard icon={isMobile ? <StarsMobile /> : <Stars />} title="AI-Powered Essay Rating" />
                     <FeaturesItemCard icon={isMobile ? <UserMobile /> : <User />} title="Personalized Feedback and Recommendations" />
                     <FeaturesItemCard icon={isMobile ? <RiseMobile /> : <Rise />} title="In-Depth Progress Tracking" />
