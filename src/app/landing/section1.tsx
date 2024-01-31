@@ -34,8 +34,8 @@ export default function Section1() {
             <div className={'col-lg-9 col-md-9 col-12 flex flex-column items-start justify-center pl-[163px] mac:pl-[111px] mr-auto h-full sm:h-fit sm:pr-[20px] sm:pl-[30px] sm:mt-[350px] ' + styles.content}>
                 <h1 className='flex flex-wrap text-primaryColor'>
                     <p> Achieve IELTS Writing &nbsp; Excellence with</p>
-                    <span className="whitespace-nowrap "> AI-Driven &nbsp;</span>
-                    <div className={'text-primaryColor ' + styles.animationText}>
+                    <span className="whitespace-nowrap "> AI-Driven&nbsp;</span>
+                    <span className={'text-primaryColor ' + styles.animationText}>
                         <Typewriter
                             options={{
                                 strings: ['Rating', 'Analysis', 'Progress Tracking'],
@@ -45,7 +45,7 @@ export default function Section1() {
                             }}
 
                         />
-                    </div>
+                    </span>
 
                 </h1>
 

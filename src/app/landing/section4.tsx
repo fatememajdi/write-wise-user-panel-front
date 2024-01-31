@@ -55,10 +55,18 @@ export default function Section4() {
             if (selectedItem === 0 && !isMobile)
                 changeSelectedItem(1);
         }}
-        className='bg-section4-gradiant overflow-hidden flex pt-[150px] flex-col h-fit sm:pt-[55px] sm:min-h-fit sm:pl-[50px]'>
-        <h2 className='text-whiteText leading-[61.5px] ml-[234px] sm:ml-0 sm:leading-[26px]'>Progressive IELTS Learning with WriteWiseAI</h2>
-        <div className='hidden sm:ml-0 w-[259px] h-[0.5px] bg-divider-gradiant mt-[18px] mb-[20px] sm:block ' />
-        <h6 className='text-whiteText leading-[31px] ml-[234px] sm:ml-0 sm:mt-0 mt-[48px] mb-[90px] max-w-[500px] sm:text-[13px] sm:leading-[19.5px] sm:mb-0 sm:max-w-full sm:mr-[50px] '>
+        className='bg-section4-gradiant overflow-hidden flex pt-[80px] flex-col h-fit sm:pt-[55px] sm:min-h-fit sm:pl-[50px]'>
+        <h2 className='text-whiteText leading-[60px] ml-[162px] sm:ml-0 sm:leading-[26px]'>Progressive IELTS Learning with WriteWiseAI</h2>
+        <Image
+            className=" mt-[32px] ml-[162px] sm:hidden "
+            src="/landing/line.svg"
+            alt="line"
+            width={1040}
+            height={0.5}
+            priority
+            loading="eager"
+        />
+        <h6 className='text-whiteText leading-[36px] ml-[162px] sm:ml-0 sm:mt-0 mt-[32px] mb-[90px] max-w-[550px] sm:text-[13px] sm:leading-[19.5px] sm:mb-0 sm:max-w-full sm:mr-[50px] '>
             Empower your IELTS preparation by tracking and visualizing your writing improvements.
         </h6>
 
@@ -117,7 +125,7 @@ export default function Section4() {
         {/* //-----------------------------------------------------------------------------desktop mode steps */}
 
         <AnimatePresence>
-            <div className='flex flex-row h-fit w-full flex-1 pr-[110px] items-end sm:hidden'>
+            <div className='flex flex-row h-fit w-full flex-1 items-end sm:hidden'>
                 <div
                     style={{ opacity: selectedItem === 1 || selectedItem === 0 ? 1 : 0.5 }}
                     className='relative flex-1 min-h-[22vh] border-t-[1px] border-t-whiteText '></div>
@@ -125,11 +133,11 @@ export default function Section4() {
                     animate={{ height: selectedItem === 1 ? '36vh' : '22vh' }}
                     transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 1 || selectedItem === 0 ? 1 : 0.5 }}
-                    className='relative min-h-[22vh] w-[340px]'>
+                    className='relative min-h-[22vh] w-[300px]'>
                     <motion.div
                         animate={{ height: selectedItem === 1 ? '14vh' : 0 }}
                         transition={{ type: "spring", duration: 1.5 }}
-                        className='relative ml-auto w-[340px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
+                        className='relative ml-auto w-[300px] max-w-[300px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
                         <motion.div animate={{ height: selectedItem === 1 ? '7vh' : 0 }}
                             transition={{ type: "spring", duration: 1.5 }}
                             className='absolute top-0 right-0 z-0 border-r-[1px] border-r-whiteText' />
@@ -145,17 +153,17 @@ export default function Section4() {
                         className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">01</span> Dynamic Visuals</div>
                 </motion.div>
                 <motion.div
-                    animate={{ height: selectedItem === 2 ? '39vh' : '29vh' }}
+                    animate={{ height: selectedItem === 2 ? '39vh' : '29vh', width: selectedItem === 1 || selectedItem === 2 ? 340 : 300 }}
                     transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 2 || selectedItem === 0 ? 1 : 0.5 }}
-                    className='relative w-[340px] min-h-[29vh]'>
+                    className='relative w-[300px] min-h-[29vh]'>
                     <motion.div animate={{ height: selectedItem === 2 ? '3vh' : 0 }}
                         transition={{ type: "spring", duration: 1.5 }}
                         className='absolute top-0 right-0 z-0 border-r-[1px] border-r-whiteText' />
                     <motion.div
-                        animate={{ height: selectedItem === 2 ? '17vh' : selectedItem === 1 ? 0 : '7vh' }}
+                        animate={{ height: selectedItem === 2 ? '17vh' : selectedItem === 1 ? 0 : '7vh', width: selectedItem === 1 || selectedItem === 2 ? 340 : 300 }}
                         transition={{ type: "spring", duration: 1.5 }}
-                        className='relative ml-auto w-[340px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
+                        className='relative ml-auto w-[300px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
                         <motion.div
                             animate={{ opacity: selectedItem === 2 ? 1 : 0 }}
                             style={{ padding: 10, zIndex: 1 }}
@@ -168,14 +176,14 @@ export default function Section4() {
                         className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">02</span> Unlimited Revisions</div>
                 </motion.div>
                 <motion.div
-                    animate={{ height: selectedItem === 3 ? '50vh' : '36vh' }}
+                    animate={{ height: selectedItem === 3 ? '50vh' : '36vh', width: selectedItem === 3 || selectedItem === 2 ? 340 : 300 }}
                     transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 3 || selectedItem === 0 ? 1 : 0.5 }}
-                    className='relative w-[340px] min-h-[36vh]'>
+                    className='relative w-[300px] min-h-[36vh]'>
                     <motion.div
-                        animate={{ height: selectedItem === 3 ? '21vh' : selectedItem === 2 ? 0 : '7vh' }}
+                        animate={{ height: selectedItem === 3 ? '21vh' : selectedItem === 2 ? 0 : '7vh', width: selectedItem === 2 || selectedItem === 3 ? 340 : 300 }}
                         transition={{ type: "spring", duration: 1.5 }}
-                        className='relative ml-auto w-[340px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
+                        className='relative ml-auto w-[300px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
                         <motion.div animate={{ height: selectedItem === 3 ? '7vh' : 0 }}
                             transition={{ type: "spring", duration: 1.5 }}
                             className='absolute top-0 right-0 z-0 border-r-[1px] border-r-whiteText' />
@@ -191,17 +199,17 @@ export default function Section4() {
                         className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">03</span> Diverse Feedback</div>
                 </motion.div>
                 <motion.div
-                    animate={{ height: selectedItem === 4 ? '57vh' : '43vh' }}
+                    animate={{ height: selectedItem === 4 ? '57vh' : '43vh', width: selectedItem === 3 || selectedItem === 4 ? 340 : 300 }}
                     transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 4 || selectedItem === 0 ? 1 : 0.5 }}
-                    className='relative w-[340px] min-h-[43vh]'>
+                    className='relative w-[300px] min-h-[43vh]'>
                     <motion.div animate={{ height: selectedItem === 4 ? '7vh' : 0 }}
                         transition={{ type: "spring", duration: 1.5 }}
                         className='absolute top-0 right-0 z-0 border-r-[1px] border-r-whiteText' />
                     <motion.div
-                        animate={{ height: selectedItem === 4 ? '21vh' : selectedItem === 3 ? 0 : '7vh' }}
+                        animate={{ height: selectedItem === 4 ? '21vh' : selectedItem === 3 ? 0 : '7vh', width: selectedItem === 3 || selectedItem === 4 ? 340 : 300 }}
                         transition={{ type: "spring", duration: 1.5 }}
-                        className='relative ml-auto w-[340px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
+                        className='relative ml-auto w-[300px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
                         <motion.div
                             animate={{ opacity: selectedItem === 4 ? 1 : 0 }}
                             style={{ padding: 10, zIndex: 1 }}
@@ -211,13 +219,13 @@ export default function Section4() {
                     </motion.div>
                     <div
                         onClick={() => DesktopSelectStep(4)}
-                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">04</span> Motivation Booster</div>
+                        className='text-whiteText text-[32px] font-medium leading-[38.5px] absolute top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.80)]">04</span> Motivation Booster</div>
                 </motion.div>
                 <motion.div
                     style={{ opacity: selectedItem === 4 || selectedItem === 0 ? 1 : 0.5 }}
-                    className='relative w-[340px] h-[50vh]'>
+                    className='relative flex-1 min-w-[400px] h-[50vh]'>
                     <Image
-                        className='absolute top-[-105px] right-[100px] text-whiteText '
+                        className='absolute top-[-105px] right-auto left-[130px] text-whiteText '
                         src="/icons/flag.svg"
                         alt="flag icon"
                         width={52}
@@ -228,7 +236,7 @@ export default function Section4() {
                     <motion.div
                         animate={{ height: selectedItem === 4 ? 0 : '7vh' }}
                         transition={{ type: "spring", duration: 1.5 }}
-                        className='relative ml-auto w-[340px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
+                        className='relative ml-auto flex-1 min-w-[400px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
                     </motion.div>
                 </motion.div>
             </div>

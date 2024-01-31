@@ -26,12 +26,13 @@ export default function PackageCard({ pack, loading, style }: _props) {
         style={{ ...style, backgroundColor: pack.isPopup && '#F3F3F3' }}>
         {
             pack.discountPercent > 0 ?
-                <div className="bg-background h-[78px] w-[78px] rounded-bl-full absolute z-2 right-[8px] top-[16px] text-red text-center text-[18.5px] font-bold leading-normal flex flex-col items-end justify-center pr-[15px] sm:h-[59px] sm:w-[59px] sm:right-[7px] sm:top-[12px] sm:text-[13.7px] sm:font-bold sm:pr-[14px] sm:leading-[18.6px] " >
+                <div
+                    className="bg-background pb-[7px] h-[78px] w-[78px] rounded-bl-full rounded-t-[8px] rounded-br-[8px] absolute z-2 right-[14px] top-[15px] text-red text-center text-[16px] font-bold leading-normal flex flex-col items-end justify-center pr-[15px] sm:h-[59px] sm:w-[59px] sm:right-[7px] sm:top-[12px] sm:text-[13.7px] sm:font-bold sm:pr-[14px] sm:leading-[18.6px] " >
                     <span>%{pack.discountPercent}</span>
                     <span>Off</span>
                 </div>
                 : pack.isPopup &&
-                <div style={{ paddingRight: 5 }} className="bg-background h-[78px] w-[78px] rounded-bl-full absolute z-2 right-[8px] top-[16px] text-red text-center text-[18.5px] font-bold leading-normal flex flex-col items-end justify-center pr-[15px] sm:h-[59px] sm:w-[59px] sm:right-[7px] sm:top-[12px] sm:text-[10px] sm:font-bold sm:pr-[14px] sm:leading-[18.6px] " >
+                <div style={{ paddingRight: 5 }} className="bg-background pb-[7px] h-[78px] w-[78px] rounded-bl-full rounded-t-[8px] rounded-br-[8px]  absolute z-2 right-[14px] top-[15px] text-red text-center text-[16px] font-bold leading-normal flex flex-col items-end justify-center pr-[8px] sm:h-[59px] sm:w-[59px] sm:right-[7px] sm:top-[12px] sm:text-[10px] sm:font-bold sm:pr-[14px] sm:leading-[18.6px] " >
                     <span>Limited</span>
                     <span>Offer</span>
                 </div>
@@ -41,14 +42,16 @@ export default function PackageCard({ pack, loading, style }: _props) {
                 <ReactLoading className="flex m-auto sm:mt-[40px] sm:mb-[40px] " type={'bubbles'} color={'#172E4A'} height={50} width={50} />
                 :
                 <div style={pack.isPopup ? { backgroundColor: '#AB141D', paddingBottom: 27 } : {}}
-                    className="bg-primaryColor w-full h-full flex flex-col py-[37px] items-start pl-[30px] pr-[20px] sm:py-[24px] sm:pl-[24px] sm:pr-0 ">
-                    <div className="text-whiteText text-center text-[16px] font-normal pr-[14px] leading-[28.14px] sm:text-[12.16px] sm:font-normal sm:leading-[16.9px]">{
+                    className="bg-primaryColor w-full h-full flex flex-col pt-[37px] items-start pl-[37px] pr-[20px] sm:py-[24px] sm:pl-[24px] sm:pr-0 ">
+                    <div className="text-whiteText text-center text-[16px] mr-[20px] font-normal leading-[20px] sm:text-[12.16px] sm:font-normal sm:leading-[16.9px]">{
                         pack.title}
                     </div>
-                    <div className="text-whiteText text-center text-[34px] font-bold leading-normal mt-[10px] mb-[24px] flex flex-col h-[74px] justify-end sm:text-[22.4px] sm:font-bold sm:leading-[37.5px] sm:mt-[11px] sm:mb-[16px] ">
+                    <div
+                        style={!pack.isPopup ? { minHeight: 80 } : {}}
+                        className="text-whiteText text-center text-[34px] font-bold leading-normal mt-0 mb-[19px] flex flex-col h-fit justify-end sm:text-[22.4px] sm:font-bold sm:leading-[37.5px] sm:mt-[11px] sm:mb-[16px] ">
                         {
                             pack.discountPercent > 0 &&
-                            <span className="line-through text-left text-[20px] font-normal relative w-fit pr-[30px] sm:text-[15.6px] ">
+                            <span className="line-through text-left text-[20px] font-normal leading-[36px] relative w-fit pr-[30px] sm:text-[15.6px] ">
                                 {
                                     pack.currency === 'IRR' ?
                                         pack.showingPrice.slice(0, pack.showingPrice.length - 1)
@@ -63,7 +66,7 @@ export default function PackageCard({ pack, loading, style }: _props) {
                         }
 
                         <div
-                            style={pack.showingPriceWithDiscount.length > 12 ? { fontSize: 24 } : {}}
+                            style={pack.showingPriceWithDiscount.length > 12 ? { fontSize: 24, marginTop: pack.discountPercent > 0 ? 13 : 0 } : { marginTop: pack.discountPercent <= 0 ? 13 : 0 }}
                             className="relative pr-[30px] ">
                             {
                                 pack.currency === 'IRR' ?
@@ -82,8 +85,8 @@ export default function PackageCard({ pack, loading, style }: _props) {
                     <OptionCard text="Analysis" />
                     <OptionCard text="Insights" />
                     <OptionCard text="Recommendations" />
-                    <div className="mt-[28px] text-whiteText text-[16px] font-normal leading-[23px] sm:text-[13.2px] sm:font-bold sm:leading-[18.7px] sm:mt-[15px] ">{pack.description}</div>
-                    <div className="text-whiteText text-[14px] font-normal leading-[23px] mt-[8px] sm:mt-[6px] sm:text-[12.16px] sm:font-normal sm:leading-[18.7px] ">{pack.subDescription}</div>
+                    <div className="mt-[20px] text-whiteText text-[16px] font-normal leading-[36px] sm:text-[13.2px] sm:font-bold sm:leading-[18.7px] sm:mt-[15px] ">{pack.description}</div>
+                    <div className="text-whiteText text-[16px] font-normal leading-[32px] sm:mt-[6px] sm:text-[12.16px] sm:font-normal sm:leading-[18.7px] ">{pack.subDescription}</div>
                 </div>
         }
     </div>
@@ -91,5 +94,5 @@ export default function PackageCard({ pack, loading, style }: _props) {
 
 
 export function OptionCard({ text }: { text: string }) {
-    return <div className="flex flex-row mt-[8px] text-whiteText text-[16px] font-semibold leading-[23.4px] items-center sm:text-[12.16px] sm:font-bold sm:leading-[17.78px] "><FiCheck style={{ marginRight: 7 }} />{text}</div>
+    return <div className="flex flex-row text-whiteText text-[16px] font-normal leading-[36px] items-center sm:text-[12.16px] sm:font-bold sm:leading-[17.78px] "><FiCheck style={{ marginRight: 11 }} />{text}</div>
 };

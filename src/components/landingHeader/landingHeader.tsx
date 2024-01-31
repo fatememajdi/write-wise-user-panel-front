@@ -116,7 +116,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
 
     const variants = {
-        open: { backgroundColor: isMobile ? '#2E4057' : 'transparent', boxShadow: 'none', height: isMobile ? 45 : isMac ? 90 : 105, borderBottomWidth: 0.5, borderButtomColor: '#626E7E;' },
+        open: { backgroundColor: isMobile ? '#2E4057' : 'transparent', boxShadow: 'none', height: isMobile ? 45 : isMac ? 90 : 105, borderBottomWidth: 0.5, borderBottomColor: '#a4a4a5' },
         closed: { backgroundColor: isMobile ? '#2E4057' : '#FFF', boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", height: isMobile ? 45 : isMac ? 90 : 112 },
     }
 

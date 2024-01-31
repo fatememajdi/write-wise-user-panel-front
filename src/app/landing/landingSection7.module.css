@@ -1,6 +1,6 @@
 .itemCard {
     color: var(--color-darkText);
-    line-height: 40px;
+    line-height: 36px;
     font-family: var(--font-lato);
 }
 .itemCard span {

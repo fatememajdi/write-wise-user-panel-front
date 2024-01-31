@@ -36,7 +36,7 @@ export default function Section3() {
                             router.push('/features');
                             StartLoader();
                         }}
-                        className='flex text-red font-black leading-[40px] text-[24px] p-0 mt-[54px] w-fit sm:hidden hover:shadow-none '>
+                        className='flex text-red font-black leading-[36px] text-[24px] p-0 mt-[62px] w-fit sm:hidden hover:shadow-none '>
                         Read More  <IoIosArrowForward style={{ marginTop: 5 }} />
                     </button>
 
@@ -63,11 +63,11 @@ export default function Section3() {
 };
 
 const FeaturesItemCard: React.FC<{ title: string, icon: any }> = ({ title, icon }) =>
-    <div className='w-[550px] flex flex-row mb-[65px] items-center sm:w-full sm:mb-[29px]'>
-        <div className='min-w-[133px] w-fit flex flex-row justify-end pr-[20px] sm:min-w-[60px]'>
+    <div className='w-[677px] flex flex-row mb-[65px] items-center sm:w-full sm:mb-[29px]'>
+        <div className='min-w-[107px] w-fit flex flex-row justify-end pr-[20px] sm:min-w-[60px]'>
             {icon}
         </div>
-        <div className='lg:leading-[31.2px] sm:leading-[19.2px] text-[32px] font-semibold text-seccondaryColor py-[15px] pr-[20px] pl-[13px] rounded-[8px] border-solid border-1 border-whiteText bg-features-card sm:text-[14.8px] sm:font-semibold sm:pr-10px sm:rounded-[3px]'>
+        <div className='lg:leading-[36px] flex-1 lg:min-h-[80px] flex items-center sm:leading-[19.2px] text-[32px] font-semibold text-seccondaryColor py-[14px] pr-[20px] pl-[22px] rounded-[8px] border-solid border-1 border-whiteText bg-features-card sm:text-[14.8px] sm:font-semibold sm:pr-10px sm:rounded-[3px]'>
             {title}
         </div>
     </div>;

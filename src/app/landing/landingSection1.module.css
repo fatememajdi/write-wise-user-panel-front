@@ -8,7 +8,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-feature-settings: 'ss04' on, 'ss03' on, 'ss02' on, 'ss01' on, 'salt' on;
-    line-height: normal;
+    height: 95px !important;
 }
 
 .cursorStyle {

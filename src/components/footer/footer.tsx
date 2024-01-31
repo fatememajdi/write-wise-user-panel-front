@@ -7,9 +7,9 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 //----------------------------------------------------------------icons
-import { IoLogoFacebook, IoLogoLinkedin } from 'react-icons/io';
+import { IoLogoLinkedin } from 'react-icons/io';
 import { AiFillInstagram } from 'react-icons/ai';
-import { FaRegCopyright } from 'react-icons/fa';
+import { FaRegCopyright, FaFacebook } from 'react-icons/fa';
 
 //----------------------------------------------------------------social media items
 const SocialMediaItems = [
@@ -18,7 +18,7 @@ const SocialMediaItems = [
         link: 'https://www.linkedin.com'
     },
     {
-        icon: <IoLogoFacebook />,
+        icon: <FaFacebook />,
         link: 'https://www.facebook.com'
     },
     {
@@ -79,11 +79,8 @@ const Footer: React.FC = () => {
             behavior: "smooth",
         });
     };
-
     const pathname = usePathname();
     const router = useRouter();
-
-
     React.useEffect(() => {
         if (typeof document != 'undefined') {
             if (window.location.hash) {
@@ -95,47 +92,52 @@ const Footer: React.FC = () => {
         };
     }, []);
 
-    return <footer className='col-12 h-[267px] tablet:h-[230px] bg-seccondaryColor flex flex-row items-center justify-between py-0 px-[190px] tablet:px-[71px] relative text-whiteText sm:h-[184px] sm:px-[17px] sm:overflow-hidden sm:z-[501] tablet:z-[501] '>
+    return <footer className='col-12 h-[345px] bg-seccondaryColor flex flex-col items-start py-0 pl-[134px] pr-[67px] relative text-whiteText z-[501] '>
 
-        <div className="flex flex-col items-start h-full pt-[26px] ">
-            <Image
-                className="w-[336px] h-[42px] tablet:w-[140px] tablet:h-[31px] tablet:ml-[-10px] mr-auto ml-[-80px] sm:w-[95px] sm:h-[18px] sm:ml-[-10px] "
-                src={"/logoIcon2.svg"}
-                alt="Logo"
-                width="0"
-                height="0"
-                sizes="100vw"
-                loading="eager"
-                priority
-            />
+        <Image
+            className="w-[339px] h-[57px] mt-[48px] ml-[-55px] "
+            src={"/logoIcon2.svg"}
+            alt="Logo"
+            width="0"
+            height="0"
+            sizes="100vw"
+            loading="eager"
+            priority
+        />
 
-            <div className="flex lg:flex-row tablet:flex-col tablet:items-start items-center text-[20px] tablet:text-[16px] font-normal leading-[24px] underline mt-[24px] tablet:mt-[20px] sm:flex-col sm:mt-[8px] sm:text-[10px] sm:leading-[24px] sm:items-start sm:whitespace-nowrap  ">
+        <div className="flex flex-row items-center justify-between w-full mt-[16px] ">
+            <div className="flex w-fit lg:flex-row  items-center text-[20px]  font-normal leading-[36px] underline ">
                 {
                     FooterLinks.map((item, index) => <Link className="mr-[32px] tablet:mr-[20px] tablet:mb-[6px] opacity-50 hover:opacity-100 "
                         key={index} href={item.route}>{item.title}</Link>)
                 }
             </div>
 
-            <div className="mt-[64px] text-[20px] font-normal leading-[24px] opacity-50 flex flex-row items-center sm:hidden tablet:hidden ">
-                <FaRegCopyright fontSize={25} style={{ marginRight: 7 }} className="sm:hidden" /> WriteWiseAI 2023</div>
-
-        </div>
-
-        <div className="flex items-start h-full lg:flex-wrap sm:flex-wrap tablet:flex-col max-w-[333px] min-w-[333px] pt-[58px] tablet:pt-[79px] text-[20px] tablet:text-[16px] font-normal leading-[22.18px] underline pb-[70px] sm:relative sm:pt-[45px] sm:leading-[24px] sm:text-[10px] sm:mt-[8px] ">
-            {
-                LandingItems.map((item, index) => <Link className="opacity-50 lg:mb-[24px] tablet:mb-[6px] min-w-[160px] sm:w-full hover:opacity-100 sm:mb-[0px] "
-                    onClick={() => { if (pathname === '/') handleScroll; else router.push('/' + item.route); handleScroll }}
-                    key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>)
-            }
-            <div className="w-[160px] tablet:hidden lg:flex sm:flex flex-row mt-[11px] sm:absolute sm:right-[7px] sm:bottom-[40px] ">
+            <div className="flex w-fit lg:flex-row  items-center text-[20px] font-normal leading-[36px] underline  ">
                 {
-                    SocialMediaItems.map((item, index) => <a className="min-w-[50px] text-[30px] opacity-50 hover:opacity-100 sm:text-[15px] sm:min-w-[20px] " key={index} href={item.link}>{item.icon}</a>)
+                    LandingItems.map((item, index) => <Link className="opacity-50 tablet:mb-[6px] ml-[40px] sm:w-full hover:opacity-100 sm:mb-[0px] "
+                        onClick={() => { if (pathname === '/') handleScroll; else router.push('/' + item.route); handleScroll }}
+                        key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>)
                 }
             </div>
-            <div className="hidden sm:flex flex-row items-center absolute right-[87px] bottom-[23px] opacity-50 leading-[24px] font-normal text-[10px] mt-[10px] ">
-                <FaRegCopyright className="text-[25px] mr-[5px] sm:text-[12px] " /> WriteWiseAI 2023</div>
+
         </div>
 
+
+        <div className=" w-full mt-auto mb-[14px] flex flex-col items-center justify-center ">
+            <div className=" w-fit flex flex-row">
+                {
+                    SocialMediaItems.map((item, index) => <a className="mx-[13px] text-[43px] opacity-50 hover:opacity-100 sm:text-[15px]" key={index} href={item.link}>{item.icon}</a>)
+                }
+            </div>
+            <div className="mt-[24px] text-[20px] font-normal leading-[24px] opacity-50 flex flex-row items-center sm:hidden tablet:hidden ">
+                <FaRegCopyright fontSize={25} style={{ marginRight: 7 }} className="sm:hidden" /> WriteWiseAI 2023</div>
+
+            <div className=" col-lg-7 text-center mt-[7px] text-[12px] font-normal leading-[20px] ">
+                The International English Language Testing System (IELTS) is a trademark of IELTS, jointly owned by the British Council, IDP: IELTS Australia, and Cambridge English Language Assessment.
+                ‘WriteWiseAI’ is not affiliated with, endorsed by, or otherwise associated with IELTS or any of its owning entities.</div>
+
+        </div>
     </footer>
 };
 

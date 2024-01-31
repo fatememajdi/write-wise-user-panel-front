@@ -54,17 +54,18 @@ export default function Section6() {
         GetPackage('');
     }, []);
 
-    return <section className='bg-section2-gradiant pt-[120px] sm:pt-[77px] pr-[160px] sm:pr-[10px] pb-[132px] sm:pb-[39px] pl-[130px] sm:pl-[10px] flex flex-col sm:min-h-fit '
+    return <section className='bg-section2-gradiant pt-[50px] sm:pt-[77px] pr-[140px] sm:pr-[10px] pb-[84px] sm:pb-[39px] pl-[130px] sm:pl-[10px] flex flex-col sm:min-h-fit '
         id="pricing">
-        <h2 className='text-whiteText leading-[62.4px] sm:ml-[43px] sm:leading-[24.3px] sm:mr-[60px] '>No Monthly Commitments, Pure Flexibility</h2>
-        <h6 className="text-whiteText leading-[32px] mt-[32px] max-w-[850px] sm:text-[13px] sm:font-normal sm:leading-[16.9px] sm:ml-[43px] sm:mt-[27px] sm:max-w-full ">
+        <h2 className='text-whiteText lg:ml-[59px] leading-[60px] sm:ml-[43px] sm:leading-[24.3px] sm:mr-[60px] '>No Monthly Commitments, Pure Flexibility</h2>
+        <h6 className="text-whiteText lg:ml-[59px]  leading-[32px] mt-[36px] max-w-[850px] sm:text-[13px] sm:font-normal sm:leading-[16.9px] sm:ml-[43px] sm:mt-[27px] sm:max-w-full ">
             At WriteWiseAI, we have streamlined our pricing to ensure you get the
             best value for your IELTS writing needs.
         </h6>
 
 
-        <div className="text-whiteText text-center text-[20px] font-normal leading-[38.5px] mt-[43px] flex flex-row items-center justify-center sm:text-[13px] ">
-            Use of a VPN might change your regional currency!{
+        <div className="text-whiteText text-center text-[24px] font-normal leading-[36px] mb-[56px] mt-[56px] flex flex-row items-center justify-center sm:text-[13px] ">
+            Use of a VPN might change your regional currency!
+            {/* {
                 packages.length > 0 && packages[0].flagUrl &&
                 <Image
                     src={packages[0].flagUrl}
@@ -76,7 +77,8 @@ export default function Section6() {
                     priority
                     className="h-[20px] w-[20px] ml-[5px] sm:w-[30px] sm:h-[15px] "
                 />
-            }</div>
+            } */}
+        </div>
 
         <Carousel
             showThumbs={false}
@@ -114,7 +116,7 @@ export default function Section6() {
             showStatus={false}
             showIndicators={false}
             thumbWidth={100}
-            className='col-12 self-center mt-[50px] ml-auto mr-auto hidden sm:block '>
+            className='col-12 self-center ml-auto mr-auto hidden sm:block '>
             {packages.map(
                 (item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
 
@@ -124,7 +126,7 @@ export default function Section6() {
             loading ?
                 <ReactLoading className="m-auto" type={'spin'} color={'#FFF'} height={50} width={50} />
                 :
-                <div className='col-12 flex flex-row justify-between mt-[23px] sm:hidden '>
+                <div className='col-12 flex flex-row justify-between sm:hidden '>
                     {packages.map(
                         (item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
                 </div>
