@@ -11,7 +11,7 @@ import '../../styles/global.css';
 import { StartLoader } from "@/components/Untitled";
 
 //-------------------------------------------icons
-import { Stars, Rise, User, UserMobile, StarsMobile, RiseMobile } from "../../../public/icons";
+import { Stars, Rise, User, UserMobile, StarsMobile, RiseMobile, Grammer, Book } from "../../../public/icons";
 import { IoIosArrowForward } from 'react-icons/io';
 
 export default function Section3() {
@@ -42,10 +42,11 @@ export default function Section3() {
 
                 </div>
 
-                <div className='col-lg-5 col-md-6 col-12 flex flex-col h-fit justify-center pl-[20px] hover:shadow-none sm:p-0 sm:mt-[24px] sm:pl-0 ' >
+                <div className='col-lg-5 col-md-6 col-12 flex flex-col mt-[80px] h-fit justify-center pl-[20px] hover:shadow-none sm:p-0 sm:mt-[24px] sm:pl-0 ' >
+                    <FeaturesItemCard icon={isMobile ? <Grammer /> : <Grammer />} title="AI-Powered Grammar Analysis" />
+                    <FeaturesItemCard icon={isMobile ? <Book /> : <Book />} title="AI-Powered Vocabulary Analysis " />
                     <FeaturesItemCard icon={isMobile ? <StarsMobile /> : <Stars />} title="AI-Powered Essay Rating" />
                     <FeaturesItemCard icon={isMobile ? <UserMobile /> : <User />} title="Personalized Feedback and Recommendations" />
-                    <FeaturesItemCard icon={isMobile ? <RiseMobile /> : <Rise />} title="In-Depth Progress Tracking" />
                 </div>
 
                 <button

@@ -16,6 +16,8 @@ import ArrowLeft from './arrowLeft';
 import Camera from './camera';
 import Edit from './edit';
 import Chat2 from './chat2';
+import Grammer from './grammer';
+import Book from './book';
 
 export {
     UserMobile,
@@ -35,5 +37,7 @@ export {
     ArrowLeft,
     Camera,
     Edit,
-    Chat2
+    Chat2,
+    Grammer,
+    Book
 }

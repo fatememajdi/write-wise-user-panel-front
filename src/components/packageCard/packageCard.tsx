@@ -66,7 +66,7 @@ export default function PackageCard({ pack, loading, style }: _props) {
                         }
 
                         <div
-                            style={pack.showingPriceWithDiscount.length > 12 ? { fontSize: 24, marginTop: pack.discountPercent > 0 ? 13 : 0 } : { marginTop: pack.discountPercent <= 0 ? 13 : 0 }}
+                            style={pack.showingPriceWithDiscount.length > 10 ? { fontSize: 30, marginTop: pack.discountPercent > 0 ? 13 : 0 } : { marginTop: pack.discountPercent <= 0 ? 13 : 0 }}
                             className="relative pr-[30px] ">
                             {
                                 pack.currency === 'IRR' ?

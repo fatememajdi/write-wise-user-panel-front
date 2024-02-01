@@ -47,9 +47,9 @@ const Features: React.FC = () => {
                                         : { color: '#252525', opacity: 0.5, marginLeft: 0, fontSize: isMobile ? 16 : 32, fontWeight: 600 }}
                                     transition={{ type: "spring", duration: 1 }}
                                     className={' flex flex-col items-center mb-[56px] cursor-pointer leading-[133%] w-fit pb-[8px] hover:opacity-100 sm:mt-[8px] ' + (selectedItem === index ? ' text-[48px] sm:text-[16px] sm:font-semibold sm:leading-[133%] ' : 'text-[32px] sm:text-[16px] ')}>
-                                    <div className="flex flex-row w-full ">
+                                    <div className="flex flex-row w-full items-center ">
                                         <Image
-                                            className={'mr-[16px] ' + (selectedItem === index ? 'h-[70px] w-[70px] sm:h-[27px] sm:w-[27px] ' : 'h-[50px] w-[50px] sm:h-[27px] sm:w-[27px] ')}
+                                            className={'mr-[16px] ' + (selectedItem === index ? 'h-[70px] w-[70px] sm:h-[27px] sm:w-[27px] ' : 'h-[38px] w-[38px] sm:h-[27px] sm:w-[27px] ')}
                                             src={"/features/" + item.icon}
                                             alt="Logo"
                                             width="0"
@@ -83,6 +83,9 @@ const Features: React.FC = () => {
                     !isMobile &&
                     <h6 key={selectedItem} className='text-blackText leading-[36px] pr-[196px] w-[40%] sm:hidden '>
                         {selectedItem !== -1 && featuresItems[selectedItem].description}
+                        <button className="bg-red text-whiteText text-[24px] font-bold w-[165px] h-[70px] mt-[63px]  ">
+                            Sign Up
+                        </button>
                     </h6>
                 }
             </AnimatePresence>

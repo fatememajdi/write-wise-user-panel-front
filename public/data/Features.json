@@ -1,7 +1,7 @@
 [
     {
         "icon": "stars.svg",
-        "title": "AI-Powered Essay Rating and Analysis",
+        "title": "AI-Powered Essay Rating",
         "description": "WriteWiseAI's AI-powered essay rating and analysis goes beyond basic grammar checks to emulate the nuanced evaluation of a human examiner. Leveraging the latest in AI technology, it scrutinizes essays for structural coherence, argument strength, vocabulary range, and task response. The system simulates an IELTS examiner's approach, providing a comprehensive assessment that prepares users for the actual exam conditions."
     },
     {
@@ -13,6 +13,16 @@
         "icon": "check.svg",
         "title": "Personalized Feedback, Insights and Recommendations",
         "description": "Each user's writing is unique, and WriteWiseAI recognizes this by providing personalized feedback. It offers detailed insights into individual writing patterns, pinpointing strengths and areas for improvement. The platform generates customized recommendations to guide learners on how to refine their writing skills, enhance their style, and avoid common pitfalls, effectively making each learning experience as unique as the user's own writing."
+    },
+    {
+        "icon": "grammer.svg",
+        "title": "AI Powered Grammar Analysis",
+        "description": "WriteWIseAI uses the power of AI to give you a detailed analysis of the grammatical range and accuracy of your sentences by scrutinizing the syntactical structure of each sentence in your writing. In addition, our intelligent Grammar Checker provides you with a corrected version of your sentences."
+    },
+    {
+        "icon": "book.svg",
+        "title": "AI Powered Vocabulary Analysis",
+        "description": "Our AI powered vocabulary analyzer assesses the lexical range and accuracy of the words, collocations, and idiomatic expressions in your writing. It provides you with a detailed description of all lexical errors and their corrections. In addition, you will receive a report on your CEFR vocabulary level."
     },
     {
         "icon": "rise.svg",
