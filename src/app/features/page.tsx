@@ -5,14 +5,17 @@ import React, { lazy } from "react";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMediaQuery } from 'react-responsive';
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import ReactLoading from "react-loading";
 
 //------------------------------------------------components
-const LandingHeader = React.lazy(() => import("@/components/landingHeader/landingHeader"));
+const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"), { ssr: false, loading: () => <div className="text-center min-h-[80px] items-center justify-center flex "><ReactLoading type='bubbles' color={'#929391'} height={50} width={50} /></div> });
 const Footer = lazy(() => import("@/components/footer/footer"));
 import { StopLoader } from "@/components/Untitled";
 
 //------------------------------------------------data
 import featuresItems from '../../../public/data/Features.json';
+
 
 const Features: React.FC = () => {
     const [logedIn, changeLogedIn] = React.useState<boolean>(false);

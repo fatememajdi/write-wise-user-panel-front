@@ -9,6 +9,7 @@ const Footer = dynamic(() => import("@/components/footer/footer"), {
     ssr: false, loading: () => <div role="status" className="col-12 m-auto flex justify-center self-center items-center h-[200px]"><ReactLoading type={'spin'} color={'#929391'} height={50} width={50} /></div>
 });
 const QuestionCard = dynamic(() => import("@/components/questionCard/questionCard"), { ssr: false, loading: () => <div className=" min-h-[80px] items-center justify-center flex m-auto ml-auto "><ReactLoading type='bubbles' color={'#929391'} height={50} width={50} /></div> });
+const LandingHeader = dynamic(() => import("@/components/landingHeader/landingHeader"), { ssr: false, loading: () => <div className="text-center min-h-[80px] items-center justify-center flex bg-seccondaryColor "><ReactLoading type='bubbles' color={'#929391'} height={50} width={50} /></div> });
 import { StopLoader } from "@/components/Untitled";
 
 //--------------------------------------------icons 
@@ -22,24 +23,41 @@ const Page: React.FC = () => {
         StopLoader();
     }, []);
 
+    const [logedIn, changeLogedIn] = React.useState<boolean>(false);
+    const [showQ, changeShowQ] = React.useState<number>();
+
+    React.useEffect(() => {
+        const item = localStorage.getItem('user');
+        if (item)
+            changeLogedIn(true);
+        else
+            changeLogedIn(false);
+        StopLoader();
+
+    }, []);
+
+
     return <div className="col-12 bg-fqa-pattern bg-cover bg-no-repeat min-h-screen overflow-hidden relative sm:min-h-fit ">
+        <LandingHeader logedIn={logedIn} shadow />
+
         <AnimatePresence>
-            <div className='col-12 bg-seccondaryColor h-[418px] relative top-0 flex flex-col justify-center items-center pt-[100px] sm:h-[150px] '>
-                <div className='text-whiteText text-center text-[64px] font-bold leading-[40px] flex flex-col items-center sm:text-[20px] sm:mb-[50px] '>
-                    <IoMdChatbubbles className='text-[100px] sm:hidden ' /><br />
-                    Frequently Asked Questions</div>
+            <div className='col-12 bg-seccondaryColor h-[460px] relative top-0 flex flex-col justify-center items-center pt-[100px] sm:h-[150px] '>
+                <div className='text-whiteText relative text-center text-[48px] font-extrabold leading-[36px] flex flex-col items-center sm:text-[20px] sm:mb-[50px] '>
+                    <IoMdChatbubbles className='text-[98px] sm:hidden absolute top-[-50px] right-[-95px] ' /><br />
+                    Frequently Asked Questions
+                </div>
 
             </div>
-            <div className='col-12 flex lg:flex-row min-h-[30vh] pt-[147px] pr-[40px] pb-[150px] pl-[180px] items-start sm:py-[50px] sm:px-[14px] sm:flex-col ' key={Math.random()} >
-                <div className='flex flex-col h-fit flex-1 '>
+            <div className='col-12 flex lg:flex-row min-h-[30vh] pt-[85px] pr-[167px] pb-[312px] pl-[167px] items-start sm:py-[50px] sm:px-[14px] sm:flex-col ' key={Math.random()} >
+                <div className='flex flex-col h-fit flex-1 pr-[100px] '>
                     {
-                        questions.slice(0, questions.length / 2).map((item, index) => <QuestionCard key={index} question={item.question} answer={item.answer} />)
+                        questions.slice(0, questions.length / 2).map((item, index) => <QuestionCard key={index} question={item.question} answer={item.answer} id={item.id} showQ={showQ === item.id} changeShowQ={changeShowQ} />)
                     }
 
                 </div>
-                <div className='flex flex-col h-fit flex-1 '>
+                <div className='flex flex-col h-fit flex-1 pl-[100px] '>
                     {
-                        questions.slice(questions.length / 2, questions.length + 1).map((item, index) => <QuestionCard key={index} question={item.question} answer={item.answer} />)
+                        questions.slice(questions.length / 2, questions.length + 1).map((item, index) => <QuestionCard key={index} question={item.question} answer={item.answer} id={item.id} showQ={showQ === item.id} changeShowQ={changeShowQ} />)
                     }
 
                 </div>
