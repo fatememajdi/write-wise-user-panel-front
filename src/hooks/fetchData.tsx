@@ -41,7 +41,7 @@ export async function GetTopics(type: string, page: number) {
     })
     return topics;
 };
-export async function GetUserProfile(LogOut: any) {
+export async function GetUserProfile(LogOut?: any) {
 
     let profile: UserProfile
     await client.query({
@@ -50,8 +50,9 @@ export async function GetUserProfile(LogOut: any) {
     }).then(async (res) => {
         profile = res.data.getUserProfile;
     }).catch(async (err) => {
-        if (err.graphQLErrors[0].status == 401 || err.graphQLErrors[0].status == 403){
-            LogOut();
+        if (err.graphQLErrors[0].status == 401 || err.graphQLErrors[0].status == 403) {
+            if (LogOut)
+                LogOut();
             console.log(err.graphQLErrors[0].status == 401 || err.graphQLErrors[0].status == 403);
         }
     })
