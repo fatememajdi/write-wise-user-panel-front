@@ -116,8 +116,8 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
 
 
     const variants = {
-        open: { backgroundColor: isMobile ? '#2E4057' : 'transparent', boxShadow: 'none', height: isMobile ? 45 : isMac ? 90 : 105, borderBottomWidth: 0.5, borderBottomColor: '#a4a4a5' },
-        closed: { backgroundColor: isMobile ? '#2E4057' : '#FFF', boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", height: isMobile ? 45 : isMac ? 90 : 112 },
+        open: { backgroundColor: isMobile ? '#2E4057' : 'transparent', boxShadow: 'none', height: isMobile ? 45 : isMac ? 89 : 105, borderBottomWidth: 0.5, borderBottomColor: '#a4a4a5' },
+        closed: { backgroundColor: isMobile ? '#2E4057' : '#FFF', boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", height: isMobile ? 45 : isMac ? 89 : 112 },
     }
 
     return (<AnimatePresence>
@@ -149,7 +149,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     <Link style={{ cursor: 'pointer' }} onClick={() => { if (pathname === '/') handleScroll; }}
                         href={pathname === '/' ? '#hero-section' : '/#hero-section'}>
                         <Image
-                            className="mr-[114px] w-[183px] h-[25px] mac:w-[150px] mac:h-[20px] "
+                            className="mr-[114px] mac:mr-[57px] w-[183px] h-[25px] mac:w-[150px] mac:h-[20px] "
                             src={"/logoWithIcon.svg"}
                             alt="Logo"
                             width="0"
@@ -161,7 +161,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     </Link>
                     {
                         headerItems.map(
-                            (item, index) => <Link className="text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[19px] font-normal mr-[50px] cursor-pointer"
+                            (item, index) => <Link className="text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[19px] mac:leading-[22px] font-normal mr-[50px] mac:mr-[37px] cursor-pointer"
                                 onClick={() => { if (pathname === '/') handleScroll; }}
                                 key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>
                         )
@@ -174,13 +174,13 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                                     router.push('/ielts');
                                     StartLoader();
                                 }}
-                                className='text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[19px] font-normal mr-[40px] cursor-pointer'>
+                                className='text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[19px] mac:leading-[22px] font-normal mr-[40px] mac:mr-[37px] cursor-pointer'>
                                 Dashboard</a>
                             :
                             <div onClick={() => {
                                 router.push('/signIn');
                                 StartLoader();
-                            }} className='text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[19px] font-normal mr-[40px] cursor-pointer'>
+                            }} className='text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[19px] mac:leading-[22px] font-normal mr-[40px] mac:mr-[37px] cursor-pointer'>
                                 Signup</div>
                     }
 
@@ -189,14 +189,14 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
             {
                 showPopup && !disablePopup &&
                 <motion.div
-                    animate={{ height: showPopup ? isMac ? 49 : isMobile ? 34 : 65 : 0 }}
+                    animate={{ height: showPopup ? isMac ? 54 : isMobile ? 34 : 65 : 0 }}
                     transition={{ type: "spring", duration: 1 }}
-                    className='bg-red overflow-hidden flex flex-row items-center justify-center pr-[50px] mt-0 sm:absolute sm:left-0 sm:right-0 sm:bottom-[-45px]'>
-                    <div className='text-whiteText text-[20px] mac:text-[18px] font-medium leading-[52.8px] ml-auto sm:text-[13px]'>
+                    className='bg-red overflow-hidden flex flex-row items-center justify-center pr-[50px] mac:pr-[18px] mt-0 sm:absolute sm:left-0 sm:right-0 sm:bottom-[-45px]'>
+                    <div className='text-whiteText text-[20px] mac:text-[16px] mac:font-semibold font-medium leading-[52.8px] ml-auto sm:text-[13px]'>
                         Limited Time Offer!</div>
                     <button
                         onClick={showModal}
-                        className="w-[120px] h-[43px] items-center justify-center rounded-[4px] bg-background text-red text-[20px] mac:text-[18px] font-normal leading-[40px] ml-[52px] sm:w-[95px] sm:h-[22px] sm:text-[14px] sm:font-normal sm:leading-[31.4px]" >
+                        className="w-[120px] mac:w-[90px] mac:h-[36px] h-[43px] items-center justify-center rounded-[4px] bg-background text-red text-[20px] mac:text-[16px] mac:font-semibold font-normal leading-[40px] ml-[26px] mac:ml-[20px] sm:w-[95px] sm:h-[22px] sm:text-[14px] sm:font-normal sm:leading-[31.4px]" >
                         Start Now
                     </button>
 

@@ -7,14 +7,14 @@ import '../../styles/global.css';
 
 export default function Section8() {
 
-    return <section className="overflow-hidden pt-[209px] pr-[355px] pb-[187px] pl-[392px] bg-background sm:py-[50px] sm:pr-[33px] sm:pl-[53px] sm:min-h-fit " id="">
+    return <section className="overflow-hidden pt-[209px] mac:pt-[151px] pr-[355px] mac:pr-[311px] pb-[187px] mac:pb-[129px] pl-[392px] mac:pl-[370px] bg-background sm:py-[50px] sm:pr-[33px] sm:pl-[53px] sm:min-h-fit " id="">
         <div className="bg-background relative sm:py-[70px] sm:px-[40px] ">
 
-            <h2 className="text-seccondaryColor leading-[36px] sm:text-[24px] sm:leading-[28px] text-center ">
+            <div className="text-seccondaryColor mac:text-[25px] font-extrabold text-[48px] leading-[36px] mac:leading-[22px] sm:text-[24px] sm:leading-[28px] text-center ">
                 Join <span className="text-red">W</span>rite<span className="text-red">W</span>ise<span className="text-red">AI</span> now!
-            </h2>
+            </div>
 
-            <h6 className="text-blackText leading-[36px] text-left mt-[60px] sm:text-[13px] sm:leading-[19.5px] sm:mt-[32px] ">
+            <h6 className="text-blackText leading-[36px] mac:leading-[28.5px] text-left mt-[60px] mac:mt-[58px] sm:text-[13px] sm:leading-[19.5px] sm:mt-[32px] ">
                 Don't let IELTS writing hold you back from achieving your dreams. Join WriteWiseAI now and
                 unlock a world of opportunity with our innovative, AI-powered platform. Elevate your writing skills,
                 gain personalized insights, and conquer your IELTS test with confidence. Start your journey to IELTS

@@ -33,7 +33,7 @@ module.exports = {
         'fqa-pattern': "url('/fqa/FQA.svg')",
         'login-pattern': 'url("/signIn/background.svg")',
         'section2-gradiant': 'linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%)',
-        'features-card': 'linear-gradient(91deg, #F3F3F3 0.35%, rgba(247, 247, 247, 0.22) 41.43%, #F3EEEF 96.6%)',
+        'features-card': 'linear-gradient(91deg, #F3F3F3 1.17%, rgba(252, 252, 252, 0.56) 43.1%, #ECF0F4 96.61%)',
         'section4-gradiant': 'linear-gradient(110deg, #172E4A 3.16%, #2E4057 102.08%)',
         'divider-gradiant': 'linear-gradient(90deg, #D4DCE7 3.15%, rgba(104, 122, 146, 0.30) 104.87%)',
         'arrow-icon': 'linear-gradient(141deg, #B5C0CE 0%, rgba(234, 234, 234, 0.20) 83.58%)',

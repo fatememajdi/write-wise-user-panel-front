@@ -7,7 +7,6 @@ import dynamic from 'next/dynamic';
 import ReactLoading from 'react-loading';
 import { Carousel } from 'react-responsive-carousel';
 import toast from "react-hot-toast";
-import Image from "next/image";
 
 //---------------------------------------------------styles
 import '../../styles/section6Select.css';
