@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 import React from "react";
-import { useMediaQuery } from 'react-responsive';
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
 
@@ -12,15 +11,13 @@ import '../../styles/global.css';
 import { StartLoader } from "@/components/Untitled";
 
 //-------------------------------------------icons
-import { Stars, User, UserMobile, StarsMobile, Grammer, Book } from "../../../public/icons";
 import { IoIosArrowForward } from 'react-icons/io';
 
 export default function Section3() {
     const router = useRouter();
-    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     return (
-        <section className='col-12 overflow-hidden relative pt-[200px] mac:pt-[113px] pb-[330px] mac:pb-[255px] pr-[205px] pl-[205px] mac:px-[116px] bg-background sm:px-[48px] sm:pt-[48px] sm:pb-[66px]' id='features'>
+        <section className='col-12 overflow-hidden relative pt-[200px] mac:pt-[113px] pb-[330px] mac:pb-[210px] pr-[205px] pl-[205px] mac:px-[116px] bg-background sm:px-[48px] sm:pt-[48px] sm:pb-[66px]' id='features'>
             <div className='col-12 flex lg:flex-row items-center justify-center h-full sm:flex-col ' >
 
                 <div className='w-[55%] flex flex-col h-fit pr-[112px] mac:pr-[64px] sm:p-0' >
@@ -34,7 +31,7 @@ export default function Section3() {
                     <button
                         aria-label="read more button"
                         onClick={() => {
-                            router.push('/features');
+                            router.replace('/features');
                             StartLoader();
                         }}
                         className='flex text-red font-black leading-[36px] mac:leading-[22px] text-[24px] mac:text-[19px] p-0 mt-[62px] mac:mt-[38px] w-fit sm:hidden hover:shadow-none '>

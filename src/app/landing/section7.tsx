@@ -5,7 +5,6 @@ import { useMediaQuery } from 'react-responsive';
 import { useRouter } from 'next/navigation';
 
 //--------------------------styles
-import styles from './landingSection7.module.css';
 import '../../styles/global.css';
 
 //------------------------------------------components
@@ -15,38 +14,8 @@ import { StartLoader } from "@/components/Untitled";
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { IoIosArrowForward } from 'react-icons/io';
 
-const questions = [
-    {
-        id: 0,
-        question: <div className={styles.itemCard}>How does the WriteWiseAI platform work?</div>,
-        answer: 'WriteWiseAI is an AI-powered platform designed to help IELTS test-takers improve their writing skills. Users can submit essays for rating, receive personalized feedback, and track your progress. Simply sign up, log in, write or upload your essay, and have it rated to receive your score and individualized insights and resommendations.'
-    },
-    {
-        id: 1,
-        question: <div className={styles.itemCard}>How does WriteWiseAI score and analyze essays?</div>,
-        answer: 'WriteWiseAI uses advanced artificial intelligence algorithms to accurately score and analyze essays based on the specific criteria of IELTS writing exams. The AI evaluates Task Achievement/Response, Cohesion and Coherence, Lexical Resource, and Grammatical Range and Accuracy. Then it provides your score, and personalized feedback and recommendations to help you improve your writing skills.'
-    },
-    {
-        id: 2,
-        question: <div className={styles.itemCard}>How long does it take to get feedback on my essay?</div>,
-        answer: 'WriteWiseAI provides feedback on your essay almost instantly. Within seconds of submitting your essay, you will receive a comprehensive analysis, personalized feedback, and targeted recommendations to help you improve'
-    },
-    {
-        id: 3,
-        question: <div className={styles.itemCard}>How do I pay for WriteWiseAI services?</div>,
-        answer: ' To use our Pay-as-you-Go system, after signing up and logging in, navigate to the "Wallet" section in your user panel. Then, select a payment model , and complete the payment process. You can then use your wallet to access rating, analysis and personalized feedback and recommendations.'
-    },
-    {
-        id: 4,
-        question: <div className={styles.itemCard}>How accurate are the AI-generated essay ratings?</div>,
-        answer: 'WriteWiseAI uses advanced AI technology to analyze your essays based on the official IELTS criteria. While our system is highly accurate and reliable, it\'s important to remember that AI-generated ratings may not perfectly match those of human examiners. We suggest a “between-rater” difference of half a band score to be considered. Nonetheless, our ratings serve as a valuable tool for understanding your current writing proficiency and tracking your progress.'
-    },
-    {
-        id: 5,
-        question: <div className={styles.itemCard}>Can I use WriteWiseAI for both General and Academic IELTS writing tasks?</div>,
-        answer: 'Absolutely! WriteWiseAI supports Task 1 General, Task 1 Academic, and Task 2 essay types, allowing you to practice and improve your writing skills for any IELTS test format.'
-    },
-];
+//-----------------------------------------data
+import questions from '../../../public/data/LandingQuestions.json';
 
 export default function Section7() {
 
@@ -56,7 +25,7 @@ export default function Section7() {
 
     return (<section className="overflow-hidden bg-background sm:bg-section7-gradiant " id="FQA">
         <AnimatePresence>
-            <div className="flex flex-1 lg:flex-row items-start pt-[171px] px-[131px] pb-[233px] sm:min-h-fit sm:py-[40px] sm:px-[30px] sm:flex-col-reverse ">
+            <div className="flex flex-1 lg:flex-row items-start pt-[171px] mac:pt-[114px] px-[131px] mac:px-[60px] pb-[233px] mac:pb-[218px] sm:min-h-fit sm:py-[40px] sm:px-[30px] sm:flex-col-reverse ">
                 <div className='col-lg-6 col-md-6 col-12 flex flex-col '>
                     {
                         questions.slice(0, 3).map((item, index) => <QuestionCard selectedItem={selectedItem} QA={item} key={index} ChangeSelectedItem={ChangeSelectedItem} />)
@@ -66,7 +35,7 @@ export default function Section7() {
                             router.push('/fqa');
                             StartLoader();
                         }}
-                        className="text-seccondaryColor w-fit text-[24px] font-bold leading-[36px] mt-[64px] ml-[50px] p-0 items-center sm:text-[13px] sm:font-black sm:leading-[16.17px] hover:shadow-none ">
+                        className="text-seccondaryColor w-fit text-[24px] mac:text-[18px] font-bold leading-[36px] mac:leading-[28px] mt-[29px] mac:mt-[10px] mac:ml-[45px] ml-[50px] p-0 items-center sm:text-[13px] sm:font-black sm:leading-[16.17px] hover:shadow-none ">
                         Read More <IoIosArrowForward className="text-[26px] mt-[5px] sm:text-[16px] " />
                     </button>
                 </div>
@@ -85,7 +54,7 @@ export default function Section7() {
 
 type _props = {
     QA: {
-        question: any,
+        question: string,
         id: number,
         answer: string
     },
@@ -95,27 +64,27 @@ type _props = {
 
 const QuestionCard: React.FC<_props> = ({ QA, selectedItem, ChangeSelectedItem }) => {
 
-    return <div className=" min-h-[163px] pt-[50px] pb-[32px] mx-[50px] flex flex-col h-fit border-b-[1px] border-b-blackText sm:py-[20px] sm:min-h-fit sm:last-of-type:border-b-[1px] last-of-type:border-0 ">
+    return <div className=" min-h-[163px] mac:min-h-[128px] pt-[50px] pb-[32px] mx-[50px] mac:mx-[45px] flex flex-col h-fit border-b-[1px] border-b-blackText sm:py-[20px] sm:min-h-fit sm:last-of-type:border-b-[1px] last-of-type:border-0 ">
         <div className="w-full flex flex-row items-center justify-between ">
-            <h6> {QA.question}</h6>
+            <h6 className=" leading-[30px] mac:leading-[28px] "> {QA.question}</h6>
             {
                 selectedItem === QA.id ?
                     <div
                         className="cursor-pointer ml-30px "
                         onClick={() => ChangeSelectedItem(-1)}>
-                        <AiOutlineMinus className="text-[40px] sm:text-[20px] " /></div>
+                        <AiOutlineMinus className="text-[40px] sm:text-[20px] mac:text-[24px] " /></div>
                     :
                     <div
                         className="cursor-pointer ml-30px "
                         onClick={() => ChangeSelectedItem(QA.id)}>
-                        <AiOutlinePlus className="text-[40px] sm:text-[20px] " /></div>
+                        <AiOutlinePlus className="text-[40px] sm:text-[20px] mac:text-[24px] " /></div>
             }
         </div>
 
         <motion.div
             animate={{ height: selectedItem === QA.id ? 'fit-content' : 0, opacity: selectedItem === QA.id ? 1 : 0 }}
             transition={{ type: "spring", duration: 1 }}
-            className="text-blackText text-[24px] font-normal leading-[36px] mt-[16px] overflow-hidden sm:text-[13px] sm:font-normal sm:leading-[20px] "
+            className="text-blackText text-[24px] mac:text-[18px] font-normal leading-[36px] mac:leading-[28px] mt-[16px] overflow-hidden sm:text-[13px] sm:font-normal sm:leading-[20px] "
         >
             {
                 selectedItem === QA.id && QA.answer

@@ -81,6 +81,6 @@ interface _props {
 
 const StepCard: React.FC<_props> = ({ Step }) => <div className='pt-[52px] mac:pt-[55px] pr-[23px] mac:pr-[50px] pb-[36px] pl-[80px] mac:pl-0 flex flex-col text-whiteText mb-[60px] min-h-[380px] justify-start w-full items-start sm:pt-[20px] sm:pr-[30px] sm:pb-[10px] sm:pl-[30px] sm:mb-[30px] sm:min-h-[246px] sm:justify-start'>
     <div className='font-normal text-[24px] text-justify leading-[36px] mac:leading-[22px] mac:text-[19px] sm:text-[13px] sm:font-normal'>{Step.step}</div>
-    <div className=' font-semibold text-[32px] mac:text-[25px] leading-[36px] mac:leading-[22px] mt-[20px] mac:mt-[12px] text-left text-whiteText sm:text-[20px] sm:font-semibold sm:mt-[9px] sm:leading-[20px]'>{Step.title}</div>
+    <div className='font-extrabold text-[32px] mac:text-[25px] leading-[36px] mac:leading-[22px] mt-[20px] mac:mt-[12px] text-left text-whiteText sm:text-[20px] sm:font-semibold sm:mt-[9px] sm:leading-[20px]'>{Step.title}</div>
     <div className='leading-[36px] mac:leading-[28.5px] sm:leading-[21px] text-[24px] mac:text-[19px] sm:text-[13px] font-normal mt-[24px] mac:mt-[18px] sm:mt-[18px] text-left'>{Step.description}</div>
 </div>

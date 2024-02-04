@@ -25,7 +25,7 @@ export default function Section5() {
     const [selectedItem, setSelectedItem] = React.useState<number>(0);
     const [watchedItems, changeWatchedItems] = React.useState<boolean>(false);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-    const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
+    const isMac = useMediaQuery({ query: "(max-width: 1680px)" });
     const router = useRouter();
 
     async function lockScroll(deltaY: number) {

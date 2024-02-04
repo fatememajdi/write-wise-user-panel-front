@@ -22,8 +22,8 @@ const steps = [
 export default function Section4() {
 
     const [selectedItem, changeSelectedItem] = React.useState<number>(0);
-    // const [animating, changeAnimating] = React.useState<boolean>(false);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+    const isMac = useMediaQuery({ query: "(max-width: 1680px)" });
 
     function selectStep(id: number) {
         if (id === selectedItem)
@@ -35,19 +35,7 @@ export default function Section4() {
     function DesktopSelectStep(id: number) {
         if (id !== selectedItem) {
             changeSelectedItem(id);
-            // if (animating) {
-            //     setTimeout(() => {
-            //         changeSelectedItem(id);
-            //         changeAnimating(true);
-            //     }, 1000);
-            // } else {
-            //     changeSelectedItem(id);
-            //     changeAnimating(true);
-            // }
         };
-        // setTimeout(() => {
-        //     changeAnimating(false);
-        // }, 1500);
     };
 
     return <section
@@ -55,10 +43,10 @@ export default function Section4() {
             if (selectedItem === 0 && !isMobile)
                 changeSelectedItem(1);
         }}
-        className='bg-section4-gradiant overflow-hidden flex pt-[80px] flex-col h-fit sm:pt-[55px] sm:min-h-fit sm:pl-[50px]'>
-        <h2 className='text-whiteText leading-[60px] ml-[162px] sm:ml-0 sm:leading-[26px]'>Progressive IELTS Learning with WriteWiseAI</h2>
+        className='bg-section4-gradiant overflow-hidden flex pt-[80px] mac:pt-[84px] flex-col h-fit sm:pt-[55px] pb-[30px] mac:pb-0 sm:min-h-fit sm:pl-[50px]'>
+        <h2 className='text-whiteText leading-[60px] mac:leading-[22px] ml-[162px] mac:ml-[138px] sm:ml-0 sm:leading-[26px]'><span className="mac:text-[25px]">Progressive IELTS Learning with WriteWiseAI</span></h2>
         <Image
-            className=" mt-[32px] ml-[162px] sm:hidden "
+            className=" mt-[32px] mac:mt-[25px] ml-[162px] mac:ml-[138px] sm:hidden "
             src="/landing/line.svg"
             alt="line"
             width={1040}
@@ -66,7 +54,7 @@ export default function Section4() {
             priority
             loading="eager"
         />
-        <h6 className='text-whiteText leading-[36px] ml-[162px] sm:ml-0 sm:mt-0 mt-[32px] mb-[90px] max-w-[550px] sm:text-[13px] sm:leading-[19.5px] sm:mb-0 sm:max-w-full sm:mr-[50px] '>
+        <h6 className='text-whiteText leading-[36px] mac:leading-[28px] ml-[162px] mac:ml-[138px] sm:ml-0 sm:mt-0 mt-[32px] mac:mt-[25px] mb-[90px] max-w-[550px] mac:max-w-[463px] sm:text-[13px] sm:leading-[19.5px] sm:mb-0 sm:max-w-full sm:mr-[50px] '>
             Empower your IELTS preparation by tracking and visualizing your writing improvements.
         </h6>
 
@@ -125,7 +113,7 @@ export default function Section4() {
         {/* //-----------------------------------------------------------------------------desktop mode steps */}
 
         <AnimatePresence>
-            <div className='flex flex-row h-fit w-full flex-1 items-end sm:hidden'>
+            <div className='flex flex-row mt-[38px] mac:mt-[70px] h-fit w-full flex-1 items-end sm:hidden'>
                 <div
                     style={{ opacity: selectedItem === 1 || selectedItem === 0 ? 1 : 0.5 }}
                     className='relative flex-1 min-h-[22vh] border-t-[1px] border-t-whiteText '></div>
@@ -133,11 +121,11 @@ export default function Section4() {
                     animate={{ height: selectedItem === 1 ? '36vh' : '22vh' }}
                     transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 1 || selectedItem === 0 ? 1 : 0.5 }}
-                    className='relative min-h-[22vh] w-[300px]'>
+                    className='relative min-h-[22vh] mac:w-[225px] w-[300px] '>
                     <motion.div
                         animate={{ height: selectedItem === 1 ? '14vh' : 0 }}
                         transition={{ type: "spring", duration: 1.5 }}
-                        className='relative ml-auto w-[300px] max-w-[300px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
+                        className='relative ml-auto mac:w-[225px] mac:max-w-[225px] w-[300px] max-w-[300px] font-normal text-[20px] leading-[36px] mac:text-[17px] mac:leading-[26px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
                         <motion.div animate={{ height: selectedItem === 1 ? '7vh' : 0 }}
                             transition={{ type: "spring", duration: 1.5 }}
                             className='absolute top-0 right-0 z-0 border-r-[1px] border-r-whiteText' />
@@ -150,20 +138,20 @@ export default function Section4() {
                     </motion.div>
                     <div
                         onClick={() => DesktopSelectStep(1)}
-                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">01</span> Dynamic Visuals</div>
+                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute mac:text-[25px] mac:font-semibold mac:leading-[30px] top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">01</span> Dynamic Visuals</div>
                 </motion.div>
                 <motion.div
-                    animate={{ height: selectedItem === 2 ? '39vh' : '29vh', width: selectedItem === 1 || selectedItem === 2 ? 340 : 300 }}
+                    animate={{ height: selectedItem === 2 ? '39vh' : '29vh', width: selectedItem === 1 || selectedItem === 2 ? isMac ? 280 : 340 : isMac ? 225 : 300 }}
                     transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 2 || selectedItem === 0 ? 1 : 0.5 }}
-                    className='relative w-[300px] min-h-[29vh]'>
+                    className='relative mac:w-[225px] w-[300px] min-h-[29vh]'>
                     <motion.div animate={{ height: selectedItem === 2 ? '3vh' : 0 }}
                         transition={{ type: "spring", duration: 1.5 }}
                         className='absolute top-0 right-0 z-0 border-r-[1px] border-r-whiteText' />
                     <motion.div
-                        animate={{ height: selectedItem === 2 ? '17vh' : selectedItem === 1 ? 0 : '7vh', width: selectedItem === 1 || selectedItem === 2 ? 340 : 300 }}
+                        animate={{ height: selectedItem === 2 ? '17vh' : selectedItem === 1 ? 0 : '7vh', width: selectedItem === 1 || selectedItem === 2 ? isMac ? 280 : 340 : isMac ? 225 : 300  }}
                         transition={{ type: "spring", duration: 1.5 }}
-                        className='relative ml-auto w-[300px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
+                        className='relative ml-auto mac:w-[225px] w-[300px] mac:max-w-[280px] max-w-[340px] font-normal text-[20px] leading-[36px] mac:text-[17px] mac:leading-[26px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
                         <motion.div
                             animate={{ opacity: selectedItem === 2 ? 1 : 0 }}
                             style={{ padding: 10, zIndex: 1 }}
@@ -173,17 +161,17 @@ export default function Section4() {
                     </motion.div>
                     <div
                         onClick={() => DesktopSelectStep(2)}
-                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">02</span> Unlimited Revisions</div>
+                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] mac:text-[25px] mac:font-semibold mac:leading-[30px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">02</span> Unlimited Revisions</div>
                 </motion.div>
                 <motion.div
-                    animate={{ height: selectedItem === 3 ? '50vh' : '36vh', width: selectedItem === 3 || selectedItem === 2 ? 340 : 300 }}
+                    animate={{ height: selectedItem === 3 ? '50vh' : '36vh', width: selectedItem === 3 || selectedItem === 2 ? isMac ? 280 : 340 : isMac ? 225 : 300  }}
                     transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 3 || selectedItem === 0 ? 1 : 0.5 }}
-                    className='relative w-[300px] min-h-[36vh]'>
+                    className='relative mac:w-[225px] w-[300px] min-h-[36vh]'>
                     <motion.div
-                        animate={{ height: selectedItem === 3 ? '21vh' : selectedItem === 2 ? 0 : '7vh', width: selectedItem === 2 || selectedItem === 3 ? 340 : 300 }}
+                        animate={{ height: selectedItem === 3 ? '21vh' : selectedItem === 2 ? 0 : '7vh', width: selectedItem === 2 || selectedItem === 3 ? isMac ? 280 : 340 : isMac ? 225 : 300  }}
                         transition={{ type: "spring", duration: 1.5 }}
-                        className='relative ml-auto w-[300px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
+                        className='relative ml-auto mac:w-[225px] w-[300px] mac:max-w-[280px] max-w-[340px] font-normal text-[20px] leading-[36px] mac:text-[17px] mac:leading-[26px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
                         <motion.div animate={{ height: selectedItem === 3 ? '7vh' : 0 }}
                             transition={{ type: "spring", duration: 1.5 }}
                             className='absolute top-0 right-0 z-0 border-r-[1px] border-r-whiteText' />
@@ -196,20 +184,20 @@ export default function Section4() {
                     </motion.div>
                     <div
                         onClick={() => DesktopSelectStep(3)}
-                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">03</span> Diverse Feedback</div>
+                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] mac:text-[25px] mac:font-semibold mac:leading-[30px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">03</span> Diverse Feedback</div>
                 </motion.div>
                 <motion.div
-                    animate={{ height: selectedItem === 4 ? '57vh' : '43vh', width: selectedItem === 3 || selectedItem === 4 ? 340 : 300 }}
+                    animate={{ height: selectedItem === 4 ? '57vh' : '43vh', width: selectedItem === 3 || selectedItem === 4 ? isMac ? 280 : 340 : isMac ? 225 : 300  }}
                     transition={{ type: "spring", duration: 1.5 }}
                     style={{ opacity: selectedItem === 4 || selectedItem === 0 ? 1 : 0.5 }}
-                    className='relative w-[300px] min-h-[43vh]'>
+                    className='relative mac:w-[225px] w-[300px] min-h-[43vh]'>
                     <motion.div animate={{ height: selectedItem === 4 ? '7vh' : 0 }}
                         transition={{ type: "spring", duration: 1.5 }}
                         className='absolute top-0 right-0 z-0 border-r-[1px] border-r-whiteText' />
                     <motion.div
-                        animate={{ height: selectedItem === 4 ? '21vh' : selectedItem === 3 ? 0 : '7vh', width: selectedItem === 3 || selectedItem === 4 ? 340 : 300 }}
+                        animate={{ height: selectedItem === 4 ? '21vh' : selectedItem === 3 ? 0 : '7vh', width: selectedItem === 3 || selectedItem === 4 ? isMac ? 280 : 340 : isMac ? 225 : 300  }}
                         transition={{ type: "spring", duration: 1.5 }}
-                        className='relative ml-auto w-[300px] max-w-[340px] font-normal text-[20px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
+                        className='relative ml-auto mac:w-[225px] w-[300px] mac:max-w-[280px] max-w-[340px] font-normal text-[20px] leading-[36px] mac:text-[17px] mac:leading-[26px] text-whiteText h-[7vh] border-l-[1px] border-t-[1px] border-l-whiteText border-t-whiteText '>
                         <motion.div
                             animate={{ opacity: selectedItem === 4 ? 1 : 0 }}
                             style={{ padding: 10, zIndex: 1 }}
@@ -219,11 +207,11 @@ export default function Section4() {
                     </motion.div>
                     <div
                         onClick={() => DesktopSelectStep(4)}
-                        className='text-whiteText text-[32px] font-medium leading-[38.5px] absolute top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.80)]">04</span> Motivation Booster</div>
+                        className='text-whiteText text-[32px] font-medium leading-[38.5px] absolute top-[-60px] right-[13px] mac:text-[25px] mac:font-semibold mac:leading-[30px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.80)]">04</span> Motivation Booster</div>
                 </motion.div>
                 <motion.div
                     style={{ opacity: selectedItem === 4 || selectedItem === 0 ? 1 : 0.5 }}
-                    className='relative flex-1 min-w-[400px] h-[50vh]'>
+                    className='relative flex-1 min-w-[400px] mac:min-w-[300px] h-[50vh]'>
                     <Image
                         className='absolute top-[-105px] right-auto left-[130px] text-whiteText '
                         src="/icons/flag.svg"
