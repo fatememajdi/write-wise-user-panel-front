@@ -39,7 +39,12 @@ module.exports = {
         'arrow-icon': 'linear-gradient(141deg, #B5C0CE 0%, rgba(234, 234, 234, 0.20) 83.58%)',
         'section7-gradiant': 'linear-gradient(90deg, #F4DEDF, #DBE8F2)',
         'token-gradiant': 'linear-gradient(180deg, #2E4057 0.14%, #626E7E 100.14%)',
-        'login-mobile-pattern': 'url("/signIn/mobile-background.svg")'
+        'login-mobile-pattern': 'url("/signIn/mobile-background.svg")',
+        'F&Q-pattern':"url('/landing/f&q.svg')",
+        'Features-pattern':"url('/landing/Features.svg')",
+        'howItWorks-pattern':"url('/landing/how it works.svg')",
+        'joinNow-pattern':"url('/landing/join now.svg')",
+        'footer-pattern':"url('/landing/footer.svg')",
       },
     },
   },

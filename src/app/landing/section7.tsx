@@ -23,7 +23,7 @@ export default function Section7() {
     const router = useRouter();
     const [selectedItem, ChangeSelectedItem] = React.useState<number>(null);
 
-    return (<section className="overflow-hidden bg-background sm:bg-section7-gradiant " id="FQA">
+    return (<section className=" bg-F&Q-pattern bg-cover bg-no-repeat overflow-hidden bg-background sm:bg-section7-gradiant " id="FQA">
         <AnimatePresence>
             <div className="flex flex-1 lg:flex-row items-start pt-[171px] mac:pt-[114px] px-[131px] mac:px-[60px] pb-[233px] mac:pb-[218px] sm:min-h-fit sm:py-[40px] sm:px-[30px] sm:flex-col-reverse ">
                 <div className='col-lg-6 col-md-6 col-12 flex flex-col '>

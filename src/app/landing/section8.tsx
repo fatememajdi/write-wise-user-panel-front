@@ -7,7 +7,7 @@ import '../../styles/global.css';
 
 export default function Section8() {
 
-    return <section className="overflow-hidden pt-[209px] mac:pt-[151px] pr-[355px] mac:pr-[311px] pb-[187px] mac:pb-[129px] pl-[392px] mac:pl-[370px] bg-background sm:py-[50px] sm:pr-[33px] sm:pl-[53px] sm:min-h-fit " id="">
+    return <section className=" bg-joinNow-pattern bg-cover bg-no-repeat overflow-hidden pt-[209px] mac:pt-[151px] pr-[355px] mac:pr-[311px] pb-[187px] mac:pb-[129px] pl-[392px] mac:pl-[370px] bg-background sm:py-[50px] sm:pr-[33px] sm:pl-[53px] sm:min-h-fit " id="">
         <div className="bg-background relative sm:py-[70px] sm:px-[40px] ">
 
             <div className="text-seccondaryColor mac:text-[25px] font-extrabold text-[48px] leading-[36px] mac:leading-[22px] sm:text-[24px] sm:leading-[28px] text-center ">

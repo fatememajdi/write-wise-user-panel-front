@@ -53,7 +53,7 @@ export default function Section6() {
         GetPackage('');
     }, []);
 
-    return <section className='bg-section2-gradiant pt-[50px] mac:pt-[47px] sm:pt-[77px] pr-[140px] mac:pr-[72px] sm:pr-[10px] pb-[84px] mac:pb-[110px] sm:pb-[39px] pl-[130px] mac:pl-[72px] sm:pl-[10px] flex flex-col sm:min-h-fit '
+    return <section className='bg-section2-gradiant pt-[50px] mac:pt-[48px] sm:pt-[77px] pr-[140px] mac:pr-[72px] sm:pr-[10px] pb-[84px] mac:pb-[110px] sm:pb-[39px] pl-[130px] mac:pl-[72px] sm:pl-[10px] flex flex-col sm:min-h-fit '
         id="pricing">
         <h2 className='text-whiteText lg:ml-[59px] leading-[60px] mac:leading-[47px] mac:ml-[100px] sm:ml-[43px] sm:leading-[24.3px] sm:mr-[60px] '>No Monthly Commitments, Pure Flexibility</h2>
         <h6 className="text-whiteText lg:ml-[59px]  leading-[32px] mac:leading-[19px] mt-[36px] mac:ml-[100px] mac:mt-[19px] mac:max-w-full max-w-[850px] sm:text-[13px] sm:font-normal sm:leading-[16.9px] sm:ml-[43px] sm:mt-[27px] sm:max-w-full ">

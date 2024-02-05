@@ -12,7 +12,7 @@ import steps from '../../../public/data/Steps.json';
 export default function Section2() {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
-    return <section className="overflow-hidden pt-[58px] mac:pt-[56px] pb-[106px] mac:pb-[100px] w-full relative flex flex-col items-center bg-section2-gradiant sm:min-h-fit sm:pt-[20px] sm:pb-[100px]"
+    return <section className="bg-howItWorks-pattern bg-cover bg-no-repeat overflow-hidden pt-[58px] mac:pt-[56px] pb-[106px] mac:pb-[100px] w-full relative flex flex-col items-center sm:min-h-fit sm:pt-[20px] sm:pb-[100px]"
         id="how-it-works">
         <div className="flex flex-col items-start mb-[87px] mac:mb-[57px] sm:mb-[60px]">
             <h2 className="text-whiteText leading-[60px] mac:leading-[47px] text-center w-full sm:mx-[30px] sm:text-left sm:mr-auto sm:w-fit " >

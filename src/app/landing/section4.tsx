@@ -138,7 +138,7 @@ export default function Section4() {
                     </motion.div>
                     <div
                         onClick={() => DesktopSelectStep(1)}
-                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute mac:text-[25px] mac:font-semibold mac:leading-[30px] top-[-60px] right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">01</span> Dynamic Visuals</div>
+                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute mac:text-[25px] mac:font-semibold mac:leading-[30px] top-[-60px] mac:top-[-50px]  right-[13px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">01</span> Dynamic Visuals</div>
                 </motion.div>
                 <motion.div
                     animate={{ height: selectedItem === 2 ? '39vh' : '29vh', width: selectedItem === 1 || selectedItem === 2 ? isMac ? 280 : 340 : isMac ? 225 : 300 }}
@@ -161,7 +161,7 @@ export default function Section4() {
                     </motion.div>
                     <div
                         onClick={() => DesktopSelectStep(2)}
-                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] mac:text-[25px] mac:font-semibold mac:leading-[30px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">02</span> Unlimited Revisions</div>
+                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] mac:top-[-50px] right-[13px] mac:text-[25px] mac:font-semibold mac:leading-[30px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">02</span> Unlimited Revisions</div>
                 </motion.div>
                 <motion.div
                     animate={{ height: selectedItem === 3 ? '50vh' : '36vh', width: selectedItem === 3 || selectedItem === 2 ? isMac ? 280 : 340 : isMac ? 225 : 300  }}
@@ -184,7 +184,7 @@ export default function Section4() {
                     </motion.div>
                     <div
                         onClick={() => DesktopSelectStep(3)}
-                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] right-[13px] mac:text-[25px] mac:font-semibold mac:leading-[30px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">03</span> Diverse Feedback</div>
+                        className='text-whiteText text-[32px] font-normal leading-[38.5px] absolute top-[-60px] mac:top-[-50px]  right-[13px] mac:text-[25px] mac:font-semibold mac:leading-[30px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.50)]">03</span> Diverse Feedback</div>
                 </motion.div>
                 <motion.div
                     animate={{ height: selectedItem === 4 ? '57vh' : '43vh', width: selectedItem === 3 || selectedItem === 4 ? isMac ? 280 : 340 : isMac ? 225 : 300  }}
@@ -207,7 +207,7 @@ export default function Section4() {
                     </motion.div>
                     <div
                         onClick={() => DesktopSelectStep(4)}
-                        className='text-whiteText text-[32px] font-medium leading-[38.5px] absolute top-[-60px] right-[13px] mac:text-[25px] mac:font-semibold mac:leading-[30px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.80)]">04</span> Motivation Booster</div>
+                        className='text-whiteText text-[32px] font-medium leading-[38.5px] absolute top-[-60px] mac:top-[-50px]  right-[13px] mac:text-[25px] mac:font-semibold mac:leading-[30px] cursor-pointer whitespace-nowrap '><span className="text-[rgba(243, 243, 243, 0.80)]">04</span> Motivation Booster</div>
                 </motion.div>
                 <motion.div
                     style={{ opacity: selectedItem === 4 || selectedItem === 0 ? 1 : 0.5 }}

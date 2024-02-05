@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
         };
     }, []);
 
-    return <footer className='col-12 h-[345px] mac:h-[272px] bg-seccondaryColor flex flex-col items-start py-0 pl-[134px] mac:pl-[95px] pr-[67px] relative text-whiteText z-[501] '>
+    return <footer className='bg-footer-pattern bg-cover bg-no-repeat col-12 h-[345px] mac:h-[272px] bg-seccondaryColor flex flex-col items-start py-0 pl-[134px] mac:pl-[95px] pr-[67px] relative text-whiteText z-[501] '>
 
         <Image
             className="w-[339px] mac:w-[198px] mac:h-[45px] mac:ml-[-8px] mac:mt-[32px] h-[57px] mt-[48px] ml-[-55px] "
