@@ -27,3 +27,9 @@
         height: 70px !important;
     }
 }
+
+@media screen and (max-width: 1281px) and (min-width: 816px) {
+    .animationText {
+        height: 55px !important;
+    }
+}

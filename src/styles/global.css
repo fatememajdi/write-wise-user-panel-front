@@ -188,8 +188,43 @@ textarea::-webkit-scrollbar-thumb {
     font-weight: 400 !important;
   }
 
-  h2{
+  h2 {
     font-size: 38px !important;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    width: 4px !important;
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 4px !important;
+  }
+
+  textarea::-webkit-scrollbar-thumb {
+    width: 4px !important;
+  }
+}
+
+
+@media screen and (max-width: 1281px) and (min-width: 816px) {
+  h1 {
+    font-size: 46px !important;
+    font-weight: 790 !important;
+    line-height: 48px !important;
+  }
+
+  h2 {
+    font-size: 30px !important;
+  }
+
+  h6 {
+    font-size: 15px !important;
+    font-weight: 400 !important;
   }
 
   ::-webkit-scrollbar {
