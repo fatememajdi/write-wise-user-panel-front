@@ -53,16 +53,16 @@ export default function Section6() {
         GetPackage('');
     }, []);
 
-    return <section className='bg-section2-gradiant pt-[50px] mac:pt-[48px] sm:pt-[77px] pr-[140px] mac:pr-[72px] sm:pr-[10px] pb-[84px] mac:pb-[110px] sm:pb-[39px] pl-[130px] mac:pl-[72px] sm:pl-[10px] flex flex-col sm:min-h-fit '
+    return <section className='bg-section2-gradiant pt-[50px] mac:pt-[48px] sm:pt-[77px] pr-[140px] mac:pr-[72px] sm:pr-[10px] pb-[84px] mac:pb-[110px] sm:pb-[39px] pl-[130px] tablet:px-[25px] tablet:pb-[95px] mac:pl-[72px] sm:pl-[10px] flex flex-col sm:min-h-fit '
         id="pricing">
-        <h2 className='text-whiteText lg:ml-[59px] leading-[60px] mac:leading-[47px] mac:ml-[100px] sm:ml-[43px] sm:leading-[24.3px] sm:mr-[60px] '>No Monthly Commitments, Pure Flexibility</h2>
-        <h6 className="text-whiteText lg:ml-[59px]  leading-[32px] mac:leading-[19px] mt-[36px] mac:ml-[100px] mac:mt-[19px] mac:max-w-full max-w-[850px] sm:text-[13px] sm:font-normal sm:leading-[16.9px] sm:ml-[43px] sm:mt-[27px] sm:max-w-full ">
+        <h2 className='text-whiteText lg:ml-[59px] tablet:ml-[66px] leading-[60px] tablet:leading-[36px] mac:leading-[47px] mac:ml-[100px] sm:ml-[43px] sm:leading-[24.3px] sm:mr-[60px] '>No Monthly Commitments, Pure Flexibility</h2>
+        <h6 className="text-whiteText lg:ml-[59px] tablet:ml-[66px] leading-[32px] tablet:leading-[22px] tablet:mt-[21px] mac:leading-[19px] mt-[36px] mac:ml-[100px] mac:mt-[19px] mac:max-w-full max-w-[850px] tablet:max-w-[640px] sm:text-[13px] sm:font-normal sm:leading-[16.9px] sm:ml-[43px] sm:mt-[27px] sm:max-w-full ">
             At WriteWiseAI, we have streamlined our pricing to ensure you get the
             best value for your IELTS writing needs.
         </h6>
 
 
-        <div className="text-whiteText text-center text-[24px] mac:text-[19px] font-normal leading-[36px] mb-[56px] mac:mb-[45px] mt-[56px] mac:mt-[66px] flex flex-row items-center justify-center sm:text-[13px] ">
+        <div className="text-whiteText text-center text-[24px] tablet:text-[15px] tablet:leading-[22px] tablet:mt-[77px] mac:text-[19px] font-normal leading-[36px] mb-[56px] tablet:mb-[33px] mac:mb-[45px] mt-[56px] mac:mt-[66px] flex flex-row items-center justify-center sm:text-[13px] ">
             Use of a VPN might change your regional currency!
             {/* {
                 packages.length > 0 && packages[0].flagUrl &&

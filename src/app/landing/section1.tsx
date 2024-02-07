@@ -31,7 +31,7 @@ export default function Section1() {
         <header><LandingHeader logedIn={logedIn} landing /></header>
         <section className={'col-12 flex flex-row not-italic px-0 pt-[319px] tablet:pt-[215px] mac:pt-[282px] pb-[240px] tablet:pb-[193px] mac:pb-[220px] sm:flex-col-reverse justify-center items-center sm:pt-[100px] sm:pb-[50px] sm:min-h-fit ' + styles.section1Container} id="hero-section">
 
-            <div className={'col-lg-8 col-md-9 col-12 flex flex-column items-start justify-center pl-[163px] mac:pl-[112px] tablet:pl-[85px] mr-auto h-full sm:h-fit sm:pr-[20px] sm:pl-[30px] sm:mt-[350px] ' + styles.content}>
+            <div className={'col-lg-9 col-md-9 col-12 flex flex-column items-start justify-center pl-[163px] mac:pl-[112px] tablet:pl-[85px] mr-auto h-full sm:h-fit sm:pr-[20px] sm:pl-[30px] sm:mt-[350px] ' + styles.content}>
                 <h1 className='flex flex-wrap text-primaryColor'>
                     <p> Achieve IELTS Writing &nbsp; Excellence with</p>
                     <span className="whitespace-nowrap "> AI-Driven&nbsp;</span>
