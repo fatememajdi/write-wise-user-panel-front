@@ -44,7 +44,7 @@ export default function Section4() {
             if (selectedItem === 0 && !isMobile)
                 changeSelectedItem(1);
         }}
-        className='bg-section4-gradiant overflow-hidden flex pt-[80px] mac:pt-[84px] tablet:pt-[98px] flex-col h-fit sm:pt-[55px] pb-[30px] mac:pb-0 sm:min-h-fit sm:pl-[50px]'>
+        className='bg-progresive-pattern bg-cover bg-no-repeat overflow-hidden flex pt-[80px] mac:pt-[84px] tablet:pt-[98px] flex-col h-fit sm:pt-[55px] pb-[30px] mac:pb-0 sm:min-h-fit sm:pl-[50px]'>
         <h2 className='text-whiteText leading-[60px] mac:leading-[22px] tablet:leading-[22px] ml-[162px] tablet:ml-[92px] mac:ml-[138px] sm:ml-0 sm:leading-[26px]'><span className="mac:text-[25px]">Progressive IELTS Learning with WriteWiseAI</span></h2>
         <Image
             className=" mt-[32px] mac:mt-[25px] ml-[162px] mac:ml-[138px] tablet:ml-[91px] tablet:mt-[19px] sm:hidden "

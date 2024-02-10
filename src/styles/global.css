@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .content-auto {
+    content-visibility: auto;
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -220,6 +226,37 @@ textarea::-webkit-scrollbar-thumb {
 
   h2 {
     font-size: 30px !important;
+  }
+
+  h6 {
+    font-size: 15px !important;
+    font-weight: 400 !important;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    width: 4px !important;
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 4px !important;
+  }
+
+  textarea::-webkit-scrollbar-thumb {
+    width: 4px !important;
+  }
+}
+
+
+@media screen and (max-width: 815px) and (min-width: 601px) {
+  h1 {
+    font-size: 46px !important;
+    font-weight: 8000 !important;
+    line-height: 48px !important;
   }
 
   h6 {

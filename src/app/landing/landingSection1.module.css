@@ -28,7 +28,7 @@
     }
 }
 
-@media screen and (max-width: 1281px) and (min-width: 816px) {
+@media screen and (max-width: 1281px) and (min-width: 601px) {
     .animationText {
         height: 55px !important;
     }
