@@ -25,18 +25,19 @@ type _props = {
 export default function PackageCard({ pack, loading, style }: _props) {
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
     const isTablet = useMediaQuery({ query: "(max-width: 1281px)" });
+    const isminiTablet = useMediaQuery({ query: "(max-width: 815px)" });
 
-    return <div className=" w-[300px] tablet:w-[184px] tablet:h-[280px] mac:w-[237px] mac:h-[360px] h-[456px] bg-grayColor rounded-[12px] mac:rounded-[9px] tablet:rounded-[7px] border-solid border-[1px] border-grayColor shadow-[0px 2px 2px 0px rgba(0, 82, 147, 0.18)] py-[27px] mac:py-[21px] px-[20px] tablet:py-[16px] tablet:px-[12px] mac:px-[15px] relative sm:w-[228px] sm:h-[360px] sm:py-[20px] sm:px-[15px] sm:mr-auto sm:ml-auto "
+    return <div className=" w-[300px] mini-tablet:w-[184px] mini-tablet:h-[280px] tablet:w-[184px] tablet:h-[280px] mac:w-[237px] mac:h-[360px] h-[456px] bg-grayColor rounded-[12px] mini-tablet:rounded-[7px] mac:rounded-[9px] tablet:rounded-[7px] border-solid border-[1px] border-grayColor shadow-[0px 2px 2px 0px rgba(0, 82, 147, 0.18)] py-[27px] mini-tablet:py-[16px] mini-tablet:px-[12px] mac:py-[21px] px-[20px] tablet:py-[16px] tablet:px-[12px] mac:px-[15px] relative sm:w-[228px] sm:h-[360px] sm:py-[20px] sm:px-[15px] sm:mr-auto sm:ml-auto "
         style={{ ...style, backgroundColor: pack.isPopup && '#F3F3F3' }}>
         {
             pack.discountPercent > 0 ?
                 <div
-                    className="bg-background pb-[7px] h-[78px] w-[78px] tablet:h-[48px] tablet:w-[48px] mac:h-[61px] mac:w-[61px] tablet:text-[9px] tablet:leading-[15px] tablet:top-[8px] tablet:right-[7px] rounded-bl-full rounded-t-[8px] rounded-br-[8px] absolute z-2 right-[14px] top-[15px] mac:top-[11px] mac:right-[9px] text-red text-center text-[16px] mac:text-[12px] font-bold leading-normal mac:leading-[22px] flex flex-col items-end justify-center pr-[15px] tablet:pr-[10px] sm:h-[59px] sm:w-[59px] sm:right-[7px] sm:top-[12px] sm:text-[13.7px] sm:font-bold sm:pr-[14px] sm:leading-[18.6px] " >
+                    className="bg-background pb-[7px] mini-tablet:top-[6px] mini-tablet:text-[9px] mini-tablet:leading-[15px] mini-tablet:right-[7px] h-[78px] w-[78px] tablet:h-[48px] tablet:w-[48px] mini-tablet:h-[48px] mini-tablet:w-[48px] mac:h-[61px] mac:w-[61px] tablet:text-[9px] tablet:leading-[15px] tablet:top-[8px] tablet:right-[7px] rounded-bl-full rounded-t-[8px] rounded-br-[8px] absolute z-2 right-[14px] top-[15px] mac:top-[11px] mac:right-[9px] text-red text-center text-[16px] mac:text-[12px] font-bold leading-normal mac:leading-[22px] flex flex-col items-end justify-center pr-[15px] mini-tablet:pr-[9px] tablet:pr-[10px] sm:h-[59px] sm:w-[59px] sm:right-[7px] sm:top-[12px] sm:text-[13.7px] sm:font-bold sm:pr-[14px] sm:leading-[18.6px] " >
                     <span>%{pack.discountPercent}</span>
                     <span>Off</span>
                 </div>
                 : pack.isPopup &&
-                <div style={{ paddingRight: 5 }} className="bg-background pb-[7px] h-[78px] tablet:h-[48px] tablet:w-[48px] w-[78px] mac:h-[61px] mac:w-[61px] tablet:text-[9px]  tablet:top-[8px] tablet:right-[7px] tablet:leading-[15px] rounded-bl-full rounded-t-[8px] rounded-br-[8px]  absolute z-2 right-[14px] top-[15px] mac:top-[11px] mac:right-[9px] text-red text-center text-[16px] mac:text-[12px] font-bold leading-normal mac:leading-[22px] flex flex-col items-end justify-center pr-[8px] tablet:pr-[4px] sm:h-[59px] sm:w-[59px] sm:right-[7px] sm:top-[12px] sm:text-[10px] sm:font-bold sm:pr-[14px] sm:leading-[18.6px] " >
+                <div style={{ paddingRight: 5 }} className="bg-background pb-[7px] h-[78px] mini-tablet:text-[9px] mini-tablet:leading-[15px] mini-tablet:top-[6px] mini-tablet:right-[7px] mini-tablet:h-[48px] mini-tablet:w-[48px] tablet:h-[48px] tablet:w-[48px] w-[78px] mac:h-[61px] mac:w-[61px] tablet:text-[9px]  tablet:top-[8px] tablet:right-[7px] tablet:leading-[15px] rounded-bl-full rounded-t-[8px] rounded-br-[8px]  absolute z-2 right-[14px] top-[15px] mac:top-[11px] mac:right-[9px] text-red text-center text-[16px] mac:text-[12px] font-bold leading-normal mac:leading-[22px] flex flex-col items-end justify-center pr-[8px] tablet:pr-[4px] sm:h-[59px] sm:w-[59px] sm:right-[7px] sm:top-[12px] sm:text-[10px] sm:font-bold sm:pr-[14px] sm:leading-[18.6px] " >
                     <span>Limited</span>
                     <span>Offer</span>
                 </div>
@@ -46,15 +47,15 @@ export default function PackageCard({ pack, loading, style }: _props) {
                 <ReactLoading className="flex m-auto sm:mt-[40px] sm:mb-[40px] " type={'bubbles'} color={'#172E4A'} height={50} width={50} />
                 :
                 <div style={pack.isPopup ? { backgroundColor: '#AB141D', paddingBottom: 27 } : {}}
-                    className="bg-primaryColor w-full h-full flex flex-col pt-[37px] tablet:pt-[21px] mac:pt-[27px] tablet:rounded-[4px] items-start pl-[37px] tablet:pl-[20px] mac:pl-[30px] pr-[20px] sm:py-[24px] sm:pl-[24px] sm:pr-0 ">
-                    <div className="text-whiteText text-center text-[16px] tablet:text-[9px] tablet:leading-[12px] mac:text-[12px] mac:leading-[15px] mr-[20px] tablet:mr-0 font-normal leading-[20px] sm:text-[12.16px] sm:font-normal sm:leading-[16.9px]">{
+                    className="bg-primaryColor w-full h-full flex flex-col pt-[37px] tablet:pt-[21px] mac:pt-[27px] tablet:rounded-[4px] mini-tablet:rounded-[4px] items-start pl-[37px] mini-tablet:pl-[24px] mini-tablet:pr-[0px] mini-tablet:pt-[21px] tablet:pl-[20px] mac:pl-[30px] pr-[20px] sm:py-[24px] sm:pl-[24px] sm:pr-0 ">
+                    <div className="text-whiteText text-center text-[16px] tablet:text-[9px] mini-tablet:text-[9px] mini-tablet:leading-[12px] tablet:leading-[12px] mac:text-[12px] mac:leading-[15px] mr-[20px] tablet:mr-0 font-normal leading-[20px] sm:text-[12.16px] sm:font-normal sm:leading-[16.9px]">{
                         pack.title}
                     </div>
                     <div
-                        className={"text-whiteText text-center text-[34px] tablet:text-[19px] tablet:font-extrabold tablet:leading-[22px] mac:text-[25px] mac:font-extrabold mac:leading-[28px] font-bold leading-normal mt-0 mb-[19px] mac:mb-[7px] flex flex-col h-fit justify-end sm:text-[22.4px] sm:font-bold sm:leading-[37.5px] sm:mt-[11px] sm:mb-[16px] " + (!pack.isPopup ? 'min-h-[80px] mac:min-h-[60px] tablet:min-h-[47px] ' : ' flex-1 ')}>
+                        className={"text-whiteText text-center text-[34px] mini-tablet:text-[19px] mini-tablet:leading-[22px] mini-tablet:font-extrabold tablet:text-[19px] tablet:font-extrabold tablet:leading-[22px] mac:text-[25px] mac:font-extrabold mac:leading-[28px] font-bold leading-normal mt-0 mb-[19px] mac:mb-[7px] flex flex-col h-fit justify-end sm:text-[22.4px] sm:font-bold sm:leading-[37.5px] sm:mt-[11px] sm:mb-[16px] " + (!pack.isPopup ? 'min-h-[80px] mac:min-h-[60px] mini-tablet:min-h-[47px] tablet:min-h-[47px] ' : ' flex-1 ')}>
                         {
                             pack.discountPercent > 0 &&
-                            <span className="line-through text-left text-[20px] tablet:text-[12px] tablet:leading-[22px] mac:text-[15px] font-normal leading-[36px] mac:leading-[28px] relative w-fit pr-[30px] sm:text-[15.6px] ">
+                            <span className="line-through text-left text-[20px] tablet:text-[12px] mini-tablet:text-[12px] tablet:leading-[22px] mac:text-[15px] font-normal leading-[36px] mac:leading-[28px] relative w-fit pr-[30px] sm:text-[15.6px] ">
                                 {
                                     pack.currency === 'IRR' ?
                                         pack.showingPrice.slice(0, pack.showingPrice.length - 1)
@@ -69,7 +70,7 @@ export default function PackageCard({ pack, loading, style }: _props) {
                         }
 
                         <div
-                            style={pack.showingPriceWithDiscount.length > 10 ? { fontSize: isTablet ? 15 : isMac ? 20 : 30, marginTop: pack.discountPercent > 0 ? isMac ? 0 : 5 : 0 } : { marginTop: pack.discountPercent <= 0 ? isTablet ? 10 : isMac ? 0 : 5 : 0 }}
+                            style={pack.showingPriceWithDiscount.length > 10 ? { fontSize: isTablet || isminiTablet ? 15 : isMac ? 20 : 30, marginTop: pack.discountPercent > 0 ? isMac ? 0 : 5 : 0 } : { marginTop: pack.discountPercent <= 0 ? isTablet ? 10 : isMac ? 0 : 5 : 0 }}
                             className="relative pr-[30px] tablet:pr-[17px] ">
                             {
                                 pack.currency === 'IRR' ?

@@ -264,6 +264,10 @@ textarea::-webkit-scrollbar-thumb {
     font-weight: 400 !important;
   }
 
+  h2 {
+    font-size: 30px !important;
+  }
+
   ::-webkit-scrollbar {
     width: 4px !important;
   }
