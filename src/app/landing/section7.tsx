@@ -20,7 +20,7 @@ import questions from '../../../public/data/LandingQuestions.json';
 export default function Section7() {
 
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-    const isMiniTablet = useMediaQuery({ query: "(max-width: 815px)" });
+    const isMiniTablet = useMediaQuery({ query: "(max-width: 821px)" });
     const router = useRouter();
     const [selectedItem, ChangeSelectedItem] = React.useState<number>(null);
 

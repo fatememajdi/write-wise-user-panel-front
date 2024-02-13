@@ -19,9 +19,10 @@ module.exports = {
     screens: {
       'sm': { 'min': '280px', 'max': '600px' },
       'mac': { 'min': '1440px', 'max': '1680px' },
-      'mini-tablet': { 'min': '601px', 'max': '815px' },
-      'tablet': { 'min': '816px', 'max': '1281px' },
+      'mini-tablet': { 'min': '601px', 'max': '821px' },
+      'tablet': { 'min': '822px', 'max': '1281px' },
       'lg': { 'min': '1681px' },
+      'tablet-pro': { 'raw': '(min-height: 1200px)', 'min': '822px', 'max': '1281px' }
     },
     extend: {
       backgroundImage: {
@@ -31,6 +32,7 @@ module.exports = {
         'hero-pattern': "url('/landing/section1-desktop-background.svg')",
         'hero-tablet-pattern': "url('/landing/section1-tablet-background.svg')",
         'hero-miniTablet-pattern': "url('/landing/hero section tablet.svg')",
+        'hero-tabletPro-pattern': "url('/landing/sectin1-tabletPro-background.svg')",
         'hero-mac-pattern': "url('/landing/section1-mac-background.svg')",
         'progresive-pattern': "url('/landing/progresive.svg')",
         'fqa-pattern': "url('/fqa/FQA.svg')",

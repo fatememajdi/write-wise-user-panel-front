@@ -25,9 +25,9 @@ type _props = {
 export default function PackageCard({ pack, loading, style }: _props) {
     const isMac = useMediaQuery({ query: "(max-width: 1440px)" });
     const isTablet = useMediaQuery({ query: "(max-width: 1281px)" });
-    const isminiTablet = useMediaQuery({ query: "(max-width: 815px)" });
+    const isminiTablet = useMediaQuery({ query: "(max-width: 821px)" });
 
-    return <div className=" w-[300px] mini-tablet:w-[184px] mini-tablet:h-[280px] tablet:w-[184px] tablet:h-[280px] mac:w-[237px] mac:h-[360px] h-[456px] bg-grayColor rounded-[12px] mini-tablet:rounded-[7px] mac:rounded-[9px] tablet:rounded-[7px] border-solid border-[1px] border-grayColor shadow-[0px 2px 2px 0px rgba(0, 82, 147, 0.18)] py-[27px] mini-tablet:py-[16px] mini-tablet:px-[12px] mac:py-[21px] px-[20px] tablet:py-[16px] tablet:px-[12px] mac:px-[15px] relative sm:w-[228px] sm:h-[360px] sm:py-[20px] sm:px-[15px] sm:mr-auto sm:ml-auto "
+    return <div className=" w-[300px] mini-tablet:mx-[10px] mini-tablet:w-[184px] mini-tablet:mt-[24px] mini-tablet:h-[280px] tablet:w-[184px] tablet:h-[280px] mac:w-[237px] mac:h-[360px] h-[456px] bg-grayColor rounded-[12px] mini-tablet:rounded-[7px] mac:rounded-[9px] tablet:rounded-[7px] border-solid border-[1px] border-grayColor shadow-[0px 2px 2px 0px rgba(0, 82, 147, 0.18)] py-[27px] mini-tablet:py-[16px] mini-tablet:px-[12px] mac:py-[21px] px-[20px] tablet:py-[16px] tablet:px-[12px] mac:px-[15px] relative sm:w-[228px] sm:h-[360px] sm:py-[20px] sm:px-[15px] sm:mr-auto sm:ml-auto "
         style={{ ...style, backgroundColor: pack.isPopup && '#F3F3F3' }}>
         {
             pack.discountPercent > 0 ?
@@ -55,7 +55,7 @@ export default function PackageCard({ pack, loading, style }: _props) {
                         className={"text-whiteText text-center text-[34px] mini-tablet:text-[19px] mini-tablet:leading-[22px] mini-tablet:font-extrabold tablet:text-[19px] tablet:font-extrabold tablet:leading-[22px] mac:text-[25px] mac:font-extrabold mac:leading-[28px] font-bold leading-normal mt-0 mb-[19px] mac:mb-[7px] flex flex-col h-fit justify-end sm:text-[22.4px] sm:font-bold sm:leading-[37.5px] sm:mt-[11px] sm:mb-[16px] " + (!pack.isPopup ? 'min-h-[80px] mac:min-h-[60px] mini-tablet:min-h-[47px] tablet:min-h-[47px] ' : ' flex-1 ')}>
                         {
                             pack.discountPercent > 0 &&
-                            <span className="line-through text-left text-[20px] tablet:text-[12px] mini-tablet:text-[12px] tablet:leading-[22px] mac:text-[15px] font-normal leading-[36px] mac:leading-[28px] relative w-fit pr-[30px] sm:text-[15.6px] ">
+                            <span className="line-through text-left text-[20px] tablet:text-[12px] mini-tablet:text-[12px] tablet:leading-[22px] mini-tablet:leading-[22px] mac:text-[15px] font-normal leading-[36px] mac:leading-[28px] relative w-fit pr-[30px] sm:text-[15.6px] mini-tablet:pr-[15px] ">
                                 {
                                     pack.currency === 'IRR' ?
                                         pack.showingPrice.slice(0, pack.showingPrice.length - 1)
@@ -64,14 +64,14 @@ export default function PackageCard({ pack, loading, style }: _props) {
                                 }
                                 {
                                     pack.currency === 'IRR' &&
-                                    <TbCurrencyIranianRial className="absolute right-0 top-0 text-[24px] tablet:text-[15px] " />
+                                    <TbCurrencyIranianRial className="absolute right-0 top-0 text-[24px] tablet:text-[15px] mini-tablet:text-[12px] " />
                                 }
                             </span>
                         }
 
                         <div
                             style={pack.showingPriceWithDiscount.length > 10 ? { fontSize: isTablet || isminiTablet ? 15 : isMac ? 20 : 30, marginTop: pack.discountPercent > 0 ? isMac ? 0 : 5 : 0 } : { marginTop: pack.discountPercent <= 0 ? isTablet ? 10 : isMac ? 0 : 5 : 0 }}
-                            className="relative pr-[30px] tablet:pr-[17px] ">
+                            className="relative pr-[30px] tablet:pr-[17px] mini-tablet:pr-[15px] ">
                             {
                                 pack.currency === 'IRR' ?
                                     pack.showingPriceWithDiscount.slice(0, pack.showingPriceWithDiscount.length - 1)
@@ -80,7 +80,7 @@ export default function PackageCard({ pack, loading, style }: _props) {
                             }
                             {
                                 pack.currency === 'IRR' &&
-                                <TbCurrencyIranianRial className="absolute right-0 top-0 text-[24px] tablet:text-[15px] " />
+                                <TbCurrencyIranianRial className="absolute right-0 top-0 text-[24px] tablet:text-[15px] mini-tablet:text-[12px] " />
                             }
                         </div>
 
@@ -89,8 +89,8 @@ export default function PackageCard({ pack, loading, style }: _props) {
                     <OptionCard text="Analysis" />
                     <OptionCard text="Insights" />
                     <OptionCard text="Recommendations" />
-                    <div className="mt-[20px] mac:mt-[15px] tablet:mt-[11px] tablet:text-[9px] tablet:leading-[22px] text-whiteText text-[16px] mac:text-[12px] font-normal leading-[36px] mac:leading-[28px] sm:text-[13.2px] sm:font-bold sm:leading-[18.7px] sm:mt-[15px] ">{pack.description}</div>
-                    <div className="text-whiteText text-[16px] tablet:text-[9px] tablet:leading-[22px] mac:text-[12px] font-normal leading-[32px] mac:leading-[28px] sm:mt-[6px] sm:text-[12.16px] sm:font-normal sm:leading-[18.7px] ">{pack.subDescription}</div>
+                    <div className="mt-[20px] mac:mt-[15px] mini-tablet:mt-[11px] tablet:mt-[11px] mini-tablet:text-[9px] tablet:text-[9px] tablet:leading-[22px] mini-tablet:leading-[22px] text-whiteText text-[16px] mac:text-[12px] font-normal leading-[36px] mac:leading-[28px] sm:text-[13.2px] sm:font-bold sm:leading-[18.7px] sm:mt-[15px] ">{pack.description}</div>
+                    <div className="text-whiteText text-[16px] mini-tablet:text-[9px] tablet:text-[9px] tablet:leading-[22px] mini-tablet:leading-[22px] mac:text-[12px] font-normal leading-[32px] mac:leading-[28px] sm:mt-[6px] sm:text-[12.16px] sm:font-normal sm:leading-[18.7px] ">{pack.subDescription}</div>
                 </div>
         }
     </div>
@@ -98,5 +98,5 @@ export default function PackageCard({ pack, loading, style }: _props) {
 
 
 export function OptionCard({ text }: { text: string }) {
-    return <div className="flex flex-row text-whiteText text-[16px] tablet:text-[9px] tablet:leading-[22px] mac:text-[12px] font-normal leading-[36px] mac:leading-[28px] items-center sm:text-[12.16px] sm:font-bold sm:leading-[17.78px] "><FiCheck style={{ marginRight: 11 }} />{text}</div>
+    return <div className="flex flex-row text-whiteText text-[16px] tablet:text-[9px] mini-tablet:text-[9px] tablet:leading-[22px] mac:text-[12px] font-normal leading-[36px] mini-tablet:leading-[22px] mac:leading-[28px] items-center sm:text-[12.16px] sm:font-bold sm:leading-[17.78px] "><FiCheck style={{ marginRight: 11 }} />{text}</div>
 };

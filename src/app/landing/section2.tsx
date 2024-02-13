@@ -11,7 +11,7 @@ import steps from '../../../public/data/Steps.json';
 
 export default function Section2() {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-    const isMiniTablet = useMediaQuery({ query: "(max-width: 815px)" });
+    const isMiniTablet = useMediaQuery({ query: "(max-width: 821px)" });
 
     return <section className="bg-howItWorks-pattern bg-cover bg-no-repeat overflow-hidden pt-[58px] mini-tablet:pl-[77px] mini-tablet:pr-[65px] mini-tablet:pt-[45px] tablet:pt-[68px] mac:pt-[56px] pb-[106px] mini-tablet:pb-[115px] tablet:pb-[97px] mac:pb-[100px] w-full relative flex flex-col items-center sm:min-h-fit sm:pt-[20px] sm:pb-[100px]"
         id="how-it-works">

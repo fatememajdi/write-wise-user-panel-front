@@ -25,7 +25,7 @@ export default function Section4() {
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isMac = useMediaQuery({ query: "(max-width: 1680px)" });
     const isTablet = useMediaQuery({ query: "(max-width: 1281px)" });
-    const isMiniTablet = useMediaQuery({ query: "(max-width: 815px)" });
+    const isMiniTablet = useMediaQuery({ query: "(max-width: 821px)" });
 
     function selectStep(id: number) {
         if (id === selectedItem)

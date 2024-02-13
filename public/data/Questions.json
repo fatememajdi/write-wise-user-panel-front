@@ -41,7 +41,7 @@
     },
     {
         "id": 8,
-        "question": "Wahat payment methods does WriteWiseAI accept?",
+        "question": "What payment methods does WriteWiseAI accept?",
         "answer": "WriteWiseAI accepts a variety of payment methods using Stripe and Nowpayment’s secure payment services. For ease of use, we offer localized pricing plans in different currencies and cryptocurrency."
     },
     {

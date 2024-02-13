@@ -55,7 +55,8 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
     const isMac = useMediaQuery({ query: "(max-width: 1680px)" });
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isTablet = useMediaQuery({ query: "(max-width: 1281px)" });
-    const isMiniTablet = useMediaQuery({ query: "(max-width: 815px)" });
+    const isMiniTablet = useMediaQuery({ query: "(max-width: 821px)" });
+    const isTabletPro = useMediaQuery({ maxWidth: 1281, minHeight: 1200 });
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => setIsModalOpen(false);
     const pathname = usePathname();
@@ -117,8 +118,8 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
     });
 
     const variants = {
-        open: { backgroundColor: isMobile ? '#2E4057' : 'transparent', boxShadow: 'none', height: isMobile ? 45 : isMiniTablet ? 63 : isTablet ? 62 : isMac ? 89 : 105, borderBottomWidth: 0.5, borderBottomColor: '#a4a4a5' },
-        closed: { backgroundColor: isMobile ? '#2E4057' : '#FFF', boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", height: isMobile ? 45 : isMiniTablet ? 63 : isTablet ? 62 : isMac ? 89 : 112 },
+        open: { backgroundColor: isMobile ? '#2E4057' : 'transparent', boxShadow: 'none', height: isMobile ? 45 : isMiniTablet ? 63 : isTabletPro ? 83 : isTablet ? 62 : isMac ? 89 : 105, borderBottomWidth: 0.5, borderBottomColor: '#a4a4a5' },
+        closed: { backgroundColor: isMobile ? '#2E4057' : '#FFF', boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)", height: isMobile ? 45 : isMiniTablet ? 63 : isTabletPro ? 83 : isTablet ? 62 : isMac ? 89 : 112 },
     };
 
     return (<AnimatePresence>
@@ -130,8 +131,8 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
             {/* ---------------------------------------------------------------------mobile header */}
             <div
                 onClick={() => SetShowDrawer()}
-                className="hidden z-[1000] sm:flex mini-tablet:flex mini-tablet:absolute mini-tablet:top-[15px] mini-tablet:bottom-auto mini-tablet:left-[44px] sm:absolute sm:top-auto sm:bottom-auto sm:left-[15px]">
-                <MdOutlineMenu className="text-[30px]" color={isMobile ? "#FFF" : "#252525"} />
+                className="hidden z-[1000] sm:flex mini-tablet:flex mini-tablet:absolute tablet-pro:absolute tablet-pro:flex mini-tablet:top-[15px] tablet-pro:top-[15px] tablet-pro:bottom-auto mini-tablet:bottom-auto mini-tablet:left-[44px] tablet-pro:left-[58px] sm:absolute sm:top-auto sm:bottom-auto sm:left-[15px]">
+                <MdOutlineMenu className="text-[30px] tablet-pro:text-[50px] " color={isMobile ? "#FFF" : "#252525"} />
             </div>
 
             <Image
@@ -144,13 +145,13 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                 loading="eager"
             />
 
-            <div className={'col-12 flex h-full mac:h-[89px] flex-row items-center justify-between flex-1 z-10 pr-[97px] pl-[164px] mini-tablet:px-0 tablet:pl-[90px] mac:pr-[71px] mac:pl-[107px] relative sm:hidden ' + styles.headerCard}>
-                <div className="flex flex-row w-fit h-full items-center mini-tablet:mx-auto "  >
+            <div className={'col-12 flex h-full mac:h-[89px] flex-row items-center justify-between flex-1 z-10 pr-[97px] pl-[164px] mini-tablet:px-0 tablet-pro:px-0 tablet:pl-[90px] mac:pr-[71px] mac:pl-[107px] relative sm:hidden ' + styles.headerCard}>
+                <div className="flex flex-row w-fit h-full items-center mini-tablet:mx-auto tablet-pro:mx-auto "  >
 
                     <Link style={{ cursor: 'pointer' }} onClick={() => { if (pathname === '/') handleScroll; }}
                         href={pathname === '/' ? '#hero-section' : '/#hero-section'}>
                         <Image
-                            className="mr-[114px] mini-tablet:mr-0 mac:mr-[57px] w-[183px] h-[25px] mac:w-[150px] mac:h-[20px] tablet:w-[116px] tablet:h-[17px] mini-tablet:w-[116px] mini-tablet:h-[17px] "
+                            className="mr-[114px] mini-tablet:mr-0 tablet-pro:mr-0 mac:mr-[57px] w-[183px] h-[25px] mac:w-[150px] mac:h-[20px] tablet:w-[116px] tablet:h-[17px] tablet-pro:w-[154px] tablet-pro:h-[22px] mini-tablet:w-[116px] mini-tablet:h-[17px] "
                             src={"/logoWithIcon.svg"}
                             alt="Logo"
                             width="0"
@@ -162,7 +163,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     </Link>
                     {
                         headerItems.map(
-                            (item, index) => <Link className="text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[19px] tablet:text-[15px] tablet:leading-[22px] mac:leading-[22px] tablet:mr-[26px] font-normal mr-[50px] mac:mr-[37px] cursor-pointer mini-tablet:hidden"
+                            (item, index) => <Link className="text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[19px] tablet:text-[15px] tablet:leading-[22px] mac:leading-[22px] tablet:mr-[26px] font-normal mr-[50px] mac:mr-[37px] cursor-pointer mini-tablet:hidden tablet-pro:hidden "
                                 onClick={() => { if (pathname === '/') handleScroll; }}
                                 key={index} href={pathname === '/' ? item.route : '/' + item.route}>{item.title}</Link>
                         )
@@ -175,13 +176,13 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                                     router.push('/ielts');
                                     StartLoader();
                                 }}
-                                className='text-seccondaryColor no-underline leading-[28px] text-[24px] tablet:text-[15px] tablet:leading-[22px] tablet:mr-[26px] mac:text-[19px] mac:leading-[22px] font-normal mr-[40px] mac:mr-[37px] cursor-pointer mini-tablet:hidden'>
+                                className='text-seccondaryColor no-underline leading-[28px] text-[24px] tablet:text-[15px] tablet:leading-[22px] tablet:mr-[26px] mac:text-[19px] mac:leading-[22px] font-normal mr-[40px] mac:mr-[37px] cursor-pointer mini-tablet:hidden tablet-pro:hidden '>
                                 Dashboard</a>
                             :
                             <div onClick={() => {
                                 router.push('/signIn');
                                 StartLoader();
-                            }} className='text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[19px] tablet:text-[15px] tablet:leading-[22px] tablet:mr-[26px] mac:leading-[22px] font-normal mr-[40px] mac:mr-[37px] cursor-pointer mini-tablet:hidden'>
+                            }} className='text-seccondaryColor no-underline leading-[28px] text-[24px] mac:text-[19px] tablet:text-[15px] tablet:leading-[22px] tablet:mr-[26px] mac:leading-[22px] font-normal mr-[40px] mac:mr-[37px] cursor-pointer mini-tablet:hidden tablet-pro:hidden '>
                                 Signup</div>
                     }
 
@@ -190,14 +191,14 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
             {
                 showPopup && !disablePopup &&
                 <motion.div
-                    animate={{ height: showPopup ? isMobile ? 34 : isTablet || isMiniTablet ? 42 : isMac ? 54 : 65 : 0 }}
+                    animate={{ height: showPopup ? isMobile ? 34 : isTabletPro ? 56 : isTablet || isMiniTablet ? 42 : isMac ? 54 : 65 : 0 }}
                     transition={{ type: "spring", duration: 1 }}
                     className='bg-red overflow-hidden flex flex-row items-center justify-center pr-[50px] mac:pr-[18px] mini-tablet:pr-[14px] tablet:pr-[36px] mt-0 sm:absolute sm:left-0 sm:right-0 sm:bottom-[-45px]'>
-                    <div className='text-whiteText text-[20px] mac:text-[16px] tablet:text-[12px] mini-tablet:text-[12px] mini-tablet:font-semibold mac:font-semibold font-medium leading-[52.8px] ml-auto sm:text-[13px]'>
+                    <div className='text-whiteText text-[20px] mac:text-[16px] tablet-pro:text-[16px] tablet-pro:leading-[70px] tablet-pro:font-semibold tablet:text-[12px] mini-tablet:text-[12px] mini-tablet:font-semibold mac:font-semibold font-medium leading-[52.8px] ml-auto sm:text-[13px]'>
                         Limited Time Offer!</div>
                     <button
                         onClick={showModal}
-                        className="w-[120px] mac:w-[90px] mac:h-[36px] h-[43px] mini-tablet:w-[64px] tablet:w-[64px] mini-tablet:h-[30px] tablet:h-[30px] items-center justify-center rounded-[4px] bg-background text-red text-[20px] mini-tablet:text-[12px] tablet:text-[12px] mac:text-[16px] mac:font-semibold font-normal leading-[40px] ml-[26px] mini-tablet:ml-[16px] tablet:ml-[16px] mac:ml-[20px] sm:w-[95px] sm:h-[22px] sm:text-[14px] sm:font-normal sm:leading-[31.4px]" >
+                        className="w-[120px] tablet-pro:w-[85px] tablet-pro:h-[40px] tablet-pro:text-[16px] tablet-pro:font-semibold tablet-pro:leading-[53px] mac:w-[90px] mac:h-[36px] h-[43px] mini-tablet:w-[64px] tablet:w-[64px] mini-tablet:h-[30px] tablet:h-[30px] items-center justify-center rounded-[4px] bg-background text-red text-[20px] mini-tablet:text-[12px] tablet:text-[12px] mac:text-[16px] mac:font-semibold font-normal leading-[40px] ml-[26px] mini-tablet:ml-[16px] tablet:ml-[16px] mac:ml-[20px] sm:w-[95px] sm:h-[22px] sm:text-[14px] sm:font-normal sm:leading-[31.4px]" >
                         Start Now
                     </button>
 

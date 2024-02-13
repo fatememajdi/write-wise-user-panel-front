@@ -27,7 +27,7 @@ export default function Section1() {
             changeLogedIn(false);
     }, []);
 
-    return <div className='col-12 bg-hero-pattern mini-tablet:bg-hero-miniTablet-pattern mac:bg-hero-mac-pattern tablet:bg-hero-tablet-pattern bg-cover bg-no-repeat relative z-[501] overflow-hidden lg:min-h-[1080px] min-h-fit sm:bg-mobile-hero-pattern '>
+    return <div className='col-12 tablet-pro:bg-hero-tabletPro-pattern bg-hero-pattern mini-tablet:bg-hero-miniTablet-pattern mac:bg-hero-mac-pattern tablet:bg-hero-tablet-pattern bg-cover bg-no-repeat relative z-[501] overflow-hidden lg:min-h-[1080px] min-h-fit sm:bg-mobile-hero-pattern '>
         <header><LandingHeader logedIn={logedIn} landing /></header>
         <section className={'col-12 flex flex-row not-italic px-0 pt-[319px] tablet:pt-[215px] mini-tablet:pt-[623px] mac:pt-[282px] pb-[240px] mini-tablet:pb-[70px] tablet:pb-[193px] mac:pb-[220px] sm:flex-col-reverse justify-center items-center sm:pt-[100px] sm:pb-[50px] sm:min-h-fit ' + styles.section1Container} id="hero-section">
 
