@@ -53,16 +53,16 @@ export default function Section6() {
         GetPackage('');
     }, []);
 
-    return <section className='bg-section2-gradiant pt-[50px] mini-tablet:pt-[55px] mac:pt-[48px] sm:pt-[77px] pr-[140px] mac:pr-[72px] sm:pr-[10px] pb-[84px] mac:pb-[110px] sm:pb-[39px] pl-[130px] mini-tablet:pr-[70px] tablet:px-[25px] tablet:pb-[95px] mac:pl-[72px] mini-tablet:pl-[61px] sm:pl-[10px] flex flex-col sm:min-h-fit '
+    return <section className='bg-section2-gradiant pt-[50px] mini-tablet:pt-[55px] tablet-pro:pt-[70px] mac:pt-[48px] sm:pt-[77px] pr-[140px] mac:pr-[72px] sm:pr-[10px] pb-[84px] mac:pb-[110px] sm:pb-[39px] pl-[130px] mini-tablet:pr-[70px] tablet:px-[25px] tablet-pro:pl-[97px] tablet-pro:pb-[89px] tablet:pb-[95px] mac:pl-[72px] mini-tablet:pl-[61px] sm:pl-[10px] flex flex-col sm:min-h-fit '
         id="pricing">
-        <h2 className='text-whiteText lg:ml-[59px] tablet:ml-[66px] mini-tablet:ml-[12px] leading-[60px] mini-tablet:leading-[36px] tablet:leading-[36px] mac:leading-[47px] mac:ml-[100px] sm:ml-[43px] sm:leading-[24.3px] sm:mr-[60px] '>No Monthly Commitments, Pure Flexibility</h2>
-        <h6 className="text-whiteText lg:ml-[59px] tablet:ml-[66px] mini-tablet:ml-[12px] leading-[32px] mini-tablet:leading-[22px] tablet:leading-[22px] tablet:mt-[21px] mini-tablet:mt-[21px] mac:leading-[19px] mt-[36px] mac:ml-[100px] mac:mt-[19px] mac:max-w-full max-w-[850px] tablet:max-w-[640px] sm:text-[13px] sm:font-normal sm:leading-[16.9px] sm:ml-[43px] sm:mt-[27px] sm:max-w-full ">
+        <h2 className='text-whiteText tablet-pro:leading-[48px] lg:ml-[59px] tablet:ml-[66px] mini-tablet:ml-[12px] tablet-pro:mx-0 leading-[60px] mini-tablet:leading-[36px] tablet:leading-[36px] mac:leading-[47px] mac:ml-[100px] sm:ml-[43px] sm:leading-[24.3px] sm:mr-[60px] '>No Monthly Commitments, Pure Flexibility</h2>
+        <h6 className="text-whiteText tablet-pro:leading-[29px] lg:ml-[59px] tablet:ml-[66px] mini-tablet:ml-[12px] leading-[32px] mini-tablet:leading-[22px] tablet:leading-[22px] tablet:mt-[21px] tablet-pro:mt-[28px] tablet-pro:mx-0 mini-tablet:mt-[21px] mac:leading-[19px] mt-[36px] mac:ml-[100px] mac:mt-[19px] mac:max-w-full max-w-[850px] tablet:max-w-[640px] tablet-pro:max-w-full tablet-pro:mr-[72px] sm:text-[13px] sm:font-normal sm:leading-[16.9px] sm:ml-[43px] sm:mt-[27px] sm:max-w-full ">
             At WriteWiseAI, we have streamlined our pricing to ensure you get the
             best value for your IELTS writing needs.
         </h6>
 
 
-        <div className="text-whiteText text-center text-[24px] mini-tablet:text-[15px] tablet:text-[15px] tablet:leading-[22px] mini-tablet:leading-[22px] tablet:mt-[77px] mac:text-[19px] font-normal leading-[36px] mb-[56px] tablet:mb-[33px] mac:mb-[45px] mt-[56px] mini-tablet:mt-[54px] mini-tablet:mb-[5px] mac:mt-[66px] flex flex-row items-center justify-center sm:text-[13px] ">
+        <div className="text-whiteText text-center text-[24px] tablet-pro:text-[20px] tablet-pro:leading-[29px] mini-tablet:text-[15px] tablet:text-[15px] tablet:leading-[22px] mini-tablet:leading-[22px] tablet:mt-[77px] mac:text-[19px] font-normal leading-[36px] mb-[56px] tablet:mb-[33px] tablet-pro:mb-[6px] mac:mb-[45px] mt-[56px] tablet-pro:mt-[64px] mini-tablet:mt-[54px] mini-tablet:mb-[5px] mac:mt-[66px] flex flex-row items-center justify-center sm:text-[13px] ">
             Use of a VPN might change your regional currency!
             {/* {
                 packages.length > 0 && packages[0].flagUrl &&
@@ -125,7 +125,7 @@ export default function Section6() {
             loading ?
                 <ReactLoading className="m-auto" type={'spin'} color={'#FFF'} height={50} width={50} />
                 :
-                <div className='col-12 flex flex-row mini-tablet:flex-wrap mini-tablet:px-[12px] justify-between mini-tablet:justify-center sm:hidden '>
+                <div className='col-12 flex flex-row mini-tablet:flex-wrap tablet-pro:flex-wrap tablet-pro:pl-0 tablet-pro:pr-[70px] mini-tablet:px-[12px] justify-between tablet-pro:justify-center mini-tablet:justify-center sm:hidden '>
                     {packages.map(
                         (item: Package, index: number) => <PackageCard loading={loading} pack={item} key={index} />)}
                 </div>

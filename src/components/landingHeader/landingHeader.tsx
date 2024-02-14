@@ -54,9 +54,9 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
     const [selectedDrawerItem, setSelectedDrawerItem] = React.useState<number>();
     const isMac = useMediaQuery({ query: "(max-width: 1680px)" });
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-    const isTablet = useMediaQuery({ query: "(max-width: 1281px)" });
+    const isTablet = useMediaQuery({ query: "(max-width: 1399px)" });
     const isMiniTablet = useMediaQuery({ query: "(max-width: 821px)" });
-    const isTabletPro = useMediaQuery({ maxWidth: 1281, minHeight: 1200 });
+    const isTabletPro = useMediaQuery({ maxWidth: 1399, minHeight: 1200 });
     const showModal = () => setIsModalOpen(true);
     const handleCancel = () => setIsModalOpen(false);
     const pathname = usePathname();
@@ -193,7 +193,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                 <motion.div
                     animate={{ height: showPopup ? isMobile ? 34 : isTabletPro ? 56 : isTablet || isMiniTablet ? 42 : isMac ? 54 : 65 : 0 }}
                     transition={{ type: "spring", duration: 1 }}
-                    className='bg-red overflow-hidden flex flex-row items-center justify-center pr-[50px] mac:pr-[18px] mini-tablet:pr-[14px] tablet:pr-[36px] mt-0 sm:absolute sm:left-0 sm:right-0 sm:bottom-[-45px]'>
+                    className='bg-red overflow-hidden flex flex-row items-center justify-center pr-[50px] mac:pr-[18px] mini-tablet:pr-[14px] tablet-pro:pr-[79px] tablet:pr-[36px] mt-0 sm:absolute sm:left-0 sm:right-0 sm:bottom-[-45px]'>
                     <div className='text-whiteText text-[20px] mac:text-[16px] tablet-pro:text-[16px] tablet-pro:leading-[70px] tablet-pro:font-semibold tablet:text-[12px] mini-tablet:text-[12px] mini-tablet:font-semibold mac:font-semibold font-medium leading-[52.8px] ml-auto sm:text-[13px]'>
                         Limited Time Offer!</div>
                     <button
@@ -203,7 +203,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     </button>
 
                     <AiOutlineClose
-                        className="sm:text-[20px] tablet:text-[16px] ml-auto text-whiteText text-[27px] mini-tablet:text-[20px] cursor-pointer"
+                        className="sm:text-[20px] tablet:text-[16px] tablet-pro:text-[20px] ml-auto text-whiteText text-[27px] mini-tablet:text-[20px] cursor-pointer"
                         onClick={() => {
                             changeShowPopup(false);
                             setDisablePopup(true);
@@ -252,11 +252,11 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                 closable={false}
                 onClose={onCloseDrawer}
                 open={showDrawer}
-                width={isMobile ? 216 : 256}
-                className={' mini-tablet:pt-[27px] mini-tablet:pl-[35px] ' + styles.drawer}
+                width={isMobile ? 216 : isTabletPro ? 341 : 256}
+                className={' mini-tablet:pt-[27px] mini-tablet:pl-[35px] tablet-pro:pl-[55px] tablet-pro:pt-[20px] ' + styles.drawer}
             >
                 {
-                    headerItems.map((item, index) => <p className="text-whiteText twxt-[20px] mini-tablet:text-[25px] mini-tablet:leading-[36px] font-normal leading-[28px] mt-[15px] w-full"
+                    headerItems.map((item, index) => <p className="text-whiteText twxt-[20px] mini-tablet:text-[25px] tablet-pro:text-[34px] tablet-pro:leading-[48px] mini-tablet:leading-[36px] font-normal leading-[28px] mt-[15px] w-full"
                         key={index} style={selectedDrawerItem === index ? { backgroundColor: '#172E4A' } : {}}>
                         {landing ?
                             <Link href={item.route} onClick={() => {
@@ -278,7 +278,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                     logedIn ?
                         <>
                             <p
-                                className="text-whiteText twxt-[20px] mini-tablet:text-[25px] mini-tablet:leading-[36px] font-normal leading-[28px] mt-[15px] w-full"
+                                className="text-whiteText twxt-[20px] tablet-pro:text-[34px] tablet-pro:leading-[48px] mini-tablet:text-[25px] mini-tablet:leading-[36px] font-normal leading-[28px] mt-[15px] w-full"
                                 style={pathname === '/ielts' ? { backgroundColor: '#172E4A' } : {}}
                                 onClick={() => {
                                     router.push('/ielts');
@@ -288,7 +288,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                                 }}
                             >Dashboard</p>
                             <p
-                                className="text-whiteText twxt-[20px] mini-tablet:text-[25px] mini-tablet:leading-[36px] font-normal leading-[28px] mt-[15px] w-full"
+                                className="text-whiteText twxt-[20px] tablet-pro:text-[34px] tablet-pro:leading-[48px] mini-tablet:text-[25px] mini-tablet:leading-[36px] font-normal leading-[28px] mt-[15px] w-full"
                                 style={pathname === '/wallet' ? { backgroundColor: '#172E4A' } : {}}
                                 onClick={() => {
                                     router.push('/wallet');
@@ -300,7 +300,7 @@ const LandingHeader: React.FC<{ logedIn: boolean, shadow?: boolean, landing?: bo
                         </>
                         :
                         <p
-                            className="text-whiteText twxt-[20px] font-normal leading-[28px] mt-[15px] w-full"
+                            className="text-whiteText tablet-pro:text-[34px] tablet-pro:leading-[48px] mini-tablet:text-[25px] mini-tablet:leading-[36px] text-[20px] font-normal leading-[28px] mt-[15px] w-full"
                             style={selectedDrawerItem === 7 ? { backgroundColor: '#172E4A' } : {}}
                             onClick={() => {
                                 router.push('/signIn');

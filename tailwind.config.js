@@ -18,11 +18,11 @@ module.exports = {
     },
     screens: {
       'sm': { 'min': '280px', 'max': '600px' },
-      'mac': { 'min': '1440px', 'max': '1680px' },
+      'mac': { 'min': '1400px', 'max': '1680px' },
       'mini-tablet': { 'min': '601px', 'max': '821px' },
-      'tablet': { 'min': '822px', 'max': '1281px' },
+      'tablet': { 'min': '822px', 'max': '1399px' },
       'lg': { 'min': '1681px' },
-      'tablet-pro': { 'raw': '(min-height: 1200px)', 'min': '822px', 'max': '1281px' }
+      'tablet-pro': { 'raw': '(min-height: 1200px)', 'min': '822px', 'max': '1399px' }
     },
     extend: {
       backgroundImage: {

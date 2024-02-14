@@ -22,7 +22,7 @@ const Features: React.FC = () => {
     const [selectedItem, changeSelectedItem] = React.useState<number>(-1);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isMac = useMediaQuery({ query: "(max-width: 1680px)" });
-    const isTablet = useMediaQuery({ query: "(max-width: 1281px)" });
+    const isTablet = useMediaQuery({ query: "(max-width: 1399px)" });
     const isMiniTablet = useMediaQuery({ query: "(max-width: 821px)" });
 
     React.useEffect(() => {
