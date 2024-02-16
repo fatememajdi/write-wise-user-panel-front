@@ -26,6 +26,7 @@ export default function Section4() {
     const isMac = useMediaQuery({ query: "(max-width: 1680px)" });
     const isTablet = useMediaQuery({ query: "(max-width: 1399px)" });
     const isMiniTablet = useMediaQuery({ query: "(max-width: 821px)" });
+    const isTabletPro = useMediaQuery({ maxWidth: 1399, minHeight: 1200 });
 
     function selectStep(id: number) {
         if (id === selectedItem)
@@ -45,10 +46,10 @@ export default function Section4() {
             if (selectedItem === 0 && !isMobile)
                 changeSelectedItem(1);
         }}
-        className='bg-progresive-pattern bg-cover bg-no-repeat overflow-hidden flex pt-[80px] mini-tablet:pt-[31px] mac:pt-[84px] tablet:pt-[98px] flex-col h-fit sm:pt-[55px] pb-[30px] mini-tablet:pb-0 mac:pb-0 sm:min-h-fit sm:pl-[50px] mini-tablet:pl-[70px] '>
-        <h2 className='text-whiteText leading-[60px] mac:leading-[22px] tablet:leading-[22px] ml-[162px] mini-tablet:ml-0 tablet:ml-[92px] mac:ml-[138px] sm:ml-0 sm:leading-[26px]'><span className="mac:text-[25px]">Progressive IELTS Learning with WriteWiseAI</span></h2>
+        className='bg-progresive-pattern bg-cover tablet-pro:pb-0 bg-no-repeat overflow-hidden flex pt-[80px] tablet-pro:pt-[41px] mini-tablet:pt-[31px] mac:pt-[84px] tablet:pt-[98px] flex-col h-fit sm:pt-[55px] pb-[30px] mini-tablet:pb-0 mac:pb-0 sm:min-h-fit sm:pl-[50px] tablet-pro:pl-[93px] tablet-pro:pr-0 mini-tablet:pl-[70px] '>
+        <h2 className='text-whiteText leading-[60px] mac:leading-[22px] tablet-pro:leading-[82px] tablet:leading-[22px] ml-[162px] tablet-pro:ml-0 mini-tablet:ml-0 tablet:ml-[92px] mac:ml-[138px] sm:ml-0 sm:leading-[26px]'><span className="mac:text-[25px]">Progressive IELTS Learning with WriteWiseAI</span></h2>
         <Image
-            className="flex z-[100] mt-[32px] mini-tablet:mt-[11px] mac:mt-[25px] ml-[162px] mini-tablet:ml-0 mac:ml-[138px] tablet:ml-[91px] tablet:mt-[19px] sm:hidden "
+            className="flex z-[100] mt-[32px] mini-tablet:mt-[11px] mac:mt-[25px] tablet-pro:mt-[14px] ml-[162px] mini-tablet:ml-0 mac:ml-[138px] tablet:ml-[91px] tablet:mt-[19px] sm:hidden "
             src="/landing/line.svg"
             alt="line"
             width={isTablet ? 693 : 1040}
@@ -56,8 +57,8 @@ export default function Section4() {
             priority
             loading="eager"
         />
-        <h6 className='text-whiteText leading-[36px] mini-tablet:leading-[20px] mini-tablet:mt-[11px] mac:leading-[28px] tablet:leading-[22px] tablet:ml-[92px] tablet:mt-[19px] ml-[162px] mini-tablet:ml-0 mac:ml-[138px] sm:ml-0 sm:mt-0 mt-[32px] mac:mt-[25px] mb-[90px] max-w-[550px] tablet:max-w-[470px] mac:max-w-[463px] sm:text-[13px] sm:leading-[19.5px] sm:mb-0 mini-tablet:mb-0 sm:max-w-full sm:mr-[50px] '>
-            <span className="tablet:text-[17px] "> Empower your IELTS preparation by tracking and visualizing your writing improvements.</span>
+        <h6 className='text-whiteText leading-[36px] tablet-pro:mt-[30px] tablet-pro:leading-[26px] mini-tablet:leading-[20px] mini-tablet:mt-[11px] mac:leading-[28px] tablet:leading-[22px] tablet:ml-[92px] tablet-pro:ml-0 tablet:mt-[19px] ml-[162px] mini-tablet:ml-0 mac:ml-[138px] sm:ml-0 sm:mt-0 mt-[32px] mac:mt-[25px] mb-[90px] tablet-pro:mb-[76px] max-w-[550px] tablet:max-w-[470px] mac:max-w-[463px] tablet-pro:max-w-[680px] sm:text-[13px] sm:leading-[19.5px] sm:mb-0 mini-tablet:mb-0 sm:max-w-full sm:mr-[50px] '>
+            <span className="tablet:text-[17px] tablet-pro:text-[24px] "> Empower your IELTS preparation by tracking and visualizing your writing improvements.</span>
         </h6>
 
         {/* <button className={styles.button}>
@@ -66,15 +67,15 @@ export default function Section4() {
 
         {/* //-----------------------------------------------------------------------------mobile mode steps */}
         <AnimatePresence>
-            <div className='col-12 hidden sm:flex mini-tablet:flex flex-col mt-[16px] mini-tablet:mt-[58px]' >
+            <div className='col-12 hidden sm:flex mini-tablet:flex tablet-pro:flex flex-col mt-[16px] mini-tablet:mt-[58px]' >
                 {
-                    steps.map((item, index) => <div key={index} className='flex flex-col w-full items-start h-fit max-w-[242px] mini-tablet:max-w-[563px] mini-tablet:mb-[28px] '>
+                    steps.map((item, index) => <div key={index} className='flex flex-col w-full items-start h-fit max-w-[242px] mini-tablet:max-w-[563px] tablet-pro:max-w-[751px] tablet-pro:mb-[37px] mini-tablet:mb-[28px] '>
                         <motion.div
-                            animate={{ opacity: !isMiniTablet && selectedItem !== (index + 1) && selectedItem !== 0 ? 0.5 : 1 }}
+                            animate={{ opacity: !isMiniTablet && !isTabletPro && selectedItem !== (index + 1) && selectedItem !== 0 ? 0.5 : 1 }}
                             transition={{ type: "spring", duration: 2 }}
                             onClick={() => selectStep(index + 1)}
-                            className='flex flex-row text-whiteText text-[16px] mini-tablet:text-[20px] mini-tablet:font-semibold font-normal leading-[38.5px] items-center'>
-                            {!isMiniTablet ?
+                            className='flex flex-row text-whiteText text-[16px] tablet-pro:text-[26px] tablet-pro:font-semibold tablet-pro:leading-[51px] mini-tablet:text-[20px] mini-tablet:font-semibold font-normal leading-[38.5px] items-center'>
+                            {!isMiniTablet && !isTabletPro ?
                                 selectedItem === (index + 1) ?
                                     <MdOutlineKeyboardArrowDown fontSize={20} />
                                     :
@@ -85,12 +86,12 @@ export default function Section4() {
                             {' 0' + (index + 1) + ' ' + item.title}
                         </motion.div>
                         <motion.div
-                            animate={{ height: selectedItem === (index + 1) || isMiniTablet ? 'fit-content' : 0 }}
+                            animate={{ height: selectedItem === (index + 1) || isMiniTablet || isTabletPro ? 'fit-content' : 0 }}
                             transition={{ type: "spring", duration: 2 }}
-                            className='text-whiteText text-[13px] font-normal leading-[16.9px] overflow-hidden mini-tablet:mt-[8px] '
+                            className='text-whiteText text-[13px] tablet-pro:text-[20px] font-normal leading-[16.9px] tablet-pro:leading-[29px] overflow-hidden tablet-pro:mt-[10px] mini-tablet:mt-[8px] '
                         >
                             {
-                                isMiniTablet ?
+                                isTabletPro || isMiniTablet ?
                                     item.description :
                                     selectedItem === (index + 1) &&
                                     item.description
@@ -118,11 +119,11 @@ export default function Section4() {
         </motion.div>
 
         <Image
-            className='ml-auto hidden mini-tablet:flex mt-[-60px] '
+            className='ml-auto hidden mini-tablet:flex tablet-pro:flex mt-[-60px] tablet-pro:mt-[-90px] '
             src="/landing/miniTabletStep.svg"
             alt="flag icon"
-            width={602}
-            height={229}
+            width={isTabletPro ? 803 : 602}
+            height={isTabletPro ? 300 : 229}
             loading="eager"
             priority
         />
@@ -130,7 +131,7 @@ export default function Section4() {
         {/* //-----------------------------------------------------------------------------desktop mode steps */}
 
         <AnimatePresence>
-            <div className='flex flex-row mt-[38px] mac:mt-[70px] h-fit w-full flex-1 items-end sm:hidden mini-tablet:hidden '>
+            <div className='flex flex-row mt-[38px] mac:mt-[70px] h-fit w-full flex-1 items-end sm:hidden mini-tablet:hidden tablet-pro:hidden '>
                 <div
                     style={{ opacity: selectedItem === 1 || selectedItem === 0 ? 1 : 0.5 }}
                     className='relative flex-1 min-h-[22vh] border-t-[1px] border-t-whiteText '></div>
